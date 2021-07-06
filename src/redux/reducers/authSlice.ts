@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface IInitialState {
+export interface IInitialState {
   user?: object;
   isLoggedIn: boolean;
   token?: string;

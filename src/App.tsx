@@ -1,8 +1,13 @@
 // import { CommonButton } from "tdw-components";
 
+import { ThemeProvider } from "@material-ui/core";
+import MUITheme from "./theme/theme";
+
 function App() {
   return (
-    <div className="App">{/* <CommonButton buttonText="click me" /> */}</div>
+    <ThemeProvider theme={MUITheme}>
+      
+    </ThemeProvider>
   );
 }
 

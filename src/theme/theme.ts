@@ -7,7 +7,26 @@ const { berryRed, white } = Color;
 
 const MUITheme = createMuiTheme({
   overrides: {},
+  // palette: {
+  //   text: {
+  //     primary: "#092C4C",
+  //   },
+  //   background: {
+  //     // flashWhite: "#EFF3FA",
+  //   },
+  // },
+  palette: createPalette({
+    primary: {
+      main: berryRed,
+      contrastText: white,
+    },
+  }),
   typography: {
+    fontFamily: "IBM Plex Sans, sans-serif",
+    fontWeightLight: 400,
+    fontWeightRegular: 400,
+    fontWeightMedium: 700,
+    fontWeightBold: 700,
     h1: theme.typography.h1,
     h2: theme.typography.h2,
     h3: theme.typography.h3,
@@ -21,12 +40,9 @@ const MUITheme = createMuiTheme({
     subtitle2: theme.typography.subtitle2,
     subtitle1: theme.typography.subtitle1,
   },
-  palette: createPalette({
-    primary: {
-      main: berryRed,
-      contrastText: white,
-    },
-  }),
+
+
+
 });
 
 export default MUITheme;

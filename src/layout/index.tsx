@@ -1,4 +1,7 @@
 import { Grid, AppBar, Toolbar, Typography } from "@material-ui/core";
+import { Footer } from "tdw-components";
+//import Footer from "./footer";
+import { FooterData } from "../utils/constants/language/en/footerData";
 
 export interface LayoutProps {
   children: React.ReactNode;
@@ -24,7 +27,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </Grid>
         <Grid item xs={12}>
           {/* // * Footer here */}
-          <Typography variant="h5">Footer</Typography>
+          <Footer data={FooterData} />
         </Grid>
       </Grid>
     </div>

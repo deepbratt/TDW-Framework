@@ -1,5 +1,9 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 import { theme } from "./globalFontSize";
+import createPalette from "@material-ui/core/styles/createPalette";
+import { Color } from "./color";
+
+const { berryRed, white } = Color;
 
 const MUITheme = createMuiTheme({
   overrides: {},
@@ -16,7 +20,13 @@ const MUITheme = createMuiTheme({
     caption: theme.typography.caption,
     subtitle2: theme.typography.subtitle2,
     subtitle1: theme.typography.subtitle1,
-  }
+  },
+  palette: createPalette({
+    primary: {
+      main: berryRed,
+      contrastText: white,
+    },
+  }),
 });
 
 export default MUITheme;

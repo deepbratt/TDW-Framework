@@ -7,6 +7,9 @@ const Login = lazy(() => import("../pages/login"));
 export const paths = {
   home: "home",
   login: "login",
+  about: "about",
+  products: "products",
+  contact: "contact",
   forgotPassword: "forgot-password",
   resetPassword: "reset-password",
 };
@@ -14,14 +17,32 @@ export const paths = {
 export const routes = {
   home: "/",
   login: "/login",
+  about: "/about",
+  products: "/products",
+  contact: "/contact",
   forgotPassword: "/forgot-password",
   resetPassword: "/reset-password/:token",
 };
 
 export const privateRoutes = {
   [paths.home]: {
-    name: "Dashboard",
+    name: "Home",
     path: routes.home,
+    component: Home,
+  },
+  [paths.about]: {
+    name: "About",
+    path: routes.about,
+    component: Home,
+  },
+  [paths.products]: {
+    name: "Products",
+    path: routes.products,
+    component: Home,
+  },
+  [paths.contact]: {
+    name: "Contact",
+    path: routes.contact,
     component: Home,
   },
 };

@@ -1,7 +1,10 @@
 import { Grid, AppBar, Toolbar, Typography } from "@material-ui/core";
-
+import {Header} from "@TDW/Sections"
+import MUITheme from "../theme/theme";
+import { ThemeProvider } from "@material-ui/core";
 export interface LayoutProps {
   children: React.ReactNode;
+  
 }
 
 /**
@@ -12,13 +15,13 @@ export interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div>
-      <AppBar position="sticky">
-        <Toolbar>
-          {/* // * Logo here */}
-          <Typography variant="h5">TezDealz</Typography>
-        </Toolbar>
-      </AppBar>
+      
       <Grid container>
+      <Grid item xs={12}>
+      <ThemeProvider theme={MUITheme}>
+         <Header />
+         </ThemeProvider>
+      </Grid>
         <Grid item xs={12}>
           {children}
         </Grid>

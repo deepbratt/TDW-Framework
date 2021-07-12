@@ -1,5 +1,7 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 import { theme } from "./globalFontSize";
+import createPalette from "@material-ui/core/styles/createPalette";
+
 
 const MUITheme = createMuiTheme({
   overrides: {},

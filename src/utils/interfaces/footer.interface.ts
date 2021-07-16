@@ -30,8 +30,11 @@ export interface IData {
   help: IRoutes[];
   categories: ICategories;
   mostSearched: IRoutes[];
+  termsAndConditions: IRoutes[];
 }
 
 export interface FooterProps {
   data: IData;
+  rootBackgroundColor: string;
+  textPrimary: string;
 }

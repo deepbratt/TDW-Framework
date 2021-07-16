@@ -27,7 +27,11 @@ theme.typography.h5 = {};
 theme.typography.h6 = {};
 
 theme.typography.subtitle1 = {};
-theme.typography.subtitle2 = {};
+theme.typography.subtitle2 = {
+  fontWeight: 300,
+  fontSize: "16px",
+  lineHeight: "22.5px",
+};
 
 theme.typography.body1 = {};
 theme.typography.body2 = {

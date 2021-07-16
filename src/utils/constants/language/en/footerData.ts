@@ -72,4 +72,8 @@ export const FooterData = {
     { name: "Used Honda Civic", path: "/" },
     { name: "Used Suzuki Swift", path: "/" },
   ],
+  termsAndConditions: [
+    { name: "Terms & Conditions", path: "/" },
+    { name: "Privacy Policy", path: "/" },
+  ],
 };

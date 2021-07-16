@@ -1,25 +1,32 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 import { theme } from "./globalFontSize";
 import createPalette from "@material-ui/core/styles/createPalette";
 import { Color } from "./color";
 
 const { berryRed, white } = Color;
 
-const MUITheme = createMuiTheme({
-  overrides: {},
-  // palette: {
-  //   text: {
-  //     primary: "#092C4C",
-  //   },
-  //   background: {
-  //     // flashWhite: "#EFF3FA",
-  //   },
-  // },
+const MUITheme = createTheme({
+  overrides: {
+    MuiTab: {
+      root: {
+        textAlign: "left",
+        textTransform: "capitalize",
+        fontSize: "18px",
+        fontWeight: 400,
+        margin: "0 10px",
+      },
+      wrapper: {
+        display: "flex",
+        alignItems: "flex-start",
+      },
+    },
+  },
   palette: createPalette({
     primary: {
       main: berryRed,
       contrastText: white,
     },
+    text: { secondary: "#828282" },
   }),
   typography: {
     fontFamily: "IBM Plex Sans, sans-serif",
@@ -40,9 +47,6 @@ const MUITheme = createMuiTheme({
     subtitle2: theme.typography.subtitle2,
     subtitle1: theme.typography.subtitle1,
   },
-
-
-
 });
 
 export default MUITheme;

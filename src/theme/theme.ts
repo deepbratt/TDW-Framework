@@ -13,11 +13,25 @@ const MUITheme = createTheme({
         textTransform: "capitalize",
         fontSize: "18px",
         fontWeight: 400,
-        margin: "0 10px",
+        "&$selected": {
+          fontSize: "24px",
+          fontWeight: 700,
+        },
       },
       wrapper: {
         display: "flex",
         alignItems: "flex-start",
+      },
+    },
+    MuiTabs: {
+      flexContainer: {
+        marginLeft: "10px",
+        borderBottom: "1px solid #bdbdbd",
+      },
+      indicator: {
+        backgroundColor: "#2F80ED",
+        height: "2px",
+        borderRadius: "5px",
       },
     },
   },
@@ -29,7 +43,7 @@ const MUITheme = createTheme({
     text: { secondary: "#828282" },
   }),
   typography: {
-    fontFamily: "IBM Plex Sans, sans-serif",
+    fontFamily: "'IBM Plex Sans', sans-serif",
     fontWeightLight: 400,
     fontWeightRegular: 400,
     fontWeightMedium: 700,

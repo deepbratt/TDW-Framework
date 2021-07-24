@@ -34,16 +34,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <Grid item xs={12}>
           {/* <CustomButton buttonText="button"/> */}
         </Grid>
-        <Grid item xs={12}>
-          {children}
+        <Grid item xs={12} container justify="center">
+          <Grid item xs={8}>
+            {children}
+          </Grid>
         </Grid>
-        <Grid item container xs={10}>
-          {/* // * Footer here */}
+        {/* <Grid item container xs={10}>
           <TabComponent data={browseUsedCards} />
         </Grid>
-        <Grid item container xs={10} spacing={5}>
+        <Grid item container xs={12}>
           <PostAd data={PostAdData} />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           {/* // * Footer here */}
           <Footer
@@ -58,3 +59,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 };
 
 export default Layout;
+
+// import { createUseStyles } from "react-jss";
+
+// export const useStyles = createUseStyles({
+//   "@global": {
+//     body: {
+//       margin: "0px",
+//       padding: "0px",
+//       width: "100%",
+//       height: "100%",
+//       overflowX: "hidden"
+//     },
+//     html: {
+//       overflowX: "hidden",
+//     },
+//   },
+// });

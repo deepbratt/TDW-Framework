@@ -4,4 +4,5 @@ export const Colors= {
     greythree: "#828282",
     greySix: "#F2F2F2",
     flashWhite: "#EFF3FA",
+    white: "white"
 };

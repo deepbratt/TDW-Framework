@@ -1,17 +1,12 @@
 import { Grid } from "@material-ui/core";
-// import {Home}  from "tdw-pages";
+// import {ComparisonContext,Banner}  from "@TDW/Sections/build/index";
 // import HeaderContext from "../Sections/Header/Header";
-// import { Footer } from "@TDW/components";
+// import { TestComponent } from "tdw-components-npm";
 // import { Footer } from "tdw-components";
 import Footer from "./footer";
-import { FooterData } from "../utils/constants/language/en/footerData";
-import { Colors } from "../utils/constants/colors/colors";
-import TabComponent from "./tabs";
-import {
-  browseUsedCards,
-  PostAdData,
-} from "../utils/constants/language/en/homePageData";
-import PostAd from "./postAd";
+import { FooterData } from "../Utils/constants/language/en/footerData";
+import { Colors } from "../Utils/constants/colors/colors";
+import Header from "./Sections/Sections/Header/Header";
 // import CarComparision from "./carComparision";
 // import CarsComparisonImage from "../assets/Cars/carsComparision.png";
 // import DownloadApp from "./downloadApp";
@@ -31,18 +26,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div>
       <Grid container>
-        <Grid item xs={12}>
-          {/* <CustomButton buttonText="button"/> */}
-        </Grid>
+      <Grid item xs={12}>
+        <Header/>
+        {/* <TestComponent/> */}
+      </Grid>
         <Grid item xs={12}>
           {children}
-        </Grid>
-        <Grid item container xs={10}>
-          {/* // * Footer here */}
-          <TabComponent data={browseUsedCards} />
-        </Grid>
-        <Grid item container xs={10} spacing={5}>
-          <PostAd data={PostAdData} />
         </Grid>
         <Grid item xs={12}>
           {/* // * Footer here */}

@@ -14,7 +14,7 @@ const Slider: React.FC<SliderProps> = ({ children, styles}) => {
       autoPlay
       showStatus={false}
       interval={2500}
-      showArrows={true}
+      showArrows={false}
       infiniteLoop={true}
       transitionTime={500}
       showIndicators={false}

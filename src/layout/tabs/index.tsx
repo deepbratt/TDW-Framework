@@ -42,8 +42,8 @@ const TabComponent: React.FC<TabsProps> = ({ data }) => {
                 <Grid key={index} item xs={4} md={3} lg={2}>
                   <OptionsCard
                     data={value}
-                    backgroundColor={primary}
-                    backgroundColorSelected={greySix}
+                    backgroundColor={greySix}
+                    backgroundColorSelected={primary}
                   />
                 </Grid>
               ))}

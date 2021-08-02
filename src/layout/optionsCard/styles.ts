@@ -23,13 +23,22 @@ const OptionsCardStyles = makeStyles<Theme, OptionsCardStylesProps>(() => ({
     padding: "30px 20px",
     borderRadius: "2px",
     boxShadow: "none",
-    "& img": {
+    "& svg": {
       maxHeight: "30px",
       maxWidth: "30px",
       margin: "10px",
     },
     "& > h6": {
-      color: greySix,
+      color: "grey",
+    },
+    "&:hover": {
+      backgroundColor: ({ backgroundColorSelected }) => backgroundColorSelected,
+      "& > h6": {
+        color: "white",
+      },
+      "& > svg > path": {
+        fill: "#fff",
+      },
     },
   },
 }));

@@ -1,12 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 
 const TabsStyles = makeStyles(() => ({
-  root: {
-    "&.MuiTab-selected-121": {
-      fontSize: "24px",
-      fontWeight: 700,
-    },
-  },
+  root: {},
   tabsStyle: {
     marginBottom: "10px",
   },

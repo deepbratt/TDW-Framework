@@ -1,9 +1,10 @@
 import { lazy } from "react";
-const Home = lazy(() => import("../pages/home"));
-const Login = lazy(() => import("../pages/login"));
-const CarsListing = lazy(() => import("../pages/carsListing"));
-// const ForgetPassword = lazy(() => import("../pages/ForgetPassword"));
-// const ResetPassword = lazy(() => import("../pages/ResetPassword"));
+import AddEditCar from "../Pages/AddEditCar";
+const Home = lazy(() => import("../Pages/home"));
+const Login = lazy(() => import("../Pages/login"));
+const CarsListing = lazy(() => import("../Pages/carsListing"));
+// const ForgetPassword = lazy(() => import("../Pages/ForgetPassword"));
+// const ResetPassword = lazy(() => import("../Pages/ResetPassword"));
 
 export const paths = {
   home: "home",
@@ -11,6 +12,7 @@ export const paths = {
   cars: "cars",
   forgotPassword: "forgot-password",
   resetPassword: "reset-password",
+  addEditCar:"add-edit/car/"
 };
 
 export const routes = {
@@ -19,6 +21,7 @@ export const routes = {
   cars: "/cars",
   forgotPassword: "/forgot-password",
   resetPassword: "/reset-password/:token",
+  addEditCar:"/add-edit/car/:id?"
 };
 
 export const privateRoutes = {
@@ -39,5 +42,10 @@ export const publicRoutes = {
     name: "Cars Listing",
     path: routes.cars,
     component: CarsListing,
+  },
+  [paths.addEditCar]: {
+    name: "Cars Add Edit",
+    path: routes.addEditCar,
+    component: AddEditCar,
   },
 };

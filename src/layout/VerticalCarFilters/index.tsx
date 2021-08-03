@@ -1,11 +1,11 @@
 import { Grid, Slider } from "@material-ui/core";
 import FilterAccordion from "../accordion";
 // import { FilterAccordion } from "tdw-components-npm";
-import { CarFiltersData } from "../../utils/constants/language/en/filtersData";
+import { CarFiltersData } from "../../Utils/constants/language/en/filtersData";
 import InputFieldWithButton from "../InputField/InputFieldWithButton";
 import InputField from "../InputField";
-import { fieldNames } from "../../utils/constants/formsConstants";
-import { useForm } from "../../pages/carsListing/useForm";
+import { fieldNames } from "../../Utils/constants/formsConstants";
+import { useForm } from "../../Pages/carsListing/useForm";
 
 export interface CarFiltersProps {}
 

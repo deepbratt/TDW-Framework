@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { Grid, Hidden, Typography } from "@material-ui/core";
 import CarFilters from "../../layout/VerticalCarFilters";
 import ListingCard from "../../layout/listingCard";
-import { CarsListingData } from "../../utils/constants/language/en/listingData";
+import { CarsListingData } from "../../Utils/constants/language/en/listingData";
 
-import { SHOW_RESULT } from "../../utils/constants/language/en/buttonLabels";
+import { SHOW_RESULT } from "../../Utils/constants/language/en/buttonLabels";
 import HorizontalFilters from "../../layout/HorizontalFilters";
 
 export interface CarsListingProps {}

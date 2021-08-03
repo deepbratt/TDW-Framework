@@ -4,13 +4,13 @@ import { Grid } from "@material-ui/core";
 // import { Footer } from "@TDW/components";
 // import { Footer } from "tdw-components";
 import Footer from "./footer";
-import { FooterData } from "../utils/constants/language/en/footerData";
-import { Colors } from "../utils/constants/colors/colors";
+import { FooterData } from "../Utils/constants/language/en/footerData";
+import { Colors } from "../Utils/constants/colors/colors";
 import TabComponent from "./tabs";
 import {
   browseUsedCards,
   PostAdData,
-} from "../utils/constants/language/en/homePageData";
+} from "../Utils/constants/language/en/homePageData";
 import PostAd from "./postAd";
 // import CarComparision from "./carComparision";
 // import CarsComparisonImage from "../assets/Cars/carsComparision.png";

@@ -9,7 +9,8 @@ import { useMediaQuery} from "@material-ui/core";
     const desktop = useMediaQuery(theme.breakpoints.up("lg"));
     const tablet = useMediaQuery(theme.breakpoints.only("md"));
     const mobile = useMediaQuery(theme.breakpoints.only("xs"));
-       return {desktop,tablet,mobile}
+    const mobileLarge = useMediaQuery(theme.breakpoints.only("sm"));
+       return {desktop,tablet,mobile, mobileLarge}
   };
 
   export default Sizes

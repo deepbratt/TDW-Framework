@@ -10,6 +10,7 @@ const ListingCardStyles = makeStyles(() => ({
     boxShadow: "none",
     position: "relative",
     maxWidth: "600px",
+    cursor: "pointer",
   },
   grid: {
     display: "flex",
@@ -17,6 +18,7 @@ const ListingCardStyles = makeStyles(() => ({
     backgroundColor: flashWhite,
     boxShadow: "none",
     position: "relative",
+    cursor: "pointer",
   },
   featuredBadge: {
     position: "absolute",

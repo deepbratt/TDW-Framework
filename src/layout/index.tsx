@@ -3,15 +3,15 @@ import { Grid } from "@material-ui/core";
 // import HeaderContext from "../Sections/Header/Header";
 // import { Footer } from "@TDW/components";
 // import { Footer } from "tdw-components";
-import Footer from "./footer";
+import Footer from "../sections/Footer";
 import { FooterData } from "../utils/constants/language/en/footerData";
 import { Colors } from "../utils/constants/colors/colors";
-import TabComponent from "./tabs";
+import TabComponent from "../components/Tabs";
 import {
   browseUsedCards,
   PostAdData,
 } from "../utils/constants/language/en/homePageData";
-import PostAd from "./postAd";
+import PostAd from "../sections/PostAd";
 // import CarComparision from "./carComparision";
 // import CarsComparisonImage from "../assets/Cars/carsComparision.png";
 // import DownloadApp from "./downloadApp";
@@ -35,7 +35,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           {/* <CustomButton buttonText="button"/> */}
         </Grid>
         <Grid item xs={12} container justify="center">
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             {children}
           </Grid>
         </Grid>

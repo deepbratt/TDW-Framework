@@ -4,21 +4,24 @@ import LayoutStyle from "./styles";
 
 export interface InputFieldWithButtonProps {}
 
-const InputFieldWithButton: React.FC<InputFieldWithButtonProps | any> = ({
-  value,
-  multiline,
-  fullWidth,
-  placeholder,
-  name,
-  variant,
-  size,
-  rows,
-  rowsMax,
-  error = null,
-  onChange,
-  buttonlabel,
-  handleClick,
-}) => {
+const InputFieldWithButton: React.FC<InputFieldWithButtonProps | any> = (
+  props
+) => {
+  const {
+    value,
+    multiline,
+    fullWidth,
+    placeholder,
+    name,
+    variant,
+    size,
+    rows,
+    rowsMax,
+    error = null,
+    onChange,
+    buttonlabel,
+    handleClick,
+  } = props;
   const { root, input, btn } = LayoutStyle();
   return (
     <TextField
@@ -33,6 +36,7 @@ const InputFieldWithButton: React.FC<InputFieldWithButtonProps | any> = ({
       size={size}
       rowsMax={rowsMax}
       onChange={onChange}
+      {...props}
       {...(error && { error: true, helperText: error })}
       InputProps={{
         classes: { input: input },

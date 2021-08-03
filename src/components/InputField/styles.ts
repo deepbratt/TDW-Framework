@@ -1,8 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 const LayoutStyle = makeStyles((theme) => ({
   root: {
-    marginTop: "10px",
-    marginBottom: "16px",
+    margin: "5px 0",
   },
   input: {
     [theme.breakpoints.down("md")]: {
@@ -20,7 +19,12 @@ const LayoutStyle = makeStyles((theme) => ({
       },
     },
   },
-  btn: {},
+  btn: {
+    padding: "5px 7px",
+    boxShadow: "none",
+    minWidth: "20px",
+    lineHeight: "18px",
+  },
 }));
 
 export default LayoutStyle;

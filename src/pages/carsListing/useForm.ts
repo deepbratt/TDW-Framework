@@ -4,17 +4,24 @@ import { fieldNames, messages } from "../../utils/constants/formsConstants";
 const initialValues: any = {
   categories: "",
   priceFrom: 0,
-  priceRange: [0, 50000000],
   priceTo: 0,
+  priceRange: [0, 50000000],
+  yearFrom: 0,
+  yearTo: 0,
+  yearRange: [1900, 2021],
+  mileageFrom: 0,
+  mileageTo: 0,
+  mileageRange: [600, 30000],
+  sellerType: [],
+  transmission: [],
+  city: [],
+  withPicture: false,
+  withVideo: false,
 };
 
 export const useForm = (validateOnChange = true) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialValues);
-  const [priceRange, setPriceRange] = useState([
-    initialValues.priceFrom,
-    initialValues.priceTo,
-  ]);
   // const [responseMessage, setResponseMessage] = useState("");
   // const [isLoading, setIsLoading] = useState(false);
 
@@ -44,6 +51,21 @@ export const useForm = (validateOnChange = true) => {
     if (validateOnChange) validate({ [name]: value });
   };
 
+  const handleCheckboxChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    filterName: string
+  ) => {
+    let temp = values[filterName];
+    if (e.target.checked) {
+      temp.push(e.target.name);
+    } else {
+      temp = temp.filter((item: string) => item !== e.target.name);
+    }
+    // console.log(e.target.name)
+    setValues({ ...values, [filterName]: temp });
+    console.log(temp);
+  };
+
   const resetForm = () => {
     setValues(initialValues);
     setErrors({});
@@ -59,12 +81,11 @@ export const useForm = (validateOnChange = true) => {
     errors,
     setErrors,
     handleInputChange,
+    handleCheckboxChange,
     resetForm,
     validate,
     handleSubmit,
     // isLoading,
     // responseMessage,
-    priceRange,
-    setPriceRange,
   };
 };

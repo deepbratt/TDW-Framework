@@ -3,8 +3,8 @@ import { Grid, Tabs, Tab } from "@material-ui/core";
 import TabsStyles from "./styles";
 import { IOptions, TabsProps } from "../../utils/interfaces/tabs.interface";
 import TabsPanels from "./tabsPanel";
-import Slider from "../slider";
-import OptionsCard from "../optionsCard";
+import Slider from "../Slider";
+import OptionsCard from "../OptionsCard";
 import { Colors } from "../../utils/constants/colors/colors";
 
 const TabComponent: React.FC<TabsProps> = ({ data }) => {

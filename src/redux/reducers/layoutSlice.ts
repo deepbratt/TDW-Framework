@@ -12,15 +12,12 @@ const layoutSlice = createSlice({
   name: "layout",
   initialState,
   reducers: {
-    list: (state) => {
-      state.layoutType = "list";
-    },
-    grid: (state) => {
-      state.layoutType = "grid";
+    setLayout: (state, action: any) => {
+      state.layoutType = action.payload;
     },
   },
 });
 
-export const { list, grid } = layoutSlice.actions;
+export const { setLayout } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

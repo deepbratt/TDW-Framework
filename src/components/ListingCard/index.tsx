@@ -1,8 +1,9 @@
+import { useHistory } from "react-router-dom";
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
-import { ICarCard } from "../../utils/interfaces/products.interface";
-import { FEATURED } from "../../utils/constants/language/en/buttonLabels";
 import ListingCardStyles from "./styles";
 import LocationIcon from "../../assets/icons/location.png";
+import { FEATURED } from "../../utils/constants/language/en/buttonLabels";
+import { ICarCard } from "../../utils/interfaces/products.interface";
 
 export interface ListingCardProps {
   data: {
@@ -13,6 +14,8 @@ export interface ListingCardProps {
 }
 
 const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType }) => {
+  const history = useHistory();
+
   const {
     root,
     grid,
@@ -22,8 +25,10 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType }) => {
     details,
     location,
   } = ListingCardStyles();
+
   const { product, productImage } = data;
   const {
+    _id,
     date,
     price,
     name,
@@ -35,8 +40,12 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType }) => {
     city,
     isFeatured,
   } = product;
+
   return (
-    <Card className={layoutType === "list" ? root : grid}>
+    <Card
+      className={layoutType === "list" ? root : grid}
+      onClick={() => history.push(`/car-details/${_id}`)}
+    >
       <CardMedia
         style={{
           display: "flex",

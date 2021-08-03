@@ -3,7 +3,7 @@ import { theme } from "./globalFontSize";
 import createPalette from "@material-ui/core/styles/createPalette";
 import { Color } from "./color";
 
-const { berryRed, white } = Color;
+const { berryRed, white, secondary } = Color;
 
 const MUITheme = createTheme({
   overrides: {
@@ -39,6 +39,9 @@ const MUITheme = createTheme({
     primary: {
       main: berryRed,
       contrastText: white,
+    },
+    secondary: {
+      main: secondary,
     },
     text: { secondary: "#828282" },
   }),

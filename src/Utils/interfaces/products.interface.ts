@@ -1,4 +1,5 @@
 export interface ICarCard {
+  _id: string;
   date: string;
   year: string;
   driven: number;

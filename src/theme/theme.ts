@@ -1,11 +1,74 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 import { theme } from "./globalFontSize";
 import createPalette from "@material-ui/core/styles/createPalette";
+import { Color } from "./color";
 
 
-const MUITheme = createMuiTheme({
-  overrides: {},
+const { berryRed, white } = Color;
+
+const MUITheme = createTheme({
+  overrides: {
+    MuiFormLabel: {
+      asterisk: {
+        color: '#db3131',
+        '&$error': {
+          color: '#db3131'
+        },
+      },
+      root:{
+        fontSize: "16px",
+        color: Colors.textPrimary,
+      }
+    },
+    MuiTab: {
+      root: {
+        textAlign: "left",
+        textTransform: "capitalize",
+        fontSize: "18px",
+        fontWeight: 400,
+        "&$selected": {
+          fontSize: "24px",
+          fontWeight: 700,
+        },
+      },
+      wrapper: {
+        display: "flex",
+        alignItems: "flex-start",
+      },
+    },
+    MuiTabs: {
+      flexContainer: {
+        marginLeft: "10px",
+        borderBottom: "1px solid #bdbdbd",
+      },
+      indicator: {
+        backgroundColor: "#2F80ED",
+        height: "2px",
+        borderRadius: "5px",
+      },
+    },
+  },
+  props:{
+    MuiTextField:{
+      variant:"outlined",
+      InputLabelProps:{
+        shrink:true
+      }
+    },
+  },
+  palette: createPalette({
+    primary: {
+      main: berryRed,
+      contrastText: white,
+    },
+    text: { secondary: "#828282" },
+  }),
   typography: {
+    fontFamily: "'IBM Plex Sans', sans-serif",
+    fontWeightLight: 400,
+    fontWeightRegular: 400,
+    fontWeightMedium: 700,
+    fontWeightBold: 700,
     h1: theme.typography.h1,
     h2: theme.typography.h2,
     h3: theme.typography.h3,
@@ -18,7 +81,7 @@ const MUITheme = createMuiTheme({
     caption: theme.typography.caption,
     subtitle2: theme.typography.subtitle2,
     subtitle1: theme.typography.subtitle1,
-  }
+  },
 });
 
 export default MUITheme;

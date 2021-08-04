@@ -1,15 +1,8 @@
 import { Grid } from "@material-ui/core";
-// import {ComparisonContext,Banner}  from "@TDW/Sections/build/index";
-// import HeaderContext from "../Sections/Header/Header";
-// import { TestComponent } from "tdw-components-npm";
-// import { Footer } from "tdw-components";
 import Footer from "./footer";
 import { FooterData } from "../Utils/constants/language/en/footerData";
 import { Colors } from "../Utils/constants/colors/colors";
 import Header from "./Sections/Sections/Header/Header";
-// import CarComparision from "./carComparision";
-// import CarsComparisonImage from "../assets/Cars/carsComparision.png";
-// import DownloadApp from "./downloadApp";
 
 export interface LayoutProps {
   children: React.ReactNode;
@@ -28,10 +21,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Grid container>
       <Grid item xs={12}>
         <Header/>
-        {/* <TestComponent/> */}
       </Grid>
-        <Grid item xs={12}>
-          {children}
+        <Grid item xs={12} container justify="center">
+          <Grid item xs={8}>
+            {children}
+          </Grid>
         </Grid>
         <Grid item xs={12}>
           {/* // * Footer here */}
@@ -47,3 +41,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 };
 
 export default Layout;
+
+// import { createUseStyles } from "react-jss";
+
+// export const useStyles = createUseStyles({
+//   "@global": {
+//     body: {
+//       margin: "0px",
+//       padding: "0px",
+//       width: "100%",
+//       height: "100%",
+//       overflowX: "hidden"
+//     },
+//     html: {
+//       overflowX: "hidden",
+//     },
+//   },
+// });

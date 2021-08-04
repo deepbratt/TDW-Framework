@@ -1,4 +1,4 @@
-import InstallmentIcon from "../../../../assets/icons/installmentsOption.png";
+import InstallmentIcon from "../../../../assets/icons/installmentsOption.svg";
 import PostAdCoverImg from "../../../../assets/Cars/forSale.png";
 
 export const PostAdData = {

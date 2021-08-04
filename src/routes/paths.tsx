@@ -7,8 +7,10 @@ const Verification = lazy(() => import("../pages/verificationPage"));
 const CarDetail = lazy(() => import("../pages/carDetail"));
 const CarComparison = lazy(() => import("../pages/carComparision/index"));
 const CarListing = lazy(() => import("../pages/carListing"));
+const CarsListing = lazy(() => import("../pages/carsListing"));
 // const ForgetPassword = lazy(() => import("../pages/ForgetPassword"));
 // const ResetPassword = lazy(() => import("../pages/ResetPassword"));
+import AddEditCar from "../pages/AddEditCar";
 
 export const paths = {
   home: "home",
@@ -20,13 +22,15 @@ export const paths = {
   carComparision: "carComparision",
   carListing: "carListing",
   signup: "signup",
+  cars: "cars",
   forgotPassword: "forgot-password",
   resetPassword: "reset-password",
+  addEditCar:"add-edit/car/"
 };
 
 export const routes = {
   home: "/",
-  login: "/login",
+  login: "/login",  
   usedCars: "/search-used-cars",
   carDetail: "/car-detail",
   carComparision: "/car-comparision",
@@ -34,8 +38,10 @@ export const routes = {
   profile: "/profile",
   signup: "/signup",
   verification: "/phone-number-verification",
+  cars: "/cars",
   forgotPassword: "/forgot-password",
   resetPassword: "/reset-password/:token",
+  addEditCar:"/add-edit/car/:id?"
 };
 
 export const privateRoutes = {
@@ -75,5 +81,15 @@ export const publicRoutes = {
     name: "Login",
     path: routes.login,
     component: Login,
+  },
+  [paths.cars]: {
+    name: "Cars Listing",
+    path: routes.cars,
+    component: CarsListing,
+  },
+  [paths.addEditCar]: {
+    name: "Cars Add Edit",
+    path: routes.addEditCar,
+    component: AddEditCar,
   },
 };

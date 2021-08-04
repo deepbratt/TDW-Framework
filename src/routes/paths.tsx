@@ -7,6 +7,7 @@ const ResetPassword = lazy(() => import("../pages/resetPassword"));
 const Signup = lazy(() => import("../pages/signup"));
 const SignupWithEmail = lazy(() => import("../pages/signup/SignupWithEmail"));
 const SignupWithMobile = lazy(() => import("../pages/signup/SignupWithMobile"));
+const AddEditCar = lazy(() => import("../pages/AddEditCar"));
 
 export const paths = {
   home: "home",
@@ -17,6 +18,7 @@ export const paths = {
   resetPassword: "reset-password",
   signupWithEmail: "signup-with-email",
   signupWithMobile: "signup-with-mobile",
+  addEditCar: "add-edit/car/",
 };
 
 export const routes = {
@@ -28,6 +30,7 @@ export const routes = {
   resetPassword: "/reset-password/:token",
   signupWithEmail: "/signup-with-email",
   signupWithMobile: "/signup-with-mobile",
+  addEditCar: "/add-edit/car/:id?",
 };
 
 export const privateRoutes = {
@@ -73,5 +76,10 @@ export const publicRoutes = {
     name: "Sign With Mobile",
     path: routes.signupWithMobile,
     component: SignupWithMobile,
+  },
+  [paths.addEditCar]: {
+    name: "Cars Add Edit",
+    path: routes.addEditCar,
+    component: AddEditCar,
   },
 };

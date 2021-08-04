@@ -2,9 +2,8 @@ import { useHistory } from "react-router-dom";
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import ListingCardStyles from "./styles";
 import LocationIcon from "../../assets/icons/location.png";
-import { FEATURED } from "../../utils/constants/language/en/buttonLabels";
 import { ICarCard } from "../../utils/interfaces/products.interface";
-
+import { FEATURED } from "../../utils/constants/language/en/buttonLabels";
 export interface ListingCardProps {
   data: {
     product: ICarCard;

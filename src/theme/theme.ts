@@ -2,11 +2,24 @@ import { createTheme } from "@material-ui/core/styles";
 import { theme } from "./globalFontSize";
 import createPalette from "@material-ui/core/styles/createPalette";
 import { Color } from "./color";
+import { Colors } from "../Utils/constants/colors/colors";
 
 const { berryRed, white, secondary } = Color;
 
 const MUITheme = createTheme({
   overrides: {
+    MuiFormLabel: {
+      asterisk: {
+        color: '#db3131',
+        '&$error': {
+          color: '#db3131'
+        },
+      },
+      root:{
+        fontSize: "16px",
+        color: Colors.textPrimary,
+      }
+    },
     MuiTab: {
       root: {
         textAlign: "left",
@@ -33,6 +46,14 @@ const MUITheme = createTheme({
         height: "2px",
         borderRadius: "5px",
       },
+    },
+  },
+  props:{
+    MuiTextField:{
+      variant:"outlined",
+      InputLabelProps:{
+        shrink:true
+      }
     },
   },
   palette: createPalette({

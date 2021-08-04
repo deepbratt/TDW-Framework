@@ -1,13 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Grid, Hidden, Typography } from "@material-ui/core";
-import CarFilters from "../../sections/VerticalCarFilters";
 import ListingCard from "../../components/ListingCard";
-import { CarsListingData } from "../../utils/constants/language/en/listingData";
-
-import { SHOW_RESULT } from "../../utils/constants/language/en/buttonLabels";
-import HorizontalFilters from "../../sections/HorizontalFilters";
 import BreadCrumbs from "../../components/BreadCrumbs";
+import CarFilters from "../../sections/VerticalCarFilters";
+import HorizontalFilters from "../../sections/HorizontalFilters";
+import { CarsListingData } from "../../utils/constants/language/en/listingData";
+import { SHOW_RESULT } from "../../utils/constants/language/en/buttonLabels";
 
 export interface CarsListingProps {}
 

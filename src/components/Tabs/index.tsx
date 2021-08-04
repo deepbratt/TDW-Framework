@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Grid, Tabs, Tab } from "@material-ui/core";
-import TabsStyles from "./styles";
-import { IOptions, TabsProps } from "../../utils/interfaces/tabs.interface";
-import TabsPanels from "./tabsPanel";
 import Slider from "../Slider";
+import TabsPanels from "./tabsPanel";
 import OptionsCard from "../OptionsCard";
+import TabsStyles from "./styles";
 import { Colors } from "../../utils/constants/colors/colors";
+import { IOptions, TabsProps } from "../../utils/interfaces/tabs.interface";
 
 const TabComponent: React.FC<TabsProps> = ({ data }) => {
   const { root, tabsStyle, optionsWrapper } = TabsStyles();

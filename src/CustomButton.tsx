@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Typography } from "@material-ui/core";
-import Breakpoints from "./utils/Breakpoints"
+import Breakpoints from "./Utils/Breakpoints"
 
 type IProp = {
   fullWidth?: boolean;

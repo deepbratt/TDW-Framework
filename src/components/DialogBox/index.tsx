@@ -1,45 +1,34 @@
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-} from "@material-ui/core";
-import {
-  APPLY_FILTERS,
-  CANCEL,
-} from "../../utils/constants/language/en/buttonLabels";
-
+import { Typography } from "@material-ui/core";
+import { useState } from "react";
+import DialogBoxContent from "./DialogBox";
 export interface DialogBoxProps {
   title: string;
-  open: boolean;
-  handleClose: Function;
   children: React.ReactNode;
-  maxWidth?: any;
 }
 
-const DialogBox: React.FC<DialogBoxProps> = (
-  { title, children, open, handleClose },
-  props
-) => {
+const DialogBox: React.FC<DialogBoxProps> = (props) => {
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
-    <Dialog
-      open={open}
-      onClose={() => handleClose}
-      aria-labelledby="dialog"
-      {...props}
-    >
-      <DialogTitle id="dialog-title">{title}</DialogTitle>
-      <DialogContent>{children}</DialogContent>
-      <DialogActions>
-        <Button onClick={() => handleClose()} color="primary">
-          {CANCEL}
-        </Button>
-        <Button onClick={() => handleClose()} color="primary">
-          {APPLY_FILTERS}
-        </Button>
-      </DialogActions>
-    </Dialog>
+    <>
+      <Typography
+        style={{ cursor: "pointer" }}
+        variant="button"
+        onClick={() => handleClickOpen()}
+      >
+        see more options...
+      </Typography>
+      <DialogBoxContent open={open} handleClose={handleClose} {...props}>
+        {props.children}
+      </DialogBoxContent>
+    </>
   );
 };
 

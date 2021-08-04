@@ -3,6 +3,12 @@ import { Grid, Card, Button, Typography } from "@material-ui/core";
 import GlobalStyles from "../../globalStyles";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../utils/constants/formsConstants";
+import {
+  ACCOUNT_RECOVERY,
+  RESET_PASS_LINK_MESSAGE,
+  ENTER_YOUR_EMAIL_PASS_MESSAGE,
+  CONTINUE,
+} from "../../utils/constants/language/en/buttonLabels";
 
 const ForgetPassword = () => {
   const {
@@ -26,7 +32,7 @@ const ForgetPassword = () => {
       <Grid item xs={4}>
         <Card className={formCard}>
           <Typography variant="h3" gutterBottom>
-            Account Recovery
+            {ACCOUNT_RECOVERY}
           </Typography>
           {resetLinkMessage ? (
             <Typography
@@ -41,16 +47,17 @@ const ForgetPassword = () => {
             <>
               <form className={formStyle} onSubmit={handleSubmit}>
                 <Typography variant="body2" gutterBottom>
-                  Enter your Account Email or Account Number to reset your password:
+                  {ENTER_YOUR_EMAIL_PASS_MESSAGE}
                 </Typography>
                 <InputField
                   id="input-email"
                   name={fieldNames.email}
                   fullWidth
                   variant="outlined"
-                  placeholder="Email/Number"
+                  label="Email/Number"
                   value={values.email}
                   error={errors.email}
+                  required
                   onChange={handleInputChange}
                 />
 
@@ -60,13 +67,9 @@ const ForgetPassword = () => {
                   variant="contained"
                   color="secondary"
                   type="submit"
-                  onClick={() =>
-                    setResetLinkMessage(
-                      "Reset password link sent to entered email"
-                    )
-                  }
+                  onClick={() => setResetLinkMessage(RESET_PASS_LINK_MESSAGE)}
                 >
-                  Continue
+                  {CONTINUE}
                 </Button>
                 {responseMessage && (
                   <Typography color="error" variant="subtitle1">

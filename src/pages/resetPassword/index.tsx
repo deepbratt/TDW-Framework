@@ -3,6 +3,10 @@ import GlobalStyles from "../../globalStyles";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../utils/constants/formsConstants";
 import { useForm } from "./useForm";
+import {
+  ACCOUNT_RECOVERY,
+  RESET_PASSWORD,
+} from "../../utils/constants/language/en/buttonLabels";
 
 const ResetPassword = () => {
   const { values, errors, handleInputChange, responseMessage, handleSubmit } =
@@ -20,7 +24,7 @@ const ResetPassword = () => {
       <Grid item xs={4}>
         <Card className={formCard}>
           <Typography align="center" variant="h2" gutterBottom>
-            Account Recovery
+            {ACCOUNT_RECOVERY}
           </Typography>
           <form className={formStyle} onSubmit={handleSubmit}>
             <InputField
@@ -30,6 +34,7 @@ const ResetPassword = () => {
               fullWidth
               variant="outlined"
               placeholder="Enter your password"
+              label="Password"
               value={values.password}
               error={errors.password}
               onChange={handleInputChange}
@@ -40,6 +45,7 @@ const ResetPassword = () => {
               name={fieldNames.confirmPassword}
               type="password"
               placeholder="Re-enter your password"
+              label="Confirm Password"
               fullWidth
               variant="outlined"
               value={values.confirmPassword}
@@ -53,7 +59,7 @@ const ResetPassword = () => {
               color="secondary"
               type="submit"
             >
-              Reset Password
+              {RESET_PASSWORD}
             </Button>
             {responseMessage && (
               <Typography color="error" variant="subtitle1">

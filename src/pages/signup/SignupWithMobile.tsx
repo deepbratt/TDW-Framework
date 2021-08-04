@@ -4,13 +4,13 @@ import { Grid, Card, Button } from "@material-ui/core";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../utils/constants/formsConstants";
 import {
+  CONTINUE,
   SIGNUP,
 } from "../../utils/constants/language/en/buttonLabels";
 import GlobalStyles from "../../globalStyles";
 
 const SignupWithMobile = () => {
-  const { loginFormGrid, formCard, buttonWrap, formStyle, loginbtn } =
-    GlobalStyles();
+  const { loginFormGrid, formCard, formStyle, loginbtn } = GlobalStyles();
   const { values, errors, handleInputChange, handleSubmit } = useForm();
 
   return (
@@ -34,7 +34,7 @@ const SignupWithMobile = () => {
                   name={fieldNames.firstName}
                   fullWidth
                   variant="outlined"
-                  placeholder="First Name"
+                  label="First Name"
                   value={values.firstName}
                   error={errors.firstName}
                   onChange={handleInputChange}
@@ -46,7 +46,7 @@ const SignupWithMobile = () => {
                   name={fieldNames.lastName}
                   fullWidth
                   variant="outlined"
-                  placeholder="Last Name"
+                  label="Last Name"
                   value={values.lastName}
                   error={errors.lastName}
                   onChange={handleInputChange}
@@ -58,21 +58,20 @@ const SignupWithMobile = () => {
                   name={fieldNames.mobile}
                   fullWidth
                   variant="outlined"
-                  placeholder="Mobile"
+                  label="Number"
                   value={values.mobile}
                   error={errors.mobile}
                   onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
-              
                 <InputField
                   id="input-password"
                   name={fieldNames.password}
                   type="password"
                   fullWidth
                   variant="outlined"
-                  placeholder="Password"
+                  label="Password"
                   value={values.password}
                   error={errors.password}
                   onChange={handleInputChange}
@@ -84,6 +83,7 @@ const SignupWithMobile = () => {
                   name={fieldNames.confirmPassword}
                   type="password"
                   placeholder="Re-enter your password"
+                  label="Confirm Password"
                   fullWidth
                   variant="outlined"
                   value={values.confirmPassword}
@@ -99,7 +99,7 @@ const SignupWithMobile = () => {
                   color="secondary"
                   type="submit"
                 >
-                  CONTINUE
+                  {CONTINUE}
                 </Button>
               </Grid>
             </Grid>

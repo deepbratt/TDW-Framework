@@ -1,10 +1,7 @@
-import { useForm } from "./useForm";
 import { NavLink, useHistory } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import { Grid, Card, Button } from "@material-ui/core";
 import { PhoneAndroidRounded } from "@material-ui/icons";
-import InputField from "../../components/InputField";
-import { fieldNames } from "../../utils/constants/formsConstants";
 import {
   SIGNIN,
   SIGNUP,
@@ -18,9 +15,7 @@ import GlobalStyles from "../../globalStyles";
 
 const Signup = () => {
   const history = useHistory();
-  const { loginFormGrid, formCard, buttonWrap, formStyle, loginbtn } =
-    GlobalStyles();
-  const { values, errors, handleInputChange, handleSubmit } = useForm();
+  const { loginFormGrid, formCard, buttonWrap } = GlobalStyles();
 
   return (
     <Grid

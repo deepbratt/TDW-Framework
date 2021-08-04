@@ -26,7 +26,7 @@ const HorizontalFilters: React.FC<HorizontalFiltersProps> = () => {
   };
   return (
     <Grid style={{ margin: "10px 0" }} container justify="space-between">
-      <Grid item container xs={10} spacing={1}>
+      <Grid item container xs={10} spacing={2}>
         <Grid item xs={4}>
           <Dropdown label="SORT BY" options={sortingOptions} />
         </Grid>
@@ -37,7 +37,16 @@ const HorizontalFilters: React.FC<HorizontalFiltersProps> = () => {
           <Dropdown label="DELIVERY OPTIONS" options={sortingOptions} />
         </Grid>
       </Grid>
-      <Grid style={{ display: "flex", alignItems: "center" }} item xs={2}>
+      <Grid
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          marginRight: "10px",
+        }}
+        item
+        xs={2}
+      >
         <ToggleButtonGroup
           size="small"
           value={layoutType}

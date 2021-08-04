@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fieldNames, messages } from "../../utils/constants/formsConstants";
 
 const initialValues: any = {
@@ -9,14 +9,21 @@ const initialValues: any = {
   yearFrom: 0,
   yearTo: 0,
   yearRange: [1900, 2021],
+  province: [],
+  city: [],
   mileageFrom: 0,
   mileageTo: 0,
-  mileageRange: [600, 30000],
-  sellerType: [],
+  registrationCity: [],
+  mileageRange: [0, 1000000],
   transmission: [],
-  city: [],
-  withPicture: false,
-  withVideo: false,
+  engineType: [],
+  engineCapacityFrom: 0,
+  engineCapacityTo: 0,
+  engineCapacityRange: [600, 30000],
+  bodyType: [],
+  pictireAvailability: false,
+  videoAvailability: false,
+  sellerType: [],
 };
 
 export const useForm = (validateOnChange = true) => {
@@ -24,6 +31,10 @@ export const useForm = (validateOnChange = true) => {
   const [errors, setErrors] = useState(initialValues);
   // const [responseMessage, setResponseMessage] = useState("");
   // const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    console.info("Request", JSON.stringify(values));
+  }, [values]);
 
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
@@ -61,9 +72,20 @@ export const useForm = (validateOnChange = true) => {
     } else {
       temp = temp.filter((item: string) => item !== e.target.name);
     }
-    // console.log(e.target.name)
     setValues({ ...values, [filterName]: temp });
     console.log(temp);
+  };
+
+  const handleSingleCheckBoxChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name, checked } = e.target;
+
+    setValues({
+      ...values,
+      [name]: checked,
+    });
+    if (validateOnChange) validate({ [name]: checked });
   };
 
   const resetForm = () => {
@@ -82,6 +104,7 @@ export const useForm = (validateOnChange = true) => {
     setErrors,
     handleInputChange,
     handleCheckboxChange,
+    handleSingleCheckBoxChange,
     resetForm,
     validate,
     handleSubmit,

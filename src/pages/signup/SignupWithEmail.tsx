@@ -4,13 +4,13 @@ import { Grid, Card, Button } from "@material-ui/core";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../utils/constants/formsConstants";
 import {
+  CONTINUE,
   SIGNUP,
 } from "../../utils/constants/language/en/buttonLabels";
 import GlobalStyles from "../../globalStyles";
 
 const SignupWithEmail = () => {
-  const { loginFormGrid, formCard, buttonWrap, formStyle, loginbtn } =
-    GlobalStyles();
+  const { loginFormGrid, formCard, formStyle, loginbtn } = GlobalStyles();
   const { values, errors, handleInputChange, handleSubmit } = useForm();
 
   return (
@@ -99,7 +99,7 @@ const SignupWithEmail = () => {
                   color="secondary"
                   type="submit"
                 >
-                  CONTINUE
+                  {CONTINUE}
                 </Button>
               </Grid>
             </Grid>

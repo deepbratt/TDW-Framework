@@ -7,11 +7,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import FilterAccordion from "../../components/Accordion";
-// import {
-//   FilterAccordion,
-//   InputField,
-//   InputFieldWithButton,
-// } from "tdw-components-npm";
 import {
   Carfilters,
   CarFiltersData,
@@ -23,20 +18,10 @@ import { fieldNames } from "../../utils/constants/formsConstants";
 import { useForm } from "../../pages/carsListing/useForm";
 import VerticalFilterStyles from "./styles";
 import DialogBox from "../../components/DialogBox";
-import { useState } from "react";
 
 export interface CarFiltersProps {}
 
 const CarFilters: React.FC<CarFiltersProps> = () => {
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
   const {} = VerticalFilterStyles();
   const {
     CATEGORIES,
@@ -59,6 +44,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
   } = CarFiltersData;
 
   const majorCities = ["Karachi", "Islamabad", "Lahore", "Peshawar", "Quetta"];
+  const mainCarTypes = ["Sedan", "Hatchback", "Pick Up"];
   const cities = City.getCitiesOfCountry("PK");
   const provinces = State.getStatesOfCountry("PK");
   const extractedCityNames = cities?.map((item) => item.name);
@@ -72,6 +58,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
     errors,
     handleInputChange,
     handleCheckboxChange,
+    handleSingleCheckBoxChange,
     handleSubmit,
   } = useForm(true);
   return (
@@ -79,7 +66,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
       <FilterAccordion title={CATEGORIES}>
         <InputFieldWithButton
           name={fieldNames.categories}
-          placeholder="Eg. Honda In Lahore"
+          label="Eg. Honda In Lahore"
           value={values.categories}
           error={errors.categories}
           onChange={handleInputChange}
@@ -88,11 +75,11 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
       </FilterAccordion>
       <FilterAccordion title={PRICE_RANGE}>
         <Grid container direction="column">
-          <Grid item container>
-            <Grid xs={5}>
+          <Grid item container spacing={1}>
+            <Grid item xs={5}>
               <InputField
                 name={fieldNames.priceFrom}
-                placeholder="From"
+                label="From"
                 value={values.priceRange[0]}
                 error={errors.priceFrom}
                 onChange={(e: any) => {
@@ -106,7 +93,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
             <Grid item xs={7}>
               <InputFieldWithButton
                 name={fieldNames.priceTo}
-                placeholder="To"
+                label="To"
                 value={values.priceRange[1]}
                 error={errors.priceTo}
                 onChange={(e: any) => {
@@ -124,7 +111,6 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
               value={[values.priceRange[0], values.priceRange[1]]}
               min={50000}
               max={5000000}
-              valueLabelDisplay="auto"
               onChange={(event: any, newValue: number | number[]) => {
                 setValues((previousState: any) => {
                   console.log(newValue);
@@ -137,11 +123,11 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
         </Grid>
       </FilterAccordion>
       <FilterAccordion title={YEAR}>
-        <Grid item container>
-          <Grid xs={5}>
+        <Grid item container spacing={1}>
+          <Grid item xs={5}>
             <InputField
               name={fieldNames.yearFrom}
-              placeholder="From"
+              label="From"
               value={values.yearRange[0]}
               error={errors.yearFrom}
               onChange={(e: any) => {
@@ -155,7 +141,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
           <Grid item xs={7}>
             <InputFieldWithButton
               name={fieldNames.yearTo}
-              placeholder="To"
+              label="To"
               value={values.yearRange[1]}
               error={errors.yearTo}
               onChange={(e: any) => {
@@ -170,10 +156,26 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
         </Grid>
       </FilterAccordion>
       <FilterAccordion title={MAKE}>
-        <InputField placeholder="Eg. Honda In Lahore" />
+        <InputField label="Eg. Honda In Lahore" />
       </FilterAccordion>
       <FilterAccordion title={PROVINCE}>
-        <InputField placeholder="Eg. Honda In Lahore" />
+        <FormGroup>
+          {provinces.map((province) => (
+            <FormControlLabel
+              key={`province-${province.name}`}
+              control={
+                <Checkbox
+                  checked={values.province.indexOf(province.name) > -1}
+                  onChange={(e) => handleCheckboxChange(e, "province")}
+                  name={province.name}
+                  color="secondary"
+                  size="small"
+                />
+              }
+              label={province.name}
+            />
+          ))}
+        </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={CITY}>
         <FormGroup>
@@ -193,14 +195,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                 label={city}
               />
             ))}
-          <Typography variant="button" onClick={() => handleClickOpen()}>
-            see more options...
-          </Typography>
-          <DialogBox
-            open={open}
-            handleClose={handleClose}
-            title="Select Cities"
-          >
+          <DialogBox title="Select Cities">
             <Grid style={{ display: "flex" }} container>
               {provinces.map((province) => (
                 <Grid item xs={12} md={6}>
@@ -220,6 +215,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                             onChange={(e) => handleCheckboxChange(e, "city")}
                             name={city.name}
                             color="secondary"
+                            size="small"
                           />
                         }
                         label={city.name}
@@ -233,14 +229,65 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
         </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={REGISTRATION_CITY}>
-        <InputField placeholder="Eg. Honda In Lahore" />
+        <FormGroup>
+          {cityNames
+            .filter((item) => majorCities.includes(item))
+            .map((city) => (
+              <FormControlLabel
+                key={`city-${city}`}
+                control={
+                  <Checkbox
+                    checked={values.registrationCity.indexOf(city) > -1}
+                    onChange={(e) =>
+                      handleCheckboxChange(e, "registrationCity")
+                    }
+                    name={city}
+                    color="secondary"
+                  />
+                }
+                label={city}
+              />
+            ))}
+
+          <DialogBox title="Select Cities">
+            <Grid style={{ display: "flex" }} container>
+              {provinces.map((province) => (
+                <Grid item xs={12} md={6}>
+                  <Typography variant="h4" gutterBottom>
+                    {province.name}
+                  </Typography>
+                  {City.getCitiesOfState(
+                    province.countryCode,
+                    province.isoCode
+                  ).map((city) => {
+                    return (
+                      <FormControlLabel
+                        key={`city-${city.name}`}
+                        control={
+                          <Checkbox
+                            checked={values.city.indexOf(city.name) > -1}
+                            onChange={(e) => handleCheckboxChange(e, "city")}
+                            name={city.name}
+                            color="secondary"
+                            size="small"
+                          />
+                        }
+                        label={city.name}
+                      />
+                    );
+                  })}
+                </Grid>
+              ))}
+            </Grid>
+          </DialogBox>
+        </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={MILEAGE}>
-        <Grid item container>
-          <Grid xs={5}>
+        <Grid item container spacing={1}>
+          <Grid item xs={5}>
             <InputField
               name={fieldNames.mileageFrom}
-              placeholder="From"
+              label="From"
               value={values.mileageRange[0]}
               error={errors.mileageFrom}
               onChange={(e: any) => {
@@ -254,7 +301,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
           <Grid item xs={7}>
             <InputFieldWithButton
               name={fieldNames.mileageTo}
-              placeholder="To"
+              label="To"
               value={values.mileageRange[1]}
               error={errors.mileageTo}
               onChange={(e: any) => {
@@ -279,6 +326,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                   onChange={(e) => handleCheckboxChange(e, "transmission")}
                   name={type}
                   color="secondary"
+                  size="small"
                 />
               }
               label={type}
@@ -287,25 +335,157 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
         </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={ENGINE_TYPE}>
-        <InputField placeholder="Eg. Honda In Lahore" />
+        <FormGroup>
+          {Carfilters.ENGINE_TYPE.map((type) => (
+            <FormControlLabel
+              key={`engine-type-${type}`}
+              control={
+                <Checkbox
+                  checked={values.engineType.indexOf(type) > -1}
+                  onChange={(e) => handleCheckboxChange(e, "engineType")}
+                  name={type}
+                  color="secondary"
+                  size="small"
+                />
+              }
+              label={type}
+            />
+          ))}
+        </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={ENGINE_CAPACITY}>
-        <InputField placeholder="Eg. Honda In Lahore" />
+        <Grid item container spacing={1}>
+          <Grid item xs={5}>
+            <InputField
+              name={fieldNames.engineCapacityFrom}
+              label="From"
+              value={values.engineCapacityRange[0]}
+              error={errors.engineCapacityFrom}
+              onChange={(e: any) => {
+                setValues((previousState: any) => {
+                  previousState.mileageRange[0] = e.target.value;
+                  return { ...previousState };
+                });
+              }}
+            />
+          </Grid>
+          <Grid item xs={7}>
+            <InputFieldWithButton
+              name={fieldNames.engineCapacityTo}
+              label="To"
+              value={values.engineCapacityRange[1]}
+              error={errors.engineCapacityTo}
+              onChange={(e: any) => {
+                setValues((previousState: any) => {
+                  previousState.mileageRange[1] = e.target.value;
+                  return { ...previousState };
+                });
+              }}
+              handleClick={handleSubmit}
+            />
+          </Grid>
+        </Grid>
       </FilterAccordion>
       <FilterAccordion title={COLOR}>
-        <InputField placeholder="Eg. Honda In Lahore" />
+        <InputField label="Eg. Honda In Lahore" />
       </FilterAccordion>
       <FilterAccordion title={BODY_TYPE}>
-        <InputField placeholder="Eg. Honda In Lahore" />
+        <FormGroup>
+          {Carfilters.BODY_TYPE.filter((item) =>
+            mainCarTypes.includes(item.name)
+          ).map((type) => (
+            <FormControlLabel
+              key={`body-type-${type.name}`}
+              control={
+                <Checkbox
+                  checked={values.bodyType.indexOf(type.name) > -1}
+                  onChange={(e) => handleCheckboxChange(e, "bodyType")}
+                  name={type.name}
+                  color="secondary"
+                  size="small"
+                />
+              }
+              label={
+                <div style={{ display: "flex" }}>
+                  <img
+                    width="60px"
+                    style={{ margin: "0 10px" }}
+                    src={type.icon}
+                    alt={type.name}
+                  />
+                  <Typography>{type.name}</Typography>
+                </div>
+              }
+            />
+          ))}
+
+          <DialogBox title="Select Body Type">
+            <Grid container spacing={2}>
+              {Carfilters.BODY_TYPE.map((type) => (
+                <Grid item xs={12} md={6}>
+                  <FormControlLabel
+                    key={`body-type-${type.name}`}
+                    control={
+                      <Checkbox
+                        checked={values.bodyType.indexOf(type.name) > -1}
+                        onChange={(e) => handleCheckboxChange(e, "bodyType")}
+                        name={type.name}
+                        color="secondary"
+                        size="small"
+                      />
+                    }
+                    label={
+                      <div style={{ display: "flex" }}>
+                        <img
+                          width="60px"
+                          style={{ margin: "0 10px" }}
+                          src={type.icon}
+                          alt={type.name}
+                        />
+                        <Typography>{type.name}</Typography>
+                      </div>
+                    }
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </DialogBox>
+        </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={MODEL_CATEGORY}>
-        <InputField placeholder="Eg. Honda In Lahore" />
+        <InputField label="Eg. Honda In Lahore" />
       </FilterAccordion>
       <FilterAccordion title={PICTURE_AVAILABILITY}>
-        <InputField placeholder="Eg. Honda In Lahore" />
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={values.withPicture}
+                onChange={handleSingleCheckBoxChange}
+                name={fieldNames.pictureAvailability}
+                color="secondary"
+                size="small"
+              />
+            }
+            label={Carfilters.PICTURE_AVAILABILITY[0]}
+          />
+        </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={VIDEO_AVAILABILITY}>
-        <InputField placeholder="Eg. Honda In Lahore" />
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={values.withVideo}
+                onChange={handleSingleCheckBoxChange}
+                name={fieldNames.videoAvailability}
+                color="secondary"
+                size="small"
+              />
+            }
+            label={Carfilters.VIDEO_AVAILABILITY[0]}
+          />
+        </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={SELLER_TYPE}>
         <FormGroup>
@@ -318,6 +498,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                   onChange={(e) => handleCheckboxChange(e, "sellerType")}
                   name={type}
                   color="secondary"
+                  size="small"
                 />
               }
               label={type}

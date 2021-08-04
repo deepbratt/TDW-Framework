@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import { Colors } from "../../utils/constants/colors/colors";
+import { Colors } from "../../Utils/constants/colors/colors";
 const { primary } = Colors;
 
 const CarsComparisonStyles = makeStyles(() => ({

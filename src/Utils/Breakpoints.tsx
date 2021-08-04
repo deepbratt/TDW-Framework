@@ -1,4 +1,4 @@
-import Sizes from "./theme.constants";
+import Sizes from "./themeConstants"
 
 const Breakpoints = () => {
   const { desktop, tablet, mobile } = Sizes();

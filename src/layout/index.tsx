@@ -1,8 +1,4 @@
 import { Grid } from "@material-ui/core";
-// import {ComparisonContext,Banner}  from "@TDW/Sections/build/index";
-// import HeaderContext from "../Sections/Header/Header";
-// import { TestComponent } from "tdw-components-npm";
-// import { Footer } from "tdw-components";
 import Footer from "./footer";
 import { FooterData } from "../Utils/constants/language/en/footerData";
 import { Colors } from "../Utils/constants/colors/colors";

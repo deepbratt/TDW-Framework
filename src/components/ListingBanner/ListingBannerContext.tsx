@@ -18,7 +18,7 @@ const ListingBannerContext = ({carTitle,carSubTitle,array} : IProp) => {
             subTitle={carSubTitle}
           />
         </Grid>
-        <Grid className={banner} item lg={8} xs={12}  >
+        <Grid className={banner} item lg={12} xs={12}  >
           {array.map((data, index) => {
             return (
               <Grid key={index} className={grid} item lg={3} xs={12} >

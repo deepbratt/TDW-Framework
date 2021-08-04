@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface TabsPanelsProps {
   children?: React.ReactNode;
   index: number;
@@ -12,11 +14,7 @@ const TabsPanels: React.FC<TabsPanelsProps> = ({ value, index, children }) => {
       aria-labelledby={`tab-${index}`}
       style={{ width: "100%" }}
     >
-      {value === index && (
-        <div>
-          {children}
-        </div>
-      )}
+      {value === index && <div>{children}</div>}
     </div>
   );
 };

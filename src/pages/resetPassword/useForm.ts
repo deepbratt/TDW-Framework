@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { fieldNames, messages } from "../../utils/constants/formsConstants";
 
 const initialValues: any = {
@@ -13,7 +12,6 @@ export const useForm = (token: any, validateOnChange = false) => {
   const [responseMessage, setResponseMessage] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
-  const history = useHistory();
 
   const validate = (fieldValues = values) => {
     let temp = { ...errors };

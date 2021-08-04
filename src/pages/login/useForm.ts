@@ -4,8 +4,6 @@ import {
   isEmailValid,
   messages,
 } from "../../utils/constants/formsConstants";
-// import { useDispatch } from "react-redux";
-// import { useHistory } from "react-router";
 
 const initialValues: any = {
   email: "",
@@ -17,9 +15,6 @@ export const useForm = (validateOnChange = false) => {
   const [errors, setErrors] = useState(initialValues);
   const [isLoading, setIsLoading] = useState(false);
   // const [responseMessage, setResponseMessage] = useState("");
-
-  // const history = useHistory();
-  // const dispatch = useDispatch();
 
   const validate = (fieldValues = values) => {
     let temp = { ...errors };

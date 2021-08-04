@@ -37,8 +37,9 @@ const SearchSelect: React.FC<IProps> = ({
 
 
   return (
-    <Grid lg={12} xs={12} item className={root}>
-        <Grid className={select} item lg={2} md={12} xs={12}>
+   <Grid container >
+      <Grid xs={12} item className={root}>
+        <Grid className={select} item lg={2} xs={12}>
         <Select
           value={val.model}
           onChange={(e) => {
@@ -54,7 +55,7 @@ const SearchSelect: React.FC<IProps> = ({
        <MenuItem value={carModel[1]}> {carModel[1]}</MenuItem>;
         </Select>
       </Grid>
-      <Grid className={select} item lg={2} md={12} xs={12}>
+      <Grid className={select} item lg={2} xs={12}>
         <Select
           value={val.cities}
           onChange={(e) => {
@@ -70,7 +71,7 @@ const SearchSelect: React.FC<IProps> = ({
        <MenuItem value={cities[1]}> {cities[1]}</MenuItem>;
         </Select>
       </Grid>
-      <Grid className={select} item lg={2} md={12} xs={12}>
+      <Grid className={select} item lg={2} xs={12}>
         <Select
           value={val.priceRange}
           onChange={(e) => {
@@ -92,6 +93,7 @@ const SearchSelect: React.FC<IProps> = ({
         </Button>
       </Grid>
     </Grid>
+   </Grid>
   );
 };
 

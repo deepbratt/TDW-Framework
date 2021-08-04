@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Grid } from "@material-ui/core";
-import CustomButton from "../../../Components/components/CustomButton";
-import CustomTitle from "../../../Components/components/CustomTitle/CustomTitle";
-import SearchSelect from "../../../Components/components/SearchSelect/SearchSelect";
+import CustomButton from "../../../../components/CustomButton";
+import CustomTitle from "../../../../components/CustomTitle/CustomTitle";
+import SearchSelect from "../../../../components/SearchSelect/SearchSelect";
 import bannerStyles from "./bannerStyles";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
@@ -36,7 +36,7 @@ const Banner: React.FC<IBanner> = ({ Title, subTitle, category, filter,cities,pr
         85.96%)`,
         }}
       >
-        <Grid item lg={12} xs={12}>
+        <Grid item xs={12}>
           <CustomTitle
             text={Title}
             subTitle={subTitle}

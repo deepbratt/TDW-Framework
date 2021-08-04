@@ -1,6 +1,6 @@
 import React from 'react'
 import ListBannerContainer from '../../Sections/Sections/ListingBanner/ListBannerContainer'
-import Section from '../../Components/components'
+import Section from '../../../components'
 import {carTitle,carSubTitle,carData} from "../Utils/Text"
 const index = () => {
     return (

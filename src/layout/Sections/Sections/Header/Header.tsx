@@ -4,7 +4,7 @@ import { ListItem, List, Toolbar, AppBar, Typography } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import { Hidden } from "@material-ui/core";
 import SideBar from "./Sidebar/Sidebar";
-import CustomButton from "../../../Components/components/CustomButton";
+import CustomButton from "../../../../components/CustomButton";
 import Logo from "../../assets/logo.png";
 import header from "../../assets/header.png";
 import pattern from "../../assets/pattern.png";

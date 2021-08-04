@@ -48,7 +48,6 @@ export const useStyles = makeStyles((theme) => ({
     color: white,
   },
   active: {
-    // color: blackColor,
   },
   logo: {
     width: "8rem",

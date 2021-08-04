@@ -1,4 +1,4 @@
-import Sizes from "./theme.constants";
+import Sizes from "../../Utils/theme.constants";
 
 const Size = () => {
   const { desktop, tablet, mobile } = Sizes();

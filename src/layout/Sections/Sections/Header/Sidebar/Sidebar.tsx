@@ -8,11 +8,6 @@ import Logo from "../../../assets/logo.png";
 import { useState } from "react";
 import { Paths } from "../paths";
 
-// interface Provider {
-//     open?: boolean;
-//     setOpen: (value: boolean) => void
-//   }
-
 const SideBar = () => {
   const classes = useStyles();
   const { root, drawer, drawerHeader, closeIcon, logo, link } = classes;

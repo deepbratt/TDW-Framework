@@ -1,5 +1,5 @@
 import React from "react";
-import ListingBannerContext from "../../../Components/components/ListingBanner/ListingBannerContext";
+import ListingBannerContext from "../../../..//components/ListingBanner/ListingBannerContext";
 import { Grid } from "@material-ui/core";
 import {CarProp} from "../../Utils/types"
 const ListBannerContainer = ({carTitle,carSubTitle,carArray} : CarProp) => {

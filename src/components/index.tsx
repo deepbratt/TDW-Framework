@@ -12,7 +12,6 @@ const Section = ({ children, backColor }: IProps) => {
 
   return (
     <div className={root} style={{ backgroundColor: backColor }}>
-      {/* {patterns && patterns.map((pattern, index) => <span key={index+"pattern"}>{pattern.image}</span>)} */}
       <div className={content}>
         <Grid item xs={12}>
           {children}

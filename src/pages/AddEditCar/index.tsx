@@ -7,10 +7,10 @@ import {
   Stepper,
   Typography,
 } from "@material-ui/core";
-import Sizes from "../../Utils/themeConstants";
+import Sizes from "../../utils/themeConstants";
 import CustomStepper from "./CustomStepperIcon";
 import useAddEditCar from "./useAddEditCar";
-import addEditCarData from "../../Utils/constants/language/en/addEditCarData";
+import addEditCarData from "../../utils/constants/language/en/addEditCarData";
 
 const AddEditCar = () => {
   const { activeStep, handleBack, handleNext, ComponentContent } =

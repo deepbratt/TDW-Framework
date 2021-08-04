@@ -1,8 +1,8 @@
 import { Grid, Typography } from "@material-ui/core";
 import AprroveIcon from "../../assets/icons/approve.png";
 import CustomButton from "../../CustomButton";
-import { POST_YOUR_AD } from "../../utils/constants/language/en/buttonLabels";
 import PostAdStyles from "./styles";
+import { POST_YOUR_AD } from "../../utils/constants/language/en/buttonLabels";
 
 export interface PostAdProps {
   data: {

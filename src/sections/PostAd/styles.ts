@@ -5,6 +5,7 @@ const PostAdStyles = makeStyles(() => ({
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
+    
   },
   itemRoot: {
     display: "flex",

@@ -1,7 +1,7 @@
 import { Card, CardMedia, CardActions } from "@material-ui/core";
 import CustomButton from "../../CustomButton";
-import { CAR_COMPARISIONS } from "../../utils/constants/language/en/buttonLabels";
 import DownloadAppStyles from "./styles";
+import { CAR_COMPARISIONS } from "../../utils/constants/language/en/buttonLabels";
 export interface DownloadAppProps {
   featureImg: string;
 }

@@ -15,6 +15,7 @@ const DownloadAppStyles = makeStyles(() => ({
     borderRadius: "6px",
     "& img": {
       margin: "20px 0",
+      
     },
   },
 }));

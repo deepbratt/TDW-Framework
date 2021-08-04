@@ -4,6 +4,7 @@ const { primary } = Colors;
 
 const CarsComparisonStyles = makeStyles(() => ({
   root: {
+    
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

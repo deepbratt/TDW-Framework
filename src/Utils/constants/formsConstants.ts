@@ -19,6 +19,10 @@ export const fieldNames = {
   yearTo: "yearTo",
   mileageFrom: "mileageFrom",
   mileageTo: "mileageTo",
+  engineCapacityFrom: "engineCapacityFrom",
+  engineCapacityTo: "engineCapacityTo",
+  pictureAvailability: "pictureAvailability",
+  videoAvailability: "videoAvailability"
 };
 
 const regName = /^(?=.{3,40}$)[a-zA-Z]+(?:[-'. ][a-zA-Z]+)*$/;

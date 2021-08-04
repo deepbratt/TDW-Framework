@@ -42,10 +42,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType }) => {
   } = product;
 
   return (
-    <Card
-      className={layoutType === "list" ? root : grid}
-      onClick={() => history.push(`/car-details/${_id}`)}
-    >
+    <Card className={layoutType === "list" ? root : grid}>
       <CardMedia
         style={{
           display: "flex",
@@ -59,7 +56,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType }) => {
           style={{
             minWidth: "100%",
             minHeight: "100%",
-            width: "auto",
+            width: "300px",
             height: "auto",
           }}
           src={productImage}
@@ -82,7 +79,13 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType }) => {
           </Typography>
         </div>
         <div>
-          <Typography variant="h3">{name}</Typography>
+          <Typography
+            variant="h3"
+            style={{ cursor: "pointer" }}
+            onClick={() => history.push(`/car-details/${_id}`)}
+          >
+            {name}
+          </Typography>
           <div className={details}>
             <Typography color="textSecondary" variant="body2" component="span">
               {year}

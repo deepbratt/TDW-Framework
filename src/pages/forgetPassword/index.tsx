@@ -2,13 +2,13 @@ import { useForm } from "./useForm";
 import { Grid, Card, Button, Typography } from "@material-ui/core";
 import GlobalStyles from "../../globalStyles";
 import InputField from "../../components/InputField";
-import { fieldNames } from "../../utils/constants/formsConstants";
+import { fieldNames } from "../../Utils/constants/formsConstants";
 import {
   ACCOUNT_RECOVERY,
   RESET_PASS_LINK_MESSAGE,
   ENTER_YOUR_EMAIL_PASS_MESSAGE,
   CONTINUE,
-} from "../../utils/constants/language/en/buttonLabels";
+} from "../../Utils/constants/language/en/buttonLabels";
 
 const ForgetPassword = () => {
   const {

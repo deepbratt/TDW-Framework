@@ -7,8 +7,8 @@ import {
 } from "@material-ui/core";
 import SelectComponent from "./SelectComponent";
 import { City } from "country-state-city";
-import addEditCarData from "../../utils/constants/language/en/addEditCarData";
-import { Colors } from "../../utils/constants/colors/colors";
+import addEditCarData from "../../Utils/constants/language/en/addEditCarData";
+import { Colors } from "../../Utils/constants/colors/colors";
 
 interface CarInformationFormProps {
   formData: any;

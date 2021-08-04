@@ -10,11 +10,11 @@ import FilterAccordion from "../../components/Accordion";
 import {
   Carfilters,
   CarFiltersData,
-} from "../../utils/constants/language/en/filtersData";
+} from "../../Utils/constants/language/en/filtersData";
 import { City, State } from "country-state-city";
 import InputFieldWithButton from "../../components/InputField/InputFieldWithButton";
 import InputField from "../../components/InputField";
-import { fieldNames } from "../../utils/constants/formsConstants";
+import { fieldNames } from "../../Utils/constants/formsConstants";
 import { useForm } from "../../pages/carsListing/useForm";
 import VerticalFilterStyles from "./styles";
 import DialogBox from "../../components/DialogBox";

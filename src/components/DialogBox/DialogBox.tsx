@@ -8,7 +8,7 @@ import {
 import {
   APPLY_FILTERS,
   CANCEL,
-} from "../../utils/constants/language/en/buttonLabels";
+} from "../../Utils/constants/language/en/buttonLabels";
 
 export interface DialogBoxContentProps {
   title: string;

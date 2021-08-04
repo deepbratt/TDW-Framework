@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import { HOME } from "../../utils/constants/language/en/buttonLabels";
+import { HOME } from "../../Utils/constants/language/en/buttonLabels";
 
 export interface BreadCrumbsProps {}
 

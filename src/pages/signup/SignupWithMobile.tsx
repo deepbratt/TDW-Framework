@@ -2,11 +2,11 @@ import { useForm } from "./useForm";
 import { Typography } from "@material-ui/core";
 import { Grid, Card, Button } from "@material-ui/core";
 import InputField from "../../components/InputField";
-import { fieldNames } from "../../utils/constants/formsConstants";
+import { fieldNames } from "../../Utils/constants/formsConstants";
 import {
   CONTINUE,
   SIGNUP,
-} from "../../utils/constants/language/en/buttonLabels";
+} from "../../Utils/constants/language/en/buttonLabels";
 import GlobalStyles from "../../globalStyles";
 
 const SignupWithMobile = () => {

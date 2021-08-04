@@ -1,7 +1,7 @@
 import { Grid } from "@material-ui/core";
 import Footer from "../sections/Footer";
-import { FooterData } from "../utils/constants/language/en/footerData";
-import { Colors } from "../utils/constants/colors/colors";
+import { FooterData } from "../Utils/constants/language/en/footerData";
+import { Colors } from "../Utils/constants/colors/colors";
 export interface LayoutProps {
   children: React.ReactNode;
 }

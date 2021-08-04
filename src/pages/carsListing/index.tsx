@@ -1,16 +1,23 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Grid, Hidden, Typography } from "@material-ui/core";
+import { Chip, Drawer, Grid, Hidden, Typography } from "@material-ui/core";
+import FilterListRoundedIcon from "@material-ui/icons/FilterListRounded";
 import ListingCard from "../../components/ListingCard";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import CarFilters from "../../sections/VerticalCarFilters";
 import HorizontalFilters from "../../sections/HorizontalFilters";
-import { CarsListingData } from "../../utils/constants/language/en/listingData";
-import { SHOW_RESULT } from "../../utils/constants/language/en/buttonLabels";
+import { CarsListingData } from "../../Utils/constants/language/en/listingData";
+import { SHOW_RESULT } from "../../Utils/constants/language/en/buttonLabels";
 
 export interface CarsListingProps {}
 
 const CarsListing: React.FC<CarsListingProps> = () => {
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+
+  const toggleDrawer = () => {
+    setDrawerOpen(drawerOpen ? false : true);
+  };
+
   const layoutType = useSelector(
     (state: any) => state.persistedReducer.layout.layoutType
   );
@@ -42,6 +49,20 @@ const CarsListing: React.FC<CarsListingProps> = () => {
           </Hidden>
         </Grid>
         <Grid item container xs={12} md={8} alignContent="flex-start">
+          <Hidden mdUp>
+            <Grid item xs={12}>
+              <Chip
+                variant="outlined"
+                size="small"
+                icon={<FilterListRoundedIcon color="secondary" />}
+                label="Filters"
+                onClick={toggleDrawer}
+              />
+              <Drawer anchor="bottom" open={drawerOpen} onClose={toggleDrawer}>
+                <CarFilters />
+              </Drawer>
+            </Grid>
+          </Hidden>
           <Hidden xsDown>
             <Grid item xs={12}>
               <HorizontalFilters />

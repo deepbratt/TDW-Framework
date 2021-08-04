@@ -4,7 +4,7 @@ import {
   isEmailValid,
   isPhoneValid,
   messages,
-} from "../../utils/constants/formsConstants";
+} from "../../Utils/constants/formsConstants";
 
 const initialValues: any = {
   firstName: "",

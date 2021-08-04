@@ -1,4 +1,4 @@
-import addEditCarData from "../../utils/constants/language/en/addEditCarData";
+import addEditCarData from "../../Utils/constants/language/en/addEditCarData";
 import {
   Checkbox,
   createStyles,
@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import SelectComponent from "./SelectComponent";
-import { Colors } from "../../utils/constants/colors/colors";
+import { Colors } from "../../Utils/constants/colors/colors";
 
 interface CarAdditionalInformationProps {
   formData: any;

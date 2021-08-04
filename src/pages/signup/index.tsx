@@ -10,7 +10,7 @@ import {
   CONTINUE_WITH_FACEBOOK,
   CONTINUE_WITH_EMAIL,
   ALREADY_HAVE_ACCOUNT,
-} from "../../utils/constants/language/en/buttonLabels";
+} from "../../Utils/constants/language/en/buttonLabels";
 import GlobalStyles from "../../globalStyles";
 
 const Signup = () => {

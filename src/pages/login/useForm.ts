@@ -3,7 +3,7 @@ import {
   fieldNames,
   isEmailValid,
   messages,
-} from "../../utils/constants/formsConstants";
+} from "../../Utils/constants/formsConstants";
 
 const initialValues: any = {
   email: "",

@@ -4,8 +4,8 @@ import Slider from "../Slider";
 import TabsPanels from "./tabsPanel";
 import OptionsCard from "../OptionsCard";
 import TabsStyles from "./styles";
-import { Colors } from "../../utils/constants/colors/colors";
-import { IOptions, TabsProps } from "../../utils/interfaces/tabs.interface";
+import { Colors } from "../../Utils/constants/colors/colors";
+import { IOptions, TabsProps } from "../../Utils/interfaces/tabs.interface";
 
 const TabComponent: React.FC<TabsProps> = ({ data }) => {
   const { root, tabsStyle, optionsWrapper } = TabsStyles();

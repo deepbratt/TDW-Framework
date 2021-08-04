@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, BrowserRouter } from "react-router-dom";
 import { Grid, Typography } from "@material-ui/core";
 import FooterStyles from "./styles";
-import { FooterProps, IRoutes } from "../../utils/interfaces/footer.interface";
+import { FooterProps, IRoutes } from "../../Utils/interfaces/footer.interface";
 
 /** 
  @param data 

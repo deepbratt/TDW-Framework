@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fieldNames, messages } from "../../utils/constants/formsConstants";
+import { fieldNames, messages } from "../../Utils/constants/formsConstants";
 
 const initialValues: any = {
   password: "",

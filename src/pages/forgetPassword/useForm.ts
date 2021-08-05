@@ -1,9 +1,6 @@
 import { useState } from "react";
-import {
-  messages,
-  fieldNames,
-  isEmailValid,
-} from "../../Utils/constants/formsConstants";
+import { messages, fieldNames } from "../../Utils/constants/formsConstants";
+import { isEmailValid } from "../../Utils/regex";
 
 const initialValues: any = {
   email: "",
@@ -76,6 +73,6 @@ export const useForm = (validateOnChange = false) => {
     isLoading,
     resetLinkMessage,
     responseMessage,
-    setResetLinkMessage
+    setResetLinkMessage,
   };
 };

@@ -1,9 +1,6 @@
 import { useState } from "react";
-import {
-  fieldNames,
-  isEmailValid,
-  messages,
-} from "../../Utils/constants/formsConstants";
+import { fieldNames, messages } from "../../Utils/constants/formsConstants";
+import { isEmailValid } from "../../Utils/regex";
 
 const initialValues: any = {
   email: "",

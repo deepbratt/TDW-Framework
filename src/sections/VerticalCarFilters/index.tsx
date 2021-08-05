@@ -70,6 +70,9 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
     let result = City.getCitiesOfCountry("PK")?.filter((city: ICity) =>
       city.name.toLowerCase().includes(e.target.value.toLowerCase())
     );
+    if (e.target.value === "") {
+      result = [];
+    }
     setSearchResult(result);
   };
 
@@ -240,11 +243,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                   })}
               </Grid>
               {provinces.map((province) => (
-                <Grid
-                  style={{ height: "100%", border: "1px solid red" }}
-                  item
-                  xs={12}
-                >
+                <Grid item xs={12}>
                   <Typography variant="h4" gutterBottom>
                     {province.name}
                   </Typography>

@@ -19,5 +19,7 @@ export const ACCOUNT_RECOVERY: string = "Account Recovery";
 export const DONOT_HAVE_ACCOUNT: string = "Don't have an account?";
 export const FORGOT_PASS: string = "Forgot Password";
 export const APPLY_FILTERS: string = "Apply Filters";
+export const RESET: string = "Reset";
 export const CANCEL: string = "CANCEL";
+export const CLOSE: string = "Close";
 export const CONTINUE: string = "Continue";

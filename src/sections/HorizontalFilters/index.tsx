@@ -1,34 +1,26 @@
-import Dropdown from "../../components/Dropdown";
 import { Grid } from "@material-ui/core";
-import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab";
-import { useDispatch, useSelector } from "react-redux";
-import { setLayout } from "../../redux/reducers/layoutSlice";
-import ViewListRoundedIcon from "@material-ui/icons/ViewListRounded";
-import ViewModuleRoundedIcon from "@material-ui/icons/ViewModuleRounded";
+import Dropdown from "../../components/Dropdown";
+import LayoutToggler from "../../components/LayoutToggler";
+import { useForm } from "../../pages/carsListing/useForm";
+import { fieldNames } from "../../Utils/constants/formsConstants";
+import { sortingOptions } from "../../Utils/constants/language/en/filtersData";
 
 export interface HorizontalFiltersProps {}
-const sortingOptions = [
-  { value: "most_popular", label: "most popular" },
-  { value: "recent", label: "recent" },
-  { value: "oldest", label: "oldest" },
-];
 
 const HorizontalFilters: React.FC<HorizontalFiltersProps> = () => {
-  const dispatch = useDispatch();
-  const layoutType = useSelector(
-    (state: any) => state.persistedReducer.layout.layoutType
-  );
-  const handleChange = (
-    event: React.MouseEvent<HTMLElement>,
-    nextView: string
-  ) => {
-    dispatch(setLayout(nextView));
-  };
+  const { values, errors, handleInputChange } = useForm();
   return (
     <Grid style={{ margin: "10px 0" }} container justify="space-between">
       <Grid item container xs={10} spacing={2}>
         <Grid item xs={4}>
-          <Dropdown label="SORT BY" options={sortingOptions} />
+          <Dropdown
+            label="SORTING OPTIONS"
+            name={fieldNames.sortingOptions}
+            onChange={handleInputChange}
+            error={errors.sortingOptions}
+            value={values.sortingOptions}
+            options={sortingOptions}
+          />
         </Grid>
         <Grid item xs={3}>
           <Dropdown label="CONDITION" options={sortingOptions} />
@@ -47,23 +39,7 @@ const HorizontalFilters: React.FC<HorizontalFiltersProps> = () => {
         item
         xs={2}
       >
-        <ToggleButtonGroup
-          size="small"
-          value={layoutType}
-          exclusive
-          onChange={handleChange}
-        >
-          <ToggleButton value="list" aria-label="list">
-            <ViewListRoundedIcon
-              color={layoutType === "list" ? "primary" : "disabled"}
-            />
-          </ToggleButton>
-          <ToggleButton value="grid" aria-label="grid">
-            <ViewModuleRoundedIcon
-              color={layoutType !== "list" ? "primary" : "disabled"}
-            />
-          </ToggleButton>
-        </ToggleButtonGroup>
+        <LayoutToggler />
       </Grid>
     </Grid>
   );

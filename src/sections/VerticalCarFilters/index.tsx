@@ -18,10 +18,13 @@ import { fieldNames } from "../../Utils/constants/formsConstants";
 import { useForm } from "../../pages/carsListing/useForm";
 import VerticalFilterStyles from "./styles";
 import DialogBox from "../../components/DialogBox";
+import { useState } from "react";
+import { ICity } from "country-state-city/dist/lib/interface";
 
 export interface CarFiltersProps {}
 
 const CarFilters: React.FC<CarFiltersProps> = () => {
+  const [searchResult, setSearchResult] = useState<ICity[]>();
   const {} = VerticalFilterStyles();
   const {
     CATEGORIES,
@@ -37,7 +40,6 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
     ENGINE_CAPACITY,
     COLOR,
     BODY_TYPE,
-    MODEL_CATEGORY,
     PICTURE_AVAILABILITY,
     VIDEO_AVAILABILITY,
     SELLER_TYPE,
@@ -45,6 +47,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
 
   const majorCities = ["Karachi", "Islamabad", "Lahore", "Peshawar", "Quetta"];
   const mainCarTypes = ["Sedan", "Hatchback", "Pick Up"];
+  const mainColors = ["Black", "White", "Red"];
   const cities = City.getCitiesOfCountry("PK");
   const provinces = State.getStatesOfCountry("PK");
   const extractedCityNames = cities?.map((item) => item.name);
@@ -59,8 +62,17 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
     handleInputChange,
     handleCheckboxChange,
     handleSingleCheckBoxChange,
+
     handleSubmit,
   } = useForm(true);
+
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let result = City.getCitiesOfCountry("PK")?.filter((city: ICity) =>
+      city.name.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setSearchResult(result);
+  };
+
   return (
     <div>
       <FilterAccordion title={CATEGORIES}>
@@ -197,8 +209,42 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
             ))}
           <DialogBox title="Select Cities">
             <Grid style={{ display: "flex" }} container>
+              <Grid xs={12}>
+                <InputField
+                  variant="filled"
+                  label="Search"
+                  onChange={handleSearchInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="h4" gutterBottom>
+                  {"Search Result"}
+                </Typography>
+                {searchResult &&
+                  searchResult.map((city: ICity) => {
+                    return (
+                      <FormControlLabel
+                        key={`city-${city.name}`}
+                        control={
+                          <Checkbox
+                            checked={values.city.indexOf(city.name) > -1}
+                            onChange={(e) => handleCheckboxChange(e, "city")}
+                            name={city.name}
+                            color="secondary"
+                            size="small"
+                          />
+                        }
+                        label={city.name}
+                      />
+                    );
+                  })}
+              </Grid>
               {provinces.map((province) => (
-                <Grid item xs={12} md={6}>
+                <Grid
+                  style={{ height: "100%", border: "1px solid red" }}
+                  item
+                  xs={12}
+                >
                   <Typography variant="h4" gutterBottom>
                     {province.name}
                   </Typography>
@@ -387,7 +433,79 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
         </Grid>
       </FilterAccordion>
       <FilterAccordion title={COLOR}>
-        <InputField label="Eg. Honda In Lahore" />
+        <FormGroup>
+          {Carfilters.COLOR.filter((item) =>
+            mainColors.includes(item.name)
+          ).map((type) => (
+            <FormControlLabel
+              key={`color-type-${type.name}`}
+              control={
+                <Checkbox
+                  checked={values.color.indexOf(type.name) > -1}
+                  onChange={(e) => handleCheckboxChange(e, "color")}
+                  name={type.name}
+                  color="secondary"
+                  size="small"
+                />
+              }
+              label={
+                <div style={{ display: "flex" }}>
+                  <span
+                    style={{
+                      borderRadius: "50%",
+                      maxWidth: "20px",
+                      maxHeight: "20px",
+                      minWidth: "20px",
+                      minHeight: "20px",
+                      backgroundColor: type.hex,
+                      border: "0.2px solid grey",
+                      marginRight: "7px",
+                    }}
+                  />
+                  <Typography>{type.name}</Typography>
+                </div>
+              }
+            />
+          ))}
+
+          <DialogBox title="Select Color">
+            <Grid container spacing={2}>
+              {Carfilters.COLOR.map((type) => (
+                <Grid item xs={12} md={6}>
+                  <FormControlLabel
+                    key={`color-type-${type.name}`}
+                    control={
+                      <Checkbox
+                        checked={values.color.indexOf(type.name) > -1}
+                        onChange={(e) => handleCheckboxChange(e, "color")}
+                        name={type.name}
+                        color="secondary"
+                        size="small"
+                      />
+                    }
+                    label={
+                      <div style={{ display: "flex" }}>
+                        <span
+                          style={{
+                            borderRadius: "50%",
+                            maxWidth: "20px",
+                            maxHeight: "20px",
+                            minWidth: "20px",
+                            minHeight: "20px",
+                            backgroundColor: type.hex,
+                            border: "0.2px solid grey",
+                            marginRight: "7px",
+                          }}
+                        />
+                        <Typography>{type.name}</Typography>
+                      </div>
+                    }
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </DialogBox>
+        </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={BODY_TYPE}>
         <FormGroup>
@@ -452,9 +570,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
           </DialogBox>
         </FormGroup>
       </FilterAccordion>
-      <FilterAccordion title={MODEL_CATEGORY}>
-        <InputField label="Eg. Honda In Lahore" />
-      </FilterAccordion>
+
       <FilterAccordion title={PICTURE_AVAILABILITY}>
         <FormGroup>
           <FormControlLabel

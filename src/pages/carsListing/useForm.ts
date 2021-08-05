@@ -20,10 +20,12 @@ const initialValues: any = {
   engineCapacityFrom: 0,
   engineCapacityTo: 0,
   engineCapacityRange: [600, 30000],
+  color: [],
   bodyType: [],
   pictireAvailability: false,
   videoAvailability: false,
   sellerType: [],
+  sortingOptions: "",
 };
 
 export const useForm = (validateOnChange = true) => {
@@ -33,7 +35,7 @@ export const useForm = (validateOnChange = true) => {
   // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.info("Request", JSON.stringify(values));
+    console.info("Request", values);
   }, [values]);
 
   const validate = (fieldValues = values) => {
@@ -73,7 +75,6 @@ export const useForm = (validateOnChange = true) => {
       temp = temp.filter((item: string) => item !== e.target.name);
     }
     setValues({ ...values, [filterName]: temp });
-    console.log(temp);
   };
 
   const handleSingleCheckBoxChange = (

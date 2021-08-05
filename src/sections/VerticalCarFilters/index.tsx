@@ -67,11 +67,12 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
   } = useForm(true);
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    
     let result = City.getCitiesOfCountry("PK")?.filter((city: ICity) =>
       city.name.toLowerCase().includes(e.target.value.toLowerCase())
     );
-    if (e.target.value === "") {
-      result = [];
+    if(e.target.value === ""){
+      result= []
     }
     setSearchResult(result);
   };

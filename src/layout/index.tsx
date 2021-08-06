@@ -1,20 +1,8 @@
 import { Grid } from "@material-ui/core";
-// import {Home}  from "tdw-pages";
-// import HeaderContext from "../Sections/Header/Header";
-// import { Footer } from "@TDW/components";
-// import { Footer } from "tdw-components";
 import Footer from "./footer";
 import { FooterData } from "../Utils/constants/language/en/footerData";
 import { Colors } from "../Utils/constants/colors/colors";
-import TabComponent from "./tabs";
-import {
-  browseUsedCards,
-  PostAdData,
-} from "../Utils/constants/language/en/homePageData";
-import PostAd from "./postAd";
-// import CarComparision from "./carComparision";
-// import CarsComparisonImage from "../assets/Cars/carsComparision.png";
-// import DownloadApp from "./downloadApp";
+import Header from "./Sections/Sections/Header/Header";
 
 export interface LayoutProps {
   children: React.ReactNode;
@@ -31,20 +19,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div>
       <Grid container>
-        <Grid item xs={12}>
-          {/* <CustomButton buttonText="button"/> */}
-        </Grid>
+      <Grid item xs={12}>
+        <Header/>
+      </Grid>
         <Grid item xs={12} container justify="center">
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             {children}
           </Grid>
         </Grid>
-        {/* <Grid item container xs={10}>
-          <TabComponent data={browseUsedCards} />
-        </Grid>
-        <Grid item container xs={12}>
-          <PostAd data={PostAdData} />
-        </Grid> */}
         <Grid item xs={12}>
           {/* // * Footer here */}
           <Footer

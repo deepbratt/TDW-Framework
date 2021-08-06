@@ -36,7 +36,7 @@ const TabComponent: React.FC<TabsProps> = ({ data }) => {
       </Tabs>
       {Object.values(data).map((values, index) => (
         <TabsPanels value={currentTab} index={index}>
-          <Slider>
+          <Slider >
             <Grid className={optionsWrapper} container xs={10} spacing={2}>
               {values.map((value: IOptions, index: any) => (
                 <Grid key={index} item xs={4} md={3} lg={2}>

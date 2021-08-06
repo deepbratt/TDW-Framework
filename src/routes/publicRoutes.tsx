@@ -1,4 +1,4 @@
-import { Route, RouteProps } from "react-router";
+import { Route, RouteProps } from "react-router-dom";
 import Layout from "../layout";
 
 export type ProtectedRouteProps = {

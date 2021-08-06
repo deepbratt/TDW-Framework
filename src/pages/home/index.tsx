@@ -1,7 +1,13 @@
+import Page from "../../layout/Pages/home"
 export interface HomeProps {}
 
-const Home: React.FC<HomeProps> = () => {
-  return <div>Home Page</div>;
+const HomePage: React.FC<HomeProps> = () => {
+  return (
+    <>
+      <Page/>
+
+    </>
+  );
 };
 
-export default Home;
+export default HomePage;

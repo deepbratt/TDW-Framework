@@ -25,11 +25,11 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = {};
       state.token = "";
-      state.isLoggedIn = false;
+      state.isLoggedIn = true;
     },
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout} = authSlice.actions;
 
 export default authSlice.reducer;

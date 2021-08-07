@@ -2,6 +2,8 @@ import { Grid } from "@material-ui/core";
 import Footer from "../sections/Footer";
 import { FooterData } from "../Utils/constants/language/en/footerData";
 import { Colors } from "../Utils/constants/colors/colors";
+import Header from "./Sections/Sections/Header/Header";
+
 export interface LayoutProps {
   children: React.ReactNode;
 }
@@ -18,7 +20,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div>
       <Grid container>
         <Grid item xs={12}>
-          {/* Header Here */}
+          <Header />
         </Grid>
         <Grid item xs={12} container justify="center">
           {children}

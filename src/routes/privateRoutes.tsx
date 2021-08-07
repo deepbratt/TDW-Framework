@@ -1,4 +1,4 @@
-import { Route, Redirect, RouteProps } from "react-router";
+import { Route, Redirect, RouteProps } from "react-router-dom";
 import { connect } from "react-redux";
 import Layout from "../layout";
 

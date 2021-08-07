@@ -1,8 +1,6 @@
 import { Grid, Typography } from "@material-ui/core";
 import AprroveIcon from "../../assets/icons/approve.png";
-import CustomButton from "../../CustomButton";
 import PostAdStyles from "./styles";
-import { POST_YOUR_AD } from "../../Utils/constants/language/en/buttonLabels";
 
 export interface PostAdProps {
   data: {
@@ -42,7 +40,7 @@ const PostAd: React.FC<PostAdProps> = ({ data }) => {
         <img className={featureImgStyle} src={coverImg} alt="" />
       </Grid>
       <Grid item xs={12}>
-        <CustomButton>{POST_YOUR_AD}</CustomButton>
+        {/* <CustomButton>{POST_YOUR_AD}</CustomButton> */}
       </Grid>
     </Grid>
   );

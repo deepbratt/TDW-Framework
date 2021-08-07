@@ -8,12 +8,23 @@ const Signup = lazy(() => import("../pages/signup"));
 const SignupWithEmail = lazy(() => import("../pages/signup/SignupWithEmail"));
 const SignupWithMobile = lazy(() => import("../pages/signup/SignupWithMobile"));
 const AddEditCar = lazy(() => import("../pages/AddEditCar"));
+const usedCars = lazy(() => import("../pages/SearchUsedCars/index"));
+const DashBoard = lazy(() => import("../pages/profile/index"));
+const Verification = lazy(() => import("../pages/verificationPage"));
+const CarDetail = lazy(() => import("../pages/carDetail"));
+const CarComparison = lazy(() => import("../pages/carComparision/index"));
 
 export const paths = {
   home: "home",
-  cars: "cars",
   login: "login",
+  usedCars: "usedCars",
+  profile: "profile",
+  verification: "verification",
+  carDetail: "carDetail",
+  carComparision: "carComparision",
+  carListing: "carListing",
   signup: "signup",
+  cars: "cars",
   forgotPassword: "forgot-password",
   resetPassword: "reset-password",
   signupWithEmail: "signup-with-email",
@@ -23,9 +34,15 @@ export const paths = {
 
 export const routes = {
   home: "/",
-  cars: "/cars",
-  login: "/login",
+  login: "/login",  
+  usedCars: "/search-used-cars",
+  carDetail: "/car-detail",
+  carComparision: "/car-comparision",
+  carListing: "/post-an-ad",
+  profile: "/dashboard",
   signup: "/signup",
+  verification: "/phone-number-verification",
+  cars: "/cars",
   forgotPassword: "/forgot-password",
   resetPassword: "/reset-password/:token",
   signupWithEmail: "/signup-with-email",
@@ -39,6 +56,30 @@ export const privateRoutes = {
     path: routes.home,
     component: Home,
   },
+  [paths.usedCars]: {
+    path: routes.usedCars,
+    component: usedCars,
+  },
+  [paths.profile]: {
+    path: routes.profile,
+    component: DashBoard,
+  },
+  [paths.verification]: {
+    path: routes.verification,
+    component: Verification
+  },
+  [paths.carDetail]: {
+    path: routes.carDetail,
+    component: CarDetail
+  },
+  [paths.carComparision]: {
+    path: routes.carComparision,
+    component: CarComparison
+  },
+  [paths.carListing]: {
+    path: routes.carListing,
+    component: CarsListing
+  }
 };
 
 export const publicRoutes = {

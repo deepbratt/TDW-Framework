@@ -67,12 +67,13 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
   } = useForm(true);
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    
-    let result = City.getCitiesOfCountry("PK")?.filter((city: ICity) =>
-      city.name.toLowerCase().includes(e.target.value.toLowerCase())
+    let result = City.getCitiesOfCountry("PK")?.filter(
+      (city: ICity) =>
+        city.name.substr(0, e.target.value.length).toLowerCase() ===
+        e.target.value.toLowerCase()
     );
-    if(e.target.value === ""){
-      result= []
+    if (e.target.value === "") {
+      result = [];
     }
     setSearchResult(result);
   };
@@ -467,6 +468,23 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
               }
             />
           ))}
+          <FormControlLabel
+            key={`color-type-other`}
+            control={
+              <Checkbox
+                checked={values.color.indexOf("Other") > -1}
+                onChange={(e) => handleCheckboxChange(e, "color")}
+                name="Other"
+                color="secondary"
+                size="small"
+              />
+            }
+            label={
+              <div style={{ display: "flex" }}>
+                <Typography>Other Colors</Typography>
+              </div>
+            }
+          />
 
           <DialogBox title="Select Color">
             <Grid container spacing={2}>
@@ -503,6 +521,25 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                   />
                 </Grid>
               ))}
+              <Grid item xs={12}>
+                <FormControlLabel
+                  key={`color-type-other`}
+                  control={
+                    <Checkbox
+                      checked={values.color.indexOf("Other") > -1}
+                      onChange={(e) => handleCheckboxChange(e, "color")}
+                      name="Other"
+                      color="secondary"
+                      size="small"
+                    />
+                  }
+                  label={
+                    <div style={{ display: "flex" }}>
+                      <Typography>Other Colors</Typography>
+                    </div>
+                  }
+                />
+              </Grid>
             </Grid>
           </DialogBox>
         </FormGroup>

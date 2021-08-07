@@ -32,7 +32,7 @@ export const Carfilters = {
     { hex: "#6F4E37", name: "Brown" },
     { hex: "#D3D3D3	", name: "Silver" },
     { hex: "#DAA520", name: "Golden" },
-    { hex: "rgba(0, 0, 0, 0)", name: "Other Colors" },
+    // { hex: "rgba(0, 0, 0, 0)", name: "Other Colors" },
   ],
   BODY_TYPE: [
     { icon: SedanIcon, name: "Sedan" },

@@ -8,3 +8,31 @@ body {
 a {
   text-decoration: none;
 }
+
+
+
+
+
+
+
+
+/* 
+
+/* .select-search:not(.select-search--multiple) .select-search__select {
+  position: absolute;
+  z-index: 2;
+  top: 44px;
+  right: 0;
+  left: 0;
+  border-radius: 3px;
+  overflow: auto;
+  max-height: 360px;
+}  */
+
+.select-search:not(.is-loading):not(.select-search--multiple) .select-search__value::after {
+  transform: rotate(45deg);
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  pointer-events: none;
+  margin-right: 20px;
+}

@@ -5,6 +5,7 @@ import {
   FormControlLabel,
   Checkbox,
   Typography,
+  IconButton,
 } from "@material-ui/core";
 import FilterAccordion from "../../components/Accordion";
 import {
@@ -12,6 +13,7 @@ import {
   CarFiltersData,
 } from "../../Utils/constants/language/en/filtersData";
 import { City, State } from "country-state-city";
+import HighlightOffRoundedIcon from "@material-ui/icons/HighlightOffRounded";
 import InputFieldWithButton from "../../components/InputField/InputFieldWithButton";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../Utils/constants/formsConstants";
@@ -20,6 +22,7 @@ import VerticalFilterStyles from "./styles";
 import DialogBox from "../../components/DialogBox";
 import { useState } from "react";
 import { ICity } from "country-state-city/dist/lib/interface";
+import { APPLIED_FILTERS } from "../../Utils/constants/language/en/buttonLabels";
 
 export interface CarFiltersProps {}
 
@@ -27,7 +30,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
   const [searchResult, setSearchResult] = useState<ICity[]>();
   const {} = VerticalFilterStyles();
   const {
-    CATEGORIES,
+    KEYWORDS,
     PRICE_RANGE,
     YEAR,
     MAKE,
@@ -62,7 +65,8 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
     handleInputChange,
     handleCheckboxChange,
     handleSingleCheckBoxChange,
-
+    appliedFilters,
+    removeFilter,
     handleSubmit,
   } = useForm(true);
 
@@ -80,12 +84,32 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
 
   return (
     <div>
-      <FilterAccordion title={CATEGORIES}>
+      {appliedFilters.length > 0 && (
+        <FilterAccordion title={APPLIED_FILTERS}>
+          <Grid container spacing={1}>
+            {appliedFilters.map((filter: any) => (
+              <Grid
+                key={`filter-${filter}`}
+                item
+                container
+                justifyContent="space-between"
+                xs={12}
+              >
+                <Typography variant="body2">{filter}</Typography>
+                <IconButton size="small" onClick={() => removeFilter(filter)}>
+                  <HighlightOffRoundedIcon color="secondary" fontSize="small" />
+                </IconButton>
+              </Grid>
+            ))}
+          </Grid>
+        </FilterAccordion>
+      )}
+      <FilterAccordion title={KEYWORDS}>
         <InputFieldWithButton
-          name={fieldNames.categories}
+          name={fieldNames.keywords}
           label="Eg. Honda In Lahore"
-          value={values.categories}
-          error={errors.categories}
+          value={values.keywords}
+          error={errors.keywords}
           onChange={handleInputChange}
           handleClick={handleSubmit}
         />
@@ -607,7 +631,6 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
           </DialogBox>
         </FormGroup>
       </FilterAccordion>
-
       <FilterAccordion title={PICTURE_AVAILABILITY}>
         <FormGroup>
           <FormControlLabel

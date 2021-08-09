@@ -19,7 +19,7 @@ const LayoutStyle = makeStyles((theme) => ({
     },
   },
   sectionHeader: {
-    marginBottom: "40px",
+    marginBottom: "0px",
   },
   subHeader: {
     color: grey,

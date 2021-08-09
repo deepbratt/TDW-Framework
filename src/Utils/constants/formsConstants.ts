@@ -6,7 +6,22 @@ export const messages = {
 };
 
 export const fieldNames = {
-  categories: "categories",
+  firstName: "firstName",
+  lastName: "lastName",
+  email: "email",
+  mobile: "mobile",
+  password: "password",
+  confirmPassword: "confirmPassword",
+  keywords: "keywords",
   priceFrom: "priceFrom",
   priceTo: "priceTo",
+  yearFrom: "yearFrom",
+  yearTo: "yearTo",
+  mileageFrom: "mileageFrom",
+  mileageTo: "mileageTo",
+  engineCapacityFrom: "engineCapacityFrom",
+  engineCapacityTo: "engineCapacityTo",
+  pictureAvailability: "pictureAvailability",
+  videoAvailability: "videoAvailability",
+  sortingOptions: "sortingOptions",
 };

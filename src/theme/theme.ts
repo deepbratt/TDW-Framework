@@ -2,9 +2,9 @@ import { createTheme } from "@material-ui/core/styles";
 import { theme } from "./globalFontSize";
 import createPalette from "@material-ui/core/styles/createPalette";
 import { Color } from "./color";
-import { Colors } from "../Utils/constants/colors/colors";
 
-const { berryRed, white } = Color;
+
+const { berryRed, white, secondary } = Color;
 
 const MUITheme = createTheme({
   overrides: {
@@ -17,7 +17,7 @@ const MUITheme = createTheme({
       },
       root:{
         fontSize: "16px",
-        color: Colors.textPrimary,
+        color: Color.textPrimary,
       }
     },
     MuiTab: {
@@ -60,6 +60,9 @@ const MUITheme = createTheme({
     primary: {
       main: berryRed,
       contrastText: white,
+    },
+    secondary: {
+      main: secondary,
     },
     text: { secondary: "#828282" },
   }),

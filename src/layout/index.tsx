@@ -1,15 +1,14 @@
 import { Grid } from "@material-ui/core";
+import Header from "./Sections/Sections/Header/Header";
 import Footer from "../sections/Footer";
 import { FooterData } from "../Utils/constants/language/en/footerData";
 import { Colors } from "../Utils/constants/colors/colors";
-import Header from "./Sections/Sections/Header/Header";
-
 export interface LayoutProps {
   children: React.ReactNode;
+  
 }
 
 /**
-  // Todo: Move this component to components repo
   @children childrens
 **/
 

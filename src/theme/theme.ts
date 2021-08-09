@@ -2,7 +2,7 @@ import { createTheme } from "@material-ui/core/styles";
 import { theme } from "./globalFontSize";
 import createPalette from "@material-ui/core/styles/createPalette";
 import { Color } from "./color";
-import { Colors } from "../Utils/constants/colors/colors";
+
 
 const { berryRed, white, secondary } = Color;
 

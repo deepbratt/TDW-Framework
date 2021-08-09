@@ -17,7 +17,7 @@ const MUITheme = createTheme({
       },
       root:{
         fontSize: "16px",
-        color: Colors.textPrimary,
+        color: Color.textPrimary,
       }
     },
     MuiTab: {

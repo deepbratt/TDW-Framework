@@ -46,6 +46,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
     PICTURE_AVAILABILITY,
     VIDEO_AVAILABILITY,
     SELLER_TYPE,
+    AD_TYPE
   } = CarFiltersData;
 
   const majorCities = ["Karachi", "Islamabad", "Lahore", "Peshawar", "Quetta"];
@@ -107,7 +108,8 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
       <FilterAccordion title={KEYWORDS}>
         <InputFieldWithButton
           name={fieldNames.keywords}
-          label="Eg. Honda In Lahore"
+          label="Keywords"
+          placeholder="Eg. Honda In Lahore"
           value={values.keywords}
           error={errors.keywords}
           onChange={handleInputChange}
@@ -672,6 +674,25 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                 <Checkbox
                   checked={values.sellerType.indexOf(type) > -1}
                   onChange={(e) => handleCheckboxChange(e, "sellerType")}
+                  name={type}
+                  color="secondary"
+                  size="small"
+                />
+              }
+              label={type}
+            />
+          ))}
+        </FormGroup>
+      </FilterAccordion>
+      <FilterAccordion title={AD_TYPE}>
+        <FormGroup>
+          {Carfilters.AD_TYPE.map((type) => (
+            <FormControlLabel
+              key={`ad-type-${type}`}
+              control={
+                <Checkbox
+                  checked={values.adType.indexOf(type) > -1}
+                  onChange={(e) => handleCheckboxChange(e, "adType")}
                   name={type}
                   color="secondary"
                   size="small"

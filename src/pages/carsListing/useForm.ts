@@ -25,6 +25,7 @@ const initialValues: any = {
   pictireAvailability: false,
   videoAvailability: false,
   sellerType: [],
+  adType: [],
   sortingOptions: "",
 };
 

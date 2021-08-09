@@ -19,6 +19,7 @@ export const CarFiltersData = {
   PICTURE_AVAILABILITY: "PICTURE AVAILABILITY",
   VIDEO_AVAILABILITY: "VIDEO AVAILABILITY",
   SELLER_TYPE: "SELLER TYPE",
+  AD_TYPE: "AD TYPE",
 };
 
 export const Carfilters = {
@@ -47,6 +48,7 @@ export const Carfilters = {
   PICTURE_AVAILABILITY: ["With Picture"],
   VIDEO_AVAILABILITY: ["With Video"],
   SELLER_TYPE: ["Individuals", "Dealers"],
+  AD_TYPE: ["Featured Ads"],
 };
 
 export const sortingOptions = [

@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { API_ENDPOINTS } from "../../Utils/API/endpoints";
 import { fieldNames, messages } from "../../Utils/constants/formsConstants";
+import useApi from "../../Utils/hooks/useApi";
 import { isEmailValid, isPhoneValid } from "../../Utils/regex";
 
 const initialValues: any = {
@@ -12,6 +14,7 @@ const initialValues: any = {
 };
 
 export const useForm = (validateOnChange = false) => {
+  const { loading, responseStatus, responseMessage, addRequest } = useApi();
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialValues);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +69,20 @@ export const useForm = (validateOnChange = false) => {
     setErrors({});
   };
 
+  const handleEmailSubmit = async (e: any) => {
+    e.preventDefault();
+
+    let requestBody = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      password: values.password,
+      confirmPassword: values.confirmPassword,
+    };
+    console.log("requestBody", requestBody);
+    await addRequest(API_ENDPOINTS.USERS.SIGNUP.WITH_EMAIL, requestBody);
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log("btn clicked", values);
@@ -89,6 +106,7 @@ export const useForm = (validateOnChange = false) => {
     resetForm,
     validate,
     handleSubmit,
+    handleEmailSubmit,
     isLoading,
   };
 };

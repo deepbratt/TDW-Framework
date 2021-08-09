@@ -11,7 +11,7 @@ import GlobalStyles from "../../globalStyles";
 
 const SignupWithEmail = () => {
   const { loginFormGrid, formCard, formStyle, loginbtn } = GlobalStyles();
-  const { values, errors, handleInputChange, handleSubmit } = useForm();
+  const { values, errors, handleInputChange, handleEmailSubmit } = useForm();
 
   return (
     <Grid
@@ -26,7 +26,7 @@ const SignupWithEmail = () => {
             {SIGNUP}
           </Typography>
 
-          <form className={formStyle} onSubmit={handleSubmit}>
+          <form className={formStyle} onSubmit={handleEmailSubmit}>
             <Grid container spacing={1}>
               <Grid item xs={12} md={6}>
                 <InputField

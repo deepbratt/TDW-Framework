@@ -1,4 +1,3 @@
-
 interface IArray {
     title: string;
     icon: string;

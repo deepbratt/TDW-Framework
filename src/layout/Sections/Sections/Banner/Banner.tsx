@@ -18,14 +18,31 @@ interface IBanner {
   category: string;
   filter: string;
   carModel: string[];
-  cities: string[];
-  priceRange: string[]
+  range: {
+    min: string;
+    max: string;
+  };
 }
 
-const Banner: React.FC<IBanner> = ({ Title, subTitle, category, filter,cities,priceRange,carModel}) => {
+const Banner: React.FC<IBanner> = ({
+  Title,
+  subTitle,
+  category,
+  filter,
+  range,
+  carModel,
+}) => {
   const { root, fab, grid, btn } = bannerStyles();
-  const {val,setVal} = useHooks();
+  const { val, setVal } = useHooks();
   const { white, cherry, lightGrey } = Colors;
+
+  // const years = () => {
+  //   const now = new Date().getUTCFullYear();
+  //   return Array(now - (now - 25)).fill('').map((v, idx) => now - idx) as Array<number>;
+  // }
+
+  // console.log(years())
+
   return (
     <>
       <Grid
@@ -48,7 +65,8 @@ const Banner: React.FC<IBanner> = ({ Title, subTitle, category, filter,cities,pr
           <SearchSelect
             setVal={setVal}
             val={val}
-            priceRange={priceRange} carModel={carModel} cities={cities}
+            range={range}
+            carModel={carModel}
           />
         </Grid>
         <Grid className={grid} item lg={4} md={5} xs={9}>

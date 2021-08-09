@@ -15,6 +15,7 @@
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.2",
     "country-state-city": "^3.0.1",
+    "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
@@ -52,6 +53,9 @@
   "devDependencies": {
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
-    "chokidar": "^3.5.2"
+    "axios": "^0.21.1",
+    "chokidar": "^3.5.2",
+    "react-hook-form": "^7.12.2",
+    "webpack-dev-server": "^3.11.0"
   }
 }

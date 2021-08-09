@@ -35,7 +35,7 @@ const VerificationContext = () => {
 
 
   return (
-        <>
+        <Grid container>
           <Grid className={root} item  xs={12}>
             <img className={Icon} src={icon} alt="icon" />
             <Grid item xs={12}>
@@ -66,7 +66,7 @@ const VerificationContext = () => {
               </button>
             </Typography>
           </Grid>
-        </> 
+        </Grid> 
   );
 };
 

@@ -14,7 +14,14 @@ const initialValues: any = {
 };
 
 export const useForm = (validateOnChange = false) => {
-  const { loading, responseStatus, responseMessage, addRequest } = useApi();
+  const {
+    loading,
+    alertOpen,
+    setAlertOpen,
+    responseStatus,
+    responseMessage,
+    addRequest,
+  } = useApi();
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialValues);
   const [isLoading, setIsLoading] = useState(false);
@@ -77,7 +84,7 @@ export const useForm = (validateOnChange = false) => {
       lastName: values.lastName,
       email: values.email,
       password: values.password,
-      confirmPassword: values.confirmPassword,
+      passwordConfirm: values.confirmPassword,
     };
     console.log("requestBody", requestBody);
     await addRequest(API_ENDPOINTS.USERS.SIGNUP.WITH_EMAIL, requestBody);
@@ -107,6 +114,10 @@ export const useForm = (validateOnChange = false) => {
     validate,
     handleSubmit,
     handleEmailSubmit,
-    isLoading,
+    loading,
+    alertOpen,
+    setAlertOpen,
+    responseStatus,
+    responseMessage,
   };
 };

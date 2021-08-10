@@ -2,12 +2,13 @@ import Img1 from "../assets/image1.png"
 import Img2 from "../assets/image2.png"
 import Img3 from "../assets/image3.png"
 
-import car from "../../../assets/Group 56.png";
+import car from "../assets/Group 56.png";
 import download from "../assets/dowloadApp.png";
 import apple from "../assets/Apple logo.png";
 import arrow from "../assets/Subtract.png";
 import replaceImg from "../assets/image 5.png";
 
+import phoneIcon from "../assets/phone.png";
 
 import { Colors } from "./color.constants";
 
@@ -58,6 +59,8 @@ export const num = " ********* 180"
 export const code = "Didn't get the code?"
 export const buttonText = "Resend code"
 export const mainBtn = "Continue"
+export const regex = /^[ A-Za-z0-9_@./#&+-]*$/
+export const icon = phoneIcon
 
 
 export const pin = {

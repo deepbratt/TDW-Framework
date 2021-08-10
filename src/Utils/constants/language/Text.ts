@@ -1,10 +1,10 @@
-import Img1 from "../assets/image1.png";
-import Img2 from "../assets/image2.png";
-import Img3 from "../assets/image3.png";
+import Img1 from "../../../assets/Cars/image1.png";
+import Img2 from "../../../assets/Cars/image2.png";
+import Img3 from "../../../assets/Cars/image3.png";
 
-import car from "../assets/car.png"
-import picture from "../assets/picture.png"
-import tag from "../assets/tag.png"
+import car from "../../../assets/Cars/car.png"
+import picture from "../../../assets/Cars/picture.png"
+import tag from "../../../assets/Cars/tag.png"
 
 export const Title = "Find Your Perfect Car";
 export const subTitle =
@@ -39,11 +39,7 @@ export const carModel = ["Audi", "Mehran", "Range Rover"];
 
 export const cities = ["Lahore", "Cape Town", "Karachi"];
 
-export const priceRange = ["1000-2000", "3000-4000", "6000-10000"];
-
-
-
-
+export const priceRange = {min: "500000",max: "3000000"};
 
 
 

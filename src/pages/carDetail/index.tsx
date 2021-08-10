@@ -1,10 +1,11 @@
-// import Page from "../../layout/Pages/carDetail"
-const CarDetailContainer = () => {
-  return (
-    // <Page/>
-    <>
-    </>
-  );
-};
+import React from 'react'
 
-export default CarDetailContainer;
+const index = () => {
+  return (
+    <div>
+      <h1>Car detail</h1>
+    </div>
+  )
+}
+
+export default index

@@ -1,6 +1,14 @@
 import { useForm } from "./useForm";
-import { Typography, LinearProgress } from "@material-ui/core";
-import { Grid, Card, Button } from "@material-ui/core";
+import { useHistory } from "react-router";
+import Toast from "../../components/Toast";
+import {
+  Typography,
+  LinearProgress,
+  Grid,
+  Card,
+  Button,
+} from "@material-ui/core";
+import { routes } from "../../routes/paths";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../Utils/constants/formsConstants";
 import {
@@ -8,10 +16,6 @@ import {
   SIGNUP,
 } from "../../Utils/constants/language/en/buttonLabels";
 import GlobalStyles from "../../globalStyles";
-import useApi from "../../Utils/hooks/useApi";
-import { useHistory } from "react-router";
-import { routes } from "../../routes/paths";
-import Toast from "../../components/Toast";
 
 const SignupWithEmail = () => {
   const { loginFormGrid, formCard, formStyle, loginbtn } = GlobalStyles();
@@ -139,7 +143,7 @@ const SignupWithEmail = () => {
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-          severity={responseStatus}
+          type={responseStatus}
           message={responseMessage}
         />
       )}

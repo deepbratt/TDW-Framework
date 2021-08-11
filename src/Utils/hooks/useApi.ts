@@ -23,8 +23,8 @@ const useApi = () => {
         console.log("error", error);
         setLoading(false);
         setAlertOpen(true);
-        setResponseStatus(error.status);
-        setResponseMessage(error.message);
+        setResponseStatus("error");
+        setResponseMessage(error);
       });
   };
 
@@ -42,7 +42,7 @@ const useApi = () => {
         console.log("error", error);
         setLoading(false);
         setAlertOpen(true);
-        setResponseStatus(error.status);
+        setResponseStatus("error");
         setResponseMessage(error.message);
       });
   };

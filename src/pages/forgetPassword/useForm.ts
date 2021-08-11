@@ -1,17 +1,26 @@
 import { useState } from "react";
+import useApi from "../../Utils/hooks/useApi";
+import { API_ENDPOINTS } from "../../Utils/API/endpoints";
+import { isEmailValid, isPhoneValid } from "../../Utils/regex";
 import { messages, fieldNames } from "../../Utils/constants/formsConstants";
-import { isEmailValid } from "../../Utils/regex";
 
 const initialValues: any = {
   email: "",
 };
 
 export const useForm = (validateOnChange = false) => {
+  const { USERS, FORGOT_PASSWORD } = API_ENDPOINTS;
+  const {
+    loading,
+    alertOpen,
+    setAlertOpen,
+    responseStatus,
+    responseMessage,
+    addRequest,
+  } = useApi();
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialValues);
-  const [isLoading, setIsLoading] = useState(false);
-  const [responseMessage, setResponseMessage] = useState("");
-  const [resetLinkMessage, setResetLinkMessage] = useState("");
+  const [resetLinkMessage, setResetLinkMessage] = useState(false);
 
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
@@ -20,7 +29,7 @@ export const useForm = (validateOnChange = false) => {
       temp.email =
         fieldValues.email.trim() === ""
           ? messages.isRequired
-          : isEmailValid(fieldValues.email)
+          : isEmailValid(fieldValues.email) || isPhoneValid(fieldValues.email)
           ? ""
           : messages.notValid;
     }
@@ -50,14 +59,16 @@ export const useForm = (validateOnChange = false) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("btn clicked", values);
     if (validate()) {
-      setIsLoading(true);
-      console.log(values);
       let requestBody = {
-        email: values.email,
+        data: values.email,
       };
-      console.log("request body,", requestBody);
+      console.log("requestBody", requestBody);
+      await addRequest(USERS + FORGOT_PASSWORD, requestBody).then(() => {
+        if (responseStatus === "success") {
+          setResetLinkMessage(true);
+        }
+      });
     }
   };
 
@@ -70,9 +81,12 @@ export const useForm = (validateOnChange = false) => {
     resetForm,
     validate,
     handleSubmit,
-    isLoading,
     resetLinkMessage,
-    responseMessage,
     setResetLinkMessage,
+    loading,
+    alertOpen,
+    setAlertOpen,
+    responseStatus,
+    responseMessage,
   };
 };

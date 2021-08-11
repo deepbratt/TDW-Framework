@@ -1,4 +1,6 @@
 import { useState } from "react";
+import useApi from "../../Utils/hooks/useApi";
+import { API_ENDPOINTS } from "../../Utils/API/endpoints";
 import { fieldNames, messages } from "../../Utils/constants/formsConstants";
 
 const initialValues: any = {
@@ -7,11 +9,17 @@ const initialValues: any = {
 };
 
 export const useForm = (token: any, validateOnChange = false) => {
+  const { USERS, FORGOT_PASSWORD } = API_ENDPOINTS;
+  const {
+    loading,
+    alertOpen,
+    setAlertOpen,
+    responseStatus,
+    responseMessage,
+    addRequest,
+  } = useApi();
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialValues);
-  const [responseMessage, setResponseMessage] = useState("");
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
@@ -51,15 +59,13 @@ export const useForm = (token: any, validateOnChange = false) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("btn clicked", values);
     if (validate()) {
-      setIsLoading(true);
-      console.log(values, token);
       let requestBody = {
         password: values.password,
         passwordConfirm: values.confirmPassword,
       };
-      console.log("request Body", requestBody);
+      console.log("requestBody", requestBody);
+      await addRequest(USERS + FORGOT_PASSWORD + `/${token}`, requestBody);
     }
   };
 
@@ -72,7 +78,10 @@ export const useForm = (token: any, validateOnChange = false) => {
     resetForm,
     validate,
     handleSubmit,
-    isLoading,
+    loading,
+    alertOpen,
+    setAlertOpen,
+    responseStatus,
     responseMessage,
   };
 };

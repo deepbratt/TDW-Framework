@@ -1,6 +1,14 @@
 import { useForm } from "./useForm";
-import { Typography } from "@material-ui/core";
-import { Grid, Card, Button } from "@material-ui/core";
+import { useHistory } from "react-router";
+import Toast from "../../components/Toast";
+import { routes } from "../../routes/paths";
+import {
+  Typography,
+  LinearProgress,
+  Grid,
+  Card,
+  Button,
+} from "@material-ui/core";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../Utils/constants/formsConstants";
 import {
@@ -11,7 +19,29 @@ import GlobalStyles from "../../globalStyles";
 
 const SignupWithMobile = () => {
   const { loginFormGrid, formCard, formStyle, loginbtn } = GlobalStyles();
-  const { values, errors, handleInputChange, handleSubmit } = useForm();
+  const history = useHistory();
+  const {
+    values,
+    errors,
+    handleInputChange,
+    handleMobileSubmit,
+    loading,
+    alertOpen,
+    setAlertOpen,
+    responseStatus,
+    responseMessage,
+  } = useForm();
+
+  const handleAlertClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setAlertOpen(false);
+  };
 
   return (
     <Grid
@@ -21,12 +51,13 @@ const SignupWithMobile = () => {
       alignContent="center"
     >
       <Grid item xs={4}>
+        {loading && <LinearProgress color="secondary" />}
         <Card className={formCard}>
           <Typography variant="h6" gutterBottom>
             {SIGNUP}
           </Typography>
 
-          <form className={formStyle} onSubmit={handleSubmit}>
+          <form className={formStyle} onSubmit={handleMobileSubmit}>
             <Grid container spacing={1}>
               <Grid item xs={12} md={6}>
                 <InputField
@@ -95,6 +126,7 @@ const SignupWithMobile = () => {
                 <Button
                   className={loginbtn}
                   fullWidth
+                  disabled={loading}
                   variant="contained"
                   color="secondary"
                   type="submit"
@@ -103,15 +135,18 @@ const SignupWithMobile = () => {
                 </Button>
               </Grid>
             </Grid>
-
-            {/* {responseMessage && (
-              <Typography color="error" variant="subtitle1">
-                {responseMessage}
-              </Typography>
-            )} */}
+            {responseStatus === "success" && history.push(routes.verification)}
           </form>
         </Card>
       </Grid>
+      {responseMessage && (
+        <Toast
+          open={alertOpen}
+          onClose={handleAlertClose}
+          type={responseStatus}
+          message={responseMessage}
+        />
+      )}
     </Grid>
   );
 };

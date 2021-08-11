@@ -1,5 +1,14 @@
 import { useForm } from "./useForm";
-import { Grid, Card, Button, Typography } from "@material-ui/core";
+import { useHistory } from "react-router";
+import Toast from "../../components/Toast";
+import { routes } from "../../routes/paths";
+import {
+  Grid,
+  LinearProgress,
+  Card,
+  Button,
+  Typography,
+} from "@material-ui/core";
 import GlobalStyles from "../../globalStyles";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../Utils/constants/formsConstants";
@@ -11,16 +20,30 @@ import {
 } from "../../Utils/constants/language/en/buttonLabels";
 
 const ForgetPassword = () => {
+  const history = useHistory();
   const {
     values,
     errors,
     handleInputChange,
     handleSubmit,
+    loading,
+    alertOpen,
+    setAlertOpen,
+    responseStatus,
     responseMessage,
     resetLinkMessage,
-    setResetLinkMessage,
   } = useForm();
   const { loginFormGrid, formStyle, formCard, loginbtn } = GlobalStyles();
+
+  const handleAlertClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAlertOpen(false);
+  };
 
   return (
     <Grid
@@ -30,6 +53,7 @@ const ForgetPassword = () => {
       alignContent="center"
     >
       <Grid item xs={4}>
+        {loading && <LinearProgress color="secondary" />}
         <Card className={formCard}>
           <Typography variant="h3" gutterBottom>
             {ACCOUNT_RECOVERY}
@@ -41,7 +65,7 @@ const ForgetPassword = () => {
               align="center"
               variant="h4"
             >
-              {resetLinkMessage}
+              {RESET_PASS_LINK_MESSAGE}
             </Typography>
           ) : (
             <>
@@ -50,7 +74,7 @@ const ForgetPassword = () => {
                   {ENTER_YOUR_EMAIL_PASS_MESSAGE}
                 </Typography>
                 <InputField
-                  id="input-email"
+                  id="input-email-phone"
                   name={fieldNames.email}
                   fullWidth
                   variant="outlined"
@@ -64,23 +88,28 @@ const ForgetPassword = () => {
                 <Button
                   className={loginbtn}
                   fullWidth
+                  disabled={loading}
                   variant="contained"
                   color="secondary"
                   type="submit"
-                  onClick={() => setResetLinkMessage(RESET_PASS_LINK_MESSAGE)}
                 >
                   {CONTINUE}
                 </Button>
-                {responseMessage && (
-                  <Typography color="error" variant="subtitle1">
-                    {responseMessage}
-                  </Typography>
-                )}
+                {responseStatus === "success" &&
+                  history.push(routes.resetPassword)}
               </form>
             </>
           )}
         </Card>
       </Grid>
+      {responseMessage && (
+        <Toast
+          open={alertOpen}
+          onClose={handleAlertClose}
+          type={responseStatus}
+          message={responseMessage}
+        />
+      )}
     </Grid>
   );
 };

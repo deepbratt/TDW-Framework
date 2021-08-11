@@ -14,6 +14,7 @@ const initialValues: any = {
 };
 
 export const useForm = (validateOnChange = false) => {
+  const { USERS, SIGNUP_WITH_EMAIL, SIGNUP_WITH_MOBILE } = API_ENDPOINTS;
   const {
     loading,
     alertOpen,
@@ -24,8 +25,6 @@ export const useForm = (validateOnChange = false) => {
   } = useApi();
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialValues);
-  const [isLoading, setIsLoading] = useState(false);
-  // const [responseMessage, setResponseMessage] = useState("");
 
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
@@ -87,21 +86,26 @@ export const useForm = (validateOnChange = false) => {
       passwordConfirm: values.confirmPassword,
     };
     console.log("requestBody", requestBody);
-    await addRequest(API_ENDPOINTS.USERS.SIGNUP.WITH_EMAIL, requestBody);
+    await addRequest(USERS + SIGNUP_WITH_EMAIL, requestBody);
+  };
+
+  const handleMobileSubmit = async (e: any) => {
+    e.preventDefault();
+
+    let requestBody = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      phone: values.mobile,
+      password: values.password,
+      passwordConfirm: values.confirmPassword,
+    };
+    console.log("requestBody", requestBody);
+    await addRequest(USERS + SIGNUP_WITH_MOBILE, requestBody);
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log("btn clicked", values);
-    if (validate()) {
-      setIsLoading(true);
-      console.log(values);
-      let requestBody = {
-        email: values.email,
-        password: values.password,
-      };
-      console.log("requestBody", requestBody);
-    }
   };
 
   return {
@@ -114,6 +118,7 @@ export const useForm = (validateOnChange = false) => {
     validate,
     handleSubmit,
     handleEmailSubmit,
+    handleMobileSubmit,
     loading,
     alertOpen,
     setAlertOpen,

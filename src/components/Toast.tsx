@@ -3,7 +3,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 interface IProp {
   open: boolean;
   message: string;
-  onClose: () => ReturnType<any>;
+  onClose: Function;
   type: string;
 }
 const Alert = (props: any) => (

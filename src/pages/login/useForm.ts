@@ -1,4 +1,6 @@
 import { useState } from "react";
+import useApi from "../../Utils/hooks/useApi";
+import { API_ENDPOINTS } from "../../Utils/API/endpoints";
 import { fieldNames, messages } from "../../Utils/constants/formsConstants";
 import { isEmailValid } from "../../Utils/regex";
 
@@ -8,10 +10,17 @@ const initialValues: any = {
 };
 
 export const useForm = (validateOnChange = false) => {
+  const { USERS, LOGIN_WITH_EMAIL } = API_ENDPOINTS;
+  const {
+    loading,
+    alertOpen,
+    setAlertOpen,
+    responseStatus,
+    responseMessage,
+    addRequest,
+  } = useApi();
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialValues);
-  const [isLoading, setIsLoading] = useState(false);
-  // const [responseMessage, setResponseMessage] = useState("");
 
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
@@ -54,18 +63,14 @@ export const useForm = (validateOnChange = false) => {
     setErrors({});
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleEmailSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("btn clicked", values);
-    if (validate()) {
-      setIsLoading(true);
-      console.log(values);
-      let requestBody = {
-        email: values.email,
-        password: values.password,
-      };
-      console.log("requestBody", requestBody);
-    }
+    let requestBody = {
+      email: values.email,
+      password: values.password,
+    };
+    console.log("requestBody", requestBody);
+    await addRequest(USERS + LOGIN_WITH_EMAIL, requestBody);
   };
 
   return {
@@ -76,7 +81,11 @@ export const useForm = (validateOnChange = false) => {
     handleInputChange,
     resetForm,
     validate,
-    handleSubmit,
-    isLoading,
+    handleEmailSubmit,
+    loading,
+    alertOpen,
+    setAlertOpen,
+    responseStatus,
+    responseMessage,
   };
 };

@@ -1,5 +1,8 @@
 import { useForm } from "./useForm";
+import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
+import Toast from "../../components/Toast";
+import { routes } from "../../routes/paths";
 import { Typography } from "@material-ui/core";
 import { Grid, Card, Button } from "@material-ui/core";
 import { PhoneAndroidRounded } from "@material-ui/icons";
@@ -18,10 +21,30 @@ import {
 import GlobalStyles from "../../globalStyles";
 
 const Login = () => {
+  const history = useHistory();
   const { loginFormGrid, formCard, buttonWrap, formStyle, loginbtn } =
     GlobalStyles();
-  const { values, errors, handleInputChange, handleSubmit } = useForm();
+  const {
+    values,
+    errors,
+    handleInputChange,
+    handleEmailSubmit,
+    loading,
+    alertOpen,
+    setAlertOpen,
+    responseStatus,
+    responseMessage,
+  } = useForm();
 
+  const handleAlertClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAlertOpen(false);
+  };
   return (
     <Grid
       className={loginFormGrid}
@@ -58,7 +81,7 @@ const Login = () => {
           >
             {CONTINUE_WITH_FACEBOOK}
           </Button>
-          <form className={formStyle} onSubmit={handleSubmit}>
+          <form className={formStyle} onSubmit={handleEmailSubmit}>
             <Typography variant="body2" gutterBottom>
               {SIGNIN_USING_ACCOUNT}
             </Typography>
@@ -100,20 +123,25 @@ const Login = () => {
             <Button
               className={loginbtn}
               fullWidth
+              disabled={loading}
               variant="contained"
               color="secondary"
               type="submit"
             >
               {SIGNIN}
             </Button>
-            {/* {responseMessage && (
-              <Typography color="error" variant="subtitle1">
-                {responseMessage}
-              </Typography>
-            )} */}
+            {responseStatus === "success" && history.push(routes.home)}
           </form>
         </Card>
       </Grid>
+      {responseMessage && (
+        <Toast
+          open={alertOpen}
+          onClose={handleAlertClose}
+          type={responseStatus}
+          message={responseMessage}
+        />
+      )}
     </Grid>
   );
 };

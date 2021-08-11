@@ -1,64 +1,221 @@
-import axios from "axios";
-
-const BASE_URL = "http://api.tezdealz.com/v1";
-const axiosInstance = axios.create({
-  baseURL: BASE_URL,
-
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    Authorization: `Bearer ${localStorage.getItem('jwt')}`
-  },
-});
-
-const useApi = (url: string) => {
-  const getData = async () => {
-    try {
-      let result = await axiosInstance.get(url);
-      return result.data;
-    } catch (error) {
-      return error.response.data;
-    }
+import { useState } from "react";
+import {
+  getData,
+  getSingleData,
+  addToFav,
+  deleteData,
+  updateUser,
+} from "./actions";
+import { ICarCard } from "../../layout/Sections/Utils/types";
+const useApi = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [obj, setObj] = useState<ICarCard>();
+  const [open, setOpen] = useState(false);
+  const [responseMessage, setResponseMessage] = useState({
+    status: "",
+    message: "",
+  });
+  const loadAllData = async (url: string) => {
+    setIsLoading(true);
+    await getData(url)
+      .then((response) => {
+        setIsLoading(false);
+        if (response.status === "success") {
+          setData(response.data.result);
+        } else {
+          return "error";
+        }
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
   };
 
-  const getSingleData = async (id: string) => {
-    try {
-      let result = await axiosInstance.get(`${url}/${id}`);
-      return result.data;
-    } catch (error) {
-      return error.response.data;
-    }
+  const loadSingleData = async (url: string, id: string) => {
+    setIsLoading(true);
+    await getSingleData(url, id)
+      .then((response) => {
+        setIsLoading(false);
+        if (response.status === "success") {
+          setData(response.data.result);
+          setObj(response.data.result);
+        } else {
+          return "error";
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
-  const addToFav = async (id: string) => {
-    try {
-      let result = await axiosInstance.patch(`${url}/${id}`);
-      return result.data;
-    } catch (error) {
-      return error.response.data;
-    }
+  const addFavs = async (url: string, id: string) => {
+    setIsLoading(true);
+    setOpen(false);
+    await addToFav(url, id)
+      .then((response) => {
+        setIsLoading(false);
+        if (response.status === "fail") {
+          setOpen(true);
+          setResponseMessage({
+            status: "error",
+            message: response.message,
+          });
+        } else {
+          setOpen(true);
+          setResponseMessage({
+            status: "success",
+            message: response.message,
+          });
+        }
+      })
+      .catch((error) => {
+        setOpen(true);
+        setResponseMessage({
+          status: "error",
+          message: error.message,
+        });
+      });
   };
 
-  const updataData = async (id: string, data: any) => {
-    try {
-      let result = await axiosInstance.patch(`${url}/${id}`, data);
-      return result.data;
-    } catch (error) {
-      return error.response.data;
+  const updateProfile = async (
+    url: string,
+    data: any,
+    number: string,
+    date: any,
+    Image: any
+  ) => {
+    setIsLoading(true);
+    var formData = new FormData();
+    {
+      Image && formData.append("image", Image);
     }
+    {
+      data.fullName && formData.append("firstName", data.fullName);
+    }
+    {
+      data.gender && formData.append("gender", data.gender);
+    }
+    {
+      data.city && formData.append("city", data.city);
+    }
+    {
+      data.userName && formData.append("displayName", data.userName);
+    }
+    {
+      date && formData.append("dateOfBirth", date);
+    }
+
+    await updateUser(url, formData)
+      .then((response) => {
+        if (response.status === "success") {
+          setIsLoading(false);
+          console.log(response);
+          setOpen(true);
+          setResponseMessage({
+            status: "success",
+            message: "Updated successfully",
+          });
+        } else {
+          setOpen(true);
+          console.log(response);
+          setResponseMessage({
+            status: "error",
+            message: response.message,
+          });
+        }
+      })
+      .catch((error) => {
+        setOpen(true);
+        setResponseMessage({
+          status: "error",
+          message: error.message,
+        });
+      });
   };
 
-  const deleteData = async (id: string) => {
-    try {
-      let result = await axiosInstance.patch(`${url}/${id}`);
-      return result.data;
-    } catch (error) {
-      return error.response.data;
-    }
+  const changePassword = async (url: string, data: any) => {
+    setIsLoading(true);
+    var formData = new FormData();
+    formData.append("passwordCurrent", data.currentPassword);
+    formData.append("password", data.newPassword);
+    formData.append("passwordConfirm", data.confirmPassword);
+
+    await updateUser(url, formData)
+      .then((response) => {
+        if (response.status === "success") {
+          setIsLoading(false);
+          console.log(response);
+          setOpen(true);
+          setResponseMessage({
+            status: "success",
+            message: response.message,
+          });
+        } else {
+          setOpen(true);
+          console.log(response);
+          setResponseMessage({
+            status: "error",
+            message: response.message,
+          });
+        }
+      })
+      .catch((error) => {
+        setOpen(true);
+        setResponseMessage({
+          status: "error",
+          message: error.message,
+        });
+      });
   };
 
-  return { getSingleData, addToFav, deleteData, updataData, getData };
+  const removeData = async (url: string, id: string) => {
+    setIsLoading(true);
+    setOpen(false);
+    await deleteData(url, id)
+      .then((response) => {
+        if (response.status === "success") {
+          let filteredArray = data.filter((item: any) => item._id !== id);
+          setIsLoading(false);
+          setData(filteredArray);
+          setOpen(true);
+          setResponseMessage({
+            status: "success",
+            message: response.message,
+          });
+        } else {
+          setOpen(true);
+          setResponseMessage({
+            status: "error",
+            message: response.message,
+          });
+        }
+      })
+      .catch((error) => {
+        setOpen(true);
+        setResponseMessage({
+          status: "error",
+          message: error.message,
+        });
+      });
+  };
+
+  return {
+    loadSingleData,
+    addFavs,
+    loadAllData,
+    removeData,
+    updateProfile,
+    changePassword,
+    data,
+    setData,
+    isLoading,
+    setResponseMessage,
+    responseMessage,
+    open,
+    setOpen,
+    obj
+  };
 };
 
 export default useApi;

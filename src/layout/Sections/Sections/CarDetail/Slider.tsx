@@ -8,7 +8,6 @@ import { Colors } from "../../Utils/color.constants";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import CustomButton from "../../../../components/CustomButton";
 import Sizes from "../../../../Utils/themeConstants";
-import { addFavs } from "../../../../Utils/hooks/actions";
 import { addToFavs } from "../../../../Utils/hooks/endpoints";
 import useApi from "../../../../Utils/hooks/useApi";
 import Toast from "../../../../components/Toast";
@@ -28,22 +27,16 @@ const Slider = ({
   date,
   isFavs,
 }: Detail) => {
-  const [open, setOpen] = useState(false);
   const [colorChange, setColorChange] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [responseMessage, setResponseMessage] = useState({
-    status: "",
-    message: "",
-  });
+
+  const { addFavs, setOpen, responseMessage, open } = useApi();
+  const { carousel, detail, btn, sec } = useStyles();
+  const { mobile } = Sizes();
+  const { gray, red, white } = Colors;
 
   const handleAlertClose = () => {
     setOpen(false);
   };
-
-  const { addToFav } = useApi(addToFavs);
-  const { carousel, detail, btn, sec } = useStyles();
-  const { mobile } = Sizes();
-  const { gray, red, white } = Colors;
 
   return (
     <Grid container>
@@ -73,13 +66,7 @@ const Slider = ({
                   <CustomButton
                     handleClick={() => {
                       if (id) {
-                        addFavs(
-                          addToFav,
-                          id,
-                          setOpen,
-                          setResponseMessage,
-                          setIsLoading
-                        );
+                        addFavs(addToFavs, id);
                         setColorChange(true);
                       }
                     }}

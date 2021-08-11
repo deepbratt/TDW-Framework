@@ -21,32 +21,27 @@ import Slides from "../../layout/Sections/Sections/CarDetail/Slider";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useStyles } from "../../layout/Sections/Sections/CarDetail/useStyles";
 import CarInformation from "../../layout/Sections/Sections/CarDetail/CarInformation";
-import useApi from "../../Utils/hooks/useApi";
-import { loadSingleData } from "../../Utils/hooks/actions";
 import { getSingleCar } from "../../Utils/hooks/endpoints";
-import { useEffect, useState } from "react";
-import { ICarCard } from "../../layout/Sections/Utils/types";
+import { useEffect } from "react";
 import { useParams } from "react-router";
+import useApi from "../../Utils/hooks/useApi"
 
 interface RouteProps {
   id: string;
 }
 const CarDetailContainer = () => {
+  const {loadSingleData,isLoading,obj} = useApi()
   const { main } = useStyles();
   const { id } = useParams<RouteProps>();
-  const { getSingleData } = useApi(getSingleCar);
-  const [data, setData] = useState<ICarCard>();
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    loadSingleData(setIsLoading, setData, getSingleData, id);
-    console.log(id)
+    loadSingleData(getSingleCar,id);
   }, []);
 
   return (
     <Grid style={{ display: "flex", justifyContent: "center" }} container>
       <Section>
-        {isLoading || !data ? (
+        {isLoading || !obj ? (
           <h1>Loading...</h1>
         ) : (
           <>
@@ -56,35 +51,35 @@ const CarDetailContainer = () => {
                 info={CarInfo}
                 feature={CarFeature}
                 desc={desc}
-                paragraph={data?.description}
+                paragraph={obj?.description}
                 arr={arr}
-                id={data?._id}
-                city={data?.registeredCity}
-                assembly={data?.assembly}
-                color={data?.bodyColor}
-                bodyType={data?.bodyType}
-                engineCapacity={data?.engineCapacity}
-                date={data.date}
-                isFavs={data.isFav}
+                id={obj?._id}
+                city={obj?.registeredCity}
+                assembly={obj?.assembly}
+                color={obj?.bodyColor}
+                bodyType={obj?.bodyType}
+                engineCapacity={obj?.engineCapacity}
+                date={obj.date}
+                isFavs={obj.isFav}
               />
               <CarDetail
                 mainButton={mainButton}
                 numButton={numButton}
                 Title={Title}
-                location={data?.city}
+                location={obj?.city}
                 rating={rating}
                 array={array}
                 locIcon={locIcon}
                 mailIcon={mailIcon}
                 ratIcon={ratIcon}
                 numbIcon={numbIcon}
-                paragraph={data?.description}
+                paragraph={obj?.description}
                 desc={desc}
-                price={data?.price}
-                year={data?.year}
-                transmission={data?.transmission}
-                mileage={data?.milage}
-                engineType={data?.engineType}
+                price={obj?.price}
+                year={obj?.year}
+                transmission={obj?.transmission}
+                mileage={obj?.milage}
+                engineType={obj?.engineType}
               />
             </Grid>
             <Hidden lgUp>
@@ -94,12 +89,12 @@ const CarDetailContainer = () => {
                   info={CarInfo}
                   // feature={data?.features}
                   feature={CarFeature}
-                  city={data?.registeredCity}
-                  assembly={data?.assembly}
-                  color={data?.bodyColor}
-                  bodyType={data?.bodyType}
-                  engineCapacity={data?.engineCapacity}
-                  date={data.date}
+                  city={obj?.registeredCity}
+                  assembly={obj?.assembly}
+                  color={obj?.bodyColor}
+                  bodyType={obj?.bodyType}
+                  engineCapacity={obj?.engineCapacity}
+                  date={obj.date}
                 />
               </Grid>
             </Hidden>

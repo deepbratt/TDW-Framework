@@ -21,6 +21,7 @@ export const locIcon = locationIcon;
 export const ratIcon = ratingIcon;
 export const numbIcon = num;
 export const mailIcon = mail;
+export const seller = "Seller Information"
 
 export const array =
   {

@@ -1,4 +1,4 @@
-
+import { Dispatch, SetStateAction } from "react";
 
 
 // car detail
@@ -58,6 +58,8 @@ interface IArray {
     province?: string;
     registeredCity?: string;
     _id?: string;
+    isFav?: boolean;
+    assembly?: string
   }
   
   
@@ -70,12 +72,13 @@ interface IArray {
     carTitle: string;
     id?: string;
     city?: string;
-    assembly?: string;
+    assembly?: string
     bodyType?: string;
     adRef?: string;
     color?: string;
     engineCapacity?: number;
     date: string;
+    isFavs?: boolean;
   }
   
   
@@ -97,6 +100,7 @@ interface IArray {
     transmission?: string;
     mileage?: number;
     engineType?: string;
+    assembly?: string
   }
 
 
@@ -133,7 +137,7 @@ interface IArray {
     Title?: string
     lessBtn?: string
     moreBtn?: string
-    items: Item;
+    items: ICarCard[];
   }
   
 
@@ -152,3 +156,63 @@ export interface CarProp {
   carSubTitle: string;
   carArray: CarArray[]
 }
+
+
+
+
+// Used cars 
+
+export interface IData {
+  model: string;
+  city: string;
+  min: number;
+  max: number;
+  area: string;
+  version: string;
+  yearFrom: number;
+  yearTo: string;
+  engine: string;
+  engineCapacityFrom: number;
+  engineCapacityTo: number;
+  mileageFrom: string;
+  mileageTo: string;
+}
+
+export interface MoreOptions {
+  allBody: string;
+  allColors: string;
+  registered: string;
+  assemblyTypes: string;
+  transmissionTypes: string;
+  adWithPics: string;
+  sellerType: string;
+  adTypes: string;
+}
+
+export interface IToggle {
+  setIsChecked?: Dispatch<SetStateAction<boolean>>;
+  isChecked?: boolean;
+  data: IData;
+  setData: (value: any) => void;
+}
+
+export interface Options {
+  setIsChecked?: Dispatch<SetStateAction<boolean>>;
+  moreOp: MoreOptions;
+  data?: Data;
+  setMoreOp: (value: any) => void;
+}
+
+
+export interface IExtend {
+  payload: ICarCard[];
+  handleAddFavs: (id:string) => void;
+  colorChange: boolean
+}
+
+
+export interface IContainer {
+  payload: ICarCard[];
+}
+
+

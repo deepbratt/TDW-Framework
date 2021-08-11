@@ -10,7 +10,6 @@ const HomePage: React.FC<HomeProps> = () => {
       <Banner Title={Title} subTitle={subTitle} category={category}  filter={filter} range={priceRange} carModel={carModel}  />
       {/* <CategorySection  data={Data} />
       <ComparisonContext/> */}
-
     </div>
   );
 };

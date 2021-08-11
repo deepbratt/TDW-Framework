@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { Colors } from "../Utils/color.constants";
+import { Colors } from "../../Utils/constants/colors/colors";
 import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
-const { white, navyBlue } = Colors;
+const { white, navyBlue} = Colors;
 const breakpoints = createBreakpoints({});
 
 const selectStyles = makeStyles((theme) => ({
@@ -32,9 +32,20 @@ const selectStyles = makeStyles((theme) => ({
     },
   },
   select: {
+    height: 55,
+    width: "50%",
+    [breakpoints.down("md")]: {
+      width: "100%",
+    },
+    outline: 'none',
+    cursor: 'pointer',
+    textAlign: 'left',
+    color: white,
+    backgroundColor: white,
+    borderRadius: "3px",
   },
   selection: {
-    height: 50,
+    height: 55,
     width: "100%",
     [breakpoints.down("md")]: {
       width: "100%",
@@ -42,13 +53,16 @@ const selectStyles = makeStyles((theme) => ({
     outline: 'none',
     cursor: 'pointer',
     textAlign: 'left',
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-
-    color: theme.palette.common.black,
-    backgroundColor: "white",
+    color: white,
+    backgroundColor: white,
     borderRadius: "3px",
+   
   },
+  cssLabel:{
+    "&.Mui-focused": {
+      color: white
+    }
+  }
 }));
 
 export default selectStyles;

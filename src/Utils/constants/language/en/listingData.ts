@@ -1,5 +1,7 @@
 import CarImage from "../../../../assets/Cars/listingCard.jpg";
 
+export const LISTING_PAGE_HEADER = "Featured Used Cars For Sale";
+
 export const CarsListingData = {
   product: {
     _id: "0f988897654de0",

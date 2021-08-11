@@ -15,5 +15,7 @@ export const Colors = {
   green: "#27AE60",
   gray: "#4F4F4F",
   malibuBlue: "rgb(9, 44, 76, 0.6)",
-  darkGray: "#F2F2F2"
+  darkGray: "#F2F2F2",
+  lightGreen: "lightGreen",
+  berryRed: "#C20000",
 };

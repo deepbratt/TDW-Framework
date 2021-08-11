@@ -1,23 +1,27 @@
 import { Snackbar } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
-
-function Alert(props: any) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
+interface IProp {
+  open: boolean;
+  message: string;
+  onClose: () => ReturnType<any>;
+  type: string;
 }
+const Alert = (props: any) => (
+  <MuiAlert elevation={0} variant="filled" {...props} />
+);
 
-const Toast = (props: any) => {
+const Toast = ({ open, message, type, onClose }: IProp) => {
   return (
     <Snackbar
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "left",
       }}
-      open={props.open}
-      onClose={props.onClose}
-      autoHideDuration={5000}
+      open={open}
+      autoHideDuration={20}
     >
-      <Alert onClose={props.onClose} severity={props.severity}>
-        {props.message}
+      <Alert onClose={onClose} severity={type}>
+        {message}
       </Alert>
     </Snackbar>
   );

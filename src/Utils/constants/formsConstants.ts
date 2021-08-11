@@ -12,7 +12,7 @@ export const fieldNames = {
   mobile: "mobile",
   password: "password",
   confirmPassword: "confirmPassword",
-  categories: "categories",
+  keywords: "keywords",
   priceFrom: "priceFrom",
   priceTo: "priceTo",
   yearFrom: "yearFrom",

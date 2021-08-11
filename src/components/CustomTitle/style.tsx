@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import {Colors} from "../Utils/color.constants"
+import {Colors} from "../../Utils/constants/colors/colors"
 
 const {grey,blue} = Colors
 const LayoutStyle = makeStyles((theme) => ({
@@ -19,7 +19,7 @@ const LayoutStyle = makeStyles((theme) => ({
     },
   },
   sectionHeader: {
-    marginBottom: "40px",
+    marginBottom: "0px",
   },
   subHeader: {
     color: grey,

@@ -19,7 +19,10 @@ import BreadCrumbs from "../../components/BreadCrumbs";
 import CarFilters from "../../sections/VerticalCarFilters";
 import { SortRounded } from "@material-ui/icons";
 import HorizontalFilters from "../../sections/HorizontalFilters";
-import { CarsListingData } from "../../Utils/constants/language/en/listingData";
+import {
+  CarsListingData,
+  LISTING_PAGE_HEADER,
+} from "../../Utils/constants/language/en/listingData";
 import { sortingOptions } from "../../Utils/constants/language/en/filtersData";
 import {
   APPLY_FILTERS,
@@ -28,6 +31,8 @@ import {
 import FullScreenDialog from "../../components/DialogBox/FullScreenDialog";
 import { useForm } from "./useForm";
 import { fieldNames } from "../../Utils/constants/formsConstants";
+import CustomTitle from "../../components/CustomTitle/CustomTitle";
+import { Color } from "../../theme/color";
 
 export interface CarsListingProps {}
 
@@ -56,7 +61,10 @@ const CarsListing: React.FC<CarsListingProps> = () => {
     <Grid container justify="center">
       <Grid item container xs={12} lg={10} spacing={3}>
         <Grid item xs={12}>
-          {/* // * PAGE HEADER HERE */}
+          <CustomTitle
+            color={Color.textPrimary}
+            text={`${LISTING_PAGE_HEADER} (0000)`}
+          />
         </Grid>
         <Grid item xs={12}>
           <BreadCrumbs />

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { fieldNames, messages } from "../../Utils/constants/formsConstants";
 
 const initialValues: any = {
-  categories: "",
+  keywords: "",
   priceFrom: 0,
   priceTo: 0,
   priceRange: [0, 50000000],
@@ -25,26 +25,23 @@ const initialValues: any = {
   pictireAvailability: false,
   videoAvailability: false,
   sellerType: [],
+  adType: [],
   sortingOptions: "",
 };
 
 export const useForm = (validateOnChange = true) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialValues);
+  const [appliedFilters, setAppliedFilters] = useState<any>([]);
   // const [responseMessage, setResponseMessage] = useState("");
   // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.info("Request", values);
-  }, [values]);
+    console.info("APPLIED FILTERS", appliedFilters);
+  }, [appliedFilters]);
 
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
-
-    if (fieldNames.categories in fieldValues) {
-      temp.categories =
-        fieldValues.categories.length === 0 ? messages.isRequired : "";
-    }
 
     setErrors({
       ...temp,
@@ -62,6 +59,11 @@ export const useForm = (validateOnChange = true) => {
       [name]: value,
     });
     if (validateOnChange) validate({ [name]: value });
+    if (values[name] !== value) {
+      if (!appliedFilters.includes(name)) {
+        setAppliedFilters([...appliedFilters, name]);
+      }
+    }
   };
 
   const handleCheckboxChange = (
@@ -75,6 +77,14 @@ export const useForm = (validateOnChange = true) => {
       temp = temp.filter((item: string) => item !== e.target.name);
     }
     setValues({ ...values, [filterName]: temp });
+    if (e.target.checked) {
+      if (!appliedFilters.includes(filterName)) {
+        setAppliedFilters([...appliedFilters, filterName]);
+      }
+    }
+    if (!e.target.checked) {
+      removeFilter(filterName);
+    }
   };
 
   const handleSingleCheckBoxChange = (
@@ -87,6 +97,24 @@ export const useForm = (validateOnChange = true) => {
       [name]: checked,
     });
     if (validateOnChange) validate({ [name]: checked });
+    if (e.target.checked) {
+      if (!appliedFilters.includes(name)) {
+        setAppliedFilters([...appliedFilters, name]);
+      }
+    }
+    if (!e.target.checked) {
+      removeFilter(name);
+    }
+  };
+
+  const removeFilter = (filterName: string) => {
+    setAppliedFilters(
+      appliedFilters.filter((filter: string) => filter !== filterName)
+    );
+    setValues((values: any) => {
+      values[filterName] = initialValues[filterName];
+      return { ...values };
+    });
   };
 
   const resetForm = () => {
@@ -106,6 +134,9 @@ export const useForm = (validateOnChange = true) => {
     handleInputChange,
     handleCheckboxChange,
     handleSingleCheckBoxChange,
+    appliedFilters,
+    setAppliedFilters,
+    removeFilter,
     resetForm,
     validate,
     handleSubmit,

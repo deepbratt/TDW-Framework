@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Button as MuiButton, ButtonProps , Typography} from "@material-ui/core";
 import Breakpoints from "../Utils/Breakpoints";
 import useStyles from "../components/CustomTitle/style"

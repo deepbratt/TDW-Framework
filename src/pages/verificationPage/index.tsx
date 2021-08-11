@@ -1,10 +1,10 @@
-import React from "react";
-// import VerificationPage from "../../layout/Pages/verificationPage/index"
+import VerificationContext from "../../layout/Sections/Sections/PinVerfication";
+import Section from "../../components";
 const index = () => {
   return (
-    <>
-     {/* <VerificationPage/> */}
-    </>
+    <Section>
+     <VerificationContext/>
+    </Section>
   );
 };
 

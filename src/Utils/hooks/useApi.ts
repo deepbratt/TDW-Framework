@@ -35,8 +35,8 @@ const useApi = () => {
         console.log("response", response);
         setLoading(false);
         setAlertOpen(true);
-        setResponseStatus(response.status);
-        setResponseMessage(response.message);
+        setResponseStatus(response.data.status);
+        setResponseMessage(response.data.message);
       })
       .catch((error) => {
         console.log("error", error);

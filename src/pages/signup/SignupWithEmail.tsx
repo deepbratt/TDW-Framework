@@ -9,12 +9,13 @@ import {
 } from "../../Utils/constants/language/en/buttonLabels";
 import GlobalStyles from "../../globalStyles";
 import useApi from "../../Utils/hooks/useApi";
-import { Redirect } from "react-router";
+import { useHistory } from "react-router";
 import { routes } from "../../routes/paths";
 import Toast from "../../components/Toast";
 
 const SignupWithEmail = () => {
   const { loginFormGrid, formCard, formStyle, loginbtn } = GlobalStyles();
+  const history = useHistory();
   const {
     values,
     errors,
@@ -27,7 +28,10 @@ const SignupWithEmail = () => {
     responseMessage,
   } = useForm();
 
-  const handleAlertClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
+  const handleAlertClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
     if (reason === "clickaway") {
       return;
     }
@@ -127,9 +131,7 @@ const SignupWithEmail = () => {
               </Grid>
             </Grid>
 
-            {responseStatus === "success" && (
-              <Redirect to={routes.verification} />
-            )}
+            {responseStatus === "success" && history.push(routes.verification)}
           </form>
         </Card>
       </Grid>

@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
     Accept: "application/json",
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyZGF0YSI6eyJpZCI6IjYxMDM3NWVkNmI4OTdhMDAxZDg2NGNhMSJ9LCJpYXQiOjE2MjgyNTc0NDMsImV4cCI6NjgxMjI1NzQ0M30.zx_XQmGyd3ruA371egoR137PAvIuFT7CkbqqnP7igUY`,
+    Authorization: `Bearer ${localStorage.getItem('jwt')}`
   },
 });
 

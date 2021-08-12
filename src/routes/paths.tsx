@@ -9,7 +9,6 @@ const SignupWithEmail = lazy(() => import("../pages/signup/SignupWithEmail"));
 const SignupWithMobile = lazy(() => import("../pages/signup/SignupWithMobile"));
 const AddEditCar = lazy(() => import("../pages/AddEditCar"));
 const usedCars = lazy(() => import("../pages/SearchUsedCars/index"));
-const DashBoard = lazy(() => import("../pages/profile/index"));
 const Verification = lazy(() => import("../pages/verificationPage"));
 const CarDetail = lazy(() => import("../pages/carDetail"));
 const CarComparison = lazy(() => import("../pages/carComparision/index"));
@@ -44,13 +43,13 @@ export const routes = {
   products: "/products",
   contact: "/contact",
   usedCars: "/search-used-cars",
-  carDetail: "/car-detail",
+  carDetail: "/car-detail/:id",
   carComparision: "/car-comparision",
   carShortlist: "/cars-shortlist",
   carListing: "/post-an-ad",
-  profile: "/dashboard",
+  profile: "/dashboard/:id",
   signup: "/signup",
-  verification: "/phone-number-verification",
+  verification: "/verification",
   cars: "/cars",
   forgotPassword: "/forgot-password",
   resetPassword: "/reset-password/:token",
@@ -83,10 +82,6 @@ export const privateRoutes = {
   [paths.usedCars]: {
     path: routes.usedCars,
     component: usedCars,
-  },
-  [paths.profile]: {
-    path: routes.profile,
-    component: DashBoard,
   },
   [paths.verification]: {
     path: routes.verification,
@@ -148,8 +143,16 @@ export const publicRoutes = {
     path: routes.addEditCar,
     component: AddEditCar,
   },
+  [paths.carDetail]: {
+    path: routes.carDetail,
+    component: CarDetail,
+  },
   [paths.carComparision]: {
     path: routes.carComparision,
     component: CarComparison,
+  },
+  [paths.usedCars]: {
+    path: routes.usedCars,
+    component: usedCars,
   },
 };

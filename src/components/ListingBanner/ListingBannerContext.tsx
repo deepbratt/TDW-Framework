@@ -1,9 +1,8 @@
-import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import CustomTitle from "../CustomTitle/CustomTitle";
 import useStyles from "./useStyles";
-import { IProp} from "../Utils/types";
-import { Colors } from "../Utils/color.constants";
+import { IProp} from "../../Utils/interfaces/banner.interface";
+import { Colors } from "../../Utils/constants/colors/colors";
 const ListingBannerContext = ({carTitle,carSubTitle,array} : IProp) => {
   const { root, grid, img, banner} = useStyles();
   const { white } = Colors;

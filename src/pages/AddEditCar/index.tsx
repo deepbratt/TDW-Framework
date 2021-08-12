@@ -8,8 +8,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import Sizes from "../../Utils/themeConstants";
-import CustomStepper from "./CustomStepperIcon";
-import useAddEditCar from "./useAddEditCar";
+import CustomStepper from "../../Pages/AddEditCar/CustomStepperIcon";
+import useAddEditCar from "../../Pages/AddEditCar/useAddEditCar";
 import addEditCarData from "../../Utils/constants/language/en/addEditCarData";
 
 const AddEditCar = () => {
@@ -22,16 +22,16 @@ const AddEditCar = () => {
       <Grid item xs={12}>
         Banner
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} style={{padding:"60px"}}>
         <Stepper
           activeStep={activeStep}
-          style={{ padding: "0" }}
+          style={{ marginTop: "50px" }}
           orientation={
             size.mobileLarge || size.mobile ? "vertical" : "horizontal"
           }
         >
           {addEditCarData.steps.map((label, index) => (
-            <Step key={label} style={{ padding: "0" }}>
+            <Step key={label} style={{ width: "100%" }}>
               {size.mobileLarge || size.mobile ? (
                 <StepLabel>{label}</StepLabel>
               ) : (
@@ -83,15 +83,11 @@ const AddEditCar = () => {
           >
             {addEditCarData.buttons.back}
           </Button>
-          {activeStep === addEditCarData.steps.length - 1 ? (
-            <Button variant="contained" color="primary" onClick={handleNext}>
-              {addEditCarData.buttons.post}
-            </Button>
-          ) : (
-            <Button variant="contained" color="primary" onClick={handleNext}>
-              {addEditCarData.buttons.next}
-            </Button>
-          )}
+          <Button variant="contained" color="primary" onClick={handleNext}>
+            {activeStep === addEditCarData.steps.length - 1
+              ? addEditCarData.buttons.post
+              : addEditCarData.buttons.next}
+          </Button>
         </Grid>
       </Grid>
     </Grid>

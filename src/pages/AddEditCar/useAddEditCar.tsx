@@ -1,7 +1,10 @@
 import { useEffect, useReducer, useState } from "react";
+import { useParams } from "react-router";
 import CarAdditionalInformation from "./CarAdditionalInformation";
 import CarInformationForm from "./CarInformationForm";
 import UploadPhotosForm from "./UploadPhotosForm";
+import { City, State } from "country-state-city";
+import { IState } from "country-state-city/dist/lib/interface";
 
 const formReducer = (state: any, event: any) => {
   return {
@@ -12,7 +15,12 @@ const formReducer = (state: any, event: any) => {
 
 const initialFieldValues = {
   city: "",
-  carInfo: "",
+  carModel: "",
+  carMake: "",
+  modelYear: "",
+  bodyColor: "",
+  bodyType: "",
+  bodyCondition: "",
   registeredIn: "",
   mileage: "",
   price: "",
@@ -23,42 +31,44 @@ const initialFieldValues = {
   assembly: "",
   images: [],
   features: [],
+  province: "",
+  location: { coordinates: { lat: "", long: "" }, address: "" },
 };
 
-const initialAllRequireError = {
-  city: false,
-  carInfo: false,
-  registeredIn: false,
-  mileage: false,
-  price: false,
-  engineType: false,
-  engineCapacity: false,
-  transmission: false,
-  assembly: false,
-  images: false,
-};
-
+// validating step 1
 const initialRequireError = {
   city: false,
-  carInfo: false,
+  carModel: false,
+  carMake: false,
+  modelYear: false,
+  bodyColor: false,
   registeredIn: false,
   mileage: false,
   price: false,
 };
 
+// step 2 validation is on the go
+
+// validating step 3
 const initialRequireError_2 = {
   engineType: false,
   engineCapacity: false,
   transmission: false,
+  bodyCondition: false,
+  bodyType: false,
   assembly: false,
   images: false,
 };
 
 const useAddEditCar = () => {
+  const { id } = useParams<{ id: string }>();
   const [formData, setFormData] = useReducer(formReducer, initialFieldValues);
   const [activeStep, setActiveStep] = useState(0);
   const [images, setImages] = useState<Array<any>>([]);
-  const [requireError, setRequireError] = useState(initialAllRequireError);
+  const [requireError, setRequireError] = useState({
+    ...initialRequireError,
+    ...initialRequireError_2,
+  });
   const updateImagesState = (img: any) => {
     setImages(img);
     setFormData({ name: "images", value: img });
@@ -73,9 +83,9 @@ const useAddEditCar = () => {
     });
     event.target.value = event.target.name === "image" && null;
   };
-  const handleChangeSelect = (name:string, value:any)=>{
-    setFormData({name: name, value: value})
-  }
+  const handleChangeSelect = (name: string, value: any) => {
+    setFormData({ name: name, value: value });
+  };
   const ComponentContent = [
     <CarInformationForm
       formData={formData}
@@ -98,8 +108,8 @@ const useAddEditCar = () => {
   ];
 
   useEffect(() => {
-    console.log("car add edit - image/photo edited");
-  }, [images]);
+    console.log("car add edit ", id);
+  }, [id]);
 
   function allFalse(obj: any) {
     for (var o in obj) {
@@ -108,145 +118,89 @@ const useAddEditCar = () => {
     return true;
   }
 
-  const validateStep1 = () => {
-    let flagRequireError = Object.assign({}, initialRequireError);
-    if (formData.city === "" || formData.city === "null"|| !formData.city) {
-      setRequireError((requireError) => {
-        return { ...requireError, city: true };
-      });
-      flagRequireError.city = true;
-    } else {
-      setRequireError((requireError) => {
-        return { ...requireError, city: false };
-      });
-    }
-
-    if (formData.carInfo === "" || formData.carInfo === "null") {
-      setRequireError((requireError) => {
-        return { ...requireError, carInfo: true };
-      });
-      flagRequireError.carInfo = true;
-    } else {
-      setRequireError((requireError) => {
-        return { ...requireError, carInfo: false };
-      });
-    }
-
-    if (formData.mileage === "" || formData.mileage === "null") {
-      setRequireError((requireError) => {
-        return { ...requireError, mileage: true };
-      });
-      flagRequireError.mileage = true;
-    } else {
-      setRequireError((requireError) => {
-        return { ...requireError, mileage: false };
-      });
-    }
-
-    if (formData.registeredIn === "" || formData.registeredIn === "null") {
-      setRequireError((requireError) => {
-        return { ...requireError, registeredIn: true };
-      });
-      flagRequireError.registeredIn = true;
-    } else {
-      setRequireError((requireError) => {
-        return { ...requireError, registeredIn: false };
-      });
-    }
-
-    if (formData.price === "" || formData.price === "null") {
-      setRequireError((requireError) => {
-        return { ...requireError, price: true };
-      });
-      flagRequireError.price = true;
-    } else {
-      setRequireError((requireError) => {
-        return { ...requireError, price: false };
-      });
-    }
-
+  function checkValidation(validationObject: object) {
+    let flagRequireError = Object.assign({}, validationObject);
+    Object.keys(validationObject).forEach((key) => {
+      if (formData[key] === "" || formData[key] === "null" || !formData[key]) {
+        setRequireError((requireError) => {
+          return { ...requireError, [key]: true };
+        });
+        flagRequireError = { ...flagRequireError, [key]: true };
+      } else {
+        setRequireError((requireError) => {
+          return { ...requireError, [key]: false };
+        });
+      }
+    });
     return allFalse(flagRequireError);
-  };
-
-  const validateStep3 = () => {
-    let flagRequireError = Object.assign({}, initialRequireError_2);
-    if (formData.engineType === "" || formData.engineType === "null") {
-      setRequireError((requireError) => {
-        return { ...requireError, engineType: true };
-      });
-      flagRequireError.engineType = true;
-    } else {
-      setRequireError((requireError) => {
-        return { ...requireError, engineType: false };
-      });
-    }
-
-    if (formData.engineCapacity === "" || formData.engineCapacity === "null") {
-      setRequireError((requireError) => {
-        return { ...requireError, engineCapacity: true };
-      });
-      flagRequireError.engineCapacity = true;
-    } else {
-      setRequireError((requireError) => {
-        return { ...requireError, engineCapacity: false };
-      });
-    }
-
-    if (formData.transmission === "" || formData.transmission === "null") {
-      setRequireError((requireError) => {
-        return { ...requireError, transmission: true };
-      });
-      flagRequireError.transmission = true;
-    } else {
-      setRequireError((requireError) => {
-        return { ...requireError, transmission: false };
-      });
-    }
-
-    if (formData.assembly === "" || formData.assembly === "null") {
-      setRequireError((requireError) => {
-        return { ...requireError, assembly: true };
-      });
-      flagRequireError.assembly = true;
-    } else {
-      setRequireError((requireError) => {
-        return { ...requireError, assembly: false };
-      });
-    }
-
-    return allFalse(flagRequireError);
-  };
+  }
 
   const handleNext = () => {
-    console.log(formData);
-    let firstStepValidated = true;
-    let secondStepValidated = true;
-    let thirdStepValidated = true;
     if (activeStep === 0) {
-      firstStepValidated = validateStep1();
+      if (!checkValidation(initialRequireError)) {
+        return;
+      } else {
+        let cityData = City.getCitiesOfCountry("PK");
+        let cityInformation = cityData?.filter(
+          (city) => city.name === formData.city
+        );
+        let provinceInformation: IState | undefined;
+        if (cityInformation) {
+          provinceInformation = State.getStateByCodeAndCountry(
+            cityInformation[0].stateCode,
+            "PK"
+          );
+          setFormData({
+            name: "location",
+            value: {
+              coordinate: {
+                lat: cityInformation[0].latitude,
+                long: cityInformation[0].longitude,
+              },
+              address: `${formData.city}, ${provinceInformation?.name}`,
+            },
+          });
+          setFormData({ name: "province", value: provinceInformation?.name });
+        }
+      }
     } else if (activeStep === 1) {
-      secondStepValidated = images.length > 0;
+      let secondStepValidated = images.length > 0;
       setRequireError((requireError) => {
         return { ...requireError, images: !secondStepValidated };
       });
+      if (!secondStepValidated) {
+        return;
+      }
     } else {
-      thirdStepValidated = validateStep3();
-    }
-    if (activeStep === 0 && !firstStepValidated) {
-      return;
-    }
-
-    if (activeStep === 1 && !secondStepValidated) {
-      return;
-    }
-
-    if (activeStep === 2 && !thirdStepValidated) {
-      return;
+      if (!checkValidation(initialRequireError_2)) {
+        return;
+      }
     }
 
     if (activeStep === 2) {
       console.log("submit following data: ");
-      console.log(formData);
+      // console.log(formData);
+      let fd = new FormData()
+      fd.append("country", "Pakistan")
+      fd.append("city", formData.city)
+      fd.append("province", formData.province)
+      fd.append("location", formData.location)
+      fd.append("images", formData.images)
+      fd.append("model", formData.carModel)
+      fd.append("make", formData.carMake)
+      fd.append("transmission", formData.transmission)
+      fd.append("assembly", formData.assembly)
+      fd.append("registrationCity", formData.registeredIn)
+      fd.append("bodyColor", formData.bodyColor)
+      fd.append("milage", formData.mileage)
+      fd.append("condition", formData.bodyCondition)
+      fd.append("description", formData.description)
+      fd.append("bodyType", formData.bodyType)
+      fd.append("engineType", formData.engineType)
+      fd.append("date", new Date(formData.modelYear).toISOString())
+      fd.append("features", formData.features)
+      fd.append("price", formData.price)
+      console.table(Object.fromEntries(fd))
       // submit data to backend
       return;
     }

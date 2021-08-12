@@ -34,17 +34,6 @@ const CarInformationForm = ({
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={12} md={6}>
-        {/* <SelectComponent
-          menuItem={cityNames}
-          name={"city"}
-          className={classes.selectFields}
-          value={formData.city}
-          label={addEditCarData.fields.selectCity.label}
-          required
-          error={requireError.city}
-          helperText={requireError.city ? addEditCarData.requiredFieldText : ""}
-          onChange={handleChange}
-        /> */}
         <SelectInputComponent
           dataArray={cityNames}
           name={"city"}
@@ -59,33 +48,20 @@ const CarInformationForm = ({
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
         <SelectComponent
-          menuItem={addEditCarData.fields.carInformation.menu}
-          name={"carInfo"}
+          menuItem={addEditCarData.fields.carMake.menu}
+          name={"carMake"}
           className={classes.selectFields}
-          value={formData.carInfo}
-          label={addEditCarData.fields.carInformation.label}
+          value={formData.carMake}
+          label={addEditCarData.fields.carMake.label}
           required
-          error={requireError.carInfo}
+          error={requireError.carMake}
           helperText={
-            requireError.carInfo ? addEditCarData.requiredFieldText : ""
+            requireError.carMake ? addEditCarData.requiredFieldText : ""
           }
           onChange={handleChange}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
-        {/* <SelectComponent
-          menuItem={cityNames}
-          name={"registeredIn"}
-          className={classes.selectFields}
-          value={formData.registeredIn}
-          label={addEditCarData.fields.registeredIn.label}
-          required
-          error={requireError.registeredIn}
-          helperText={
-            requireError.registeredIn ? addEditCarData.requiredFieldText : ""
-          }
-          onChange={handleChange}
-        /> */}
         <SelectInputComponent
           dataArray={cityNames}
           name={"registeredIn"}
@@ -102,15 +78,45 @@ const CarInformationForm = ({
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
         <SelectComponent
-          menuItem={addEditCarData.fields.carInformation.menu}
-          name={"carInfo"}
+          menuItem={addEditCarData.fields.carModel.menu}
+          name={"carModel"}
           className={classes.selectFields}
-          value={formData.carInfo}
-          label={addEditCarData.fields.carInformation.label}
+          value={formData.carModel}
+          label={addEditCarData.fields.carModel.label}
           required
-          error={requireError.carInfo}
+          error={requireError.carModel}
           helperText={
-            requireError.carInfo ? addEditCarData.requiredFieldText : ""
+            requireError.carModel ? addEditCarData.requiredFieldText : ""
+          }
+          onChange={handleChange}
+        />
+      </Grid>
+      <Grid item xs={12} sm={12} md={6}>
+        <SelectComponent
+          menuItem={addEditCarData.fields.modelYear.menu}
+          name={"modelYear"}
+          className={classes.selectFields}
+          value={formData.modelYear}
+          label={addEditCarData.fields.modelYear.label}
+          required
+          error={requireError.modelYear}
+          helperText={
+            requireError.modelYear ? addEditCarData.requiredFieldText : ""
+          }
+          onChange={handleChange}
+        />
+      </Grid>
+      <Grid item xs={12} sm={12} md={6}>
+        <SelectComponent
+          menuItem={addEditCarData.fields.bodyColor.menu}
+          name={"bodyColor"}
+          className={classes.selectFields}
+          value={formData.bodyColor}
+          label={addEditCarData.fields.bodyColor.label}
+          required
+          error={requireError.bodyColor}
+          helperText={
+            requireError.bodyColor ? addEditCarData.requiredFieldText : ""
           }
           onChange={handleChange}
         />

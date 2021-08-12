@@ -1,3 +1,5 @@
+import onlyYears from "../../../helperFunctions";
+
 const addEditCarData = {
   // headings:{},
   fields: {
@@ -9,6 +11,36 @@ const addEditCarData = {
       label: "Car Information",
       defaultValue: "Car Information",
       menu: ["Lorem", "Ipsum", "Hello", "World"],
+    },
+    carModel: {
+      label: "Car Model",
+      defaultValue: "Car Model",
+      menu: ["Civic", "City", "Corolla", "Mehran"],
+    },
+    carMake: {
+      label: "Car Make",
+      defaultValue: "Car Make",
+      menu: ["Honda", "Toyota", "Suzuki", "Ford"],
+    },
+    modelYear: {
+      label: "Model Year",
+      defaultValue: "Model Year",
+      menu: onlyYears,
+    },
+    bodyColor: {
+      label: "Body Color",
+      defaultValue: "Body Color",
+      menu: ["black", "blue", "green", "white"],
+    },
+    bodyType: {
+      label: "Body Type",
+      defaultValue: "Body Type",
+      menu: ["Sedan", "SUV", "Mini Van", "Hatchback"],
+    },
+    bodyCondition: {
+      label: "Body Condition",
+      defaultValue: "Body Condition",
+      menu: ["poor", "good", "excellent", "New"],
     },
     registeredIn: {
       label: "Registered In",

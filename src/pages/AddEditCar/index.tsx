@@ -8,8 +8,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import Sizes from "../../Utils/themeConstants";
-import CustomStepper from "../../Pages/AddEditCar/CustomStepperIcon";
-import useAddEditCar from "../../Pages/AddEditCar/useAddEditCar";
+import CustomStepper from "./CustomStepperIcon";
+import useAddEditCar from "./useAddEditCar";
 import addEditCarData from "../../Utils/constants/language/en/addEditCarData";
 
 const AddEditCar = () => {

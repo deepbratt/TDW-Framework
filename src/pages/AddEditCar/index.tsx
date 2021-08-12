@@ -22,16 +22,16 @@ const AddEditCar = () => {
       <Grid item xs={12}>
         Banner
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} style={{padding:"60px"}}>
         <Stepper
           activeStep={activeStep}
-          style={{ padding: "50px" }}
+          style={{ marginTop: "50px" }}
           orientation={
             size.mobileLarge || size.mobile ? "vertical" : "horizontal"
           }
         >
           {addEditCarData.steps.map((label, index) => (
-            <Step key={label} style={{ padding: "0" }}>
+            <Step key={label} style={{ width: "100%" }}>
               {size.mobileLarge || size.mobile ? (
                 <StepLabel>{label}</StepLabel>
               ) : (

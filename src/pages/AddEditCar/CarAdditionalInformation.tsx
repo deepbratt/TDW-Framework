@@ -105,6 +105,36 @@ const CarAdditionalInformation = ({
           onChange={handleChange}
         />
       </Grid>
+      <Grid item xs={12} sm={12} md={6}>
+        <SelectComponent
+          menuItem={addEditCarData.fields.bodyType.menu}
+          name={"bodyType"}
+          className={classes.selectFields}
+          value={formData.bodyType}
+          label={addEditCarData.fields.bodyType.label}
+          required
+          error={requireError.bodyType}
+          helperText={
+            requireError.bodyType ? addEditCarData.requiredFieldText : ""
+          }
+          onChange={handleChange}
+        />
+      </Grid>
+      <Grid item xs={12} sm={12} md={6}>
+        <SelectComponent
+          menuItem={addEditCarData.fields.bodyCondition.menu}
+          name={"bodyCondition"}
+          className={classes.selectFields}
+          value={formData.bodyCondition}
+          label={addEditCarData.fields.bodyCondition.label}
+          required
+          error={requireError.bodyCondition}
+          helperText={
+            requireError.bodyCondition ? addEditCarData.requiredFieldText : ""
+          }
+          onChange={handleChange}
+        />
+      </Grid>
       <Grid container item xs={12}>
         <Grid item xs={12}>
           <Typography variant="body1" className={classes.checkBoxLabel}>

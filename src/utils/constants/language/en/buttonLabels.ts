@@ -24,3 +24,5 @@ export const RESET: string = "Reset";
 export const CANCEL: string = "CANCEL";
 export const CLOSE: string = "Close";
 export const CONTINUE: string = "Continue";
+export const COMPARE: string = "Compare";
+export const SHORTLIST_ITEMS: string = "ShortList Items";

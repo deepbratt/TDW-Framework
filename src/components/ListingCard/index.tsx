@@ -6,6 +6,7 @@ import {
   CardMedia,
   Typography,
 } from "@material-ui/core";
+import { routes } from "../../routes/paths";
 import ListingCardStyles from "./styles";
 import LocationIcon from "../../assets/icons/location.png";
 import { ICarCard } from "../../Utils/interfaces/products.interface";
@@ -16,9 +17,14 @@ export interface ListingCardProps {
     productImage: string;
   };
   layoutType: string;
+  handleClick?: Function;
 }
 
-const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType }) => {
+const ListingCard: React.FC<ListingCardProps> = ({
+  data,
+  layoutType,
+  handleClick,
+}) => {
   const history = useHistory();
 
   const { root, grid, featuredBadge, location } = ListingCardStyles();
@@ -93,7 +99,11 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType }) => {
                   <Typography
                     variant="h3"
                     style={{ cursor: "pointer" }}
-                    onClick={() => history.push(`/car-details/${_id}`)}
+                    onClick={() => {
+                      handleClick
+                        ? handleClick()
+                        : history.push(routes.carDetail + _id);
+                    }}
                   >
                     {name}
                   </Typography>

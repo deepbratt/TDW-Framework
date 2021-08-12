@@ -6,11 +6,12 @@ import { isEmailValid } from "../../Utils/regex";
 
 const initialValues: any = {
   email: "",
+  mobile: "",
   password: "",
 };
 
 export const useForm = (validateOnChange = false) => {
-  const { USERS, LOGIN_WITH_EMAIL } = API_ENDPOINTS;
+  const { USERS, LOGIN_WITH_EMAIL, LOGIN_WITH_MOBILE } = API_ENDPOINTS;
   const {
     loading,
     alertOpen,
@@ -73,6 +74,16 @@ export const useForm = (validateOnChange = false) => {
     await addRequest(USERS + LOGIN_WITH_EMAIL, requestBody);
   };
 
+  const handleMobileSubmit = async (e: any) => {
+    e.preventDefault();
+    let requestBody = {
+      phone: values.mobile,
+      password: values.password,
+    };
+    console.log("requestBody", requestBody);
+    await addRequest(USERS + LOGIN_WITH_MOBILE, requestBody);
+  };
+
   return {
     values,
     setValues,
@@ -82,6 +93,7 @@ export const useForm = (validateOnChange = false) => {
     resetForm,
     validate,
     handleEmailSubmit,
+    handleMobileSubmit,
     loading,
     alertOpen,
     setAlertOpen,

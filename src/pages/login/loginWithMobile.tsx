@@ -10,30 +10,25 @@ import {
   Card,
   Button,
 } from "@material-ui/core";
-import { PhoneAndroidRounded } from "@material-ui/icons";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../Utils/constants/formsConstants";
 import {
   SIGNIN,
   SIGNUP,
-  CONTINUE_WITH_PHONE,
-  CONTINUE_WITH_GOOGLE,
-  CONTINUE_WITH_FACEBOOK,
   SIGNIN_USING_ACCOUNT,
   DONOT_HAVE_ACCOUNT,
   FORGOT_PASS,
 } from "../../Utils/constants/language/en/buttonLabels";
 import GlobalStyles from "../../globalStyles";
 
-const Login = () => {
+const LoginWithMobile = () => {
   const history = useHistory();
-  const { loginFormGrid, formCard, buttonWrap, formStyle, loginbtn } =
-    GlobalStyles();
+  const { loginFormGrid, formCard, formStyle, loginbtn } = GlobalStyles();
   const {
     values,
     errors,
     handleInputChange,
-    handleEmailSubmit,
+    handleMobileSubmit,
     loading,
     alertOpen,
     setAlertOpen,
@@ -63,43 +58,19 @@ const Login = () => {
           <Typography variant="h6" gutterBottom>
             {SIGNIN}
           </Typography>
-          <Button
-            className={buttonWrap}
-            fullWidth
-            variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
-            onClick={() => history.push(routes.loginWithMobile)}
-          >
-            {CONTINUE_WITH_PHONE}
-          </Button>
-          <Button
-            className={buttonWrap}
-            fullWidth
-            variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
-          >
-            {CONTINUE_WITH_GOOGLE}
-          </Button>
-          <Button
-            className={buttonWrap}
-            fullWidth
-            variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
-          >
-            {CONTINUE_WITH_FACEBOOK}
-          </Button>
-          <form className={formStyle} onSubmit={handleEmailSubmit}>
+
+          <form className={formStyle} onSubmit={handleMobileSubmit}>
             <Typography variant="body2" gutterBottom>
               {SIGNIN_USING_ACCOUNT}
             </Typography>
             <InputField
-              id="input-email"
-              name={fieldNames.email}
+              id="input-mobile"
+              name={fieldNames.mobile}
               fullWidth
               variant="outlined"
-              label="Email"
-              value={values.email}
-              error={errors.email}
+              label="Phone"
+              value={values.mobile}
+              error={errors.mobile}
               onChange={handleInputChange}
             />
             <InputField
@@ -153,4 +124,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginWithMobile;

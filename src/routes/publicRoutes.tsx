@@ -11,6 +11,7 @@ export default function PublicRoutes({
 }: ProtectedRouteProps) {
   return (
     <Route
+    {...routeProps}
       render={(props) => (
         <Layout>
           <Component {...props} />

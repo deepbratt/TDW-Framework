@@ -15,8 +15,6 @@ const CarDetail = lazy(() => import("../pages/carDetail"));
 const CarComparison = lazy(() => import("../pages/carComparision"));
 const CarListing = lazy(() => import("../pages/postAd"));
 const CarsListing = lazy(() => import("../pages/carsListing"));
-// const ForgetPassword = lazy(() => import("../pages/ForgetPassword"));
-// const ResetPassword = lazy(() => import("../pages/ResetPassword"));
 
 export const paths = {
   home: "home",

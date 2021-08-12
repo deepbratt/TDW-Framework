@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useForm } from "../../pages/carsListing/useForm";
 import {
   Grid,
   Slider,
@@ -17,10 +19,8 @@ import HighlightOffRoundedIcon from "@material-ui/icons/HighlightOffRounded";
 import InputFieldWithButton from "../../components/InputField/InputFieldWithButton";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../Utils/constants/formsConstants";
-import { useForm } from "../../pages/carsListing/useForm";
 import VerticalFilterStyles from "./styles";
 import DialogBox from "../../components/DialogBox";
-import { useState } from "react";
 import { ICity } from "country-state-city/dist/lib/interface";
 import { APPLIED_FILTERS } from "../../Utils/constants/language/en/buttonLabels";
 

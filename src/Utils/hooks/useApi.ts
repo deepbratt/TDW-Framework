@@ -5,7 +5,7 @@ import { getAllData } from "../API/getAllData";
 const useApi = () => {
   const [loading, setLoading] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
-  const [responseData, setResponseData] = useState({});
+  const [responseData, setResponseData] = useState([]);
   const [responseStatus, setResponseStatus] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
 
@@ -16,15 +16,15 @@ const useApi = () => {
         console.log("response", response);
         setLoading(false);
         setAlertOpen(true);
-        setResponseStatus(response.status);
-        setResponseMessage(response.message);
+        setResponseStatus(response.data.status);
+        setResponseMessage(response.data.message);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log("error", error.response);
         setLoading(false);
         setAlertOpen(true);
         setResponseStatus("error");
-        setResponseMessage(error);
+        setResponseMessage(error.response);
       });
   };
 
@@ -39,11 +39,11 @@ const useApi = () => {
         setResponseMessage(response.data.message);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log("error", error.data);
         setLoading(false);
         setAlertOpen(true);
         setResponseStatus("error");
-        setResponseMessage(error.message);
+        setResponseMessage(error.response);
       });
   };
 

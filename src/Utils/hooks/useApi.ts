@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { addData } from "../API/API";
-import { getAllData } from "../API/getAllData";
+import { addData, getAllData } from "../API/API";
 
 const useApi = () => {
   const [loading, setLoading] = useState(false);

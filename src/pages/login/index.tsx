@@ -23,6 +23,8 @@ import {
   DONOT_HAVE_ACCOUNT,
   FORGOT_PASS,
 } from "../../Utils/constants/language/en/buttonLabels";
+import GoogleIcon from "../../assets/icons/googleIcon.png";
+import FacebookIcon from "../../assets/icons/fbIcon.png";
 import GlobalStyles from "../../globalStyles";
 
 const Login = () => {
@@ -76,7 +78,7 @@ const Login = () => {
             className={buttonWrap}
             fullWidth
             variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
+            startIcon={<img src={GoogleIcon} alt="google-icon" />}
           >
             {CONTINUE_WITH_GOOGLE}
           </Button>
@@ -84,7 +86,7 @@ const Login = () => {
             className={buttonWrap}
             fullWidth
             variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
+            startIcon={<img src={FacebookIcon} alt="facebook-icon" />}
           >
             {CONTINUE_WITH_FACEBOOK}
           </Button>
@@ -114,7 +116,7 @@ const Login = () => {
               onChange={handleInputChange}
             />
             <Typography>
-              <NavLink to={"/forgot-password"}>{FORGOT_PASS}</NavLink>
+              <NavLink to={routes.forgotPassword}>{FORGOT_PASS}</NavLink>
             </Typography>
 
             <Typography
@@ -124,7 +126,8 @@ const Login = () => {
               component="h6"
               gutterBottom
             >
-              {DONOT_HAVE_ACCOUNT} <NavLink to={"/signup"}>{SIGNUP}</NavLink>
+              {DONOT_HAVE_ACCOUNT}{" "}
+              <NavLink to={routes.signup}>{SIGNUP}</NavLink>
             </Typography>
 
             <Button

@@ -1,7 +1,7 @@
 import { NavLink, useHistory } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import { Grid, Card, Button } from "@material-ui/core";
-import { PhoneAndroidRounded } from "@material-ui/icons";
+import { EmailRounded, PhoneAndroidRounded } from "@material-ui/icons";
 import {
   SIGNIN,
   SIGNUP,
@@ -11,7 +11,10 @@ import {
   CONTINUE_WITH_EMAIL,
   ALREADY_HAVE_ACCOUNT,
 } from "../../Utils/constants/language/en/buttonLabels";
+import GoogleIcon from "../../assets/icons/googleIcon.png";
+import FacebookIcon from "../../assets/icons/fbIcon.png";
 import GlobalStyles from "../../globalStyles";
+import { routes } from "../../routes/paths";
 
 const Signup = () => {
   const history = useHistory();
@@ -34,7 +37,7 @@ const Signup = () => {
             fullWidth
             variant="outlined"
             startIcon={<PhoneAndroidRounded />}
-            onClick={() => history.push("/signup-with-mobile")}
+            onClick={() => history.push(routes.signupWithMobile)}
           >
             {CONTINUE_WITH_PHONE}
           </Button>
@@ -42,7 +45,7 @@ const Signup = () => {
             className={buttonWrap}
             fullWidth
             variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
+            startIcon={<img src={GoogleIcon} alt="google-icon" />}
           >
             {CONTINUE_WITH_GOOGLE}
           </Button>
@@ -50,7 +53,7 @@ const Signup = () => {
             className={buttonWrap}
             fullWidth
             variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
+            startIcon={<img src={FacebookIcon} alt="facebook-icon" />}
           >
             {CONTINUE_WITH_FACEBOOK}
           </Button>
@@ -58,8 +61,8 @@ const Signup = () => {
             className={buttonWrap}
             fullWidth
             variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
-            onClick={() => history.push("/signup-with-email")}
+            startIcon={<EmailRounded />}
+            onClick={() => history.push(routes.signupWithEmail)}
           >
             {CONTINUE_WITH_EMAIL}
           </Button>
@@ -70,7 +73,7 @@ const Signup = () => {
             component="h6"
             gutterBottom
           >
-            {ALREADY_HAVE_ACCOUNT} <NavLink to={"/login"}>{SIGNIN}</NavLink>
+            {ALREADY_HAVE_ACCOUNT} <NavLink to={routes.login}>{SIGNIN}</NavLink>
           </Typography>
         </Card>
       </Grid>

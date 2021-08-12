@@ -9,17 +9,20 @@ import SelectComponent from "./SelectComponent";
 import { City } from "country-state-city";
 import addEditCarData from "../../Utils/constants/language/en/addEditCarData";
 import { Colors } from "../../Utils/constants/colors/colors";
+import SelectInputComponent from "./SelectInputComponent";
 
 interface CarInformationFormProps {
   formData: any;
   handleChange: (event: any) => void;
   requireError: any;
+  handleChangeSelect: any;
 }
 
 const CarInformationForm = ({
   formData,
   handleChange,
   requireError,
+  handleChangeSelect,
 }: CarInformationFormProps) => {
   const classes = useStyles();
   const cities = City.getCitiesOfCountry("PK");
@@ -31,7 +34,7 @@ const CarInformationForm = ({
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={12} md={6}>
-        <SelectComponent
+        {/* <SelectComponent
           menuItem={cityNames}
           name={"city"}
           className={classes.selectFields}
@@ -41,6 +44,17 @@ const CarInformationForm = ({
           error={requireError.city}
           helperText={requireError.city ? addEditCarData.requiredFieldText : ""}
           onChange={handleChange}
+        /> */}
+        <SelectInputComponent
+          dataArray={cityNames}
+          name={"city"}
+          className={classes.selectFields}
+          value={formData.city}
+          label={addEditCarData.fields.selectCity.label}
+          required
+          error={requireError.city}
+          helperText={requireError.city ? addEditCarData.requiredFieldText : ""}
+          handleChangeSelect={handleChangeSelect}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
@@ -59,7 +73,7 @@ const CarInformationForm = ({
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
-        <SelectComponent
+        {/* <SelectComponent
           menuItem={cityNames}
           name={"registeredIn"}
           className={classes.selectFields}
@@ -71,6 +85,19 @@ const CarInformationForm = ({
             requireError.registeredIn ? addEditCarData.requiredFieldText : ""
           }
           onChange={handleChange}
+        /> */}
+        <SelectInputComponent
+          dataArray={cityNames}
+          name={"registeredIn"}
+          className={classes.selectFields}
+          value={formData.registeredIn}
+          label={addEditCarData.fields.registeredIn.label}
+          required
+          error={requireError.registeredIn}
+          helperText={
+            requireError.registeredIn ? addEditCarData.requiredFieldText : ""
+          }
+          handleChangeSelect={handleChangeSelect}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>

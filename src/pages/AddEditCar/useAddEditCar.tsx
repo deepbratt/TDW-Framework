@@ -73,11 +73,15 @@ const useAddEditCar = () => {
     });
     event.target.value = event.target.name === "image" && null;
   };
+  const handleChangeSelect = (name:string, value:any)=>{
+    setFormData({name: name, value: value})
+  }
   const ComponentContent = [
     <CarInformationForm
       formData={formData}
       handleChange={handleChange}
       requireError={requireError}
+      handleChangeSelect={handleChangeSelect}
     />,
     <UploadPhotosForm
       images={images}
@@ -106,7 +110,7 @@ const useAddEditCar = () => {
 
   const validateStep1 = () => {
     let flagRequireError = Object.assign({}, initialRequireError);
-    if (formData.city === "" || formData.city === "null") {
+    if (formData.city === "" || formData.city === "null"|| !formData.city) {
       setRequireError((requireError) => {
         return { ...requireError, city: true };
       });
@@ -214,6 +218,7 @@ const useAddEditCar = () => {
   };
 
   const handleNext = () => {
+    console.log(formData);
     let firstStepValidated = true;
     let secondStepValidated = true;
     let thirdStepValidated = true;

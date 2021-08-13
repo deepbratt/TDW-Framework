@@ -16,9 +16,9 @@ const useApi = () => {
     status: "",
     message: "",
   });
-  const loadAllData = async (url: string) => {
+  const loadAllData = async (url: string,param: number | string) => {
     setIsLoading(true);
-    await getData(url)
+    await getData(url,param)
       .then((response) => {
         setIsLoading(false);
         if (response.status === "success") {
@@ -114,7 +114,7 @@ const useApi = () => {
           setOpen(true);
           setResponseMessage({
             status: "success",
-            message: "Updated successfully",
+            message: response.message,
           });
         } else {
           setOpen(true);

@@ -61,6 +61,7 @@ interface IArray {
     isFav?: boolean;
     assembly?: string
   }
+
   
   
   export interface Detail {
@@ -121,23 +122,16 @@ interface IArray {
   
 
 // carcomparision
-  interface Item {
-    [key: string]: {
-      name: string;
-      type: string;
-      data: {
-        name: string;
-        value: string;
-      }[];
-    };
-  }
+
   
   export interface IProps {
     subTitle: string
     Title?: string
     lessBtn?: string
     moreBtn?: string
-    items: ICarCard[];
+    array?: string[];
+    items: ICarCard[]
+    collapsedArray?: string[];
   }
   
 
@@ -199,7 +193,7 @@ export interface IToggle {
 export interface Options {
   setIsChecked?: Dispatch<SetStateAction<boolean>>;
   moreOp: MoreOptions;
-  data?: Data;
+  data?: IData;
   setMoreOp: (value: any) => void;
 }
 
@@ -207,7 +201,6 @@ export interface Options {
 export interface IExtend {
   payload: ICarCard[];
   handleAddFavs: (id:string) => void;
-  colorChange: boolean
 }
 
 

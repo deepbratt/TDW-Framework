@@ -8,13 +8,13 @@ const axiosInstance = axios.create({
     Accept: "application/json",
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
-    Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyZGF0YSI6eyJpZCI6IjYxMDM3NWVkNmI4OTdhMDAxZDg2NGNhMSJ9LCJpYXQiOjE2MjgyNTc0NDMsImV4cCI6NjgxMjI1NzQ0M30.zx_XQmGyd3ruA371egoR137PAvIuFT7CkbqqnP7igUY`,
   },
 });
 
-export const getData = async (url: string) => {
+export const getData = async (url: string,param: number | string) => {
   try {
-    let result = await axiosInstance.get(url);
+    let result = await axiosInstance.get(`${url}${param}`);
     return result.data;
   } catch (error) {
     return error.response.data;

@@ -1,3 +1,8 @@
+import {
+  facebookAuthProvider,
+  googleAuthProvider,
+} from "../functions/authMethod";
+import socialMediaAuth from "../functions/userAuth";
 import { axiosInstance } from "./axiosInstances";
 
 export const addData = async (endpoint: string, requestBody: object) => {
@@ -13,6 +18,21 @@ export const getAllData = async (endpoint: string) => {
   try {
     const result = await axiosInstance.get(endpoint);
     return result;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const handleFacebookAuth = async () => {
+  const response = await socialMediaAuth(facebookAuthProvider);
+  console.log("response", response);
+};
+
+export const handleGoogleAuth = async () => {
+  try {
+    const response = await socialMediaAuth(googleAuthProvider);
+    console.log("response", response.additionalUserInfo.profile);
+    return response.additionalUserInfo.profile;
   } catch (error) {
     return error;
   }

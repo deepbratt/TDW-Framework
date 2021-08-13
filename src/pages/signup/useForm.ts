@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { handleGoogleAuth } from "../../Utils/API/API";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
 import { fieldNames, messages } from "../../Utils/constants/formsConstants";
 import useApi from "../../Utils/hooks/useApi";
@@ -14,7 +15,8 @@ const initialValues: any = {
 };
 
 export const useForm = (validateOnChange = false) => {
-  const { USERS, SIGNUP_WITH_EMAIL, SIGNUP_WITH_MOBILE } = API_ENDPOINTS;
+  const { USERS, SIGNUP_WITH_EMAIL, SIGNUP_WITH_MOBILE, GOOGLE_AUTH } =
+    API_ENDPOINTS;
   const {
     loading,
     alertOpen,
@@ -103,6 +105,21 @@ export const useForm = (validateOnChange = false) => {
     await addRequest(USERS + SIGNUP_WITH_MOBILE, requestBody);
   };
 
+  const handleGoogleSubmit = async () => {
+    await handleGoogleAuth().then(async (response) => {
+      let requestBody = {
+        googleId: response.id,
+        displayName: response.name,
+        firstName: response.given_name,
+        lastName: response.family_name,
+        image: response.picture,
+        email: response.email,
+      };
+      console.log("request body", requestBody);
+      await addRequest(USERS + GOOGLE_AUTH, requestBody);
+    });
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log("btn clicked", values);
@@ -119,6 +136,7 @@ export const useForm = (validateOnChange = false) => {
     handleSubmit,
     handleEmailSubmit,
     handleMobileSubmit,
+    handleGoogleSubmit,
     loading,
     alertOpen,
     setAlertOpen,

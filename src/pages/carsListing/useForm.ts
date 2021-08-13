@@ -47,19 +47,24 @@ export const useForm = (validateOnChange = true) => {
   const [appliedFilters, setAppliedFilters] = useState<any>([]);
 
   const getAllCars = useCallback(async () => {
-    let queryParams = new URLSearchParams({
-      keywords: values.keywords,
-      limit: "2",
-      page: "1",
-      city: values.city,
-    });
+    // let queryParams = new URLSearchParams({
+    //   keywords: values.keywords,
+    //   limit: "2",
+    //   page: "1",
+    //   city: values.city,
+    // });
+    let queryParams = `?limit=2&page=1&keywords=${
+      values.keywords
+    }&${values.city.map((item: any) => `city=${item}`)}&engineType=${
+      values.engineTypes
+    }`;
     console.log("queryParams", queryParams);
     await getAll(CARS + queryParams);
   }, []);
 
-  // useEffect(() => {
-  //   getAllCars();
-  // }, [getAllCars, values]);
+  useEffect(() => {
+    getAllCars();
+  }, [getAllCars, values]);
 
   useEffect(() => {
     console.log("Applied filters", appliedFilters);

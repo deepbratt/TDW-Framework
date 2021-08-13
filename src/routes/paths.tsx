@@ -1,21 +1,21 @@
 import { lazy } from "react";
-const Home = lazy(() => import("../pages/home"));
-const Login = lazy(() => import("../pages/login"));
-const ForgetPassword = lazy(() => import("../pages/forgetPassword"));
-const ResetPassword = lazy(() => import("../pages/resetPassword"));
-const Signup = lazy(() => import("../pages/signup"));
-const SignupWithEmail = lazy(() => import("../pages/signup/SignupWithEmail"));
-const SignupWithMobile = lazy(() => import("../pages/signup/SignupWithMobile"));
-const AddEditCar = lazy(() => import("../pages/AddEditCar"));
-const usedCars = lazy(() => import("../pages/SearchUsedCars"));
-const Dashboard = lazy(() => import("../pages/dashboard/index"));
-const Verification = lazy(() => import("../pages/verificationPage"));
-const CarDetail = lazy(() => import("../pages/carDetail"));
-const CarComparison = lazy(() => import("../pages/carComparision"));
-const CarListing = lazy(() => import("../pages/postAd"));
-const CarsListing = lazy(() => import("../pages/carsListing"));
-// const ForgetPassword = lazy(() => import("../pages/ForgetPassword"));
-// const ResetPassword = lazy(() => import("../pages/ResetPassword"));
+const Home = lazy(() => import("../Pages/home"));
+const Login = lazy(() => import("../Pages/login"));
+const ForgetPassword = lazy(() => import("../Pages/forgetPassword"));
+const ResetPassword = lazy(() => import("../Pages/resetPassword"));
+const Signup = lazy(() => import("../Pages/signup"));
+const SignupWithEmail = lazy(() => import("../Pages/signup/SignupWithEmail"));
+const SignupWithMobile = lazy(() => import("../Pages/signup/SignupWithMobile"));
+const AddEditCar = lazy(() => import("../Pages/AddEditCar"));
+const usedCars = lazy(() => import("../Pages/SearchUsedCars"));
+const Dashboard = lazy(() => import("../Pages/dashboard/index"));
+const Verification = lazy(() => import("../Pages/verificationPage"));
+const CarDetail = lazy(() => import("../Pages/carDetail"));
+const CarComparison = lazy(() => import("../Pages/carComparision"));
+const CarListing = lazy(() => import("../Pages/postAd"));
+const CarsListing = lazy(() => import("../Pages/carsListing"));
+// const ForgetPassword = lazy(() => import("../Pages/ForgetPassword"));
+// const ResetPassword = lazy(() => import("../Pages/ResetPassword"));
 
 export const paths = {
   home: "home",

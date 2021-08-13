@@ -26,13 +26,13 @@ const CustomStepperIcon= ({ activeIndex, index, label }: IStepIcon) => {
   const classes = useStyles();
   // const {active, completed, label} = props
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative", width:"100%" }}>
       <Typography
         className={clsx(classes.label, index === activeIndex && classes.activeText, activeIndex > index && classes.activeText)}
       >
         {label}
       </Typography>
-      <img width="95%" src={index <= activeIndex ? iconArray[index].active : iconArray[index].inactive} alt=""/>
+      <img width="100%" src={index <= activeIndex ? iconArray[index].active : iconArray[index].inactive} alt=""/>
     </div>
   );
 };

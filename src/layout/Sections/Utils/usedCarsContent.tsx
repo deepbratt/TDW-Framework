@@ -9,7 +9,8 @@ import arrowRight from "../assets/Vector (5).png";
 export const usedCarsTitle = ["Featured", "Used Cars", "For Sale"];
 export const arrowleft = arrowLeft;
 export const arrowright = arrowRight;
-
+export const icon = heart;
+export const img = car;
 export const productData = [
   {
     id: 1,
@@ -78,15 +79,19 @@ export const searchBtn = "Search";
 export const detailTitle = "Other Details"
 export const adTitle = "Ad Property"
 export const array = [
-  "City Area",
+  "Registered City",
   "Versions",
-  "Year",
+  "Year From",
   "Engine Details",
-  "Engine Capacity",
-  "Mileage",
+  "Engine Capacity From",
+  "Mileage From",
   "Car Model",
   "City",
-  "Price Range"
+  "Min",
+  "Year To",
+  "Mileage To",
+  "Engine Capacity To",
+  "Max",
 ];
 
 export const searchTitle = ["Find Cars for Sale in", "Pakistan"];
@@ -123,7 +128,7 @@ export const searchSubTitle =
     },
   ];
 
-  export const priceRange = [
+  export const Min = [
     {
       name: 5000,
       value: 5000,
@@ -135,6 +140,22 @@ export const searchSubTitle =
     {
       name: 9000,
       value: 9000,
+    },
+  ];
+
+
+  export const Max = [
+    {
+      name: 1000000,
+      value: 1000000,
+    },
+    {
+      name: 2000000,
+      value: 2000000,
+    },
+    {
+      name: 888000,
+      value: 888000,
     },
   ];
 
@@ -172,78 +193,155 @@ export const searchSubTitle =
 
   export const engine = [
     {
-      name: "All",
-      value: "All",
+      name: "Petrol",
+      value: "Petrol",
     },
     {
-      name: "Less",
-      value: "Less",
+      name: "Diesel",
+      value: "Diesel",
+    },
+    {
+      name: "CNG",
+      value: "CNG",
     },
   ];
 
 
   export const engineCapacityFrom = [
     {
-      name: "20",
-      value: 20,
+      name: 600,
+      value: 600,
     },
     {
-      name: "400",
-      value: 40,
+      name: 1000,
+      value: 1000,
     },
   ];
 
   export const engineCapacityTo = [
     {
-      name: "60",
-      value: 60,
+      name: 600,
+      value: 600,
     },
     {
-      name: "80",
-      value: 80,
+      name: 1000,
+      value: 1000,
     },
   ];
 
   export const mileageFrom = [
     {
-      name: "400km",
-      value: "400km",
+      name: 4000,
+      value: 4000,
     },
     {
-      name: "800km",
-      value: "800km",
+      name: 8000,
+      value: 8000,
     },
   ];
 
   export const mileageTo = [
     {
-      name: "600km",
-      value: "600km",
+      name: 10000,
+      value: 10000,
     },
     {
-      name: "1000km",
-      value: "1000km",
+      name: 15000,
+      value: 15000,
     },
   ];
+
+
+  export const body = [
+    {
+      name: "Pick Up",
+      value: "Pick Up",
+    },
+    {
+      name: "Sedan",
+      value: "Sedan",
+    },
+    {
+      name: "MPV",
+      value: "MPV",
+    },
+    {
+      name: "Mini Van",
+      value: "Mini Van",
+    },
+  ];
+
+  export const color = [
+    {
+      name: "Silver",
+      value: "Silver",
+    },
+    {
+      name: "White",
+      value: "White",
+    },
+    {
+      name: "Golden",
+      value: "Golden",
+    },
+    {
+      name: "Bronze",
+      value: "Bronze",
+    },
+  ];
+
+  export const assembly = [
+    {
+      name: "All Assembly Types",
+      value: "All Assembly Types",
+    },
+    {
+      name: "Local",
+      value: "Local",
+    },
+    {
+      name: "Imported",
+      value: "Imported",
+    },
+  ];
+
+  export const transmission = [
+    {
+      name: "All Transmission Types",
+      value: "All Transmission Types",
+    },
+    {
+      name: "Automatic",
+      value: "Automatic",
+    },
+    {
+      name: "Manual",
+      value: "Manual",
+    },
+  ];
+
+
 
 
 // Add Details
 
 export const detailArray = [
-  "All Body Types",
-  "All Color Types",
-  "Registered In any city",
-  "All Assembly Types",
-  "All Transmission Type",
-  "All Transmission Type",
+  "Body Types",
+  "Color Types",
+  "Registered In Any city",
+  "Assembly Types",
+  "Transmission Type",
+  "Transmission Type",
 ]
 
 
 // Add Property
 
 export const adProperty = [
-  "Ads with and without pictures",
-  "All Seller Type",
-  "All Ad Types"
+  "Ads with And Without pictures",
+  "Seller Type",
+  "Ad Types"
 ]
+
+
 

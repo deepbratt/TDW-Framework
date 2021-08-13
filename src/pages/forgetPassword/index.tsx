@@ -29,7 +29,6 @@ const ForgetPassword = () => {
     loading,
     alertOpen,
     setAlertOpen,
-    responseStatus,
     responseMessage,
     resetLinkMessage,
   } = useForm();
@@ -95,7 +94,7 @@ const ForgetPassword = () => {
                 >
                   {CONTINUE}
                 </Button>
-                {responseStatus === "success" &&
+                {responseMessage.status === "success" &&
                   history.push(routes.resetPassword)}
               </form>
             </>
@@ -106,8 +105,8 @@ const ForgetPassword = () => {
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-          type={responseStatus}
-          message={responseMessage}
+          type={responseMessage.status}
+          message={responseMessage.message}
         />
       )}
     </Grid>

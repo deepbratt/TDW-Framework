@@ -1,6 +1,6 @@
 import Banner from "../../layout/Sections/Sections/Banner/Banner";
-// import CategorySection from "../../Sections/Sections/HomeSections/Category/CategorySection";
-// import ComparisonContext from "../../Sections/Sections/HomeSections/CarComparison/ComparisonContext";
+import CategorySection from "../../layout/Sections/Sections/HomeSections/Category/CategorySection";
+import ComparisonContext from "../../layout/Sections/Sections/HomeSections/CarComparison/ComparisonContext";
 import {
   Data,
   Title,
@@ -12,7 +12,7 @@ import {
 } from "../../Utils/constants/language/Text";
 export interface HomeProps {}
 
-const HomePage: React.FC<HomeProps> = () => {
+const HomePage = () => {
   return (
     <div>
       <Banner
@@ -23,8 +23,8 @@ const HomePage: React.FC<HomeProps> = () => {
         range={priceRange}
         carModel={carModel}
       />
-      {/* <CategorySection  data={Data} />
-      <ComparisonContext/> */}
+      <CategorySection data={Data} />
+      <ComparisonContext />
     </div>
   );
 };

@@ -14,7 +14,7 @@ export const useForm = (token: any, validateOnChange = false) => {
     loading,
     alertOpen,
     setAlertOpen,
-    responseStatus,
+    
     responseMessage,
     addRequest,
   } = useApi();
@@ -81,7 +81,7 @@ export const useForm = (token: any, validateOnChange = false) => {
     loading,
     alertOpen,
     setAlertOpen,
-    responseStatus,
+    
     responseMessage,
   };
 };

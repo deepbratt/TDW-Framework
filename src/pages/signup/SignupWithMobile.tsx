@@ -28,7 +28,7 @@ const SignupWithMobile = () => {
     loading,
     alertOpen,
     setAlertOpen,
-    responseStatus,
+    
     responseMessage,
   } = useForm();
 
@@ -135,7 +135,7 @@ const SignupWithMobile = () => {
                 </Button>
               </Grid>
             </Grid>
-            {responseStatus === "success" && history.push(routes.verification)}
+            {responseMessage.status === "success" && history.push(routes.verification)}
           </form>
         </Card>
       </Grid>
@@ -143,8 +143,8 @@ const SignupWithMobile = () => {
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-          type={responseStatus}
-          message={responseMessage}
+         type={responseMessage.status}
+          message={responseMessage.message}
         />
       )}
     </Grid>

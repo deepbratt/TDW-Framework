@@ -47,7 +47,7 @@ export const routes = {
   contact: "/contact",
   usedCars: "/search-used-cars",
   carDetail: "/car-detail/:id",
-  carComparision: "/car-comparision",
+  carComparision: "/car-comparision/:_fId/:_sId",
   carListing: "/post-an-ad",
   profile: "/dashboard/:id",
   signup: "/signup",

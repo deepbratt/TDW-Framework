@@ -27,7 +27,7 @@ const ResetPassword = () => {
     loading,
     alertOpen,
     setAlertOpen,
-    responseStatus,
+    
     responseMessage,
   } = useForm("token here");
 
@@ -92,7 +92,7 @@ const ResetPassword = () => {
             >
               {RESET_PASSWORD}
             </Button>
-            {responseStatus === "success" && history.push(routes.resetPassword)}
+            {responseMessage.status === "success" && history.push(routes.resetPassword)}
           </form>
         </Card>
       </Grid>
@@ -100,8 +100,8 @@ const ResetPassword = () => {
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-          type={responseStatus}
-          message={responseMessage}
+         type={responseMessage.status}
+          message={responseMessage.message}
         />
       )}
     </Grid>

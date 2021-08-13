@@ -32,7 +32,7 @@ const Signup = () => {
     loading,
     alertOpen,
     setAlertOpen,
-    responseStatus,
+    
     responseMessage,
   } = useForm();
 
@@ -106,14 +106,14 @@ const Signup = () => {
             {ALREADY_HAVE_ACCOUNT} <NavLink to={routes.login}>{SIGNIN}</NavLink>
           </Typography>
         </Card>
-        {responseStatus === "success" && history.push(routes.verification)}
+        {responseMessage.status === "success" && history.push(routes.verification)}
       </Grid>
       {responseMessage && (
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-          type={responseStatus}
-          message={responseMessage}
+         type={responseMessage.status}
+          message={responseMessage.message}
         />
       )}
     </Grid>

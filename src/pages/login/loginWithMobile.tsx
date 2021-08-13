@@ -32,7 +32,7 @@ const LoginWithMobile = () => {
     loading,
     alertOpen,
     setAlertOpen,
-    responseStatus,
+    
     responseMessage,
   } = useForm();
 
@@ -108,7 +108,7 @@ const LoginWithMobile = () => {
             >
               {SIGNIN}
             </Button>
-            {responseStatus === "success" && history.push(routes.home)}
+            {responseMessage.status === "success" && history.push(routes.home)}
           </form>
         </Card>
       </Grid>
@@ -116,8 +116,8 @@ const LoginWithMobile = () => {
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-          type={responseStatus}
-          message={responseMessage}
+          type={responseMessage.status}
+          message={responseMessage.message}
         />
       )}
     </Grid>

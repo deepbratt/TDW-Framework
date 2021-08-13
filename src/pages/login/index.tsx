@@ -39,7 +39,7 @@ const Login = () => {
     loading,
     alertOpen,
     setAlertOpen,
-    responseStatus,
+    
     responseMessage,
   } = useForm();
 
@@ -140,7 +140,7 @@ const Login = () => {
             >
               {SIGNIN}
             </Button>
-            {responseStatus === "success" && history.push(routes.home)}
+            {responseMessage.status === "success" && history.push(routes.home)}
           </form>
         </Card>
       </Grid>
@@ -148,8 +148,8 @@ const Login = () => {
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-          type={responseStatus}
-          message={responseMessage}
+         type={responseMessage.status}
+          message={responseMessage.message}
         />
       )}
     </Grid>

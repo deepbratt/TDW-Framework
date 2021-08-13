@@ -37,7 +37,6 @@ export const useForm = (validateOnChange = true) => {
     loading,
     alertOpen,
     setAlertOpen,
-    responseStatus,
     responseMessage,
     responseData,
     getAll,
@@ -188,7 +187,6 @@ export const useForm = (validateOnChange = true) => {
     loading,
     alertOpen,
     setAlertOpen,
-    responseStatus,
     responseMessage,
   };
 };

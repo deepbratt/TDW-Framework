@@ -10,14 +10,8 @@ const initialValues: any = {
 
 export const useForm = (validateOnChange = false) => {
   const { USERS, FORGOT_PASSWORD } = API_ENDPOINTS;
-  const {
-    loading,
-    alertOpen,
-    setAlertOpen,
-    responseStatus,
-    responseMessage,
-    addRequest,
-  } = useApi();
+  const { loading, alertOpen, setAlertOpen, responseMessage, addRequest } =
+    useApi();
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialValues);
   const [resetLinkMessage, setResetLinkMessage] = useState(false);
@@ -65,7 +59,7 @@ export const useForm = (validateOnChange = false) => {
       };
       console.log("requestBody", requestBody);
       await addRequest(USERS + FORGOT_PASSWORD, requestBody).then(() => {
-        if (responseStatus === "success") {
+        if (responseMessage.status === "success") {
           setResetLinkMessage(true);
         }
       });
@@ -86,7 +80,6 @@ export const useForm = (validateOnChange = false) => {
     loading,
     alertOpen,
     setAlertOpen,
-    responseStatus,
     responseMessage,
   };
 };

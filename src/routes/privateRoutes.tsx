@@ -14,6 +14,7 @@ const PrivateRoutes = ({
 }: ProtectedRouteProps) => {
   return (
     <Route
+    {...routeProps}
       render={(props) =>
         isLoggedIn ? (
           <Layout>

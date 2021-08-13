@@ -16,7 +16,7 @@ export const useForm = (validateOnChange = false) => {
     loading,
     alertOpen,
     setAlertOpen,
-    responseStatus,
+    
     responseMessage,
     addRequest,
   } = useApi();
@@ -97,7 +97,7 @@ export const useForm = (validateOnChange = false) => {
     loading,
     alertOpen,
     setAlertOpen,
-    responseStatus,
+    
     responseMessage,
   };
 };

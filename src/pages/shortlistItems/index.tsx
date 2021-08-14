@@ -39,6 +39,7 @@ import FullScreenDialog from "../../components/DialogBox/FullScreenDialog";
 import { fieldNames } from "../../Utils/constants/formsConstants";
 import { routes } from "../../routes/paths";
 import { useHistory } from "react-router";
+import { Colors } from "../../Utils/constants/colors/colors";
 
 export interface ShortlistItemProps {}
 
@@ -89,7 +90,7 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
                 style={{
                   padding: "20px 15px",
                   margin: "10px 0",
-                  backgroundColor: "#092C4C",
+                  backgroundColor: Colors.navyBlue,
                 }}
               >
                 <Typography style={{ color: "white" }} variant="h4">
@@ -212,7 +213,7 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
                   <Grid container item xs={3} alignContent="flex-end">
                     <Button
                       color="secondary"
-                      onClick={() => history.push(routes.carComparision)}
+                      onClick={() => history.push(`${routes.carComparision}/${shortListItems[0].product._id}/${shortListItems[1].product._id}`)}
                     >
                       {COMPARE}
                     </Button>

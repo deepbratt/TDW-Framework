@@ -1,4 +1,5 @@
 import React from "react";
+import { useForm } from "./useForm";
 import { useSelector } from "react-redux";
 import {
   Chip,
@@ -21,23 +22,36 @@ import { SortRounded } from "@material-ui/icons";
 import HorizontalFilters from "../../sections/HorizontalFilters";
 import {
   CarsListingData,
+  ICarData,
   LISTING_PAGE_HEADER,
 } from "../../Utils/constants/language/en/listingData";
+import ShortListCard from "../../components/ShortListCard";
+import CustomTitle from "../../components/CustomTitle/CustomTitle";
+import { Color } from "../../theme/color";
 import { sortingOptions } from "../../Utils/constants/language/en/filtersData";
 import {
   APPLY_FILTERS,
+  COMPARE,
   SHOW_RESULT,
+  SHORTLIST_ITEMS,
 } from "../../Utils/constants/language/en/buttonLabels";
 import FullScreenDialog from "../../components/DialogBox/FullScreenDialog";
-import { useForm } from "./useForm";
 import { fieldNames } from "../../Utils/constants/formsConstants";
-import CustomTitle from "../../components/CustomTitle/CustomTitle";
-import { Color } from "../../theme/color";
+import { routes } from "../../routes/paths";
+import { useHistory } from "react-router";
+import { Colors } from "../../Utils/constants/colors/colors";
 
-export interface CarsListingProps {}
+export interface ShortlistItemProps {}
 
-const CarsListing: React.FC<CarsListingProps> = () => {
-  const { values, handleInputChange } = useForm();
+const ShortlistItem: React.FC<ShortlistItemProps> = () => {
+  const history = useHistory();
+  const {
+    values,
+    handleInputChange,
+    shortListItems,
+    shortListItem,
+    removeShortListItem,
+  } = useForm();
 
   const [open, setOpen] = React.useState(false);
   const [sortDrawerOpen, setSortDrawerOpen] = React.useState(false);
@@ -76,7 +90,7 @@ const CarsListing: React.FC<CarsListingProps> = () => {
                 style={{
                   padding: "20px 15px",
                   margin: "10px 0",
-                  backgroundColor: "#092C4C",
+                  backgroundColor: Colors.navyBlue,
                 }}
               >
                 <Typography style={{ color: "white" }} variant="h4">
@@ -177,21 +191,54 @@ const CarsListing: React.FC<CarsListingProps> = () => {
               <HorizontalFilters />
             </Grid>
           </Hidden>
-          <Grid item container xs={12} spacing={1}>
+          {shortListItems.length > 0 && (
             <Grid item container xs={12} spacing={1}>
-              {CarsListingData &&
-                CarsListingData.map((cardData, index) => (
-                  <Grid
-                    key={`cars-card-${index}`}
-                    item
-                    xs={12}
-                    sm={layoutType === "list" ? 12 : 6}
-                    xl={layoutType === "list" ? 12 : 6}
-                  >
-                    <ListingCard data={cardData} layoutType={layoutType} />
+              <Grid item xs={12}>
+                <Typography variant="h4" gutterBottom>
+                  {SHORTLIST_ITEMS}
+                </Typography>
+              </Grid>
+              <Grid item container xs={12} spacing={1}>
+                {shortListItems.map((item: ICarData) => (
+                  <Grid key={`shotlist-item-${item.product.name}`} item xs={2}>
+                    <ShortListCard
+                      productImg={item.productImage}
+                      name={item.product.name}
+                      _id={item.product._id}
+                      handleClick={() => removeShortListItem(item.product._id)}
+                    />
                   </Grid>
                 ))}
+                {shortListItems.length === 2 && (
+                  <Grid container item xs={3} alignContent="flex-end">
+                    <Button
+                      color="secondary"
+                      onClick={() => history.push(`${routes.carComparision}/${shortListItems[0].product._id}/${shortListItems[1].product._id}`)}
+                    >
+                      {COMPARE}
+                    </Button>
+                  </Grid>
+                )}
+              </Grid>
             </Grid>
+          )}
+          <Grid item container xs={12} spacing={1}>
+            {CarsListingData &&
+              CarsListingData.map((cardData, index) => (
+                <Grid
+                  key={`cars-card-${index}`}
+                  item
+                  xs={12}
+                  sm={layoutType === "list" ? 12 : 6}
+                  xl={layoutType === "list" ? 12 : 6}
+                >
+                  <ListingCard
+                    data={cardData}
+                    layoutType={layoutType}
+                    handleClick={() => shortListItem(cardData)}
+                  />
+                </Grid>
+              ))}
           </Grid>
         </Grid>
       </Grid>
@@ -199,4 +246,4 @@ const CarsListing: React.FC<CarsListingProps> = () => {
   );
 };
 
-export default CarsListing;
+export default ShortlistItem;

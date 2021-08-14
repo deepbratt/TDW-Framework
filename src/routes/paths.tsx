@@ -1,6 +1,7 @@
 import { lazy } from "react";
 const Home = lazy(() => import("../pages/home"));
 const Login = lazy(() => import("../pages/login"));
+const CarsListing = lazy(() => import("../pages/carsListing"));
 const LoginWithMobile = lazy(() => import("../pages/login/loginWithMobile"));
 const ForgetPassword = lazy(() => import("../pages/forgetPassword"));
 const ResetPassword = lazy(() => import("../pages/resetPassword"));
@@ -8,13 +9,13 @@ const Signup = lazy(() => import("../pages/signup"));
 const SignupWithEmail = lazy(() => import("../pages/signup/SignupWithEmail"));
 const SignupWithMobile = lazy(() => import("../pages/signup/SignupWithMobile"));
 const AddEditCar = lazy(() => import("../pages/AddEditCar"));
-const usedCars = lazy(() => import("../pages/SearchUsedCars"));
-const Dashboard = lazy(() => import("../pages/dashboard/index"));
+const usedCars = lazy(() => import("../pages/SearchUsedCars/index"));
 const Verification = lazy(() => import("../pages/verificationPage"));
 const CarDetail = lazy(() => import("../pages/carDetail"));
-const CarComparison = lazy(() => import("../pages/carComparision"));
+const CarComparison = lazy(() => import("../pages/carComparision/index"));
+const ShortlistItem = lazy(() => import("../pages/shortlistItems"));
+const Dashboard = lazy(() => import("../pages/dashboard/index"));
 const CarListing = lazy(() => import("../pages/postAd"));
-const CarsListing = lazy(() => import("../pages/carsListing"));
 
 export const paths = {
   home: "home",
@@ -28,6 +29,7 @@ export const paths = {
   verification: "verification",
   carDetail: "carDetail",
   carComparision: "carComparision",
+  carShortlist: "cars-shortlist",
   carListing: "carListing",
   signup: "signup",
   cars: "cars",
@@ -47,6 +49,7 @@ export const routes = {
   contact: "/contact",
   usedCars: "/search-used-cars",
   carDetail: "/car-detail/:id",
+  carShortlist: "/cars-shortlist",
   carComparision: "/car-comparision/:_fId/:_sId",
   carListing: "/post-an-ad",
   profile: "/dashboard/:id",
@@ -85,17 +88,21 @@ export const privateRoutes = {
     path: routes.usedCars,
     component: usedCars,
   },
-  [paths.profile]: {
-    path: routes.profile,
-    component: Dashboard,
-  },
   [paths.verification]: {
     path: routes.verification,
     component: Verification,
   },
+  [paths.carDetail]: {
+    path: routes.carDetail,
+    component: CarDetail,
+  },
+  [paths.carShortlist]: {
+    path: routes.carShortlist,
+    component: ShortlistItem,
+  },
   [paths.carListing]: {
     path: routes.carListing,
-    component: CarListing,
+    component: CarsListing,
   },
 };
 
@@ -125,6 +132,7 @@ export const publicRoutes = {
     path: routes.forgotPassword,
     component: ForgetPassword,
   },
+
   [paths.resetPassword]: {
     name: "Reset Password",
     path: routes.resetPassword,

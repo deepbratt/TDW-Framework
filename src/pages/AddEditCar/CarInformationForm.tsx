@@ -4,12 +4,14 @@ import {
   makeStyles,
   TextField,
   Theme,
+  Typography,
 } from "@material-ui/core";
 import SelectComponent from "./SelectComponent";
 import { City } from "country-state-city";
 import addEditCarData from "../../Utils/constants/language/en/addEditCarData";
 import { Colors } from "../../Utils/constants/colors/colors";
 import SelectInputComponent from "./SelectInputComponent";
+import {NO_REGISTRATION_DISPLAY} from "../../Utils/constants/language/en/addEditCarTexts"
 
 interface CarInformationFormProps {
   formData: any;
@@ -150,6 +152,26 @@ const CarInformationForm = ({
           }
           onChange={handleChange}
         />
+      </Grid>
+      <Grid item xs={12} sm={12} md={6}>
+        <TextField
+          name={"registrationNo"}
+          type="text"
+          className={classes.selectFields}
+          value={formData.registrationNo}
+          label={addEditCarData.fields.registrationNo.label}
+          required
+          error={requireError.registrationNo}
+          helperText={
+            requireError.registrationNo ? addEditCarData.requiredFieldText : ""
+          }
+          onChange={handleChange}
+        />
+      </Grid>
+      <Grid item xs={12} sm={12} md={6} style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+        <Typography variant="h3" color="primary">
+          {NO_REGISTRATION_DISPLAY}
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <TextField

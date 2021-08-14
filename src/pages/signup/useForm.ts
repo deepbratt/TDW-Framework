@@ -21,7 +21,7 @@ export const useForm = (validateOnChange = false) => {
     loading,
     alertOpen,
     setAlertOpen,
-    
+
     responseMessage,
     addRequest,
   } = useApi();
@@ -80,7 +80,7 @@ export const useForm = (validateOnChange = false) => {
   const handleEmailSubmit = async (e: any) => {
     e.preventDefault();
 
-    let requestBody = {
+    let requestBody: any = {
       firstName: values.firstName,
       lastName: values.lastName,
       email: values.email,
@@ -140,7 +140,7 @@ export const useForm = (validateOnChange = false) => {
     loading,
     alertOpen,
     setAlertOpen,
-    
+
     responseMessage,
   };
 };

@@ -28,7 +28,6 @@ const SignupWithEmail = () => {
     loading,
     alertOpen,
     setAlertOpen,
-    
     responseMessage,
   } = useForm();
 
@@ -135,7 +134,8 @@ const SignupWithEmail = () => {
               </Grid>
             </Grid>
 
-            {responseMessage.status === "success" && history.push(routes.verification)}
+            {responseMessage.status === "success" &&
+              history.push(routes.verification)}
           </form>
         </Card>
       </Grid>
@@ -143,7 +143,7 @@ const SignupWithEmail = () => {
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-         type={responseMessage.status}
+          type={responseMessage.status}
           message={responseMessage.message}
         />
       )}

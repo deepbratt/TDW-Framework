@@ -53,17 +53,17 @@ const useApi = () => {
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({
-          status: "error",
-          message: response.message,
+          status: response.data.status,
+          message: response.data.message,
         });
       })
       .catch((error) => {
-        console.log("error", error.data);
+        console.log("error", error);
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({
           status: "error",
-          message: error.message,
+          message: error.response.data.message,
         });
       });
   };

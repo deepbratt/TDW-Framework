@@ -462,15 +462,15 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
       <FilterAccordion title={COLOR}>
         <FormGroup>
           {Carfilters.COLOR.filter((item) =>
-            mainColors.includes(item.name)
+            mainColors.includes(item.text)
           ).map((type) => (
             <FormControlLabel
-              key={`color-type-${type.name}`}
+              key={`color-type-${type.text}`}
               control={
                 <Checkbox
-                  checked={values.color.indexOf(type.name) > -1}
+                  checked={values.color.indexOf(type.text) > -1}
                   onChange={(e) => handleCheckboxChange(e, "color")}
-                  name={type.name}
+                  name={type.text}
                   color="secondary"
                   size="small"
                 />
@@ -489,7 +489,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                       marginRight: "7px",
                     }}
                   />
-                  <Typography>{type.name}</Typography>
+                  <Typography>{type.text}</Typography>
                 </div>
               }
             />
@@ -517,12 +517,12 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
               {Carfilters.COLOR.map((type) => (
                 <Grid item xs={12} md={6}>
                   <FormControlLabel
-                    key={`color-type-${type.name}`}
+                    key={`color-type-${type.text}`}
                     control={
                       <Checkbox
-                        checked={values.color.indexOf(type.name) > -1}
+                        checked={values.color.indexOf(type.text) > -1}
                         onChange={(e) => handleCheckboxChange(e, "color")}
-                        name={type.name}
+                        name={type.text}
                         color="secondary"
                         size="small"
                       />
@@ -541,7 +541,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                             marginRight: "7px",
                           }}
                         />
-                        <Typography>{type.name}</Typography>
+                        <Typography>{type.text}</Typography>
                       </div>
                     }
                   />
@@ -573,15 +573,15 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
       <FilterAccordion title={BODY_TYPE}>
         <FormGroup>
           {Carfilters.BODY_TYPE.filter((item) =>
-            mainCarTypes.includes(item.name)
+            mainCarTypes.includes(item.text)
           ).map((type) => (
             <FormControlLabel
-              key={`body-type-${type.name}`}
+              key={`body-type-${type.text}`}
               control={
                 <Checkbox
-                  checked={values.bodyType.indexOf(type.name) > -1}
+                  checked={values.bodyType.indexOf(type.text) > -1}
                   onChange={(e) => handleCheckboxChange(e, "bodyType")}
-                  name={type.name}
+                  name={type.text}
                   color="secondary"
                   size="small"
                 />
@@ -592,9 +592,9 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                     width="60px"
                     style={{ margin: "0 10px" }}
                     src={type.icon}
-                    alt={type.name}
+                    alt={type.text}
                   />
-                  <Typography>{type.name}</Typography>
+                  <Typography>{type.text}</Typography>
                 </div>
               }
             />
@@ -605,12 +605,12 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
               {Carfilters.BODY_TYPE.map((type) => (
                 <Grid item xs={12} md={6}>
                   <FormControlLabel
-                    key={`body-type-${type.name}`}
+                    key={`body-type-${type.text}`}
                     control={
                       <Checkbox
-                        checked={values.bodyType.indexOf(type.name) > -1}
+                        checked={values.bodyType.indexOf(type.text) > -1}
                         onChange={(e) => handleCheckboxChange(e, "bodyType")}
-                        name={type.name}
+                        name={type.text}
                         color="secondary"
                         size="small"
                       />
@@ -621,9 +621,9 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                           width="60px"
                           style={{ margin: "0 10px" }}
                           src={type.icon}
-                          alt={type.name}
+                          alt={type.text}
                         />
-                        <Typography>{type.name}</Typography>
+                        <Typography>{type.text}</Typography>
                       </div>
                     }
                   />

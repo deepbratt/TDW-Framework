@@ -52,7 +52,7 @@ export const routes = {
   profile: "/dashboard/:id",
   signup: "/signup",
   verification: "/verification",
-  cars: "/cars",
+  cars: "/cars/:filters?",
   forgotPassword: "/forgot-password",
   resetPassword: "/reset-password/:token",
   signupWithEmail: "/signup-with-email",

@@ -70,7 +70,6 @@ export const useForm = (validateOnChange = true) => {
           : null
         : null
     )}`;
-    queryParams = ""
 
     console.log("queryParams", queryParams);
     await getAll(CARS + queryParams);

@@ -10,11 +10,18 @@ import {
   carModel,
   priceRange,
 } from "../../Utils/constants/language/Text";
+import PostAd from "../../sections/PostAd";
+import {
+  browseUsedCards,
+  PostAdData,
+} from "../../Utils/constants/language/en/homePageData";
+import { Grid } from "@material-ui/core";
+import TabComponent from "../../components/Tabs";
 export interface HomeProps {}
 
 const HomePage = () => {
   return (
-    <div>
+    <Grid container justifyContent="center">
       <Banner
         Title={Title}
         subTitle={subTitle}
@@ -24,8 +31,14 @@ const HomePage = () => {
         carModel={carModel}
       />
       <CategorySection data={Data} />
+      <Grid item xs={12}>
+        <PostAd data={PostAdData} />
+      </Grid>
+      <Grid item xs={12}>
+        <TabComponent data={browseUsedCards} />
+      </Grid>
       <ComparisonContext />
-    </div>
+    </Grid>
   );
 };
 

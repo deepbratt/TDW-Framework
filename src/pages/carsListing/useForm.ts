@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { fieldNames, messages } from "../../Utils/constants/formsConstants";
+import React, { useState, useEffect, useCallback } from "react";
+import useApi from "../../Utils/hooks/useApi";
+import { API_ENDPOINTS } from "../../Utils/API/endpoints";
+import { KeyObject } from "crypto";
+// import { fieldNames, messages } from "../../Utils/constants/formsConstants";
 
 const initialValues: any = {
   keywords: "",
@@ -30,15 +33,59 @@ const initialValues: any = {
 };
 
 export const useForm = (validateOnChange = true) => {
+  const { CARS } = API_ENDPOINTS;
+  const {
+    loading,
+    alertOpen,
+    setAlertOpen,
+    responseMessage,
+    responseData,
+    getAll,
+  } = useApi();
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialValues);
   const [appliedFilters, setAppliedFilters] = useState<any>([]);
-  // const [responseMessage, setResponseMessage] = useState("");
-  // const [isLoading, setIsLoading] = useState(false);
+
+  function inArray(needle: string, haystack: []) {
+    var length = haystack.length;
+    for (var i = 0; i < length; i++) {
+      if (haystack[i] == needle) return true;
+    }
+    return false;
+  }
+
+  const getAllCars = useCallback(async () => {
+    // let queryParams = new URLSearchParams({
+    //   keywords: values.keywords,
+    //   limit: "2",
+    //   page: "1",
+    //   city: values.city,
+    // });
+    let queryParams = `limit=2&page=1${
+      inArray("keywords", appliedFilters) ? "&keyword=" + values.keywords : ""
+    }${appliedFilters.map((key: any) =>
+      inArray(key, appliedFilters)
+        ? typeof values[key] === typeof []
+          ? values[key].map((filter: any) => `${key}=${filter}`)
+          : null
+        : null
+    )}`;
+
+    console.log("queryParams", queryParams);
+    await getAll(CARS + queryParams);
+  }, []);
 
   useEffect(() => {
-    console.info("APPLIED FILTERS", appliedFilters);
+    getAllCars();
+  }, [getAllCars, values]);
+
+  useEffect(() => {
+    console.log("Applied filters", appliedFilters);
   }, [appliedFilters]);
+
+  useEffect(() => {
+    console.log("values", values);
+  }, [values]);
 
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
@@ -111,10 +158,21 @@ export const useForm = (validateOnChange = true) => {
     setAppliedFilters(
       appliedFilters.filter((filter: string) => filter !== filterName)
     );
-    setValues((values: any) => {
-      values[filterName] = initialValues[filterName];
-      return { ...values };
-    });
+    console.log("filter name", filterName);
+    let tempVal: any = values;
+    tempVal[filterName] = initialValues[filterName];
+    if (typeof tempVal[filterName] === typeof [""]) {
+      tempVal[filterName] = [];
+    }
+    console.log(
+      "tempVal",
+      tempVal,
+      tempVal[filterName],
+      initialValues,
+      typeof filterName
+    );
+    setValues(tempVal);
+    // setValues({ ...values, [filterName]: initialValues[filterName] });
   };
 
   const resetForm = () => {
@@ -140,7 +198,9 @@ export const useForm = (validateOnChange = true) => {
     resetForm,
     validate,
     handleSubmit,
-    // isLoading,
-    // responseMessage,
+    loading,
+    alertOpen,
+    setAlertOpen,
+    responseMessage,
   };
 };

@@ -36,13 +36,6 @@ const Banner: React.FC<IBanner> = ({
   const { val, setVal } = useHooks();
   const { white, cherry, lightGrey } = Colors;
 
-  // const years = () => {
-  //   const now = new Date().getUTCFullYear();
-  //   return Array(now - (now - 25)).fill('').map((v, idx) => now - idx) as Array<number>;
-  // }
-
-  // console.log(years())
-
   return (
     <>
       <Grid
@@ -61,7 +54,7 @@ const Banner: React.FC<IBanner> = ({
             subTitleColor={white}
           />
         </Grid>
-        <Grid item lg={12}>
+        <Grid style={{marginTop: "20px"}} item lg={12}>
           <SearchSelect
             setVal={setVal}
             val={val}

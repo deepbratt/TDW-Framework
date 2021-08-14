@@ -178,37 +178,19 @@ const CarsListing: React.FC<CarsListingProps> = () => {
             </Grid>
           </Hidden>
           <Grid item container xs={12} spacing={1}>
-            <Grid
-              item
-              xs={12}
-              sm={layoutType === "list" ? 12 : 6}
-              xl={layoutType === "list" ? 12 : 6}
-            >
-              <ListingCard data={CarsListingData} layoutType={layoutType} />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={layoutType === "list" ? 12 : 6}
-              xl={layoutType === "list" ? 12 : 6}
-            >
-              <ListingCard data={CarsListingData} layoutType={layoutType} />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={layoutType === "list" ? 12 : 6}
-              xl={layoutType === "list" ? 12 : 6}
-            >
-              <ListingCard data={CarsListingData} layoutType={layoutType} />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={layoutType === "list" ? 12 : 6}
-              xl={layoutType === "list" ? 12 : 6}
-            >
-              <ListingCard data={CarsListingData} layoutType={layoutType} />
+            <Grid item container xs={12} spacing={1}>
+              {CarsListingData &&
+                CarsListingData.map((cardData, index) => (
+                  <Grid
+                    key={`cars-card-${index}`}
+                    item
+                    xs={12}
+                    sm={layoutType === "list" ? 12 : 6}
+                    xl={layoutType === "list" ? 12 : 6}
+                  >
+                    <ListingCard data={cardData} layoutType={layoutType} />
+                  </Grid>
+                ))}
             </Grid>
           </Grid>
         </Grid>

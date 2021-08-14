@@ -1,6 +1,14 @@
 import { useForm } from "./useForm";
-import { Typography } from "@material-ui/core";
-import { Grid, Card, Button } from "@material-ui/core";
+import { useHistory } from "react-router";
+import Toast from "../../components/Toast";
+import {
+  Typography,
+  LinearProgress,
+  Grid,
+  Card,
+  Button,
+} from "@material-ui/core";
+import { routes } from "../../routes/paths";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../Utils/constants/formsConstants";
 import {
@@ -11,7 +19,28 @@ import GlobalStyles from "../../globalStyles";
 
 const SignupWithEmail = () => {
   const { loginFormGrid, formCard, formStyle, loginbtn } = GlobalStyles();
-  const { values, errors, handleInputChange, handleSubmit } = useForm();
+  const history = useHistory();
+  const {
+    values,
+    errors,
+    handleInputChange,
+    handleEmailSubmit,
+    loading,
+    alertOpen,
+    setAlertOpen,
+    responseMessage,
+  } = useForm();
+
+  const handleAlertClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setAlertOpen(false);
+  };
 
   return (
     <Grid
@@ -21,12 +50,13 @@ const SignupWithEmail = () => {
       alignContent="center"
     >
       <Grid item xs={4}>
+        {loading && <LinearProgress color="secondary" />}
         <Card className={formCard}>
           <Typography variant="h6" gutterBottom>
             {SIGNUP}
           </Typography>
 
-          <form className={formStyle} onSubmit={handleSubmit}>
+          <form className={formStyle} onSubmit={handleEmailSubmit}>
             <Grid container spacing={1}>
               <Grid item xs={12} md={6}>
                 <InputField
@@ -65,7 +95,6 @@ const SignupWithEmail = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                {" "}
                 <InputField
                   id="input-password"
                   name={fieldNames.password}
@@ -95,6 +124,7 @@ const SignupWithEmail = () => {
                 <Button
                   className={loginbtn}
                   fullWidth
+                  disabled={loading}
                   variant="contained"
                   color="secondary"
                   type="submit"
@@ -104,14 +134,19 @@ const SignupWithEmail = () => {
               </Grid>
             </Grid>
 
-            {/* {responseMessage && (
-              <Typography color="error" variant="subtitle1">
-                {responseMessage}
-              </Typography>
-            )} */}
+            {responseMessage.status === "success" &&
+              history.push(routes.verification+"/email")}
           </form>
         </Card>
       </Grid>
+      {responseMessage && (
+        <Toast
+          open={alertOpen}
+          onClose={handleAlertClose}
+          type={responseMessage.status}
+          message={responseMessage.message}
+        />
+      )}
     </Grid>
   );
 };

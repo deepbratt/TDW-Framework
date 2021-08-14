@@ -12,7 +12,7 @@ export const CONTINUE_WITH_EMAIL: string = "Continue With Email";
 export const SIGNIN_USING_ACCOUNT: string =
   "Sign in using your registered account:";
 export const ALREADY_HAVE_ACCOUNT: string = "Already have an account?";
-export const RESET_PASS_LINK_MESSAGE: string = "Reset password link sent to entered email";
+export const RESET_PASS_LINK_MESSAGE: string = "Reset password link sent to entered email/phone number";
 export const RESET_PASSWORD: string = "Reset password";
 export const ENTER_YOUR_EMAIL_PASS_MESSAGE: string = "Enter your Account Email or Account Number to reset your password:";
 export const ACCOUNT_RECOVERY: string = "Account Recovery";
@@ -24,3 +24,5 @@ export const RESET: string = "Reset";
 export const CANCEL: string = "CANCEL";
 export const CLOSE: string = "Close";
 export const CONTINUE: string = "Continue";
+export const COMPARE: string = "Compare";
+export const SHORTLIST_ITEMS: string = "ShortList Items";

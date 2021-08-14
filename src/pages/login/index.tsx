@@ -1,7 +1,15 @@
 import { useForm } from "./useForm";
+import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
-import { Typography } from "@material-ui/core";
-import { Grid, Card, Button } from "@material-ui/core";
+import Toast from "../../components/Toast";
+import { routes } from "../../routes/paths";
+import {
+  Grid,
+  LinearProgress,
+  Typography,
+  Card,
+  Button,
+} from "@material-ui/core";
 import { PhoneAndroidRounded } from "@material-ui/icons";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../Utils/constants/formsConstants";
@@ -15,13 +23,35 @@ import {
   DONOT_HAVE_ACCOUNT,
   FORGOT_PASS,
 } from "../../Utils/constants/language/en/buttonLabels";
+import GoogleIcon from "../../assets/icons/googleIcon.png";
+import FacebookIcon from "../../assets/icons/fbIcon.png";
 import GlobalStyles from "../../globalStyles";
 
 const Login = () => {
+  const history = useHistory();
   const { loginFormGrid, formCard, buttonWrap, formStyle, loginbtn } =
     GlobalStyles();
-  const { values, errors, handleInputChange, handleSubmit } = useForm();
+  const {
+    values,
+    errors,
+    handleInputChange,
+    handleEmailSubmit,
+    loading,
+    alertOpen,
+    setAlertOpen,
+    
+    responseMessage,
+  } = useForm();
 
+  const handleAlertClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAlertOpen(false);
+  };
   return (
     <Grid
       className={loginFormGrid}
@@ -30,6 +60,7 @@ const Login = () => {
       alignContent="center"
     >
       <Grid item xs={4}>
+        {loading && <LinearProgress color="secondary" />}
         <Card className={formCard}>
           <Typography variant="h6" gutterBottom>
             {SIGNIN}
@@ -39,6 +70,7 @@ const Login = () => {
             fullWidth
             variant="outlined"
             startIcon={<PhoneAndroidRounded />}
+            onClick={() => history.push(routes.loginWithMobile)}
           >
             {CONTINUE_WITH_PHONE}
           </Button>
@@ -46,7 +78,7 @@ const Login = () => {
             className={buttonWrap}
             fullWidth
             variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
+            startIcon={<img src={GoogleIcon} alt="google-icon" />}
           >
             {CONTINUE_WITH_GOOGLE}
           </Button>
@@ -54,20 +86,20 @@ const Login = () => {
             className={buttonWrap}
             fullWidth
             variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
+            startIcon={<img src={FacebookIcon} alt="facebook-icon" />}
           >
             {CONTINUE_WITH_FACEBOOK}
           </Button>
-          <form className={formStyle} onSubmit={handleSubmit}>
+          <form className={formStyle} onSubmit={handleEmailSubmit}>
             <Typography variant="body2" gutterBottom>
               {SIGNIN_USING_ACCOUNT}
             </Typography>
             <InputField
-              id="input-name"
+              id="input-email"
               name={fieldNames.email}
               fullWidth
               variant="outlined"
-              placeholder="Email"
+              label="Email"
               value={values.email}
               error={errors.email}
               onChange={handleInputChange}
@@ -78,13 +110,13 @@ const Login = () => {
               type="password"
               fullWidth
               variant="outlined"
-              placeholder="Password"
+              label="Password"
               value={values.password}
               error={errors.password}
               onChange={handleInputChange}
             />
             <Typography>
-              <NavLink to={"/forgot-password"}>{FORGOT_PASS}</NavLink>
+              <NavLink to={routes.forgotPassword}>{FORGOT_PASS}</NavLink>
             </Typography>
 
             <Typography
@@ -94,26 +126,32 @@ const Login = () => {
               component="h6"
               gutterBottom
             >
-              {DONOT_HAVE_ACCOUNT} <NavLink to={"/signup"}>{SIGNUP}</NavLink>
+              {DONOT_HAVE_ACCOUNT}{" "}
+              <NavLink to={routes.signup}>{SIGNUP}</NavLink>
             </Typography>
 
             <Button
               className={loginbtn}
               fullWidth
+              disabled={loading}
               variant="contained"
               color="secondary"
               type="submit"
             >
               {SIGNIN}
             </Button>
-            {/* {responseMessage && (
-              <Typography color="error" variant="subtitle1">
-                {responseMessage}
-              </Typography>
-            )} */}
+            {responseMessage.status === "success" && history.push(routes.home)}
           </form>
         </Card>
       </Grid>
+      {responseMessage && (
+        <Toast
+          open={alertOpen}
+          onClose={handleAlertClose}
+         type={responseMessage.status}
+          message={responseMessage.message}
+        />
+      )}
     </Grid>
   );
 };

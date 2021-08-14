@@ -1,11 +1,14 @@
 import VerificationContext from "../../layout/Sections/Sections/PinVerfication";
 import Section from "../../components";
-const index = () => {
+import { useParams } from "react-router";
+
+const Index = () => {
+  const { method } = useParams<{ method: string }>();
   return (
     <Section>
-     <VerificationContext/>
+      <VerificationContext verificationMethod={method} />
     </Section>
   );
 };
 
-export default index;
+export default Index;

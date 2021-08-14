@@ -5,9 +5,18 @@ import {
 import socialMediaAuth from "../functions/userAuth";
 import { axiosInstance } from "./axiosInstances";
 
-export const addData = async (endpoint: string, requestBody: object) => {
+export const addData = async (endpoint: string, requestBody?: object) => {
   try {
     const result = await axiosInstance.post(endpoint, requestBody);
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const updateData = async (endpoint: string, requestBody?: object) => {
+  try {
+    const result = await axiosInstance.patch(endpoint, requestBody);
     return result;
   } catch (error) {
     return error;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addData, getAllData, handleGoogleAuth } from "../API/API";
+import { addData, getAllData, updateData, handleGoogleAuth } from "../API/API";
 import {
   getData,
   getSingleData,
@@ -30,22 +30,22 @@ const useApi = () => {
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({
-          status: "error",
-          message: response.message,
+          status: response.data.data.status,
+          message: response.data.data.message,
         });
       })
       .catch((error) => {
-        console.log("error", error.response);
+        console.log("error", error);
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({
-          status: "error",
+          status: error.status,
           message: error.message,
         });
       });
   };
 
-  const addRequest = async (endpoint: string, requestBody: object) => {
+  const addRequest = async (endpoint: string, requestBody?: object) => {
     setLoading(true);
     await addData(endpoint, requestBody)
       .then((response) => {
@@ -53,16 +53,39 @@ const useApi = () => {
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({
-          status: "error",
-          message: response.message,
+          status: response.data.data.status,
+          message: response.data.data.message,
         });
       })
       .catch((error) => {
-        console.log("error", error.data);
+        console.log("error", error);
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({
-          status: "error",
+          status: error.status,
+          message: error.message,
+        });
+      });
+  };
+
+  const updateRequest = async (endpoint: string, requestBody?: object) => {
+    setLoading(true);
+    await updateData(endpoint, requestBody)
+      .then((response) => {
+        console.log("response", response);
+        setLoading(false);
+        setAlertOpen(true);
+        setResponseMessage({
+          status: response.data.data.status,
+          message: response.data.data.message,
+        });
+      })
+      .catch((error) => {
+        console.log("error", error);
+        setLoading(false);
+        setAlertOpen(true);
+        setResponseMessage({
+          status: error.status,
           message: error.message,
         });
       });
@@ -255,6 +278,7 @@ const useApi = () => {
   return {
     getAll,
     addRequest,
+    updateRequest,
     loading,
     setLoading,
     alertOpen,

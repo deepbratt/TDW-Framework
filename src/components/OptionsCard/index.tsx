@@ -8,6 +8,7 @@ export interface OptionsCardProps {
   };
   backgroundColor: string;
   backgroundColorSelected: string;
+  handleClick: Function;
 }
 
 /** 
@@ -20,6 +21,7 @@ const OptionsCard: React.FC<OptionsCardProps> = ({
   data,
   backgroundColor,
   backgroundColorSelected,
+  handleClick,
 }) => {
   const optionsCardStylesProps = {
     backgroundColor,
@@ -27,7 +29,7 @@ const OptionsCard: React.FC<OptionsCardProps> = ({
   };
   const { root } = OptionsCardStyles(optionsCardStylesProps);
   return (
-    <Paper className={root}>
+    <Paper className={root} onClick={() => handleClick()}>
       <svg
         width="30"
         height="30"
@@ -40,7 +42,7 @@ const OptionsCard: React.FC<OptionsCardProps> = ({
           fill="#828282"
         />
       </svg>
-      <Typography variant="body2" component="h6">
+      <Typography align="center" variant="body2" component="h6">
         {data.text}
       </Typography>
     </Paper>

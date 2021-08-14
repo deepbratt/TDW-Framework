@@ -13,12 +13,11 @@ import useAddEditCar from "../../Pages/AddEditCar/useAddEditCar";
 import addEditCarData from "../../Utils/constants/language/en/addEditCarData";
 
 const AddEditCar = () => {
-  const { activeStep, handleBack, handleNext, ComponentContent } =
+  const { activeStep, handleBack, handleNext, ComponentContent, id, handleDeleteAd } =
     useAddEditCar();
   const size = Sizes();
-
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} style={{minHeight:"90vh"}}>
       <Grid item xs={12}>
         Banner
       </Grid>
@@ -56,10 +55,18 @@ const AddEditCar = () => {
         spacing={3}
         style={{ padding: size.desktop || size.tablet ? "50px" : 0 }}
       >
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{display:"flex", justifyContent:"space-between", alignItems:"center"}}>
           <Typography variant="h2">
             {addEditCarData.steps[activeStep]}
           </Typography>
+          {id ? <Button
+            color="primary"
+            variant="outlined"
+            style={{ marginRight: "16px" }}
+            onClick={handleDeleteAd}
+          >
+            {addEditCarData.buttons.delete}
+          </Button> : "null"}
         </Grid>
         <Grid item xs={12}>
           {ComponentContent[activeStep]}

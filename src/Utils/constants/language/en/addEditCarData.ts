@@ -40,7 +40,7 @@ const addEditCarData = {
     bodyCondition: {
       label: "Body Condition",
       defaultValue: "Body Condition",
-      menu: ["poor", "good", "excellent", "New"],
+      menu: ["Good", "Excellent", "Bad"],
     },
     registeredIn: {
       label: "Registered In",
@@ -53,6 +53,10 @@ const addEditCarData = {
     price: {
       label: "Price (Rs.)",
       defaultValue: "Price (Rs.)",
+    },
+    registrationNo: {
+      label: "Registration No.",
+      defaultValue: "Registration No.",
     },
     description: {
       label: "Description",
@@ -87,6 +91,7 @@ const addEditCarData = {
     next: "Next",
     post: "Post",
     back: "Back",
+    delete:"Delete",
     addPhoto: "Add Photos +",
   },
   infoText: "(Max limit 5 MB per image)",

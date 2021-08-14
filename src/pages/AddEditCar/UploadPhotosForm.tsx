@@ -34,13 +34,14 @@ const UploadPhotosForm = ({
     temp.splice(index, 1);
     updateImagesState(temp);
   };
+  
   return (
     <Grid container>
       {requireError}
       <Grid item xs={12} className={classes.itemContainer}>
         {images.length < 1 ? (
           <>
-            <img src={UploadPicIcon} alt="" />
+            <img src={UploadPicIcon} alt="car" />
             {requireError ? (
               <Typography variant="body1" color="error">
                 {addEditCarData.requiredImageText}
@@ -53,7 +54,7 @@ const UploadPhotosForm = ({
               typeof image === "string" ? (
                 <img
                   src={image}
-                  alt=""
+                  alt="car"
                   className={classes.imgStyle}
                   onClick={() => removePhoto(index)}
                   key={"img1"+index}
@@ -62,7 +63,7 @@ const UploadPhotosForm = ({
                 <img
                   src={URL.createObjectURL(image)}
                   className={classes.imgStyle}
-                  alt=""
+                  alt="car"
                   onClick={() => removePhoto(index)}
                   key={"img1"+index}
                 />

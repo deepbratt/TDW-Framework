@@ -1,7 +1,6 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { useEffect } from "react";
 
 interface SelectInputProps {
   dataArray: Array<string>;
@@ -29,9 +28,6 @@ const SelectInputComponent = ({
   helperText,
   handleChangeSelect
 }: SelectInputProps) => {
-    useEffect(()=>{
-     console.log(value)   
-    },[value])
   return (
     <Autocomplete
       value={value}

@@ -1,0 +1,1 @@
+export const NO_REGISTRATION_DISPLAY = "Registeration Number will not be displayed on the platform"

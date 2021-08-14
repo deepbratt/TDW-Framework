@@ -135,7 +135,7 @@ const SignupWithMobile = () => {
                 </Button>
               </Grid>
             </Grid>
-            {responseMessage.status === "success" && history.push(routes.verification)}
+            {responseMessage.status === "success" && history.push(routes.verification+"/phone")}
           </form>
         </Card>
       </Grid>

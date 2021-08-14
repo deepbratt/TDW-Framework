@@ -51,7 +51,7 @@ export const routes = {
   carListing: "/post-an-ad",
   profile: "/dashboard/:id",
   signup: "/signup",
-  verification: "/verification",
+  verification: "/verification/:method",
   cars: "/cars/:filters?",
   forgotPassword: "/forgot-password",
   resetPassword: "/reset-password/:token",

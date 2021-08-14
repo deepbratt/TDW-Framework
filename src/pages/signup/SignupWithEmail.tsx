@@ -135,7 +135,7 @@ const SignupWithEmail = () => {
             </Grid>
 
             {responseMessage.status === "success" &&
-              history.push(routes.verification)}
+              history.push(routes.verification+"/email")}
           </form>
         </Card>
       </Grid>

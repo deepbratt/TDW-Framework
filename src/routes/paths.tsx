@@ -2,6 +2,7 @@ import { lazy } from "react";
 const Home = lazy(() => import("../pages/home"));
 const Login = lazy(() => import("../pages/login"));
 const CarsListing = lazy(() => import("../pages/carsListing"));
+const LoginWithMobile = lazy(() => import("../pages/login/loginWithMobile"));
 const ForgetPassword = lazy(() => import("../pages/forgetPassword"));
 const ResetPassword = lazy(() => import("../pages/resetPassword"));
 const Signup = lazy(() => import("../pages/signup"));
@@ -13,10 +14,13 @@ const Verification = lazy(() => import("../pages/verificationPage"));
 const CarDetail = lazy(() => import("../pages/carDetail"));
 const CarComparison = lazy(() => import("../pages/carComparision/index"));
 const ShortlistItem = lazy(() => import("../pages/shortlistItems"));
+const Dashboard = lazy(() => import("../pages/dashboard/index"));
+const CarListing = lazy(() => import("../pages/postAd"));
 
 export const paths = {
   home: "home",
   login: "login",
+  loginWithMobile: "login-with-mobile",
   about: "about",
   products: "products",
   contact: "contact",
@@ -39,6 +43,7 @@ export const paths = {
 export const routes = {
   home: "/",
   login: "/login",
+  loginWithMobile: "/login-with-mobile",
   about: "/about",
   products: "/products",
   contact: "/contact",
@@ -111,6 +116,11 @@ export const publicRoutes = {
     name: "Login",
     path: routes.login,
     component: Login,
+  },
+  [paths.loginWithMobile]: {
+    name: "Login With Mobile",
+    path: routes.loginWithMobile,
+    component: LoginWithMobile,
   },
   [paths.signup]: {
     name: "Signup",

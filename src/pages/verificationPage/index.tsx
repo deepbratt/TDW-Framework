@@ -3,7 +3,7 @@ import Section from "../../components";
 const index = () => {
   return (
     <Section>
-     <VerificationContext/>
+      <VerificationContext />
     </Section>
   );
 };

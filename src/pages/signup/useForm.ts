@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { handleGoogleAuth } from "../../Utils/API/API";
+import { API_ENDPOINTS } from "../../Utils/API/endpoints";
 import { fieldNames, messages } from "../../Utils/constants/formsConstants";
+import useApi from "../../Utils/hooks/useApi";
 import { isEmailValid, isPhoneValid } from "../../Utils/regex";
 
 const initialValues: any = {
@@ -12,10 +15,18 @@ const initialValues: any = {
 };
 
 export const useForm = (validateOnChange = false) => {
+  const { USERS, SIGNUP_WITH_EMAIL, SIGNUP_WITH_MOBILE, GOOGLE_AUTH } =
+    API_ENDPOINTS;
+  const {
+    loading,
+    alertOpen,
+    setAlertOpen,
+    
+    responseMessage,
+    addRequest,
+  } = useApi();
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialValues);
-  const [isLoading, setIsLoading] = useState(false);
-  // const [responseMessage, setResponseMessage] = useState("");
 
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
@@ -66,18 +77,52 @@ export const useForm = (validateOnChange = false) => {
     setErrors({});
   };
 
+  const handleEmailSubmit = async (e: any) => {
+    e.preventDefault();
+
+    let requestBody = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      password: values.password,
+      passwordConfirm: values.confirmPassword,
+    };
+    console.log("requestBody", requestBody);
+    await addRequest(USERS + SIGNUP_WITH_EMAIL, requestBody);
+  };
+
+  const handleMobileSubmit = async (e: any) => {
+    e.preventDefault();
+
+    let requestBody = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      phone: values.mobile,
+      password: values.password,
+      passwordConfirm: values.confirmPassword,
+    };
+    console.log("requestBody", requestBody);
+    await addRequest(USERS + SIGNUP_WITH_MOBILE, requestBody);
+  };
+
+  const handleGoogleSubmit = async () => {
+    await handleGoogleAuth().then(async (response) => {
+      let requestBody = {
+        googleId: response.id,
+        displayName: response.name,
+        firstName: response.given_name,
+        lastName: response.family_name,
+        image: response.picture,
+        email: response.email,
+      };
+      console.log("request body", requestBody);
+      await addRequest(USERS + GOOGLE_AUTH, requestBody);
+    });
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log("btn clicked", values);
-    if (validate()) {
-      setIsLoading(true);
-      console.log(values);
-      let requestBody = {
-        email: values.email,
-        password: values.password,
-      };
-      console.log("requestBody", requestBody);
-    }
   };
 
   return {
@@ -89,6 +134,13 @@ export const useForm = (validateOnChange = false) => {
     resetForm,
     validate,
     handleSubmit,
-    isLoading,
+    handleEmailSubmit,
+    handleMobileSubmit,
+    handleGoogleSubmit,
+    loading,
+    alertOpen,
+    setAlertOpen,
+    
+    responseMessage,
   };
 };

@@ -1,7 +1,13 @@
 import { NavLink, useHistory } from "react-router-dom";
-import { Typography } from "@material-ui/core";
-import { Grid, Card, Button } from "@material-ui/core";
-import { PhoneAndroidRounded } from "@material-ui/icons";
+import Toast from "../../components/Toast";
+import {
+  Grid,
+  LinearProgress,
+  Typography,
+  Card,
+  Button,
+} from "@material-ui/core";
+import { EmailRounded, PhoneAndroidRounded } from "@material-ui/icons";
 import {
   SIGNIN,
   SIGNUP,
@@ -11,11 +17,35 @@ import {
   CONTINUE_WITH_EMAIL,
   ALREADY_HAVE_ACCOUNT,
 } from "../../Utils/constants/language/en/buttonLabels";
+import GoogleIcon from "../../assets/icons/googleIcon.png";
+import FacebookIcon from "../../assets/icons/fbIcon.png";
 import GlobalStyles from "../../globalStyles";
+import { routes } from "../../routes/paths";
+import { handleFacebookAuth, handleGoogleAuth } from "../../Utils/API/API";
+import { useForm } from "./useForm";
 
 const Signup = () => {
   const history = useHistory();
   const { loginFormGrid, formCard, buttonWrap } = GlobalStyles();
+  const {
+    handleGoogleSubmit,
+    loading,
+    alertOpen,
+    setAlertOpen,
+    
+    responseMessage,
+  } = useForm();
+
+  const handleAlertClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setAlertOpen(false);
+  };
 
   return (
     <Grid
@@ -25,6 +55,7 @@ const Signup = () => {
       alignContent="center"
     >
       <Grid item xs={4}>
+        {loading && <LinearProgress color="secondary" />}
         <Card className={formCard}>
           <Typography variant="h6" gutterBottom>
             {SIGNUP}
@@ -34,7 +65,7 @@ const Signup = () => {
             fullWidth
             variant="outlined"
             startIcon={<PhoneAndroidRounded />}
-            onClick={() => history.push("/signup-with-mobile")}
+            onClick={() => history.push(routes.signupWithMobile)}
           >
             {CONTINUE_WITH_PHONE}
           </Button>
@@ -42,7 +73,8 @@ const Signup = () => {
             className={buttonWrap}
             fullWidth
             variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
+            startIcon={<img src={GoogleIcon} alt="google-icon" />}
+            onClick={() => handleGoogleSubmit()}
           >
             {CONTINUE_WITH_GOOGLE}
           </Button>
@@ -50,7 +82,8 @@ const Signup = () => {
             className={buttonWrap}
             fullWidth
             variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
+            startIcon={<img src={FacebookIcon} alt="facebook-icon" />}
+            onClick={() => handleFacebookAuth()}
           >
             {CONTINUE_WITH_FACEBOOK}
           </Button>
@@ -58,8 +91,8 @@ const Signup = () => {
             className={buttonWrap}
             fullWidth
             variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
-            onClick={() => history.push("/signup-with-email")}
+            startIcon={<EmailRounded />}
+            onClick={() => history.push(routes.signupWithEmail)}
           >
             {CONTINUE_WITH_EMAIL}
           </Button>
@@ -70,10 +103,19 @@ const Signup = () => {
             component="h6"
             gutterBottom
           >
-            {ALREADY_HAVE_ACCOUNT} <NavLink to={"/login"}>{SIGNIN}</NavLink>
+            {ALREADY_HAVE_ACCOUNT} <NavLink to={routes.login}>{SIGNIN}</NavLink>
           </Typography>
         </Card>
+        {responseMessage.status === "success" && history.push(routes.verification)}
       </Grid>
+      {responseMessage && (
+        <Toast
+          open={alertOpen}
+          onClose={handleAlertClose}
+         type={responseMessage.status}
+          message={responseMessage.message}
+        />
+      )}
     </Grid>
   );
 };

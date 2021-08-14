@@ -1,37 +1,40 @@
+import { useForm } from "./useForm";
 import { useHistory } from "react-router";
+import { NavLink } from "react-router-dom";
 import Toast from "../../components/Toast";
 import { routes } from "../../routes/paths";
 import {
   Grid,
   LinearProgress,
+  Typography,
   Card,
   Button,
-  Typography,
 } from "@material-ui/core";
-import GlobalStyles from "../../globalStyles";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../Utils/constants/formsConstants";
-import { useForm } from "./useForm";
 import {
-  ACCOUNT_RECOVERY,
-  RESET_PASSWORD,
+  SIGNIN,
+  SIGNUP,
+  SIGNIN_USING_ACCOUNT,
+  DONOT_HAVE_ACCOUNT,
+  FORGOT_PASS,
 } from "../../Utils/constants/language/en/buttonLabels";
+import GlobalStyles from "../../globalStyles";
 
-const ResetPassword = () => {
+const LoginWithMobile = () => {
   const history = useHistory();
+  const { loginFormGrid, formCard, formStyle, loginbtn } = GlobalStyles();
   const {
     values,
     errors,
     handleInputChange,
-    handleSubmit,
+    handleMobileSubmit,
     loading,
     alertOpen,
     setAlertOpen,
     
     responseMessage,
-  } = useForm("token here");
-
-  const { loginFormGrid, formStyle, formCard, loginbtn } = GlobalStyles();
+  } = useForm();
 
   const handleAlertClose = (
     event: React.SyntheticEvent | React.MouseEvent,
@@ -42,7 +45,6 @@ const ResetPassword = () => {
     }
     setAlertOpen(false);
   };
-
   return (
     <Grid
       className={loginFormGrid}
@@ -53,35 +55,49 @@ const ResetPassword = () => {
       <Grid item xs={4}>
         {loading && <LinearProgress color="secondary" />}
         <Card className={formCard}>
-          <Typography align="center" variant="h2" gutterBottom>
-            {ACCOUNT_RECOVERY}
+          <Typography variant="h6" gutterBottom>
+            {SIGNIN}
           </Typography>
-          <form className={formStyle} onSubmit={handleSubmit}>
+
+          <form className={formStyle} onSubmit={handleMobileSubmit}>
+            <Typography variant="body2" gutterBottom>
+              {SIGNIN_USING_ACCOUNT}
+            </Typography>
+            <InputField
+              id="input-mobile"
+              name={fieldNames.mobile}
+              fullWidth
+              variant="outlined"
+              label="Phone"
+              value={values.mobile}
+              error={errors.mobile}
+              onChange={handleInputChange}
+            />
             <InputField
               id="input-password"
               name={fieldNames.password}
               type="password"
               fullWidth
               variant="outlined"
-              placeholder="Enter your password"
               label="Password"
               value={values.password}
               error={errors.password}
               onChange={handleInputChange}
             />
+            <Typography>
+              <NavLink to={"/forgot-password"}>{FORGOT_PASS}</NavLink>
+            </Typography>
 
-            <InputField
-              id="input-confirm-password"
-              name={fieldNames.confirmPassword}
-              type="password"
-              placeholder="Re-enter your password"
-              label="Confirm Password"
-              fullWidth
-              variant="outlined"
-              value={values.confirmPassword}
-              error={errors.confirmPassword}
-              onChange={handleInputChange}
-            />
+            <Typography
+              style={{ margin: "30px 0" }}
+              align="center"
+              variant="body2"
+              component="h6"
+              gutterBottom
+            >
+              {DONOT_HAVE_ACCOUNT} <NavLink to={"/signup"}>{SIGNUP}</NavLink>
+            </Typography>
+
             <Button
               className={loginbtn}
               fullWidth
@@ -90,9 +106,9 @@ const ResetPassword = () => {
               color="secondary"
               type="submit"
             >
-              {RESET_PASSWORD}
+              {SIGNIN}
             </Button>
-            {responseMessage.status === "success" && history.push(routes.resetPassword)}
+            {responseMessage.status === "success" && history.push(routes.home)}
           </form>
         </Card>
       </Grid>
@@ -100,7 +116,7 @@ const ResetPassword = () => {
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-         type={responseMessage.status}
+          type={responseMessage.status}
           message={responseMessage.message}
         />
       )}
@@ -108,4 +124,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default LoginWithMobile;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { addData, getAllData, handleGoogleAuth } from "../API/API";
 import {
   getData,
   getSingleData,
@@ -7,7 +8,11 @@ import {
   updateUser,
 } from "./actions";
 import { ICarCard } from "../../layout/Sections/Utils/types";
+
 const useApi = () => {
+  const [loading, setLoading] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [responseData, setResponseData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
   const [obj, setObj] = useState<ICarCard>();
@@ -16,9 +21,56 @@ const useApi = () => {
     status: "",
     message: "",
   });
-  const loadAllData = async (url: string,param: number | string) => {
+
+  const getAll = async (endpoint: string) => {
+    setLoading(true);
+    await getAllData(endpoint)
+      .then((response) => {
+        console.log("response", response);
+        setLoading(false);
+        setAlertOpen(true);
+        setResponseMessage({
+          status: "error",
+          message: response.message,
+        });
+      })
+      .catch((error) => {
+        console.log("error", error.response);
+        setLoading(false);
+        setAlertOpen(true);
+        setResponseMessage({
+          status: "error",
+          message: error.message,
+        });
+      });
+  };
+
+  const addRequest = async (endpoint: string, requestBody: object) => {
+    setLoading(true);
+    await addData(endpoint, requestBody)
+      .then((response) => {
+        console.log("response", response);
+        setLoading(false);
+        setAlertOpen(true);
+        setResponseMessage({
+          status: "error",
+          message: response.message,
+        });
+      })
+      .catch((error) => {
+        console.log("error", error.data);
+        setLoading(false);
+        setAlertOpen(true);
+        setResponseMessage({
+          status: "error",
+          message: error.message,
+        });
+      });
+  };
+
+  const loadAllData = async (url: string, param: number | string) => {
     setIsLoading(true);
-    await getData(url,param)
+    await getData(url, param)
       .then((response) => {
         setIsLoading(false);
         if (response.status === "success") {
@@ -201,6 +253,16 @@ const useApi = () => {
   };
 
   return {
+    getAll,
+    addRequest,
+    loading,
+    setLoading,
+    alertOpen,
+    setAlertOpen,
+    responseData,
+    setResponseData,
+    responseMessage,
+    setResponseMessage,
     loadSingleData,
     addFavs,
     loadAllData,
@@ -210,11 +272,9 @@ const useApi = () => {
     data,
     setData,
     isLoading,
-    setResponseMessage,
-    responseMessage,
     open,
     setOpen,
-    obj
+    obj,
   };
 };
 

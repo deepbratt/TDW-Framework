@@ -131,6 +131,7 @@ const useStyles = makeStyles((theme: Theme) =>
     imgStyle: {
       cursor: "pointer",
       width: "200px",
+      marginLeft:"5px"
     },
   })
 );

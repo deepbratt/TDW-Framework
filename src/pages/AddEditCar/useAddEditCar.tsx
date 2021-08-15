@@ -7,6 +7,7 @@ import { City, State } from "country-state-city";
 import { IState } from "country-state-city/dist/lib/interface";
 import { addEditCarApi, deleteCarAd, getCarById } from "./api";
 import { useCallback } from "react";
+import { useRef } from "react";
 
 const formReducer = (state: any, event: any) => {
   return {
@@ -49,6 +50,7 @@ const initialRequireError = {
   mileage: false,
   price: false,
   registrationNo: false,
+  description:false
 };
 
 // step 2 validation is on the go
@@ -66,6 +68,7 @@ const initialRequireError_2 = {
 
 const useAddEditCar = () => {
   const { id } = useParams<{ id: string }>();
+  const formRef = useRef<any>(null)
   const [formData, setFormData] = useReducer(formReducer, initialFieldValues);
   const [activeStep, setActiveStep] = useState(0);
   const [images, setImages] = useState<Array<any>>([]);
@@ -131,7 +134,7 @@ const useAddEditCar = () => {
           registrationNo: result.regNumber,
           description: result.description,
           engineType: result.engineType,
-          engineCapacity: "",
+          engineCapacity: result.engineCapacity,
           transmission: result.transmission,
           assembly: result.assembly,
           images: result.image,
@@ -185,6 +188,7 @@ const useAddEditCar = () => {
   }
 
   const handleNext = () => {
+    formRef.current.scrollIntoView({behavior:'smooth'})
     if (activeStep === 0) {
       if (!checkValidation(initialRequireError)) {
         return;
@@ -233,16 +237,18 @@ const useAddEditCar = () => {
       fd.append("country", "Pakistan");
       fd.append("city", formData.city);
       fd.append("province", formData.province);
-      fd.append("location", formData.location);
-      if(images.length === 1 && typeof images[0] === "string"){
-        console.log('single')
-        fd.append('image', images[0])
-      }else{
-        for (let i = 0; i < images.length; i++) {
+      fd.append("location.address", formData.location.address);
+      fd.append("location.coordinate.lat", formData.location.coordinate.lat);
+      fd.append("location.coordinate.long", formData.location.coordinate.long);
+      let StringUrls = 0
+      for (let i = 0; i < formData.images.length; i++) {
+        if(typeof formData.images[i] === typeof "string"){
+          fd.append("image["+StringUrls+"]", images[i]);
+          StringUrls++
+        }else{
           fd.append("image", images[i]);
         }
       }
-      fd.append("image", formData.images)
       fd.append("model", formData.carModel);
       fd.append("make", formData.carMake);
       fd.append("transmission", formData.transmission);
@@ -254,6 +260,7 @@ const useAddEditCar = () => {
       fd.append("description", formData.description);
       fd.append("bodyType", formData.bodyType);
       fd.append("engineType", formData.engineType);
+      fd.append("engineCapacity", formData.engineCapacity);
       fd.append("regNumber", formData.registrationNo);
       // fd.append("date", new Date(formData.modelYear).toISOString());
       fd.append("modelYear", formData.modelYear);
@@ -276,6 +283,7 @@ const useAddEditCar = () => {
   };
 
   const handleBack = () => {
+    formRef.current.scrollIntoView({behavior:'smooth'})
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
@@ -291,7 +299,8 @@ const useAddEditCar = () => {
     ComponentContent,
     requireError,
     id,
-    handleDeleteAd
+    handleDeleteAd,
+    formRef
   };
 };
 

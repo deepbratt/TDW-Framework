@@ -179,11 +179,16 @@ const CarInformationForm = ({
           label={addEditCarData.fields.description.label}
           multiline
           name="description"
+          required
           rows={4}
           placeholder={addEditCarData.fields.description.defaultValue}
           style={{ width: "100%" }}
           value={formData.description}
           onChange={handleChange}
+          error={requireError.registrationNo}
+          helperText={
+            requireError.registrationNo ? addEditCarData.requiredFieldText : ""
+          }
         />
       </Grid>
     </Grid>

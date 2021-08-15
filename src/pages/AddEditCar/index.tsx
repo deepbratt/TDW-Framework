@@ -13,15 +13,22 @@ import useAddEditCar from "./useAddEditCar";
 import addEditCarData from "../../Utils/constants/language/en/addEditCarData";
 
 const AddEditCar = () => {
-  const { activeStep, handleBack, handleNext, ComponentContent, id, handleDeleteAd } =
-    useAddEditCar();
+  const {
+    activeStep,
+    handleBack,
+    handleNext,
+    ComponentContent,
+    id,
+    handleDeleteAd,
+    formRef,
+  } = useAddEditCar();
   const size = Sizes();
   return (
-    <Grid container spacing={3} style={{minHeight:"90vh"}}>
+    <Grid container spacing={3} style={{ minHeight: "90vh" }}>
       <Grid item xs={12}>
         Banner
       </Grid>
-      <Grid item xs={12} style={{padding:"60px"}}>
+      <Grid item xs={12} style={{ padding: "60px" }}>
         <Stepper
           activeStep={activeStep}
           style={{ marginTop: "50px" }}
@@ -54,19 +61,30 @@ const AddEditCar = () => {
         xs={12}
         spacing={3}
         style={{ padding: size.desktop || size.tablet ? "50px" : 0 }}
+        ref={formRef}
       >
-        <Grid item xs={12} style={{display:"flex", justifyContent:"space-between", alignItems:"center"}}>
+        <Grid
+          item
+          xs={12}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <Typography variant="h2">
             {addEditCarData.steps[activeStep]}
           </Typography>
-          {id ? <Button
-            color="primary"
-            variant="outlined"
-            style={{ marginRight: "16px" }}
-            onClick={handleDeleteAd}
-          >
-            {addEditCarData.buttons.delete}
-          </Button> : "null"}
+          {id ? (
+            <Button
+              color="primary"
+              variant="outlined"
+              style={{ marginRight: "16px" }}
+              onClick={handleDeleteAd}
+            >
+              {addEditCarData.buttons.delete}
+            </Button>
+          ) : null}
         </Grid>
         <Grid item xs={12}>
           {ComponentContent[activeStep]}

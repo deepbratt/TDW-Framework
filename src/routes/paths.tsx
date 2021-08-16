@@ -15,13 +15,13 @@ const CarDetail = lazy(() => import("../Pages/carDetail"));
 const CarComparison = lazy(() => import("../Pages/carComparision/index"));
 const ShortlistItem = lazy(() => import("../Pages/shortlistItems"));
 const Dashboard = lazy(() => import("../Pages/dashboard/index"));
-const CarListing = lazy(() => import("../Pages/postAd"));
+// const CarListing = lazy(() => import("../Pages/postAd"));
 
-export const paths = {
+            export const paths = {
   home: "home",
   login: "login",
   loginWithMobile: "login-with-mobile",
-  about: "about",
+         about: "about",
   products: "products",
   contact: "contact",
   usedCars: "usedCars",

@@ -46,7 +46,8 @@
   "lint-staged": {
     "*.{js,ts,tsx}": [
       "eslint --quiet --fix",
-      "prettier --config .prettierrc --write"
+      "prettier --write",
+      "git add"
     ]
   },
   "eslintConfig": {

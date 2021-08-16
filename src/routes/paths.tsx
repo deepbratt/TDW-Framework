@@ -1,21 +1,19 @@
 import { lazy } from "react";
-const Home = lazy(() => import("../Pages/home"));
-const Login = lazy(() => import("../Pages/login"));
-const CarsListing = lazy(() => import("../Pages/carsListing"));
-const LoginWithMobile = lazy(() => import("../Pages/login/loginWithMobile"));
-const ForgetPassword = lazy(() => import("../Pages/forgetPassword"));
-const ResetPassword = lazy(() => import("../Pages/resetPassword"));
-const Signup = lazy(() => import("../Pages/signup"));
-const SignupWithEmail = lazy(() => import("../Pages/signup/SignupWithEmail"));
-const SignupWithMobile = lazy(() => import("../Pages/signup/SignupWithMobile"));
-const AddEditCar = lazy(() => import("../Pages/AddEditCar"));
-const usedCars = lazy(() => import("../Pages/SearchUsedCars/index"));
-const Verification = lazy(() => import("../Pages/verificationPage"));
-const CarDetail = lazy(() => import("../Pages/carDetail"));
-const CarComparison = lazy(() => import("../Pages/carComparision/index"));
-const ShortlistItem = lazy(() => import("../Pages/shortlistItems"));
-const Dashboard = lazy(() => import("../Pages/dashboard/index"));
-const CarListing = lazy(() => import("../Pages/postAd"));
+const Home = lazy(() => import("../pages/home"));
+const Login = lazy(() => import("../pages/login"));
+const CarsListing = lazy(() => import("../pages/carsListing"));
+const LoginWithMobile = lazy(() => import("../pages/login/loginWithMobile"));
+const ForgetPassword = lazy(() => import("../pages/forgetPassword"));
+const ResetPassword = lazy(() => import("../pages/resetPassword"));
+const Signup = lazy(() => import("../pages/signup"));
+const AddEditCar = lazy(() => import("../pages/AddEditCar"));
+const usedCars = lazy(() => import("../pages/SearchUsedCars/index"));
+const Verification = lazy(() => import("../pages/verificationPage"));
+const CarDetail = lazy(() => import("../pages/carDetail"));
+const CarComparison = lazy(() => import("../pages/carComparision/index"));
+const ShortlistItem = lazy(() => import("../pages/shortlistItems"));
+const Dashboard = lazy(() => import("../pages/dashboard/index"));
+const CarListing = lazy(() => import("../pages/postAd"));
 
 export const paths = {
   home: "home",
@@ -35,8 +33,6 @@ export const paths = {
   cars: "cars",
   forgotPassword: "forgot-password",
   resetPassword: "reset-password",
-  signupWithEmail: "signup-with-email",
-  signupWithMobile: "signup-with-mobile",
   addEditCar: "add-edit/car/",
 };
 
@@ -58,8 +54,6 @@ export const routes = {
   cars: "/cars/:filters?",
   forgotPassword: "/forgot-password",
   resetPassword: "/reset-password/:token",
-  signupWithEmail: "/signup-with-email",
-  signupWithMobile: "/signup-with-mobile",
   addEditCar: "/add-edit/car/:id?",
 };
 
@@ -137,16 +131,6 @@ export const publicRoutes = {
     name: "Reset Password",
     path: routes.resetPassword,
     component: ResetPassword,
-  },
-  [paths.signupWithEmail]: {
-    name: "Sign With Email",
-    path: routes.signupWithEmail,
-    component: SignupWithEmail,
-  },
-  [paths.signupWithMobile]: {
-    name: "Sign With Mobile",
-    path: routes.signupWithMobile,
-    component: SignupWithMobile,
   },
   [paths.addEditCar]: {
     name: "Cars Add Edit",

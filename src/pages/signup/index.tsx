@@ -63,15 +63,6 @@ const Signup = () => {
             className={buttonWrap}
             fullWidth
             variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
-            onClick={() => history.push(routes.signupWithMobile)}
-          >
-            {CONTINUE_WITH_PHONE}
-          </Button>
-          <Button
-            className={buttonWrap}
-            fullWidth
-            variant="outlined"
             startIcon={<img src={GoogleIcon} alt="google-icon" />}
             onClick={() => handleGoogleSubmit()}
           >
@@ -86,15 +77,7 @@ const Signup = () => {
           >
             {CONTINUE_WITH_FACEBOOK}
           </Button>
-          <Button
-            className={buttonWrap}
-            fullWidth
-            variant="outlined"
-            startIcon={<EmailRounded />}
-            onClick={() => history.push(routes.signupWithEmail)}
-          >
-            {CONTINUE_WITH_EMAIL}
-          </Button>
+          <Signup />
           <Typography
             style={{ margin: "30px 0" }}
             align="center"

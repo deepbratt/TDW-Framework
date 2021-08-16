@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/reducers/authSlice";
 import { handleGoogleAuth } from "../../Utils/API/API";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
 import { fieldNames, messages } from "../../Utils/constants/formsConstants";
@@ -14,14 +16,15 @@ const initialValues: any = {
   confirmPassword: "",
 };
 
-export const useForm = (validateOnChange = false) => {
+export const useForm = (validateOnChange = true) => {
+  const dispatch = useDispatch();
   const { USERS, SIGNUP_WITH_EMAIL, SIGNUP_WITH_MOBILE, GOOGLE_AUTH } =
     API_ENDPOINTS;
   const {
     loading,
     alertOpen,
     setAlertOpen,
-
+    responseData,
     responseMessage,
     addRequest,
   } = useApi();
@@ -71,6 +74,12 @@ export const useForm = (validateOnChange = false) => {
     });
     if (validateOnChange) validate({ [name]: value });
   };
+
+  useEffect(() => {
+    if (responseMessage.status === "success") {
+      dispatch(login(responseData));
+    }
+  }, [responseMessage]);
 
   const resetForm = () => {
     setValues(initialValues);

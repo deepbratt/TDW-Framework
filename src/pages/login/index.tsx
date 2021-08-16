@@ -26,6 +26,8 @@ import {
 import GoogleIcon from "../../assets/icons/googleIcon.png";
 import FacebookIcon from "../../assets/icons/fbIcon.png";
 import GlobalStyles from "../../globalStyles";
+import { handleFacebookAuth } from "../../Utils/API/API";
+import PasswordField from "../../components/InputField/PasswordField";
 
 const Login = () => {
   const history = useHistory();
@@ -36,22 +38,23 @@ const Login = () => {
     errors,
     handleInputChange,
     handleEmailSubmit,
+    handleGoogleSubmit,
     loading,
-    alertOpen,
-    setAlertOpen,
-    
+    // alertOpen,
+    // setAlertOpen,
     responseMessage,
   } = useForm();
 
-  const handleAlertClose = (
-    event: React.SyntheticEvent | React.MouseEvent,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setAlertOpen(false);
-  };
+  // const handleAlertClose = (
+  //   event: React.SyntheticEvent | React.MouseEvent,
+  //   reason?: string
+  // ) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+  //   setAlertOpen(false);
+  // };
+
   return (
     <Grid
       className={loginFormGrid}
@@ -79,6 +82,7 @@ const Login = () => {
             fullWidth
             variant="outlined"
             startIcon={<img src={GoogleIcon} alt="google-icon" />}
+            onClick={() => handleGoogleSubmit()}
           >
             {CONTINUE_WITH_GOOGLE}
           </Button>
@@ -87,6 +91,7 @@ const Login = () => {
             fullWidth
             variant="outlined"
             startIcon={<img src={FacebookIcon} alt="facebook-icon" />}
+            onClick={() => handleFacebookAuth()}
           >
             {CONTINUE_WITH_FACEBOOK}
           </Button>
@@ -104,10 +109,9 @@ const Login = () => {
               error={errors.email}
               onChange={handleInputChange}
             />
-            <InputField
+            <PasswordField
               id="input-password"
               name={fieldNames.password}
-              type="password"
               fullWidth
               variant="outlined"
               label="Password"
@@ -144,14 +148,14 @@ const Login = () => {
           </form>
         </Card>
       </Grid>
-      {responseMessage && (
+      {/* {responseMessage && (
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
          type={responseMessage.status}
           message={responseMessage.message}
         />
-      )}
+      )} */}
     </Grid>
   );
 };

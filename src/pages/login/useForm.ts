@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import useApi from "../../Utils/hooks/useApi";
+import { isEmailValid } from "../../Utils/regex";
+import { login } from "../../redux/reducers/authSlice";
+import { handleGoogleAuth } from "../../Utils/API/API";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
 import { fieldNames, messages } from "../../Utils/constants/formsConstants";
-import { isEmailValid } from "../../Utils/regex";
 
 const initialValues: any = {
   email: "",
@@ -10,13 +13,14 @@ const initialValues: any = {
   password: "",
 };
 
-export const useForm = (validateOnChange = false) => {
-  const { USERS, LOGIN_WITH_EMAIL, LOGIN_WITH_MOBILE } = API_ENDPOINTS;
+export const useForm = (validateOnChange = true) => {
+  const { USERS, LOGIN_WITH_EMAIL, LOGIN_WITH_MOBILE, GOOGLE_AUTH } = API_ENDPOINTS;
+  const dispatch = useDispatch();
   const {
     loading,
     alertOpen,
     setAlertOpen,
-    
+    responseData,
     responseMessage,
     addRequest,
   } = useApi();
@@ -64,6 +68,12 @@ export const useForm = (validateOnChange = false) => {
     setErrors({});
   };
 
+  useEffect(() => {
+    if (responseMessage.status === "success") {
+      dispatch(login(responseData));
+    }
+  }, [responseMessage]);
+
   const handleEmailSubmit = async (e: any) => {
     e.preventDefault();
     let requestBody = {
@@ -84,6 +94,21 @@ export const useForm = (validateOnChange = false) => {
     await addRequest(USERS + LOGIN_WITH_MOBILE, requestBody);
   };
 
+  const handleGoogleSubmit = async () => {
+    await handleGoogleAuth().then(async (response) => {
+      let requestBody = {
+        googleId: response.id,
+        displayName: response.name,
+        firstName: response.given_name,
+        lastName: response.family_name,
+        image: response.picture,
+        email: response.email,
+      };
+      console.log("request body", requestBody);
+      await addRequest(USERS + GOOGLE_AUTH, requestBody);
+    });
+  };
+
   return {
     values,
     setValues,
@@ -97,7 +122,7 @@ export const useForm = (validateOnChange = false) => {
     loading,
     alertOpen,
     setAlertOpen,
-    
+    handleGoogleSubmit,
     responseMessage,
   };
 };

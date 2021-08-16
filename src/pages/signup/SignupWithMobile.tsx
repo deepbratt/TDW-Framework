@@ -16,6 +16,7 @@ import {
   SIGNUP,
 } from "../../Utils/constants/language/en/buttonLabels";
 import GlobalStyles from "../../globalStyles";
+import PasswordField from "../../components/InputField/PasswordField";
 
 const SignupWithMobile = () => {
   const { loginFormGrid, formCard, formStyle, loginbtn } = GlobalStyles();
@@ -28,7 +29,7 @@ const SignupWithMobile = () => {
     loading,
     alertOpen,
     setAlertOpen,
-    
+
     responseMessage,
   } = useForm();
 
@@ -96,10 +97,9 @@ const SignupWithMobile = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <InputField
+                <PasswordField
                   id="input-password"
                   name={fieldNames.password}
-                  type="password"
                   fullWidth
                   variant="outlined"
                   label="Password"
@@ -109,10 +109,9 @@ const SignupWithMobile = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <InputField
+                <PasswordField
                   id="input-confirm-password"
                   name={fieldNames.confirmPassword}
-                  type="password"
                   placeholder="Re-enter your password"
                   label="Confirm Password"
                   fullWidth
@@ -135,7 +134,8 @@ const SignupWithMobile = () => {
                 </Button>
               </Grid>
             </Grid>
-            {responseMessage.status === "success" && history.push(routes.verification+"/phone")}
+            {responseMessage.status === "success" &&
+              history.push(routes.verification + "/phone")}
           </form>
         </Card>
       </Grid>
@@ -143,7 +143,7 @@ const SignupWithMobile = () => {
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-         type={responseMessage.status}
+          type={responseMessage.status}
           message={responseMessage.message}
         />
       )}

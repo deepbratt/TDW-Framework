@@ -30,22 +30,21 @@ const Signup = () => {
   const {
     handleGoogleSubmit,
     loading,
-    alertOpen,
-    setAlertOpen,
-    
+    // alertOpen,
+    // setAlertOpen,
     responseMessage,
   } = useForm();
 
-  const handleAlertClose = (
-    event: React.SyntheticEvent | React.MouseEvent,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
+  // const handleAlertClose = (
+  //   event: React.SyntheticEvent | React.MouseEvent,
+  //   reason?: string
+  // ) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
 
-    setAlertOpen(false);
-  };
+  //   setAlertOpen(false);
+  // };
 
   return (
     <Grid
@@ -106,16 +105,16 @@ const Signup = () => {
             {ALREADY_HAVE_ACCOUNT} <NavLink to={routes.login}>{SIGNIN}</NavLink>
           </Typography>
         </Card>
-        {responseMessage.status === "success" && history.push(routes.verification)}
+        {responseMessage.status === "success" && history.push(routes.home)}
       </Grid>
-      {responseMessage && (
+      {/* {responseMessage && (
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
          type={responseMessage.status}
           message={responseMessage.message}
         />
-      )}
+      )} */}
     </Grid>
   );
 };

@@ -16,6 +16,7 @@ import {
   SIGNUP,
 } from "../../Utils/constants/language/en/buttonLabels";
 import GlobalStyles from "../../globalStyles";
+import PasswordField from "../../components/InputField/PasswordField";
 
 const SignupWithEmail = () => {
   const { loginFormGrid, formCard, formStyle, loginbtn } = GlobalStyles();
@@ -95,10 +96,9 @@ const SignupWithEmail = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <InputField
+                <PasswordField
                   id="input-password"
                   name={fieldNames.password}
-                  type="password"
                   fullWidth
                   variant="outlined"
                   placeholder="Password"
@@ -108,10 +108,9 @@ const SignupWithEmail = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <InputField
+                <PasswordField
                   id="input-confirm-password"
                   name={fieldNames.confirmPassword}
-                  type="password"
                   placeholder="Re-enter your password"
                   fullWidth
                   variant="outlined"
@@ -135,7 +134,7 @@ const SignupWithEmail = () => {
             </Grid>
 
             {responseMessage.status === "success" &&
-              history.push(routes.verification+"/email")}
+              history.push(routes.verification + "/email")}
           </form>
         </Card>
       </Grid>

@@ -20,6 +20,7 @@ import {
   FORGOT_PASS,
 } from "../../Utils/constants/language/en/buttonLabels";
 import GlobalStyles from "../../globalStyles";
+import PasswordField from "../../components/InputField/PasswordField";
 
 const LoginWithMobile = () => {
   const history = useHistory();
@@ -32,7 +33,7 @@ const LoginWithMobile = () => {
     loading,
     alertOpen,
     setAlertOpen,
-    
+
     responseMessage,
   } = useForm();
 
@@ -73,10 +74,9 @@ const LoginWithMobile = () => {
               error={errors.mobile}
               onChange={handleInputChange}
             />
-            <InputField
+            <PasswordField
               id="input-password"
               name={fieldNames.password}
-              type="password"
               fullWidth
               variant="outlined"
               label="Password"

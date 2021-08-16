@@ -7,8 +7,8 @@ import { API_ENDPOINTS } from "../../Utils/API/endpoints";
 import useValidation from "../../Utils/hooks/useValidation";
 
 const initialValues: any = {
-  email: "",
   data: "",
+  password: "",
 };
 
 export const useForm = (validateOnChange = false) => {
@@ -49,7 +49,7 @@ export const useForm = (validateOnChange = false) => {
     e.preventDefault();
     if (validate()) {
       let requestBody = {
-        email: values.email,
+        data: values.data,
         password: values.password,
       };
       console.log("requestBody", requestBody);

@@ -44,15 +44,15 @@ const useValidation = (values: any) => {
           ? ""
           : messages.notValid;
     }
-    if (fieldNames.data in fieldValues) {
-      if (isEmailValid(fieldNames.data)) {
-        temp.data = "";
-      } else if (isPhoneValid(fieldValues.data)) {
-        temp.data = "";
-      } else {
-        temp.data = messages.notValid;
-      }
-    }
+    // if (fieldNames.data in fieldValues) {
+    //   if (isEmailValid(fieldNames.data)) {
+    //     temp.data = "";
+    //   } else if (isPhoneValid(fieldValues.data)) {
+    //     temp.data = "";
+    //   } else {
+    //     temp.data = messages.notValid;
+    //   }
+    // }
     if (fieldNames.password in fieldValues) {
       temp.password =
         fieldValues.password.trim() === ""

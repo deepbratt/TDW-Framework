@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useApi from "../../Utils/hooks/useApi";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
-import { fieldNames, messages } from "../../Utils/constants/formsConstants";
+import useValidation from "../../Utils/hooks/useValidation";
 
 const initialValues: any = {
   password: "",
@@ -14,33 +14,11 @@ export const useForm = (token: any, validateOnChange = false) => {
     loading,
     alertOpen,
     setAlertOpen,
-    
     responseMessage,
     addRequest,
   } = useApi();
   const [values, setValues] = useState(initialValues);
-  const [errors, setErrors] = useState(initialValues);
-
-  const validate = (fieldValues = values) => {
-    let temp = { ...errors };
-
-    if (fieldNames.password in fieldValues) {
-      temp.password = fieldValues.password.length < 5 ? messages.password : "";
-    }
-    if (fieldNames.confirmPassword in fieldValues) {
-      temp.confirmPassword =
-        fieldValues.confirmPassword !== fieldValues.password
-          ? messages.notMatch
-          : "";
-    }
-
-    setErrors({
-      ...temp,
-    });
-
-    if (fieldValues === values)
-      return Object.values(temp).every((x) => x === "");
-  };
+  const { errors, setErrors, validate } = useValidation(values);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -65,7 +43,7 @@ export const useForm = (token: any, validateOnChange = false) => {
         passwordConfirm: values.confirmPassword,
       };
       console.log("requestBody", requestBody);
-      await addRequest(USERS + FORGOT_PASSWORD + `/${token}`, requestBody);
+      // await addRequest(USERS + FORGOT_PASSWORD + `/${token}`, requestBody);
     }
   };
 
@@ -76,12 +54,10 @@ export const useForm = (token: any, validateOnChange = false) => {
     setErrors,
     handleInputChange,
     resetForm,
-    validate,
     handleSubmit,
     loading,
     alertOpen,
     setAlertOpen,
-    
     responseMessage,
   };
 };

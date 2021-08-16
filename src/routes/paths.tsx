@@ -50,7 +50,7 @@ export const routes = {
   profile: "/dashboard/:id",
   verification: "/verification/:method",
   cars: "/cars/:filters?",
-  forgotPassword: "/forgot-password",
+  forgotPassword: "/forgot-password/:token?",
   resetPassword: "/reset-password/:token",
   addEditCar: "/add-edit/car/:id?",
 };

@@ -6,12 +6,12 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
-import SelectComponent from "./SelectComponent";
+import SelectComponent from "../components/SelectComponent";
 import { City } from "country-state-city";
-import addEditCarData from "../../Utils/constants/language/en/addEditCarData";
-import { Colors } from "../../Utils/constants/colors/colors";
-import SelectInputComponent from "./SelectInputComponent";
-import {NO_REGISTRATION_DISPLAY} from "../../Utils/constants/language/en/addEditCarTexts"
+import addEditCarData from "../Utils/constants/language/en/addEditCarData";
+import { Colors } from "../Utils/constants/colors/colors";
+import SelectInputComponent from "../components/SelectInputComponent";
+import {NO_REGISTRATION_DISPLAY} from "../Utils/constants/language/en/addEditCarTexts"
 
 interface CarInformationFormProps {
   formData: any;

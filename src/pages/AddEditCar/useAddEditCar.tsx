@@ -1,8 +1,8 @@
 import { useEffect, useReducer, useState } from "react";
-import { useParams } from "react-router";
-import CarAdditionalInformation from "./CarAdditionalInformation";
-import CarInformationForm from "./CarInformationForm";
-import UploadPhotosForm from "./UploadPhotosForm";
+import { useHistory, useParams } from "react-router";
+import CarAdditionalInformation from "../../sections/CarAdditionalInformation";
+import CarInformationForm from "../../sections/CarInformationForm";
+import UploadPhotosForm from "../../sections/UploadPhotosForm";
 import { City, State } from "country-state-city";
 import { IState } from "country-state-city/dist/lib/interface";
 import { addEditCarApi, deleteCarAd, getCarById } from "./api";
@@ -66,7 +66,8 @@ const initialRequireError_2 = {
   images: false,
 };
 
-const useAddEditCar = () => {
+const useAddEditCar = (user: any) => {
+  const history = useHistory()
   const { id } = useParams<{ id: string }>();
   const formRef = useRef<any>(null)
   const [formData, setFormData] = useReducer(formReducer, initialFieldValues);
@@ -118,7 +119,11 @@ const useAddEditCar = () => {
     getCarById(id).then(response=>{
       if(response.data.status==="success"){
         let result = response.data.data.result
-        console.log(result)
+        if(result.createdBy._id !== user.id){
+          console.log('phans gaye')
+          // history.push('/')
+          // return
+        }
         let FieldValues = formData
         FieldValues = {
           city: result.city,
@@ -153,11 +158,11 @@ const useAddEditCar = () => {
   },[id])
 
   useEffect(() => {
-    console.log("car add edit ", id);
+    // console.log("car add edit ", id);
     getData()
   }, [getData, id]);
   useEffect(() => {
-    console.log("images", images);
+    // console.log("images", images);
   }, [images]);
 
   const allFalse=(obj: any)=> {
@@ -272,7 +277,7 @@ const useAddEditCar = () => {
       console.table(Object.fromEntries(fd));
       addEditCarApi(fd, id ? id : "").then((response) => {
         if (response) {
-          console.log("response", response);
+          // console.log("response", response);
         } else {
           console.log("error", response);
         }
@@ -304,4 +309,4 @@ const useAddEditCar = () => {
   };
 };
 
-export default useAddEditCar;
+export default (useAddEditCar);

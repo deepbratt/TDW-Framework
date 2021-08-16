@@ -10,13 +10,11 @@ import {
   Card,
   Button,
 } from "@material-ui/core";
-import { PhoneAndroidRounded } from "@material-ui/icons";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../Utils/constants/formsConstants";
 import {
   SIGNIN,
   SIGNUP,
-  CONTINUE_WITH_PHONE,
   CONTINUE_WITH_GOOGLE,
   CONTINUE_WITH_FACEBOOK,
   SIGNIN_USING_ACCOUNT,
@@ -37,7 +35,7 @@ const Login = () => {
     values,
     errors,
     handleInputChange,
-    handleEmailSubmit,
+    handleSubmit,
     handleGoogleSubmit,
     loading,
     // alertOpen,
@@ -72,15 +70,6 @@ const Login = () => {
             className={buttonWrap}
             fullWidth
             variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
-            onClick={() => history.push(routes.loginWithMobile)}
-          >
-            {CONTINUE_WITH_PHONE}
-          </Button>
-          <Button
-            className={buttonWrap}
-            fullWidth
-            variant="outlined"
             startIcon={<img src={GoogleIcon} alt="google-icon" />}
             onClick={() => handleGoogleSubmit()}
           >
@@ -95,18 +84,18 @@ const Login = () => {
           >
             {CONTINUE_WITH_FACEBOOK}
           </Button>
-          <form className={formStyle} onSubmit={handleEmailSubmit}>
+          <form className={formStyle} onSubmit={handleSubmit}>
             <Typography variant="body2" gutterBottom>
               {SIGNIN_USING_ACCOUNT}
             </Typography>
             <InputField
-              id="input-email"
-              name={fieldNames.email}
+              id="input-data"
+              name={fieldNames.data}
               fullWidth
               variant="outlined"
-              label="Email"
-              value={values.email}
-              error={errors.email}
+              label="Email/Phone Number"
+              value={values.data}
+              error={errors.data}
               onChange={handleInputChange}
             />
             <PasswordField

@@ -7,31 +7,38 @@ import {
   Card,
   Button,
 } from "@material-ui/core";
-import { EmailRounded, PhoneAndroidRounded } from "@material-ui/icons";
 import {
+  OR,
   SIGNIN,
   SIGNUP,
-  CONTINUE_WITH_PHONE,
   CONTINUE_WITH_GOOGLE,
   CONTINUE_WITH_FACEBOOK,
-  CONTINUE_WITH_EMAIL,
   ALREADY_HAVE_ACCOUNT,
 } from "../../Utils/constants/language/en/buttonLabels";
 import GoogleIcon from "../../assets/icons/googleIcon.png";
 import FacebookIcon from "../../assets/icons/fbIcon.png";
 import GlobalStyles from "../../globalStyles";
 import { routes } from "../../routes/paths";
-import { handleFacebookAuth, handleGoogleAuth } from "../../Utils/API/API";
+import { handleFacebookAuth } from "../../Utils/API/API";
+import InputField from "../../components/InputField";
+import { fieldNames } from "../../Utils/constants/formsConstants";
+import { CONTINUE } from "../../Utils/constants/language/en/buttonLabels";
+import PasswordField from "../../components/InputField/PasswordField";
 import { useForm } from "./useForm";
 
 const Signup = () => {
   const history = useHistory();
-  const { loginFormGrid, formCard, buttonWrap } = GlobalStyles();
+  const { loginFormGrid, formCard, buttonWrap, formStyle, loginbtn } =
+    GlobalStyles();
   const {
     handleGoogleSubmit,
     loading,
     // alertOpen,
     // setAlertOpen,
+    handleInputChange,
+    handleSubmit,
+    values,
+    errors,
     responseMessage,
   } = useForm();
 
@@ -77,7 +84,92 @@ const Signup = () => {
           >
             {CONTINUE_WITH_FACEBOOK}
           </Button>
-          <Signup />
+          <Typography
+            style={{ fontSize: "24px", marginTop: "10px" }}
+            align="center"
+            variant="body1"
+          >
+            {OR}
+          </Typography>
+          <form className={formStyle} onSubmit={handleSubmit}>
+            <Grid container spacing={1}>
+              <Grid item xs={12} md={6}>
+                <InputField
+                  id="input-first-name"
+                  name={fieldNames.firstName}
+                  fullWidth
+                  variant="outlined"
+                  placeholder="First Name"
+                  value={values.firstName}
+                  error={errors.firstName}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <InputField
+                  id="input-last-name"
+                  name={fieldNames.lastName}
+                  fullWidth
+                  variant="outlined"
+                  placeholder="Last Name"
+                  value={values.lastName}
+                  error={errors.lastName}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <InputField
+                  id="input-data"
+                  name={fieldNames.data}
+                  fullWidth
+                  variant="outlined"
+                  label="Email/Phone Number"
+                  value={values.data}
+                  error={errors.data}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <PasswordField
+                  id="input-password"
+                  name={fieldNames.password}
+                  fullWidth
+                  variant="outlined"
+                  label="Password"
+                  value={values.password}
+                  error={errors.password}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <PasswordField
+                  id="input-confirm-password"
+                  name={fieldNames.confirmPassword}
+                  label="Confirm Password"
+                  placeholder="Re-enter your password"
+                  fullWidth
+                  variant="outlined"
+                  value={values.confirmPassword}
+                  error={errors.confirmPassword}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  className={loginbtn}
+                  fullWidth
+                  disabled={loading}
+                  variant="contained"
+                  color="secondary"
+                  type="submit"
+                >
+                  {CONTINUE}
+                </Button>
+              </Grid>
+            </Grid>
+
+            {responseMessage.status === "success" && history.push(routes.login)}
+          </form>
           <Typography
             style={{ margin: "30px 0" }}
             align="center"

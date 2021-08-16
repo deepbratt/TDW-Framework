@@ -14,10 +14,9 @@ const initialValues: any = {
   confirmPassword: "",
 };
 
-export const useForm = (validateOnChange = true) => {
+export const useForm = (validateOnChange = false) => {
   const dispatch = useDispatch();
-  const { USERS, SIGNUP_WITH_EMAIL, SIGNUP_WITH_MOBILE, GOOGLE_AUTH } =
-    API_ENDPOINTS;
+  const { USERS, GOOGLE_AUTH } = API_ENDPOINTS;
   const {
     loading,
     alertOpen,
@@ -67,14 +66,16 @@ export const useForm = (validateOnChange = true) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    let requestBody = {
-      firstName: values.firstName,
-      lastName: values.lastName,
-      data: values.data,
-      password: values.password,
-      passwordConfirm: values.confirmPassword,
-    };
-    console.log("requestBody", requestBody);
+    if (validate()) {
+      let requestBody = {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        data: values.data,
+        password: values.password,
+        passwordConfirm: values.confirmPassword,
+      };
+      console.log("requestBody", requestBody);
+    }
     // await addRequest(USERS + SIGNUP_WITH_MOBILE, requestBody);
   };
 

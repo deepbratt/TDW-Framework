@@ -1,18 +1,15 @@
 import {
   Button,
   Grid,
-  Step,
-  StepIcon,
-  StepLabel,
-  Stepper,
   Typography,
 } from "@material-ui/core";
 import Sizes from "../../Utils/themeConstants";
-import CustomStepper from "./CustomStepperIcon";
 import useAddEditCar from "./useAddEditCar";
 import addEditCarData from "../../Utils/constants/language/en/addEditCarData";
+import { connect } from "react-redux";
+import CustomStepper from "../../components/CustomStepper";
 
-const AddEditCar = () => {
+const AddEditCar = (user : any) => {
   const {
     activeStep,
     handleBack,
@@ -21,39 +18,16 @@ const AddEditCar = () => {
     id,
     handleDeleteAd,
     formRef,
-  } = useAddEditCar();
+  } = useAddEditCar(user.user);
   const size = Sizes();
   return (
-    <Grid container spacing={3} style={{ minHeight: "90vh" }}>
+    <div style={{backgroundColor:"grey", padding:"100px"}}>
+    <Grid container spacing={3} style={{ minHeight: "90vh", backgroundColor:"white" }}>
       <Grid item xs={12}>
         Banner
       </Grid>
-      <Grid item xs={12} style={{ padding: "60px" }}>
-        <Stepper
-          activeStep={activeStep}
-          style={{ marginTop: "50px" }}
-          orientation={
-            size.mobileLarge || size.mobile ? "vertical" : "horizontal"
-          }
-        >
-          {addEditCarData.steps.map((label, index) => (
-            <Step key={label} style={{ width: "100%" }}>
-              {size.mobileLarge || size.mobile ? (
-                <StepLabel>{label}</StepLabel>
-              ) : (
-                <StepIcon
-                  icon={
-                    <CustomStepper
-                      label={label}
-                      index={index}
-                      activeIndex={activeStep}
-                    />
-                  }
-                ></StepIcon>
-              )}
-            </Step>
-          ))}
-        </Stepper>
+      <Grid item xs={12} >
+        <CustomStepper dataArray={addEditCarData.steps} activeStep={activeStep}/>
       </Grid>
       <Grid
         container
@@ -116,7 +90,10 @@ const AddEditCar = () => {
         </Grid>
       </Grid>
     </Grid>
+    </div>
   );
 };
-
-export default AddEditCar;
+const mapStateToProps = (state: any) => ({
+  user: state.persistedReducer.auth.user,
+});
+export default connect(mapStateToProps)(AddEditCar);

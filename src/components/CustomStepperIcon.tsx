@@ -5,12 +5,12 @@ import {
 } from "@material-ui/core";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import Arrow1 from "../../assets/icons/arrow1.png";
-import Arrow2 from "../../assets/icons/arrow2.png";
-import Arrow3 from "../../assets/icons/arrow3.png";
-import ArrowActive1 from "../../assets/icons/arrow_active1.png";
-import ArrowActive2 from "../../assets/icons/arrow_active2.png";
-import ArrowActive3 from "../../assets/icons/arrow_active3.png";
+import Arrow1 from "../assets/icons/arrow1.png";
+import Arrow2 from "../assets/icons/arrow2.png";
+import Arrow3 from "../assets/icons/arrow3.png";
+import ArrowActive1 from "../assets/icons/arrow_active1.png";
+import ArrowActive2 from "../assets/icons/arrow_active2.png";
+import ArrowActive3 from "../assets/icons/arrow_active3.png";
 interface IStepIcon {
   label?: string;
   index: number;

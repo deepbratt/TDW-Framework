@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - production
 
 jobs:
   build:
@@ -20,5 +21,9 @@ jobs:
         run: npm install && npm run build
         env:
          CI: false
-      - name: Deploy app build to S3 bucket
+      - name: Deploy app build to Development S3 bucket
+        if: github.ref == 'refs/heads/develop'
         run: aws s3 sync ./build/ s3://dev.tezdealz.com --delete
+      - name: Deploy app build to Production S3 bucket
+        if: github.ref == 'refs/heads/production'
+        run: aws s3 sync ./build/ s3://tezdealz.com --delete

@@ -6,8 +6,8 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
-import UploadPicIcon from "../../assets/icons/uploadPicIcon.png";
-import addEditCarData from "../../Utils/constants/language/en/addEditCarData";
+import UploadPicIcon from "../assets/icons/uploadPicIcon.png";
+import addEditCarData from "../Utils/constants/language/en/addEditCarData";
 
 interface IUploadPhotosFormProps {
   images: any;
@@ -131,6 +131,7 @@ const useStyles = makeStyles((theme: Theme) =>
     imgStyle: {
       cursor: "pointer",
       width: "200px",
+      marginLeft:"5px"
     },
   })
 );

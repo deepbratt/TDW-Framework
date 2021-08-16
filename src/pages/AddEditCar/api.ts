@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const BASE_URL = "https://api.tezdealz.com/v1";
-let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyZGF0YSI6eyJpZCI6IjYxMDM3NWVkNmI4OTdhMDAxZDg2NGNhMSJ9LCJpYXQiOjE2Mjg5NjY2MTksImV4cCI6NjgxMjk2NjYxOX0.3JTF7Aa_TvsRbC2DkPq9gmlsuGI96JSKu1VKZ5oQT_4"
+let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyZGF0YSI6eyJpZCI6IjYxMTkwMDMxYmY4ZTE4MDAxZTM0OGJhNiJ9LCJpYXQiOjE2MjkwMjg2MDcsImV4cCI6NjgxMzAyODYwN30.QDT0OdcxMPZHzILfnwX9xQv5qaQU4s7PsGzrA3r_Y-8"
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,

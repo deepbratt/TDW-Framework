@@ -9,7 +9,7 @@ const initialValues: any = {
 
 export const useForm = (validateOnChange = false) => {
   const { USERS, FORGOT_PASSWORD } = API_ENDPOINTS;
-  const { loading, alertOpen, setAlertOpen, responseMessage, addRequest } =
+  const { loading, alertOpen, setAlertOpen, responseMessage, addRequest, setResponseMessage } =
     useApi();
   const [values, setValues] = useState(initialValues);
   const { errors, setErrors, validate } = useValidation(values);
@@ -33,15 +33,19 @@ export const useForm = (validateOnChange = false) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (validate()) {
-      let requestBody = {
-        data: values.data,
-      };
-      console.log("requestBody", requestBody);
-      await addRequest(USERS + FORGOT_PASSWORD, requestBody).then(() => {
-        if (responseMessage.status === "success") {
-          setResetLinkMessage(true);
-        }
-      });
+      // let requestBody = {
+      //   data: values.data,
+      // };
+      // console.log("requestBody", requestBody);
+      // await addRequest(USERS + FORGOT_PASSWORD, requestBody).then(() => {
+      //   if (responseMessage.status === "success") {
+      //     setResetLinkMessage(true);
+      //   }
+      // });
+      setResponseMessage({
+        status:"success",
+        message:""
+      })
     }
   };
 

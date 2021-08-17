@@ -1,8 +1,8 @@
 import { useForm } from "./useForm";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
-import Toast from "../../components/Toast";
-import { routes } from "../../routes/paths";
+// import Toast from "../../components/Toast";
+import { routes,paths } from "../../routes/paths";
 import {
   Grid,
   LinearProgress,
@@ -109,7 +109,7 @@ const Login = () => {
               onChange={handleInputChange}
             />
             <Typography>
-              <NavLink to={routes.forgotPassword}>{FORGOT_PASS}</NavLink>
+              <NavLink to={paths.forgotPassword}>{FORGOT_PASS}</NavLink>
             </Typography>
 
             <Typography

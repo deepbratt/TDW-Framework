@@ -1,7 +1,7 @@
 import { useForm } from "./useForm";
 import { useHistory, useParams } from "react-router";
 import Toast from "../../components/Toast";
-import { routes } from "../../routes/paths";
+import { routes, paths } from "../../routes/paths";
 import {
   Grid,
   LinearProgress,
@@ -99,7 +99,7 @@ const ForgetPassword = () => {
                   {CONTINUE}
                 </Button>
                 {responseMessage.status === "success" &&
-                  history.push(routes.resetPassword)}
+                  history.push(paths.verification+`/reset-password`)}
               </form>
             </Card>
           </>

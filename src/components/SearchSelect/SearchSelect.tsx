@@ -4,6 +4,7 @@ import { Grid, MenuItem, Button, TextField } from "@material-ui/core";
 import selectStyles from "./selectStyles";
 import Breakpoints from "../../Utils/Breakpoints";
 import { City } from "country-state-city";
+
 interface IProps {
   setVal: (val: any) => void;
   val: any;
@@ -12,20 +13,14 @@ interface IProps {
     min: string;
     max: string;
   };
+  handleChange: (e:any) => void
+  handleNavigation: () => void
 }
 
-const SearchSelect: React.FC<IProps> = ({ setVal, val, carModel, range }) => {
-  const { root, grid, button, selection, cssLabel, select } = selectStyles();
-  const { model, cities, min, max } = val;
-  const handleChange = (e: any) => {
-    const { value, name } = e.target;
-    setVal({
-      ...val,
-      [name]: value,
-    });
-  };
-
+const SearchSelect: React.FC<IProps> = ({ val, carModel, range,handleChange,handleNavigation}) => {
   const city = City.getCitiesOfCountry("PK");
+  const { root, grid, button, selection, select, cssLabel } = selectStyles();
+  const { model, cities, min, max } = val;
 
   return (
     <Grid container>
@@ -78,7 +73,7 @@ const SearchSelect: React.FC<IProps> = ({ setVal, val, carModel, range }) => {
         </Grid>
         <Grid item lg={2} xs={12}>
           <TextField
-            value={val.min}
+            value={min}
             onChange={(e) => {
               handleChange(e);
             }}
@@ -95,7 +90,7 @@ const SearchSelect: React.FC<IProps> = ({ setVal, val, carModel, range }) => {
             <MenuItem value={range.min}> {range.min}</MenuItem>;
           </TextField>
           <TextField
-            value={val.max}
+            value={max}
             onChange={(e) => {
               handleChange(e);
             }}
@@ -115,9 +110,7 @@ const SearchSelect: React.FC<IProps> = ({ setVal, val, carModel, range }) => {
         <Grid className={grid} item>
           <Button className={button} size={Breakpoints()} variant="contained">
             <SearchIcon
-              onClick={() =>
-                console.log(model, cities, Number(min), Number(max))
-              }
+              onClick={() => handleNavigation()}
               style={{ fontSize: "2rem" }}
             />
           </Button>

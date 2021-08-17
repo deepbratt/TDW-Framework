@@ -33,6 +33,7 @@ const useApi = () => {
           status: response.data.data.status,
           message: response.data.data.message,
         });
+        setResponseData(response.data)
       })
       .catch((error) => {
         console.log("error", error);

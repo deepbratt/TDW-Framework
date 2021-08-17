@@ -60,7 +60,7 @@ const Login = () => {
       justify="center"
       alignContent="center"
     >
-      <Grid item xs={4}>
+      <Grid item xs={10} md={8} lg={4}>
         {loading && <LinearProgress color="secondary" />}
         <Card className={formCard}>
           <Typography variant="h6" gutterBottom>

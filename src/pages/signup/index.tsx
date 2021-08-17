@@ -60,7 +60,7 @@ const Signup = () => {
       justify="center"
       alignContent="center"
     >
-      <Grid item xs={4}>
+      <Grid item xs={10} md={6} lg={4}>
         {loading && <LinearProgress color="secondary" />}
         <Card className={formCard}>
           <Typography variant="h6" gutterBottom>
@@ -92,7 +92,7 @@ const Signup = () => {
             {OR}
           </Typography>
           <form className={formStyle} onSubmit={handleSubmit}>
-            <Grid container spacing={1}>
+            <Grid container spacing={1}  justifyContent="center">
               <Grid item xs={12} md={6}>
                 <InputField
                   id="input-first-name"
@@ -154,6 +154,19 @@ const Signup = () => {
                   onChange={handleInputChange}
                 />
               </Grid>
+              <Grid item container xs={10} md={6} justifyContent="center">
+                <Typography
+                  style={{ margin: "30px 0" }}
+                  align="center"
+                  variant="body2"
+                  component="h6"
+                  gutterBottom
+                >
+                  {ALREADY_HAVE_ACCOUNT}{" "}
+                  <NavLink to={routes.login}>{SIGNIN}</NavLink>
+                </Typography>
+              </Grid>
+
               <Grid item xs={12}>
                 <Button
                   className={loginbtn}
@@ -167,18 +180,8 @@ const Signup = () => {
                 </Button>
               </Grid>
             </Grid>
-
             {responseMessage.status === "success" && history.push(routes.login)}
           </form>
-          <Typography
-            style={{ margin: "30px 0" }}
-            align="center"
-            variant="body2"
-            component="h6"
-            gutterBottom
-          >
-            {ALREADY_HAVE_ACCOUNT} <NavLink to={routes.login}>{SIGNIN}</NavLink>
-          </Typography>
         </Card>
         {responseMessage.status === "success" && history.push(routes.home)}
       </Grid>

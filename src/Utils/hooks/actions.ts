@@ -12,6 +12,15 @@ const axiosInstance = axios.create({
   },
 });
 
+export const addData = async (endpoint: string, requestBody?: object) => {
+  try {
+    const result = await axiosInstance.post(endpoint, requestBody);
+    return result.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 export const getData = async (url: string,param: number | string) => {
   try {
     let result = await axiosInstance.get(`${url}${param}`);

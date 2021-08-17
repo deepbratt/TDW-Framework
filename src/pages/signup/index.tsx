@@ -32,9 +32,9 @@ const Signup = () => {
     GlobalStyles();
   const {
     handleGoogleSubmit,
-    loading,
-    // alertOpen,
-    // setAlertOpen,
+    isLoading,
+    alertOpen,
+    setAlertOpen,
     handleInputChange,
     handleSubmit,
     values,
@@ -42,16 +42,16 @@ const Signup = () => {
     responseMessage,
   } = useForm();
 
-  // const handleAlertClose = (
-  //   event: React.SyntheticEvent | React.MouseEvent,
-  //   reason?: string
-  // ) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
+  const handleAlertClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
 
-  //   setAlertOpen(false);
-  // };
+    setAlertOpen(false);
+  };
 
   return (
     <Grid
@@ -61,7 +61,7 @@ const Signup = () => {
       alignContent="center"
     >
       <Grid item xs={10} md={6} lg={4}>
-        {loading && <LinearProgress color="secondary" />}
+        {isLoading && <LinearProgress color="secondary" />}
         <Card className={formCard}>
           <Typography variant="h6" gutterBottom>
             {SIGNUP}
@@ -183,7 +183,7 @@ const Signup = () => {
                 <Button
                   className={loginbtn}
                   fullWidth
-                  disabled={loading}
+                  disabled={isLoading}
                   variant="contained"
                   color="secondary"
                   type="submit"
@@ -197,14 +197,14 @@ const Signup = () => {
         </Card>
         {responseMessage.status === "success" && history.push(routes.home)}
       </Grid>
-      {/* {responseMessage && (
+      {responseMessage && (
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
          type={responseMessage.status}
           message={responseMessage.message}
         />
-      )} */}
+      )}
     </Grid>
   );
 };

@@ -4,12 +4,13 @@ import { login } from "../../redux/reducers/authSlice";
 import { handleGoogleAuth } from "../../Utils/API/API";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
 import useApi from "../../Utils/hooks/useApi";
+import { addData } from "../../Utils/hooks/actions";
 import useValidation from "../../Utils/hooks/useValidation";
 
 const initialValues: any = {
   firstName: "",
   lastName: "",
-  username:"",
+  username: "",
   data: "",
   password: "",
   confirmPassword: "",
@@ -17,17 +18,19 @@ const initialValues: any = {
 
 export const useForm = (validateOnChange = false) => {
   const dispatch = useDispatch();
-  const { USERS, GOOGLE_AUTH } = API_ENDPOINTS;
-  const {
-    loading,
-    alertOpen,
-    setAlertOpen,
-    responseData,
-    responseMessage,
-    addRequest,
-  } = useApi();
+  const { USERS, GOOGLE_AUTH, SIGNUP } = API_ENDPOINTS;
+  const { addRequest } = useApi();
+
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [responseData, setResponseData] = useState<any>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const [values, setValues] = useState(initialValues);
   const { validate, errors, setErrors } = useValidation(values);
+  const [responseMessage, setResponseMessage] = useState({
+    status: "",
+    message: "",
+  });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -39,11 +42,11 @@ export const useForm = (validateOnChange = false) => {
     if (validateOnChange) validate({ [name]: value });
   };
 
-  useEffect(() => {
-    if (responseMessage.status === "success") {
-      dispatch(login(responseData));
-    }
-  }, [responseMessage]);
+  // useEffect(() => {
+  //   if (responseMessage.status === "success") {
+  //     dispatch(login(responseData));
+  //   }
+  // }, [responseMessage]);
 
   const resetForm = () => {
     setValues(initialValues);
@@ -71,13 +74,41 @@ export const useForm = (validateOnChange = false) => {
       let requestBody = {
         firstName: values.firstName,
         lastName: values.lastName,
+        username: values.username,
         data: values.data,
         password: values.password,
         passwordConfirm: values.confirmPassword,
       };
       console.log("requestBody", requestBody);
+      await addData(USERS + SIGNUP, requestBody)
+        .then((response) => {
+          setIsLoading(false);
+          if (response.status === "success") {
+            console.log("response log", response)
+            // setResponseData(response.data);
+            setAlertOpen(true);
+            setResponseMessage({
+              status: response.status,
+              message: response.message,
+            });
+          } else {
+            setIsLoading(false);
+            setAlertOpen(true);
+            setResponseMessage({
+              status: "error",
+              message: response.message,
+            });
+          }
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          setAlertOpen(true);
+          setResponseMessage({
+            status: "error",
+            message: error.message,
+          });
+        });
     }
-    // await addRequest(USERS + SIGNUP_WITH_MOBILE, requestBody);
   };
 
   return {
@@ -90,7 +121,7 @@ export const useForm = (validateOnChange = false) => {
     validate,
     handleSubmit,
     handleGoogleSubmit,
-    loading,
+    isLoading,
     alertOpen,
     setAlertOpen,
     responseMessage,

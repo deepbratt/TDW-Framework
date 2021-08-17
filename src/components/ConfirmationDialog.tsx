@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, DialogTitleProps, useMediaQuery, useTheme } from "@material-ui/core"
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery, useTheme } from "@material-ui/core"
 
 interface DialogComponentProps {
     title: string
@@ -9,7 +9,7 @@ interface DialogComponentProps {
     confirmBtnLabel?: string
     rejectBtnLabel?: string 
 }
-const DialogComponent = ({title, message, handleConfirmation, handleRejection, open, confirmBtnLabel="Agree", rejectBtnLabel="Disagree"} : DialogComponentProps)=>{
+const ConfirmationDialog = ({title, message, handleConfirmation, handleRejection, open, confirmBtnLabel="Agree", rejectBtnLabel="Disagree"} : DialogComponentProps)=>{
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     return(
@@ -18,6 +18,8 @@ const DialogComponent = ({title, message, handleConfirmation, handleRejection, o
         open={open}
         onClose={handleRejection}
         aria-labelledby="responsive-dialog-title"
+        maxWidth={"sm"}
+        fullWidth={true}
       >
         <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>
         <DialogContent>
@@ -37,4 +39,4 @@ const DialogComponent = ({title, message, handleConfirmation, handleRejection, o
     )
 }
 
-export default DialogComponent
+export default ConfirmationDialog

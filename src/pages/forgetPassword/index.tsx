@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import GlobalStyles from "../../globalStyles";
 import InputField from "../../components/InputField";
+import CodeVerification from "../../sections/CodeVerification";
 import { fieldNames } from "../../Utils/constants/formsConstants";
 import {
   ACCOUNT_RECOVERY,
@@ -19,6 +20,7 @@ import {
   CONTINUE,
 } from "../../Utils/constants/language/en/buttonLabels";
 import ResetPassword from "../resetPassword";
+import PinInput from "react-pin-input";
 
 const ForgetPassword = () => {
   const { token } = useParams<any>();
@@ -27,6 +29,8 @@ const ForgetPassword = () => {
     values,
     errors,
     handleInputChange,
+    pin,
+    setPin,
     handleSubmit,
     loading,
     alertOpen,
@@ -72,35 +76,37 @@ const ForgetPassword = () => {
               <Typography variant="h3" gutterBottom>
                 {ACCOUNT_RECOVERY}
               </Typography>
-              <form className={formStyle} onSubmit={handleSubmit}>
-                <Typography variant="body2" gutterBottom>
-                  {ENTER_YOUR_EMAIL_PASS_MESSAGE}
-                </Typography>
-                <InputField
-                  id="input-data"
-                  name={fieldNames.data}
-                  fullWidth
-                  variant="outlined"
-                  label="Email/Phone Number"
-                  value={values.data}
-                  error={errors.data}
-                  required
-                  onChange={handleInputChange}
-                />
+              {responseMessage.status === "success" ? (
+                <CodeVerification pin={pin} setPin={setPin} />
+              ) : (
+                <form className={formStyle} onSubmit={handleSubmit}>
+                  <Typography variant="body2" gutterBottom>
+                    {ENTER_YOUR_EMAIL_PASS_MESSAGE}
+                  </Typography>
+                  <InputField
+                    id="input-data"
+                    name={fieldNames.data}
+                    fullWidth
+                    variant="outlined"
+                    label="Email/Phone Number"
+                    value={values.data}
+                    error={errors.data}
+                    required
+                    onChange={handleInputChange}
+                  />
 
-                <Button
-                  className={loginbtn}
-                  fullWidth
-                  disabled={loading}
-                  variant="contained"
-                  color="secondary"
-                  type="submit"
-                >
-                  {CONTINUE}
-                </Button>
-                {responseMessage.status === "success" &&
-                  history.push(paths.verification+`/reset-password`)}
-              </form>
+                  <Button
+                    className={loginbtn}
+                    fullWidth
+                    disabled={loading}
+                    variant="contained"
+                    color="secondary"
+                    type="submit"
+                  >
+                    {CONTINUE}
+                  </Button>
+                </form>
+              )}
             </Card>
           </>
         )}

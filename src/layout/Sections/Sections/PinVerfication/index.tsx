@@ -63,7 +63,7 @@ const VerificationContext = ({ verificationMethod }: IVerficationProps) => {
           {message} <span style={{ fontWeight: "bolder" }}>{num}</span>
         </Typography>
         <PinInput
-          length={6}
+          length={4}
           onChange={(value: string) => setVal(value)}
           inputMode="numeric"
           style={{ padding: "10px", marginBottom: "10px" }}

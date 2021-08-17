@@ -9,9 +9,16 @@ const initialValues: any = {
 
 export const useForm = (validateOnChange = false) => {
   const { USERS, FORGOT_PASSWORD } = API_ENDPOINTS;
-  const { loading, alertOpen, setAlertOpen, responseMessage, addRequest, setResponseMessage } =
-    useApi();
+  const {
+    loading,
+    alertOpen,
+    setAlertOpen,
+    responseMessage,
+    addRequest,
+    setResponseMessage,
+  } = useApi();
   const [values, setValues] = useState(initialValues);
+  const [pin, setPin] = useState("");
   const { errors, setErrors, validate } = useValidation(values);
   const [resetLinkMessage, setResetLinkMessage] = useState(false);
 
@@ -43,9 +50,9 @@ export const useForm = (validateOnChange = false) => {
       //   }
       // });
       setResponseMessage({
-        status:"success",
-        message:""
-      })
+        status: "success",
+        message: "",
+      });
     }
   };
 
@@ -54,6 +61,9 @@ export const useForm = (validateOnChange = false) => {
     setValues,
     errors,
     setErrors,
+    pin,
+    setPin,
+    
     handleInputChange,
     resetForm,
     validate,

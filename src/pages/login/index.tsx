@@ -66,7 +66,7 @@ const Login = () => {
           <Typography variant="h6" gutterBottom>
             {SIGNIN}
           </Typography>
-          <Button
+          {/* <Button
             className={buttonWrap}
             fullWidth
             variant="outlined"
@@ -83,7 +83,7 @@ const Login = () => {
             onClick={() => handleFacebookAuth()}
           >
             {CONTINUE_WITH_FACEBOOK}
-          </Button>
+          </Button> */}
           <form className={formStyle} onSubmit={handleSubmit}>
             <Typography variant="body2" gutterBottom>
               {SIGNIN_USING_ACCOUNT}

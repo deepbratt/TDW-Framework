@@ -1,4 +1,4 @@
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import Toast from "../../components/Toast";
 import { routes } from "../../routes/paths";
 import { LinearProgress, Card, Button, Typography } from "@material-ui/core";
@@ -14,6 +14,7 @@ import PasswordField from "../../components/InputField/PasswordField";
 
 const ResetPassword = () => {
   const history = useHistory();
+  const { token } = useParams<any>();
   const {
     values,
     errors,
@@ -24,7 +25,7 @@ const ResetPassword = () => {
     setAlertOpen,
 
     responseMessage,
-  } = useForm("token here");
+  } = useForm(token);
 
   const { formStyle, formCard, loginbtn } = GlobalStyles();
 

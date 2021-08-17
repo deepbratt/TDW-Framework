@@ -66,7 +66,7 @@ const Signup = () => {
           <Typography variant="h6" gutterBottom>
             {SIGNUP}
           </Typography>
-          <Button
+          {/* <Button
             className={buttonWrap}
             fullWidth
             variant="outlined"
@@ -90,7 +90,7 @@ const Signup = () => {
             variant="body1"
           >
             {OR}
-          </Typography>
+          </Typography> */}
           <form className={formStyle} onSubmit={handleSubmit}>
             <Grid container spacing={1}  justifyContent="center">
               <Grid item xs={12} md={6}>

@@ -9,14 +9,9 @@ const initialValues: any = {
 };
 
 export const useForm = (token: any, validateOnChange = false) => {
-  const { USERS, FORGOT_PASSWORD } = API_ENDPOINTS;
-  const {
-    loading,
-    alertOpen,
-    setAlertOpen,
-    responseMessage,
-    addRequest,
-  } = useApi();
+  const { USERS, RESET_PASSWORD } = API_ENDPOINTS;
+  const { loading, alertOpen, setAlertOpen, responseMessage, addRequest } =
+    useApi();
   const [values, setValues] = useState(initialValues);
   const { errors, setErrors, validate } = useValidation(values);
 
@@ -43,7 +38,7 @@ export const useForm = (token: any, validateOnChange = false) => {
         passwordConfirm: values.confirmPassword,
       };
       console.log("requestBody", requestBody);
-      // await addRequest(USERS + FORGOT_PASSWORD + `/${token}`, requestBody);
+      await addRequest(USERS + RESET_PASSWORD + `/${token}`, requestBody);
     }
   };
 

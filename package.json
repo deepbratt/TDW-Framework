@@ -45,7 +45,6 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
-      "npm run lint:fix",
       "eslint --quiet --fix",
       "prettier --config .prettierrc --write",
       "git add"

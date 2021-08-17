@@ -1,67 +1,164 @@
-import axios from "axios";
-
-const BASE_URL = "http://api.tezdealz.com/v1";
-const axiosInstance = axios.create({
-  baseURL: BASE_URL,
-
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyZGF0YSI6eyJpZCI6IjYxMDM3NWVkNmI4OTdhMDAxZDg2NGNhMSJ9LCJpYXQiOjE2MjgyNTc0NDMsImV4cCI6NjgxMjI1NzQ0M30.zx_XQmGyd3ruA371egoR137PAvIuFT7CkbqqnP7igUY`,
-  },
-});
-
-export const getData = async (url: string,param: number | string) => {
-  try {
-    let result = await axiosInstance.get(`${url}${param}`);
-    return result.data;
-  } catch (error) {
-    return error.response.data;
-  }
-};
-
-export const getSingleData = async (url: string, id: string) => {
-  try {
-    let result = await axiosInstance.get(`${url}/${id}`);
-    return result.data;
-  } catch (error) {
-    return error.response.data;
-  }
-};
-
-export const addToFav = async (url: string, id: string) => {
-  try {
-    let result = await axiosInstance.patch(`${url}/${id}`);
-    return result.data;
-  } catch (error) {
-    return error.response.data;
-  }
-};
-
-export const updataData = async (url: string, id: string, data: any) => {
-  try {
-    let result = await axiosInstance.patch(`${url}/${id}`, data);
-    return result.data;
-  } catch (error) {
-    return error.response.data;
-  }
-};
-
-export const updateUser = async (url: string, data: any) => {
-  try {
-    let result = await axiosInstance.patch(`${url}`, data);
-    return result.data;
-  } catch (error) {
-    return error.response.data;
-  }
-};
-
-export const deleteData = async (url: string, id: string) => {
-  try {
-    let result = await axiosInstance.patch(`${url}/${id}`);
-    return result.data;
-  } catch (error) {
-    return error.response.data;
-  }
-};
+import {
+    getData,
+    getSingleData,
+    addToFav
+  } from "./apiConfig";
+  import {getAllData,addData,updateData} from "../API/API"
+  
+  const Actions = () => {
+      // const getAll = async (endpoint: string) => {
+    //   setLoading(true);
+    //   await getAllData(endpoint)
+    //     .then((response) => {
+    //       console.log("response", response);
+    //       setLoading(false);
+    //       setAlertOpen(true);
+    //       setResponseMessage({
+    //         status: response.data.data.status,
+    //         message: response.data.data.message,
+    //       });
+    //     })
+    //     .catch((error) => {
+    //       console.log("error", error);
+    //       setLoading(false);
+    //       setAlertOpen(true);
+    //       setResponseMessage({
+    //         status: error.status,
+    //         message: error.message,
+    //       });
+    //     });
+    // };
+  
+    // const addRequest = async (endpoint: string, requestBody?: object) => {
+    //   setLoading(true);
+    //   await addData(endpoint, requestBody)
+    //     .then((response) => {
+    //       console.log("response", response);
+    //       setLoading(false);
+    //       setAlertOpen(true);
+    //       setResponseMessage({
+    //         status: response.data.data.status,
+    //         message: response.data.data.message,
+    //       });
+    //     })
+    //     .catch((error) => {
+    //       console.log("error", error);
+    //       setLoading(false);
+    //       setAlertOpen(true);
+    //       setResponseMessage({
+    //         status: error.status,
+    //         message: error.message,
+    //       });
+    //     });
+    // };
+  
+    // const updateRequest = async (endpoint: string, requestBody?: object) => {
+    //   setLoading(true);
+    //   await updateData(endpoint, requestBody)
+    //     .then((response) => {
+    //       console.log("response", response);
+    //       setLoading(false);
+    //       setAlertOpen(true);
+    //       setResponseMessage({
+    //         status: response.data.data.status,
+    //         message: response.data.data.message,
+    //       });
+    //     })
+    //     .catch((error) => {
+    //       console.log("error", error);
+    //       setLoading(false);
+    //       setAlertOpen(true);
+    //       setResponseMessage({
+    //         status: error.status,
+    //         message: error.message,
+    //       });
+    //     });
+    // };
+    const loadAllData = async (
+      url: string,
+      param: number | string,
+      setIsLoading: any,
+      setData: any
+    ) => {
+      setIsLoading(true);
+      await getData(url, param)
+        .then((response) => {
+          setIsLoading(false);
+          if (response.status === "success") {
+            setData(response.data.result);
+          } else {
+            return "error";
+          }
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
+    };
+  
+    const loadSingleData = async (
+      url: string,
+      id: string,
+      setIsLoading: any,
+      setObj: any,
+    ) => {
+      setIsLoading(true);
+      await getSingleData(url, id)
+        .then((response) => {
+          setIsLoading(false);
+          if (response.status === "success") {
+            setObj(response.data.result);
+          } else {
+            return "error";
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+  
+    const addFavs = async (
+      url: string,
+      id: string,
+      setOpen: any,
+      setIsLoading: any,
+      setResponseMessage: any
+    ) => {
+      setIsLoading(true);
+      setOpen(false);
+      await addToFav(url, id)
+        .then((response) => {
+          setIsLoading(false);
+          if (response.status === "fail") {
+            setOpen(true);
+            setResponseMessage({
+              status: "error",
+              message: response.message,
+            });
+          } else {
+            setOpen(true);
+            setResponseMessage({
+              status: "success",
+              message: response.message,
+            });
+          }
+        })
+        .catch((error) => {
+          setOpen(true);
+          setResponseMessage({
+            status: "error",
+            message: error.message,
+          });
+        });
+    };
+  
+  
+  
+    return {
+      loadSingleData,
+      addFavs,
+      loadAllData,
+    };
+  };
+  
+  export default Actions;
+  

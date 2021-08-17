@@ -99,7 +99,7 @@ const Signup = () => {
                   name={fieldNames.firstName}
                   fullWidth
                   variant="outlined"
-                  placeholder="First Name"
+                  label="First Name"
                   value={values.firstName}
                   error={errors.firstName}
                   onChange={handleInputChange}
@@ -111,9 +111,21 @@ const Signup = () => {
                   name={fieldNames.lastName}
                   fullWidth
                   variant="outlined"
-                  placeholder="Last Name"
+                  label="Last Name"
                   value={values.lastName}
                   error={errors.lastName}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <InputField
+                  id="input-username"
+                  name={fieldNames.username}
+                  fullWidth
+                  variant="outlined"
+                  label="Username"
+                  value={values.username}
+                  error={errors.username}
                   onChange={handleInputChange}
                 />
               </Grid>
@@ -154,7 +166,7 @@ const Signup = () => {
                   onChange={handleInputChange}
                 />
               </Grid>
-              <Grid item container xs={10} md={6} justifyContent="center">
+              <Grid item container xs={12} justifyContent="center">
                 <Typography
                   style={{ margin: "30px 0" }}
                   align="center"

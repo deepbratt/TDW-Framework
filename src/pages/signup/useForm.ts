@@ -9,6 +9,7 @@ import useValidation from "../../Utils/hooks/useValidation";
 const initialValues: any = {
   firstName: "",
   lastName: "",
+  username:"",
   data: "",
   password: "",
   confirmPassword: "",

@@ -17,5 +17,7 @@ export const Colors = {
   blue: "#1A75FF",
   darkBlue: "#111B47",
   berry: "#530000",
-  iceBlue: "#EFF3FA"
+  iceBlue: "#EFF3FA",
+  whiteTranparent : "rgba(255,255,255,0.5)",
+  greyTranparent : "rgba(255,255,255,0.5)"
 };

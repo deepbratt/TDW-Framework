@@ -1,21 +1,21 @@
 import { lazy } from "react";
-const Home = lazy(() => import("../Pages/home"));
-const Login = lazy(() => import("../Pages/login"));
-const CarsListing = lazy(() => import("../Pages/carsListing"));
-const LoginWithMobile = lazy(() => import("../Pages/login/loginWithMobile"));
-const ForgetPassword = lazy(() => import("../Pages/forgetPassword"));
-const ResetPassword = lazy(() => import("../Pages/resetPassword"));
-const Signup = lazy(() => import("../Pages/signup"));
-const SignupWithEmail = lazy(() => import("../Pages/signup/SignupWithEmail"));
-const SignupWithMobile = lazy(() => import("../Pages/signup/SignupWithMobile"));
-const AddEditCar = lazy(() => import("../Pages/AddEditCar"));
-const usedCars = lazy(() => import("../Pages/SearchUsedCars/index"));
-const Verification = lazy(() => import("../Pages/verificationPage"));
-const CarDetail = lazy(() => import("../Pages/carDetail"));
-const CarComparison = lazy(() => import("../Pages/carComparision/index"));
-const ShortlistItem = lazy(() => import("../Pages/shortlistItems"));
-// const Dashboard = lazy(() => import("../Pages/dashboard/index")) ;
-// const CarListing = lazy(() => import("../Pages/postAd"));
+const Home = lazy(() => import("../Pages_1/home"));
+const Login = lazy(() => import("../Pages_1/login"));
+const CarsListing = lazy(() => import("../Pages_1/carsListing"));
+const LoginWithMobile = lazy(() => import("../Pages_1/login/loginWithMobile"));
+const ForgetPassword = lazy(() => import("../Pages_1/forgetPassword"));
+const ResetPassword = lazy(() => import("../Pages_1/resetPassword"));
+const Signup = lazy(() => import("../Pages_1/signup"));
+const SignupWithEmail = lazy(() => import("../Pages_1/signup/SignupWithEmail"));
+const SignupWithMobile = lazy(() => import("../Pages_1/signup/SignupWithMobile"));
+const AddEditCar = lazy(() => import("../Pages_1/AddEditCar"));
+const usedCars = lazy(() => import("../Pages_1/SearchUsedCars/index"));
+const Verification = lazy(() => import("../Pages_1/verificationPage"));
+const CarDetail = lazy(() => import("../Pages_1/carDetail"));
+const CarComparison = lazy(() => import("../Pages_1/carComparision/index"));
+const ShortlistItem = lazy(() => import("../Pages_1/shortlistItems"));
+// const Dashboard = lazy(() => import("../Pages_1/dashboard/index")) ;
+// const CarListing = lazy(() => import("../Pages_1/postAd"));
 
 export const paths = {
   home: "home",

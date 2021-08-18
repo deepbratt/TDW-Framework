@@ -11,5 +11,5 @@ export const API_ENDPOINTS = {
   SIGNUP_WITH_EMAIL: "/signup-email",
   SIGNUP_WITH_MOBILE: "/signup-phone",
   FORGOT_PASSWORD: "/forgotPassword",
-  RESET_PASSWORD: "/reset-password",
+  RESET_PASSWORD: "/resetPassword",
 };

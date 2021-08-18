@@ -20,7 +20,7 @@ const CodeVerfication: React.FC<CodeVerficationProps> = ({ pin, setPin }) => {
       setPinError(true);
     } else {
       setPinError(false);
-      history.push(paths.forgotPassword + `/${pin}`);
+      history.push(paths.forgotPassword + `/reset-password`);
     }
   };
 

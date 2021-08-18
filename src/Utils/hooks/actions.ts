@@ -3,12 +3,11 @@ import axios from "axios";
 const BASE_URL = "http://api.tezdealz.com/v1";
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
-
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyZGF0YSI6eyJpZCI6IjYxMDM3NWVkNmI4OTdhMDAxZDg2NGNhMSJ9LCJpYXQiOjE2MjgyNTc0NDMsImV4cCI6NjgxMjI1NzQ0M30.zx_XQmGyd3ruA371egoR137PAvIuFT7CkbqqnP7igUY`,
+    Authorization: "Bearer " + localStorage.getItem("jwt"),
   },
 });
 
@@ -21,7 +20,7 @@ export const addData = async (endpoint: string, requestBody?: object) => {
   }
 };
 
-export const getData = async (url: string,param: number | string) => {
+export const getData = async (url: string, param: number | string) => {
   try {
     let result = await axiosInstance.get(`${url}${param}`);
     return result.data;

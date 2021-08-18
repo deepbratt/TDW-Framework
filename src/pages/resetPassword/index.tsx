@@ -1,9 +1,8 @@
-import { useHistory, useParams } from "react-router";
+import { useHistory } from "react-router";
 import Toast from "../../components/Toast";
-import { routes } from "../../routes/paths";
+import { paths } from "../../routes/paths";
 import { LinearProgress, Card, Button, Typography } from "@material-ui/core";
 import GlobalStyles from "../../globalStyles";
-import InputField from "../../components/InputField";
 import { fieldNames } from "../../Utils/constants/formsConstants";
 import { useForm } from "./useForm";
 import {
@@ -12,15 +11,15 @@ import {
 } from "../../Utils/constants/language/en/buttonLabels";
 import PasswordField from "../../components/InputField/PasswordField";
 
-const ResetPassword = () => {
+const ResetPassword = ({ token }: any) => {
   const history = useHistory();
-  const { token } = useParams<any>();
+
   const {
     values,
     errors,
     handleInputChange,
     handleSubmit,
-    loading,
+    isLoading,
     alertOpen,
     setAlertOpen,
 
@@ -41,7 +40,7 @@ const ResetPassword = () => {
 
   return (
     <>
-      {loading && <LinearProgress color="secondary" />}
+      {isLoading && <LinearProgress color="secondary" />}
       <Card className={formCard}>
         <Typography variant="h3" gutterBottom>
           {ACCOUNT_RECOVERY}
@@ -73,15 +72,14 @@ const ResetPassword = () => {
           <Button
             className={loginbtn}
             fullWidth
-            disabled={loading}
+            disabled={isLoading}
             variant="contained"
             color="secondary"
             type="submit"
           >
             {RESET_PASSWORD}
           </Button>
-          {responseMessage.status === "success" &&
-            history.push(routes.resetPassword)}
+          {responseMessage.status === "success" && history.push(paths.login)}
         </form>
       </Card>
       {responseMessage && (

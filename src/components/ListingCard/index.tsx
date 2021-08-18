@@ -12,10 +12,7 @@ import LocationIcon from "../../assets/icons/location.png";
 import { ICarCard } from "../../Utils/interfaces/products.interface";
 import { FEATURED } from "../../Utils/constants/language/en/buttonLabels";
 export interface ListingCardProps {
-  data: {
-    product: ICarCard;
-    productImage: string;
-  };
+  data: any;
   layoutType: string;
   handleClick?: Function;
 }
@@ -28,24 +25,15 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const history = useHistory();
 
   const { root, grid, featuredBadge, location } = ListingCardStyles();
-
-  const { product, productImage } = data;
-  const {
-    _id,
-    date,
-    price,
-    name,
-    year,
-    driven,
-    fuel,
-    engineCapacity,
-    transmission,
-    city,
-    isFeatured,
-  } = product;
+  const { _id, model, modelYear, milage, engineType, engineCapacity, transmission, city, createdAt, price, image,  } = data;
+  
 
   return (
-    <Card className={layoutType === "list" ? root : grid}>
+    <Card className={layoutType === "list" ? root : grid}  onClick={() => {
+      handleClick
+        ? handleClick()
+        : history.push(routes.carDetail + _id);
+    }}>
       <Grid container>
         <Grid item xs={12} sm={layoutType !== "list" ? 12 : 4}>
           <CardMedia
@@ -55,6 +43,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
               alignItems: "center",
               overflow: "hidden",
               maxHeight: "200px",
+              minHeight:"100%",
             }}
           >
             <img
@@ -62,7 +51,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 minWidth: "100%",
                 minHeight: "100%",
               }}
-              src={productImage}
+              src={image[0]}
               alt=""
             />
           </CardMedia>
@@ -76,14 +65,15 @@ const ListingCard: React.FC<ListingCardProps> = ({
               direction="column"
               justify="space-between"
             >
-              {isFeatured ? (
+              {/* // * We are not using it for now */}
+              {/* {false ? (
                 <span className={featuredBadge}>
                   <Typography variant="body2">{FEATURED}</Typography>
                 </span>
-              ) : null}
+              ) : null} */}
               <Grid item container justify="space-between" xs={12}>
                 <Grid item>
-                  <Typography variant="h5">{date}</Typography>
+                  <Typography variant="h5">{new Date(createdAt).toLocaleDateString("en-PK")}</Typography>
                 </Grid>
                 <Grid item>
                   <Typography color="secondary" variant="h4">
@@ -99,13 +89,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   <Typography
                     variant="h3"
                     style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      handleClick
-                        ? handleClick()
-                        : history.push(routes.carDetail + _id);
-                    }}
+                   
                   >
-                    {name}
+                    {model}
                   </Typography>
                 </Grid>
                 <Grid item container xs={12} spacing={1} justify="flex-start">
@@ -115,7 +101,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       variant="body2"
                       component="span"
                     >
-                      {year}
+                      {modelYear}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -124,7 +110,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       variant="body2"
                       component="span"
                     >
-                      {driven.toLocaleString(navigator.language, {
+                      {milage.toLocaleString(navigator.language, {
                         minimumFractionDigits: 0,
                       })}
                     </Typography>
@@ -135,7 +121,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       variant="body2"
                       component="span"
                     >
-                      {fuel}
+                      {engineType}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -164,7 +150,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       <Typography variant="subtitle2">{city}</Typography>
                     </span>
                     <span>
-                      <Typography variant="subtitle2">{date}</Typography>
+                      <Typography variant="subtitle2">{new Date(createdAt).toLocaleDateString("en-PK")}</Typography>
                     </span>
                   </div>
                 </Grid>

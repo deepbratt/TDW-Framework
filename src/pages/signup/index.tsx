@@ -7,45 +7,51 @@ import {
   Card,
   Button,
 } from "@material-ui/core";
-import { EmailRounded, PhoneAndroidRounded } from "@material-ui/icons";
 import {
+  OR,
   SIGNIN,
   SIGNUP,
-  CONTINUE_WITH_PHONE,
   CONTINUE_WITH_GOOGLE,
   CONTINUE_WITH_FACEBOOK,
-  CONTINUE_WITH_EMAIL,
   ALREADY_HAVE_ACCOUNT,
 } from "../../Utils/constants/language/en/buttonLabels";
 import GoogleIcon from "../../assets/icons/googleIcon.png";
 import FacebookIcon from "../../assets/icons/fbIcon.png";
 import GlobalStyles from "../../globalStyles";
 import { routes } from "../../routes/paths";
-import { handleFacebookAuth, handleGoogleAuth } from "../../Utils/API/API";
+import { handleFacebookAuth } from "../../Utils/API/API";
+import InputField from "../../components/InputField";
+import { fieldNames } from "../../Utils/constants/formsConstants";
+import { CONTINUE } from "../../Utils/constants/language/en/buttonLabels";
+import PasswordField from "../../components/InputField/PasswordField";
 import { useForm } from "./useForm";
 
 const Signup = () => {
   const history = useHistory();
-  const { loginFormGrid, formCard, buttonWrap } = GlobalStyles();
+  const { loginFormGrid, formCard, buttonWrap, formStyle, loginbtn } =
+    GlobalStyles();
   const {
     handleGoogleSubmit,
     loading,
-    alertOpen,
-    setAlertOpen,
-    
+    // alertOpen,
+    // setAlertOpen,
+    handleInputChange,
+    handleSubmit,
+    values,
+    errors,
     responseMessage,
   } = useForm();
 
-  const handleAlertClose = (
-    event: React.SyntheticEvent | React.MouseEvent,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
+  // const handleAlertClose = (
+  //   event: React.SyntheticEvent | React.MouseEvent,
+  //   reason?: string
+  // ) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
 
-    setAlertOpen(false);
-  };
+  //   setAlertOpen(false);
+  // };
 
   return (
     <Grid
@@ -64,15 +70,6 @@ const Signup = () => {
             className={buttonWrap}
             fullWidth
             variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
-            onClick={() => history.push(routes.signupWithMobile)}
-          >
-            {CONTINUE_WITH_PHONE}
-          </Button>
-          <Button
-            className={buttonWrap}
-            fullWidth
-            variant="outlined"
             startIcon={<img src={GoogleIcon} alt="google-icon" />}
             onClick={() => handleGoogleSubmit()}
           >
@@ -87,15 +84,92 @@ const Signup = () => {
           >
             {CONTINUE_WITH_FACEBOOK}
           </Button>
-          <Button
-            className={buttonWrap}
-            fullWidth
-            variant="outlined"
-            startIcon={<EmailRounded />}
-            onClick={() => history.push(routes.signupWithEmail)}
+          <Typography
+            style={{ fontSize: "24px", marginTop: "10px" }}
+            align="center"
+            variant="body1"
           >
-            {CONTINUE_WITH_EMAIL}
-          </Button>
+            {OR}
+          </Typography>
+          <form className={formStyle} onSubmit={handleSubmit}>
+            <Grid container spacing={1}>
+              <Grid item xs={12} md={6}>
+                <InputField
+                  id="input-first-name"
+                  name={fieldNames.firstName}
+                  fullWidth
+                  variant="outlined"
+                  placeholder="First Name"
+                  value={values.firstName}
+                  error={errors.firstName}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <InputField
+                  id="input-last-name"
+                  name={fieldNames.lastName}
+                  fullWidth
+                  variant="outlined"
+                  placeholder="Last Name"
+                  value={values.lastName}
+                  error={errors.lastName}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <InputField
+                  id="input-data"
+                  name={fieldNames.data}
+                  fullWidth
+                  variant="outlined"
+                  label="Email/Phone Number"
+                  value={values.data}
+                  error={errors.data}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <PasswordField
+                  id="input-password"
+                  name={fieldNames.password}
+                  fullWidth
+                  variant="outlined"
+                  label="Password"
+                  value={values.password}
+                  error={errors.password}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <PasswordField
+                  id="input-confirm-password"
+                  name={fieldNames.confirmPassword}
+                  label="Confirm Password"
+                  placeholder="Re-enter your password"
+                  fullWidth
+                  variant="outlined"
+                  value={values.confirmPassword}
+                  error={errors.confirmPassword}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  className={loginbtn}
+                  fullWidth
+                  disabled={loading}
+                  variant="contained"
+                  color="secondary"
+                  type="submit"
+                >
+                  {CONTINUE}
+                </Button>
+              </Grid>
+            </Grid>
+
+            {responseMessage.status === "success" && history.push(routes.login)}
+          </form>
           <Typography
             style={{ margin: "30px 0" }}
             align="center"
@@ -106,16 +180,16 @@ const Signup = () => {
             {ALREADY_HAVE_ACCOUNT} <NavLink to={routes.login}>{SIGNIN}</NavLink>
           </Typography>
         </Card>
-        {responseMessage.status === "success" && history.push(routes.verification)}
+        {responseMessage.status === "success" && history.push(routes.home)}
       </Grid>
-      {responseMessage && (
+      {/* {responseMessage && (
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
          type={responseMessage.status}
           message={responseMessage.message}
         />
-      )}
+      )} */}
     </Grid>
   );
 };

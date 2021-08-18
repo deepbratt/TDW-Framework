@@ -12,7 +12,7 @@ import { ICarCard } from "../../layout/Sections/Utils/types";
 const useApi = () => {
   const [loading, setLoading] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
-  const [responseData, setResponseData] = useState([]);
+  const [responseData, setResponseData] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
   const [obj, setObj] = useState<ICarCard>();
@@ -33,6 +33,7 @@ const useApi = () => {
           status: response.data.data.status,
           message: response.data.data.message,
         });
+        setResponseData(response.data)
       })
       .catch((error) => {
         console.log("error", error);
@@ -49,22 +50,27 @@ const useApi = () => {
     setLoading(true);
     await addData(endpoint, requestBody)
       .then((response) => {
-        console.log("response", response);
         setLoading(false);
-        setAlertOpen(true);
-        setResponseMessage({
-          status: response.data.data.status,
-          message: response.data.data.message,
-        });
+        console.log("response log", response);
+        if (response.data.status === "success") {
+          setResponseData(response.data);
+          setAlertOpen(true);
+          setResponseMessage({
+            status: response.data.status,
+            message: response.data.message,
+          });
+        } else {
+          console.log("response log", response);
+        }
       })
       .catch((error) => {
-        console.log("error", error);
-        setLoading(false);
-        setAlertOpen(true);
-        setResponseMessage({
-          status: error.status,
-          message: error.message,
-        });
+        console.log("error log", error);
+        // setLoading(false);
+        // setAlertOpen(true);
+        // setResponseMessage({
+        //   status: error.status,
+        //   message: error.message,
+        // });
       });
   };
 

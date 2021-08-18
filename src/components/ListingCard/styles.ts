@@ -9,7 +9,7 @@ const ListingCardStyles = makeStyles(() => ({
     backgroundColor: flashWhite,
     boxShadow: "none",
     position: "relative",
-    maxWidth: "800px",
+    maxWidth: "825px",
     width: "100%",
   },
   grid: {

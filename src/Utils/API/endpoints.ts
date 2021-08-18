@@ -1,5 +1,6 @@
 export const API_ENDPOINTS = {
-  CARS: "cars?",
+  ADS:"/ads",
+  CARS: "/cars",
   USERS: "/Users",
   PHONE_VERIFICATION:"/phone-verfication",
   EMAIL_VERIFICATION:"/email-verfication",

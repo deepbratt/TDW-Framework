@@ -1,12 +1,20 @@
+import { Grid } from "@material-ui/core";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import SliderStyles from "./styles";
 export interface SliderProps {
-  children: React.ReactChild[];
-  styles?: string
+  children?: React.ReactChild[] | any;
+  styles?: string;
+  showArrows?: boolean;
+  showIndicators?: boolean;
 }
 
-const Slider: React.FC<SliderProps> = ({ children, styles}) => {
+const Slider: React.FC<SliderProps> = ({
+  children,
+  styles,
+  showArrows,
+  showIndicators,
+}) => {
   const { dotsIndicator } = SliderStyles();
   return (
     <Carousel
@@ -14,10 +22,10 @@ const Slider: React.FC<SliderProps> = ({ children, styles}) => {
       autoPlay
       showStatus={false}
       interval={2500}
-      showArrows={false}
+      showArrows={showArrows}
       infiniteLoop={true}
       transitionTime={500}
-      showIndicators={false}
+      showIndicators={showIndicators}
       showThumbs={false}
     >
       {children}
@@ -26,4 +34,3 @@ const Slider: React.FC<SliderProps> = ({ children, styles}) => {
 };
 
 export default Slider;
-

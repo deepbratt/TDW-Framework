@@ -13,34 +13,48 @@ const { greySix } = Colors;
  @param backgroundColorSelected card background Color after Selection
  **/
 
-const OptionsCardStyles = makeStyles<Theme, OptionsCardStylesProps>(() => ({
-  root: {
-    backgroundColor: ({ backgroundColor }) => backgroundColor,
-    display: "flex",
-    flexDirection: "column",
-    alignContent: "center",
-    alignItems: "center",
-    padding: "30px 20px",
-    borderRadius: "2px",
-    boxShadow: "none",
-    "& svg": {
-      maxHeight: "30px",
-      maxWidth: "30px",
-      margin: "10px",
-    },
-    "& > h6": {
-      color: "grey",
-    },
-    "&:hover": {
-      backgroundColor: ({ backgroundColorSelected }) => backgroundColorSelected,
+const OptionsCardStyles = makeStyles<Theme, OptionsCardStylesProps>(
+  (theme) => ({
+    root: {
+      backgroundColor: ({ backgroundColor }) => backgroundColor,
+      display: "flex",
+      flexDirection: "column",
+      alignContent: "center",
+      alignItems: "center",
+      padding: "30px 20px",
+      borderRadius: "2px",
+      boxShadow: "none",
+      [theme.breakpoints.down("sm")]: {
+        padding: "20px 10px",
+      },
+      "& svg": {
+        maxHeight: "30px",
+        maxWidth: "30px",
+        margin: "10px",
+        [theme.breakpoints.down("sm")]: {
+          maxHeight: "20px",
+          maxWidth: "20px",
+          margin: "7px",
+        },
+      },
       "& > h6": {
-        color: "white",
+        color: "grey",
+        [theme.breakpoints.down("sm")]: {
+          fontSize: "14px",
+        },
       },
-      "& > svg > path": {
-        fill: "#fff",
+      "&:hover": {
+        backgroundColor: ({ backgroundColorSelected }) =>
+          backgroundColorSelected,
+        "& > h6": {
+          color: "white",
+        },
+        "& > svg > path": {
+          fill: "#fff",
+        },
       },
     },
-  },
-}));
+  })
+);
 
 export default OptionsCardStyles;

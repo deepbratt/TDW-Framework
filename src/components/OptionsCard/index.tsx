@@ -6,6 +6,7 @@ export interface OptionsCardProps {
     icon: string;
     text: string;
   };
+  key?: string;
   backgroundColor: string;
   backgroundColorSelected: string;
   handleClick: Function;

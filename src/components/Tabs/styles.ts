@@ -6,7 +6,7 @@ const TabsStyles = makeStyles(() => ({
     marginBottom: "10px",
   },
   optionsWrapper: {
-    margin: "30px 10px",
+    margin: "30px 0px",
   },
 }));
 

@@ -2,6 +2,7 @@ export const API_ENDPOINTS = {
   CARS: "cars?",
   USERS: "/Users",
   SIGNUP: "/signup",
+  LOGIN: "/login",
   PHONE_VERIFICATION: "/phone-verfication",
   EMAIL_VERIFICATION: "/email-verfication",
   GOOGLE_AUTH: "/google-auth",

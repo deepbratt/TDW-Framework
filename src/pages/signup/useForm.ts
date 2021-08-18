@@ -15,9 +15,9 @@ const initialValues: any = {
 };
 
 export const useForm = (validateOnChange = false) => {
+  const [values, setValues] = useState(initialValues);
   const [alertOpen, setAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [values, setValues] = useState(initialValues);
   const { validate, errors, setErrors } = useValidation(values);
   const [responseMessage, setResponseMessage] = useState({
     status: "",

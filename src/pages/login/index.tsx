@@ -1,8 +1,8 @@
 import { useForm } from "./useForm";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
-// import Toast from "../../components/Toast";
-import { routes,paths } from "../../routes/paths";
+import Toast from "../../components/Toast";
+import { routes, paths } from "../../routes/paths";
 import {
   Grid,
   LinearProgress,
@@ -15,43 +15,48 @@ import { fieldNames } from "../../Utils/constants/formsConstants";
 import {
   SIGNIN,
   SIGNUP,
-  CONTINUE_WITH_GOOGLE,
-  CONTINUE_WITH_FACEBOOK,
+  // CONTINUE_WITH_GOOGLE,
+  // CONTINUE_WITH_FACEBOOK,
   SIGNIN_USING_ACCOUNT,
   DONOT_HAVE_ACCOUNT,
   FORGOT_PASS,
 } from "../../Utils/constants/language/en/buttonLabels";
-import GoogleIcon from "../../assets/icons/googleIcon.png";
-import FacebookIcon from "../../assets/icons/fbIcon.png";
+// import GoogleIcon from "../../assets/icons/googleIcon.png";
+// import FacebookIcon from "../../assets/icons/fbIcon.png";
 import GlobalStyles from "../../globalStyles";
-import { handleFacebookAuth } from "../../Utils/API/API";
+// import { handleFacebookAuth } from "../../Utils/API/API";
 import PasswordField from "../../components/InputField/PasswordField";
 
 const Login = () => {
   const history = useHistory();
-  const { loginFormGrid, formCard, buttonWrap, formStyle, loginbtn } =
-    GlobalStyles();
+  const {
+    loginFormGrid,
+    formCard,
+    // buttonWrap,
+    formStyle,
+    loginbtn,
+  } = GlobalStyles();
   const {
     values,
     errors,
-    handleInputChange,
+    isLoading,
+    alertOpen,
     handleSubmit,
-    handleGoogleSubmit,
-    loading,
-    // alertOpen,
-    // setAlertOpen,
+    setAlertOpen,
     responseMessage,
+    handleInputChange,
+    // handleGoogleSubmit,
   } = useForm();
 
-  // const handleAlertClose = (
-  //   event: React.SyntheticEvent | React.MouseEvent,
-  //   reason?: string
-  // ) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-  //   setAlertOpen(false);
-  // };
+  const handleAlertClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAlertOpen(false);
+  };
 
   return (
     <Grid
@@ -61,7 +66,7 @@ const Login = () => {
       alignContent="center"
     >
       <Grid item xs={10} md={8} lg={4}>
-        {loading && <LinearProgress color="secondary" />}
+        {isLoading && <LinearProgress color="secondary" />}
         <Card className={formCard}>
           <Typography variant="h6" gutterBottom>
             {SIGNIN}
@@ -126,7 +131,7 @@ const Login = () => {
             <Button
               className={loginbtn}
               fullWidth
-              disabled={loading}
+              disabled={isLoading}
               variant="contained"
               color="secondary"
               type="submit"
@@ -137,14 +142,14 @@ const Login = () => {
           </form>
         </Card>
       </Grid>
-      {/* {responseMessage && (
+      {responseMessage && (
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-         type={responseMessage.status}
+          type={responseMessage.status}
           message={responseMessage.message}
         />
-      )} */}
+      )}
     </Grid>
   );
 };

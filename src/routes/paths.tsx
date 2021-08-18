@@ -13,7 +13,7 @@ const usedCars = lazy(() => import("../Pages/SearchUsedCars/index"));
 const Verification = lazy(() => import("../Pages/verificationPage"));
 const CarDetail = lazy(() => import("../Pages/carDetail"));
 const CarComparison = lazy(() => import("../Pages/carComparision/index"));
-const ShortlistItem = lazy(() => import("../Pages/shortlistItems"));
+const ShortlistItem = lazy(() => import("../Pages/shortlistItems/index"));
 // const Dashboard = lazy(() => import("../Pages/dashboard/index")) ;
 // const CarListing = lazy(() => import("../Pages/postAd"));
 

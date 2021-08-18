@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "../../redux/reducers/authSlice";
+import { useState } from "react";
 import { handleGoogleAuth } from "../../Utils/API/API";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
 import useApi from "../../Utils/hooks/useApi";
@@ -17,20 +15,17 @@ const initialValues: any = {
 };
 
 export const useForm = (validateOnChange = false) => {
-  const dispatch = useDispatch();
-  const { USERS, GOOGLE_AUTH, SIGNUP } = API_ENDPOINTS;
-  const { addRequest } = useApi();
-
   const [alertOpen, setAlertOpen] = useState(false);
-  const [responseData, setResponseData] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
-  const [open, setOpen] = useState(false);
   const [values, setValues] = useState(initialValues);
   const { validate, errors, setErrors } = useValidation(values);
   const [responseMessage, setResponseMessage] = useState({
     status: "",
     message: "",
   });
+
+  const { addRequest } = useApi();
+  const { USERS, GOOGLE_AUTH, SIGNUP } = API_ENDPOINTS;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -41,12 +36,6 @@ export const useForm = (validateOnChange = false) => {
     });
     if (validateOnChange) validate({ [name]: value });
   };
-
-  // useEffect(() => {
-  //   if (responseMessage.status === "success") {
-  //     dispatch(login(responseData));
-  //   }
-  // }, [responseMessage]);
 
   const resetForm = () => {
     setValues(initialValues);
@@ -84,13 +73,12 @@ export const useForm = (validateOnChange = false) => {
         .then((response) => {
           setIsLoading(false);
           if (response.status === "success") {
-            console.log("response log", response)
-            // setResponseData(response.data);
             setAlertOpen(true);
             setResponseMessage({
               status: response.status,
               message: response.message,
             });
+
           } else {
             setIsLoading(false);
             setAlertOpen(true);

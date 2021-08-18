@@ -8,18 +8,18 @@ import {
   Button,
 } from "@material-ui/core";
 import {
-  OR,
+  // OR,
   SIGNIN,
   SIGNUP,
-  CONTINUE_WITH_GOOGLE,
-  CONTINUE_WITH_FACEBOOK,
+  // CONTINUE_WITH_GOOGLE,
+  // CONTINUE_WITH_FACEBOOK,
   ALREADY_HAVE_ACCOUNT,
 } from "../../Utils/constants/language/en/buttonLabels";
-import GoogleIcon from "../../assets/icons/googleIcon.png";
-import FacebookIcon from "../../assets/icons/fbIcon.png";
+// import GoogleIcon from "../../assets/icons/googleIcon.png";
+// import FacebookIcon from "../../assets/icons/fbIcon.png";
 import GlobalStyles from "../../globalStyles";
 import { routes } from "../../routes/paths";
-import { handleFacebookAuth } from "../../Utils/API/API";
+// import { handleFacebookAuth } from "../../Utils/API/API";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../Utils/constants/formsConstants";
 import { CONTINUE } from "../../Utils/constants/language/en/buttonLabels";
@@ -28,10 +28,15 @@ import { useForm } from "./useForm";
 
 const Signup = () => {
   const history = useHistory();
-  const { loginFormGrid, formCard, buttonWrap, formStyle, loginbtn } =
-    GlobalStyles();
   const {
-    handleGoogleSubmit,
+    loginFormGrid,
+    formCard,
+    //  buttonWrap,
+    formStyle,
+    loginbtn,
+  } = GlobalStyles();
+  const {
+    // handleGoogleSubmit,
     isLoading,
     alertOpen,
     setAlertOpen,
@@ -49,7 +54,6 @@ const Signup = () => {
     if (reason === "clickaway") {
       return;
     }
-
     setAlertOpen(false);
   };
 
@@ -92,7 +96,7 @@ const Signup = () => {
             {OR}
           </Typography> */}
           <form className={formStyle} onSubmit={handleSubmit}>
-            <Grid container spacing={1}  justifyContent="center">
+            <Grid container spacing={1} justifyContent="center">
               <Grid item xs={12} md={6}>
                 <InputField
                   id="input-first-name"
@@ -201,7 +205,7 @@ const Signup = () => {
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-         type={responseMessage.status}
+          type={responseMessage.status}
           message={responseMessage.message}
         />
       )}

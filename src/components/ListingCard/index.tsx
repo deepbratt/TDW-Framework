@@ -29,7 +29,11 @@ const ListingCard: React.FC<ListingCardProps> = ({
   
 
   return (
-    <Card className={layoutType === "list" ? root : grid}>
+    <Card className={layoutType === "list" ? root : grid}  onClick={() => {
+      handleClick
+        ? handleClick()
+        : history.push(routes.carDetail + _id);
+    }}>
       <Grid container>
         <Grid item xs={12} sm={layoutType !== "list" ? 12 : 4}>
           <CardMedia
@@ -39,6 +43,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
               alignItems: "center",
               overflow: "hidden",
               maxHeight: "200px",
+              minHeight:"100%",
             }}
           >
             <img
@@ -60,11 +65,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
               direction="column"
               justify="space-between"
             >
-              {false ? (
+              {/* // * We are not using it for now */}
+              {/* {false ? (
                 <span className={featuredBadge}>
                   <Typography variant="body2">{FEATURED}</Typography>
                 </span>
-              ) : null}
+              ) : null} */}
               <Grid item container justify="space-between" xs={12}>
                 <Grid item>
                   <Typography variant="h5">{new Date(createdAt).toLocaleDateString("en-PK")}</Typography>
@@ -83,11 +89,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   <Typography
                     variant="h3"
                     style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      handleClick
-                        ? handleClick()
-                        : history.push(routes.carDetail + _id);
-                    }}
+                   
                   >
                     {model}
                   </Typography>

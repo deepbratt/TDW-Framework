@@ -1,11 +1,6 @@
 import { useState } from "react";
-import { fieldNames, messages } from "../constants/formsConstants";
-import {
-  isEmailValid,
-  isNameValid,
-  isPasswordValid,
-  isPhoneValid,
-} from "../regex";
+import { fieldNames } from "../constants/formsConstants";
+import { validateEmail, validateName, validatePassword, validatePhone, validateConfirmPassword } from "../functions/validations";
 
 const useValidation = (values: any) => {
   const [errors, setErrors] = useState(values);
@@ -13,36 +8,16 @@ const useValidation = (values: any) => {
     let temp = { ...errors };
 
     if (fieldNames.email in fieldValues) {
-      temp.email =
-        fieldValues.email.trim() === ""
-          ? messages.isRequired
-          : isEmailValid(fieldValues.email)
-          ? ""
-          : messages.notValid;
+      temp.email = validateEmail(fieldValues.email)
     }
     if (fieldNames.firstName in fieldValues) {
-      temp.firstName =
-        fieldValues.firstName.trim() === ""
-          ? messages.isRequired
-          : isNameValid(fieldValues.firstName)
-          ? ""
-          : messages.notValid;
+      temp.firstName = validateName(fieldValues.firstName)
     }
     if (fieldNames.lastName in fieldValues) {
-      temp.lastName =
-        fieldValues.lastName.trim() === ""
-          ? messages.isRequired
-          : isNameValid(fieldValues.lastName)
-          ? ""
-          : messages.notValid;
+      temp.firstName = validateName(fieldValues.lastName)
     }
     if (fieldNames.mobile in fieldValues) {
-      temp.mobile =
-        fieldValues.mobile.trim() === ""
-          ? messages.isRequired
-          : isPhoneValid(fieldValues.mobile)
-          ? ""
-          : messages.notValid;
+      temp.mobile =validatePhone(fieldValues.mobile)
     }
     // if (fieldNames.data in fieldValues) {
     //   if (isEmailValid(fieldNames.data)) {
@@ -54,20 +29,10 @@ const useValidation = (values: any) => {
     //   }
     // }
     if (fieldNames.password in fieldValues) {
-      temp.password =
-        fieldValues.password.trim() === ""
-          ? messages.isRequired
-          : isPasswordValid(fieldValues.password)
-          ? ""
-          : messages.notValid;
+      temp.password = validatePassword(fieldValues.password)
     }
     if (fieldNames.confirmPassword in fieldValues) {
-      temp.confirmPassword =
-        fieldValues.confirmPassword.trim() === ""
-          ? messages.isRequired
-          : fieldValues.confirmPassword === fieldValues.password
-          ? ""
-          : messages.notMatch;
+      temp.confirmPassword = validateConfirmPassword(fieldValues.confirmPassword, fieldValues.password)
     }
 
     setErrors({

@@ -1,7 +1,6 @@
 import { useForm } from "./useForm";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import Toast from "../../components/Toast";
-import { routes, paths } from "../../routes/paths";
 import {
   Grid,
   LinearProgress,
@@ -20,11 +19,9 @@ import {
   CONTINUE,
 } from "../../Utils/constants/language/en/buttonLabels";
 import ResetPassword from "../resetPassword";
-import PinInput from "react-pin-input";
 
 const ForgetPassword = () => {
   const { token } = useParams<any>();
-  const history = useHistory();
   const {
     values,
     errors,
@@ -32,7 +29,7 @@ const ForgetPassword = () => {
     pin,
     setPin,
     handleSubmit,
-    loading,
+    isLoading,
     alertOpen,
     setAlertOpen,
     responseMessage,
@@ -71,7 +68,7 @@ const ForgetPassword = () => {
           </Typography>
         ) : (
           <>
-            {loading && <LinearProgress color="secondary" />}
+            {isLoading && <LinearProgress color="secondary" />}
             <Card className={formCard}>
               <Typography variant="h3" gutterBottom>
                 {ACCOUNT_RECOVERY}
@@ -98,7 +95,7 @@ const ForgetPassword = () => {
                   <Button
                     className={loginbtn}
                     fullWidth
-                    disabled={loading}
+                    disabled={isLoading}
                     variant="contained"
                     color="secondary"
                     type="submit"

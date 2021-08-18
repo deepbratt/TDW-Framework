@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import useApi from "../../Utils/hooks/useApi";
 import { login } from "../../redux/reducers/authSlice";
 import { handleGoogleAuth } from "../../Utils/API/API";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
@@ -57,6 +56,7 @@ export const useForm = (validateOnChange = false) => {
       console.log("requestBody", requestBody);
       await addData(USERS + LOGIN, requestBody)
         .then((response) => {
+          console.log("data", response)
           setIsLoading(false);
           if (response.status === "success") {
             setAlertOpen(true);

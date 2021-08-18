@@ -54,7 +54,7 @@ const ForgetPassword = () => {
       justify="center"
       alignContent="center"
     >
-      <Grid item xs={4}>
+      <Grid item xs={10} md={8} lg={6}>
         {token ? (
           <ResetPassword token={pin} />
         ) : resetLinkMessage ? (

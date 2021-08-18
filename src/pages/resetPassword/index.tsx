@@ -1,6 +1,6 @@
 import { useHistory } from "react-router";
 import Toast from "../../components/Toast";
-import { paths } from "../../routes/paths";
+import { routes } from "../../routes/paths";
 import { LinearProgress, Card, Button, Typography } from "@material-ui/core";
 import GlobalStyles from "../../globalStyles";
 import { fieldNames } from "../../Utils/constants/formsConstants";
@@ -22,7 +22,6 @@ const ResetPassword = ({ token }: any) => {
     isLoading,
     alertOpen,
     setAlertOpen,
-
     responseMessage,
   } = useForm(token);
 
@@ -51,7 +50,6 @@ const ResetPassword = ({ token }: any) => {
             name={fieldNames.password}
             fullWidth
             variant="outlined"
-            placeholder="Enter your password"
             label="Password"
             value={values.password}
             error={errors.password}
@@ -61,7 +59,6 @@ const ResetPassword = ({ token }: any) => {
           <PasswordField
             id="input-confirm-password"
             name={fieldNames.confirmPassword}
-            placeholder="Re-enter your password"
             label="Confirm Password"
             fullWidth
             variant="outlined"
@@ -79,7 +76,7 @@ const ResetPassword = ({ token }: any) => {
           >
             {RESET_PASSWORD}
           </Button>
-          {responseMessage.status === "success" && history.push(paths.login)}
+          {responseMessage.status === "success" && history.push(routes.login)}
         </form>
       </Card>
       {responseMessage && (

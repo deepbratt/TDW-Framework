@@ -162,7 +162,6 @@ const Signup = () => {
                   id="input-confirm-password"
                   name={fieldNames.confirmPassword}
                   label="Confirm Password"
-                  placeholder="Re-enter your password"
                   fullWidth
                   variant="outlined"
                   value={values.confirmPassword}
@@ -196,7 +195,6 @@ const Signup = () => {
                 </Button>
               </Grid>
             </Grid>
-            {responseMessage.status === "success" && history.push(routes.login)}
           </form>
         </Card>
         {responseMessage.status === "success" && history.push(routes.home)}

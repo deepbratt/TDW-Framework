@@ -42,34 +42,34 @@ export const useForm = (validateOnChange = false) => {
         data: values.data,
       };
       console.log("requestBody", requestBody);
-      setResponseMessage({
-        status: "success",
-        message: "",
-      });
-      // setResetLinkMessage(true);
-      // await addData(USERS + FORGOT_PASSWORD, requestBody)
-      //   .then((response) => {
-      //     console.log("data", response);
-      //     setIsLoading(false);
-      //     if (response.status === "success") {
-      //       setAlertOpen(true);
-      //     } else {
-      //       setIsLoading(false);
-      //       setAlertOpen(true);
-      //       setResponseMessage({
-      //         status: "error",
-      //         message: response.message,
-      //       });
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     setIsLoading(false);
-      //     setAlertOpen(true);
-      //     setResponseMessage({
-      //       status: "error",
-      //       message: error.message,
-      //     });
-      //   });
+
+      await addData(USERS + FORGOT_PASSWORD, requestBody)
+        .then((response) => {
+          console.log("data", response);
+          setIsLoading(false);
+          if (response.status === "success") {
+            setAlertOpen(true);
+            setResponseMessage({
+              status: response.status,
+              message: response.message,
+            });
+          } else {
+            setIsLoading(false);
+            setAlertOpen(true);
+            setResponseMessage({
+              status: "error",
+              message: response.message,
+            });
+          }
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          setAlertOpen(true);
+          setResponseMessage({
+            status: error.status,
+            message: error.message,
+          });
+        });
     }
   };
 

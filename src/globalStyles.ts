@@ -42,6 +42,7 @@ const GlobalStyles = makeStyles((theme) => ({
     boxShadow: "0px 4px 100px 5px rgba(0, 0, 0, 0.06)",
     padding: "50px 60px",
     borderRadius: "10px",
+    maxWidth:"600px",
     [theme.breakpoints.down("xs")]: {
       padding: "10px 15px",
     },

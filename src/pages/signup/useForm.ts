@@ -92,7 +92,7 @@ export const useForm = (validateOnChange = false) => {
           setIsLoading(false);
           setAlertOpen(true);
           setResponseMessage({
-            status: "error",
+            status: error.status,
             message: error.message,
           });
         });

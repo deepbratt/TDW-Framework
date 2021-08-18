@@ -16,7 +16,7 @@ export const addData = async (endpoint: string, requestBody?: object) => {
     const result = await axiosInstance.post(endpoint, requestBody);
     return result.data;
   } catch (error) {
-    return error.response.data;
+    return { status: "error", message: "Network Error" };
   }
 };
 
@@ -47,7 +47,7 @@ export const addToFav = async (url: string, id: string) => {
   }
 };
 
-export const updataData = async (url: string, id: string, data: any) => {
+export const updateData = async (url: string, id: string, data: any) => {
   try {
     let result = await axiosInstance.patch(`${url}/${id}`, data);
     return result.data;

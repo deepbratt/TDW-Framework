@@ -56,7 +56,7 @@ export const useForm = (validateOnChange = false) => {
       console.log("requestBody", requestBody);
       await addData(USERS + LOGIN, requestBody)
         .then((response) => {
-          console.log("data", response)
+          console.log("data", response);
           setIsLoading(false);
           if (response.status === "success") {
             setAlertOpen(true);
@@ -76,9 +76,10 @@ export const useForm = (validateOnChange = false) => {
         })
         .catch((error) => {
           setIsLoading(false);
+          console.log("Error log", error);
           setAlertOpen(true);
           setResponseMessage({
-            status: "error",
+            status: error.status,
             message: error.message,
           });
         });

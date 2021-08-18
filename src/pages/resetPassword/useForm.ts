@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
 import useValidation from "../../Utils/hooks/useValidation";
-import { addData } from "../../Utils/hooks/actions";
+import { updateData } from "../../Utils/hooks/actions";
 
 const initialValues: any = {
   password: "",
@@ -43,7 +43,7 @@ export const useForm = (token: any, validateOnChange = false) => {
         passwordConfirm: values.confirmPassword,
       };
       console.log("requestBody", requestBody);
-      await addData(USERS + RESET_PASSWORD + `/${token}`, requestBody)
+      await updateData(USERS + RESET_PASSWORD, token, requestBody)
         .then((response) => {
           console.log("data", response);
           setIsLoading(false);
@@ -53,7 +53,6 @@ export const useForm = (token: any, validateOnChange = false) => {
               status: response.status,
               message: response.message,
             });
-            // setResponseData(response.data);
           } else {
             setIsLoading(false);
             setAlertOpen(true);
@@ -67,7 +66,7 @@ export const useForm = (token: any, validateOnChange = false) => {
           setIsLoading(false);
           setAlertOpen(true);
           setResponseMessage({
-            status: "error",
+            status: error.status,
             message: error.message,
           });
         });

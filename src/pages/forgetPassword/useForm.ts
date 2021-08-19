@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addData } from "../../Utils/hooks/actions";
+import useApi from "../../Utils/hooks/useApi";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
 import { isEmailValid, isPhoneValid } from "../../Utils/regex";
 import { messages, fieldNames } from "../../Utils/constants/formsConstants";
@@ -9,17 +9,12 @@ const initialValues: any = {
 };
 
 export const useForm = (validateOnChange = false) => {
-  const [pin, setPin] = useState("");
-  const [values, setValues] = useState(initialValues);
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const { validate, errors, setErrors } = useValidation(values);
-  const [resetLinkMessage, setResetLinkMessage] = useState(false);
-  const [responseMessage, setResponseMessage] = useState({
-    status: "",
-    message: "",
-  });
   const { USERS, FORGOT_PASSWORD } = API_ENDPOINTS;
+  const { loading, alertOpen, setAlertOpen, responseMessage, addRequest } =
+    useApi();
+  const [values, setValues] = useState(initialValues);
+  const [errors, setErrors] = useState(initialValues);
+  const [resetLinkMessage, setResetLinkMessage] = useState(false);
 
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
@@ -63,34 +58,11 @@ export const useForm = (validateOnChange = false) => {
         data: values.email,
       };
       console.log("requestBody", requestBody);
-
-      await addData(USERS + FORGOT_PASSWORD, requestBody)
-        .then((response) => {
-          console.log("data", response);
-          setIsLoading(false);
-          if (response.status === "success") {
-            setAlertOpen(true);
-            setResponseMessage({
-              status: response.status,
-              message: response.message,
-            });
-          } else {
-            setIsLoading(false);
-            setAlertOpen(true);
-            setResponseMessage({
-              status: "error",
-              message: response.message,
-            });
-          }
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          setAlertOpen(true);
-          setResponseMessage({
-            status: error.status,
-            message: error.message,
-          });
-        });
+      await addRequest(USERS + FORGOT_PASSWORD, requestBody).then(() => {
+        if (responseMessage.status === "success") {
+          setResetLinkMessage(true);
+        }
+      });
     }
   };
 
@@ -99,17 +71,15 @@ export const useForm = (validateOnChange = false) => {
     setValues,
     errors,
     setErrors,
-    pin,
-    setPin,
     handleInputChange,
     resetForm,
     validate,
     handleSubmit,
     resetLinkMessage,
     setResetLinkMessage,
+    loading,
     alertOpen,
     setAlertOpen,
     responseMessage,
-    isLoading,
   };
 };

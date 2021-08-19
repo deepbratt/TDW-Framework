@@ -6,7 +6,6 @@ export const messages = {
 };
 
 export const fieldNames = {
-  username:"username",
   firstName: "firstName",
   lastName: "lastName",
   email: "email",

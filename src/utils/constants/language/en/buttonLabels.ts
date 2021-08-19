@@ -25,5 +25,6 @@ export const CANCEL: string = "CANCEL";
 export const CLOSE: string = "Close";
 export const OR: string = "Or";
 export const CONTINUE: string = "Continue";
+export const VERIFY: string = "Verify";
 export const COMPARE: string = "Compare";
 export const SHORTLIST_ITEMS: string = "ShortList Items";

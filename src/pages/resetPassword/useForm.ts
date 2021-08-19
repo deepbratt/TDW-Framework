@@ -1,7 +1,7 @@
 import { useState } from "react";
-import useApi from "../../Utils/hooks/useApi";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
 import useValidation from "../../Utils/hooks/useValidation";
+import { updateData } from "../../Utils/hooks/actions";
 
 const initialValues: any = {
   password: "",
@@ -9,16 +9,16 @@ const initialValues: any = {
 };
 
 export const useForm = (token: any, validateOnChange = false) => {
-  const { USERS, FORGOT_PASSWORD } = API_ENDPOINTS;
-  const {
-    loading,
-    alertOpen,
-    setAlertOpen,
-    responseMessage,
-    addRequest,
-  } = useApi();
+  const { USERS, RESET_PASSWORD } = API_ENDPOINTS;
   const [values, setValues] = useState(initialValues);
-  const { errors, setErrors, validate } = useValidation(values);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  // const [responseData, setResponseData] = useState({});
+  const { validate, errors, setErrors } = useValidation(values);
+  const [responseMessage, setResponseMessage] = useState({
+    status: "",
+    message: "",
+  });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -43,7 +43,33 @@ export const useForm = (token: any, validateOnChange = false) => {
         passwordConfirm: values.confirmPassword,
       };
       console.log("requestBody", requestBody);
-      // await addRequest(USERS + FORGOT_PASSWORD + `/${token}`, requestBody);
+      await updateData(USERS + RESET_PASSWORD, token, requestBody)
+        .then((response) => {
+          console.log("data", response);
+          setIsLoading(false);
+          if (response.status === "success") {
+            setAlertOpen(true);
+            setResponseMessage({
+              status: response.status,
+              message: response.message,
+            });
+          } else {
+            setIsLoading(false);
+            setAlertOpen(true);
+            setResponseMessage({
+              status: "error",
+              message: response.message,
+            });
+          }
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          setAlertOpen(true);
+          setResponseMessage({
+            status: error.status,
+            message: error.message,
+          });
+        });
     }
   };
 
@@ -55,7 +81,7 @@ export const useForm = (token: any, validateOnChange = false) => {
     handleInputChange,
     resetForm,
     handleSubmit,
-    loading,
+    isLoading,
     alertOpen,
     setAlertOpen,
     responseMessage,

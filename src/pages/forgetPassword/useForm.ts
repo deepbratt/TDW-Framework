@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useApi from "../../Utils/hooks/useApi";
+import { addData } from "../../Utils/hooks/actions";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
 import useValidation from "../../Utils/hooks/useValidation";
 
@@ -8,12 +8,17 @@ const initialValues: any = {
 };
 
 export const useForm = (validateOnChange = false) => {
-  const { USERS, FORGOT_PASSWORD } = API_ENDPOINTS;
-  const { loading, alertOpen, setAlertOpen, responseMessage, addRequest } =
-    useApi();
+  const [pin, setPin] = useState("");
   const [values, setValues] = useState(initialValues);
-  const { errors, setErrors, validate } = useValidation(values);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { validate, errors, setErrors } = useValidation(values);
   const [resetLinkMessage, setResetLinkMessage] = useState(false);
+  const [responseMessage, setResponseMessage] = useState({
+    status: "",
+    message: "",
+  });
+  const { USERS, FORGOT_PASSWORD } = API_ENDPOINTS;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -37,11 +42,34 @@ export const useForm = (validateOnChange = false) => {
         data: values.data,
       };
       console.log("requestBody", requestBody);
-      await addRequest(USERS + FORGOT_PASSWORD, requestBody).then(() => {
-        if (responseMessage.status === "success") {
-          setResetLinkMessage(true);
-        }
-      });
+
+      await addData(USERS + FORGOT_PASSWORD, requestBody)
+        .then((response) => {
+          console.log("data", response);
+          setIsLoading(false);
+          if (response.status === "success") {
+            setAlertOpen(true);
+            setResponseMessage({
+              status: response.status,
+              message: response.message,
+            });
+          } else {
+            setIsLoading(false);
+            setAlertOpen(true);
+            setResponseMessage({
+              status: "error",
+              message: response.message,
+            });
+          }
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          setAlertOpen(true);
+          setResponseMessage({
+            status: error.status,
+            message: error.message,
+          });
+        });
     }
   };
 
@@ -50,15 +78,17 @@ export const useForm = (validateOnChange = false) => {
     setValues,
     errors,
     setErrors,
+    pin,
+    setPin,
     handleInputChange,
     resetForm,
     validate,
     handleSubmit,
     resetLinkMessage,
     setResetLinkMessage,
-    loading,
     alertOpen,
     setAlertOpen,
     responseMessage,
+    isLoading,
   };
 };

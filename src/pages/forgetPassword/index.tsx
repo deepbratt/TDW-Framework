@@ -1,7 +1,6 @@
 import { useForm } from "./useForm";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import Toast from "../../components/Toast";
-import { routes } from "../../routes/paths";
 import {
   Grid,
   LinearProgress,
@@ -11,6 +10,7 @@ import {
 } from "@material-ui/core";
 import GlobalStyles from "../../globalStyles";
 import InputField from "../../components/InputField";
+import CodeVerification from "../../sections/CodeVerification";
 import { fieldNames } from "../../Utils/constants/formsConstants";
 import {
   ACCOUNT_RECOVERY,
@@ -22,13 +22,14 @@ import ResetPassword from "../resetPassword";
 
 const ForgetPassword = () => {
   const { token } = useParams<any>();
-  const history = useHistory();
   const {
     values,
     errors,
     handleInputChange,
+    pin,
+    setPin,
     handleSubmit,
-    loading,
+    isLoading,
     alertOpen,
     setAlertOpen,
     responseMessage,
@@ -53,9 +54,9 @@ const ForgetPassword = () => {
       justify="center"
       alignContent="center"
     >
-      <Grid item xs={4}>
+      <Grid item xs={10} md={8} lg={6}>
         {token ? (
-          <ResetPassword />
+          <ResetPassword token={pin} />
         ) : resetLinkMessage ? (
           <Typography
             style={{ margin: "20px 0" }}
@@ -67,40 +68,42 @@ const ForgetPassword = () => {
           </Typography>
         ) : (
           <>
-            {loading && <LinearProgress color="secondary" />}
+            {isLoading && <LinearProgress color="secondary" />}
             <Card className={formCard}>
               <Typography variant="h3" gutterBottom>
                 {ACCOUNT_RECOVERY}
               </Typography>
-              <form className={formStyle} onSubmit={handleSubmit}>
-                <Typography variant="body2" gutterBottom>
-                  {ENTER_YOUR_EMAIL_PASS_MESSAGE}
-                </Typography>
-                <InputField
-                  id="input-data"
-                  name={fieldNames.data}
-                  fullWidth
-                  variant="outlined"
-                  label="Email/Phone Number"
-                  value={values.data}
-                  error={errors.data}
-                  required
-                  onChange={handleInputChange}
-                />
+              {responseMessage.status === "success" ? (
+                <CodeVerification pin={pin} setPin={setPin} />
+              ) : (
+                <form className={formStyle} onSubmit={handleSubmit}>
+                  <Typography variant="body2" gutterBottom>
+                    {ENTER_YOUR_EMAIL_PASS_MESSAGE}
+                  </Typography>
+                  <InputField
+                    id="input-data"
+                    name={fieldNames.data}
+                    fullWidth
+                    variant="outlined"
+                    label="Email/Phone Number"
+                    value={values.data}
+                    error={errors.data}
+                    required
+                    onChange={handleInputChange}
+                  />
 
-                <Button
-                  className={loginbtn}
-                  fullWidth
-                  disabled={loading}
-                  variant="contained"
-                  color="secondary"
-                  type="submit"
-                >
-                  {CONTINUE}
-                </Button>
-                {responseMessage.status === "success" &&
-                  history.push(routes.resetPassword)}
-              </form>
+                  <Button
+                    className={loginbtn}
+                    fullWidth
+                    disabled={isLoading}
+                    variant="contained"
+                    color="secondary"
+                    type="submit"
+                  >
+                    {CONTINUE}
+                  </Button>
+                </form>
+              )}
             </Card>
           </>
         )}

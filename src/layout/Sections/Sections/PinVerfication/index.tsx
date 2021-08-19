@@ -20,7 +20,7 @@ import {
 import { API_ENDPOINTS } from "../../../../Utils/API/endpoints";
 import useApi from "../../../../Utils/hooks/useApi";
 import { useHistory } from "react-router";
-import { routes } from "../../../../routes/paths";
+import { routes, paths } from "../../../../routes/paths";
 
 interface IVerficationProps {
   verificationMethod: string;
@@ -42,7 +42,6 @@ const VerificationContext = ({ verificationMethod }: IVerficationProps) => {
     } else {
       console.log(typeof number);
       setError(false);
-
       await updateRequest(
         USERS + verificationMethod === "phone"
           ? PHONE_VERIFICATION
@@ -64,7 +63,7 @@ const VerificationContext = ({ verificationMethod }: IVerficationProps) => {
           {message} <span style={{ fontWeight: "bolder" }}>{num}</span>
         </Typography>
         <PinInput
-          length={6}
+          length={4}
           onChange={(value: string) => setVal(value)}
           inputMode="numeric"
           style={{ padding: "10px", marginBottom: "10px" }}
@@ -72,7 +71,14 @@ const VerificationContext = ({ verificationMethod }: IVerficationProps) => {
           autoSelect={true}
           regexCriteria={regex}
         />
-        <CustomButton disabled={loading} onClick={() => onSubmit()}>
+        <CustomButton
+          disabled={loading}
+          onClick={() => {
+            verificationMethod === "reset-password"
+              ? history.push(paths.forgotPassword + `/${number}`)
+              : onSubmit();
+          }}
+        >
           {mainBtn}
         </CustomButton>
         <Typography

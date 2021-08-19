@@ -6,36 +6,55 @@ import {
   CardMedia,
   Typography,
 } from "@material-ui/core";
-import { routes } from "../../routes/paths";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import ListingCardStyles from "./styles";
 import LocationIcon from "../../assets/icons/location.png";
-import { ICarCard } from "../../Utils/interfaces/products.interface";
+import { ICarCard } from "../../layout/Sections/Utils/types";
 import { FEATURED } from "../../Utils/constants/language/en/buttonLabels";
+import { Colors } from "../../Utils/constants/colors/colors";
+import CarImage from "../../assets/Cars/listingCard.jpg";
+import ConvertDate from "../../components/convertDate";
 export interface ListingCardProps {
-  data: any;
+  data: ICarCard[];
   layoutType: string;
-  handleClick?: Function;
+  span?: string;
+  isFavs?: boolean;
+  handleFavs?: (id: string) => void;
 }
 
-const ListingCard: React.FC<ListingCardProps> = ({
-  data,
-  layoutType,
-  handleClick,
-}) => {
+const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,handleFavs}) => {
   const history = useHistory();
 
-  const { root, grid, featuredBadge, location } = ListingCardStyles();
-  const { _id, model, modelYear, milage, engineType, engineCapacity, transmission, city, createdAt, price, image,  } = data;
-  
+  const {
+    root,
+    grid,
+    featuredBadge,
+    yearPrice,
+    detailRoot,
+    details,
+    location,
+    favsIcon,
+    label,
+    favsIconGrid
+  } = ListingCardStyles();
+  const { red,grey} = Colors;
+
+  const favs = (id: string) => {
+    if (handleFavs) {
+      handleFavs(id);
+    }
+  };
+
+
 
   return (
-    <Card className={layoutType === "list" ? root : grid}  onClick={() => {
-      handleClick
-        ? handleClick()
-        : history.push(routes.carDetail + _id);
-    }}>
+    <>
+    {data &&
+        data.map((payload: any, index: number) => {
+          return (
+    <Card className={layoutType === "list" ? root : grid}>
       <Grid container>
-        <Grid item xs={12} sm={layoutType !== "list" ? 12 : 4}>
+        <Grid key={`cars ${index}`} item xs={12} sm={layoutType !== "list" ? 12 : 4}>
           <CardMedia
             style={{
               display: "flex",
@@ -43,7 +62,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
               alignItems: "center",
               overflow: "hidden",
               maxHeight: "200px",
-              minHeight:"100%",
             }}
           >
             <img
@@ -51,7 +69,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 minWidth: "100%",
                 minHeight: "100%",
               }}
-              src={image[0]}
+              src={CarImage}
               alt=""
             />
           </CardMedia>
@@ -65,22 +83,30 @@ const ListingCard: React.FC<ListingCardProps> = ({
               direction="column"
               justify="space-between"
             >
-              {/* // * We are not using it for now */}
-              {/* {false ? (
+              {/* {isFeatured ? (
                 <span className={featuredBadge}>
                   <Typography variant="body2">{FEATURED}</Typography>
                 </span>
               ) : null} */}
+               {payload.inFavs || isFavs ? (
+                    <button
+                      onClick={() => {
+                        favs(payload._id)
+                       
+                      }}
+                      className={layoutType === "list" ? favsIcon : favsIconGrid}
+                      style={payload.inFavs || isFavs ? {color: red} : {color: grey}}
+                    >
+                      <FavoriteIcon />
+                    </button>
+                  ) :  null}
               <Grid item container justify="space-between" xs={12}>
                 <Grid item>
-                  <Typography variant="h5">{new Date(createdAt).toLocaleDateString("en-PK")}</Typography>
+                  <Typography variant="h5">{payload.modelYear}</Typography>
                 </Grid>
                 <Grid item>
                   <Typography color="secondary" variant="h4">
-                    PKR{" "}
-                    {price.toLocaleString(navigator.language, {
-                      minimumFractionDigits: 0,
-                    })}
+                  {payload.price && `PKR ${payload.price?.toLocaleString()}`}
                   </Typography>
                 </Grid>
               </Grid>
@@ -89,9 +115,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   <Typography
                     variant="h3"
                     style={{ cursor: "pointer" }}
-                   
+                    onClick={() => history.push(`/car-details/${payload._id}`)}
                   >
-                    {model}
+                       {payload.make}
                   </Typography>
                 </Grid>
                 <Grid item container xs={12} spacing={1} justify="flex-start">
@@ -101,7 +127,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       variant="body2"
                       component="span"
                     >
-                      {modelYear}
+                      {payload.year}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -110,9 +136,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       variant="body2"
                       component="span"
                     >
-                      {milage.toLocaleString(navigator.language, {
-                        minimumFractionDigits: 0,
-                      })}
+                      {payload.milage?.toLocaleString()}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -121,7 +145,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       variant="body2"
                       component="span"
                     >
-                      {engineType}
+                          {payload.engineType}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -130,7 +154,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       variant="body2"
                       component="span"
                     >
-                      {`${engineCapacity} cc`}
+                         {`${payload.engineCapacity} cc`}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -139,18 +163,24 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       variant="body2"
                       component="span"
                     >
-                      {transmission}
+                       {payload.transmission}
                     </Typography>
                   </Grid>
                 </Grid>
                 <Grid item xs={12}>
                   <div className={location}>
                     <span>
-                      <img src={LocationIcon} alt={city} />
-                      <Typography variant="subtitle2">{city}</Typography>
+                      <img src={LocationIcon} alt={payload.city} />
+                      <Typography variant="subtitle2">{payload.city}</Typography>
                     </span>
                     <span>
-                      <Typography variant="subtitle2">{new Date(createdAt).toLocaleDateString("en-PK")}</Typography>
+                      <Typography variant="subtitle2"> {span ? (
+                          <span className={label}>{`${span} ${ConvertDate(
+                            payload.createdAt
+                          )}`}</span>
+                        ) : (
+                          ConvertDate(payload.createdAt)
+                        )}</Typography>
                     </span>
                   </div>
                 </Grid>
@@ -160,6 +190,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
         </Grid>
       </Grid>
     </Card>
+     );
+    })}
+</>
   );
 };
 

@@ -7,6 +7,7 @@ export const useStyles = makeStyles(() => ({
   root: {
     padding: "70px 0px 0px 0px",
     margin: "20px 0px 0px 20px",
+    position: "relative",
     [breakpoints.down("md")]: {
       margin: "0px",
     },
@@ -170,4 +171,10 @@ export const useStyles = makeStyles(() => ({
     marginTop: "10px",
     borderRadius: "50%",
   },
+  loader: {
+    margin: "300px 0px"
+  },
+  link:{
+    color: white
+  }
 }));

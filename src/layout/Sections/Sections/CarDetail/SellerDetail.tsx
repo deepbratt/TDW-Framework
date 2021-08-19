@@ -1,14 +1,42 @@
 import { Typography,Grid} from '@material-ui/core'
 import {useStyles} from "./useStyles"
-import { seller } from '../../Utils/carDetail'
-const SellerDetail = () => {
-    const {box} = useStyles()
+import { seller,sellerInfo} from '../../Utils/carDetail'
+
+const SellerDetail = ({createdBy} : any) => {
+
+  const {box} = useStyles()
+
     return (
         <Grid container>
                <Grid className={box} item xs={12}>
-                   <Typography variant="h3">
+                   <Typography style={{margin: "10px"}} variant="h3">
                        {seller}
                    </Typography>
+                   <Grid
+                item
+                xs={12}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  margin: "10px",
+                }}
+              >
+                <Grid item lg={3}>
+                {sellerInfo.map((payload : any,index : number) => {
+                  return (
+                    <Typography key={`title ${index}`} variant="subtitle1">{payload.title}</Typography>   
+                  )
+                })}   
+                </Grid>
+                <Grid item lg={3}>
+                <Typography variant="subtitle1">{createdBy.city}</Typography>    
+                <Typography variant="subtitle1">{createdBy.firstName}</Typography>   
+                <Typography variant="subtitle1">{createdBy.lastName}</Typography> 
+                <Typography variant="subtitle1">{createdBy.gender}</Typography>    
+                <Typography variant="subtitle1">{createdBy.country}</Typography>    
+                </Grid>
+                
+                </Grid>
                </Grid>
         </Grid>
     )

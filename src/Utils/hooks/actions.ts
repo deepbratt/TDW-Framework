@@ -57,6 +57,16 @@ export const updateUser = async (url: string, data: any) => {
   }
 };
 
+
+export const accountVerify = async (url: string, token: string) => {
+  try {
+    let result = await axiosInstance.patch(`${url}${token}`);
+    return result.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 export const deleteData = async (url: string, id: string) => {
   try {
     let result = await axiosInstance.patch(`${url}/${id}`);

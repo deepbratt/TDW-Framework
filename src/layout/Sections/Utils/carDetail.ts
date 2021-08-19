@@ -120,3 +120,23 @@ export const CarFeature = [{
   icon: tyreIcon    
 }
 ]
+
+
+// seller info 
+export const sellerInfo = [{
+  title: "City"
+},
+{
+  title: "First Name"
+},
+{
+  title: "Last Name"
+},
+{
+  title: "Gender"
+},
+{
+  title: "Country"
+}
+
+]

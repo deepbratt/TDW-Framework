@@ -1,32 +1,66 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "../../redux/reducers/authSlice";
+import { useState } from "react";
 import { handleGoogleAuth } from "../../Utils/API/API";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
+import { fieldNames, messages } from "../../Utils/constants/formsConstants";
 import useApi from "../../Utils/hooks/useApi";
-import useValidation from "../../Utils/hooks/useValidation";
+import { isEmailValid, isPhoneValid } from "../../Utils/regex";
 
 const initialValues: any = {
   firstName: "",
   lastName: "",
-  data: "",
+  email: "",
+  mobile: "",
   password: "",
   confirmPassword: "",
 };
 
 export const useForm = (validateOnChange = false) => {
-  const dispatch = useDispatch();
-  const { USERS, GOOGLE_AUTH } = API_ENDPOINTS;
+  const { USERS, SIGNUP_WITH_EMAIL, SIGNUP_WITH_MOBILE, GOOGLE_AUTH } =
+    API_ENDPOINTS;
   const {
     loading,
     alertOpen,
     setAlertOpen,
-    responseData,
+
     responseMessage,
     addRequest,
   } = useApi();
   const [values, setValues] = useState(initialValues);
-  const { validate, errors, setErrors } = useValidation(values);
+  const [errors, setErrors] = useState(initialValues);
+
+  const validate = (fieldValues = values) => {
+    let temp = { ...errors };
+
+    if (fieldNames.email in fieldValues) {
+      temp.email =
+        fieldValues.email.trim() === ""
+          ? messages.isRequired
+          : isEmailValid(fieldValues.email)
+          ? ""
+          : messages.notValid;
+    }
+    if (fieldNames.mobile in fieldValues) {
+      temp.mobile =
+        fieldValues.mobile.trim() === ""
+          ? messages.isRequired
+          : isPhoneValid(fieldValues.mobile)
+          ? ""
+          : messages.notValid;
+    }
+    if (fieldNames.password in fieldValues) {
+      temp.password =
+        fieldValues.password.length < 5
+          ? "Password must be 8 charactors long"
+          : "";
+    }
+
+    setErrors({
+      ...temp,
+    });
+
+    if (fieldValues === values)
+      return Object.values(temp).every((x) => x === "");
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -38,15 +72,37 @@ export const useForm = (validateOnChange = false) => {
     if (validateOnChange) validate({ [name]: value });
   };
 
-  useEffect(() => {
-    if (responseMessage.status === "success") {
-      dispatch(login(responseData));
-    }
-  }, [responseMessage]);
-
   const resetForm = () => {
     setValues(initialValues);
     setErrors({});
+  };
+
+  const handleEmailSubmit = async (e: any) => {
+    e.preventDefault();
+
+    let requestBody: any = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      password: values.password,
+      passwordConfirm: values.confirmPassword,
+    };
+    console.log("requestBody", requestBody);
+    await addRequest(USERS + SIGNUP_WITH_EMAIL, requestBody);
+  };
+
+  const handleMobileSubmit = async (e: any) => {
+    e.preventDefault();
+
+    let requestBody = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      phone: values.mobile,
+      password: values.password,
+      passwordConfirm: values.confirmPassword,
+    };
+    console.log("requestBody", requestBody);
+    await addRequest(USERS + SIGNUP_WITH_MOBILE, requestBody);
   };
 
   const handleGoogleSubmit = async () => {
@@ -66,17 +122,7 @@ export const useForm = (validateOnChange = false) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (validate()) {
-      let requestBody = {
-        firstName: values.firstName,
-        lastName: values.lastName,
-        data: values.data,
-        password: values.password,
-        passwordConfirm: values.confirmPassword,
-      };
-      console.log("requestBody", requestBody);
-    }
-    // await addRequest(USERS + SIGNUP_WITH_MOBILE, requestBody);
+    console.log("btn clicked", values);
   };
 
   return {
@@ -88,10 +134,13 @@ export const useForm = (validateOnChange = false) => {
     resetForm,
     validate,
     handleSubmit,
+    handleEmailSubmit,
+    handleMobileSubmit,
     handleGoogleSubmit,
     loading,
     alertOpen,
     setAlertOpen,
+
     responseMessage,
   };
 };

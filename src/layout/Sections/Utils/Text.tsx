@@ -54,13 +54,14 @@ export const img = replaceImg
 // Verification
 
 export const title = "Verify Phone Number"
-export const message = "Enter the 4 digit code we sent you via sms to"
-export const num = " ********* 180"
+export const message = "Enter the 4 digit code we sent you to"
+export const num = " ********* "
 export const code = "Didn't get the code?"
 export const buttonText = "Resend code"
 export const mainBtn = "Continue"
 export const regex = /^[ A-Za-z0-9_@./#&+-]*$/
 export const icon = phoneIcon
+export const heading = "Account Verified Successfully"
 
 
 export const pin = {

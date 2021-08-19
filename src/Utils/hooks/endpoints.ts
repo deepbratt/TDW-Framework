@@ -4,7 +4,7 @@ export const addToFavs = "ads/cars/add-to-fav";
 export const removeFavs = "ads/cars/remove-from-fav";
 
 // ads
-export const getAds = "ads/cars/myCars?limit=4&page=";
+export const getAds = "ads/cars/myCars?limit=3&page=";
 
 // cars
 
@@ -20,3 +20,8 @@ export const compareCars = "ads/Cars?"
 export const updateMe = "Users/updateMe"
 export const changeMyPassword = "Users/updateMyPassword"
 export const deleteAccount = "Users/deleteMe"
+export const addMyPhone = "Users/addMyPhone"
+
+
+// verification
+export const verifyNumber = "Users/phone-verification/"

@@ -10,11 +10,13 @@ import {
   Card,
   Button,
 } from "@material-ui/core";
+import { PhoneAndroidRounded } from "@material-ui/icons";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../Utils/constants/formsConstants";
 import {
   SIGNIN,
   SIGNUP,
+  CONTINUE_WITH_PHONE,
   CONTINUE_WITH_GOOGLE,
   CONTINUE_WITH_FACEBOOK,
   SIGNIN_USING_ACCOUNT,
@@ -24,8 +26,6 @@ import {
 import GoogleIcon from "../../assets/icons/googleIcon.png";
 import FacebookIcon from "../../assets/icons/fbIcon.png";
 import GlobalStyles from "../../globalStyles";
-import { handleFacebookAuth } from "../../Utils/API/API";
-import PasswordField from "../../components/InputField/PasswordField";
 
 const Login = () => {
   const history = useHistory();
@@ -35,24 +35,23 @@ const Login = () => {
     values,
     errors,
     handleInputChange,
-    handleSubmit,
-    handleGoogleSubmit,
+    handleEmailSubmit,
     loading,
-    // alertOpen,
-    // setAlertOpen,
+    alertOpen,
+    setAlertOpen,
+    
     responseMessage,
   } = useForm();
 
-  // const handleAlertClose = (
-  //   event: React.SyntheticEvent | React.MouseEvent,
-  //   reason?: string
-  // ) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-  //   setAlertOpen(false);
-  // };
-
+  const handleAlertClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAlertOpen(false);
+  };
   return (
     <Grid
       className={loginFormGrid}
@@ -70,8 +69,16 @@ const Login = () => {
             className={buttonWrap}
             fullWidth
             variant="outlined"
+            startIcon={<PhoneAndroidRounded />}
+            onClick={() => history.push(routes.loginWithMobile)}
+          >
+            {CONTINUE_WITH_PHONE}
+          </Button>
+          <Button
+            className={buttonWrap}
+            fullWidth
+            variant="outlined"
             startIcon={<img src={GoogleIcon} alt="google-icon" />}
-            onClick={() => handleGoogleSubmit()}
           >
             {CONTINUE_WITH_GOOGLE}
           </Button>
@@ -80,27 +87,27 @@ const Login = () => {
             fullWidth
             variant="outlined"
             startIcon={<img src={FacebookIcon} alt="facebook-icon" />}
-            onClick={() => handleFacebookAuth()}
           >
             {CONTINUE_WITH_FACEBOOK}
           </Button>
-          <form className={formStyle} onSubmit={handleSubmit}>
+          <form className={formStyle} onSubmit={handleEmailSubmit}>
             <Typography variant="body2" gutterBottom>
               {SIGNIN_USING_ACCOUNT}
             </Typography>
             <InputField
-              id="input-data"
-              name={fieldNames.data}
+              id="input-email"
+              name={fieldNames.email}
               fullWidth
               variant="outlined"
-              label="Email/Phone Number"
-              value={values.data}
-              error={errors.data}
+              label="Email"
+              value={values.email}
+              error={errors.email}
               onChange={handleInputChange}
             />
-            <PasswordField
+            <InputField
               id="input-password"
               name={fieldNames.password}
+              type="password"
               fullWidth
               variant="outlined"
               label="Password"
@@ -137,14 +144,14 @@ const Login = () => {
           </form>
         </Card>
       </Grid>
-      {/* {responseMessage && (
+      {responseMessage && (
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
          type={responseMessage.status}
           message={responseMessage.message}
         />
-      )} */}
+      )}
     </Grid>
   );
 };

@@ -1,10 +1,11 @@
 import { useState } from "react";
 import useApi from "../../Utils/hooks/useApi";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
-import useValidation from "../../Utils/hooks/useValidation";
+import { isEmailValid, isPhoneValid } from "../../Utils/regex";
+import { messages, fieldNames } from "../../Utils/constants/formsConstants";
 
 const initialValues: any = {
-  data: "",
+  email: "",
 };
 
 export const useForm = (validateOnChange = false) => {
@@ -12,8 +13,28 @@ export const useForm = (validateOnChange = false) => {
   const { loading, alertOpen, setAlertOpen, responseMessage, addRequest } =
     useApi();
   const [values, setValues] = useState(initialValues);
-  const { errors, setErrors, validate } = useValidation(values);
+  const [errors, setErrors] = useState(initialValues);
   const [resetLinkMessage, setResetLinkMessage] = useState(false);
+
+  const validate = (fieldValues = values) => {
+    let temp = { ...errors };
+
+    if (fieldNames.email in fieldValues) {
+      temp.email =
+        fieldValues.email.trim() === ""
+          ? messages.isRequired
+          : isEmailValid(fieldValues.email) || isPhoneValid(fieldValues.email)
+          ? ""
+          : messages.notValid;
+    }
+
+    setErrors({
+      ...temp,
+    });
+
+    if (fieldValues === values)
+      return Object.values(temp).every((x) => x === "");
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -34,7 +55,7 @@ export const useForm = (validateOnChange = false) => {
     e.preventDefault();
     if (validate()) {
       let requestBody = {
-        data: values.data,
+        data: values.email,
       };
       console.log("requestBody", requestBody);
       await addRequest(USERS + FORGOT_PASSWORD, requestBody).then(() => {

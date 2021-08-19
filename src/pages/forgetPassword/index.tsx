@@ -1,5 +1,5 @@
 import { useForm } from "./useForm";
-import { useHistory, useParams } from "react-router";
+import { useHistory } from "react-router";
 import Toast from "../../components/Toast";
 import { routes } from "../../routes/paths";
 import {
@@ -18,10 +18,8 @@ import {
   ENTER_YOUR_EMAIL_PASS_MESSAGE,
   CONTINUE,
 } from "../../Utils/constants/language/en/buttonLabels";
-import ResetPassword from "../resetPassword";
 
 const ForgetPassword = () => {
-  const { token } = useParams<any>();
   const history = useHistory();
   const {
     values,
@@ -54,36 +52,34 @@ const ForgetPassword = () => {
       alignContent="center"
     >
       <Grid item xs={4}>
-        {token ? (
-          <ResetPassword />
-        ) : resetLinkMessage ? (
-          <Typography
-            style={{ margin: "20px 0" }}
-            color="secondary"
-            align="center"
-            variant="h4"
-          >
-            {RESET_PASS_LINK_MESSAGE}
+        {loading && <LinearProgress color="secondary" />}
+        <Card className={formCard}>
+          <Typography variant="h3" gutterBottom>
+            {ACCOUNT_RECOVERY}
           </Typography>
-        ) : (
-          <>
-            {loading && <LinearProgress color="secondary" />}
-            <Card className={formCard}>
-              <Typography variant="h3" gutterBottom>
-                {ACCOUNT_RECOVERY}
-              </Typography>
+          {resetLinkMessage ? (
+            <Typography
+              style={{ margin: "20px 0" }}
+              color="secondary"
+              align="center"
+              variant="h4"
+            >
+              {RESET_PASS_LINK_MESSAGE}
+            </Typography>
+          ) : (
+            <>
               <form className={formStyle} onSubmit={handleSubmit}>
                 <Typography variant="body2" gutterBottom>
                   {ENTER_YOUR_EMAIL_PASS_MESSAGE}
                 </Typography>
                 <InputField
-                  id="input-data"
-                  name={fieldNames.data}
+                  id="input-email-phone"
+                  name={fieldNames.email}
                   fullWidth
                   variant="outlined"
-                  label="Email/Phone Number"
-                  value={values.data}
-                  error={errors.data}
+                  label="Email/Number"
+                  value={values.email}
+                  error={errors.email}
                   required
                   onChange={handleInputChange}
                 />
@@ -101,9 +97,9 @@ const ForgetPassword = () => {
                 {responseMessage.status === "success" &&
                   history.push(routes.resetPassword)}
               </form>
-            </Card>
-          </>
-        )}
+            </>
+          )}
+        </Card>
       </Grid>
       {responseMessage && (
         <Toast

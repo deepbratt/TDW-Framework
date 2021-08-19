@@ -21,28 +21,29 @@ import Slides from "../../layout/Sections/Sections/CarDetail/Slider";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useStyles } from "../../layout/Sections/Sections/CarDetail/useStyles";
 import CarInformation from "../../layout/Sections/Sections/CarDetail/CarInformation";
-import { getSingleCar } from "../../Utils/hooks/endpoints";
-import { useEffect } from "react";
+import { getSingleCar} from "../../Utils/hooks/endpoints";
+import { useEffect} from "react";
 import { useParams } from "react-router";
-import useApi from "../../Utils/hooks/useApi"
+import Actions from "./useFunctions"
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface RouteProps {
   id: string;
 }
 const CarDetailContainer = () => {
-  const {loadSingleData,isLoading,obj} = useApi()
-  const { main } = useStyles();
   const { id } = useParams<RouteProps>();
+  const {loadSingleData,obj,isLoading} = Actions(id?? '')
+  const { main,loader} = useStyles();
 
-  useEffect(() => {
-    loadSingleData(getSingleCar,id);
-  }, []);
+
+
+
 
   return (
     <Grid style={{ display: "flex", justifyContent: "center" }} container>
       <Section>
         {isLoading || !obj ? (
-          <h1>Loading...</h1>
+          <h1 className={loader}><CircularProgress/></h1>
         ) : (
           <>
             <Grid className={main} item xs={12}>
@@ -61,6 +62,8 @@ const CarDetailContainer = () => {
                 engineCapacity={obj?.engineCapacity}
                 date={obj.date}
                 isFavs={obj.isFav}
+                createdBy={obj.createdBy}
+                createdAt={obj.updatedAt}
               />
               <CarDetail
                 mainButton={mainButton}
@@ -80,6 +83,7 @@ const CarDetailContainer = () => {
                 transmission={obj?.transmission}
                 mileage={obj?.milage}
                 engineType={obj?.engineType}
+                createdBy={obj.createdBy}
               />
             </Grid>
             <Hidden lgUp>
@@ -87,6 +91,7 @@ const CarDetailContainer = () => {
                 <CarInformation
                   carTitle={carTitle}
                   info={CarInfo}
+                  // #empty array of feature from api so temporary static feature
                   // feature={data?.features}
                   feature={CarFeature}
                   city={obj?.registeredCity}
@@ -95,6 +100,8 @@ const CarDetailContainer = () => {
                   bodyType={obj?.bodyType}
                   engineCapacity={obj?.engineCapacity}
                   date={obj.date}
+                  createdAt={obj.updatedAt}
+                  createdBy={obj.createdBy}
                 />
               </Grid>
             </Hidden>

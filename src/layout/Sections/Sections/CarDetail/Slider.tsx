@@ -9,7 +9,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import CustomButton from "../../../../components/CustomButton";
 import Sizes from "../../../../Utils/themeConstants";
 import { addToFavs } from "../../../../Utils/hooks/endpoints";
-import useApi from "../../../../Utils/hooks/useApi";
+import Actions from "../../../../Pages/carDetail/useFunctions";
 import Toast from "../../../../components/Toast";
 const Slider = ({
   desc,
@@ -26,10 +26,11 @@ const Slider = ({
   engineCapacity,
   date,
   isFavs,
+  createdBy,
+  createdAt
 }: Detail) => {
   const [colorChange, setColorChange] = useState(false);
-
-  const { addFavs, setOpen, responseMessage, open } = useApi();
+  const { addFavs,open,setOpen,responseMessage} = Actions();
   const { carousel, detail, btn, sec } = useStyles();
   const { mobile } = Sizes();
   const { gray, red, white } = Colors;
@@ -37,6 +38,9 @@ const Slider = ({
   const handleAlertClose = () => {
     setOpen(false);
   };
+
+  // #static user as of now
+  let currentUser = "610375ed6b897a001d864ca1"
 
   return (
     <Grid container>
@@ -62,7 +66,8 @@ const Slider = ({
                   src={data.image}
                   alt=""
                 />
-                {isFavs === false ? (
+                {createdBy && currentUser === createdBy._id || isFavs === true ? null : 
+                (
                   <CustomButton
                     handleClick={() => {
                       if (id) {
@@ -90,7 +95,8 @@ const Slider = ({
                       />
                     </section>
                   </CustomButton>
-                ) : null}
+                )
+                }
               </>
             );
           })}
@@ -113,6 +119,8 @@ const Slider = ({
               bodyType={bodyType}
               engineCapacity={engineCapacity}
               date={date}
+              createdAt={createdAt}
+              createdBy={createdBy}
             />
           </Grid>
         </Hidden>

@@ -17,6 +17,7 @@ import {
 } from "../../Utils/constants/language/en/homePageData";
 import { Grid } from "@material-ui/core";
 import TabComponent from "../../components/Tabs";
+
 export interface HomeProps {}
 
 const HomePage = () => {

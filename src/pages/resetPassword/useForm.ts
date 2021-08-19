@@ -1,7 +1,7 @@
 import { useState } from "react";
+import useApi from "../../Utils/hooks/useApi";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
-import useValidation from "../../Utils/hooks/useValidation";
-import { updateData } from "../../Utils/hooks/actions";
+import { fieldNames, messages } from "../../Utils/constants/formsConstants";
 
 const initialValues: any = {
   password: "",
@@ -9,16 +9,38 @@ const initialValues: any = {
 };
 
 export const useForm = (token: any, validateOnChange = false) => {
-  const { USERS, RESET_PASSWORD } = API_ENDPOINTS;
+  const { USERS, FORGOT_PASSWORD } = API_ENDPOINTS;
+  const {
+    loading,
+    alertOpen,
+    setAlertOpen,
+    
+    responseMessage,
+    addRequest,
+  } = useApi();
   const [values, setValues] = useState(initialValues);
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  // const [responseData, setResponseData] = useState({});
-  const { validate, errors, setErrors } = useValidation(values);
-  const [responseMessage, setResponseMessage] = useState({
-    status: "",
-    message: "",
-  });
+  const [errors, setErrors] = useState(initialValues);
+
+  const validate = (fieldValues = values) => {
+    let temp = { ...errors };
+
+    if (fieldNames.password in fieldValues) {
+      temp.password = fieldValues.password.length < 5 ? messages.password : "";
+    }
+    if (fieldNames.confirmPassword in fieldValues) {
+      temp.confirmPassword =
+        fieldValues.confirmPassword !== fieldValues.password
+          ? messages.notMatch
+          : "";
+    }
+
+    setErrors({
+      ...temp,
+    });
+
+    if (fieldValues === values)
+      return Object.values(temp).every((x) => x === "");
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -43,33 +65,7 @@ export const useForm = (token: any, validateOnChange = false) => {
         passwordConfirm: values.confirmPassword,
       };
       console.log("requestBody", requestBody);
-      await updateData(USERS + RESET_PASSWORD, token, requestBody)
-        .then((response) => {
-          console.log("data", response);
-          setIsLoading(false);
-          if (response.status === "success") {
-            setAlertOpen(true);
-            setResponseMessage({
-              status: response.status,
-              message: response.message,
-            });
-          } else {
-            setIsLoading(false);
-            setAlertOpen(true);
-            setResponseMessage({
-              status: "error",
-              message: response.message,
-            });
-          }
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          setAlertOpen(true);
-          setResponseMessage({
-            status: error.status,
-            message: error.message,
-          });
-        });
+      await addRequest(USERS + FORGOT_PASSWORD + `/${token}`, requestBody);
     }
   };
 
@@ -80,10 +76,12 @@ export const useForm = (token: any, validateOnChange = false) => {
     setErrors,
     handleInputChange,
     resetForm,
+    validate,
     handleSubmit,
-    isLoading,
+    loading,
     alertOpen,
     setAlertOpen,
+    
     responseMessage,
   };
 };

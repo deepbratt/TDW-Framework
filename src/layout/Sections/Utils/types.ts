@@ -59,7 +59,10 @@ interface IArray {
     registeredCity?: string;
     _id?: string;
     isFav?: boolean;
-    assembly?: string
+    assembly?: string;
+    createdBy: any;
+    updatedAt: string;
+    
   }
 
   
@@ -80,6 +83,8 @@ interface IArray {
     engineCapacity?: number;
     date: string;
     isFavs?: boolean;
+    createdBy: any;
+    createdAt: string;
   }
   
   
@@ -101,7 +106,9 @@ interface IArray {
     transmission?: string;
     mileage?: number;
     engineType?: string;
-    assembly?: string
+    assembly?: string;
+    createdBy: any;
+    createdAt?: string;
   }
 
 
@@ -118,6 +125,8 @@ interface IArray {
     color?: string;
     engineCapacity?: number;
     date: string;
+    createdBy: any;
+    createdAt: string;
   }
   
 

@@ -6,7 +6,6 @@ const regPhone =
 const regTypePhone = /^[+0-9 ]*$/;
 const regEmail =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const regPass = /[^A-Za-z0-9]+/g;
 
 export const isNameValid = (name: string) => {
   return regName.test(name);
@@ -23,6 +22,74 @@ export const isTypeNumPlusBracket = (phone: string) => {
 export const isEmailValid = (email: string) => {
   return regEmail.test(email);
 };
-export const isPasswordValid = (password: string) => {
-  return regPass.test(password);
-};
+
+
+
+  // const getAll = async (endpoint: string) => {
+  //   setLoading(true);
+  //   await getAllData(endpoint)
+  //     .then((response) => {
+  //       console.log("response", response);
+  //       setLoading(false);
+  //       setAlertOpen(true);
+  //       setResponseMessage({
+  //         status: response.data.data.status,
+  //         message: response.data.data.message,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log("error", error);
+  //       setLoading(false);
+  //       setAlertOpen(true);
+  //       setResponseMessage({
+  //         status: error.status,
+  //         message: error.message,
+  //       });
+  //     });
+  // };
+
+  // const addRequest = async (endpoint: string, requestBody?: object) => {
+  //   setLoading(true);
+  //   await addData(endpoint, requestBody)
+  //     .then((response) => {
+  //       console.log("response", response);
+  //       setLoading(false);
+  //       setAlertOpen(true);
+  //       setResponseMessage({
+  //         status: response.data.data.status,
+  //         message: response.data.data.message,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log("error", error);
+  //       setLoading(false);
+  //       setAlertOpen(true);
+  //       setResponseMessage({
+  //         status: error.status,
+  //         message: error.message,
+  //       });
+  //     });
+  // };
+
+  // const updateRequest = async (endpoint: string, requestBody?: object) => {
+  //   setLoading(true);
+  //   await updateData(endpoint, requestBody)
+  //     .then((response) => {
+  //       console.log("response", response);
+  //       setLoading(false);
+  //       setAlertOpen(true);
+  //       setResponseMessage({
+  //         status: response.data.data.status,
+  //         message: response.data.data.message,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log("error", error);
+  //       setLoading(false);
+  //       setAlertOpen(true);
+  //       setResponseMessage({
+  //         status: error.status,
+  //         message: error.message,
+  //       });
+  //     });
+  // };

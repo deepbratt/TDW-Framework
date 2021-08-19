@@ -232,11 +232,11 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
                   sm={layoutType === "list" ? 12 : 6}
                   xl={layoutType === "list" ? 12 : 6}
                 >
-                  <ListingCard
+                  {/* <ListingCard
                     data={cardData}
                     layoutType={layoutType}
                     handleClick={() => shortListItem(cardData)}
-                  />
+                  /> */}
                 </Grid>
               ))}
           </Grid>

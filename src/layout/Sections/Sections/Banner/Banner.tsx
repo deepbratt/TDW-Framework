@@ -33,7 +33,7 @@ const Banner: React.FC<IBanner> = ({
   carModel,
 }) => {
   const { root, fab, grid, btn } = bannerStyles();
-  const { val, setVal } = useHooks();
+  const { val, setVal,handleChange,handleNavigation} = useHooks();
   const { white, cherry, lightGrey } = Colors;
 
   return (
@@ -60,6 +60,8 @@ const Banner: React.FC<IBanner> = ({
             val={val}
             range={range}
             carModel={carModel}
+            handleChange={handleChange}
+            handleNavigation={handleNavigation}
           />
         </Grid>
         <Grid className={grid} item lg={4} md={5} xs={9}>

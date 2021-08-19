@@ -21,7 +21,8 @@ const CarDetail: React.FC<IProp> = ({
   year,
   engineType,
   mileage,
-  transmission
+  transmission,
+  createdBy
 }) => {
   const {
     root,
@@ -32,6 +33,7 @@ const CarDetail: React.FC<IProp> = ({
     mailBtn,
     icon,
     container,
+    link
   } = useStyles();
   const { blue, gray } = Colors;
 
@@ -102,7 +104,7 @@ const CarDetail: React.FC<IProp> = ({
                 </div>
               }
             >
-              {numButton}
+              <a className={link} href={`tel:${createdBy.phone}`}>{numButton}</a>
             </Button>
           </Grid>
           <Grid className={container} item xs={12}>
@@ -114,12 +116,12 @@ const CarDetail: React.FC<IProp> = ({
                 </div>
               }
             >
-              {mainButton}
+            <a className={link} href={`mailTo:${createdBy.email}`}>{mainButton}</a>
             </Button>
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <SellerDetail />
+          <SellerDetail createdBy={createdBy} />
         </Grid>
         <Hidden lgUp>
           <Grid style={{ color: gray }} item xs={12}>

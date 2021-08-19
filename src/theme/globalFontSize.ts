@@ -46,6 +46,4 @@ theme.typography.body2 = {
 
 theme.typography.caption = {};
 
-theme.typography.button = {
- 
-};
+theme.typography.button = {};

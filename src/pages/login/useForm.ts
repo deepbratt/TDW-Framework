@@ -1,29 +1,53 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "../../redux/reducers/authSlice";
-import { handleGoogleAuth } from "../../Utils/API/API";
+import { useState } from "react";
+import useApi from "../../Utils/hooks/useApi";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
-import useValidation from "../../Utils/hooks/useValidation";
-import { addData } from "../../Utils/hooks/actions";
+import { fieldNames, messages } from "../../Utils/constants/formsConstants";
+import { isEmailValid } from "../../Utils/regex";
 
 const initialValues: any = {
-  data: "",
+  email: "",
+  mobile: "",
   password: "",
 };
 
 export const useForm = (validateOnChange = false) => {
+  const { USERS, LOGIN_WITH_EMAIL, LOGIN_WITH_MOBILE } = API_ENDPOINTS;
+  const {
+    loading,
+    alertOpen,
+    setAlertOpen,
+    
+    responseMessage,
+    addRequest,
+  } = useApi();
   const [values, setValues] = useState(initialValues);
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [responseData, setResponseData] = useState({});
-  const { validate, errors, setErrors } = useValidation(values);
-  const [responseMessage, setResponseMessage] = useState({
-    status: "",
-    message: "",
-  });
+  const [errors, setErrors] = useState(initialValues);
 
-  const { USERS, LOGIN } = API_ENDPOINTS;
-  const dispatch = useDispatch();
+  const validate = (fieldValues = values) => {
+    let temp = { ...errors };
+
+    if (fieldNames.email in fieldValues) {
+      temp.email =
+        fieldValues.email.trim() === ""
+          ? messages.isRequired
+          : isEmailValid(fieldValues.email)
+          ? ""
+          : messages.notValid;
+    }
+    if (fieldNames.password in fieldValues) {
+      temp.password =
+        fieldValues.password.length < 5
+          ? "Password must be 8 charactors long"
+          : "";
+    }
+
+    setErrors({
+      ...temp,
+    });
+
+    if (fieldValues === values)
+      return Object.values(temp).every((x) => x === "");
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -40,64 +64,24 @@ export const useForm = (validateOnChange = false) => {
     setErrors({});
   };
 
-  useEffect(() => {
-    if (responseMessage.status === "success") {
-      dispatch(login(responseData));
-    }
-  }, [responseMessage]);
-
-  const handleSubmit = async (e: any) => {
+  const handleEmailSubmit = async (e: any) => {
     e.preventDefault();
-    if (validate()) {
-      let requestBody = {
-        data: values.data,
-        password: values.password,
-      };
-      console.log("requestBody", requestBody);
-      await addData(USERS + LOGIN, requestBody)
-        .then((response) => {
-          console.log("data", response);
-          setIsLoading(false);
-          if (response.status === "success") {
-            setAlertOpen(true);
-            setResponseMessage({
-              status: response.status,
-              message: response.message,
-            });
-            setResponseData(response.data);
-          } else {
-            setIsLoading(false);
-            setAlertOpen(true);
-            setResponseMessage({
-              status: "error",
-              message: response.message,
-            });
-          }
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          console.log("Error log", error);
-          setAlertOpen(true);
-          setResponseMessage({
-            status: error.status,
-            message: error.message,
-          });
-        });
-    }
+    let requestBody = {
+      email: values.email,
+      password: values.password,
+    };
+    console.log("requestBody", requestBody);
+    await addRequest(USERS + LOGIN_WITH_EMAIL, requestBody);
   };
 
-  const handleGoogleSubmit = async () => {
-    await handleGoogleAuth().then(async (response) => {
-      let requestBody = {
-        googleId: response.id,
-        displayName: response.name,
-        firstName: response.given_name,
-        lastName: response.family_name,
-        image: response.picture,
-        email: response.email,
-      };
-      console.log("request body", requestBody);
-    });
+  const handleMobileSubmit = async (e: any) => {
+    e.preventDefault();
+    let requestBody = {
+      phone: values.mobile,
+      password: values.password,
+    };
+    console.log("requestBody", requestBody);
+    await addRequest(USERS + LOGIN_WITH_MOBILE, requestBody);
   };
 
   return {
@@ -108,11 +92,12 @@ export const useForm = (validateOnChange = false) => {
     handleInputChange,
     resetForm,
     validate,
-    handleSubmit,
-    handleGoogleSubmit,
-    isLoading,
+    handleEmailSubmit,
+    handleMobileSubmit,
+    loading,
     alertOpen,
     setAlertOpen,
+    
     responseMessage,
   };
 };

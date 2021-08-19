@@ -7,43 +7,32 @@ import {
   Card,
   Button,
 } from "@material-ui/core";
+import { EmailRounded, PhoneAndroidRounded } from "@material-ui/icons";
 import {
-  // OR,
   SIGNIN,
   SIGNUP,
-  // CONTINUE_WITH_GOOGLE,
-  // CONTINUE_WITH_FACEBOOK,
+  CONTINUE_WITH_PHONE,
+  CONTINUE_WITH_GOOGLE,
+  CONTINUE_WITH_FACEBOOK,
+  CONTINUE_WITH_EMAIL,
   ALREADY_HAVE_ACCOUNT,
 } from "../../Utils/constants/language/en/buttonLabels";
-// import GoogleIcon from "../../assets/icons/googleIcon.png";
-// import FacebookIcon from "../../assets/icons/fbIcon.png";
+import GoogleIcon from "../../assets/icons/googleIcon.png";
+import FacebookIcon from "../../assets/icons/fbIcon.png";
 import GlobalStyles from "../../globalStyles";
 import { routes } from "../../routes/paths";
-// import { handleFacebookAuth } from "../../Utils/API/API";
-import InputField from "../../components/InputField";
-import { fieldNames } from "../../Utils/constants/formsConstants";
-import { CONTINUE } from "../../Utils/constants/language/en/buttonLabels";
-import PasswordField from "../../components/InputField/PasswordField";
+import { handleFacebookAuth, handleGoogleAuth } from "../../Utils/API/API";
 import { useForm } from "./useForm";
 
 const Signup = () => {
   const history = useHistory();
+  const { loginFormGrid, formCard, buttonWrap } = GlobalStyles();
   const {
-    loginFormGrid,
-    formCard,
-    //  buttonWrap,
-    formStyle,
-    loginbtn,
-  } = GlobalStyles();
-  const {
-    // handleGoogleSubmit,
-    isLoading,
+    handleGoogleSubmit,
+    loading,
     alertOpen,
     setAlertOpen,
-    handleInputChange,
-    handleSubmit,
-    values,
-    errors,
+    
     responseMessage,
   } = useForm();
 
@@ -54,6 +43,7 @@ const Signup = () => {
     if (reason === "clickaway") {
       return;
     }
+
     setAlertOpen(false);
   };
 
@@ -64,13 +54,22 @@ const Signup = () => {
       justify="center"
       alignContent="center"
     >
-      <Grid item xs={10} md={6} lg={4}>
-        {isLoading && <LinearProgress color="secondary" />}
+      <Grid item xs={4}>
+        {loading && <LinearProgress color="secondary" />}
         <Card className={formCard}>
           <Typography variant="h6" gutterBottom>
             {SIGNUP}
           </Typography>
-          {/* <Button
+          <Button
+            className={buttonWrap}
+            fullWidth
+            variant="outlined"
+            startIcon={<PhoneAndroidRounded />}
+            onClick={() => history.push(routes.signupWithMobile)}
+          >
+            {CONTINUE_WITH_PHONE}
+          </Button>
+          <Button
             className={buttonWrap}
             fullWidth
             variant="outlined"
@@ -88,122 +87,32 @@ const Signup = () => {
           >
             {CONTINUE_WITH_FACEBOOK}
           </Button>
-          <Typography
-            style={{ fontSize: "24px", marginTop: "10px" }}
-            align="center"
-            variant="body1"
+          <Button
+            className={buttonWrap}
+            fullWidth
+            variant="outlined"
+            startIcon={<EmailRounded />}
+            onClick={() => history.push(routes.signupWithEmail)}
           >
-            {OR}
-          </Typography> */}
-          <form className={formStyle} onSubmit={handleSubmit}>
-            <Grid container spacing={1} justifyContent="center">
-              <Grid item xs={12} md={6}>
-                <InputField
-                  id="input-first-name"
-                  name={fieldNames.firstName}
-                  fullWidth
-                  variant="outlined"
-                  label="First Name"
-                  value={values.firstName}
-                  error={errors.firstName}
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <InputField
-                  id="input-last-name"
-                  name={fieldNames.lastName}
-                  fullWidth
-                  variant="outlined"
-                  label="Last Name"
-                  value={values.lastName}
-                  error={errors.lastName}
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <InputField
-                  id="input-username"
-                  name={fieldNames.username}
-                  fullWidth
-                  variant="outlined"
-                  label="Username"
-                  value={values.username}
-                  error={errors.username}
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <InputField
-                  id="input-data"
-                  name={fieldNames.data}
-                  fullWidth
-                  variant="outlined"
-                  label="Email/Phone Number"
-                  value={values.data}
-                  error={errors.data}
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <PasswordField
-                  id="input-password"
-                  name={fieldNames.password}
-                  fullWidth
-                  variant="outlined"
-                  label="Password"
-                  value={values.password}
-                  error={errors.password}
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <PasswordField
-                  id="input-confirm-password"
-                  name={fieldNames.confirmPassword}
-                  label="Confirm Password"
-                  fullWidth
-                  variant="outlined"
-                  value={values.confirmPassword}
-                  error={errors.confirmPassword}
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item container xs={12} justifyContent="center">
-                <Typography
-                  style={{ margin: "30px 0" }}
-                  align="center"
-                  variant="body2"
-                  component="h6"
-                  gutterBottom
-                >
-                  {ALREADY_HAVE_ACCOUNT}{" "}
-                  <NavLink to={routes.login}>{SIGNIN}</NavLink>
-                </Typography>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Button
-                  className={loginbtn}
-                  fullWidth
-                  disabled={isLoading}
-                  variant="contained"
-                  color="secondary"
-                  type="submit"
-                >
-                  {CONTINUE}
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
+            {CONTINUE_WITH_EMAIL}
+          </Button>
+          <Typography
+            style={{ margin: "30px 0" }}
+            align="center"
+            variant="body2"
+            component="h6"
+            gutterBottom
+          >
+            {ALREADY_HAVE_ACCOUNT} <NavLink to={routes.login}>{SIGNIN}</NavLink>
+          </Typography>
         </Card>
-        {responseMessage.status === "success" && history.push(routes.home)}
+        {responseMessage.status === "success" && history.push(routes.verification)}
       </Grid>
       {responseMessage && (
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-          type={responseMessage.status}
+         type={responseMessage.status}
           message={responseMessage.message}
         />
       )}

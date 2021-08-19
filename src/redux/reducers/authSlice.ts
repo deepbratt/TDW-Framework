@@ -18,9 +18,9 @@ const authSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.isLoggedIn = true;
-      state.user = action.payload.data.user;
-      state.token = action.payload.data.token;
-      console.log("payload", action.payload.data.user);
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      localStorage.setItem("jwt", action.payload.token);
     },
     logout: (state) => {
       state.user = {};

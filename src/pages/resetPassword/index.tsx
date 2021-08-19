@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import GlobalStyles from "../../globalStyles";
-import InputField from "../../components/InputField";
 import { fieldNames } from "../../Utils/constants/formsConstants";
 import { useForm } from "./useForm";
 import {
@@ -17,19 +16,19 @@ import {
   RESET_PASSWORD,
 } from "../../Utils/constants/language/en/buttonLabels";
 
-const ResetPassword = () => {
+const ResetPassword = ({ token }: any) => {
   const history = useHistory();
+
   const {
     values,
     errors,
     handleInputChange,
     handleSubmit,
-    loading,
+    isLoading,
     alertOpen,
     setAlertOpen,
-    
     responseMessage,
-  } = useForm("token here");
+  } = useForm(token);
 
   const { loginFormGrid, formStyle, formCard, loginbtn } = GlobalStyles();
 
@@ -44,58 +43,47 @@ const ResetPassword = () => {
   };
 
   return (
-    <Grid
-      className={loginFormGrid}
-      container
-      justify="center"
-      alignContent="center"
-    >
-      <Grid item xs={4}>
-        {loading && <LinearProgress color="secondary" />}
-        <Card className={formCard}>
-          <Typography align="center" variant="h2" gutterBottom>
-            {ACCOUNT_RECOVERY}
-          </Typography>
-          <form className={formStyle} onSubmit={handleSubmit}>
-            <InputField
-              id="input-password"
-              name={fieldNames.password}
-              type="password"
-              fullWidth
-              variant="outlined"
-              placeholder="Enter your password"
-              label="Password"
-              value={values.password}
-              error={errors.password}
-              onChange={handleInputChange}
-            />
+    <>
+      {isLoading && <LinearProgress color="secondary" />}
+      <Card className={formCard}>
+        <Typography variant="h3" gutterBottom>
+          {ACCOUNT_RECOVERY}
+        </Typography>
+        <form className={formStyle} onSubmit={handleSubmit}>
+          <PasswordField
+            id="input-password"
+            name={fieldNames.password}
+            fullWidth
+            variant="outlined"
+            label="Password"
+            value={values.password}
+            error={errors.password}
+            onChange={handleInputChange}
+          />
 
-            <InputField
-              id="input-confirm-password"
-              name={fieldNames.confirmPassword}
-              type="password"
-              placeholder="Re-enter your password"
-              label="Confirm Password"
-              fullWidth
-              variant="outlined"
-              value={values.confirmPassword}
-              error={errors.confirmPassword}
-              onChange={handleInputChange}
-            />
-            <Button
-              className={loginbtn}
-              fullWidth
-              disabled={loading}
-              variant="contained"
-              color="secondary"
-              type="submit"
-            >
-              {RESET_PASSWORD}
-            </Button>
-            {responseMessage.status === "success" && history.push(routes.resetPassword)}
-          </form>
-        </Card>
-      </Grid>
+          <PasswordField
+            id="input-confirm-password"
+            name={fieldNames.confirmPassword}
+            label="Confirm Password"
+            fullWidth
+            variant="outlined"
+            value={values.confirmPassword}
+            error={errors.confirmPassword}
+            onChange={handleInputChange}
+          />
+          <Button
+            className={loginbtn}
+            fullWidth
+            disabled={isLoading}
+            variant="contained"
+            color="secondary"
+            type="submit"
+          >
+            {RESET_PASSWORD}
+          </Button>
+          {responseMessage.status === "success" && history.push(routes.login)}
+        </form>
+      </Card>
       {responseMessage && (
         <Toast
           open={alertOpen}

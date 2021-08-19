@@ -5,7 +5,7 @@ import CarInformationForm from "../../sections/CarInformationForm";
 import UploadPhotosForm from "../../sections/UploadPhotosForm";
 import { City, State } from "country-state-city";
 import { IState } from "country-state-city/dist/lib/interface";
-import { addEditCarApi, deleteCarAd, getCarById, getCurrentUser } from "./api";
+import { addEditCarApi, deleteCarAd, getCarById } from "./api";
 import { useCallback } from "react";
 import { useRef } from "react";
 
@@ -33,6 +33,7 @@ const initialFieldValues = {
   engineCapacity: "",
   transmission: "",
   assembly: "",
+  sellerType:"",
   images: [],
   features: [],
   province: "",
@@ -64,6 +65,7 @@ const initialRequireError_2 = {
   bodyType: false,
   assembly: false,
   images: false,
+  sellerType:false
 };
 
 const useAddEditCar = (user: any) => {
@@ -73,6 +75,7 @@ const useAddEditCar = (user: any) => {
   const formRef = useRef<any>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [toastOpen, setToastOpen] = useState(false)
+  const [deleteDialog, setDeleteDialog] = useState(false)
   const [toastMessage, setToastMessage] = useState("")
   const [toastType, setToastType] = useState("success")
   const [formData, setFormData] = useReducer(formReducer, initialFieldValues);
@@ -151,6 +154,7 @@ const useAddEditCar = (user: any) => {
           images: result.image,
           features: result.features,
           province: result.province,
+          sellerType: result.sellerType,
           location: { coordinates: { lat: "", long: "" }, address: "" },
         };
         Object.keys(FieldValues).forEach((key)=>{
@@ -162,9 +166,10 @@ const useAddEditCar = (user: any) => {
         setToastMessage(response.data.message)
         setToastType("error")
         setToastOpen(true)
+        history.push(pathname.substr(0, pathname.lastIndexOf('/')))
       }
       setIsLoading(false)
-    }).then(()=>history.push(pathname.substr(0, pathname.lastIndexOf('/'))))
+    })
   },[id])
 
   useEffect(() => {
@@ -279,6 +284,7 @@ const useAddEditCar = (user: any) => {
       fd.append("engineType", formData.engineType);
       fd.append("engineCapacity", formData.engineCapacity);
       fd.append("regNumber", formData.registrationNo);
+      fd.append("sellerType", formData.sellerType);
       // fd.append("date", new Date(formData.modelYear).toISOString());
       fd.append("modelYear", formData.modelYear);
       // fd.append("features", formData.features);
@@ -289,18 +295,31 @@ const useAddEditCar = (user: any) => {
       console.table(Object.fromEntries(fd));
       setIsLoading(true)
       addEditCarApi(fd, id ? id : "").then((response) => {
+        setIsLoading(false)
         if (response && response.data && response.data.status==="success") {
           console.log("response", response);
           setToastMessage(response.data.message)
-          setToastType("error")
+          setToastType("success")
           setToastOpen(true)
+          let fieldValues : any = initialFieldValues
+          Object.keys(fieldValues).forEach((key)=>{
+            setFormData({name:key, value: fieldValues[key]})
+          })
+          setImages([])
+          history.push(pathname.substr(0, pathname.lastIndexOf('/')))
+          setActiveStep(0)
         } else {
           console.log("error", response);
-          setToastMessage(response.data.message)
-          setToastType("error")
-          setToastOpen(true)
+          if(!response){
+            setToastMessage("Network Error")
+            setToastType("error")
+            setToastOpen(true)
+          }else{
+            setToastMessage(response.data.message)
+            setToastType("error")
+            setToastOpen(true)
+          }
         }
-      setIsLoading(false)
       });
       return;
     }

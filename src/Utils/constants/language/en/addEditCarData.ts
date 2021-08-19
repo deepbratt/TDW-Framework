@@ -81,6 +81,11 @@ const addEditCarData = {
       defaultValue: "Assembly",
       menu: ["Local", "Imported"],
     },
+    sellerType: {
+      label: "Seller Type",
+      defaultValue: "Seller Type",
+      menu: ["Individual", "Dealer"],
+    },
   },
   steps: [
     "Enter Your Car Information",

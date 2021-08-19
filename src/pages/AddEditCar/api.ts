@@ -16,6 +16,7 @@ const axiosFormInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
     Accept: "application/json",
+    // 'Content-Type': 'text/html',
     'Content-Type': 'multipart/form-data',
     "Access-Control-Allow-Origin": "*",
     'Authorization' : "Bearer "+token
@@ -36,7 +37,7 @@ export const getCurrentUser=async()=>{
 
 export const addEditCarApi=async(dataBody: any, id="")=>{
     try{
-        const result = id ? await axiosFormInstance.patch("/ads/cars/"+id, dataBody) : await axiosFormInstance.post("/ads/cars/", dataBody)
+        const result = id !=="" ? await axiosFormInstance.patch("/ads/cars/"+id, dataBody) : await axiosFormInstance.post("/ads/cars/", dataBody)
         console.log(result)
         return result
     }catch(error){

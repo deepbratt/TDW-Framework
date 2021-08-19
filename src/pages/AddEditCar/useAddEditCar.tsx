@@ -1,11 +1,11 @@
 import { useEffect, useReducer, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router";
 import CarAdditionalInformation from "../../sections/CarAdditionalInformation";
 import CarInformationForm from "../../sections/CarInformationForm";
 import UploadPhotosForm from "../../sections/UploadPhotosForm";
 import { City, State } from "country-state-city";
 import { IState } from "country-state-city/dist/lib/interface";
-import { addEditCarApi, deleteCarAd, getCarById } from "./api";
+import { addEditCarApi, deleteCarAd, getCarById, getCurrentUser } from "./api";
 import { useCallback } from "react";
 import { useRef } from "react";
 
@@ -68,8 +68,13 @@ const initialRequireError_2 = {
 
 const useAddEditCar = (user: any) => {
   const history = useHistory()
+  const {pathname} = useLocation()
   const { id } = useParams<{ id: string }>();
   const formRef = useRef<any>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [toastOpen, setToastOpen] = useState(false)
+  const [toastMessage, setToastMessage] = useState("")
+  const [toastType, setToastType] = useState("success")
   const [formData, setFormData] = useReducer(formReducer, initialFieldValues);
   const [activeStep, setActiveStep] = useState(0);
   const [images, setImages] = useState<Array<any>>([]);
@@ -116,14 +121,15 @@ const useAddEditCar = (user: any) => {
   ];
 
   const getData = useCallback(()=>{
+    setIsLoading(true)
     getCarById(id).then(response=>{
-      if(response.data.status==="success"){
+      if(response.data && response.data.status==="success"){
         let result = response.data.data.result
-        if(result.createdBy._id !== user.id){
-          console.log('phans gaye')
-          // history.push('/')
-          // return
-        }
+        // if(result.createdBy._id !== user.id){
+        //   console.log('phans gaye')
+        //   // history.push('/')
+        //   // return
+        // }
         let FieldValues = formData
         FieldValues = {
           city: result.city,
@@ -153,13 +159,19 @@ const useAddEditCar = (user: any) => {
         setImages(FieldValues.images)
       }else{
         console.log(response)
+        setToastMessage(response.data.message)
+        setToastType("error")
+        setToastOpen(true)
       }
-    })
+      setIsLoading(false)
+    }).then(()=>history.push(pathname.substr(0, pathname.lastIndexOf('/'))))
   },[id])
 
   useEffect(() => {
     // console.log("car add edit ", id);
-    getData()
+    if(id){
+      getData()
+    }
   }, [getData, id]);
   useEffect(() => {
     // console.log("images", images);
@@ -179,13 +191,13 @@ const useAddEditCar = (user: any) => {
     let flagRequireError = Object.assign({}, validationObject);
     Object.keys(validationObject).forEach((key) => {
       if (formData[key] === "" || formData[key] === "null" || !formData[key]) {
-        setRequireError((requireError) => {
-          return { ...requireError, [key]: true };
+        setRequireError((requiredError) => {
+          return { ...requiredError, [key]: true };
         });
         flagRequireError = { ...flagRequireError, [key]: true };
       } else {
-        setRequireError((requireError) => {
-          return { ...requireError, [key]: false };
+        setRequireError((requiredError) => {
+          return { ...requiredError, [key]: false };
         });
       }
     });
@@ -223,8 +235,8 @@ const useAddEditCar = (user: any) => {
       }
     } else if (activeStep === 1) {
       let secondStepValidated = images.length > 0;
-      setRequireError((requireError) => {
-        return { ...requireError, images: !secondStepValidated };
+      setRequireError((requiredError) => {
+        return { ...requiredError, images: !secondStepValidated };
       });
       if (!secondStepValidated) {
         return;
@@ -275,12 +287,20 @@ const useAddEditCar = (user: any) => {
       }
       fd.append("price", formData.price);
       console.table(Object.fromEntries(fd));
+      setIsLoading(true)
       addEditCarApi(fd, id ? id : "").then((response) => {
-        if (response) {
-          // console.log("response", response);
+        if (response && response.data && response.data.status==="success") {
+          console.log("response", response);
+          setToastMessage(response.data.message)
+          setToastType("error")
+          setToastOpen(true)
         } else {
           console.log("error", response);
+          setToastMessage(response.data.message)
+          setToastType("error")
+          setToastOpen(true)
         }
+      setIsLoading(false)
       });
       return;
     }
@@ -305,7 +325,12 @@ const useAddEditCar = (user: any) => {
     requireError,
     id,
     handleDeleteAd,
-    formRef
+    formRef,
+    isLoading,
+    toastMessage,
+    toastOpen,
+    setToastOpen,
+    toastType
   };
 };
 

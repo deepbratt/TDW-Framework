@@ -17,9 +17,15 @@ import {
 } from "../../Utils/constants/language/en/homePageData";
 import { Grid } from "@material-ui/core";
 import TabComponent from "../../components/Tabs";
+import Loader from "../../components/Loader";
 export interface HomeProps {}
 
 const HomePage = () => {
+let open = true
+// if(open){
+//   return <Loader open={true} isBackdrop={false}/>
+// }
+
   return (
     <Grid container justifyContent="center">
       <Banner

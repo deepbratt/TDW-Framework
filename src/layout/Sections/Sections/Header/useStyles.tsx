@@ -1,72 +1,76 @@
-import { makeStyles } from "@material-ui/core/styles";
-import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
-import { Colors } from "../../Utils/color.constants";
+import { makeStyles } from '@material-ui/core/styles';
+import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
+import { Colors } from '../../Utils/color.constants';
 
 const breakpoints = createBreakpoints({});
-const {white} = Colors
+const { white } = Colors;
 export const useStyles = makeStyles((theme) => ({
   root: {
-    boxShadow: "none",
-    width: "100%",
-    padding: "30px 50px 10px 50px",
+    width: '100%',
+    padding: '0 50px',
     backgroundColor: white,
-    [breakpoints.down("sm")]: {
-      padding: "0px",
-    },
+    boxShadow: '0 1px 2px rgba(0,0,0,0.07)',
+    [breakpoints.down('sm')]: {
+      padding: '0px'
+    }
   },
   appbarsolid: {
-    width: "100%",
-    fontSize: "16px",
-    display: "flex",
-    alignItems: "center",
+    width: '100%',
+    fontSize: '16px',
+    display: 'flex',
+    alignItems: 'center',
     zIndex: 1,
-    justifyContent: "space-between",
-    transition: "all .5s linear",
-    padding: "0 !important",
-    [breakpoints.down("sm")]: {
-      justifyContent: "space-around",
-    },
+    justifyContent: 'space-between',
+    transition: 'all .5s linear',
+    padding: '0 !important',
+    [breakpoints.down('sm')]: {
+      justifyContent: 'space-around'
+    }
   },
   menuButton: {
-    paddingRight: theme.spacing(2),
+    paddingRight: theme.spacing(2)
   },
   list: {
-    display: "flex",
-    whiteSpace: "nowrap",
-    justifyContent: "space-around",
-    alignItems: "center",
+    display: 'flex',
+    whiteSpace: 'nowrap',
+    justifyContent: 'space-around',
+    alignItems: 'flex-start'
   },
   listItem: {
-    marginRight: "20px",
-    "&:hover": {
-      cursor: "pointer",
-    },
+    marginRight: '20px',
+    '&:hover': {
+      cursor: 'pointer'
+    }
   },
-
   link: {
-    textDecoration: "none",
+    textDecoration: 'none',
     color: white,
+    marginTop: '5px'
   },
-  active: {
+  loginLink: {
+    textDecoration: 'none',
+    color: white,
+    marginTop: '8px'
   },
+  active: {},
   logo: {
-    width: "8rem",
-    padding: "10px 0px 0px 10px",
-    [breakpoints.down("sm")]: {
-      paddingLeft: "0px",
-      width: "6rem",
-    },
+    width: '8rem',
+    padding: '10px 0px 0px 10px',
+    [breakpoints.down('sm')]: {
+      paddingLeft: '0px',
+      width: '6rem'
+    }
   },
   rec: {
-    position: "absolute",
-    right: "0px",
-    height: "75px",
-    [breakpoints.down("md")]: {
-      width: "70%",
+    position: 'absolute',
+    right: '0px',
+    height: '74.5px',
+    [breakpoints.down('md')]: {
+      width: '70%'
     },
-    [breakpoints.down("sm")]: {
-      width: "50%",
-      height: "100%",
-    },
+    [breakpoints.down('sm')]: {
+      width: '50%',
+      height: '100%'
+    }
   }
 }));

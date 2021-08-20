@@ -1,17 +1,17 @@
-import { useForm } from "./useForm";
-import { useHistory } from "react-router";
-import { NavLink } from "react-router-dom";
-import Toast from "../../components/Toast";
-import { routes, paths } from "../../routes/paths";
+import { useForm } from './useForm';
+import { useHistory } from 'react-router';
+import { NavLink } from 'react-router-dom';
+import Toast from '../../components/Toast';
+import { routes, paths } from '../../routes/paths';
 import {
   Grid,
   LinearProgress,
   Typography,
   Card,
-  Button,
-} from "@material-ui/core";
-import InputField from "../../components/InputField";
-import { fieldNames } from "../../Utils/constants/formsConstants";
+  Button
+} from '@material-ui/core';
+import InputField from '../../components/InputField';
+import { fieldNames } from '../../Utils/constants/formsConstants';
 import {
   SIGNIN,
   SIGNUP,
@@ -19,13 +19,13 @@ import {
   // CONTINUE_WITH_FACEBOOK,
   SIGNIN_USING_ACCOUNT,
   DONOT_HAVE_ACCOUNT,
-  FORGOT_PASS,
-} from "../../Utils/constants/language/en/buttonLabels";
+  FORGOT_PASS
+} from '../../Utils/constants/language/en/buttonLabels';
 // import GoogleIcon from "../../assets/icons/googleIcon.png";
 // import FacebookIcon from "../../assets/icons/fbIcon.png";
-import GlobalStyles from "../../globalStyles";
+import GlobalStyles from '../../globalStyles';
 // import { handleFacebookAuth } from "../../Utils/API/API";
-import PasswordField from "../../components/InputField/PasswordField";
+import PasswordField from '../../components/InputField/PasswordField';
 
 const Login = () => {
   const history = useHistory();
@@ -34,7 +34,7 @@ const Login = () => {
     formCard,
     // buttonWrap,
     formStyle,
-    loginbtn,
+    loginbtn
   } = GlobalStyles();
   const {
     values,
@@ -44,7 +44,7 @@ const Login = () => {
     handleSubmit,
     setAlertOpen,
     responseMessage,
-    handleInputChange,
+    handleInputChange
     // handleGoogleSubmit,
   } = useForm();
 
@@ -52,7 +52,7 @@ const Login = () => {
     event: React.SyntheticEvent | React.MouseEvent,
     reason?: string
   ) => {
-    if (reason === "clickaway") {
+    if (reason === 'clickaway') {
       return;
     }
     setAlertOpen(false);
@@ -118,13 +118,13 @@ const Login = () => {
             </Typography>
 
             <Typography
-              style={{ margin: "30px 0" }}
+              style={{ margin: '30px 0' }}
               align="center"
               variant="body2"
               component="h6"
               gutterBottom
             >
-              {DONOT_HAVE_ACCOUNT}{" "}
+              {DONOT_HAVE_ACCOUNT}{' '}
               <NavLink to={routes.signup}>{SIGNUP}</NavLink>
             </Typography>
 
@@ -138,7 +138,7 @@ const Login = () => {
             >
               {SIGNIN}
             </Button>
-            {responseMessage.status === "success" && history.push(routes.home)}
+            {responseMessage.status === 'success' && history.push(routes.home)}
           </form>
         </Card>
       </Grid>

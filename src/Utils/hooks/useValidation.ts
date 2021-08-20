@@ -1,6 +1,12 @@
-import { useState } from "react";
-import { fieldNames } from "../constants/formsConstants";
-import { validateEmail, validateName, validatePassword, validatePhone, validateConfirmPassword } from "../functions/validations";
+import { useState } from 'react';
+import { fieldNames } from '../constants/formsConstants';
+import {
+  validateEmail,
+  validateName,
+  validatePassword,
+  validatePhone,
+  validateConfirmPassword
+} from '../functions/validations';
 
 const useValidation = (values: any) => {
   const [errors, setErrors] = useState(values);
@@ -8,16 +14,16 @@ const useValidation = (values: any) => {
     let temp = { ...errors };
 
     if (fieldNames.email in fieldValues) {
-      temp.email = validateEmail(fieldValues.email)
+      temp.email = validateEmail(fieldValues.email);
     }
     if (fieldNames.firstName in fieldValues) {
-      temp.firstName = validateName(fieldValues.firstName)
+      temp.firstName = validateName(fieldValues.firstName);
     }
     if (fieldNames.lastName in fieldValues) {
-      temp.firstName = validateName(fieldValues.lastName)
+      temp.firstName = validateName(fieldValues.lastName);
     }
     if (fieldNames.mobile in fieldValues) {
-      temp.mobile =validatePhone(fieldValues.mobile)
+      temp.mobile = validatePhone(fieldValues.mobile);
     }
     // if (fieldNames.data in fieldValues) {
     //   if (isEmailValid(fieldNames.data)) {
@@ -29,23 +35,26 @@ const useValidation = (values: any) => {
     //   }
     // }
     if (fieldNames.password in fieldValues) {
-      temp.password = validatePassword(fieldValues.password)
+      temp.password = validatePassword(fieldValues.password);
     }
     if (fieldNames.confirmPassword in fieldValues) {
-      temp.confirmPassword = validateConfirmPassword(fieldValues.confirmPassword, fieldValues.password)
+      temp.confirmPassword = validateConfirmPassword(
+        fieldValues.confirmPassword,
+        fieldValues.password
+      );
     }
 
     setErrors({
-      ...temp,
+      ...temp
     });
 
     if (fieldValues === values)
-      return Object.values(temp).every((x) => x === "");
+      return Object.values(temp).every((x) => x === '');
   };
   return {
     validate,
     errors,
-    setErrors,
+    setErrors
   };
 };
 

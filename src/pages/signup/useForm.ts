@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { handleGoogleAuth } from "../../Utils/API/API";
-import { API_ENDPOINTS } from "../../Utils/API/endpoints";
-import useApi from "../../Utils/hooks/useApi";
-import { addData } from "../../Utils/hooks/actions";
-import useValidation from "../../Utils/hooks/useValidation";
+import { useState } from 'react';
+import { handleGoogleAuth } from '../../Utils/API/API';
+import { API_ENDPOINTS } from '../../Utils/API/endpoints';
+import useApi from '../../Utils/hooks/useApi';
+import { addData } from '../../Utils/hooks/actions';
+import useValidation from '../../Utils/hooks/useValidation';
 
 const initialValues: any = {
-  firstName: "",
-  lastName: "",
-  username: "",
-  data: "",
-  password: "",
-  confirmPassword: "",
+  firstName: '',
+  lastName: '',
+  username: '',
+  data: '',
+  password: '',
+  confirmPassword: ''
 };
 
 export const useForm = (validateOnChange = false) => {
@@ -20,8 +20,8 @@ export const useForm = (validateOnChange = false) => {
   const [isLoading, setIsLoading] = useState(false);
   const { validate, errors, setErrors } = useValidation(values);
   const [responseMessage, setResponseMessage] = useState({
-    status: "",
-    message: "",
+    status: '',
+    message: ''
   });
 
   const { addRequest } = useApi();
@@ -32,7 +32,7 @@ export const useForm = (validateOnChange = false) => {
 
     setValues({
       ...values,
-      [name]: value,
+      [name]: value
     });
     if (validateOnChange) validate({ [name]: value });
   };
@@ -50,9 +50,9 @@ export const useForm = (validateOnChange = false) => {
         firstName: response.given_name,
         lastName: response.family_name,
         image: response.picture,
-        email: response.email,
+        email: response.email
       };
-      console.log("request body", requestBody);
+      console.log('request body', requestBody);
       await addRequest(USERS + GOOGLE_AUTH, requestBody);
     });
   };
@@ -66,25 +66,24 @@ export const useForm = (validateOnChange = false) => {
         username: values.username,
         data: values.data,
         password: values.password,
-        passwordConfirm: values.confirmPassword,
+        passwordConfirm: values.confirmPassword
       };
-      console.log("requestBody", requestBody);
+      console.log('requestBody', requestBody);
       await addData(USERS + SIGNUP, requestBody)
         .then((response) => {
           setIsLoading(false);
-          if (response.status === "success") {
+          if (response.status === 'success') {
             setAlertOpen(true);
             setResponseMessage({
               status: response.status,
-              message: response.message,
+              message: response.message
             });
-
           } else {
             setIsLoading(false);
             setAlertOpen(true);
             setResponseMessage({
-              status: "error",
-              message: response.message,
+              status: 'error',
+              message: response.message
             });
           }
         })
@@ -93,7 +92,7 @@ export const useForm = (validateOnChange = false) => {
           setAlertOpen(true);
           setResponseMessage({
             status: error.status,
-            message: error.message,
+            message: error.message
           });
         });
     }
@@ -112,6 +111,6 @@ export const useForm = (validateOnChange = false) => {
     isLoading,
     alertOpen,
     setAlertOpen,
-    responseMessage,
+    responseMessage
   };
 };

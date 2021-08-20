@@ -1,6 +1,6 @@
-import Banner from "../../layout/Sections/Sections/Banner/Banner";
-import CategorySection from "../../layout/Sections/Sections/HomeSections/Category/CategorySection";
-import ComparisonContext from "../../layout/Sections/Sections/HomeSections/CarComparison/ComparisonContext";
+import Banner from '../../layout/Sections/Sections/Banner/Banner';
+import CategorySection from '../../layout/Sections/Sections/HomeSections/Category/CategorySection';
+import ComparisonContext from '../../layout/Sections/Sections/HomeSections/CarComparison/ComparisonContext';
 import {
   Data,
   Title,
@@ -8,15 +8,15 @@ import {
   filter,
   category,
   carModel,
-  priceRange,
-} from "../../Utils/constants/language/Text";
-import PostAd from "../../sections/PostAd";
+  priceRange
+} from '../../Utils/constants/language/Text';
+import PostAd from '../../sections/PostAd';
 import {
   browseUsedCards,
-  PostAdData,
-} from "../../Utils/constants/language/en/homePageData";
-import { Grid } from "@material-ui/core";
-import TabComponent from "../../components/Tabs";
+  PostAdData
+} from '../../Utils/constants/language/en/homePageData';
+import { Grid } from '@material-ui/core';
+import TabComponent from '../../components/Tabs';
 export interface HomeProps {}
 
 const HomePage = () => {

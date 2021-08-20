@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import CustomStepper from "../../components/CustomStepper";
 import Toast from "../../components/Toast";
 import Loader from "../../components/Loader";
+import ConfirmationDialog from "../../components/ConfirmationDialog";
 
 const AddEditCar = (user : any) => {
   const {
@@ -24,7 +25,9 @@ const AddEditCar = (user : any) => {
     toastMessage,
     toastType,
     setToastOpen,
-    isLoading
+    isLoading,
+    deleteDialog,
+    setDeleteDialog
   } = useAddEditCar(user.user);
   const size = Sizes();
   return (
@@ -62,7 +65,7 @@ const AddEditCar = (user : any) => {
               color="primary"
               variant="outlined"
               style={{ marginRight: "16px" }}
-              onClick={handleDeleteAd}
+              onClick={()=>setDeleteDialog(true)}
             >
               {addEditCarData.buttons.delete}
             </Button>
@@ -98,6 +101,7 @@ const AddEditCar = (user : any) => {
         </Grid>
       </Grid>
       <Toast open={toastOpen} onClose={()=>setToastOpen(false)} type={toastType} message={toastMessage}/>
+      <ConfirmationDialog open={deleteDialog} title={addEditCarData.deleteDialogTitle} message={addEditCarData.deleteDialogMessage} rejectBtnLabel={addEditCarData.buttons.cancelDelete} confirmBtnLabel={addEditCarData.buttons.confirmDelete} handleConfirmation={handleDeleteAd} handleRejection={()=>setDeleteDialog(false)}/>
     </Grid>
     </div>
   );

@@ -6,6 +6,7 @@ const regPhone =
 const regTypePhone = /^[+0-9 ]*$/;
 const regEmail =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const regPass = /[^A-Za-z0-9]+/g;
 
 export const isNameValid = (name: string) => {
   return regName.test(name);
@@ -21,4 +22,7 @@ export const isTypeNumPlusBracket = (phone: string) => {
 };
 export const isEmailValid = (email: string) => {
   return regEmail.test(email);
+};
+export const isPasswordValid = (password: string) => {
+  return regPass.test(password);
 };

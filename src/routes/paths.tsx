@@ -1,48 +1,43 @@
 import { lazy } from "react";
-const Home = lazy(() => import("../Pages/home"));
-const Login = lazy(() => import("../Pages/login"));
-const CarsListing = lazy(() => import("../Pages/carsListing"));
-const LoginWithMobile = lazy(() => import("../Pages/login/loginWithMobile"));
-const ForgetPassword = lazy(() => import("../Pages/forgetPassword"));
-const ResetPassword = lazy(() => import("../Pages/resetPassword"));
-const Signup = lazy(() => import("../Pages/signup"));
-const SignupWithEmail = lazy(() => import("../Pages/signup/SignupWithEmail"));
-const SignupWithMobile = lazy(() => import("../Pages/signup/SignupWithMobile"));
-const AddEditCar = lazy(() => import("../Pages/AddEditCar"));
-const usedCars = lazy(() => import("../Pages/SearchUsedCars/index"));
-const Verification = lazy(() => import("../Pages/verificationPage"));
-const CarDetail = lazy(() => import("../Pages/carDetail"));
-const CarComparison = lazy(() => import("../Pages/carComparision/index"));
-const ShortlistItem = lazy(() => import("../Pages/shortlistItems"));
-// const Dashboard = lazy(() => import("../Pages/dashboard/index")) ;
-// const CarListing = lazy(() => import("../Pages/postAd"));
+const Home = lazy(() => import("../pages/home"));
+const Login = lazy(() => import("../pages/login"));
+const CarsListing = lazy(() => import("../pages/carsListing"));
+const ForgetPassword = lazy(() => import("../pages/forgetPassword"));
+const ResetPassword = lazy(() => import("../pages/resetPassword"));
+const Signup = lazy(() => import("../pages/signup"));
+const AddEditCar = lazy(() => import("../pages/AddEditCar"));
+const usedCars = lazy(() => import("../pages/SearchUsedCars/index"));
+const Verification = lazy(() => import("../pages/verificationPage"));
+const CarDetail = lazy(() => import("../pages/carDetail"));
+const CarComparison = lazy(() => import("../pages/carComparision/index"));
+const ShortlistItem = lazy(() => import("../pages/shortlistItems"));
+// const Dashboard = lazy(() => import("../pages/dashboard/index"));
+// const CarListing = lazy(() => import("../pages/postAd"));
 
 export const paths = {
   home: "home",
   login: "login",
-  loginWithMobile: "login-with-mobile",
   about: "about",
   products: "products",
   contact: "contact",
   usedCars: "usedCars",
   profile: "profile",
-  verification: "verification",
+  verification: "/verification",
   carDetail: "carDetail",
   carComparision: "carComparision",
   carShortlist: "cars-shortlist",
   carListing: "carListing",
   signup: "signup",
   cars: "cars",
-  forgotPassword: "forgot-password",
+  forgotPassword: "/forgot-password",
   resetPassword: "reset-password",
-  signupWithEmail: "signup-with-email",
-  signupWithMobile: "signup-with-mobile",
   addEditCar: "add-edit/car/",
 };
 
 export const routes = {
   home: "/",
   login: "/login",
+  signup: "/signup",
   loginWithMobile: "/login-with-mobile",
   about: "/about",
   products: "/products",
@@ -53,13 +48,10 @@ export const routes = {
   carComparision: "/car-comparision/:_fId/:_sId",
   carListing: "/post-an-ad",
   profile: "/dashboard/:id",
-  signup: "/signup",
-  verification: "/verification/:method",
+  verification: "/verification/:method?",
   cars: "/cars/:filters?",
-  forgotPassword: "/forgot-password",
+  forgotPassword: "/forgot-password/:token?",
   resetPassword: "/reset-password/:token",
-  signupWithEmail: "/signup-with-email",
-  signupWithMobile: "/signup-with-mobile",
   addEditCar: "/add-edit/car/:id?",
 };
 
@@ -117,11 +109,6 @@ export const publicRoutes = {
     path: routes.login,
     component: Login,
   },
-  [paths.loginWithMobile]: {
-    name: "Login With Mobile",
-    path: routes.loginWithMobile,
-    component: LoginWithMobile,
-  },
   [paths.signup]: {
     name: "Signup",
     path: routes.signup,
@@ -137,16 +124,6 @@ export const publicRoutes = {
     name: "Reset Password",
     path: routes.resetPassword,
     component: ResetPassword,
-  },
-  [paths.signupWithEmail]: {
-    name: "Sign With Email",
-    path: routes.signupWithEmail,
-    component: SignupWithEmail,
-  },
-  [paths.signupWithMobile]: {
-    name: "Sign With Mobile",
-    path: routes.signupWithMobile,
-    component: SignupWithMobile,
   },
   [paths.addEditCar]: {
     name: "Cars Add Edit",

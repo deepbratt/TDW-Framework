@@ -6,8 +6,10 @@ export const messages = {
 };
 
 export const fieldNames = {
+  username:"username",
   firstName: "firstName",
   lastName: "lastName",
+  data: "data",
   email: "email",
   mobile: "mobile",
   password: "password",

@@ -2,7 +2,7 @@ import { useForm } from "./useForm";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
 import Toast from "../../components/Toast";
-import { routes } from "../../routes/paths";
+import { routes, paths } from "../../routes/paths";
 import {
   Grid,
   LinearProgress,
@@ -10,37 +10,42 @@ import {
   Card,
   Button,
 } from "@material-ui/core";
-import { PhoneAndroidRounded } from "@material-ui/icons";
 import InputField from "../../components/InputField";
 import { fieldNames } from "../../Utils/constants/formsConstants";
 import {
   SIGNIN,
   SIGNUP,
-  CONTINUE_WITH_PHONE,
-  CONTINUE_WITH_GOOGLE,
-  CONTINUE_WITH_FACEBOOK,
+  // CONTINUE_WITH_GOOGLE,
+  // CONTINUE_WITH_FACEBOOK,
   SIGNIN_USING_ACCOUNT,
   DONOT_HAVE_ACCOUNT,
   FORGOT_PASS,
 } from "../../Utils/constants/language/en/buttonLabels";
-import GoogleIcon from "../../assets/icons/googleIcon.png";
-import FacebookIcon from "../../assets/icons/fbIcon.png";
+// import GoogleIcon from "../../assets/icons/googleIcon.png";
+// import FacebookIcon from "../../assets/icons/fbIcon.png";
 import GlobalStyles from "../../globalStyles";
+// import { handleFacebookAuth } from "../../Utils/API/API";
+import PasswordField from "../../components/InputField/PasswordField";
 
 const Login = () => {
   const history = useHistory();
-  const { loginFormGrid, formCard, buttonWrap, formStyle, loginbtn } =
-    GlobalStyles();
+  const {
+    loginFormGrid,
+    formCard,
+    // buttonWrap,
+    formStyle,
+    loginbtn,
+  } = GlobalStyles();
   const {
     values,
     errors,
-    handleInputChange,
-    handleEmailSubmit,
-    loading,
+    isLoading,
     alertOpen,
+    handleSubmit,
     setAlertOpen,
-    
     responseMessage,
+    handleInputChange,
+    // handleGoogleSubmit,
   } = useForm();
 
   const handleAlertClose = (
@@ -52,6 +57,7 @@ const Login = () => {
     }
     setAlertOpen(false);
   };
+
   return (
     <Grid
       className={loginFormGrid}
@@ -59,26 +65,18 @@ const Login = () => {
       justify="center"
       alignContent="center"
     >
-      <Grid item xs={4}>
-        {loading && <LinearProgress color="secondary" />}
+      <Grid item xs={10} md={8} lg={4}>
+        {isLoading && <LinearProgress color="secondary" />}
         <Card className={formCard}>
           <Typography variant="h6" gutterBottom>
             {SIGNIN}
           </Typography>
-          <Button
-            className={buttonWrap}
-            fullWidth
-            variant="outlined"
-            startIcon={<PhoneAndroidRounded />}
-            onClick={() => history.push(routes.loginWithMobile)}
-          >
-            {CONTINUE_WITH_PHONE}
-          </Button>
-          <Button
+          {/* <Button
             className={buttonWrap}
             fullWidth
             variant="outlined"
             startIcon={<img src={GoogleIcon} alt="google-icon" />}
+            onClick={() => handleGoogleSubmit()}
           >
             {CONTINUE_WITH_GOOGLE}
           </Button>
@@ -87,27 +85,27 @@ const Login = () => {
             fullWidth
             variant="outlined"
             startIcon={<img src={FacebookIcon} alt="facebook-icon" />}
+            onClick={() => handleFacebookAuth()}
           >
             {CONTINUE_WITH_FACEBOOK}
-          </Button>
-          <form className={formStyle} onSubmit={handleEmailSubmit}>
+          </Button> */}
+          <form className={formStyle} onSubmit={handleSubmit}>
             <Typography variant="body2" gutterBottom>
               {SIGNIN_USING_ACCOUNT}
             </Typography>
             <InputField
-              id="input-email"
-              name={fieldNames.email}
+              id="input-data"
+              name={fieldNames.data}
               fullWidth
               variant="outlined"
-              label="Email"
-              value={values.email}
-              error={errors.email}
+              label="Email/Phone Number"
+              value={values.data}
+              error={errors.data}
               onChange={handleInputChange}
             />
-            <InputField
+            <PasswordField
               id="input-password"
               name={fieldNames.password}
-              type="password"
               fullWidth
               variant="outlined"
               label="Password"
@@ -116,7 +114,7 @@ const Login = () => {
               onChange={handleInputChange}
             />
             <Typography>
-              <NavLink to={routes.forgotPassword}>{FORGOT_PASS}</NavLink>
+              <NavLink to={paths.forgotPassword}>{FORGOT_PASS}</NavLink>
             </Typography>
 
             <Typography
@@ -133,7 +131,7 @@ const Login = () => {
             <Button
               className={loginbtn}
               fullWidth
-              disabled={loading}
+              disabled={isLoading}
               variant="contained"
               color="secondary"
               type="submit"
@@ -148,7 +146,7 @@ const Login = () => {
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-         type={responseMessage.status}
+          type={responseMessage.status}
           message={responseMessage.message}
         />
       )}

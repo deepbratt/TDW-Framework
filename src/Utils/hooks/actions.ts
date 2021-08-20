@@ -1,22 +1,25 @@
-import axios from "axios";
+import axios from 'axios';
 
-const BASE_URL = "http://api.tezdealz.com/v1";
+const BASE_URL = 'http://api.tezdealz.com/v1';
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    Authorization: "Bearer " + localStorage.getItem("jwt"),
-  },
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    Authorization: 'Bearer ' + localStorage.getItem('tezdealzjwt')
+  }
 });
 
 export const addData = async (endpoint: string, requestBody?: object) => {
   try {
-    const result = await axiosInstance.post(endpoint, requestBody);
+      const result = await axiosInstance.post(endpoint, requestBody);
     return result.data;
-  } catch (error) {
-    return { status: "error", message: "Network Error" };
+  } 
+  
+  catch (error) {
+    return { 
+       status: 'error', message: 'Network Error' };
   }
 };
 
@@ -68,6 +71,15 @@ export const updateUser = async (url: string, data: any) => {
 export const deleteData = async (url: string, id: string) => {
   try {
     let result = await axiosInstance.patch(`${url}/${id}`);
+    return result.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+export const isLoggedIn = async (url: string) => {
+  try {
+    let result = await axiosInstance.get(url);
     return result.data;
   } catch (error) {
     return error.response.data;

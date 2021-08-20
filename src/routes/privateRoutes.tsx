@@ -1,6 +1,6 @@
-import { Route, Redirect, RouteProps } from "react-router-dom";
-import { connect } from "react-redux";
-import Layout from "../layout";
+import { Route, Redirect, RouteProps } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Layout from '../layout';
 
 export type ProtectedRouteProps = {
   component: React.ComponentType;
@@ -14,7 +14,7 @@ const PrivateRoutes = ({
 }: ProtectedRouteProps) => {
   return (
     <Route
-    {...routeProps}
+      {...routeProps}
       render={(props) =>
         isLoggedIn ? (
           <Layout>
@@ -29,7 +29,7 @@ const PrivateRoutes = ({
 };
 
 const mapStateToProps = (state: any) => ({
-  isLoggedIn: state.persistedReducer.auth.isLoggedIn,
+  isLoggedIn: state.persistedReducer.auth.isLoggedIn
 });
 
 export default connect(mapStateToProps)(PrivateRoutes);

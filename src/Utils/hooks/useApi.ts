@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { addData, getAllData, updateData, handleGoogleAuth } from "../API/API";
+import { useState } from 'react';
+import { addData, getAllData, updateData, handleGoogleAuth } from '../API/API';
 import {
   getData,
   getSingleData,
   addToFav,
   deleteData,
-  updateUser,
-} from "./actions";
-import { ICarCard } from "../../layout/Sections/Utils/types";
+  updateUser
+} from './actions';
+import { ICarCard } from '../../layout/Sections/Utils/types';
 
 const useApi = () => {
   const [loading, setLoading] = useState(false);
@@ -18,30 +18,30 @@ const useApi = () => {
   const [obj, setObj] = useState<ICarCard>();
   const [open, setOpen] = useState(false);
   const [responseMessage, setResponseMessage] = useState({
-    status: "",
-    message: "",
+    status: '',
+    message: ''
   });
 
   const getAll = async (endpoint: string) => {
     setLoading(true);
     await getAllData(endpoint)
       .then((response) => {
-        console.log("response", response);
+        console.log('response', response);
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({
           status: response.data.data.status,
-          message: response.data.data.message,
+          message: response.data.data.message
         });
-        setResponseData(response.data)
+        setResponseData(response.data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({
           status: error.status,
-          message: error.message,
+          message: error.message
         });
       });
   };
@@ -51,20 +51,20 @@ const useApi = () => {
     await addData(endpoint, requestBody)
       .then((response) => {
         setLoading(false);
-        console.log("response log", response);
-        if (response.data.status === "success") {
+        console.log('response log', response);
+        if (response.data.status === 'success') {
           setResponseData(response.data);
           setAlertOpen(true);
           setResponseMessage({
             status: response.data.status,
-            message: response.data.message,
+            message: response.data.message
           });
         } else {
-          console.log("response log", response);
+          console.log('response log', response);
         }
       })
       .catch((error) => {
-        console.log("error log", error);
+        console.log('error log', error);
         // setLoading(false);
         // setAlertOpen(true);
         // setResponseMessage({
@@ -78,21 +78,21 @@ const useApi = () => {
     setLoading(true);
     await updateData(endpoint, requestBody)
       .then((response) => {
-        console.log("response", response);
+        console.log('response', response);
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({
           status: response.data.data.status,
-          message: response.data.data.message,
+          message: response.data.data.message
         });
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({
           status: error.status,
-          message: error.message,
+          message: error.message
         });
       });
   };
@@ -102,10 +102,10 @@ const useApi = () => {
     await getData(url, param)
       .then((response) => {
         setIsLoading(false);
-        if (response.status === "success") {
+        if (response.status === 'success') {
           setData(response.data.result);
         } else {
-          return "error";
+          return 'error';
         }
       })
       .catch((error: any) => {
@@ -118,11 +118,11 @@ const useApi = () => {
     await getSingleData(url, id)
       .then((response) => {
         setIsLoading(false);
-        if (response.status === "success") {
+        if (response.status === 'success') {
           setData(response.data.result);
           setObj(response.data.result);
         } else {
-          return "error";
+          return 'error';
         }
       })
       .catch((error) => {
@@ -136,25 +136,25 @@ const useApi = () => {
     await addToFav(url, id)
       .then((response) => {
         setIsLoading(false);
-        if (response.status === "fail") {
+        if (response.status === 'fail') {
           setOpen(true);
           setResponseMessage({
-            status: "error",
-            message: response.message,
+            status: 'error',
+            message: response.message
           });
         } else {
           setOpen(true);
           setResponseMessage({
-            status: "success",
-            message: response.message,
+            status: 'success',
+            message: response.message
           });
         }
       })
       .catch((error) => {
         setOpen(true);
         setResponseMessage({
-          status: "error",
-          message: error.message,
+          status: 'error',
+          message: error.message
         });
       });
   };
@@ -169,48 +169,48 @@ const useApi = () => {
     setIsLoading(true);
     var formData = new FormData();
     {
-      Image && formData.append("image", Image);
+      Image && formData.append('image', Image);
     }
     {
-      data.fullName && formData.append("firstName", data.fullName);
+      data.fullName && formData.append('firstName', data.fullName);
     }
     {
-      data.gender && formData.append("gender", data.gender);
+      data.gender && formData.append('gender', data.gender);
     }
     {
-      data.city && formData.append("city", data.city);
+      data.city && formData.append('city', data.city);
     }
     {
-      data.userName && formData.append("displayName", data.userName);
+      data.userName && formData.append('displayName', data.userName);
     }
     {
-      date && formData.append("dateOfBirth", date);
+      date && formData.append('dateOfBirth', date);
     }
 
     await updateUser(url, formData)
       .then((response) => {
-        if (response.status === "success") {
+        if (response.status === 'success') {
           setIsLoading(false);
           console.log(response);
           setOpen(true);
           setResponseMessage({
-            status: "success",
-            message: response.message,
+            status: 'success',
+            message: response.message
           });
         } else {
           setOpen(true);
           console.log(response);
           setResponseMessage({
-            status: "error",
-            message: response.message,
+            status: 'error',
+            message: response.message
           });
         }
       })
       .catch((error) => {
         setOpen(true);
         setResponseMessage({
-          status: "error",
-          message: error.message,
+          status: 'error',
+          message: error.message
         });
       });
   };
@@ -218,34 +218,34 @@ const useApi = () => {
   const changePassword = async (url: string, data: any) => {
     setIsLoading(true);
     var formData = new FormData();
-    formData.append("passwordCurrent", data.currentPassword);
-    formData.append("password", data.newPassword);
-    formData.append("passwordConfirm", data.confirmPassword);
+    formData.append('passwordCurrent', data.currentPassword);
+    formData.append('password', data.newPassword);
+    formData.append('passwordConfirm', data.confirmPassword);
 
     await updateUser(url, formData)
       .then((response) => {
-        if (response.status === "success") {
+        if (response.status === 'success') {
           setIsLoading(false);
           console.log(response);
           setOpen(true);
           setResponseMessage({
-            status: "success",
-            message: response.message,
+            status: 'success',
+            message: response.message
           });
         } else {
           setOpen(true);
           console.log(response);
           setResponseMessage({
-            status: "error",
-            message: response.message,
+            status: 'error',
+            message: response.message
           });
         }
       })
       .catch((error) => {
         setOpen(true);
         setResponseMessage({
-          status: "error",
-          message: error.message,
+          status: 'error',
+          message: error.message
         });
       });
   };
@@ -255,28 +255,28 @@ const useApi = () => {
     setOpen(false);
     await deleteData(url, id)
       .then((response) => {
-        if (response.status === "success") {
+        if (response.status === 'success') {
           let filteredArray = data.filter((item: any) => item._id !== id);
           setIsLoading(false);
           setData(filteredArray);
           setOpen(true);
           setResponseMessage({
-            status: "success",
-            message: response.message,
+            status: 'success',
+            message: response.message
           });
         } else {
           setOpen(true);
           setResponseMessage({
-            status: "error",
-            message: response.message,
+            status: 'error',
+            message: response.message
           });
         }
       })
       .catch((error) => {
         setOpen(true);
         setResponseMessage({
-          status: "error",
-          message: error.message,
+          status: 'error',
+          message: error.message
         });
       });
   };
@@ -304,7 +304,7 @@ const useApi = () => {
     isLoading,
     open,
     setOpen,
-    obj,
+    obj
   };
 };
 

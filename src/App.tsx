@@ -10,7 +10,7 @@ import MUITheme from './theme/theme';
 import { API_ENDPOINTS } from './Utils/API/endpoints';
 import { isLoggedIn } from './Utils/hooks/actions';
 import Loader from './components/Loader';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from './redux/reducers/authSlice';
 
 const generateClassName = createGenerateClassName({
@@ -21,24 +21,29 @@ function App() {
   const { USERS, CURENT_USER } = API_ENDPOINTS;
   const [isLoading, setisLoading] = useState(false);
   const dispatch = useDispatch();
+  const user = useSelector((state:any) => state.persistedReducer.auth.user)
   const history = useHistory();
 
-  useEffect(() => {
-    (async () => {
-      await isLoggedIn(USERS + CURENT_USER)
-        .then((response) => {
-          setisLoading(false);
-          if (response.status === 'success') {
-            history.goBack();
-          } else {
-            dispatch(logout());
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     await isLoggedIn(USERS + CURENT_USER)
+  //       .then((response) => {
+  //         console.log("response user", response)
+  //         setisLoading(false);
+  //         // if (response.user) {
+  //         //   if(response.user === user){
+  //         //     history.goBack();
+  //         //   }
+  //         // } else {
+  //         //   console.log(" user._id", response.user._id === user._id)
+  //         //   dispatch(logout());
+  //         // }
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   })();
+  // }, []);
 
   return (
     <StylesProvider generateClassName={generateClassName}>

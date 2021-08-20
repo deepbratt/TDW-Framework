@@ -61,11 +61,11 @@ export const useForm = (validateOnChange = false) => {
           setIsLoading(false);
           if (response.status === 'success') {
             setAlertOpen(true);
+            setResponseData(response.data);
             setResponseMessage({
               status: response.status,
               message: response.message
             });
-            setResponseData(response);
           } else {
             setIsLoading(false);
             setAlertOpen(true);

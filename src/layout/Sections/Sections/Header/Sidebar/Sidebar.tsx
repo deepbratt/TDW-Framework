@@ -27,6 +27,7 @@ import {
   SIGNIN,
   SIGNUP
 } from '../../../../../Utils/constants/language/en/buttonLabels';
+import { logout } from '../../../../../redux/reducers/authSlice';
 
 const SideBar = () => {
   const classes = useStyles();
@@ -95,11 +96,8 @@ const SideBar = () => {
                       <ListItemText primary={ADD_EDIT_CAR} />
                     </NavLink>
                   </ListItem>
-
-                  <ListItem button className={nested}>
-                    <NavLink className={link} to={paths.addEditCar}>
-                      <ListItemText primary={LOGOUT} />
-                    </NavLink>
+                  <ListItem button className={nested} onClick={() => dispatch(logout())}>              
+                    <ListItemText primary={LOGOUT} />       
                   </ListItem>
                 </List>
               </Collapse>

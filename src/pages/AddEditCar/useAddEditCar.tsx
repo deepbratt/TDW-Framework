@@ -10,7 +10,7 @@ import { useCallback } from 'react';
 import { useRef } from 'react';
 import {  useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { addData, deleteData, getAllData, updateFormData } from '../../Utils/API/API';
+import {  addFormData, deleteData, getAllData, updateFormData } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 const formReducer = (state: any, event: any) => {
   return {
@@ -129,7 +129,7 @@ const useAddEditCar = () => {
 
   const getData = useCallback(() => {
     setIsLoading(true);
-    getAllData(`${API_ENDPOINTS.CARS}/${id}`).then((response) => {
+    getAllData(`${API_ENDPOINTS.ADS}/${API_ENDPOINTS.CARS}/${id}`).then((response) => {
       if (response && response.data && response.data.status === 'success') {
         let result = response.data.data.result;
         // if(result.createdBy._id !== user._id){
@@ -203,7 +203,7 @@ const useAddEditCar = () => {
   const handleDeleteAd = () => {
     setIsLoading(true);
     setDeleteDialog(false);
-    deleteData(`${API_ENDPOINTS.CARS}/${id}`).then((response) => {
+    deleteData(`${API_ENDPOINTS.ADS}/${API_ENDPOINTS.CARS}/${id}`).then((response) => {
       setIsLoading(false)
       if (response && response.data && response.data.status === 'success') {
           setToastMessage(response.data.message);
@@ -327,9 +327,9 @@ const useAddEditCar = () => {
       fd.append('price', formData.price);
       console.table(Object.fromEntries(fd));
       setIsLoading(true);
-      let addEditCarApi = id ? updateFormData : addData
-      let carId = id ? id : ""
-      addEditCarApi(`${API_ENDPOINTS.CARS}/${carId}`,fd).then((response) => {
+      let addEditCarApi = id ? updateFormData : addFormData
+      let carId = id ? "/"+id : ""
+      addEditCarApi(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${carId}`,fd).then((response) => {
         setIsLoading(false);
         if (response && response.data && response.data.status === 'success') {
           console.log('response', response);

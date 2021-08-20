@@ -24,26 +24,27 @@ function App() {
   const user = useSelector((state:any) => state.persistedReducer.auth.user)
   const history = useHistory();
 
-  // useEffect(() => {
-  //   (async () => {
-  //     await isLoggedIn(USERS + CURENT_USER)
-  //       .then((response) => {
-  //         console.log("response user", response)
-  //         setisLoading(false);
-  //         // if (response.user) {
-  //         //   if(response.user === user){
-  //         //     history.goBack();
-  //         //   }
-  //         // } else {
-  //         //   console.log(" user._id", response.user._id === user._id)
-  //         //   dispatch(logout());
-  //         // }
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      await isLoggedIn(USERS + CURENT_USER)
+        .then((response) => {
+          console.log("response user", response)
+          if (response.user) {
+            if(response.user === user){
+              console.log("user matched")
+              history.goBack();
+              setisLoading(false);
+            }
+          } else {
+            dispatch(logout());
+            setisLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    })();
+  }, []);
 
   return (
     <StylesProvider generateClassName={generateClassName}>

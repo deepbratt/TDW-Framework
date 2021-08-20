@@ -91,6 +91,7 @@ export const isLoggedIn = async (url: string) => {
     Authorization: 'Bearer ' + token
   }
   try {
+    console.log("token", token)
     let result = await axiosInstance.get(url, {headers:headers});
     return result.data;
   } catch (error) {

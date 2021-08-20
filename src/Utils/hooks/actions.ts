@@ -77,22 +77,9 @@ export const deleteData = async (url: string, id: string) => {
   }
 };
 
-const getToken = async () => {
-  let token = localStorage.getItem("tezdealzjwt");
-  return token;
-} 
-
 export const isLoggedIn = async (url: string) => {
-  let token = await getToken();
-  let headers = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    Authorization: 'Bearer ' + token
-  }
   try {
-    console.log("token", token)
-    let result = await axiosInstance.get(url, {headers:headers});
+    let result = await axiosInstance.get(url);
     return result.data;
   } catch (error) {
     return error.response.data;

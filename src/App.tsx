@@ -28,10 +28,8 @@ function App() {
     (async () => {
       await isLoggedIn(USERS + CURENT_USER)
         .then((response) => {
-          console.log("response user", response)
           if (response.user) {
             if(response.user === user){
-              console.log("user matched")
               history.goBack();
               setisLoading(false);
             }

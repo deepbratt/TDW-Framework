@@ -116,7 +116,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
           handleClick={handleSubmit}
         />
       </FilterAccordion>
-      <FilterAccordion title={PRICE_RANGE}>
+      {/* <FilterAccordion title={PRICE_RANGE}>
         <Grid container direction="column">
           <Grid item container spacing={1}>
             <Grid item xs={5}>
@@ -219,7 +219,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
             />
           ))}
         </FormGroup>
-      </FilterAccordion>
+      </FilterAccordion> */}
       <FilterAccordion title={CITY}>
         <FormGroup>
           {cityNames
@@ -301,7 +301,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
           </DialogBox>
         </FormGroup>
       </FilterAccordion>
-      <FilterAccordion title={REGISTRATION_CITY}>
+      {/* <FilterAccordion title={REGISTRATION_CITY}>
         <FormGroup>
           {cityNames
             .filter((item) => majorCities.includes(item))
@@ -632,7 +632,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
             </Grid>
           </DialogBox>
         </FormGroup>
-      </FilterAccordion>
+      </FilterAccordion> */}
       <FilterAccordion title={PICTURE_AVAILABILITY}>
         <FormGroup>
           <FormControlLabel
@@ -649,7 +649,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
           />
         </FormGroup>
       </FilterAccordion>
-      <FilterAccordion title={VIDEO_AVAILABILITY}>
+      {/* <FilterAccordion title={VIDEO_AVAILABILITY}>
         <FormGroup>
           <FormControlLabel
             control={
@@ -683,8 +683,8 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
             />
           ))}
         </FormGroup>
-      </FilterAccordion>
-      <FilterAccordion title={AD_TYPE}>
+      </FilterAccordion> */}
+      {/* <FilterAccordion title={AD_TYPE}>
         <FormGroup>
           {Carfilters.AD_TYPE.map((type) => (
             <FormControlLabel
@@ -702,7 +702,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
             />
           ))}
         </FormGroup>
-      </FilterAccordion>
+      </FilterAccordion> */}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface IInitialState {
-  user?: object;
+  user?: object | any;
   isLoggedIn: boolean;
   token?: string;
 }

@@ -3,7 +3,7 @@ import {
   googleAuthProvider,
 } from "../functions/authMethod";
 import socialMediaAuth from "../functions/userAuth";
-import { axiosInstance } from "./axiosInstances";
+import { axiosFormInstance, axiosInstance } from "./axiosInstances";
 
 export const addData = async (endpoint: string, requestBody?: object) => {
   try {
@@ -13,10 +13,34 @@ export const addData = async (endpoint: string, requestBody?: object) => {
     return error;
   }
 };
+export const addFormData = async (endpoint: string, requestBody?: object) => {
+  try {
+    const result = await axiosFormInstance.post(endpoint, requestBody);
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
 
 export const updateData = async (endpoint: string, requestBody?: object) => {
   try {
     const result = await axiosInstance.patch(endpoint, requestBody);
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+export const updateFormData = async (endpoint: string, requestBody?: object) => {
+  try {
+    const result = await axiosFormInstance.patch(endpoint, requestBody);
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+export const deleteData = async (endpoint: string) => {
+  try {
+    const result = await axiosInstance.delete(endpoint);
     return result;
   } catch (error) {
     return error;

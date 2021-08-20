@@ -2,7 +2,6 @@ import { Button, Grid, Typography } from '@material-ui/core';
 import Sizes from '../../Utils/themeConstants';
 import useAddEditCar from './useAddEditCar';
 import addEditCarData from '../../Utils/constants/language/en/addEditCarData';
-import { connect } from 'react-redux';
 import CustomStepper from '../../components/CustomStepper';
 import Toast from '../../components/Toast';
 import Loader from '../../components/Loader';
@@ -10,7 +9,7 @@ import ConfirmationDialog from '../../components/ConfirmationDialog';
 import PostAd from '../postAd';
 import { Colors } from '../../Utils/constants/colors/colors';
 
-const AddEditCar = (user: any) => {
+const AddEditCar = () => {
   const {
     activeStep,
     handleBack,
@@ -26,7 +25,7 @@ const AddEditCar = (user: any) => {
     isLoading,
     deleteDialog,
     setDeleteDialog
-  } = useAddEditCar(user.user);
+  } = useAddEditCar();
   const size = Sizes();
   return (
     <div
@@ -133,7 +132,5 @@ const AddEditCar = (user: any) => {
     </div>
   );
 };
-const mapStateToProps = (state: any) => ({
-  user: state.persistedReducer.auth.user
-});
-export default connect(mapStateToProps)(AddEditCar);
+
+export default AddEditCar;

@@ -5,7 +5,7 @@ const CarsListing = lazy(() => import("../pages/carsListing"));
 const ForgetPassword = lazy(() => import("../pages/forgetPassword"));
 const ResetPassword = lazy(() => import("../pages/resetPassword"));
 const Signup = lazy(() => import("../pages/signup"));
-const AddEditCar = lazy(() => import("../pages/AddEditCar"));
+const AddEditCar = lazy(() => import("../pages/AddEditCar/index"));
 const usedCars = lazy(() => import("../pages/SearchUsedCars/index"));
 const Verification = lazy(() => import("../pages/verificationPage"));
 const CarDetail = lazy(() => import("../pages/carDetail"));

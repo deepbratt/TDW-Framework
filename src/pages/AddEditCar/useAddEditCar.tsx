@@ -8,7 +8,8 @@ import { IState } from 'country-state-city/dist/lib/interface';
 import { addEditCarApi, deleteCarAd, getCarById } from './api';
 import { useCallback } from 'react';
 import { useRef } from 'react';
-
+import {  useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 const formReducer = (state: any, event: any) => {
   return {
     ...state,
@@ -68,11 +69,12 @@ const initialRequireError_2 = {
   sellerType: false
 };
 
-const useAddEditCar = (user: any) => {
+const useAddEditCar = () => {
   const history = useHistory();
   const { pathname } = useLocation();
   const { id } = useParams<{ id: string }>();
   const formRef = useRef<any>(null);
+  const {user} = useSelector((state: RootState)=>state.auth)
   const [isLoading, setIsLoading] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
@@ -126,9 +128,9 @@ const useAddEditCar = (user: any) => {
   const getData = useCallback(() => {
     setIsLoading(true);
     getCarById(id).then((response) => {
-      if (response.data && response.data.status === 'success') {
+      if (response && response.data && response.data.status === 'success') {
         let result = response.data.data.result;
-        // if(result.createdBy._id !== user.id){
+        // if(result.createdBy._id !== user._id){
         //   console.log('phans gaye')
         //   // history.push('/')
         //   // return
@@ -163,10 +165,17 @@ const useAddEditCar = (user: any) => {
         setImages(FieldValues.images);
       } else {
         console.log(response);
-        setToastMessage(response.data.message);
-        setToastType('error');
-        setToastOpen(true);
-        history.push(pathname.substr(0, pathname.lastIndexOf('/')));
+        if(response.data){
+          setToastMessage(response.data.message);
+          setToastType('error');
+          setToastOpen(true);
+          history.push(pathname.substr(0, pathname.lastIndexOf('/')));
+        }else{
+          setToastMessage("Network Error");
+          setToastType('error');
+          setToastOpen(true);
+          history.push(pathname.substr(0, pathname.lastIndexOf('/')));
+        }
       }
       setIsLoading(false);
     });
@@ -180,6 +189,7 @@ const useAddEditCar = (user: any) => {
   }, [getData, id]);
   useEffect(() => {
     // console.log("images", images);
+    console.log(user._id)
   }, [images]);
 
   const allFalse = (obj: any) => {

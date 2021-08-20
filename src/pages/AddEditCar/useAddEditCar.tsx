@@ -5,11 +5,13 @@ import CarInformationForm from '../../sections/CarInformationForm';
 import UploadPhotosForm from '../../sections/UploadPhotosForm';
 import { City, State } from 'country-state-city';
 import { IState } from 'country-state-city/dist/lib/interface';
-import { addEditCarApi, deleteCarAd, getCarById } from './api';
+import {  deleteCarAd, getCarById } from './api';
 import { useCallback } from 'react';
 import { useRef } from 'react';
 import {  useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { addData, deleteData, getAllData, updateFormData } from '../../Utils/API/API';
+import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 const formReducer = (state: any, event: any) => {
   return {
     ...state,
@@ -127,7 +129,7 @@ const useAddEditCar = () => {
 
   const getData = useCallback(() => {
     setIsLoading(true);
-    getCarById(id).then((response) => {
+    getAllData(`${API_ENDPOINTS.CARS}/${id}`).then((response) => {
       if (response && response.data && response.data.status === 'success') {
         let result = response.data.data.result;
         // if(result.createdBy._id !== user._id){
@@ -201,7 +203,7 @@ const useAddEditCar = () => {
   const handleDeleteAd = () => {
     setIsLoading(true);
     setDeleteDialog(false);
-    deleteCarAd(id).then((response) => {
+    deleteData(`${API_ENDPOINTS.CARS}/${id}`).then((response) => {
       setIsLoading(false)
       if (response && response.data && response.data.status === 'success') {
           setToastMessage(response.data.message);
@@ -210,7 +212,7 @@ const useAddEditCar = () => {
           history.push(pathname.substr(0, pathname.lastIndexOf('/')));
       } else {
         console.log('error', response);
-        if (!response) {
+        if (!response.response) {
           setToastMessage('Network Error');
           setToastType('error');
           setToastOpen(true);
@@ -325,7 +327,9 @@ const useAddEditCar = () => {
       fd.append('price', formData.price);
       console.table(Object.fromEntries(fd));
       setIsLoading(true);
-      addEditCarApi(fd, id ? id : '').then((response) => {
+      let addEditCarApi = id ? updateFormData : addData
+      let carId = id ? id : ""
+      addEditCarApi(`${API_ENDPOINTS.CARS}/${carId}`,fd).then((response) => {
         setIsLoading(false);
         if (response && response.data && response.data.status === 'success') {
           console.log('response', response);
@@ -341,7 +345,7 @@ const useAddEditCar = () => {
           setActiveStep(0);
         } else {
           console.log('error', response);
-          if (!response) {
+          if (!response.response) {
             setToastMessage('Network Error');
             setToastType('error');
             setToastOpen(true);
@@ -387,3 +391,5 @@ const useAddEditCar = () => {
 };
 
 export default useAddEditCar;
+
+// White Hatchback Civic Imported for sale in Islamabad.

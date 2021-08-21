@@ -47,7 +47,7 @@ const PostAd: React.FC<PostAdProps> = ({ data }) => {
           <img className={featureImgStyle} src={coverImg} alt="" />
         </Grid>
         <Grid item xs={12}>
-          <CustomButton onClick={() => history.push(routes.postAd)}>
+          <CustomButton onClick={() => history.push(routes.addEditCar.substr(0, routes.addEditCar.lastIndexOf('/')))}>
             {POST_YOUR_AD}
           </CustomButton>
         </Grid>

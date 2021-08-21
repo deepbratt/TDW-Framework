@@ -32,6 +32,7 @@ import { fieldNames } from "../../Utils/constants/formsConstants";
 import CustomTitle from "../../components/CustomTitle/CustomTitle";
 import { Color } from "../../theme/color";
 import Section from "../../components";
+import { RootState } from "../../redux/store";
 
 export interface CarsListingProps {}
 
@@ -53,8 +54,8 @@ const CarsListing: React.FC<CarsListingProps> = () => {
     setOpen(false);
   };
 
-  const layoutType = useSelector(
-    (state: any) => state.persistedReducer.layout.layoutType
+  const {layoutType} = useSelector(
+    (state: RootState) => state.layout
   );
   return (
     <Section>

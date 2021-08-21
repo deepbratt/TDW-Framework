@@ -22,7 +22,7 @@ import pattern from '../../assets/pattern.png';
 import { Paths } from './paths';
 import { Colors } from '../../Utils/color.constants';
 import { logout } from '../../../../redux/reducers/authSlice';
-import { paths } from '../../../../routes/paths';
+import { paths, routes } from '../../../../routes/paths';
 import {
   LOGOUT,
   SIGNIN,
@@ -59,7 +59,7 @@ const HeaderContext = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => history.push(paths.addEditCar)}>
+      <MenuItem onClick={() => history.push(routes.addEditCar.substr(0, routes.addEditCar.lastIndexOf('/')))}>
         {ADD_EDIT_CAR}
       </MenuItem>
       <MenuItem
@@ -98,7 +98,7 @@ const HeaderContext = () => {
                 );
               })}
               <ListItem>
-                <CustomButton style={{ background: white, color: black }}>
+                <CustomButton style={{ background: white, color: black }} onClick={()=>history.push(routes.addEditCar.substr(0, routes.addEditCar.lastIndexOf('/')))}>
                   Post an Ad
                 </CustomButton>
               </ListItem>

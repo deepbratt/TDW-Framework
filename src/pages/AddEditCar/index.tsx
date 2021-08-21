@@ -1,5 +1,4 @@
 import { Button, Grid, Typography } from '@material-ui/core';
-import Sizes from '../../Utils/themeConstants';
 import useAddEditCar from './useAddEditCar';
 import addEditCarData from '../../Utils/constants/language/en/addEditCarData';
 import CustomStepper from '../../components/CustomStepper';
@@ -24,14 +23,14 @@ const AddEditCar = () => {
     setToastOpen,
     isLoading,
     deleteDialog,
-    setDeleteDialog
+    setDeleteDialog,
+    lgMdSmPx
   } = useAddEditCar();
-  const size = Sizes();
   return (
     <div
       style={{
         backgroundColor: Colors.greySix,
-        padding: size.desktop || size.tablet ? '50px' : 0
+        padding: lgMdSmPx("50px", "0px"),
       }}
     >
       <Loader open={isLoading} />
@@ -42,7 +41,7 @@ const AddEditCar = () => {
       </Grid>
       <Grid
         container
-        style={{ minHeight: '90vh', backgroundColor: 'white', marginTop: size.desktop || size.tablet ? "50px" : 0 }}
+        style={{ minHeight: '90vh', backgroundColor: 'white', marginTop: lgMdSmPx("50px", "0px") }}
       >
         <Grid item xs={12}>
           <CustomStepper
@@ -56,7 +55,7 @@ const AddEditCar = () => {
           xs={12}
           spacing={3}
           style={{
-            padding: size.desktop || size.tablet ? '50px' : 10,
+            padding: lgMdSmPx("50px", "10px"),
             justifyContent: 'center'
           }}
           ref={formRef}

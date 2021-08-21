@@ -4,6 +4,8 @@ export const addToFavs = "ads/cars/add-to-fav";
 export const removeFavs = "ads/cars/remove-from-fav";
 
 // ads
+// export const getAds = "ads/cars/myCars?limit=4&page=";
+
 export const getAds = "ads/cars/myCars?limit=4&page=";
 
 // cars

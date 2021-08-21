@@ -242,6 +242,17 @@ const useAddEditCar = () => {
     return allFalse(flagRequireError);
   };
 
+  const addEditData = async(formBody:any)=>{
+    let result : any
+    if(id){
+      let carId = id ? "/"+id : ""
+     result = await updateFormData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${carId}`, formBody)
+    }else{
+      result = await addFormData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}`, formBody)
+    }
+    return result
+  }
+
   const handleNext = () => {
     formRef.current.scrollIntoView({ behavior: 'smooth' });
     if (activeStep === 0) {
@@ -327,9 +338,9 @@ const useAddEditCar = () => {
       fd.append('price', formData.price);
       console.table(Object.fromEntries(fd));
       setIsLoading(true);
-      let addEditCarApi = id ? updateFormData : addFormData
-      let carId = id ? "/"+id : ""
-      addEditCarApi(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${carId}`,fd).then((response) => {
+      // let addEditCarApi = id ? updateFormData : addFormData
+      // let carId = id ? "/"+id : ""
+      addEditData(fd).then((response) => {
         setIsLoading(false);
         if (response && response.data && response.data.status === 'success') {
           console.log('response', response);

@@ -23,9 +23,7 @@ const Loader = ({ open, isBackdrop = true }: LoaderProps) => {
     );
   }
   return (
-    <div
-      className={classes.root}
-    >
+    <div className={classes.root}>
       <CircularProgress color="primary" />
     </div>
   );
@@ -41,11 +39,11 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: Colors.whiteTranparent
     },
     root: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '70vh',
-        backgroundColor: Colors.greyTranparent
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '70vh',
+      backgroundColor: Colors.greyTranparent
     }
   })
 );

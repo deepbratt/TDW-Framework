@@ -1,30 +1,30 @@
-import { NavLink, useHistory } from "react-router-dom";
-import Toast from "../../components/Toast";
+import { NavLink, useHistory } from 'react-router-dom';
+import Toast from '../../components/Toast';
 import {
   Grid,
   LinearProgress,
   Typography,
   Card,
-  Button,
-} from "@material-ui/core";
+  Button
+} from '@material-ui/core';
 import {
   // OR,
   SIGNIN,
   SIGNUP,
   // CONTINUE_WITH_GOOGLE,
   // CONTINUE_WITH_FACEBOOK,
-  ALREADY_HAVE_ACCOUNT,
-} from "../../Utils/constants/language/en/buttonLabels";
+  ALREADY_HAVE_ACCOUNT
+} from '../../Utils/constants/language/en/buttonLabels';
 // import GoogleIcon from "../../assets/icons/googleIcon.png";
 // import FacebookIcon from "../../assets/icons/fbIcon.png";
-import GlobalStyles from "../../globalStyles";
-import { routes } from "../../routes/paths";
+import GlobalStyles from '../../globalStyles';
+import { routes } from '../../routes/paths';
 // import { handleFacebookAuth } from "../../Utils/API/API";
-import InputField from "../../components/InputField";
-import { fieldNames } from "../../Utils/constants/formsConstants";
-import { CONTINUE } from "../../Utils/constants/language/en/buttonLabels";
-import PasswordField from "../../components/InputField/PasswordField";
-import { useForm } from "./useForm";
+import InputField from '../../components/InputField';
+import { fieldNames } from '../../Utils/constants/formsConstants';
+import { CONTINUE } from '../../Utils/constants/language/en/buttonLabels';
+import PasswordField from '../../components/InputField/PasswordField';
+import { useForm } from './useForm';
 
 const Signup = () => {
   const history = useHistory();
@@ -33,7 +33,7 @@ const Signup = () => {
     formCard,
     //  buttonWrap,
     formStyle,
-    loginbtn,
+    loginbtn
   } = GlobalStyles();
   const {
     // handleGoogleSubmit,
@@ -44,14 +44,14 @@ const Signup = () => {
     handleSubmit,
     values,
     errors,
-    responseMessage,
+    responseMessage
   } = useForm();
 
   const handleAlertClose = (
     event: React.SyntheticEvent | React.MouseEvent,
     reason?: string
   ) => {
-    if (reason === "clickaway") {
+    if (reason === 'clickaway') {
       return;
     }
     setAlertOpen(false);
@@ -171,13 +171,13 @@ const Signup = () => {
               </Grid>
               <Grid item container xs={12} justifyContent="center">
                 <Typography
-                  style={{ margin: "30px 0" }}
+                  style={{ margin: '30px 0' }}
                   align="center"
                   variant="body2"
                   component="h6"
                   gutterBottom
                 >
-                  {ALREADY_HAVE_ACCOUNT}{" "}
+                  {ALREADY_HAVE_ACCOUNT}{' '}
                   <NavLink to={routes.login}>{SIGNIN}</NavLink>
                 </Typography>
               </Grid>
@@ -197,7 +197,7 @@ const Signup = () => {
             </Grid>
           </form>
         </Card>
-        {responseMessage.status === "success" && history.push(routes.home)}
+        {responseMessage.status === 'success' && history.push(routes.home)}
       </Grid>
       {responseMessage && (
         <Toast

@@ -15,7 +15,7 @@ const PrivateRoutes = ({
   const {isLoggedIn} = useSelector((state:RootState)=>state.auth)
   return (
     <Route
-    {...routeProps}
+      {...routeProps}
       render={(props) =>
         isLoggedIn ? (
           <Layout>

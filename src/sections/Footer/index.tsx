@@ -1,8 +1,8 @@
-import React from "react";
-import { NavLink, BrowserRouter } from "react-router-dom";
-import { Grid, Typography } from "@material-ui/core";
-import FooterStyles from "./styles";
-import { FooterProps, IRoutes } from "../../Utils/interfaces/footer.interface";
+import React from 'react';
+import { NavLink, BrowserRouter } from 'react-router-dom';
+import { Grid, Typography } from '@material-ui/core';
+import FooterStyles from './styles';
+import { FooterProps, IRoutes } from '../../Utils/interfaces/footer.interface';
 
 /** 
  @param data 
@@ -13,11 +13,11 @@ import { FooterProps, IRoutes } from "../../Utils/interfaces/footer.interface";
 const Footer: React.FC<FooterProps> = ({
   data,
   rootBackgroundColor,
-  textPrimary,
+  textPrimary
 }) => {
   const footerStylesProps = {
     rootBackgroundColor,
-    textPrimary,
+    textPrimary
   };
 
   const {
@@ -28,7 +28,7 @@ const Footer: React.FC<FooterProps> = ({
     pageLinks,
     termsLinkRoot,
     termsLink,
-    socialMediaLinks,
+    socialMediaLinks
   } = FooterStyles(footerStylesProps);
 
   return (

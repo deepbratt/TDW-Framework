@@ -8,7 +8,7 @@ const persistConfig = {
   storage
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer<RootState>(persistConfig, rootReducer);
 
 const store = createStore(persistedReducer);
 export type RootState = ReturnType<typeof rootReducer>

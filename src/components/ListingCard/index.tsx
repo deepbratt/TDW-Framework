@@ -31,7 +31,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     <Card className={layoutType === "list" ? root : grid}  onClick={() => {
       handleClick
         ? handleClick()
-        : history.push(routes.carDetail + _id);
+        : history.push(routes.carDetail.substr(0, routes.carDetail.lastIndexOf('/')+1) + _id);
     }}>
       <Grid container>
         <Grid item xs={12} sm={layoutType !== "list" ? 12 : 4}>

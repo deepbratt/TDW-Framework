@@ -2,15 +2,17 @@ import { useState } from "react";
 import { Grid, Typography, Hidden } from "@material-ui/core";
 import { Carousel } from "react-responsive-carousel";
 import { useStyles } from "./useStyles";
-import { Detail } from "../../Utils/types";
+import { Detail } from "../../Utils/types1";
 import CarInformation from "./CarInformation";
 import { Colors } from "../../Utils/color.constants";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import CustomButton from "../../../../components/CustomButton";
 import Sizes from "../../../../Utils/themeConstants";
 import { addToFavs } from "../../../../Utils/hooks/endpoints";
-import useApi from "../../../../Utils/hooks/useApi";
+import Actions from "../../../../pages/carDetail/useFunctions";
 import Toast from "../../../../components/Toast";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
 const Slider = ({
   desc,
   paragraph,
@@ -26,10 +28,12 @@ const Slider = ({
   engineCapacity,
   date,
   isFavs,
+  createdBy,
+  updatedAt
 }: Detail) => {
   const [colorChange, setColorChange] = useState(false);
-
-  const { addFavs, setOpen, responseMessage, open } = useApi();
+  const { addFavs,open,setOpen,responseMessage} = Actions();
+  const {user} = useSelector((state:RootState)=>state.auth)
   const { carousel, detail, btn, sec } = useStyles();
   const { mobile } = Sizes();
   const { gray, red, white } = Colors;
@@ -37,6 +41,9 @@ const Slider = ({
   const handleAlertClose = () => {
     setOpen(false);
   };
+
+  // #static user as of now
+  // let currentUser = "610375ed6b897a001d864ca1"
 
   return (
     <Grid container>
@@ -58,11 +65,13 @@ const Slider = ({
                 <img
                   style={{ position: "relative" }}
                   key={`img ${index}`}
-                  width="10%"
-                  src={data.image}
+                  // width="10%"
+                  height="100%"
+                  src={data}
                   alt=""
                 />
-                {isFavs === false ? (
+                {(createdBy && user._id === createdBy._id) || isFavs === true ? null : 
+                (
                   <CustomButton
                     handleClick={() => {
                       if (id) {
@@ -90,7 +99,8 @@ const Slider = ({
                       />
                     </section>
                   </CustomButton>
-                ) : null}
+                )
+                }
               </>
             );
           })}
@@ -113,6 +123,8 @@ const Slider = ({
               bodyType={bodyType}
               engineCapacity={engineCapacity}
               date={date}
+              updatedAt={updatedAt}
+              createdBy={createdBy}
             />
           </Grid>
         </Hidden>

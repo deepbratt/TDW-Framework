@@ -8,7 +8,7 @@ const Signup = lazy(() => import('../pages/signup'));
 const AddEditCar = lazy(() => import('../pages/AddEditCar'));
 const usedCars = lazy(() => import('../pages/SearchUsedCars/index'));
 const Verification = lazy(() => import('../pages/verificationPage'));
-const CarDetail = lazy(() => import('../pages/carDetail'));
+const CarDetail = lazy(() => import('../pages/carDetail/index'));
 const CarComparison = lazy(() => import('../pages/carComparision/index'));
 const ShortlistItem = lazy(() => import('../pages/shortlistItems'));
 const Dashboard = lazy(() => import('../pages/dashboard/index'));

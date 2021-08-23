@@ -17,13 +17,21 @@ import {
 } from '../../Utils/constants/language/en/homePageData';
 import { Grid } from '@material-ui/core';
 import TabComponent from '../../components/Tabs';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 export interface HomeProps {}
 
 const HomePage = () => {
+  const {user} = useSelector((state:RootState)=>state.auth)
 let open = true
 // if(open){
 //   return <Loader open={true} isBackdrop={false}/>
 // }
+
+useEffect(()=>{
+ console.log(user)
+},[user])
 
   return (
     <Grid container justifyContent="center">

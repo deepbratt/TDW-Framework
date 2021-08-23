@@ -1,14 +1,17 @@
-import { useForm } from "../../pages/carsListing/useForm";
 import { Grid } from "@material-ui/core";
 import Dropdown from "../../components/Dropdown";
 import LayoutToggler from "../../components/LayoutToggler";
 import { fieldNames } from "../../Utils/constants/formsConstants";
 import { sortingOptions } from "../../Utils/constants/language/en/filtersData";
 
-export interface HorizontalFiltersProps {}
+export interface HorizontalFiltersProps {
+  values: any;
+  errors: any;
+  handleInputChange: Function
+}
 
-const HorizontalFilters: React.FC<HorizontalFiltersProps> = () => {
-  const { values, errors, handleInputChange } = useForm();
+const HorizontalFilters: React.FC<HorizontalFiltersProps> = ({values, errors, handleInputChange}) => {
+ 
   return (
     <Grid style={{ margin: "10px 0" }} container justify="space-between">
       <Grid item container xs={10} spacing={2}>

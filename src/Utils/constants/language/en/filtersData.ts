@@ -52,7 +52,8 @@ export const Carfilters = {
 };
 
 export const sortingOptions = [
-  { value: "most_popular", label: "most popular" },
+  { value: "-price", label: "Price: Low to High" },
+  { value: "price", label: "Price: High to Low" },
   { value: "recent", label: "recent" },
   { value: "oldest", label: "oldest" },
   { value: "used", label: "Used" },

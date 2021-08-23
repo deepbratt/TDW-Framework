@@ -14,6 +14,7 @@ import {
   Typography,
   CircularProgress,
 } from "@material-ui/core";
+import Pagination from '@material-ui/lab/Pagination';
 import FilterListRoundedIcon from "@material-ui/icons/FilterListRounded";
 import ListingCard from "../../components/ListingCard";
 import BreadCrumbs from "../../components/BreadCrumbs";
@@ -36,7 +37,7 @@ import Section from "../../components";
 export interface CarsListingProps {}
 
 const CarsListing: React.FC<CarsListingProps> = () => {
-  const { values, loading, responseData, handleInputChange } = useForm();
+  const { values, loading, errors, responseData, handleInputChange, page, handlePageChange } = useForm();
 
   const [open, setOpen] = React.useState(false);
   const [sortDrawerOpen, setSortDrawerOpen] = React.useState(false);
@@ -173,7 +174,7 @@ const CarsListing: React.FC<CarsListingProps> = () => {
             </Hidden>
             <Hidden xsDown>
               <Grid item xs={12}>
-                <HorizontalFilters />
+                <HorizontalFilters values={values} errors={errors} handleInputChange={handleInputChange} />
               </Grid>
             </Hidden>
             <Grid item container xs={12} spacing={1} justifyContent="center">
@@ -192,6 +193,7 @@ const CarsListing: React.FC<CarsListingProps> = () => {
                     <ListingCard data={car} layoutType={layoutType} />
                   </Grid>
                 ))}
+                {!loading && <Pagination count={10} page={page} onChange={handlePageChange} variant="outlined" shape="rounded" />}
             </Grid>
           </Grid>
         </Grid>

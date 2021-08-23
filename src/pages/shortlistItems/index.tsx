@@ -50,6 +50,7 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
     handleInputChange,
     shortListItems,
     shortListItem,
+    errors,
     removeShortListItem,
   } = useForm();
 
@@ -188,7 +189,7 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
           </Hidden>
           <Hidden xsDown>
             <Grid item xs={12}>
-              <HorizontalFilters />
+              <HorizontalFilters values={values} errors={errors} handleInputChange={handleInputChange}/>
             </Grid>
           </Hidden>
           {shortListItems.length > 0 && (

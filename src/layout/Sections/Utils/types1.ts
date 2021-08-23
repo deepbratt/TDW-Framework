@@ -32,8 +32,9 @@ interface IArray {
 
   export interface ICarCard {
     model?: string;
-    year?: string;
     date: string;
+    year?: string;
+    modelYear: string;
     engineType?: string;
     engineCapacity?: number;
     transmission?: string;
@@ -41,7 +42,7 @@ interface IArray {
     city?: string;
     // isFeatured: boolean;
     name?: string;
-    image?: string[];
+    image: string[];
     images?: string[];
     milage?: number;
     bodyType?: string;
@@ -52,13 +53,18 @@ interface IArray {
     country?: string;
     favOf?: string[];
     features?: string[];
+    id: string;
     make?: string;
     location?: any;
     province?: string;
-    registeredCity?: string;
+    registrationCity?: string;
     _id?: string;
     isFav?: boolean;
-    assembly?: string
+    assembly?: string;
+    createdBy: any;
+    updatedAt: string;
+    createdAt: string;
+    
   }
 
   
@@ -66,9 +72,9 @@ interface IArray {
   export interface Detail {
     desc: string;
     paragraph: string | undefined;
-    arr: IArray[];
+    arr: Array<string>;
     info: IInfo;
-    feature: IFeature[]
+    feature: Array<string> | undefined
     carTitle: string;
     id?: string;
     city?: string;
@@ -79,6 +85,8 @@ interface IArray {
     engineCapacity?: number;
     date: string;
     isFavs?: boolean;
+    createdBy: any;
+    updatedAt: string;
   }
   
   
@@ -96,11 +104,13 @@ interface IArray {
     paragraph?: string;
     desc?: string;
     price?: number;
-    year?: string;
+    modelYear?: string;
     transmission?: string;
     mileage?: number;
     engineType?: string;
-    assembly?: string
+    assembly?: string;
+    createdBy: any;
+    createdAt?: string;
   }
 
 
@@ -108,7 +118,7 @@ interface IArray {
   
   export interface ICar {
     info: IInfo
-    feature: IFeature[]
+    feature: Array<string> | undefined;
     carTitle: string;
     city?: string;
     assembly?: string;
@@ -117,42 +127,12 @@ interface IArray {
     color?: string;
     engineCapacity?: number;
     date: string;
+    createdBy: any;
+    updatedAt: string;
   }
   
 
 // carcomparision
-
-export interface ICarData {
-  _id: string;
-  model: string;
-  modelYear: number;
-  createdAt: string;
-  milage: number;
-  engineType: number;
-  engineCapacity: number;
-  transmission: string;
-  city: string;
-  price: number;
-  image: string[];
-  features: string[];
-  location: any;
-  favOf: string[];
-  isSold: boolean;
-  active: boolean;
-  banned: boolean;
-  country: string;
-  province: string;
-  make: string;
-  condition: string;
-  bodyTye: string;
-  bodyColor: string;
-  registrationCity: string;
-  assembly: string;
-  description: string;
-  regNumber: string;
-  createdBy: string;
-  updatedAt: string;
-} 
 
   
   export interface IProps {
@@ -161,7 +141,7 @@ export interface ICarData {
     lessBtn?: string
     moreBtn?: string
     array?: string[];
-    items: ICarData[]
+    items: ICarCard[]
     collapsedArray?: string[];
   }
   

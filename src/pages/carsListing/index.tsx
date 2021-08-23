@@ -33,11 +33,12 @@ import { fieldNames } from "../../Utils/constants/formsConstants";
 import CustomTitle from "../../components/CustomTitle/CustomTitle";
 import { Color } from "../../theme/color";
 import Section from "../../components";
+import { RootState } from "../../redux/store";
 
 export interface CarsListingProps {}
 
 const CarsListing: React.FC<CarsListingProps> = () => {
-  const { values, loading, errors, responseData, handleInputChange, page, handlePageChange } = useForm();
+  const { values, isLoading, errors, responseData, handleInputChange, page, handlePageChange } = useForm();
 
   const [open, setOpen] = React.useState(false);
   const [sortDrawerOpen, setSortDrawerOpen] = React.useState(false);
@@ -54,18 +55,18 @@ const CarsListing: React.FC<CarsListingProps> = () => {
     setOpen(false);
   };
 
-  const layoutType = useSelector(
-    (state: any) => state.persistedReducer.layout.layoutType
+  const {layoutType} = useSelector(
+    (state: RootState) => state.layout
   );
   return (
     <Section>
       <Grid container justifyContent="center">
         <Grid item container xs={12} spacing={1}>
           <Grid item xs={12}>
-            {responseData && responseData.data.result && (
+            {responseData && responseData?.data.result && (
               <CustomTitle
                 color={Color.textPrimary}
-                text={`${LISTING_PAGE_HEADER} (${responseData.data.result.length})`}
+                text={`${LISTING_PAGE_HEADER} (${responseData?.data.result.length})`}
               />
             )}
           </Grid>
@@ -94,9 +95,9 @@ const CarsListing: React.FC<CarsListingProps> = () => {
             <Hidden mdUp>
               <Grid item container justify="space-between" xs={12} spacing={2}>
                 <Grid item>
-                  {responseData && responseData.data.result && (
+                  {responseData && responseData?.data.result && (
                     <Typography variant="h3">
-                      Results: {responseData.data.result.length}
+                      Results: {responseData?.data.result.length}
                     </Typography>
                   )}
                 </Grid>
@@ -177,11 +178,11 @@ const CarsListing: React.FC<CarsListingProps> = () => {
                 <HorizontalFilters values={values} errors={errors} handleInputChange={handleInputChange} />
               </Grid>
             </Hidden>
-            <Grid item container xs={12} spacing={1} justifyContent="center">
-              {loading && <CircularProgress />}
+            <Grid item container xs={12} spacing={1} justifyContent="flex-start">
+              {isLoading && <CircularProgress />}
               {responseData &&
-                responseData.data.result &&
-                responseData.data.result.map((car: any, index: any) => (
+                responseData?.data.result &&
+                responseData?.data.result.map((car: any, index: any) => (
                   <Grid
                     key={`cars-card-${index}`}
                     item
@@ -193,7 +194,7 @@ const CarsListing: React.FC<CarsListingProps> = () => {
                     <ListingCard data={car} layoutType={layoutType} />
                   </Grid>
                 ))}
-                {!loading && <Pagination count={10} page={page} onChange={handlePageChange} variant="outlined" shape="rounded" />}
+                {!isLoading && <Pagination count={10} page={page} onChange={handlePageChange} variant="outlined" shape="rounded" />}
             </Grid>
           </Grid>
         </Grid>

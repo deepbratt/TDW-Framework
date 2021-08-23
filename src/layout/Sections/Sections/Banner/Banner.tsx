@@ -11,6 +11,7 @@ import { Link } from "react-scroll";
 import { useHooks } from "./useHooks";
 import { Colors } from "../../Utils/color.constants";
 import { NavLink } from "react-router-dom";
+import { routes } from "../../../../routes/paths";
 
 interface IBanner {
   Title: string;
@@ -75,7 +76,7 @@ const Banner: React.FC<IBanner> = ({
               {category}
             </CustomButton>
           </Link>
-          <NavLink className={btn} to="/search-used-cars">
+          <NavLink className={btn} to={routes.cars.substr(0, routes.cars.lastIndexOf('/'))}>
             <CustomButton
               style={{ color: white, border: `1px solid ${white}` }}
               variant="outlined"

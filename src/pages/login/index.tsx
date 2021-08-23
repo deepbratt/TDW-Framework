@@ -1,57 +1,62 @@
-import { useForm } from "./useForm";
-import { useHistory } from "react-router";
-import { NavLink } from "react-router-dom";
-import Toast from "../../components/Toast";
-import { routes } from "../../routes/paths";
+import { useForm } from './useForm';
+import { useHistory } from 'react-router';
+import { NavLink } from 'react-router-dom';
+import Toast from '../../components/Toast';
+import { routes, paths } from '../../routes/paths';
 import {
   Grid,
   LinearProgress,
   Typography,
   Card,
-  Button,
-} from "@material-ui/core";
-import InputField from "../../components/InputField";
-import { fieldNames } from "../../Utils/constants/formsConstants";
+  Button
+} from '@material-ui/core';
+import InputField from '../../components/InputField';
+import { fieldNames } from '../../Utils/constants/formsConstants';
 import {
   SIGNIN,
   SIGNUP,
-  CONTINUE_WITH_GOOGLE,
-  CONTINUE_WITH_FACEBOOK,
+  // CONTINUE_WITH_GOOGLE,
+  // CONTINUE_WITH_FACEBOOK,
   SIGNIN_USING_ACCOUNT,
   DONOT_HAVE_ACCOUNT,
-  FORGOT_PASS,
-} from "../../Utils/constants/language/en/buttonLabels";
-import GoogleIcon from "../../assets/icons/googleIcon.png";
-import FacebookIcon from "../../assets/icons/fbIcon.png";
-import GlobalStyles from "../../globalStyles";
-import { handleFacebookAuth } from "../../Utils/API/API";
-import PasswordField from "../../components/InputField/PasswordField";
+  FORGOT_PASS
+} from '../../Utils/constants/language/en/buttonLabels';
+// import GoogleIcon from "../../assets/icons/googleIcon.png";
+// import FacebookIcon from "../../assets/icons/fbIcon.png";
+import GlobalStyles from '../../globalStyles';
+// import { handleFacebookAuth } from "../../Utils/API/API";
+import PasswordField from '../../components/InputField/PasswordField';
 
 const Login = () => {
   const history = useHistory();
-  const { loginFormGrid, formCard, buttonWrap, formStyle, loginbtn } =
-    GlobalStyles();
+  const {
+    loginFormGrid,
+    formCard,
+    // buttonWrap,
+    formStyle,
+    loginbtn
+  } = GlobalStyles();
   const {
     values,
     errors,
-    handleInputChange,
+    isLoading,
+    alertOpen,
     handleSubmit,
-    handleGoogleSubmit,
-    loading,
-    // alertOpen,
-    // setAlertOpen,
+    setAlertOpen,
     responseMessage,
+    handleInputChange
+    // handleGoogleSubmit,
   } = useForm();
 
-  // const handleAlertClose = (
-  //   event: React.SyntheticEvent | React.MouseEvent,
-  //   reason?: string
-  // ) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-  //   setAlertOpen(false);
-  // };
+  const handleAlertClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlertOpen(false);
+  };
 
   return (
     <Grid
@@ -60,13 +65,13 @@ const Login = () => {
       justify="center"
       alignContent="center"
     >
-      <Grid item xs={4}>
-        {loading && <LinearProgress color="secondary" />}
+      <Grid item xs={10} md={8} lg={4}>
+        {isLoading && <LinearProgress color="secondary" />}
         <Card className={formCard}>
           <Typography variant="h6" gutterBottom>
             {SIGNIN}
           </Typography>
-          <Button
+          {/* <Button
             className={buttonWrap}
             fullWidth
             variant="outlined"
@@ -83,7 +88,7 @@ const Login = () => {
             onClick={() => handleFacebookAuth()}
           >
             {CONTINUE_WITH_FACEBOOK}
-          </Button>
+          </Button> */}
           <form className={formStyle} onSubmit={handleSubmit}>
             <Typography variant="body2" gutterBottom>
               {SIGNIN_USING_ACCOUNT}
@@ -109,42 +114,42 @@ const Login = () => {
               onChange={handleInputChange}
             />
             <Typography>
-              <NavLink to={routes.forgotPassword}>{FORGOT_PASS}</NavLink>
+              <NavLink to={paths.forgotPassword}>{FORGOT_PASS}</NavLink>
             </Typography>
 
             <Typography
-              style={{ margin: "30px 0" }}
+              style={{ margin: '30px 0' }}
               align="center"
               variant="body2"
               component="h6"
               gutterBottom
             >
-              {DONOT_HAVE_ACCOUNT}{" "}
+              {DONOT_HAVE_ACCOUNT}{' '}
               <NavLink to={routes.signup}>{SIGNUP}</NavLink>
             </Typography>
 
             <Button
               className={loginbtn}
               fullWidth
-              disabled={loading}
+              disabled={isLoading}
               variant="contained"
               color="secondary"
               type="submit"
             >
               {SIGNIN}
             </Button>
-            {responseMessage.status === "success" && history.push(routes.home)}
+            {responseMessage.status === 'success' && history.push(routes.home)}
           </form>
         </Card>
       </Grid>
-      {/* {responseMessage && (
+      {responseMessage && (
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-         type={responseMessage.status}
+          type={responseMessage.status}
           message={responseMessage.message}
         />
-      )} */}
+      )}
     </Grid>
   );
 };

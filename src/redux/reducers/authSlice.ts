@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface IInitialState {
-  user?: object;
+  user?: object | any;
   isLoggedIn: boolean;
   token?: string;
 }
@@ -9,26 +9,26 @@ export interface IInitialState {
 const initialState: IInitialState = {
   user: {},
   isLoggedIn: true,
-  token: "",
+  token: ''
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     login: (state, action) => {
       state.isLoggedIn = true;
       state.user = action.payload.data.user;
       state.token = action.payload.token;
-      localStorage.setItem("jwt", action.payload.token);
+      localStorage.setItem('tezdealzjwt', action.payload.token);
     },
     logout: (state) => {
       state.user = {};
-      state.token = "";
-      state.isLoggedIn = true;
-      localStorage.removeItem("jwt");
-    },
-  },
+      state.token = '';
+      state.isLoggedIn = false;
+      localStorage.removeItem('tezdealzjwt');
+    }
+  }
 });
 
 export const { login, logout } = authSlice.actions;

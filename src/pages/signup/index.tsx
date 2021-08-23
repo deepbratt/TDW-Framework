@@ -1,57 +1,61 @@
-import { NavLink, useHistory } from "react-router-dom";
-import Toast from "../../components/Toast";
+import { NavLink, useHistory } from 'react-router-dom';
+import Toast from '../../components/Toast';
 import {
   Grid,
   LinearProgress,
   Typography,
   Card,
-  Button,
-} from "@material-ui/core";
+  Button
+} from '@material-ui/core';
 import {
-  OR,
+  // OR,
   SIGNIN,
   SIGNUP,
-  CONTINUE_WITH_GOOGLE,
-  CONTINUE_WITH_FACEBOOK,
-  ALREADY_HAVE_ACCOUNT,
-} from "../../Utils/constants/language/en/buttonLabels";
-import GoogleIcon from "../../assets/icons/googleIcon.png";
-import FacebookIcon from "../../assets/icons/fbIcon.png";
-import GlobalStyles from "../../globalStyles";
-import { routes } from "../../routes/paths";
-import { handleFacebookAuth } from "../../Utils/API/API";
-import InputField from "../../components/InputField";
-import { fieldNames } from "../../Utils/constants/formsConstants";
-import { CONTINUE } from "../../Utils/constants/language/en/buttonLabels";
-import PasswordField from "../../components/InputField/PasswordField";
-import { useForm } from "./useForm";
+  // CONTINUE_WITH_GOOGLE,
+  // CONTINUE_WITH_FACEBOOK,
+  ALREADY_HAVE_ACCOUNT
+} from '../../Utils/constants/language/en/buttonLabels';
+// import GoogleIcon from "../../assets/icons/googleIcon.png";
+// import FacebookIcon from "../../assets/icons/fbIcon.png";
+import GlobalStyles from '../../globalStyles';
+import { routes } from '../../routes/paths';
+// import { handleFacebookAuth } from "../../Utils/API/API";
+import InputField from '../../components/InputField';
+import { fieldNames } from '../../Utils/constants/formsConstants';
+import { CONTINUE } from '../../Utils/constants/language/en/buttonLabels';
+import PasswordField from '../../components/InputField/PasswordField';
+import { useForm } from './useForm';
 
 const Signup = () => {
   const history = useHistory();
-  const { loginFormGrid, formCard, buttonWrap, formStyle, loginbtn } =
-    GlobalStyles();
   const {
-    handleGoogleSubmit,
-    loading,
-    // alertOpen,
-    // setAlertOpen,
+    loginFormGrid,
+    formCard,
+    //  buttonWrap,
+    formStyle,
+    loginbtn
+  } = GlobalStyles();
+  const {
+    // handleGoogleSubmit,
+    isLoading,
+    alertOpen,
+    setAlertOpen,
     handleInputChange,
     handleSubmit,
     values,
     errors,
-    responseMessage,
+    responseMessage
   } = useForm();
 
-  // const handleAlertClose = (
-  //   event: React.SyntheticEvent | React.MouseEvent,
-  //   reason?: string
-  // ) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-
-  //   setAlertOpen(false);
-  // };
+  const handleAlertClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlertOpen(false);
+  };
 
   return (
     <Grid
@@ -60,13 +64,13 @@ const Signup = () => {
       justify="center"
       alignContent="center"
     >
-      <Grid item xs={4}>
-        {loading && <LinearProgress color="secondary" />}
+      <Grid item xs={10} md={6} lg={4}>
+        {isLoading && <LinearProgress color="secondary" />}
         <Card className={formCard}>
           <Typography variant="h6" gutterBottom>
             {SIGNUP}
           </Typography>
-          <Button
+          {/* <Button
             className={buttonWrap}
             fullWidth
             variant="outlined"
@@ -90,16 +94,16 @@ const Signup = () => {
             variant="body1"
           >
             {OR}
-          </Typography>
+          </Typography> */}
           <form className={formStyle} onSubmit={handleSubmit}>
-            <Grid container spacing={1}>
+            <Grid container spacing={1} justifyContent="center">
               <Grid item xs={12} md={6}>
                 <InputField
                   id="input-first-name"
                   name={fieldNames.firstName}
                   fullWidth
                   variant="outlined"
-                  placeholder="First Name"
+                  label="First Name"
                   value={values.firstName}
                   error={errors.firstName}
                   onChange={handleInputChange}
@@ -111,9 +115,21 @@ const Signup = () => {
                   name={fieldNames.lastName}
                   fullWidth
                   variant="outlined"
-                  placeholder="Last Name"
+                  label="Last Name"
                   value={values.lastName}
                   error={errors.lastName}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <InputField
+                  id="input-username"
+                  name={fieldNames.username}
+                  fullWidth
+                  variant="outlined"
+                  label="Username"
+                  value={values.username}
+                  error={errors.username}
                   onChange={handleInputChange}
                 />
               </Grid>
@@ -146,7 +162,6 @@ const Signup = () => {
                   id="input-confirm-password"
                   name={fieldNames.confirmPassword}
                   label="Confirm Password"
-                  placeholder="Re-enter your password"
                   fullWidth
                   variant="outlined"
                   value={values.confirmPassword}
@@ -154,11 +169,24 @@ const Signup = () => {
                   onChange={handleInputChange}
                 />
               </Grid>
+              <Grid item container xs={12} justifyContent="center">
+                <Typography
+                  style={{ margin: '30px 0' }}
+                  align="center"
+                  variant="body2"
+                  component="h6"
+                  gutterBottom
+                >
+                  {ALREADY_HAVE_ACCOUNT}{' '}
+                  <NavLink to={routes.login}>{SIGNIN}</NavLink>
+                </Typography>
+              </Grid>
+
               <Grid item xs={12}>
                 <Button
                   className={loginbtn}
                   fullWidth
-                  disabled={loading}
+                  disabled={isLoading}
                   variant="contained"
                   color="secondary"
                   type="submit"
@@ -167,29 +195,18 @@ const Signup = () => {
                 </Button>
               </Grid>
             </Grid>
-
-            {responseMessage.status === "success" && history.push(routes.login)}
           </form>
-          <Typography
-            style={{ margin: "30px 0" }}
-            align="center"
-            variant="body2"
-            component="h6"
-            gutterBottom
-          >
-            {ALREADY_HAVE_ACCOUNT} <NavLink to={routes.login}>{SIGNIN}</NavLink>
-          </Typography>
         </Card>
-        {responseMessage.status === "success" && history.push(routes.home)}
+        {responseMessage.status === 'success' && history.push(routes.home)}
       </Grid>
-      {/* {responseMessage && (
+      {responseMessage && (
         <Toast
           open={alertOpen}
           onClose={handleAlertClose}
-         type={responseMessage.status}
+          type={responseMessage.status}
           message={responseMessage.message}
         />
-      )} */}
+      )}
     </Grid>
   );
 };

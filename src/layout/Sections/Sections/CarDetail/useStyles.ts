@@ -5,8 +5,9 @@ const breakpoints = createBreakpoints({});
 const { navyBlue, grey, blue, white, green, gray, malibuBlue } = Colors;
 export const useStyles = makeStyles(() => ({
   root: {
-    padding: "70px 0px 0px 0px",
+    // padding: "70px 0px 0px 0px",
     margin: "20px 0px 0px 20px",
+    position: "relative",
     [breakpoints.down("md")]: {
       margin: "0px",
     },
@@ -62,7 +63,7 @@ export const useStyles = makeStyles(() => ({
     borderRadius: "3px",
   },
   carousel: {
-    paddingTop: "70px",
+    // paddingTop: "70px",
     width: "100%",
     "& .carousel .slide img": {
       width: "100%",
@@ -170,4 +171,10 @@ export const useStyles = makeStyles(() => ({
     marginTop: "10px",
     borderRadius: "50%",
   },
+  loader: {
+    margin: "300px 0px"
+  },
+  link:{
+    color: white
+  }
 }));

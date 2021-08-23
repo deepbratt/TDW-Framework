@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Table,
   Typography,
   TableHead,
   TableContainer,
   TableBody,
-  Collapse,
-} from "@material-ui/core";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import CustomButton from "../../../../components/CustomButton";
-import { useStyles } from "./useStyles";
-import { IProps } from "../../Utils/types";
-import EnhancedTable from "./CollapsedTable/CollapsedTable";
-import TableRows from "./TableRows";
+  Collapse
+} from '@material-ui/core';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import CustomButton from '../../../../components/CustomButton';
+import { useStyles } from './useStyles';
+import { IProps } from '../../Utils/types';
+import EnhancedTable from './CollapsedTable/CollapsedTable';
+import TableRows from './TableRows';
 const TableContext: React.FC<IProps> = ({
   Title,
   items,
@@ -20,7 +20,7 @@ const TableContext: React.FC<IProps> = ({
   lessBtn,
   subTitle,
   array,
-  collapsedArray,
+  collapsedArray
 }) => {
   const { head, table, options, btn } = useStyles();
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -35,7 +35,7 @@ const TableContext: React.FC<IProps> = ({
 
   return (
     <>
-      <Typography style={{marginTop: "20px"}} className={head} variant="h3">
+      <Typography style={{ marginTop: '20px' }} className={head} variant="h3">
         {Title}
       </Typography>
       <TableContainer>
@@ -53,9 +53,9 @@ const TableContext: React.FC<IProps> = ({
           endIcon={<ArrowDropDownIcon />}
         >
           {!isChecked ? (
-            <span style={{ marginBottom: "10px" }}> {moreBtn} </span>
+            <span style={{ marginBottom: '10px' }}> {moreBtn} </span>
           ) : (
-            <span style={{ marginBottom: "10px" }}> {lessBtn} </span>
+            <span style={{ marginBottom: '10px' }}> {lessBtn} </span>
           )}
         </CustomButton>
       </section>

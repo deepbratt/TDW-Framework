@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import {useDispatch,  useSelector} from "react-redux";
-import useApi from "../../Utils/hooks/useApi";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
 import { setAppliedFilters, setFilter } from "../../redux/reducers/carFiltersSlice";
-import { Console } from "console";
+import { getAllData } from "../../Utils/API/API";
+import useValidation from "../../Utils/hooks/useValidation";
+import { ICarCard } from "../../Utils/interfaces/products.interface";
 
 const initialValues: any = {
   keywords: "",
@@ -33,27 +34,31 @@ const initialValues: any = {
   // sortingOptions: "",
 };
 
+interface IData {
+  data: {
+    result: ICarCard[]
+  }
+}
+
 export const useForm = (validateOnChange = true) => {
   const dispatch = useDispatch();
   // const appliedFiltersFromStore = useSelector((state: any) => state.persistedReducer.carFilters.appliedFilters);
   const { ADS, CARS } = API_ENDPOINTS;
-  const {
-    loading,
-    alertOpen,
-    setAlertOpen,
-    responseMessage,
-    responseData,
-    getAll,
-  } = useApi();
   const [values, setValues] = useState(initialValues);
   const [page, setPage] = useState(1);
   const [keywords, setKeywords] = useState("");
-  const [errors, setErrors] = useState(initialValues);
   const [appliedFilters, setAppliedFilters] = useState<string[]>([]);
 
   const handlePageChange = (e: any, value: any) => {
     setPage(value);
   };
+  const [isLoading, setIsLoading] = useState(false);
+  const [responseData, setResponseData] = useState<IData>();
+  const { validate, errors, setErrors } = useValidation(values);
+  const [responseMessage, setResponseMessage] = useState({
+    status: '',
+    message: ''
+  });
 
   function inArray(needle: string, haystack: []) {
     var length = haystack.length;
@@ -156,7 +161,32 @@ export const useForm = (validateOnChange = true) => {
     })
 
     console.log("queryParams", params);
-    await getAll(ADS + CARS+"?"+params);
+    await getAllData(ADS + CARS +  params)
+    .then((response) => {
+      console.log('response', response);
+      setIsLoading(false);
+      if (response.status === 'success') {
+        setResponseData(response);
+        setResponseMessage({
+          status: response.status,
+          message: response.message
+        });
+      } else {
+        setIsLoading(false);
+        setResponseMessage({
+          status: 'error',
+          message: response.message
+        });
+      }
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      console.log('Error log', error);
+      setResponseMessage({
+        status: error.status,
+        message: error.message
+      });
+    });
   }, []);
 
 
@@ -164,17 +194,6 @@ export const useForm = (validateOnChange = true) => {
     getAllCars(appliedFilters);
   }, [appliedFilters, values, getAllCars]);
 
-
-  const validate = (fieldValues = values) => {
-    let temp = { ...errors };
-
-    setErrors({
-      ...temp,
-    });
-
-    if (fieldValues === values)
-      return Object.values(temp).every((x) => x === "");
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -293,10 +312,8 @@ export const useForm = (validateOnChange = true) => {
     resetForm,
     validate,
     handleSubmit,
-    loading,
+    isLoading,
     responseData,
-    alertOpen,
-    setAlertOpen,
     responseMessage,
   };
 };

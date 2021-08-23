@@ -13,6 +13,7 @@ import {
   Hidden,
   SwipeableDrawer,
   Typography,
+  CircularProgress
 } from "@material-ui/core";
 import FilterListRoundedIcon from "@material-ui/icons/FilterListRounded";
 import ListingCard from "../../components/ListingCard";
@@ -21,8 +22,6 @@ import CarFilters from "../../sections/VerticalCarFilters";
 import { SortRounded } from "@material-ui/icons";
 import HorizontalFilters from "../../sections/HorizontalFilters";
 import {
-  CarsListingData,
-  ICarData,
   LISTING_PAGE_HEADER,
 } from "../../Utils/constants/language/en/listingData";
 import ShortListCard from "../../components/ShortListCard";
@@ -37,15 +36,18 @@ import {
 } from "../../Utils/constants/language/en/buttonLabels";
 import FullScreenDialog from "../../components/DialogBox/FullScreenDialog";
 import { fieldNames } from "../../Utils/constants/formsConstants";
-import { routes } from "../../routes/paths";
+import { paths } from "../../routes/paths";
 import { useHistory } from "react-router";
-import { Colors } from "../../Utils/constants/colors/colors";
+import Section from "../../components";
+import { ICarCard } from "../../Utils/interfaces/products.interface";
 
 export interface ShortlistItemProps {}
 
 const ShortlistItem: React.FC<ShortlistItemProps> = () => {
   const history = useHistory();
   const {
+    isLoading,
+    responseData,
     values,
     handleInputChange,
     shortListItems,
@@ -73,13 +75,16 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
     (state: any) => state.persistedReducer.layout.layoutType
   );
   return (
-    <Grid container justify="center">
-      <Grid item container xs={12} lg={10} spacing={3}>
+    <Section>
+    <Grid container justifyContent="center">
+      <Grid item container xs={12} spacing={1}>
         <Grid item xs={12}>
-          <CustomTitle
-            color={Color.textPrimary}
-            text={`${LISTING_PAGE_HEADER} (0000)`}
-          />
+          {responseData && responseData?.data.result && (
+            <CustomTitle
+              color={Color.textPrimary}
+              text={`${LISTING_PAGE_HEADER} (${responseData?.data.result.length})`}
+            />
+          )}
         </Grid>
         <Grid item xs={12}>
           <BreadCrumbs />
@@ -91,7 +96,7 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
                 style={{
                   padding: "20px 15px",
                   margin: "10px 0",
-                  backgroundColor: Colors.navyBlue,
+                  backgroundColor: "#092C4C",
                 }}
               >
                 <Typography style={{ color: "white" }} variant="h4">
@@ -102,21 +107,18 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
             </Grid>
           </Hidden>
         </Grid>
-        <Grid
-          item
-          container
-          xs={12}
-          md={8}
-          alignContent="flex-start"
-          spacing={2}
-        >
+        <Grid item container xs={12} md={8} spacing={1}>
           <Hidden mdUp>
             <Grid item container justify="space-between" xs={12} spacing={2}>
               <Grid item>
-                <Typography variant="h3">Results: 04</Typography>
+                {responseData && responseData?.data.result && (
+                  <Typography variant="h3">
+                    Results: {responseData?.data.result.length}
+                  </Typography>
+                )}
               </Grid>
               <Grid item container xs={6} spacing={1} justify="flex-end">
-                <Grid item>
+                <Grid item container xs={7} justifyContent="flex-end">
                   <Chip
                     variant="outlined"
                     size="small"
@@ -127,8 +129,8 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
                     onClick={() => handleClickOpen()}
                   />
                 </Grid>
-                <Grid item>
-                  <Hidden smUp>
+                <Hidden smUp>
+                  <Grid item container xs={5} justifyContent="flex-end">
                     <Chip
                       variant="outlined"
                       size="small"
@@ -138,8 +140,8 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
                       color="secondary"
                       onClick={() => toggleDrawer()}
                     />
-                  </Hidden>
-                </Grid>
+                  </Grid>
+                </Hidden>
               </Grid>
               <FullScreenDialog
                 title="Filters"
@@ -200,13 +202,13 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
                 </Typography>
               </Grid>
               <Grid item container xs={12} spacing={1}>
-                {shortListItems.map((item: ICarData) => (
-                  <Grid key={`shotlist-item-${item.product.name}`} item xs={2}>
+                {shortListItems.map((item: ICarCard) => (
+                  <Grid key={`shotlist-item-${item.model}`} item xs={2}>
                     <ShortListCard
-                      productImg={item.productImage}
-                      name={item.product.name}
-                      _id={item.product._id}
-                      handleClick={() => removeShortListItem(item.product._id)}
+                      productImg={item.image[0]}
+                      name={item.model}
+                      _id={item._id}
+                      handleClick={() => removeShortListItem(item._id)}
                     />
                   </Grid>
                 ))}
@@ -214,7 +216,7 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
                   <Grid container item xs={3} alignContent="flex-end">
                     <Button
                       color="secondary"
-                      onClick={() => history.push(`${routes.carComparision}/${shortListItems[0].product._id}/${shortListItems[1].product._id}`)}
+                      onClick={() => history.push(`${paths.carComparision}/${shortListItems[0]._id}/${shortListItems[1]._id}`)}
                     >
                       {COMPARE}
                     </Button>
@@ -223,27 +225,27 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
               </Grid>
             </Grid>
           )}
-          <Grid item container xs={12} spacing={1}>
-            {CarsListingData &&
-              CarsListingData.map((cardData, index) => (
-                <Grid
-                  key={`cars-card-${index}`}
-                  item
-                  xs={12}
-                  sm={layoutType === "list" ? 12 : 6}
-                  xl={layoutType === "list" ? 12 : 6}
-                >
-                  <ListingCard
-                    data={cardData}
-                    layoutType={layoutType}
-                    handleClick={() => shortListItem(cardData)}
-                  />
-                </Grid>
-              ))}
-          </Grid>
+           <Grid item container xs={12} spacing={1} justifyContent="flex-start">
+              {isLoading && <CircularProgress />}
+              {responseData &&
+                responseData?.data.result &&
+                responseData?.data.result.map((car: any, index: any) => (
+                  <Grid
+                    key={`cars-card-${index}`}
+                    item
+                    xs={12}
+                    sm={layoutType === "list" ? 12 : 6}
+                    xl={layoutType === "list" ? 12 : 6}
+                    justifyContent="center"               
+                  >
+                    <ListingCard data={car} layoutType={layoutType} handleClick={() => shortListItem(car)} />
+                  </Grid>
+                ))}
+            </Grid>
         </Grid>
       </Grid>
     </Grid>
+    </Section>
   );
 };
 

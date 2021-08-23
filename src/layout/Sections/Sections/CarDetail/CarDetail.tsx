@@ -1,4 +1,4 @@
-import { IProp } from "../../Utils/types";
+import { IProp } from "../../Utils/types1";
 import { Grid, Typography, Button, Hidden } from "@material-ui/core";
 import { useStyles } from "./useStyles";
 import { Colors } from "../../Utils/color.constants";
@@ -18,10 +18,11 @@ const CarDetail: React.FC<IProp> = ({
   desc,
   price,
   paragraph,
-  year,
+  modelYear,
   engineType,
   mileage,
-  transmission
+  transmission,
+  createdBy
 }) => {
   const {
     root,
@@ -32,6 +33,7 @@ const CarDetail: React.FC<IProp> = ({
     mailBtn,
     icon,
     container,
+    link
   } = useStyles();
   const { blue, gray } = Colors;
 
@@ -45,13 +47,13 @@ const CarDetail: React.FC<IProp> = ({
           <Typography variant="subtitle1">
             <img width="10%" src={locIcon} alt="" /> {location}
           </Typography>
-          <Typography variant="subtitle1">
+          {/* <Typography variant="subtitle1">
             <img width="15%" src={ratIcon} alt="" /> {rating}
-          </Typography>
+          </Typography> */}
         </Grid>
         <Grid item xs={12}>
           <Typography style={{ color: blue }} variant="h4">
-            {price?.toLocaleString()}
+            PKR {price?.toLocaleString()}
           </Typography>
         </Grid>
         <Grid style={{ display: "flex" }} item lg={10} xs={12}>
@@ -61,7 +63,7 @@ const CarDetail: React.FC<IProp> = ({
               style={{ paddingTop: "10px", fontWeight: 600 }}
               variant="subtitle1"
             >
-              {year}
+              {modelYear}
             </Typography>
           </Grid>
           <Grid className={type} item lg={3} sm={12} xs={12} md={6}>
@@ -93,7 +95,7 @@ const CarDetail: React.FC<IProp> = ({
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Grid className={grid} item xs={12}>
+          {createdBy.phone && <Grid className={grid} item xs={12}>
             <Button
               className={numBtn}
               startIcon={
@@ -102,10 +104,10 @@ const CarDetail: React.FC<IProp> = ({
                 </div>
               }
             >
-              {numButton}
+              <a className={link} href={`tel:${createdBy.phone}`}>{numButton}</a>
             </Button>
-          </Grid>
-          <Grid className={container} item xs={12}>
+          </Grid>}
+          {createdBy.email && <Grid className={container} item xs={12}>
             <Button
               className={mailBtn}
               startIcon={
@@ -114,12 +116,12 @@ const CarDetail: React.FC<IProp> = ({
                 </div>
               }
             >
-              {mainButton}
+            <a className={link} href={`mailTo:${createdBy.email}`}>{mainButton}</a>
             </Button>
-          </Grid>
+          </Grid>}
         </Grid>
         <Grid item xs={12}>
-          <SellerDetail />
+          <SellerDetail createdBy={createdBy} />
         </Grid>
         <Hidden lgUp>
           <Grid style={{ color: gray }} item xs={12}>

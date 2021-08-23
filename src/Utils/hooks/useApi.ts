@@ -22,29 +22,7 @@ const useApi = () => {
     message: ''
   });
 
-  const getAll = async (endpoint: string) => {
-    setLoading(true);
-    await getAllData(endpoint)
-      .then((response) => {
-        console.log('response', response);
-        setLoading(false);
-        setAlertOpen(true);
-        setResponseMessage({
-          status: response.data.data.status,
-          message: response.data.data.message
-        });
-        setResponseData(response.data);
-      })
-      .catch((error) => {
-        console.log('error', error);
-        setLoading(false);
-        setAlertOpen(true);
-        setResponseMessage({
-          status: error.status,
-          message: error.message
-        });
-      });
-  };
+  
 
   const addRequest = async (endpoint: string, requestBody?: object) => {
     setLoading(true);
@@ -282,7 +260,6 @@ const useApi = () => {
   };
 
   return {
-    getAll,
     addRequest,
     updateRequest,
     loading,

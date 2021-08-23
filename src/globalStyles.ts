@@ -61,6 +61,12 @@ const GlobalStyles = makeStyles((theme) => ({
   },
   formStyle: {
     margin: '20px 0px'
+  },
+  header: {
+    marginTop: "70px",
+    [theme.breakpoints.down("xs")]:{
+      marginTop:"50px",
+    }
   }
 }));
 

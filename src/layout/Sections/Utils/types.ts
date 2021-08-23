@@ -32,8 +32,8 @@ interface IArray {
 
   export interface ICarCard {
     model?: string;
-    date: string;
     year?: string;
+    date: string;
     engineType?: string;
     engineCapacity?: number;
     transmission?: string;
@@ -52,7 +52,6 @@ interface IArray {
     country?: string;
     favOf?: string[];
     features?: string[];
-    id: string;
     make?: string;
     location?: any;
     province?: string;
@@ -123,6 +122,38 @@ interface IArray {
 
 // carcomparision
 
+export interface ICarData {
+  _id: string;
+  model: string;
+  modelYear: number;
+  createdAt: string;
+  milage: number;
+  engineType: number;
+  engineCapacity: number;
+  transmission: string;
+  city: string;
+  price: number;
+  image: string[];
+  features: string[];
+  location: any;
+  favOf: string[];
+  isSold: boolean;
+  active: boolean;
+  banned: boolean;
+  country: string;
+  province: string;
+  make: string;
+  condition: string;
+  bodyTye: string;
+  bodyColor: string;
+  registrationCity: string;
+  assembly: string;
+  description: string;
+  regNumber: string;
+  createdBy: string;
+  updatedAt: string;
+} 
+
   
   export interface IProps {
     subTitle: string
@@ -130,7 +161,7 @@ interface IArray {
     lessBtn?: string
     moreBtn?: string
     array?: string[];
-    items: ICarCard[]
+    items: ICarData[]
     collapsedArray?: string[];
   }
   

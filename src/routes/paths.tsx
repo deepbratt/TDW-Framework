@@ -25,8 +25,8 @@ export const paths = {
   usedCars: 'usedCars',
   profile: 'profile',
   verification: '/verification',
-  carDetail: 'carDetail',
-  carComparision: 'carComparision',
+  carDetail: '/car-detail/',
+  carComparision: '/car-comparision',
   carShortlist: 'cars-shortlist',
   signup: 'signup',
   cars: 'cars',
@@ -80,10 +80,6 @@ export const privateRoutes = {
   [paths.verification]: {
     path: routes.verification,
     component: Verification
-  },
-  [paths.carDetail]: {
-    path: routes.carDetail,
-    component: CarDetail
   },
   [paths.addEditCar]: {
     name: 'Cars Add Edit',
@@ -149,5 +145,9 @@ export const publicRoutes = {
   [paths.carShortlist]: {
     path: routes.carShortlist,
     component: ShortlistItem
-  }
+  },
+  [paths.carDetail]: {
+    path: routes.carDetail,
+    component: CarDetail
+  },
 };

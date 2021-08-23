@@ -10,9 +10,8 @@ import { routes } from "../../routes/paths";
 import ListingCardStyles from "./styles";
 import LocationIcon from "../../assets/icons/location.png";
 import { ICarCard } from "../../Utils/interfaces/products.interface";
-import { FEATURED } from "../../Utils/constants/language/en/buttonLabels";
 export interface ListingCardProps {
-  data: any;
+  data: ICarCard;
   layoutType: string;
   handleClick?: Function;
 }

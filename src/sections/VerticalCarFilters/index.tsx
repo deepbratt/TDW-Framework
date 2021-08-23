@@ -119,9 +119,9 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
           handleClick={handleTextBoxSubmit}
         />
       </FilterAccordion>
-      <FilterAccordion title={PRICE_RANGE}>
+      {/* <FilterAccordion title={PRICE_RANGE}>
         <InputRange values={values} setValues={setValues} />
-      </FilterAccordion>
+      </FilterAccordion> */}
       {/* <FilterAccordion title={PRICE_RANGE}>
         <Grid container direction="column">
           <Grid item container spacing={1}>

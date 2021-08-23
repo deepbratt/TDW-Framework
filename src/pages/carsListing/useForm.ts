@@ -35,7 +35,7 @@ const initialValues: any = {
 
 export const useForm = (validateOnChange = true) => {
   const dispatch = useDispatch();
-  const appliedFiltersFromStore = useSelector((state: any) => state.persistedReducer.carFilters.appliedFilters);
+  // const appliedFiltersFromStore = useSelector((state: any) => state.persistedReducer.carFilters.appliedFilters);
   const { ADS, CARS } = API_ENDPOINTS;
   const {
     loading,
@@ -49,7 +49,7 @@ export const useForm = (validateOnChange = true) => {
   const [page, setPage] = useState(1);
   const [keywords, setKeywords] = useState("");
   const [errors, setErrors] = useState(initialValues);
-  const [appliedFilters, setAppliedFilters] = useState<string[]>(appliedFiltersFromStore);
+  const [appliedFilters, setAppliedFilters] = useState<string[]>([]);
 
   const handlePageChange = (e: any, value: any) => {
     setPage(value);
@@ -159,26 +159,10 @@ export const useForm = (validateOnChange = true) => {
     await getAll(ADS + CARS+"?"+params);
   }, []);
 
-  useEffect(() => {
-    console.log("page", page);
-  },[page]);
-
-  useEffect(() => {
-    console.log("keywords", keywords);
-  },[keywords]);
 
   useEffect(() => {
     getAllCars(appliedFilters);
-  }, [appliedFilters, getAllCars, values, page]);
-
-  useEffect(() => {
-    dispatch(setFilter(values));
-  }, [values]);
-
-  useEffect(() => {
-    console.log("appliedFilters", appliedFilters);
-    dispatch(setAppliedFilters(appliedFilters));
-  }, [appliedFilters]);
+  }, [appliedFilters, values, getAllCars]);
 
 
   const validate = (fieldValues = values) => {

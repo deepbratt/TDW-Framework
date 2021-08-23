@@ -34,20 +34,24 @@ const Actions = () =>{
       ) => {
         setIsLoading(true);
         var formData = new FormData();
-        {
-          Image && formData.append("image", Image);
+        if(Image){
+          formData.append("image", Image);
         }
-        {
-          data.fullName && formData.append("firstName", data.fullName);
+        if(data.firstName){
+          formData.append("firstName", data.firstName);
         }
+        if(data.lastName){
+          formData.append("lastName", data.lastName);
+        }
+        if(data.gender){
+          formData.append("lastName", data.gender);
+        }
+
         {
           data.gender && formData.append("gender", data.gender);
         }
         {
           data.city && formData.append("city", data.city);
-        }
-        {
-          data.userName && formData.append("displayName", data.userName);
         }
         {
           date && formData.append("dateOfBirth", date);

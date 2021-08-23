@@ -26,7 +26,7 @@ export const paths = {
   profile: 'profile',
   verification: '/verification',
   carDetail: 'carDetail',
-  carComparision: 'carComparision',
+  carComparision: '/car-comparision',
   carShortlist: 'cars-shortlist',
   signup: 'signup',
   cars: 'cars',

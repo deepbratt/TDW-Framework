@@ -3,6 +3,7 @@ import Header from './Sections/Sections/Header/Header';
 import Footer from '../sections/Footer';
 import { FooterData } from '../Utils/constants/language/en/footerData';
 import { Colors } from '../Utils/constants/colors/colors';
+import GlobalStyles from '../globalStyles';
 export interface LayoutProps {
   children: React.ReactNode;
 }
@@ -13,6 +14,7 @@ export interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { flashWhite, textPrimary } = Colors;
+  const {header} = GlobalStyles();
 
   return (
     <div>
@@ -20,7 +22,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <Grid item xs={12}>
           <Header />
         </Grid>
-        <Grid style={{ marginTop: '80px' }} item xs={12} justify="center">
+        <Grid className={header} item xs={12} justify="center">
           {children}
         </Grid>
         <Grid item xs={12}>

@@ -37,12 +37,12 @@ const ShortListCard: React.FC<ShortListCardProps> = ({
           </IconButton>
         }
       />
-      <CardMedia>
-        <img src={productImg} alt={name} />
+      <CardMedia style={{maxHeight: "150px"}}>
+        <img height="150px" src={productImg} alt={name} />
       </CardMedia>
 
       <Typography
-        style={{ padding: "5px 10px", fontSize: "14px", lineHeight: "14px" }}
+        style={{ padding: "10px", fontSize: "16px", lineHeight: "16px" }}
         variant="h3"
         gutterBottom
       >

@@ -23,12 +23,12 @@ export const updateData = async (endpoint: string, requestBody?: object) => {
   }
 };
 
-export const getAllData = async (endpoint: string) => {
+export const getAllData = async (url: string, param: number | string) => {
   try {
-    const result = await axiosInstance.get(endpoint);
-    return result;
+    let result = await axiosInstance.get(`${url}${param}`);
+    return result.data;
   } catch (error) {
-    return error;
+    return error.response.data;
   }
 };
 

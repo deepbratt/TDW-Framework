@@ -12,6 +12,7 @@ import { isLoggedIn } from './Utils/hooks/actions';
 import Loader from './components/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from './redux/reducers/authSlice';
+import { RootState } from './redux/store';
 
 const generateClassName = createGenerateClassName({
   disableGlobal: true // or seed: 'something_unique' ?
@@ -21,7 +22,7 @@ function App() {
   const { USERS, CURENT_USER } = API_ENDPOINTS;
   const [isLoading, setisLoading] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector((state:any) => state.persistedReducer.auth.user)
+  const user = useSelector((state:RootState) => state.auth.user)
   const history = useHistory();
 
   useEffect(() => {

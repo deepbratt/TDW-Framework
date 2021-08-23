@@ -20,6 +20,11 @@ import TabComponent from '../../components/Tabs';
 export interface HomeProps {}
 
 const HomePage = () => {
+let open = true
+// if(open){
+//   return <Loader open={true} isBackdrop={false}/>
+// }
+
   return (
     <Grid container justifyContent="center">
       <Banner

@@ -3,13 +3,14 @@ import { setLayout } from "../../redux/reducers/layoutSlice";
 import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab";
 import ViewListRoundedIcon from "@material-ui/icons/ViewListRounded";
 import ViewModuleRoundedIcon from "@material-ui/icons/ViewModuleRounded";
+import { RootState } from "../../redux/store";
 
 export interface LayoutTogglerProps {}
 
 const LayoutToggler: React.FC<LayoutTogglerProps> = () => {
     const dispatch = useDispatch();
-    const layoutType = useSelector(
-      (state: any) => state.persistedReducer.layout.layoutType
+    const {layoutType} = useSelector(
+      (state: RootState) => state.layout
     );
     const handleChange = (
       event: React.MouseEvent<HTMLElement>,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useStyles } from './useStyles';
-import { useDispatch, connect } from 'react-redux';
+import { useDispatch,  useSelector } from 'react-redux';
 import {
   ListItem,
   List,
@@ -22,7 +22,7 @@ import pattern from '../../assets/pattern.png';
 import { Paths } from './paths';
 import { Colors } from '../../Utils/color.constants';
 import { logout } from '../../../../redux/reducers/authSlice';
-import { paths } from '../../../../routes/paths';
+import { paths, routes } from '../../../../routes/paths';
 import {
   LOGOUT,
   SIGNIN,
@@ -30,12 +30,11 @@ import {
   ADD_EDIT_CAR
 } from '../../../../Utils/constants/language/en/buttonLabels';
 import history from '../../../../routes/history';
-interface IHeaderProps {
-  isLoggedIn?: boolean;
-}
+import { RootState } from '../../../../redux/store';
 
-const HeaderContext = ({ isLoggedIn }: IHeaderProps) => {
+const HeaderContext = () => {
   const { logo, list, appbarsolid, root, rec, link, loginLink } = useStyles();
+  const {isLoggedIn} = useSelector((state:RootState)=>state.auth)
   const { white, black } = Colors;
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -60,7 +59,7 @@ const HeaderContext = ({ isLoggedIn }: IHeaderProps) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => history.push(paths.addEditCar)}>
+      <MenuItem onClick={() => history.push(routes.addEditCar.substr(0, routes.addEditCar.lastIndexOf('/')))}>
         {ADD_EDIT_CAR}
       </MenuItem>
       <MenuItem
@@ -99,7 +98,7 @@ const HeaderContext = ({ isLoggedIn }: IHeaderProps) => {
                 );
               })}
               <ListItem>
-                <CustomButton style={{ background: white, color: black }}>
+                <CustomButton style={{ background: white, color: black }} onClick={()=>history.push(routes.addEditCar.substr(0, routes.addEditCar.lastIndexOf('/')))}>
                   Post an Ad
                 </CustomButton>
               </ListItem>
@@ -143,8 +142,4 @@ const HeaderContext = ({ isLoggedIn }: IHeaderProps) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  isLoggedIn: state.persistedReducer.auth.isLoggedIn
-});
-
-export default connect(mapStateToProps)(HeaderContext);
+export default HeaderContext;

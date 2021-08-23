@@ -34,7 +34,7 @@ import { RootState } from '../../../../redux/store';
 
 const HeaderContext = () => {
   const { logo, list, appbarsolid, root, rec, link, loginLink } = useStyles();
-  const {isLoggedIn} = useSelector((state:RootState)=>state.auth)
+  const {isLoggedIn, user} = useSelector((state:RootState)=>state.auth)
   const { white, black } = Colors;
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -59,8 +59,8 @@ const HeaderContext = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => history.push(routes.addEditCar.substr(0, routes.addEditCar.lastIndexOf('/')))}>
-        {ADD_EDIT_CAR}
+      <MenuItem onClick={() => history.push(routes.dashboard.substr(0, routes.dashboard.lastIndexOf('/')+1)+"profile")}>
+        {paths.profile}
       </MenuItem>
       <MenuItem
         onClick={() => {

@@ -6,54 +6,29 @@ import {
   CardMedia,
   Typography,
 } from "@material-ui/core";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ListingCardStyles from "./styles1";
-import LocationIcon from "../../assets/icons/location.png";
-import { ICarCard } from "../../layout/Sections/Utils/types";
-import { FEATURED } from "../../Utils/constants/language/en/buttonLabels";
-import { Colors } from "../../Utils/constants/colors/colors";
-import CarImage from "../../assets/Cars/listingCard.jpg";
-import ConvertDate from "../convertDate";
 import { routes } from "../../routes/paths";
+import ListingCardStyles from "./styles";
+import LocationIcon from "../../assets/icons/location.png";
+import { ICarCard } from "../../Utils/interfaces/products.interface";
 export interface ListingCardProps {
-  data: any
+  data: ICarCard;
   layoutType: string;
-  span?: string;
-  isFavs?: boolean;
-  handleFavs?: (id: string) => void;
   handleClick?: Function;
-
 }
 
-const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,handleFavs, handleClick}) => {
+const ListingCard: React.FC<ListingCardProps> = ({
+  data,
+  layoutType,
+  handleClick,
+}) => {
   const history = useHistory();
 
-  const {
-    root,
-    grid,
-    featuredBadge,
-    yearPrice,
-    detailRoot,
-    details,
-    location,
-    favsIcon,
-    label,
-    favsIconGrid
-  } = ListingCardStyles();
-  const { red,grey} = Colors;
-
-  const favs = (id: string) => {
-    if (handleFavs) {
-      handleFavs(id);
-    }
-  };
-
-  const { _id, model,make, modelYear, mileage, engineType, engineCapacity, transmission, city, createdAt, price, image,  } = data;
-
+  const { root, grid, featuredBadge, location } = ListingCardStyles();
+  const { _id, model, modelYear, milage, engineType, engineCapacity, transmission, city, createdAt, price, image,  } = data;
+  
 
   return (
-    <>
-    <Card className={layoutType === "list" ? root : grid} onClick={() => {
+    <Card className={layoutType === "list" ? root : grid}  onClick={() => {
       handleClick
         ? handleClick()
         : history.push(routes.carDetail.substr(0, routes.carDetail.lastIndexOf('/')+1) + _id);
@@ -67,6 +42,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
               alignItems: "center",
               overflow: "hidden",
               maxHeight: "200px",
+              minHeight:"100%",
             }}
           >
             <img
@@ -74,7 +50,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
                 minWidth: "100%",
                 minHeight: "100%",
               }}
-              src={image && image[0]}
+              src={image[0]}
               alt=""
             />
           </CardMedia>
@@ -88,30 +64,22 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
               direction="column"
               justify="space-between"
             >
-              {/* {isFeatured ? (
+              {/* // * We are not using it for now */}
+              {/* {false ? (
                 <span className={featuredBadge}>
                   <Typography variant="body2">{FEATURED}</Typography>
                 </span>
               ) : null} */}
-               {isFavs || isFavs ? (
-                    <button
-                      onClick={() => {
-                        favs(_id?_id:"")
-                       
-                      }}
-                      className={layoutType === "list" ? favsIcon : favsIconGrid}
-                      style={isFavs || isFavs ? {color: red} : {color: grey}}
-                    >
-                      <FavoriteIcon />
-                    </button>
-                  ) :  null}
               <Grid item container justify="space-between" xs={12}>
                 <Grid item>
-                  <Typography variant="h5">{modelYear}</Typography>
+                  <Typography variant="h5">{new Date(createdAt).toLocaleDateString("en-PK")}</Typography>
                 </Grid>
                 <Grid item>
                   <Typography color="secondary" variant="h4">
-                  {price && `PKR ${price?.toLocaleString()}`}
+                    PKR{" "}
+                    {price.toLocaleString(navigator.language, {
+                      minimumFractionDigits: 0,
+                    })}
                   </Typography>
                 </Grid>
               </Grid>
@@ -120,9 +88,9 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
                   <Typography
                     variant="h3"
                     style={{ cursor: "pointer" }}
-                    onClick={() => history.push(`/car-details/${_id}`)}
+                   
                   >
-                       {`${make} ${model}`}
+                    {model}
                   </Typography>
                 </Grid>
                 <Grid item container xs={12} spacing={1} justify="flex-start">
@@ -141,7 +109,9 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
                       variant="body2"
                       component="span"
                     >
-                      {mileage?.toLocaleString()}
+                      {milage.toLocaleString(navigator.language, {
+                        minimumFractionDigits: 0,
+                      })}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -150,7 +120,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
                       variant="body2"
                       component="span"
                     >
-                          {engineType}
+                      {engineType}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -159,7 +129,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
                       variant="body2"
                       component="span"
                     >
-                         {`${engineCapacity} cc`}
+                      {`${engineCapacity} cc`}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -168,7 +138,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
                       variant="body2"
                       component="span"
                     >
-                       {transmission}
+                      {transmission}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -179,13 +149,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
                       <Typography variant="subtitle2">{city}</Typography>
                     </span>
                     <span>
-                      <Typography variant="subtitle2"> {span ? (
-                          <span className={label}>{`${span} ${ConvertDate(
-                            createdAt
-                          )}`}</span>
-                        ) : (
-                          ConvertDate(createdAt)
-                        )}</Typography>
+                      <Typography variant="subtitle2">{new Date(createdAt).toLocaleDateString("en-PK")}</Typography>
                     </span>
                   </div>
                 </Grid>
@@ -195,7 +159,6 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
         </Grid>
       </Grid>
     </Card>
-</>
   );
 };
 

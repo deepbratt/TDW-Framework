@@ -16,7 +16,7 @@ import {
   CircularProgress
 } from "@material-ui/core";
 import FilterListRoundedIcon from "@material-ui/icons/FilterListRounded";
-import ListingCard from "../../components/ListingCard";
+import ListingCard from "../../components/ListingCard/";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import CarFilters from "../../sections/VerticalCarFilters";
 import { SortRounded } from "@material-ui/icons";

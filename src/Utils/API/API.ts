@@ -47,7 +47,7 @@ export const deleteData = async (endpoint: string) => {
   }
 };
 
-export const getAllData = async (url: string, param: number | string) => {
+export const getAllData = async (url: string, param: number | string = "") => {
   try {
     let result = await axiosInstance.get(`${url}${param}`);
     return result.data;

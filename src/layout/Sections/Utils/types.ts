@@ -32,7 +32,7 @@ interface IArray {
 
   export interface ICarCard {
     model?: string;
-    year?: string;
+    modelYear?: string;
     date: string;
     engineType?: string;
     engineCapacity?: number;
@@ -43,7 +43,7 @@ interface IArray {
     name?: string;
     image?: string[];
     images?: string[];
-    milage?: number;
+    mileage?: number;
     bodyType?: string;
     bodyColor?: string;
     brand?: string;
@@ -59,6 +59,7 @@ interface IArray {
     _id?: string;
     isFav?: boolean;
     assembly?: string
+    createdAt: string
   }
 
   

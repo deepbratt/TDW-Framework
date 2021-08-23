@@ -14,11 +14,10 @@ interface RouterProps {
   _sId: string;
 }
 
-
 interface IData {
   data: {
-    result: ICarCard[]
-  }
+    result: ICarCard[];
+  };
 }
 
 const CarComparision = () => {
@@ -31,40 +30,37 @@ const CarComparision = () => {
     message: ''
   });
 
-    
   const { iceBlue } = Colors;
 
   const getAllCars = useCallback(async () => {
-    let params = `?_id=${_fId}&_id=${_sId}`
+    let params = `?_id=${_fId}&_id=${_sId}`;
     await getAllData(ADS + CARS, params)
-    .then((response) => {
-      console.log('response', response);
-      setIsLoading(false);
-      if (response.status === 'success') {     
-        setResponseData(response);
+      .then((response) => {
+        console.log('response', response);
+        setIsLoading(false);
+        if (response.status === 'success') {
+          setResponseData(response);
+          setResponseMessage({
+            status: response.status,
+            message: response.message
+          });
+        } else {
+          setIsLoading(false);
+          setResponseMessage({
+            status: 'error',
+            message: response.message
+          });
+        }
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.log('Error log', error);
         setResponseMessage({
-          status: response.status,
-          message: response.message
+          status: error.status,
+          message: error.message
         });
-      } else {
-        setIsLoading(false); 
-        setResponseMessage({
-          status: 'error',
-          message: response.message
-        });
-      }
-    })
-    .catch((error) => {
-      setIsLoading(false);
-      console.log('Error log', error);
-      setResponseMessage({
-        status: error.status,
-        message: error.message
       });
-    });
   }, []);
-
-
 
   useEffect(() => {
     getAllCars();
@@ -80,7 +76,9 @@ const CarComparision = () => {
       ) : (
         <Grid style={{ marginBottom: '80px' }} item xs={12}>
           <Section backColor={iceBlue}>
-            {responseData?.data.result && <Table data={responseData?.data.result} />}
+            {responseData?.data.result && (
+              <Table data={responseData?.data.result} />
+            )}
           </Section>
         </Grid>
       )}

@@ -32,11 +32,6 @@ const EnhancedTable: React.FC<IProps> = ({
           </TableBody>
         </Table>
       </TableContainer>
-      <section className={options}>
-        <CustomButton styles={btn} endIcon={<ArrowDropDownIcon />}>
-          <span style={{ marginBottom: '10px' }}>{moreBtn}</span>
-        </CustomButton>
-      </section>
     </>
   );
 };

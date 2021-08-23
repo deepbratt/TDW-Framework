@@ -12,9 +12,10 @@ import {
 import CustomTitle from '../../../../components/CustomTitle/CustomTitle';
 import { Colors } from '../../Utils/color.constants';
 import { ICarCard } from '../../../../Utils/interfaces/products.interface';
+import Banner from './Banner';
 
 interface IData {
-  data: ICarCard[]
+  data: ICarCard[];
 }
 
 const Container = ({ data }: IData) => {
@@ -25,6 +26,9 @@ const Container = ({ data }: IData) => {
       <Grid style={{ paddingTop: '30px' }} item xs={12}>
         <Grid style={{ borderBottom: `5px solid ${blue}` }} item xs={12}>
           <CustomTitle color={black} text={heading} />
+        </Grid>
+        <Grid item xs={12}>
+          <Banner data={data} />
         </Grid>
         <Grid item xs={12}>
           <Table

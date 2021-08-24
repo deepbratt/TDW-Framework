@@ -51,7 +51,7 @@ export const routes = {
   postAd: '/post-an-ad',
   profile: '/dashboard/:id',
   verification: '/verification/:method?',
-  cars: '/cars/:filters?',
+  cars: '/cars/:city?',
   forgotPassword: '/forgot-password/:token?',
   resetPassword: '/reset-password/:token',
   addEditCar: '/add-edit/car/:id?'

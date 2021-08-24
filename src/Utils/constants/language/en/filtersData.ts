@@ -52,18 +52,14 @@ export const Carfilters = {
 };
 
 export const sortingOptions = [
-  { value: "-price", label: "Price: Low to High" },
-  { value: "price", label: "Price: High to Low" },
-  { value: "recent", label: "recent" },
-  { value: "oldest", label: "oldest" },
-  { value: "used", label: "Used" },
-  { value: "new", label: "New" },
+  { value: "price", label: "Price: Low to High" },
+  { value: "-price", label: "Price: High to Low" },
+  { value: "-createdAt", label: "Ad Date: Recent First" },
+  { value: "createdAt", label: "Ad Date: Oldest First" },
 ];
 
-export const deliveryOptions = [
-  { value: "most_popular", label: "most popular" },
-  { value: "recent", label: "recent" },
-  { value: "oldest", label: "oldest" },
-  { value: "used", label: "Used" },
-  { value: "new", label: "New" },
+export const conditionOptions = [
+  { value: "excellent", label: "Excellent" },
+  { value: "good", label: "Good" },
+  { value: "bad", label: "Bad" },
 ];

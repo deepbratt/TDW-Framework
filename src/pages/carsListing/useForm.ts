@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useCallback } from "react";
-import {useDispatch,  useSelector} from "react-redux";
-import { API_ENDPOINTS } from "../../Utils/API/endpoints";
-import { setAppliedFilters, setFilter } from "../../redux/reducers/carFiltersSlice";
-import { getAllData } from "../../Utils/API/API";
-import useValidation from "../../Utils/hooks/useValidation";
-import { ICarCard } from "../../Utils/interfaces/products.interface";
+import React, { useState, useEffect } from 'react';
+// import {useDispatch,  useSelector} from "react-redux";
+import { API_ENDPOINTS } from '../../Utils/API/endpoints';
+// import { setAppliedFilters, setFilter } from "../../redux/reducers/carFiltersSlice";
+import { getAllData } from '../../Utils/API/API';
+import useValidation from '../../Utils/hooks/useValidation';
+import { ICarCard } from '../../Utils/interfaces/products.interface';
+// import { useParams } from "react-router";
 
 const initialValues: any = {
-  keywords: "",
+  keywords: '',
   // priceFrom: 0,
   // priceTo: 0,
   // priceRange: [0, 50000000],
@@ -31,35 +32,42 @@ const initialValues: any = {
   videoAvailability: false,
   sellerType: [],
   adType: [],
-  // sortingOptions: "",
+  sort: '',
+  condition: ""
 };
 
 interface IData {
   data: {
-    result: ICarCard[]
-  }
+    result: ICarCard[];
+  };
+  totalCount: number
 }
 
 export const useForm = (validateOnChange = true) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  // const {city} = useParams<any>();
   // const appliedFiltersFromStore = useSelector((state: any) => state.persistedReducer.carFilters.appliedFilters);
   const { ADS, CARS } = API_ENDPOINTS;
   const [values, setValues] = useState(initialValues);
   const [page, setPage] = useState(1);
-  const [keywords, setKeywords] = useState("");
+  const [pageCount, setPageCount] = useState<number>(1);
+  const [keywords, setKeywords] = useState('');
   const [appliedFilters, setAppliedFilters] = useState<string[]>([]);
-
-  const handlePageChange = (e: any, value: any) => {
-    setPage(value);
-  };
   const [isLoading, setIsLoading] = useState(false);
   const [responseData, setResponseData] = useState<IData>();
+  const [result, setResult] = useState<ICarCard[]>([]);
+  const [queryParams, setQueryParams] = useState<string>('');
   const { validate, errors, setErrors } = useValidation(values);
   const [responseMessage, setResponseMessage] = useState({
     status: '',
     message: ''
   });
 
+  const handlePageChange = (e: any, value: any) => {
+    setPage(value);
+  };
+
+  // eslint-disable-next-line
   function inArray(needle: string, haystack: []) {
     var length = haystack.length;
     for (var i = 0; i < length; i++) {
@@ -68,139 +76,106 @@ export const useForm = (validateOnChange = true) => {
     return false;
   }
 
-  const getAllCars = useCallback(async (appliedFilters: any) => {
-    let params = new URLSearchParams();
-    params.append("limit", "10");
-    params.append("page", page.toString());
-    if(inArray("keywords", appliedFilters)) {
-      console.log("values keywords in handler", keywords)
-      params.append("keywords", keywords)
-    }else{
-      params.delete("keywords")
+  const getAllCars = async (appliedFilters: any) => {
+    let params = `limit=10&page=${page.toString()}`;
+    if (appliedFilters.indexOf('sort') > -1) {
+      params += '&sort=' + values.sort;
     }
-    if(inArray("pictureAvailability", appliedFilters)) {
-      params.append("pictureAvailability",values.pictureAvailability )
-    }else{
-      params.delete("pictureAvailability")
+    if (appliedFilters.indexOf('condition') > -1) {
+      params += '&condition=' + values.condition;
     }
-    if(inArray("videoAvailability", appliedFilters)) {
-      params.append("videoAvailability",values.videoAvailability )
-    }else{
-      params.delete("videoAvailability")
+    if (appliedFilters.indexOf('keywords') > -1) {
+      params += '&keyword=' + keywords;
     }
-    if(inArray("sortingOptions", appliedFilters)) {
-      params.append("sort",values.sortingOptions )
-    }else{
-      params.delete("sort")
-    }
-    
-   
-    values.city.forEach((city: any) => {
-      if(inArray("city", appliedFilters)) {
-       params.append("city",city )
-      }else{
-        params.delete("city")
-      }
-    })
-    values.province.forEach((province: any) => {
-      console.log("filter", inArray("province", appliedFilters))
-      if(inArray("province", appliedFilters)) {
-        params.append("province",province )
-      }else{
-        params.delete("province")
-      }
-    })
-    values.registrationCity.forEach((registrationCity: any) => {
-      if(inArray("registrationCity", appliedFilters)) {
-       params.append("registrationCity",registrationCity )
-      }else{
-        params.delete("registrationCity")
-      }
-    })
-    values.transmission.forEach((transmission: any) => {
-      if(inArray("transmission", appliedFilters)) {
-        params.append("transmission",transmission )
-      }else{
-        params.delete("transmission")
-      }
-    })
-    values.engineType.forEach((engineType: any) => {
-      if(inArray("engineType", appliedFilters)) {
-        params.append("engineType",engineType )
-      }else{
-        params.delete("engineType")
-      }
-    })
-    values.color.forEach((color: any) => {
-      if(inArray("color", appliedFilters)) {
-      params.append("color",color )
-      }else{
-        params.delete("color")
-      }
-    })
-    values.bodyType.forEach((bodyType: any) => {
-      if(inArray("bodyType", appliedFilters)) {
-        params.append("bodyType",bodyType )
-      }else{
-        params.delete("bodyType")
-      }
-    })
-    values.sellerType.forEach((sellerType: any) => {
-      if(inArray("sellerType", appliedFilters)) {
-        params.append("sellerType",sellerType )
-      }else{
-        params.delete("sellerType")
-      }
-    })
-    values.adType.forEach((adType: any) => {
-      if(inArray("adType", appliedFilters)) {
-        params.append("adType",adType )
-      }else{
-        params.delete("adType")
-      }
-    })
-
-    console.log("queryParams", params);
-    await getAllData(ADS + CARS +  params)
-    .then((response) => {
-      console.log('response', response);
-      setIsLoading(false);
-      if (response.status === 'success') {
-        setResponseData(response);
-        setResponseMessage({
-          status: response.status,
-          message: response.message
-        });
-      } else {
-        setIsLoading(false);
-        setResponseMessage({
-          status: 'error',
-          message: response.message
-        });
-      }
-    })
-    .catch((error) => {
-      setIsLoading(false);
-      console.log('Error log', error);
-      setResponseMessage({
-        status: error.status,
-        message: error.message
+    if (appliedFilters.indexOf('province') > -1) {
+      values.province.map((item: string) => {
+        params += '&province=' + item;
       });
-    });
-  }, []);
-
-
-  useEffect(() => {
-    getAllCars(appliedFilters);
-  }, [appliedFilters, values, getAllCars]);
-
+    }
+    if (appliedFilters.indexOf('city') > -1) {
+      values.city.map((item: string) => {
+        params += '&city=' + item;
+      });
+    }
+    if (appliedFilters.indexOf('registrationCity') > -1) {
+      values.registrationCity.map((item: string) => {
+        params += '&registrationCity=' + item;
+      });
+    }
+    if (appliedFilters.indexOf('transmission') > -1) {
+      values.transmission.map((item: string) => {
+        params += '&transmission=' + item;
+      });
+    }
+    if (appliedFilters.indexOf('engineType') > -1) {
+      values.engineType.map((item: string) => {
+        params += '&engineType=' + item;
+      });
+    }
+    if (appliedFilters.indexOf('color') > -1) {
+      values.color.map((item: string) => {
+        params += '&color=' + item;
+      });
+    }
+    if (appliedFilters.indexOf('bodyType') > -1) {
+      values.bodyType.map((item: string) => {
+        params += '&bodyType=' + item;
+      });
+    }
+    if (appliedFilters.indexOf('sellerType') > -1) {
+      values.sellerType.map((item: string) => {
+        params += '&sellerType=' + item;
+      });
+    }
+    if (appliedFilters.indexOf('adType') > -1) {
+      values.adType.map((item: string) => {
+        params += '&adType=' + item;
+      });
+    }
+    // if(appliedFilters.indexOf("pictureAvailability") > -1) {
+    //   params+="&pictureAvailability="+values.pictureAvailability
+    // }
+    // if(appliedFilters.indexOf("videoAvailability") > -1) {
+    //   params+="&videoAvailability="+values.videoAvailability
+    // }
+    console.log('queryParams', params);
+    setQueryParams(params);
+    await getAllData(ADS + CARS + params)
+      .then((response) => {
+        console.log('response', response);
+        setIsLoading(false);
+        if (response.status === 'success') {
+          setResponseData(response);
+          setPageCount(response.totalCount < 10 ? 1 : Math.round(response.totalCount / 10));
+          setResult(response.data.result);
+          setResponseMessage({
+            status: response.status,
+            message: response.message
+          });
+        } else {
+          setIsLoading(false);
+          setResponseMessage({
+            status: 'error',
+            message: response.message
+          });
+        }
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.log('Error log', error);
+        setResponseMessage({
+          status: error.status,
+          message: error.message
+        });
+      });
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setValues({
       ...values,
-      [name]: value,
+      [name]: value
     });
     if (validateOnChange) validate({ [name]: value });
     if (values[name] !== value) {
@@ -213,7 +188,7 @@ export const useForm = (validateOnChange = true) => {
   const handleTextBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setKeywords(value);
-  }
+  };
 
   const handleCheckboxChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -224,7 +199,7 @@ export const useForm = (validateOnChange = true) => {
       temp.push(e.target.name);
     } else {
       temp = temp.filter((item: string) => item !== e.target.name);
-      console.log("temp", temp)
+      console.log('temp', temp);
     }
     setValues({ ...values, [filterName]: temp });
     if (e.target.checked) {
@@ -241,7 +216,7 @@ export const useForm = (validateOnChange = true) => {
 
     setValues({
       ...values,
-      [name]: checked,
+      [name]: checked
     });
     if (validateOnChange) validate({ [name]: checked });
     if (e.target.checked) {
@@ -258,19 +233,11 @@ export const useForm = (validateOnChange = true) => {
     setAppliedFilters(
       appliedFilters.filter((filter: string) => filter !== filterName)
     );
-    console.log("filter name", filterName);
     let tempVal: any = values;
     tempVal[filterName] = initialValues[filterName];
-    if (typeof tempVal[filterName] === typeof [""]) {
+    if (typeof tempVal[filterName] === typeof ['']) {
       tempVal[filterName] = [];
     }
-    console.log(
-      "tempVal",
-      tempVal,
-      tempVal[filterName],
-      initialValues,
-      typeof filterName
-    );
     setValues(tempVal);
     // setValues({ ...values, [filterName]: initialValues[filterName] });
   };
@@ -280,18 +247,21 @@ export const useForm = (validateOnChange = true) => {
     setErrors({});
   };
 
-  const handleSubmit = async () => {
-    console.log("btn clicked", values);
+  const handleSubmit = () => {
+    getAllCars(appliedFilters);
   };
 
   const handleTextBoxSubmit = (name: any, value: any) => {
     if (!appliedFilters.includes(name)) {
-        setAppliedFilters([...appliedFilters, name]);
-      }
-    if(keywords === ""){     
-      setErrors({...errors, [name]: "This Field is required"})
+      setAppliedFilters([...appliedFilters, name]);
     }
-  }
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    getAllCars(appliedFilters);
+    // eslint-disable-next-line
+  }, [values, page, appliedFilters]);
 
   return {
     values,
@@ -299,12 +269,16 @@ export const useForm = (validateOnChange = true) => {
     errors,
     setErrors,
     page,
+    pageCount,
+    result,
+    setResult,
     handlePageChange,
     handleInputChange,
     handleCheckboxChange,
     handleSingleCheckBoxChange,
     handleTextBoxChange,
-    keywords, setKeywords,
+    keywords,
+    setKeywords,
     handleTextBoxSubmit,
     appliedFilters,
     setAppliedFilters,
@@ -315,5 +289,6 @@ export const useForm = (validateOnChange = true) => {
     isLoading,
     responseData,
     responseMessage,
+    getAllCars
   };
 };

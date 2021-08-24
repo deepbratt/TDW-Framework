@@ -34,7 +34,7 @@ const CarComparision = () => {
 
   const getAllCars = useCallback(async () => {
     let params = `?_id=${_fId}&_id=${_sId}`;
-    await getAllData(ADS + CARS, params)
+    await getAllData(ADS + CARS + params)
       .then((response) => {
         console.log('response', response);
         setIsLoading(false);

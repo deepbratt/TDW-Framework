@@ -14,7 +14,7 @@ export interface IInitialState {
     videoAvailability: boolean;
     sellerType: string[];
     adType: string[];
-  }
+  },
   appliedFilters: []
 }
 

@@ -44,7 +44,7 @@ const SideBar = () => {
 
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(
-    (state: any) => state.persistedReducer.auth.isLoggedIn
+    (state: any) => state.auth.isLoggedIn
   );
 
   return (

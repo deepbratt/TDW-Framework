@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import CustomButton from "../../../../components/CustomButton";
 import CustomTitle from "../../../../components/CustomTitle/CustomTitle";
 import SearchSelect from "../../../../components/SearchSelect/SearchSelect";
-import bannerStyles from "./bannerStyles";
+import bannerStyles from "./bannerStyles2";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import Fab from "@material-ui/core/Fab";
@@ -11,6 +11,7 @@ import { Link } from "react-scroll";
 import { useHooks } from "./useHooks";
 import { Colors } from "../../Utils/color.constants";
 import { NavLink } from "react-router-dom";
+import { routes } from "../../../../routes/paths";
 
 interface IBanner {
   Title: string;
@@ -33,7 +34,7 @@ const Banner: React.FC<IBanner> = ({
   carModel,
 }) => {
   const { root, fab, grid, btn } = bannerStyles();
-  const { val, setVal,handleChange,handleNavigation} = useHooks();
+  const { val, setVal } = useHooks();
   const { white, cherry, lightGrey } = Colors;
 
   return (
@@ -55,14 +56,12 @@ const Banner: React.FC<IBanner> = ({
           />
         </Grid>
         <Grid style={{marginTop: "20px"}} item lg={12}>
-          <SearchSelect
+          {/* <SearchSelect
             setVal={setVal}
             val={val}
             range={range}
             carModel={carModel}
-            handleChange={handleChange}
-            handleNavigation={handleNavigation}
-          />
+          /> */}
         </Grid>
         <Grid className={grid} item lg={4} md={5} xs={9}>
           <Link to="category" spy={true} smooth={true}>
@@ -77,7 +76,7 @@ const Banner: React.FC<IBanner> = ({
               {category}
             </CustomButton>
           </Link>
-          <NavLink className={btn} to="/search-used-cars">
+          <NavLink className={btn} to={routes.cars.substr(0, routes.cars.lastIndexOf('/'))}>
             <CustomButton
               style={{ color: white, border: `1px solid ${white}` }}
               variant="outlined"

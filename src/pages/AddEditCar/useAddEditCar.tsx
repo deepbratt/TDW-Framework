@@ -364,7 +364,7 @@ const useAddEditCar = () => {
           setToastType('error');
           setToastOpen(true);
         } else {
-          setToastMessage(response.data.message);
+          setToastMessage(response.message);
           setToastType('error');
           setToastOpen(true);
         }

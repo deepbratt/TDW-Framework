@@ -37,8 +37,8 @@ const CarDetailContainer = () => {
 
 
   return (
-    <Grid style={{ display: "flex", justifyContent: "center" }} container>
       <Section>
+    <Grid style={{ display: "flex", justifyContent: "center" }} container>
         {isLoading || !obj ? (
           <h1 className={loader}><CircularProgress/></h1>
         ) : (
@@ -103,8 +103,8 @@ const CarDetailContainer = () => {
             </Hidden>
           </>
         )}
-      </Section>
     </Grid>
+      </Section>
   );
 };
 

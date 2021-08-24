@@ -40,7 +40,7 @@ export const paths = [{
     icon: icon3
 },
 {
-    title: "Shortlist Items",
+    title: "Favorites",
     path: "/dashboard/favorites",
     icon: icon4
 },

@@ -42,6 +42,7 @@ const Container = () => {
 
   useEffect(() => {
     loadAllData(getFavs, currentPage);
+    console.log(data)
   }, [currentPage]);
 
   const {layoutType} = useSelector(
@@ -67,22 +68,29 @@ const Container = () => {
         </section>
         {isLoading ? (
           <h2 className={loading}><CircularProgress/></h2>
-        ) : data.length === 0 ? <Typography variant="h2">No Result Found</Typography> :(
+        ) : data.length === 0 ? <Typography variant="h2" className={loading}>No Result Found</Typography> :(
           <Grid className={favContainer} item xs={12}>
             <Grid item xs={12}>
               <Typography style={{ textAlign: "center" }} variant="h2">
                 {favTitle}
               </Typography>
               </Grid>
-              <Grid item lg={layoutType === "list" ? 12 : 6} xs={12} sm={10}>
-              <LayoutToggler />
-              <CarListing
-                data={data}
-                layoutType={layoutType}
-                isFavs={isFavs}
-                handleFavs={handleFavs}
-              />
-            </Grid>
+              <Grid item container lg={12} xs={12} sm={10} spacing={2}>
+                <Grid item xs={12} lg={12}>
+                  <LayoutToggler />
+                </Grid>
+                {data.map((item:any, index:number)=>(
+                  <Grid item lg={layoutType === "list" ? 12 : 6} xs={12} sm={10}>
+                    <CarListing
+                      data={item}
+                      layoutType={layoutType}
+                      isFavs={isFavs}
+                      handleFavs={handleFavs}
+                      handleClick={()=>console.log("")}
+                      />
+                  </Grid>
+                ))}
+              </Grid>
        
             <Toast
               open={open}

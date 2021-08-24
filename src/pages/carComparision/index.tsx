@@ -1,7 +1,7 @@
 import Table from "../../layout/Sections/Sections/Table/Container"
 import {Grid} from "@material-ui/core"
 import Section from '../../components/index'
-import Actions from "./useFunctions1";
+import Actions from "./useFunctions";
 import { useParams } from "react-router-dom";
 import {Colors} from "../../Utils/constants/colors/colors"
 

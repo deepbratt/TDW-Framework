@@ -34,8 +34,8 @@ const TableRows = ({ items, array }: any) => {
           </TableRow>
           <TableRow>
             <TableCell className={cell}>{array[5]}</TableCell>
-            <TableCell className={cell}>{items[0].year}</TableCell>
-            <TableCell className={cell}>{items[1].year}</TableCell>
+            <TableCell className={cell}>{items[0].modelYear}</TableCell>
+            <TableCell className={cell}>{items[1].modelYear}</TableCell>
           </TableRow>
         </>
       )}

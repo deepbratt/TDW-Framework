@@ -11,7 +11,6 @@ import { Link } from "react-scroll";
 import { useHooks } from "./useHooks";
 import { Colors } from "../../Utils/color.constants";
 import { NavLink } from "react-router-dom";
-import { routes } from "../../../../routes/paths";
 
 interface IBanner {
   Title: string;
@@ -34,7 +33,7 @@ const Banner: React.FC<IBanner> = ({
   carModel,
 }) => {
   const { root, fab, grid, btn } = bannerStyles();
-  const { val, setVal } = useHooks();
+  const { val, setVal,handleChange,handleNavigation} = useHooks();
   const { white, cherry, lightGrey } = Colors;
 
   return (
@@ -61,6 +60,8 @@ const Banner: React.FC<IBanner> = ({
             val={val}
             range={range}
             carModel={carModel}
+            handleChange={handleChange}
+            handleNavigation={handleNavigation}
           />
         </Grid>
         <Grid className={grid} item lg={4} md={5} xs={9}>
@@ -76,7 +77,7 @@ const Banner: React.FC<IBanner> = ({
               {category}
             </CustomButton>
           </Link>
-          <NavLink className={btn} to={routes.cars.substr(0, routes.cars.lastIndexOf('/'))}>
+          <NavLink className={btn} to="/search-used-cars">
             <CustomButton
               style={{ color: white, border: `1px solid ${white}` }}
               variant="outlined"

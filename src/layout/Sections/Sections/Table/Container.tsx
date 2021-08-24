@@ -13,6 +13,8 @@ import CustomTitle from '../../../../components/CustomTitle/CustomTitle';
 import { Colors } from '../../Utils/color.constants';
 import { ICarCard } from '../../../../Utils/interfaces/products.interface';
 import Banner from './Banner';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 interface IData {
   data: ICarCard[];
@@ -20,7 +22,16 @@ interface IData {
 
 const Container = ({ data }: IData) => {
   const { black, blue } = Colors;
-
+  const [features, setFeatures] = useState<any>([])
+  useEffect(()=>{
+    let temp1 = data[0].features
+    let temp2 = data[1].features
+    let oneArray = [...temp1, ...temp2]
+    let uniqueArray = oneArray.filter(function(item, pos) {
+          return oneArray.indexOf(item) === pos;
+        })
+    setFeatures(uniqueArray)
+  },[])
   return (
     <Grid container>
       <Grid style={{ paddingTop: '30px' }} item xs={12}>
@@ -38,7 +49,7 @@ const Container = ({ data }: IData) => {
             subTitle={subTitle}
             moreBtn={moreBtn}
             lessBtn={lessBtn}
-            collapsedArray={collapsedArray}
+            collapsedArray={features}
           />
         </Grid>
       </Grid>

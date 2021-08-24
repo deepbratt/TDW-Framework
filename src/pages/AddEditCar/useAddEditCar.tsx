@@ -131,9 +131,9 @@ const useAddEditCar = () => {
 
   const getData = useCallback(() => {
     setIsLoading(true);
-    getAllData(`${API_ENDPOINTS.ADS}/${API_ENDPOINTS.CARS}/${id}`).then((response) => {
-      if (response && response.data && response.data.status === 'success') {
-        let result = response.data.data.result;
+    getAllData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/${id}`).then((response) => {
+      if (response && response.data && response.status === 'success') {
+        let result = response.data.result;
         // if(result.createdBy._id !== user._id){
         //   console.log('phans gaye')
         //   // history.push('/')
@@ -205,7 +205,7 @@ const useAddEditCar = () => {
   const handleDeleteAd = () => {
     setIsLoading(true);
     setDeleteDialog(false);
-    deleteData(`${API_ENDPOINTS.ADS}/${API_ENDPOINTS.CARS}/${id}`).then((response) => {
+    deleteData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/${id}`).then((response) => {
       setIsLoading(false)
       if (response && response.data && response.data.status === 'success') {
           setToastMessage(response.data.message);
@@ -289,7 +289,7 @@ const useAddEditCar = () => {
         return { ...requiredError, images: !secondStepValidated };
       });
       if (!secondStepValidated) {
-        return false;
+        //return false; //uncomment this line to put make images mandatory/required
       }
     } else {
       if (!checkValidation(initialRequireError_2)) {
@@ -307,8 +307,8 @@ const useAddEditCar = () => {
     fd.append('city', formData.city);
     fd.append('province', formData.province);
     fd.append('location.address', formData.location.address);
-    fd.append('location.coordinate.lat', formData.location.coordinate.lat);
-    fd.append('location.coordinate.long', formData.location.coordinate.long);
+    fd.append('location.coordinates.lat', formData.location.coordinate.lat);
+    fd.append('location.coordinates.long', formData.location.coordinate.long);
     let StringUrls = 0;
     for (let i = 0; i < formData.images.length; i++) {
       if (typeof formData.images[i] === typeof 'string') {
@@ -364,7 +364,7 @@ const useAddEditCar = () => {
           setToastType('error');
           setToastOpen(true);
         } else {
-          setToastMessage(response.data.message);
+          setToastMessage(response.message);
           setToastType('error');
           setToastOpen(true);
         }

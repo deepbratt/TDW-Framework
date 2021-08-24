@@ -16,7 +16,7 @@ import {
   CircularProgress
 } from "@material-ui/core";
 import FilterListRoundedIcon from "@material-ui/icons/FilterListRounded";
-import ListingCard from "../../components/ListingCard";
+import ListingCard from "../../components/ListingCard/";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import CarFilters from "../../sections/VerticalCarFilters";
 import { SortRounded } from "@material-ui/icons";
@@ -40,6 +40,7 @@ import { paths } from "../../routes/paths";
 import { useHistory } from "react-router";
 import Section from "../../components";
 import { ICarCard } from "../../Utils/interfaces/products.interface";
+import { RootState } from "../../redux/store";
 
 export interface ShortlistItemProps {}
 
@@ -70,8 +71,8 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
     setOpen(false);
   };
 
-  const layoutType = useSelector(
-    (state: any) => state.persistedReducer.layout.layoutType
+  const {layoutType} = useSelector(
+    (state: RootState) => state.layout
   );
   return (
     <Section>

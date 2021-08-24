@@ -36,7 +36,7 @@ export const paths = [{
 },
 {
     title: "Comparison",
-    path: "/",
+    path: "/cars-shortlist",
     icon: icon3
 },
 {
@@ -49,16 +49,16 @@ export const paths = [{
     path: "/dashboard/ads",
     icon: icon5
 },
-{
-    title: "Booked Items",
-    path: "/",
-    icon: icon6
-},
-{
-    title: "Buyer Request",
-    path: "/",
-    icon: icon7
-},
+// {
+//     title: "Booked Items",
+//     path: "dashboard/bookings",
+//     icon: icon6
+// },
+// {
+//     title: "Buyer Request",
+//     path: "dashboard/buyRequests",
+//     icon: icon7
+// },
 {
     title: "Help",
     path: "/dashboard/help",

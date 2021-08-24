@@ -66,14 +66,20 @@ const Container = () => {
                 {adsTitle}
               </Typography>
             </Grid>
-            <Grid item lg={layoutType === "list" ? 12 : 6} xs={12} sm={10}>
-              <LayoutToggler />
-              <CarListing
-                data={data}
-                layoutType={layoutType}
-                isFavs={false}
-                span={createdAt}
-              />
+            <Grid item container lg={12} xs={12} sm={10} spacing={2}>
+              <Grid item xs={12} lg={12}>
+                <LayoutToggler />
+              </Grid>
+              {data.map((item:any, index:number)=>(
+                <Grid item lg={layoutType === "list" ? 12 : 6} xs={12} sm={10}>
+                  <CarListing
+                    data={item}
+                    layoutType={layoutType}
+                    isFavs={false}
+                    span={createdAt}
+                  />
+                </Grid>
+              ))}
             </Grid>
           </Grid>
         )}

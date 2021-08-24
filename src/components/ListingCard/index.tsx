@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import ListingCardStyles from "./styles1";
+import ListingCardStyles from "./styles";
 import LocationIcon from "../../assets/icons/location.png";
 import { ICarCard } from "../../layout/Sections/Utils/types";
 import { FEATURED } from "../../Utils/constants/language/en/buttonLabels";
@@ -53,7 +53,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
 
   return (
     <>
-    <Card className={layoutType === "list" ? root : grid} onClick={() => {
+    <Card className={layoutType === "list" ? root : grid} style={{cursor:"pointer"}} onClick={() => {
       handleClick
         ? handleClick()
         : history.push(routes.carDetail.substr(0, routes.carDetail.lastIndexOf('/')+1) + _id);
@@ -120,7 +120,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
                   <Typography
                     variant="h3"
                     style={{ cursor: "pointer" }}
-                    onClick={() => history.push(`/car-details/${_id}`)}
+                    // onClick={() => history.push(`/car-detail/${_id}`)}
                   >
                        {`${make} ${model}`}
                   </Typography>

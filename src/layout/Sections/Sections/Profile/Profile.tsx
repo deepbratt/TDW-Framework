@@ -51,8 +51,10 @@ const Profile = () => {
     date,
     handleChangeDate,
     setVal,
+    Img,
+    setImg
   } = useHooks();
-  const [Img, setImg] = useState<string>("");
+  
 
   const handleAlertClose = () => {
     setOpen(false);
@@ -91,7 +93,7 @@ const Profile = () => {
         </section>
         <Grid className={img} item xs={12}>
           <section style={{ position: "relative" }}>
-            <ProfileUpload setImg={setImg} profile={profile} />
+            <ProfileUpload setImg={setImg} profile={Img ? Img :profile} />
             <section className={uploadBtn}>
               <AddAPhotoIcon />
             </section>
@@ -161,6 +163,7 @@ const Profile = () => {
                 onChange={(e) => handleChange(e)}
                 label="City"
                 variant="outlined"
+                defaultValue={val.city}
               >
                 {city &&
                   city.map((data: any, index: number) => {

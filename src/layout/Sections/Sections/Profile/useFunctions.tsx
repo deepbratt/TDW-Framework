@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../../../redux/reducers/authSlice";
 import {updateUser,accountVerify,deleteData,getData} from "../../../../Utils/hooks/actions"
 
 const Actions = () =>{
     const [isLoading, setIsLoading] = useState(false);
+    const dispatch = useDispatch()
     const [data, setData] = useState<any>([]);
     const [open, setOpen] = useState(false);
     const [responseMessage, setResponseMessage] = useState({
@@ -44,21 +47,18 @@ const Actions = () =>{
           formData.append("lastName", data.lastName);
         }
         if(data.gender){
-          formData.append("lastName", data.gender);
+          formData.append("gender", data.gender);
         }
-
-        {
-          data.gender && formData.append("gender", data.gender);
+        if(data.city){
+          formData.append("city", data.city);
         }
-        {
-          data.city && formData.append("city", data.city);
-        }
-        {
-          date && formData.append("dateOfBirth", date);
+        if(data.date){
+          formData.append("dateOfBirth", data.date);
         }
     
         await updateUser(url, formData)
           .then((response) => {
+            console.log(response)
             if (response.status === "success") {
               setIsLoading(false);
               setOpen(true);
@@ -66,6 +66,7 @@ const Actions = () =>{
                 status: "success",
                 message: response.message,
               });
+              dispatch(login(response))
             } else {
               setOpen(true);
               setResponseMessage({

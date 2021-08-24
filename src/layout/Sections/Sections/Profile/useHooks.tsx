@@ -8,7 +8,8 @@ const useHooks = () => {
   const {red} = Colors
   const {user} = useSelector((state:RootState)=>state.auth)
   // const [date, setDate] = useState(moment(new Date()).format("YYYY-MM-DD"));
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(user.dateOfBirth ? moment(new Date(user.dateOfBirth)).format("YYYY-MM-DD") : "");
+  const [Img, setImg] = useState<string>(user.image ? user.image : "");
   const [val, setVal] = useState({
     firstName: user.firstName,
     lastName: user.lastName,
@@ -23,7 +24,6 @@ const useHooks = () => {
   });
 
   const [number, setNumber] = useState("");
-
   const handleChange = (e: any) => {
     const { value, name } = e.target;
     setVal({
@@ -59,6 +59,8 @@ const useHooks = () => {
     errorMessage,
     setVal,
     setNumber,
+    Img,
+    setImg
   };
 };
 

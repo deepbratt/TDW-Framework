@@ -15,7 +15,6 @@ const Dashboard = () => {
       <Section backColor="#f2f2f2">
         <RoutesWrapper />
       </Section>
-      <Typography>hello</Typography>
     </>
   );
 };

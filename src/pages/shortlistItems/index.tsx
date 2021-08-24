@@ -40,6 +40,7 @@ import { paths } from "../../routes/paths";
 import { useHistory } from "react-router";
 import Section from "../../components";
 import { ICarCard } from "../../Utils/interfaces/products.interface";
+import { RootState } from "../../redux/store";
 
 export interface ShortlistItemProps {}
 
@@ -70,8 +71,8 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
     setOpen(false);
   };
 
-  const layoutType = useSelector(
-    (state: any) => state.persistedReducer.layout.layoutType
+  const {layoutType} = useSelector(
+    (state: RootState) => state.layout
   );
   return (
     <Section>

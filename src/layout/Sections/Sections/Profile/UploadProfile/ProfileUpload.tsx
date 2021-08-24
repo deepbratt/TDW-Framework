@@ -21,7 +21,7 @@ const ProfileUpload = ({setImg,profile} : Upload) => {
       }
     };
 
-    // console.log("Img",img)
+    console.log("Img",profile)
   
     return (
       <>
@@ -47,6 +47,7 @@ const ProfileUpload = ({setImg,profile} : Upload) => {
             src={profile}
             width="100%"
             ref={uploadedImage}
+            alt=""
             style={{
               width: "150px",
               height: "150px",

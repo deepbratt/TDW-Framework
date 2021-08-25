@@ -82,7 +82,7 @@ const HeaderContext = () => {
         <Hidden lgUp>
           <img src={pattern} alt="pattern" className={rec} />
         </Hidden>
-        <Toolbar className={appbarsolid}>
+        <Toolbar className={appbarsolid} color="transparent">
           <section>
             <img src={Logo} alt="logo" className={logo} />
           </section>

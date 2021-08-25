@@ -37,7 +37,7 @@ const FullScreenDialog: React.FC<FullScreenDialogProps> = (props) => {
       onClose={() => handleClose()}
       TransitionComponent={Transition}
     >
-      <AppBar style={{ position: "relative" }}>
+      <AppBar style={{ position: "relative" }} color="transparent">
         <Toolbar>
           <IconButton
             edge="start"

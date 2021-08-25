@@ -15,12 +15,19 @@ const addEditCarData = {
     carModel: {
       label: "Car Model",
       defaultValue: "Car Model",
-      menu: ["Civic", "City", "Corolla", "Mehran"],
+      menu:{
+        Honda:["City", "Civic", "Vezel", "N Wgn"],
+        Toyota:["Corolla", "Yaris", "Aqua", "Fortuner", "Prius"],
+        Suzuki:["Mehran", "Alto", "Cultus", "Wagon R", "Swift"],
+        Nissan:["Dayz", "Dayz Highway Star", "Clipper", "Sunny", "Juke"],
+        Daihatsu:["Mira", "Coure", "Hijet", "Move", "Charade"],
+        "":[""]
+      }
     },
     carMake: {
       label: "Car Make",
       defaultValue: "Car Make",
-      menu: ["Honda", "Toyota", "Suzuki", "Ford"],
+      menu: ["Honda", "Toyota", "Suzuki", "Nissan", "Daihatsu"],
     },
     modelYear: {
       label: "Model Year",
@@ -30,12 +37,12 @@ const addEditCarData = {
     bodyColor: {
       label: "Body Color",
       defaultValue: "Body Color",
-      menu: ["black", "blue", "green", "white"],
+      menu: ["Black", "Blue", "Green", "White", "Red", "Grey", "Gun Metallic"],
     },
     bodyType: {
       label: "Body Type",
       defaultValue: "Body Type",
-      menu: ["Sedan", "SUV", "Mini Van", "Hatchback"],
+      menu: ["Compact sedan", "Compact SUV", "Mini Van", "Coupe", "Convertible", "Crossover", "Double Cabin", "High Roof", "Micro Van", "Mini Vehicles", "MPV", "Off-Road Vehicles", "Pick Up", "Sedan", "Single Cabin", "Station Wagon", "Subcompact hatchback", "SUV", "Truck", "Van"],
     },
     bodyCondition: {
       label: "Body Condition",

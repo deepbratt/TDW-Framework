@@ -112,7 +112,7 @@ export const useForm = (validateOnChange = true) => {
   }
 
   const getAllCars = async (appliedFilters: any) => {
-    let params = `limit=10&page=${page.toString()}`;
+    let params = `?limit=10&page=${page.toString()}`;
     if (appliedFilters.indexOf('sort') > -1) {
       params += '&sort=' + values.sort;
     }

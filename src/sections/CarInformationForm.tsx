@@ -14,7 +14,18 @@ import SelectInputComponent from "../components/SelectInputComponent";
 import {NO_REGISTRATION_DISPLAY} from "../Utils/constants/language/en/addEditCarTexts"
 
 interface CarInformationFormProps {
-  formData: any;
+  formData: {
+    city: "",
+    carModel: "",
+    carMake: "Honda" | "Daihatsu" | "Toyota" | "Nissan" | "Suzuki",
+    modelYear: "",
+    bodyColor: "",
+    registeredIn: "",
+    mileage: "",
+    price: "",
+    registrationNo: "",
+    description: ""
+  };
   handleChange: (event: any) => void;
   requireError: any;
   handleChangeSelect: any;
@@ -80,7 +91,7 @@ const CarInformationForm = ({
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
         <SelectComponent
-          menuItem={addEditCarData.fields.carModel.menu}
+          menuItem={addEditCarData.fields.carModel.menu[formData.carMake]}
           name={"carModel"}
           className={classes.selectFields}
           value={formData.carModel}

@@ -1,6 +1,10 @@
 export const CAR_COMPARISIONS: string = 'Car Comparisions';
 export const POST_YOUR_AD: string = 'Post Your Ad';
 export const FEATURED: string = 'Featured';
+export const SOLD: string = 'Sold';
+export const UNSOLD: string = 'UnSold';
+export const ACTIVE: string = 'Active';
+export const INACTIVE: string = 'InActive';
 export const SHOW_RESULT: string = 'SHOW RESULT BY:';
 export const HOME: string = 'Home';
 export const SIGNIN: string = 'Sign In';

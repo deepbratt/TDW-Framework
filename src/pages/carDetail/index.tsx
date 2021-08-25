@@ -81,6 +81,7 @@ const CarDetailContainer = () => {
                 mileage={obj?.milage}
                 engineType={obj?.engineType}
                 createdBy={obj.createdBy}
+                data={obj}
               />
             </Grid>
             <Hidden lgUp>

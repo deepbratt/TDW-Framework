@@ -10,7 +10,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ListingCardStyles from "./styles";
 import LocationIcon from "../../assets/icons/location.png";
 import { ICarCard } from "../../layout/Sections/Utils/types";
-import { FEATURED } from "../../Utils/constants/language/en/buttonLabels";
+import { ACTIVE, FEATURED, INACTIVE, SOLD, UNSOLD } from "../../Utils/constants/language/en/buttonLabels";
 import { Colors } from "../../Utils/constants/colors/colors";
 import CarImage from "../../assets/Cars/listingCard.jpg";
 import ConvertDate from "../convertDate";
@@ -48,7 +48,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
     }
   };
 
-  const { _id, model,make, modelYear, mileage, engineType, engineCapacity, transmission, city, createdAt, price, image,  } = data;
+  const { _id, model,make, modelYear, mileage, engineType, engineCapacity, transmission, city, createdAt, price, image, isSold, active  } = data;
 
   console.log(data)
 
@@ -89,11 +89,11 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
               direction="column"
               justify="space-between"
             >
-              {/* {isFeatured ? (
+              {isSold ? (
                 <span className={featuredBadge}>
-                  <Typography variant="body2">{FEATURED}</Typography>
+                  <Typography variant="body2">{SOLD}</Typography>
                 </span>
-              ) : null} */}
+              ) : null}
                {isFavs || isFavs ? (
                     <button
                       onClick={() => {
@@ -170,6 +170,24 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
                       component="span"
                     >
                        {transmission}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      color="textSecondary"
+                      variant="body2"
+                      component="span"
+                    >
+                       {isSold ? SOLD : UNSOLD}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      color="textSecondary"
+                      variant="body2"
+                      component="span"
+                    >
+                       {active ? ACTIVE : INACTIVE}
                     </Typography>
                   </Grid>
                 </Grid>

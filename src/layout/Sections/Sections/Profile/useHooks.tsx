@@ -23,7 +23,7 @@ const useHooks = () => {
     confirmPassword: ""
   });
 
-  const [number, setNumber] = useState("");
+  const [number, setNumber] = useState(user.phone);
   const handleChange = (e: any) => {
     const { value, name } = e.target;
     setVal({

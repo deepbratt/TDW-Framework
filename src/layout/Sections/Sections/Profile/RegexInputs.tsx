@@ -10,7 +10,7 @@ import useHooks from "./useHooks";
 import { useStyles } from "./useStyles";
 import { useForm } from "react-hook-form";
 import Actions from "./useFunctions";
-import { addMyPhone } from "../../../../Utils/hooks/endpoints";
+import { addMyPhone, updateMe } from "../../../../Utils/hooks/endpoints";
 import Toast from "../../../../components/Toast";
 import Verification from "./VerificationInput";
 import { useState } from "react";
@@ -34,7 +34,7 @@ const RegexInputs = () => {
   const { select, root, btnBox, cancelButton, button } = useStyles();
 
   const onSubmit = (): void => {
-    changeNumber(addMyPhone, number,setChangeToVerification);
+    changeNumber(updateMe, number,setChangeToVerification);
   };
 
   const handleAlertClose = () => {
@@ -57,9 +57,9 @@ const RegexInputs = () => {
         style={{ display: "flex", flexFlow: "wrap", marginTop: "20px" }}
         xs={12}
       >
-        {changeToVerification ? (
+        {/* {changeToVerification ? (
           <Verification slicedNumber={number && number} />
-        ) : (
+        ) : ( */}
           <>
             <Grid style={{ margin: "30px 10px" }} item lg={5} xs={12}>
               <TextField
@@ -116,7 +116,7 @@ const RegexInputs = () => {
               </Grid>
             ) : null}
           </>
-        )}
+        {/* )} */}
       </Grid>
       <Toast
         open={open}

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useForm } from "../../pages/carsListing/useForm";
+import { useState } from 'react';
 import {
   Grid,
   Slider,
@@ -7,33 +6,37 @@ import {
   FormControlLabel,
   Checkbox,
   Typography,
-  IconButton,
-} from "@material-ui/core";
-import FilterAccordion from "../../components/Accordion";
+  IconButton
+} from '@material-ui/core';
+import FilterAccordion from '../../components/Accordion';
 import {
   Carfilters,
-  CarFiltersData,
-} from "../../Utils/constants/language/en/filtersData";
-import { City, State } from "country-state-city";
-import HighlightOffRoundedIcon from "@material-ui/icons/HighlightOffRounded";
-import InputFieldWithButton from "../../components/InputField/InputFieldWithButton";
-import InputField from "../../components/InputField";
-import { fieldNames } from "../../Utils/constants/formsConstants";
-import VerticalFilterStyles from "./styles";
-import DialogBox from "../../components/DialogBox";
-import { ICity } from "country-state-city/dist/lib/interface";
-import { APPLIED_FILTERS } from "../../Utils/constants/language/en/buttonLabels";
+  CarFiltersData
+} from '../../Utils/constants/language/en/filtersData';
+import { City, State } from 'country-state-city';
+import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
+import InputFieldWithButton from '../../components/InputField/InputFieldWithButton';
+import InputField from '../../components/InputField';
+import { fieldNames } from '../../Utils/constants/formsConstants';
+import VerticalFilterStyles from './styles';
+import DialogBox from '../../components/DialogBox';
+import { ICity } from 'country-state-city/dist/lib/interface';
+import { APPLIED_FILTERS } from '../../Utils/constants/language/en/buttonLabels';
+import PriceInput from './PriceInput';
+import NumberInput from './NumberInput';
 
-export interface CarFiltersProps {}
+export interface CarFiltersProps {
+  filterProps: any
+}
 
-const CarFilters: React.FC<CarFiltersProps> = () => {
+const CarFilters: React.FC<CarFiltersProps> = ({filterProps}) => {
   const [searchResult, setSearchResult] = useState<ICity[]>();
   const {} = VerticalFilterStyles();
   const {
     KEYWORDS,
     PRICE_RANGE,
     YEAR,
-    MAKE,
+    // MAKE,
     PROVINCE,
     CITY,
     REGISTRATION_CITY,
@@ -43,17 +46,17 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
     ENGINE_CAPACITY,
     COLOR,
     BODY_TYPE,
-    PICTURE_AVAILABILITY,
-    VIDEO_AVAILABILITY,
+    // PICTURE_AVAILABILITY,
+    // VIDEO_AVAILABILITY,
     SELLER_TYPE,
     AD_TYPE
   } = CarFiltersData;
 
-  const majorCities = ["Karachi", "Islamabad", "Lahore", "Peshawar", "Quetta"];
-  const mainCarTypes = ["Sedan", "Hatchback", "Pick Up"];
-  const mainColors = ["Black", "White", "Red"];
-  const cities = City.getCitiesOfCountry("PK");
-  const provinces = State.getStatesOfCountry("PK");
+  const majorCities = ['Karachi', 'Islamabad', 'Lahore', 'Peshawar', 'Quetta'];
+  const mainCarTypes = ['Sedan', 'Hatchback', 'Pick Up'];
+  const mainColors = ['Black', 'White', 'Red'];
+  const cities = City.getCitiesOfCountry('PK');
+  const provinces = State.getStatesOfCountry('PK');
   const extractedCityNames = cities?.map((item) => item.name);
   let cityNames = [];
   if (extractedCityNames) {
@@ -61,23 +64,27 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
   }
   const {
     values,
-    setValues,
     errors,
-    handleInputChange,
+    handleTextBoxChange,
     handleCheckboxChange,
     handleSingleCheckBoxChange,
+    keywords,
+    handleTextBoxSubmit,
     appliedFilters,
     removeFilter,
-    handleSubmit,
-  } = useForm(true);
+    priceRange, setPriceRange,
+    yearRange, setYearRange,
+    mileageRange, setMileageRange,
+    engineCapacityRange, setEngineCapacityRange,
+  } = filterProps;
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let result = City.getCitiesOfCountry("PK")?.filter(
+    let result = City.getCitiesOfCountry('PK')?.filter(
       (city: ICity) =>
         city.name.substr(0, e.target.value.length).toLowerCase() ===
         e.target.value.toLowerCase()
     );
-    if (e.target.value === "") {
+    if (e.target.value === '') {
       result = [];
     }
     setSearchResult(result);
@@ -110,10 +117,10 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
           name={fieldNames.keywords}
           label="Keywords"
           placeholder="Eg. Honda In Lahore"
-          value={values.keywords}
-          error={errors.keywords}
-          onChange={handleInputChange}
-          handleClick={handleSubmit}
+          value={keywords}
+          errors={errors.keywords}
+          onChange={handleTextBoxChange}
+          handleClick={() => handleTextBoxSubmit("keywords")}
         />
       </FilterAccordion>
       <FilterAccordion title={PRICE_RANGE}>
@@ -123,13 +130,16 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
               <InputField
                 name={fieldNames.priceFrom}
                 label="From"
-                value={values.priceRange[0]}
-                error={errors.priceFrom}
+                value={priceRange[0]}
+                errors={errors.priceFrom}
+                type="number"
+                InputProps={{
+                  inputComponent: PriceInput as any,
+                }}
                 onChange={(e: any) => {
-                  setValues((previousState: any) => {
-                    previousState.priceRange[0] = e.target.value;
-                    return { ...previousState };
-                  });
+                  let temp = priceRange;
+                  temp[0] = e.target.value;
+                  setPriceRange([...temp]);
                 }}
               />
             </Grid>
@@ -137,47 +147,49 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
               <InputFieldWithButton
                 name={fieldNames.priceTo}
                 label="To"
-                value={values.priceRange[1]}
-                error={errors.priceTo}
-                onChange={(e: any) => {
-                  setValues((previousState: any) => {
-                    previousState.priceRange[1] = e.target.value;
-                    return { ...previousState };
-                  });
+                errors={errors.priceTo}
+                value={priceRange[1]}
+                type="number"
+                InputProps={{
+                  inputComponent: PriceInput as any,
                 }}
-                handleClick={handleSubmit}
+                onChange={(e: any) => {
+                  let temp = priceRange;
+                  temp[1] = e.target.value;
+                  setPriceRange([...temp]);
+                }}
+                 handleClick={() => handleTextBoxSubmit("priceRange")}
               />
             </Grid>
           </Grid>
           <Grid item>
             <Slider
-              value={[values.priceRange[0], values.priceRange[1]]}
-              min={50000}
+              value={[priceRange[0], priceRange[1]]}
+              min={0}
               max={5000000}
               onChange={(event: any, newValue: number | number[]) => {
-                setValues((previousState: any) => {
-                  console.log(newValue);
-                  previousState.priceRange = newValue as number[];
-                  return { ...previousState };
-                });
+                setPriceRange(newValue);
               }}
             />
           </Grid>
         </Grid>
       </FilterAccordion>
-      <FilterAccordion title={YEAR}>
+     <FilterAccordion title={YEAR}>
         <Grid item container spacing={1}>
           <Grid item xs={5}>
             <InputField
               name={fieldNames.yearFrom}
               label="From"
-              value={values.yearRange[0]}
-              error={errors.yearFrom}
+              value={yearRange[0]}
+              errors={errors.yearFrom}
+              type="number"
+              InputProps={{
+                inputComponent: NumberInput as any,
+              }}
               onChange={(e: any) => {
-                setValues((previousState: any) => {
-                  previousState.priceRange[0] = e.target.value;
-                  return { ...previousState };
-                });
+                let temp = yearRange;
+                temp[0] = e.target.value;
+                setYearRange([...temp]);
               }}
             />
           </Grid>
@@ -185,22 +197,22 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
             <InputFieldWithButton
               name={fieldNames.yearTo}
               label="To"
-              value={values.yearRange[1]}
-              error={errors.yearTo}
+              value={yearRange[1]}
+              errors={errors.yearTo}
+              type="number"
+                InputProps={{
+                  inputComponent: NumberInput as any,
+                }}
               onChange={(e: any) => {
-                setValues((previousState: any) => {
-                  previousState.priceRange[1] = e.target.value;
-                  return { ...previousState };
-                });
+                let temp = yearRange;
+                temp[1] = e.target.value;
+                setYearRange([...temp]);
               }}
-              handleClick={handleSubmit}
+              handleClick={() => handleTextBoxSubmit("yearRange")}
             />
           </Grid>
         </Grid>
-      </FilterAccordion>
-      <FilterAccordion title={MAKE}>
-        <InputField label="Eg. Honda In Lahore" />
-      </FilterAccordion>
+      </FilterAccordion>      
       <FilterAccordion title={PROVINCE}>
         <FormGroup>
           {provinces.map((province) => (
@@ -230,7 +242,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                 control={
                   <Checkbox
                     checked={values.city.indexOf(city) > -1}
-                    onChange={(e) => handleCheckboxChange(e, "city")}
+                    onChange={(e) => handleCheckboxChange(e, 'city')}
                     name={city}
                     color="secondary"
                   />
@@ -239,7 +251,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
               />
             ))}
           <DialogBox title="Select Cities">
-            <Grid style={{ display: "flex" }} container>
+            <Grid style={{ display: 'flex' }} container>
               <Grid xs={12}>
                 <InputField
                   variant="filled"
@@ -249,7 +261,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="h4" gutterBottom>
-                  {"Search Result"}
+                  {'Search Result'}
                 </Typography>
                 {searchResult &&
                   searchResult.map((city: ICity) => {
@@ -259,7 +271,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                         control={
                           <Checkbox
                             checked={values.city.indexOf(city.name) > -1}
-                            onChange={(e) => handleCheckboxChange(e, "city")}
+                            onChange={(e) => handleCheckboxChange(e, 'city')}
                             name={city.name}
                             color="secondary"
                             size="small"
@@ -301,7 +313,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
           </DialogBox>
         </FormGroup>
       </FilterAccordion>
-      <FilterAccordion title={REGISTRATION_CITY}>
+       <FilterAccordion title={REGISTRATION_CITY}>
         <FormGroup>
           {cityNames
             .filter((item) => majorCities.includes(item))
@@ -322,10 +334,40 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
               />
             ))}
 
-          <DialogBox title="Select Cities">
-            <Grid style={{ display: "flex" }} container>
+            <DialogBox title="Select Cities">
+            <Grid style={{ display: 'flex' }} container>
+              <Grid xs={12}>
+                <InputField
+                  variant="filled"
+                  label="Search"
+                  onChange={handleSearchInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="h4" gutterBottom>
+                  {'Search Result'}
+                </Typography>
+                {searchResult &&
+                  searchResult.map((city: ICity) => {
+                    return (
+                      <FormControlLabel
+                        key={`city-${city.name}`}
+                        control={
+                          <Checkbox
+                            checked={values.registrationCity.indexOf(city.name) > -1}
+                            onChange={(e) => handleCheckboxChange(e, 'registrationCity')}
+                            name={city.name}
+                            color="secondary"
+                            size="small"
+                          />
+                        }
+                        label={city.name}
+                      />
+                    );
+                  })}
+              </Grid>
               {provinces.map((province) => (
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                   <Typography variant="h4" gutterBottom>
                     {province.name}
                   </Typography>
@@ -338,8 +380,8 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                         key={`city-${city.name}`}
                         control={
                           <Checkbox
-                            checked={values.city.indexOf(city.name) > -1}
-                            onChange={(e) => handleCheckboxChange(e, "city")}
+                            checked={values.registrationCity.indexOf(city.name) > -1}
+                            onChange={(e) => handleCheckboxChange(e, "registrationCity")}
                             name={city.name}
                             color="secondary"
                             size="small"
@@ -355,19 +397,22 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
           </DialogBox>
         </FormGroup>
       </FilterAccordion>
-      <FilterAccordion title={MILEAGE}>
+     <FilterAccordion title={MILEAGE}>
         <Grid item container spacing={1}>
           <Grid item xs={5}>
             <InputField
               name={fieldNames.mileageFrom}
               label="From"
-              value={values.mileageRange[0]}
-              error={errors.mileageFrom}
+              value={mileageRange[0]}
+              errors={errors.mileageFrom}
+              type="number"
+              InputProps={{
+                inputComponent: NumberInput as any,
+              }}
               onChange={(e: any) => {
-                setValues((previousState: any) => {
-                  previousState.mileageRange[0] = e.target.value;
-                  return { ...previousState };
-                });
+                let temp = mileageRange;
+                temp[0] = e.target.value;
+                setMileageRange([...temp]);
               }}
             />
           </Grid>
@@ -375,19 +420,22 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
             <InputFieldWithButton
               name={fieldNames.mileageTo}
               label="To"
-              value={values.mileageRange[1]}
-              error={errors.mileageTo}
-              onChange={(e: any) => {
-                setValues((previousState: any) => {
-                  previousState.mileageRange[1] = e.target.value;
-                  return { ...previousState };
-                });
+              value={mileageRange[1]}
+              errors={errors.mileageTo}
+              type="number"
+              InputProps={{
+                inputComponent: NumberInput as any,
               }}
-              handleClick={handleSubmit}
+              onChange={(e: any) => {
+                let temp = mileageRange;
+                temp[1] = e.target.value;
+                setMileageRange([...temp]);
+              }}
+              handleClick={() => handleTextBoxSubmit("mileageRange")}
             />
           </Grid>
         </Grid>
-      </FilterAccordion>
+            </FilterAccordion>
       <FilterAccordion title={TRANSMISSION}>
         <FormGroup>
           {Carfilters.TRANSMISSION.map((type) => (
@@ -426,19 +474,22 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
           ))}
         </FormGroup>
       </FilterAccordion>
-      <FilterAccordion title={ENGINE_CAPACITY}>
+     <FilterAccordion title={ENGINE_CAPACITY}>
         <Grid item container spacing={1}>
           <Grid item xs={5}>
             <InputField
               name={fieldNames.engineCapacityFrom}
               label="From"
-              value={values.engineCapacityRange[0]}
-              error={errors.engineCapacityFrom}
+              value={engineCapacityRange[0]}
+              errors={errors.engineCapacityFrom}
+              type="number"
+              InputProps={{
+                inputComponent: NumberInput as any,
+              }}
               onChange={(e: any) => {
-                setValues((previousState: any) => {
-                  previousState.mileageRange[0] = e.target.value;
-                  return { ...previousState };
-                });
+                let temp = engineCapacityRange;
+                temp[0] = e.target.value;
+                setEngineCapacityRange([...temp]);
               }}
             />
           </Grid>
@@ -446,19 +497,23 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
             <InputFieldWithButton
               name={fieldNames.engineCapacityTo}
               label="To"
-              value={values.engineCapacityRange[1]}
-              error={errors.engineCapacityTo}
-              onChange={(e: any) => {
-                setValues((previousState: any) => {
-                  previousState.mileageRange[1] = e.target.value;
-                  return { ...previousState };
-                });
+              value={engineCapacityRange[1]}
+              errors={errors.engineCapacityTo}
+              type="number"
+              InputProps={{
+                inputComponent: NumberInput as any,
               }}
-              handleClick={handleSubmit}
-            />
+              onChange={(e: any) => {
+                let temp = engineCapacityRange;
+                temp[1] = e.target.value;
+                setEngineCapacityRange([...temp]);
+              }}
+              handleClick={() => handleTextBoxSubmit("engineCapacityRange")}
+              />
+            
           </Grid>
         </Grid>
-      </FilterAccordion>
+            </FilterAccordion>
       <FilterAccordion title={COLOR}>
         <FormGroup>
           {Carfilters.COLOR.filter((item) =>
@@ -632,8 +687,8 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
             </Grid>
           </DialogBox>
         </FormGroup>
-      </FilterAccordion>
-      <FilterAccordion title={PICTURE_AVAILABILITY}>
+      </FilterAccordion> 
+      {/* <FilterAccordion title={PICTURE_AVAILABILITY}>
         <FormGroup>
           <FormControlLabel
             control={
@@ -664,7 +719,7 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
             label={Carfilters.VIDEO_AVAILABILITY[0]}
           />
         </FormGroup>
-      </FilterAccordion>
+      </FilterAccordion> */}
       <FilterAccordion title={SELLER_TYPE}>
         <FormGroup>
           {Carfilters.SELLER_TYPE.map((type) => (

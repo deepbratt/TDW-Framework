@@ -21,7 +21,7 @@ export const useStyles = makeStyles(() => ({
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
-    margin: "125px 0px 0px 0px",
+    // margin: "125px 0px 0px 0px",
     color: blue,
   },
   grid: {

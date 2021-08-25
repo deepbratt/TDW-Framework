@@ -22,7 +22,10 @@ import CarFilters from '../../sections/VerticalCarFilters';
 import { SortRounded } from '@material-ui/icons';
 import HorizontalFilters from '../../sections/HorizontalFilters';
 import { LISTING_PAGE_HEADER } from '../../Utils/constants/language/en/listingData';
-import { conditionOptions, sortingOptions } from '../../Utils/constants/language/en/filtersData';
+import {
+  conditionOptions,
+  sortingOptions
+} from '../../Utils/constants/language/en/filtersData';
 import {
   APPLY_FILTERS,
   SHOW_RESULT
@@ -53,12 +56,15 @@ const CarsListing: React.FC<CarsListingProps> = () => {
     handleCheckboxChange,
     handleSingleCheckBoxChange,
     handleTextBoxSubmit,
-    keywords,
-    setKeywords,
     setValues,
     appliedFilters,
     pageCount,
-    removeFilter
+    removeFilter,
+    keywords,
+    priceRange, setPriceRange,
+    yearRange, setYearRange,
+    mileageRange, setMileageRange,
+    engineCapacityRange, setEngineCapacityRange,
   } = useForm();
 
   const [open, setOpen] = React.useState(false);
@@ -83,13 +89,16 @@ const CarsListing: React.FC<CarsListingProps> = () => {
     handleCheckboxChange,
     handleSingleCheckBoxChange,
     handleTextBoxSubmit,
-    keywords,
-    setKeywords,
     setValues,
     appliedFilters,
     removeFilter,
     errors,
-    values
+    values,
+    keywords,
+    priceRange, setPriceRange,
+    yearRange, setYearRange,
+    mileageRange, setMileageRange,
+    engineCapacityRange, setEngineCapacityRange,
   };
 
   return (
@@ -262,6 +271,7 @@ const CarsListing: React.FC<CarsListingProps> = () => {
               )}
 
               {responseMessage.status !== 'success' &&
+              responseData?.data &&
               responseData?.data.result === undefined ? (
                 <Typography align="center" variant="h4">
                   {responseMessage.message}

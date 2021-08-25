@@ -11,21 +11,21 @@ const initialValues: any = {
   keywords: '',
   // priceFrom: 0,
   // priceTo: 0,
-  // priceRange: [0, 50000000],
+  priceRange: [0, 50000000],
   // yearFrom: 0,
   // yearTo: 0,
-  // yearRange: [1900, 2021],
+  yearRange: [1940, 2021],
   province: [],
   city: [],
   mileageFrom: 0,
   mileageTo: 0,
   registrationCity: [],
-  // mileageRange: [0, 1000000],
+  mileageRange: [0, 1000000],
   transmission: [],
   engineType: [],
   // engineCapacityFrom: 0,
   // engineCapacityTo: 0,
-  // engineCapacityRange: [600, 30000],
+  engineCapacityRange: [600, 30000],
   color: [],
   bodyType: [],
   pictureAvailability: false,
@@ -33,14 +33,14 @@ const initialValues: any = {
   sellerType: [],
   adType: [],
   sort: '',
-  condition: ""
+  condition: ''
 };
 
 interface IData {
   data: {
     result: ICarCard[];
   };
-  totalCount: number
+  totalCount: number;
 }
 
 export const useForm = (validateOnChange = true) => {
@@ -48,14 +48,19 @@ export const useForm = (validateOnChange = true) => {
   // const {city} = useParams<any>();
   // const appliedFiltersFromStore = useSelector((state: any) => state.persistedReducer.carFilters.appliedFilters);
   const { ADS, CARS } = API_ENDPOINTS;
-  const [values, setValues] = useState(initialValues);
+  const [priceRange, setPriceRange] = useState<number[]>([0, 50000000]);
+  const [yearRange, setYearRange] = useState<number[]>([1940, 2021]);
+  const [mileageRange, setMileageRange] = useState<number[]>([0, 500000]);
+  const [engineCapacityRange, setEngineCapacityRange] = useState<number[]>([0, 5000]);
+  const [values, setValues] = useState({ ...initialValues });
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState<number>(1);
   const [keywords, setKeywords] = useState('');
+  // const [yearRange, set] = useState('');
   const [appliedFilters, setAppliedFilters] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [responseData, setResponseData] = useState<IData>();
-  const [result, setResult] = useState<ICarCard[]>([]);
+  const [responseData, setResponseData] = useState<IData | null>();
+  const [result, setResult] = useState<ICarCard[] | []>([]);
   const [queryParams, setQueryParams] = useState<string>('');
   const { validate, errors, setErrors } = useValidation(values);
   const [responseMessage, setResponseMessage] = useState({
@@ -86,6 +91,38 @@ export const useForm = (validateOnChange = true) => {
     }
     if (appliedFilters.indexOf('keywords') > -1) {
       params += '&keyword=' + keywords;
+    }
+    if (appliedFilters.indexOf('priceRange') > -1) {
+      if (priceRange[0] !== 0) {
+        params += '&price[gte]=' + priceRange[0];
+      }
+      if (priceRange[1] !== 50000000) {
+        params += '&price[lte]=' + priceRange[1];
+      }
+    }
+    if (appliedFilters.indexOf('yearRange') > -1) {
+      if (yearRange[0] !== 1940) {
+        params += '&modelYear[gte]=' + yearRange[0];
+      }
+      if (values.yearRange[1] !== 2021) {
+        params += '&modelYear[lte]=' + yearRange[1];
+      }
+    }
+    if (appliedFilters.indexOf('mileageRange') > -1) {
+      if (mileageRange[0] !== 0) {
+        params += '&milage[gte]=' + mileageRange[0];
+      }
+      if (mileageRange[1] !== 1000000) {
+        params += '&milage[lte]=' + mileageRange[1];
+      }
+    }
+    if (appliedFilters.indexOf('engineCapacityRange') > -1) {
+      if (engineCapacityRange[0] !== 600) {
+        params += '&engineCapacity[gte]=' + engineCapacityRange[0];
+      }
+      if (engineCapacityRange[1] !== 30000) {
+        params += '&engineCapacity[lte]=' + engineCapacityRange[1];
+      }
     }
     if (appliedFilters.indexOf('province') > -1) {
       values.province.map((item: string) => {
@@ -146,13 +183,17 @@ export const useForm = (validateOnChange = true) => {
         setIsLoading(false);
         if (response.status === 'success') {
           setResponseData(response);
-          setPageCount(response.totalCount < 10 ? 1 : Math.round(response.totalCount / 10));
+          setPageCount(
+            response.totalCount < 10 ? 1 : Math.round(response.totalCount / 10)
+          );
           setResult(response.data.result);
           setResponseMessage({
             status: response.status,
             message: response.message
           });
         } else {
+          setResponseData(null);
+          setResult([]);
           setIsLoading(false);
           setResponseMessage({
             status: 'error',
@@ -186,7 +227,7 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const handleTextBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
+    const { name, value } = e.target;
     setKeywords(value);
   };
 
@@ -205,7 +246,12 @@ export const useForm = (validateOnChange = true) => {
     if (e.target.checked) {
       if (!appliedFilters.includes(filterName)) {
         setAppliedFilters([...appliedFilters, filterName]);
+      }else{
+        getAllCars(appliedFilters);
       }
+    }
+    if (!e.target.checked) {
+      verifyAppliedFilters(filterName);
     }
   };
 
@@ -235,8 +281,18 @@ export const useForm = (validateOnChange = true) => {
     );
     let tempVal: any = values;
     tempVal[filterName] = initialValues[filterName];
-    if (typeof tempVal[filterName] === typeof ['']) {
-      tempVal[filterName] = [];
+    if(filterName === "priceRange"){
+      setPriceRange(initialValues[filterName])
+    }else if(filterName === "mileageRange"){
+      setMileageRange(initialValues[filterName])
+    }else if(filterName === "yearRange"){
+      setYearRange(initialValues[filterName]);
+    }else if (filterName === "engineCapacityRange"){
+      setEngineCapacityRange(initialValues[filterName]);
+    }else if(filterName === "keywords"){
+      setKeywords("");
+    }else {
+      tempVal[filterName] = initialValues[filterName];
     }
     setValues(tempVal);
     // setValues({ ...values, [filterName]: initialValues[filterName] });
@@ -251,17 +307,30 @@ export const useForm = (validateOnChange = true) => {
     getAllCars(appliedFilters);
   };
 
-  const handleTextBoxSubmit = (name: any, value: any) => {
+  const verifyAppliedFilters = (filterName:  string) => {
+    if (appliedFilters.includes(filterName)) {
+      console.log("values", values[filterName])
+      if(values[filterName].length === 1){
+        console.log("All removed");
+        removeFilter(filterName)
+      }
+    }
+  }
+
+  const handleTextBoxSubmit = (name: any) => {
     if (!appliedFilters.includes(name)) {
       setAppliedFilters([...appliedFilters, name]);
+    } else {
+      getAllCars(appliedFilters);
     }
   };
 
   useEffect(() => {
     setIsLoading(true);
+    console.log('appliedFiltr', appliedFilters);
     getAllCars(appliedFilters);
     // eslint-disable-next-line
-  }, [values, page, appliedFilters]);
+  }, [page, appliedFilters, values]);
 
   return {
     values,
@@ -271,14 +340,17 @@ export const useForm = (validateOnChange = true) => {
     page,
     pageCount,
     result,
+    keywords,
+    priceRange, setPriceRange,
+    yearRange, setYearRange,
+    mileageRange, setMileageRange,
+    engineCapacityRange, setEngineCapacityRange,
     setResult,
     handlePageChange,
     handleInputChange,
     handleCheckboxChange,
     handleSingleCheckBoxChange,
     handleTextBoxChange,
-    keywords,
-    setKeywords,
     handleTextBoxSubmit,
     appliedFilters,
     setAppliedFilters,

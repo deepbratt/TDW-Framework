@@ -5,6 +5,7 @@ on:
     branches:
       - develop
       - production
+      - prelaunch
 
 jobs:
   build:
@@ -23,6 +24,9 @@ jobs:
          CI: false
       - name: Deploy app build to Development S3 bucket
         if: github.ref == 'refs/heads/develop'
+        run: aws s3 sync ./build/ s3://dev.tezdealz.com --delete
+      - name: Deploy app build to Development S3 bucket - Prelaunch
+        if: github.ref == 'refs/heads/prelaunch'
         run: aws s3 sync ./build/ s3://dev.tezdealz.com --delete
       - name: Deploy app build to Production S3 bucket
         if: github.ref == 'refs/heads/production'

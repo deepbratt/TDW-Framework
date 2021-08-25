@@ -22,44 +22,11 @@ import VerticalFilterStyles from './styles';
 import DialogBox from '../../components/DialogBox';
 import { ICity } from 'country-state-city/dist/lib/interface';
 import { APPLIED_FILTERS } from '../../Utils/constants/language/en/buttonLabels';
-import NumberFormat from 'react-number-format';
-// import InputRange from './InputRange';
+import PriceInput from './PriceInput';
+import NumberInput from './NumberInput';
 
 export interface CarFiltersProps {
   filterProps: any
-}
-
-interface NumberFormatCustomProps {
-  inputRef: (instance: NumberFormat | null) => void;
-  onChange: (event: { target: { name: string; value: string } }) => void;
-  name: string;
-}
-
-function NumberFormatCustom(props: NumberFormatCustomProps) {
-  const { inputRef, onChange, ...other } = props;
-
-  return (
-    <NumberFormat
-      {...other}
-      getInputRef={inputRef}
-      onValueChange={(values: any) => {
-        onChange({
-          target: {
-            name: props.name,
-            value: values.value,
-          },
-        });
-      }}
-      thousandSeparator
-      isNumericString
-      thousandsGroupStyle="thousand"
-      prefix="Rs "
-      decimalSeparator="."
-      displayType="input"
-      type="text"
-      allowNegative={false}
-    />
-  );
 }
 
 const CarFilters: React.FC<CarFiltersProps> = ({filterProps}) => {
@@ -167,7 +134,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({filterProps}) => {
                 errors={errors.priceFrom}
                 type="number"
                 InputProps={{
-                  inputComponent: NumberFormatCustom as any,
+                  inputComponent: PriceInput as any,
                 }}
                 onChange={(e: any) => {
                   let temp = priceRange;
@@ -180,9 +147,12 @@ const CarFilters: React.FC<CarFiltersProps> = ({filterProps}) => {
               <InputFieldWithButton
                 name={fieldNames.priceTo}
                 label="To"
-                type="number"
-                value={priceRange[1]}
                 errors={errors.priceTo}
+                value={priceRange[1]}
+                type="number"
+                InputProps={{
+                  inputComponent: PriceInput as any,
+                }}
                 onChange={(e: any) => {
                   let temp = priceRange;
                   temp[1] = e.target.value;
@@ -212,6 +182,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({filterProps}) => {
               label="From"
               value={yearRange[0]}
               errors={errors.yearFrom}
+              type="number"
+              InputProps={{
+                inputComponent: NumberInput as any,
+              }}
               onChange={(e: any) => {
                 let temp = yearRange;
                 temp[0] = e.target.value;
@@ -225,6 +199,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({filterProps}) => {
               label="To"
               value={yearRange[1]}
               errors={errors.yearTo}
+              type="number"
+                InputProps={{
+                  inputComponent: NumberInput as any,
+                }}
               onChange={(e: any) => {
                 let temp = yearRange;
                 temp[1] = e.target.value;
@@ -427,6 +405,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({filterProps}) => {
               label="From"
               value={mileageRange[0]}
               errors={errors.mileageFrom}
+              type="number"
+              InputProps={{
+                inputComponent: NumberInput as any,
+              }}
               onChange={(e: any) => {
                 let temp = mileageRange;
                 temp[0] = e.target.value;
@@ -440,6 +422,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({filterProps}) => {
               label="To"
               value={mileageRange[1]}
               errors={errors.mileageTo}
+              type="number"
+              InputProps={{
+                inputComponent: NumberInput as any,
+              }}
               onChange={(e: any) => {
                 let temp = mileageRange;
                 temp[1] = e.target.value;
@@ -496,6 +482,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({filterProps}) => {
               label="From"
               value={engineCapacityRange[0]}
               errors={errors.engineCapacityFrom}
+              type="number"
+              InputProps={{
+                inputComponent: NumberInput as any,
+              }}
               onChange={(e: any) => {
                 let temp = engineCapacityRange;
                 temp[0] = e.target.value;
@@ -509,6 +499,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({filterProps}) => {
               label="To"
               value={engineCapacityRange[1]}
               errors={errors.engineCapacityTo}
+              type="number"
+              InputProps={{
+                inputComponent: NumberInput as any,
+              }}
               onChange={(e: any) => {
                 let temp = engineCapacityRange;
                 temp[1] = e.target.value;

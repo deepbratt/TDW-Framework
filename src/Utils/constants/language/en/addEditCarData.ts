@@ -81,6 +81,11 @@ const addEditCarData = {
       defaultValue: "Assembly",
       menu: ["Local", "Imported"],
     },
+    sellerType: {
+      label: "Seller Type",
+      defaultValue: "Seller Type",
+      menu: ["Individual", "Dealer"],
+    },
   },
   steps: [
     "Enter Your Car Information",
@@ -92,11 +97,15 @@ const addEditCarData = {
     post: "Post",
     back: "Back",
     delete:"Delete",
+    confirmDelete: "Yes",
+    cancelDelete: "Cancel",
     addPhoto: "Add Photos +",
   },
   infoText: "(Max limit 5 MB per image)",
   requiredFieldText: "This field is required",
   requiredImageText: "Minimum 1 car picture is required",
+  deleteDialogTitle:"Delete!",
+  deleteDialogMessage:"Are you sure you want to delete this Car Ad?",
   features: [
     "ABS",
     "AM/FM Radio",

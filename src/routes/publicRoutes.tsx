@@ -1,5 +1,5 @@
-import { Route, RouteProps } from "react-router-dom";
-import Layout from "../layout";
+import { Route, RouteProps } from 'react-router-dom';
+import Layout from '../layout';
 
 export type ProtectedRouteProps = {
   component: React.ComponentType;
@@ -11,7 +11,7 @@ export default function PublicRoutes({
 }: ProtectedRouteProps) {
   return (
     <Route
-    {...routeProps}
+      {...routeProps}
       render={(props) => (
         <Layout>
           <Component {...props} />

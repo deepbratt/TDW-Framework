@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { fieldNames, messages } from "../../Utils/constants/formsConstants";
-import { ICarData } from "../../Utils/constants/language/en/listingData";
+import React, { useState, useEffect, useCallback } from "react";
+import { API_ENDPOINTS } from "../../Utils/API/endpoints";
+import { getAllData } from "../../Utils/API/API";
+import useValidation from "../../Utils/hooks/useValidation";
+import { ICarCard } from "../../Utils/interfaces/products.interface";
 
 const initialValues: any = {
   keywords: "",
@@ -30,30 +32,79 @@ const initialValues: any = {
   sortingOptions: "",
 };
 
+interface IData {
+  data: {
+    result: ICarCard[]
+  }
+}
+
 export const useForm = (validateOnChange = true) => {
+  const { ADS, CARS } = API_ENDPOINTS;
   const [values, setValues] = useState(initialValues);
-  const [errors, setErrors] = useState(initialValues);
   const [appliedFilters, setAppliedFilters] = useState<any>([]);
-  const [shortListItems, setShortListItems] = useState<ICarData[]>([]);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [responseData, setResponseData] = useState<IData>();
+  const { validate, errors, setErrors } = useValidation(values);
+  const [shortListItems, setShortListItems] = useState<ICarCard[]>([]);
+  const [responseMessage, setResponseMessage] = useState({
+    status: '',
+    message: ''
+  });
 
-  useEffect(() => {
-    console.info("APPLIED FILTERS", appliedFilters);
-  }, [appliedFilters]);
+  function inArray(needle: string, haystack: []) {
+    var length = haystack.length;
+    for (var i = 0; i < length; i++) {
+      if (haystack[i] === needle) return true;
+    }
+    return false;
+  }
 
-  useEffect(() => {
-    console.info("SHORTLIST ITEMS", shortListItems);
-  }, [shortListItems]);
+  const getAllCars = useCallback(async () => {
+    let queryParams = `?limit=10&page=1${
+      inArray("keywords", appliedFilters) ? "&keyword=" + values.keywords : ""
+    }${appliedFilters.map((key: any) =>
+      inArray(key, appliedFilters)
+        ? typeof values[key] === typeof []
+          ? values[key].map((filter: any) => `&${key}=${filter}`)
+          : null
+        : null
+    )}`;
 
-  const validate = (fieldValues = values) => {
-    let temp = { ...errors };
-
-    setErrors({
-      ...temp,
+    console.log("queryParams", queryParams);
+    await getAllData(ADS + CARS, queryParams).then((response) => {
+      console.log('response', response);
+      setIsLoading(false);
+      if (response.status === 'success') {
+        setAlertOpen(true);
+        setResponseData(response);
+        setResponseMessage({
+          status: response.status,
+          message: response.message
+        });
+      } else {
+        setIsLoading(false);
+        setAlertOpen(true);
+        setResponseMessage({
+          status: 'error',
+          message: response.message
+        });
+      }
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      console.log('Error log', error);
+      setAlertOpen(true);
+      setResponseMessage({
+        status: error.status,
+        message: error.message
+      });
     });
+  }, []);
 
-    if (fieldValues === values)
-      return Object.values(temp).every((x) => x === "");
-  };
+  useEffect(() => {
+    getAllCars();
+  }, [values, appliedFilters, getAllCars]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -115,13 +166,24 @@ export const useForm = (validateOnChange = true) => {
     setAppliedFilters(
       appliedFilters.filter((filter: string) => filter !== filterName)
     );
-    setValues((values: any) => {
-      values[filterName] = initialValues[filterName];
-      return { ...values };
-    });
+    console.log("filter name", filterName);
+    let tempVal: any = values;
+    tempVal[filterName] = initialValues[filterName];
+    if (typeof tempVal[filterName] === typeof [""]) {
+      tempVal[filterName] = [];
+    }
+    console.log(
+      "tempVal",
+      tempVal,
+      tempVal[filterName],
+      initialValues,
+      typeof filterName
+    );
+    setValues(tempVal);
+    // setValues({ ...values, [filterName]: initialValues[filterName] });
   };
 
-  const shortListItem = (newItem: ICarData) => {
+  const shortListItem = (newItem: ICarCard) => {
     if (shortListItems.length < 2) {
       setShortListItems([...shortListItems, newItem]);
     }
@@ -129,7 +191,7 @@ export const useForm = (validateOnChange = true) => {
 
   const removeShortListItem = (itemId: string) => {
     let newItems = shortListItems;
-    newItems = newItems.filter((item: ICarData) => item.product._id !== itemId);
+    newItems = newItems.filter((item: ICarCard) => item._id !== itemId);
     setShortListItems(newItems);
   };
 
@@ -153,11 +215,16 @@ export const useForm = (validateOnChange = true) => {
     appliedFilters,
     setAppliedFilters,
     removeFilter,
-    shortListItems,
-    shortListItem,
-    removeShortListItem,
     resetForm,
     validate,
     handleSubmit,
+    isLoading,
+    responseData,
+    alertOpen,
+    setAlertOpen,
+    responseMessage,
+    shortListItems,
+    shortListItem,
+    removeShortListItem,
   };
 };

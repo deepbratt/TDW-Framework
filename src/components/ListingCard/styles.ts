@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import { Colors } from "../../Utils/constants/colors/colors";
-const { flashWhite, carminePink, white, greyFour, blueOne, spanishGrey } =
+const { flashWhite, carminePink, white, greyFour, blueOne, spanishGrey,black} =
   Colors;
 
 const ListingCardStyles = makeStyles(() => ({
@@ -11,6 +11,7 @@ const ListingCardStyles = makeStyles(() => ({
     position: "relative",
     maxWidth: "800px",
     width: "100%",
+    marginTop: '20px'
   },
   grid: {
     display: "flex",
@@ -20,6 +21,7 @@ const ListingCardStyles = makeStyles(() => ({
     position: "relative",
     cursor: "pointer",
     minWidth: "100%",
+    marginTop: '20px'
   },
   featuredBadge: {
     position: "absolute",
@@ -76,6 +78,26 @@ const ListingCardStyles = makeStyles(() => ({
       },
     },
   },
+  favsIcon:{
+    position: "absolute",
+    left: "200px",
+    top: "3px",
+    border: "none",
+    background: "none",
+    cursor: "pointer"
+},
+favsIconGrid:{
+  position: "absolute",
+  left: "0px",
+  top: "3px",
+  border: "none",
+  background: "none",
+  cursor: "pointer"
+},
+label: {
+  fontWeight: "bold",
+  color: black
+}
 }));
 
 export default ListingCardStyles;

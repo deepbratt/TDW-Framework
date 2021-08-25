@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
-import useApi from "../../Utils/hooks/useApi";
+import { getAllData } from "../../Utils/API/API";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
-import { KeyObject } from "crypto";
-// import { fieldNames, messages } from "../../Utils/constants/formsConstants";
+import useValidation from "../../Utils/hooks/useValidation";
+import { ICarCard } from "../../Utils/interfaces/products.interface";
 
 const initialValues: any = {
   keywords: "",
@@ -32,71 +32,79 @@ const initialValues: any = {
   sortingOptions: "",
 };
 
+interface IData {
+  data: {
+    result: ICarCard[]
+  }
+}
+
 export const useForm = (validateOnChange = true) => {
-  const { CARS } = API_ENDPOINTS;
-  const {
-    loading,
-    alertOpen,
-    setAlertOpen,
-    responseMessage,
-    responseData,
-    getAll,
-  } = useApi();
+  const { ADS, CARS } = API_ENDPOINTS;
   const [values, setValues] = useState(initialValues);
-  const [errors, setErrors] = useState(initialValues);
   const [appliedFilters, setAppliedFilters] = useState<any>([]);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [responseData, setResponseData] = useState<IData>();
+  const { validate, errors, setErrors } = useValidation(values);
+  const [responseMessage, setResponseMessage] = useState({
+    status: '',
+    message: ''
+  });
 
   function inArray(needle: string, haystack: []) {
     var length = haystack.length;
     for (var i = 0; i < length; i++) {
-      if (haystack[i] == needle) return true;
+      if (haystack[i] === needle) return true;
     }
     return false;
   }
 
   const getAllCars = useCallback(async () => {
-    // let queryParams = new URLSearchParams({
-    //   keywords: values.keywords,
-    //   limit: "2",
-    //   page: "1",
-    //   city: values.city,
-    // });
-    let queryParams = `limit=2&page=1${
+    let queryParams = `?limit=10&page=1${
       inArray("keywords", appliedFilters) ? "&keyword=" + values.keywords : ""
     }${appliedFilters.map((key: any) =>
       inArray(key, appliedFilters)
         ? typeof values[key] === typeof []
-          ? values[key].map((filter: any) => `${key}=${filter}`)
+          ? values[key].map((filter: any) => `&${key}=${filter}`)
           : null
         : null
     )}`;
 
     console.log("queryParams", queryParams);
-    await getAll(CARS + queryParams);
+    await getAllData(ADS + CARS, queryParams)
+    .then((response) => {
+      console.log('response', response);
+      setIsLoading(false);
+      if (response.status === 'success') {
+        setAlertOpen(true);
+        setResponseData(response);
+        setResponseMessage({
+          status: response.status,
+          message: response.message
+        });
+      } else {
+        setIsLoading(false);
+        setAlertOpen(true);
+        setResponseMessage({
+          status: 'error',
+          message: response.message
+        });
+      }
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      console.log('Error log', error);
+      setAlertOpen(true);
+      setResponseMessage({
+        status: error.status,
+        message: error.message
+      });
+    });
   }, []);
 
   useEffect(() => {
     getAllCars();
-  }, [getAllCars, values]);
-
-  useEffect(() => {
-    console.log("Applied filters", appliedFilters);
-  }, [appliedFilters]);
-
-  useEffect(() => {
-    console.log("values", values);
-  }, [values]);
-
-  const validate = (fieldValues = values) => {
-    let temp = { ...errors };
-
-    setErrors({
-      ...temp,
-    });
-
-    if (fieldValues === values)
-      return Object.values(temp).every((x) => x === "");
-  };
+  }, [values, appliedFilters, getAllCars]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -198,7 +206,8 @@ export const useForm = (validateOnChange = true) => {
     resetForm,
     validate,
     handleSubmit,
-    loading,
+    isLoading,
+    responseData,
     alertOpen,
     setAlertOpen,
     responseMessage,

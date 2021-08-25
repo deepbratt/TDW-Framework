@@ -8,24 +8,26 @@ interface IProps {
   setVal: (val: any) => void;
   val: any;
   carModel: string[];
+  handleNavigation:any
+  handleChange: any
   range: {
     min: string;
     max: string;
   };
 }
 
-const SearchSelect: React.FC<IProps> = ({ setVal, val, carModel, range }) => {
+const SearchSelect: React.FC<IProps> = ({ setVal, val, carModel, range, handleChange, handleNavigation }) => {
   const { root, grid, button, selection, cssLabel, select } = selectStyles();
-  const { model, cities, min, max } = val;
-  const handleChange = (e: any) => {
-    const { value, name } = e.target;
-    setVal({
-      ...val,
-      [name]: value,
-    });
-  };
+  const { model, city, min, max } = val;
+  // const handleChange = (e: any) => {
+  //   const { value, name } = e.target;
+  //   setVal({
+  //     ...val,
+  //     [name]: value,
+  //   });
+  // };
 
-  const city = City.getCitiesOfCountry("PK");
+  const cities = City.getCitiesOfCountry("PK");
 
   return (
     <Grid container>
@@ -52,11 +54,11 @@ const SearchSelect: React.FC<IProps> = ({ setVal, val, carModel, range }) => {
         </Grid>
         <Grid item lg={2} xs={12}>
           <TextField
-            value={cities}
+            value={city}
             onChange={(e) => {
               handleChange(e);
             }}
-            name="cities"
+            name="city"
             className={selection}
             select
             label="City"
@@ -66,8 +68,8 @@ const SearchSelect: React.FC<IProps> = ({ setVal, val, carModel, range }) => {
               },
             }}
           >
-            {city &&
-              city.map((data: any, index: number) => {
+            {cities &&
+              cities.map((data: any, index: number) => {
                 return (
                   <MenuItem key={index} value={data.name}>
                     {data.name}
@@ -113,11 +115,8 @@ const SearchSelect: React.FC<IProps> = ({ setVal, val, carModel, range }) => {
           </TextField>
         </Grid>
         <Grid className={grid} item>
-          <Button className={button} size={Breakpoints()} variant="contained">
+          <Button className={button} size={Breakpoints()} variant="contained" onClick={handleNavigation}>
             <SearchIcon
-              onClick={() =>
-                console.log(model, cities, Number(min), Number(max))
-              }
               style={{ fontSize: "2rem" }}
             />
           </Button>

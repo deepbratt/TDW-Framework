@@ -21,51 +21,51 @@ import Slides from "../../layout/Sections/Sections/CarDetail/Slider";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useStyles } from "../../layout/Sections/Sections/CarDetail/useStyles";
 import CarInformation from "../../layout/Sections/Sections/CarDetail/CarInformation";
-import { getSingleCar } from "../../Utils/hooks/endpoints";
-import { useEffect } from "react";
+import { getSingleCar} from "../../Utils/hooks/endpoints";
 import { useParams } from "react-router";
-import useApi from "../../Utils/hooks/useApi"
+import Actions from "./useFunctions"
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface RouteProps {
   id: string;
 }
 const CarDetailContainer = () => {
-  const {loadSingleData,isLoading,obj} = useApi()
-  const { main } = useStyles();
   const { id } = useParams<RouteProps>();
+  const {loadSingleData,obj,isLoading} = Actions(id?? '')
+  const { main,loader} = useStyles();
 
-  useEffect(() => {
-    loadSingleData(getSingleCar,id);
-  }, []);
+
 
   return (
-    <Grid style={{ display: "flex", justifyContent: "center" }} container>
       <Section>
+    <Grid style={{ display: "flex", justifyContent: "center" }} container>
         {isLoading || !obj ? (
-          <h1>Loading...</h1>
+          <h1 className={loader}><CircularProgress/></h1>
         ) : (
           <>
             <Grid className={main} item xs={12}>
               <Slides
                 carTitle={carTitle}
                 info={CarInfo}
-                feature={CarFeature}
+                feature={obj?.features}
                 desc={desc}
                 paragraph={obj?.description}
-                arr={arr}
+                arr={obj.image}
                 id={obj?._id}
-                city={obj?.registeredCity}
+                city={obj?.registrationCity}
                 assembly={obj?.assembly}
                 color={obj?.bodyColor}
                 bodyType={obj?.bodyType}
                 engineCapacity={obj?.engineCapacity}
-                date={obj.date}
+                date={obj.createdAt}
                 isFavs={obj.isFav}
+                createdBy={obj.createdBy}
+                updatedAt={obj.updatedAt}
               />
               <CarDetail
                 mainButton={mainButton}
                 numButton={numButton}
-                Title={Title}
+                Title={`${obj.make} ${obj.model} ${obj.modelYear}`}
                 location={obj?.city}
                 rating={rating}
                 array={array}
@@ -76,10 +76,11 @@ const CarDetailContainer = () => {
                 paragraph={obj?.description}
                 desc={desc}
                 price={obj?.price}
-                year={obj?.year}
+                modelYear={obj?.modelYear}
                 transmission={obj?.transmission}
                 mileage={obj?.milage}
                 engineType={obj?.engineType}
+                createdBy={obj.createdBy}
               />
             </Grid>
             <Hidden lgUp>
@@ -87,21 +88,23 @@ const CarDetailContainer = () => {
                 <CarInformation
                   carTitle={carTitle}
                   info={CarInfo}
-                  // feature={data?.features}
-                  feature={CarFeature}
-                  city={obj?.registeredCity}
+                  // #empty array of feature from api so temporary static feature
+                  feature={obj.features}
+                  city={obj?.registrationCity}
                   assembly={obj?.assembly}
                   color={obj?.bodyColor}
                   bodyType={obj?.bodyType}
                   engineCapacity={obj?.engineCapacity}
-                  date={obj.date}
+                  date={obj.createdAt}
+                  updatedAt={obj.updatedAt}
+                  createdBy={obj.createdBy}
                 />
               </Grid>
             </Hidden>
           </>
         )}
-      </Section>
     </Grid>
+      </Section>
   );
 };
 

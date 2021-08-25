@@ -1,42 +1,46 @@
-import { useEffect, useReducer, useState } from "react";
-import { useHistory, useParams } from "react-router";
-import CarAdditionalInformation from "../../sections/CarAdditionalInformation";
-import CarInformationForm from "../../sections/CarInformationForm";
-import UploadPhotosForm from "../../sections/UploadPhotosForm";
-import { City, State } from "country-state-city";
-import { IState } from "country-state-city/dist/lib/interface";
-import { addEditCarApi, deleteCarAd, getCarById } from "./api";
-import { useCallback } from "react";
-import { useRef } from "react";
-
+import { useEffect, useReducer, useState } from 'react';
+import { useHistory, useLocation, useParams } from 'react-router';
+import CarAdditionalInformation from '../../sections/CarAdditionalInformation';
+import CarInformationForm from '../../sections/CarInformationForm';
+import UploadPhotosForm from '../../sections/UploadPhotosForm';
+import { City, State } from 'country-state-city';
+import { IState } from 'country-state-city/dist/lib/interface';
+import { useCallback } from 'react';
+import { useRef } from 'react';
+import {  useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import {  addFormData, deleteData, getAllData, updateFormData } from '../../Utils/API/API';
+import { API_ENDPOINTS } from '../../Utils/API/endpoints';
+import Sizes from '../../Utils/themeConstants';
 const formReducer = (state: any, event: any) => {
   return {
     ...state,
-    [event.name]: event.value,
+    [event.name]: event.value
   };
 };
 
 const initialFieldValues = {
-  city: "",
-  carModel: "",
-  carMake: "",
-  modelYear: "",
-  bodyColor: "",
-  bodyType: "",
-  bodyCondition: "",
-  registeredIn: "",
-  mileage: "",
-  price: "",
-  registrationNo: "",
-  description: "",
-  engineType: "",
-  engineCapacity: "",
-  transmission: "",
-  assembly: "",
+  city: '',
+  carModel: '',
+  carMake: '',
+  modelYear: '',
+  bodyColor: '',
+  bodyType: '',
+  bodyCondition: '',
+  registeredIn: '',
+  mileage: '',
+  price: '',
+  registrationNo: '',
+  description: '',
+  engineType: '',
+  engineCapacity: '',
+  transmission: '',
+  assembly: '',
+  sellerType: '',
   images: [],
   features: [],
-  province: "",
-  location: { coordinates: { lat: "", long: "" }, address: "" },
+  province: '',
+  location: { coordinates: { lat: '', long: '' }, address: '' }
 };
 
 // validating step 1
@@ -50,7 +54,7 @@ const initialRequireError = {
   mileage: false,
   price: false,
   registrationNo: false,
-  description:false
+  description: false
 };
 
 // step 2 validation is on the go
@@ -64,33 +68,43 @@ const initialRequireError_2 = {
   bodyType: false,
   assembly: false,
   images: false,
+  sellerType: false
 };
 
-const useAddEditCar = (user: any) => {
-  const history = useHistory()
+const useAddEditCar = () => {
+  const history = useHistory();
+  const size = Sizes();
+  const { pathname } = useLocation();
   const { id } = useParams<{ id: string }>();
-  const formRef = useRef<any>(null)
+  const formRef = useRef<any>(null);
+  const {user} = useSelector((state: RootState)=>state.auth)
+  const [isLoading, setIsLoading] = useState(false);
+  const [toastOpen, setToastOpen] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('success');
   const [formData, setFormData] = useReducer(formReducer, initialFieldValues);
   const [activeStep, setActiveStep] = useState(0);
   const [images, setImages] = useState<Array<any>>([]);
   const [requireError, setRequireError] = useState({
     ...initialRequireError,
-    ...initialRequireError_2,
+    ...initialRequireError_2
   });
   const updateImagesState = (img: any) => {
     setImages(img);
-    setFormData({ name: "images", value: img });
+    setFormData({ name: 'images', value: img });
   };
   const handleChange = (event: any) => {
     setFormData({
       name: event.target.name,
       value:
-        event.target.name === "image"
+        event.target.name === 'image'
           ? event.target.files[0]
-          : event.target.value,
+          : event.target.value
     });
-    event.target.value = event.target.name === "image" && null;
+    event.target.value = event.target.name === 'image' && null;
   };
+  
   const handleChangeSelect = (name: string, value: any) => {
     setFormData({ name: name, value: value });
   };
@@ -112,19 +126,20 @@ const useAddEditCar = (user: any) => {
       handleChange={handleChange}
       requireError={requireError}
       setFormData={setFormData}
-    />,
+    />
   ];
 
-  const getData = useCallback(()=>{
-    getCarById(id).then(response=>{
-      if(response.data.status==="success"){
-        let result = response.data.data.result
-        if(result.createdBy._id !== user.id){
-          console.log('phans gaye')
-          // history.push('/')
-          // return
-        }
-        let FieldValues = formData
+  const getData = useCallback(() => {
+    setIsLoading(true);
+    getAllData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/${id}`).then((response) => {
+      if (response && response.data && response.status === 'success') {
+        let result = response.data.result;
+        // if(result.createdBy._id !== user._id){
+        //   console.log('phans gaye')
+        //   // history.push('/')
+        //   // return
+        // }
+        let FieldValues = formData;
         FieldValues = {
           city: result.city,
           carModel: result.model,
@@ -145,60 +160,107 @@ const useAddEditCar = (user: any) => {
           images: result.image,
           features: result.features,
           province: result.province,
-          location: { coordinates: { lat: "", long: "" }, address: "" },
+          sellerType: result.sellerType,
+          location: { coordinates: { lat: '', long: '' }, address: '' }
         };
-        Object.keys(FieldValues).forEach((key)=>{
-          setFormData({name:key, value: FieldValues[key]})
-        })
-        setImages(FieldValues.images)
-      }else{
-        console.log(response)
+        Object.keys(FieldValues).forEach((key) => {
+          setFormData({ name: key, value: FieldValues[key] });
+        });
+        setImages(FieldValues.images);
+      } else {
+        console.log(response);
+        if(response.data){
+          setToastMessage(response.data.message);
+          setToastType('error');
+          setToastOpen(true);
+          history.push(pathname.substr(0, pathname.lastIndexOf('/')));
+        }else{
+          setToastMessage("Network Error");
+          setToastType('error');
+          setToastOpen(true);
+          history.push(pathname.substr(0, pathname.lastIndexOf('/')));
+        }
       }
-    })
-  },[id])
+      setIsLoading(false);
+    });
+  }, [id]);
 
   useEffect(() => {
     // console.log("car add edit ", id);
-    getData()
+    if (id) {
+      getData();
+    }
   }, [getData, id]);
   useEffect(() => {
     // console.log("images", images);
+    console.log(user._id)
   }, [images]);
 
-  const allFalse=(obj: any)=> {
+  const allFalse = (obj: any) => {
     for (var o in obj) {
       if (obj[o]) return false;
     }
     return true;
-  }
-  const handleDeleteAd=()=> {
-    deleteCarAd(id)
-  }
+  };
+  const handleDeleteAd = () => {
+    setIsLoading(true);
+    setDeleteDialog(false);
+    deleteData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/${id}`).then((response) => {
+      setIsLoading(false)
+      if (response && response.data && response.data.status === 'success') {
+          setToastMessage(response.data.message);
+          setToastType('success');
+          setToastOpen(true);
+          history.push(pathname.substr(0, pathname.lastIndexOf('/')));
+      } else {
+        console.log('error', response);
+        if (!response.response) {
+          setToastMessage('Network Error');
+          setToastType('error');
+          setToastOpen(true);
+        } else {
+          setToastMessage(response.data.message);
+          setToastType('error');
+          setToastOpen(true);
+        }
+      }
+    });
+  };
 
-  const checkValidation=(validationObject: object)=> {
+  const checkValidation = (validationObject: object) => {
     let flagRequireError = Object.assign({}, validationObject);
     Object.keys(validationObject).forEach((key) => {
-      if (formData[key] === "" || formData[key] === "null" || !formData[key]) {
-        setRequireError((requireError) => {
-          return { ...requireError, [key]: true };
+      if (formData[key] === '' || formData[key] === 'null' || !formData[key]) {
+        setRequireError((requiredError) => {
+          return { ...requiredError, [key]: true };
         });
         flagRequireError = { ...flagRequireError, [key]: true };
       } else {
-        setRequireError((requireError) => {
-          return { ...requireError, [key]: false };
+        setRequireError((requiredError) => {
+          return { ...requiredError, [key]: false };
         });
       }
     });
     return allFalse(flagRequireError);
+  };
+
+  const addEditData = async(formBody:any)=>{
+    let result : any
+    if(id){
+      let carId = id ? "/"+id : ""
+     result = await updateFormData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${carId}`, formBody)
+    }else{
+      result = await addFormData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}`, formBody)
+    }
+    return result
   }
 
-  const handleNext = () => {
-    formRef.current.scrollIntoView({behavior:'smooth'})
+  const formValidated=()=>{
     if (activeStep === 0) {
       if (!checkValidation(initialRequireError)) {
-        return;
+        return false;
       } else {
-        let cityData = City.getCitiesOfCountry("PK");
+        let cityData = City.getCitiesOfCountry('PK');
         let cityInformation = cityData?.filter(
           (city) => city.name === formData.city
         );
@@ -206,91 +268,129 @@ const useAddEditCar = (user: any) => {
         if (cityInformation) {
           provinceInformation = State.getStateByCodeAndCountry(
             cityInformation[0].stateCode,
-            "PK"
+            'PK'
           );
           setFormData({
-            name: "location",
+            name: 'location',
             value: {
               coordinate: {
                 lat: cityInformation[0].latitude,
-                long: cityInformation[0].longitude,
+                long: cityInformation[0].longitude
               },
-              address: `${formData.city}, ${provinceInformation?.name}`,
-            },
+              address: `${formData.city}, ${provinceInformation?.name}`
+            }
           });
-          setFormData({ name: "province", value: provinceInformation?.name });
+          setFormData({ name: 'province', value: provinceInformation?.name });
         }
       }
     } else if (activeStep === 1) {
       let secondStepValidated = images.length > 0;
-      setRequireError((requireError) => {
-        return { ...requireError, images: !secondStepValidated };
+      setRequireError((requiredError) => {
+        return { ...requiredError, images: !secondStepValidated };
       });
       if (!secondStepValidated) {
-        return;
+        //return false; //uncomment this line to put make images mandatory/required
       }
     } else {
       if (!checkValidation(initialRequireError_2)) {
-        return;
+        return false;
       }
     }
+    return true
+  }
 
-    if (activeStep === 2) {
-      console.log("submit following data: ");
-      console.log(formData);
-      let fd = new FormData();
-      fd.append("country", "Pakistan");
-      fd.append("city", formData.city);
-      fd.append("province", formData.province);
-      fd.append("location.address", formData.location.address);
-      fd.append("location.coordinate.lat", formData.location.coordinate.lat);
-      fd.append("location.coordinate.long", formData.location.coordinate.long);
-      let StringUrls = 0
-      for (let i = 0; i < formData.images.length; i++) {
-        if(typeof formData.images[i] === typeof "string"){
-          fd.append("image["+StringUrls+"]", images[i]);
-          StringUrls++
-        }else{
-          fd.append("image", images[i]);
-        }
+  const submitForm = () =>{
+    console.log('submit following data: ');
+    console.log(formData);
+    let fd = new FormData();
+    fd.append('country', 'Pakistan');
+    fd.append('city', formData.city);
+    fd.append('province', formData.province);
+    fd.append('location.address', formData.location.address);
+    fd.append('location.coordinates.lat', formData.location.coordinate.lat);
+    fd.append('location.coordinates.long', formData.location.coordinate.long);
+    let StringUrls = 0;
+    for (let i = 0; i < formData.images.length; i++) {
+      if (typeof formData.images[i] === typeof 'string') {
+        fd.append('image[' + StringUrls + ']', images[i]);
+        StringUrls++;
+      } else {
+        fd.append('image', images[i]);
       }
-      fd.append("model", formData.carModel);
-      fd.append("make", formData.carMake);
-      fd.append("transmission", formData.transmission);
-      fd.append("assembly", formData.assembly);
-      fd.append("registrationCity", formData.registeredIn);
-      fd.append("bodyColor", formData.bodyColor);
-      fd.append("milage", formData.mileage);
-      fd.append("condition", formData.bodyCondition);
-      fd.append("description", formData.description);
-      fd.append("bodyType", formData.bodyType);
-      fd.append("engineType", formData.engineType);
-      fd.append("engineCapacity", formData.engineCapacity);
-      fd.append("regNumber", formData.registrationNo);
-      // fd.append("date", new Date(formData.modelYear).toISOString());
-      fd.append("modelYear", formData.modelYear);
-      // fd.append("features", formData.features);
-      for (let i = 0; i < formData.features.length; i++) {
-        fd.append("features", formData.features[i]);
-      }
-      fd.append("price", formData.price);
-      console.table(Object.fromEntries(fd));
-      addEditCarApi(fd, id ? id : "").then((response) => {
-        if (response) {
-          // console.log("response", response);
+    }
+    fd.append('model', formData.carModel);
+    fd.append('make', formData.carMake);
+    fd.append('transmission', formData.transmission);
+    fd.append('assembly', formData.assembly);
+    fd.append('registrationCity', formData.registeredIn);
+    fd.append('bodyColor', formData.bodyColor);
+    fd.append('milage', formData.mileage);
+    fd.append('condition', formData.bodyCondition);
+    fd.append('description', formData.description);
+    fd.append('bodyType', formData.bodyType);
+    fd.append('engineType', formData.engineType);
+    fd.append('engineCapacity', formData.engineCapacity);
+    fd.append('regNumber', formData.registrationNo);
+    fd.append('sellerType', formData.sellerType);
+    // fd.append("date", new Date(formData.modelYear).toISOString());
+    fd.append('modelYear', formData.modelYear);
+    // fd.append("features", formData.features);
+    for (let i = 0; i < formData.features.length; i++) {
+      fd.append('features', formData.features[i]);
+    }
+    fd.append('price', formData.price);
+    console.table(Object.fromEntries(fd));
+    setIsLoading(true);
+    // let addEditCarApi = id ? updateFormData : addFormData
+    // let carId = id ? "/"+id : ""
+    addEditData(fd).then((response) => {
+      setIsLoading(false);
+      if (response && response.data && response.data.status === 'success') {
+        console.log('response', response);
+        setToastMessage(response.data.message);
+        setToastType('success');
+        setToastOpen(true);
+        let fieldValues: any = initialFieldValues;
+        Object.keys(fieldValues).forEach((key) => {
+          setFormData({ name: key, value: fieldValues[key] });
+        });
+        setImages([]);
+        history.push(pathname.substr(0, pathname.lastIndexOf('/')));
+        setActiveStep(0);
+      } else {
+        console.log('error', response);
+        if (!response.response) {
+          setToastMessage('Network Error');
+          setToastType('error');
+          setToastOpen(true);
         } else {
-          console.log("error", response);
+          setToastMessage(response.message);
+          setToastType('error');
+          setToastOpen(true);
         }
-      });
+      }
+    });
+  }
+
+  const handleNext = () => {
+    formRef.current.scrollIntoView({ behavior: 'smooth' });
+    if(!formValidated()){
+      return
+    }
+    if (activeStep === 2) {
+      submitForm()
       return;
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
-    formRef.current.scrollIntoView({behavior:'smooth'})
+    formRef.current.scrollIntoView({ behavior: 'smooth' });
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+  const lgMdSmPx = (lgMd: string, sm: string) =>{
+    return size.desktop || size.tablet ? lgMd : sm
+  }
 
   return {
     setActiveStep,
@@ -305,8 +405,18 @@ const useAddEditCar = (user: any) => {
     requireError,
     id,
     handleDeleteAd,
-    formRef
+    formRef,
+    isLoading,
+    toastMessage,
+    toastOpen,
+    setToastOpen,
+    toastType,
+    setDeleteDialog,
+    deleteDialog,
+    lgMdSmPx
   };
 };
 
-export default (useAddEditCar);
+export default useAddEditCar;
+
+// White Hatchback Civic Imported for sale in Islamabad.

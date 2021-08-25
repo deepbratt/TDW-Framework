@@ -11,7 +11,7 @@ const Verification = lazy(() => import('../pages/verificationPage'));
 const CarDetail = lazy(() => import('../pages/carDetail/index'));
 const CarComparison = lazy(() => import('../pages/carComparision/index'));
 const ShortlistItem = lazy(() => import('../pages/shortlistItems'));
-const Dashboard = lazy(() => import('../pages/dashboard/index'));
+const Dashboard = lazy(() => import('../pages/dashboard'));
 const PostAd = lazy(() => import('../pages/postAd'));
 
 export const paths = {
@@ -37,7 +37,7 @@ export const paths = {
 
 export const routes = {
   home: '/',
-  dashboard: '/dashboard',
+  dashboard: '/dashboard/:id',
   login: '/login',
   signup: '/signup',
   loginWithMobile: '/login-with-mobile',
@@ -49,7 +49,6 @@ export const routes = {
   carShortlist: '/cars-shortlist',
   carComparision: '/car-comparision/:_fId/:_sId',
   postAd: '/post-an-ad',
-  profile: '/dashboard/:id',
   verification: '/verification/:method?',
   cars: '/cars/:city?',
   forgotPassword: '/forgot-password/:token?',

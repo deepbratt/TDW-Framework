@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-const BASE_URL = 'http://api.tezdealz.com/v1';
+const BASE_URL = "http://api.tezdealz.com/v1";
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -10,6 +10,18 @@ const axiosInstance = axios.create({
     Authorization: 'Bearer ' + localStorage.getItem('tezdealzjwt')
   }
 });
+
+const getHeaders = async()=>{
+  let headers= {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    Authorization: 'Bearer ' + localStorage.getItem('tezdealzjwt')
+  }
+  let token = await localStorage.getItem('tezdealzjwt')
+  headers['Authorization']="Bearer "+token
+  return headers
+}
 
 export const addData = async (endpoint: string, requestBody?: object) => {
   try {
@@ -23,7 +35,7 @@ export const addData = async (endpoint: string, requestBody?: object) => {
   }
 };
 
-export const getData = async (url: string, param: number | string) => {
+export const getData = async (url: string,param: number | string) => {
   try {
     let result = await axiosInstance.get(`${url}${param}`);
     return result.data;
@@ -60,8 +72,19 @@ export const updateData = async (url: string, id: string, data: any) => {
 };
 
 export const updateUser = async (url: string, data: any) => {
+  let headers  = await getHeaders()
   try {
-    let result = await axiosInstance.patch(`${url}`, data);
+    let result = await axiosInstance.patch(`${url}`, data, {headers: headers});
+    return result.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+
+export const accountVerify = async (url: string, token: string) => {
+  try {
+    let result = await axiosInstance.patch(`${url}${token}`);
     return result.data;
   } catch (error) {
     return error.response.data;

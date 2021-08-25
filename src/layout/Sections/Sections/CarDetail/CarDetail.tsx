@@ -95,7 +95,7 @@ const CarDetail: React.FC<IProp> = ({
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          {createdBy.phone && <Grid className={grid} item xs={12}>
+          {createdBy?.phone && <Grid className={grid} item xs={12}>
             <Button
               className={numBtn}
               startIcon={
@@ -104,10 +104,10 @@ const CarDetail: React.FC<IProp> = ({
                 </div>
               }
             >
-              <a className={link} href={`tel:${createdBy.phone}`}>{numButton}</a>
+              <a className={link} href={`tel:${createdBy.phone}`}>{createdBy.phone.substr(0,7)}...(Show Number)</a>
             </Button>
           </Grid>}
-          {createdBy.email && <Grid className={container} item xs={12}>
+          {createdBy?.email && <Grid className={container} item xs={12}>
             <Button
               className={mailBtn}
               startIcon={
@@ -120,9 +120,9 @@ const CarDetail: React.FC<IProp> = ({
             </Button>
           </Grid>}
         </Grid>
-        <Grid item xs={12}>
+        {createdBy && <Grid item xs={12}>
           <SellerDetail createdBy={createdBy} />
-        </Grid>
+        </Grid>}
         <Hidden lgUp>
           <Grid style={{ color: gray }} item xs={12}>
             <Typography style={{ marginTop: "20px" }} variant="h6">

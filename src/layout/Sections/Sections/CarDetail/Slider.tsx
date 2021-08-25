@@ -8,7 +8,7 @@ import { Colors } from "../../Utils/color.constants";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import CustomButton from "../../../../components/CustomButton";
 import Sizes from "../../../../Utils/themeConstants";
-import { addToFavs } from "../../../../Utils/hooks/endpoints";
+import { addToFavs, removeFavs } from "../../../../Utils/hooks/endpoints";
 import Actions from "../../../../pages/carDetail/useFunctions";
 import Toast from "../../../../components/Toast";
 import { useSelector } from "react-redux";
@@ -34,6 +34,7 @@ const Slider = ({
   const [colorChange, setColorChange] = useState(false);
   const { addFavs,open,setOpen,responseMessage} = Actions();
   const {user} = useSelector((state:RootState)=>state.auth)
+  const [isFavorite, setIsFavorite] = useState<boolean | undefined>(isFavs)
   const { carousel, detail, btn, sec } = useStyles();
   const { mobile } = Sizes();
   const { gray, red, white } = Colors;
@@ -70,13 +71,14 @@ const Slider = ({
                   src={data}
                   alt=""
                 />
-                {(createdBy && user._id === createdBy._id) || isFavs === true ? null : 
+                {user?._id === createdBy?._id ? null : 
                 (
                   <CustomButton
                     handleClick={() => {
                       if (id) {
-                        addFavs(addToFavs, id);
-                        setColorChange(true);
+                        addFavs(isFavorite ? removeFavs : addToFavs, id);
+                        // setColorChange(isFavorite ? true : false);
+                        setIsFavorite(!isFavorite)
                       }
                     }}
                     styles={btn}
@@ -84,7 +86,7 @@ const Slider = ({
                     <section className={sec}>
                       <FavoriteIcon
                         style={
-                          colorChange
+                          isFavorite
                             ? {
                                 color: red,
                                 fontSize: "20px",

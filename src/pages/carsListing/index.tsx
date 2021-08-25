@@ -12,7 +12,6 @@ import {
   Hidden,
   SwipeableDrawer,
   Typography,
-  CircularProgress
 } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';

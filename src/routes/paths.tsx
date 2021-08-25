@@ -50,7 +50,7 @@ export const routes = {
   carComparision: '/car-comparision/:_fId/:_sId',
   postAd: '/post-an-ad',
   verification: '/verification/:method?',
-  cars: '/cars/:filters?',
+  cars: '/cars/:city?',
   forgotPassword: '/forgot-password/:token?',
   resetPassword: '/reset-password/:token',
   addEditCar: '/add-edit/car/:id?'

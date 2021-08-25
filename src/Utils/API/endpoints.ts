@@ -1,6 +1,6 @@
 export const API_ENDPOINTS = {
   ADS: '/ads',
-  CARS: '/cars',
+  CARS: '/cars?',
   USERS: '/Users',
   CURENT_USER: '/currentUser',
   SIGNUP: '/signup',

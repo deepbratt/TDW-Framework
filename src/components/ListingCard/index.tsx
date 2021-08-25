@@ -50,8 +50,6 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
 
   const { _id, model,make, modelYear, mileage, engineType, engineCapacity, transmission, city, createdAt, price, image,  } = data;
 
-  console.log(data)
-
   return (
     <>
     <Card className={layoutType === "list" ? root : grid} style={{cursor:"pointer"}} onClick={() => {

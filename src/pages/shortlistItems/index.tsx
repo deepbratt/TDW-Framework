@@ -46,15 +46,14 @@ export interface ShortlistItemProps {}
 
 const ShortlistItem: React.FC<ShortlistItemProps> = () => {
   const history = useHistory();
-  const {
-    isLoading,
-    responseData,
-    values,
-    handleInputChange,
-    shortListItems,
-    shortListItem,
+  const { values, isLoading, errors, responseData, handleInputChange, shortListItems,
+    handleCheckboxChange,
+    handleSingleCheckBoxChange,    
+    setValues,
+    appliedFilters,
     removeShortListItem,
-  } = useForm();
+    shortListItem,
+    removeFilter } = useForm();
 
   const [open, setOpen] = React.useState(false);
   const [sortDrawerOpen, setSortDrawerOpen] = React.useState(false);
@@ -70,6 +69,13 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  const filtersProps = {
+    handleCheckboxChange,
+    handleSingleCheckBoxChange,
+    setValues,
+    appliedFilters,
+    removeFilter
+  }
 
   const {layoutType} = useSelector(
     (state: RootState) => state.layout
@@ -103,7 +109,7 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
                   {SHOW_RESULT}
                 </Typography>
               </div>
-              <CarFilters />
+              <CarFilters filterProps={filtersProps}/>
             </Grid>
           </Hidden>
         </Grid>
@@ -148,7 +154,7 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
                 open={open}
                 handleClose={handleClose}
               >
-                <CarFilters />
+                <CarFilters filterProps={filtersProps}/>
               </FullScreenDialog>
               <SwipeableDrawer
                 style={{
@@ -191,7 +197,7 @@ const ShortlistItem: React.FC<ShortlistItemProps> = () => {
           </Hidden>
           <Hidden xsDown>
             <Grid item xs={12}>
-              <HorizontalFilters />
+              <HorizontalFilters values={values} errors={errors} handleInputChange={handleInputChange}/>
             </Grid>
           </Hidden>
           {shortListItems.length > 0 && (

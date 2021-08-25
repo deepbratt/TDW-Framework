@@ -60,9 +60,9 @@ export const deleteData = async (endpoint: string) => {
   }
 };
 
-export const getAllData = async (url: string, param: number | string = "") => {
+export const getAllData = async (url: string) => {
   try {
-    let result = await axiosInstance.get(`${url}${param}`);
+    let result = await axiosInstance.get(url);
     return result.data;
   } catch (error) {
     return error.response.data;

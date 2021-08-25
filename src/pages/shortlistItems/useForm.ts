@@ -25,7 +25,7 @@ const initialValues: any = {
   engineCapacityRange: [600, 30000],
   color: [],
   bodyType: [],
-  pictireAvailability: false,
+  pictureAvailability: false,
   videoAvailability: false,
   sellerType: [],
   adType: [],
@@ -72,7 +72,7 @@ export const useForm = (validateOnChange = true) => {
     )}`;
 
     console.log("queryParams", queryParams);
-    await getAllData(ADS + CARS, queryParams).then((response) => {
+    await getAllData(ADS + CARS + queryParams).then((response) => {
       console.log('response', response);
       setIsLoading(false);
       if (response.status === 'success') {

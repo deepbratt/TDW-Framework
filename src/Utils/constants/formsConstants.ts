@@ -25,5 +25,6 @@ export const fieldNames = {
   engineCapacityTo: 'engineCapacityTo',
   pictureAvailability: 'pictureAvailability',
   videoAvailability: 'videoAvailability',
-  sortingOptions: 'sortingOptions'
+  sortingOptions: 'sort',
+  condition: "condition"
 };

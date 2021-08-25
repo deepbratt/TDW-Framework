@@ -14,6 +14,8 @@ import { addMyPhone, updateMe } from "../../../../Utils/hooks/endpoints";
 import Toast from "../../../../components/Toast";
 import Verification from "./VerificationInput";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
 const RegexInputs = () => {
   const {changeNumber,setOpen,responseMessage,open} = Actions()
 
@@ -32,6 +34,7 @@ const RegexInputs = () => {
   } = useHooks();
   const [changeToVerification, setChangeToVerification] = useState(false);
   const { select, root, btnBox, cancelButton, button } = useStyles();
+  const {user} = useSelector((state:RootState)=>state.auth)
 
   const onSubmit = (): void => {
     changeNumber(updateMe, number,setChangeToVerification);
@@ -46,9 +49,6 @@ const RegexInputs = () => {
   };
 
   // #static user login status info for now
-
-  let isLoggedInWithEmail = true;
-  let isLoggedInWithNumber = false;
 
   return (
     <Grid item xs={12} className={root}>
@@ -70,7 +70,7 @@ const RegexInputs = () => {
                 value={val.email}
                 onChange={(e) => handleChange(e)}
                 variant="outlined"
-                disabled={isLoggedInWithEmail ? true : false}
+                disabled={user.signedUpWithEmail}
               />
               {errors.email &&
                 errors.email.type === "pattern" &&
@@ -84,7 +84,7 @@ const RegexInputs = () => {
                 onChange={(e) => NumericOnly(e)}
                 label="Mobile Number"
                 variant="outlined"
-                disabled={!isLoggedInWithNumber ? false : true}
+                disabled={user.signedUpWithPhone}
               />
             </Grid>
             {val.email || number ? (

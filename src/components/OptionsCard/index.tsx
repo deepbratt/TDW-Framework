@@ -5,6 +5,9 @@ export interface OptionsCardProps {
   data: {
     icon: string;
     text: string;
+    value: string | string[] | number[],
+    hoverIcon: string;
+    filterName: string;
   };
   key?: string;
   backgroundColor: string;

@@ -10,8 +10,11 @@ import Section from "..";
 import { useHistory } from "react-router";
 import { useEffect } from "react";
 import DisplayCards from "./DisplayCards"
+import { useDispatch } from "react-redux";
+import {setQueryParams} from "../../redux/reducers/queryParamsSlice"
 
 const TabComponent: React.FC<TabsProps> = ({ data }) => {
+  const dispatch = useDispatch();
   const { root, tabsStyle, optionsWrapper } = TabsStyles();
   const history = useHistory();
   const [currentTab, setCurrentTab] = useState(0);
@@ -34,44 +37,11 @@ const TabComponent: React.FC<TabsProps> = ({ data }) => {
   };
 
   const handleClick = (filter: string, values: any) => {
-    history.push(`cars/${filter.toLowerCase()}=${values}`);
-  };
-
-  const displayItems = (values: any[], keys: any) => {
-    let result = [];
-    let secondaryArr = values;
-    for (let i = secondaryArr.length / (isDesktop ? 12 : 6); i > 0; i--) {
-      result.push(secondaryArr.splice(0, Math.ceil(secondaryArr.length / i)));
+    let queryParam =  {
+      [filter]: values
     }
-    console.log("Result", result);
-    return (
-      <Slider>
-        {result.map((arr, index) => (
-          <Grid
-            className={optionsWrapper}
-            key={index}
-            container
-            xs={12}
-            md={10}
-            justifyContent="center"
-            spacing={1}
-          >
-            {arr.map((value: IOptions, index: any) => (
-              <Grid key={index} item xs={4} sm={3} lg={2}>
-                <OptionsCard
-                  handleClick={() => handleClick(keys, value.text)}
-                  data={value}
-                  key={keys}
-                  backgroundColor={greySix}
-                  backgroundColorSelected={primary}
-                />
-                
-              </Grid>
-            ))}
-          </Grid>
-        ))}
-      </Slider>
-    );
+    dispatch(setQueryParams(queryParam));
+    history.push(`cars/`);
   };
 
   return (
@@ -103,7 +73,7 @@ const TabComponent: React.FC<TabsProps> = ({ data }) => {
               {values.map((value: IOptions, index: any) => (
                 <Grid key={index} item xs={4} sm={3} lg={2}>
                   <OptionsCard
-                    handleClick={() => handleClick(keys, value.text)}
+                     handleClick={() => handleClick(value.filterName, value.value)}
                     data={value}
                     key={keys}
                     backgroundColor={greySix}

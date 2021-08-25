@@ -92,9 +92,15 @@ export const useForm = (validateOnChange = true) => {
        setPriceRange(range);
        if(!appliedFilters.includes("priceRange")){
         setAppliedFilters([...appliedFilters, "priceRange"])
+      }   
+    } 
+     if("priceRange" in routeParams && routeParams["priceRange"] !== ""){
+       setPriceRange(routeParams["priceRange"]);
+       if(!appliedFilters.includes("priceRange")){
+        setAppliedFilters([...appliedFilters, "priceRange"])
       }    
     }
-    dispatch(emptyQueryParams())
+    dispatch(emptyQueryParams());
     // eslint-disable-next-line
   }, []);
 

@@ -50,7 +50,7 @@ const DisplayCards: React.FC<DisplayCardsProps> = ({
               arr.map((value: IOptions, index: any) => (
                 <Grid key={index} item xs={4} sm={3} lg={2}>
                   <OptionsCard
-                    handleClick={() => handleClick(keys, value.text)}
+                    handleClick={() => handleClick(value.filterName, value.value)}
                     data={value}
                     key={keys}
                     backgroundColor={greySix}

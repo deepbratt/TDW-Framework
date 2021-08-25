@@ -166,7 +166,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({filterProps}) => {
             <Slider
               value={[priceRange[0], priceRange[1]]}
               min={0}
-              max={5000000}
+              max={50000000}
               onChange={(event: any, newValue: number | number[]) => {
                 setPriceRange(newValue);
               }}

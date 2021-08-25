@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-// import {useDispatch,  useSelector} from "react-redux";
+import {useDispatch,  useSelector} from "react-redux";
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 // import { setAppliedFilters, setFilter } from "../../redux/reducers/carFiltersSlice";
 import { getAllData } from '../../Utils/API/API';
 import useValidation from '../../Utils/hooks/useValidation';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
+import { RootState } from "../../redux/store";
 // import { useParams } from "react-router";
 
 const initialValues: any = {
@@ -46,7 +47,7 @@ interface IData {
 export const useForm = (validateOnChange = true) => {
   // const dispatch = useDispatch();
   // const {city} = useParams<any>();
-  // const appliedFiltersFromStore = useSelector((state: any) => state.persistedReducer.carFilters.appliedFilters);
+  const routeParams = useSelector((state: RootState) => state.queryParams.queryParams);
   const { ADS, CARS } = API_ENDPOINTS;
   const [priceRange, setPriceRange] = useState<number[]>([0, 50000000]);
   const [yearRange, setYearRange] = useState<number[]>([1940, 2021]);
@@ -69,6 +70,31 @@ export const useForm = (validateOnChange = true) => {
     status: '',
     message: ''
   });
+
+  useEffect(() => {
+    console.log("routes params", routeParams);
+     if("city" in routeParams){
+       let newValues= values;
+       newValues["city"].push(routeParams["city"])
+       setValues(newValues);
+       setAppliedFilters([...appliedFilters, "city"])
+     }
+     if("min" in routeParams && routeParams["min"] !== ""){
+       let range = priceRange;
+       range[0] = routeParams["min"] as number;
+       setPriceRange(range);
+       setAppliedFilters([...appliedFilters, "priceRange"])
+     }
+     if("max" in routeParams && routeParams["max"] !== ""){
+       let range = priceRange;
+       range[1] = routeParams["max"] as number;
+       setPriceRange(range);
+       if(!appliedFilters.includes("priceRange")){
+        setAppliedFilters([...appliedFilters, "priceRange"])
+      }    
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const handlePageChange = (e: any, value: any) => {
     setPage(value);
@@ -186,7 +212,7 @@ export const useForm = (validateOnChange = true) => {
         if (response.status === 'success') {
           setResponseData(response);
           setPageCount(
-            response.totalCount < 10 ? 1 : Math.round(response.totalCount / 10)
+            response.totalCount < 10 ? 1 : Math.ceil(response.totalCount / 10)
           );
           setResult(response.data.result);
           setResponseMessage({

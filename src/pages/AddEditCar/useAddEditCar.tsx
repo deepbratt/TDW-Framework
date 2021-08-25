@@ -355,7 +355,9 @@ const useAddEditCar = () => {
           setFormData({ name: key, value: fieldValues[key] });
         });
         setImages([]);
-        history.push(pathname.substr(0, pathname.lastIndexOf('/')));
+        if(id){
+          history.push(pathname.substr(0, pathname.lastIndexOf('/'))); 
+        }
         setActiveStep(0);
       } else {
         console.log('error', response);

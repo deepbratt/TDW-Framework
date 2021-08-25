@@ -6,7 +6,9 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
+import { useState } from "react";
 import UploadPicIcon from "../assets/icons/uploadPicIcon.png";
+import InformationDialog from "../components/InformationDialog";
 import addEditCarData from "../Utils/constants/language/en/addEditCarData";
 
 interface IUploadPhotosFormProps {
@@ -22,7 +24,19 @@ const UploadPhotosForm = ({
   requireError,
 }: IUploadPhotosFormProps) => {
   const classes = useStyles();
+  const [openInfoModel, setOpenInfoModel] = useState(false)
+  const [infoMessage, setInfoMessage] = useState("")
+  const [infoTitle, setInfoTitle] = useState("")
   const uploadImage = (e: any) => {
+    let oneMb = 1024*1024
+    let fileSize = e.target.files[0].size
+    if(fileSize > 5*oneMb){
+      setInfoTitle("Error!")
+      setInfoMessage(addEditCarData.infoText)
+      setOpenInfoModel(true)
+      e.target.value = null;
+      return
+    }
     let temp = [...images];
     temp.unshift(e.target.files[0]);
     updateImagesState(temp);
@@ -88,6 +102,7 @@ const UploadPhotosForm = ({
           </Typography>
         </div>
       </Grid>
+      <InformationDialog message={infoMessage} title={infoTitle} open={openInfoModel} setOpen={()=>setOpenInfoModel(false)} />
     </Grid>
   );
 };

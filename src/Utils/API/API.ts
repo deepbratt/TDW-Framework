@@ -5,6 +5,18 @@ import {
 import socialMediaAuth from '../functions/userAuth';
 import { axiosFormInstance, axiosInstance } from './axiosInstances';
 
+const getHeaders = async()=>{
+  let headers =  {
+    Accept: 'application/json',
+    'Content-Type': 'multipart/form-data',
+    'Access-Control-Allow-Origin': '*',
+    Authorization: 'Bearer ' + localStorage.getItem('tezdealzjwt')
+  }
+  let token = await localStorage.getItem('tezdealzjwt')
+  headers['Authorization'] = "Bearer " + token
+  return headers
+}
+
 export const addData = async (endpoint: string, requestBody?: object) => {
   try {
     const result = await axiosInstance.post(endpoint, requestBody);
@@ -14,8 +26,9 @@ export const addData = async (endpoint: string, requestBody?: object) => {
   }
 };
 export const addFormData = async (endpoint: string, requestBody?: object) => {
+  const headers = await getHeaders()
   try {
-    const result = await axiosFormInstance.post(endpoint, requestBody);
+    const result = await axiosFormInstance.post(endpoint, requestBody, {headers: headers});
     return result;
   } catch (error) {
     return error;

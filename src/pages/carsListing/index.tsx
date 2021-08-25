@@ -38,6 +38,7 @@ import { Color } from '../../theme/color';
 import Section from '../../components';
 import { RootState } from '../../redux/store';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
+import Loader from '../../components/Loader';
 
 export interface CarsListingProps {}
 
@@ -105,13 +106,11 @@ const CarsListing: React.FC<CarsListingProps> = () => {
     <Section>
       <Grid container justifyContent="center">
         <Grid item container xs={12} spacing={1}>
-          <Grid item xs={12}>
-            {responseData && responseData?.totalCount && (
+          <Grid item xs={12}>          
               <CustomTitle
                 color={Color.textPrimary}
-                text={`${LISTING_PAGE_HEADER} (${responseData?.totalCount})`}
-              />
-            )}
+                text={`${LISTING_PAGE_HEADER} (${responseData !== null || undefined ? responseData?.totalCount : 0})`}
+              />           
           </Grid>
           <Grid item xs={12}>
             <BreadCrumbs />
@@ -134,15 +133,14 @@ const CarsListing: React.FC<CarsListingProps> = () => {
               </Grid>
             </Hidden>
           </Grid>
-          <Grid item container xs={12} md={8} spacing={1}>
+          <Grid item container xs={12} md={8} spacing={1} alignContent="flex-start">
             <Hidden mdUp>
               <Grid item container justify="space-between" xs={12} spacing={2}>
                 <Grid item>
-                  {responseData && responseData?.totalCount && (
                     <Typography variant="h3">
-                      Results: {responseData?.totalCount}
+                      Results: {responseData !== null ? responseData?.totalCount : 0}
                     </Typography>
-                  )}
+                  
                 </Grid>
                 <Grid item container xs={6} spacing={1} justify="flex-end">
                   <Grid item container xs={7} justifyContent="flex-end">
@@ -243,49 +241,49 @@ const CarsListing: React.FC<CarsListingProps> = () => {
                 />
               </Grid>
             </Hidden>
-            <Grid item container xs={12} spacing={1} justifyContent="center">
+            <Grid item container xs={12} spacing={2} justifyContent="flex-start">
               {isLoading ? (
-                <CircularProgress />
+                <Grid item xs={12}>
+                  <Loader open={true} isBackdrop={false}/>
+                </Grid>
+              ) : responseMessage.status !== 'success' &&
+                  responseData === null ? (
+                     <Grid item xs={12}>
+                      <Typography align="center" variant="h4">
+                        {responseMessage.message}
+                      </Typography>
+                    </Grid>
               ) : (
                 <Grid
                   item
                   container
                   xs={12}
                   spacing={1}
-                  justifyContent="flex-start"
+                  justifyContent="center"
                 >
                   {result &&
                     result.map((car: any, index: any) => (
+
                       <Grid
                         key={`cars-card-${index}`}
                         item
                         xs={12}
                         sm={layoutType === 'list' ? 12 : 6}
                         xl={layoutType === 'list' ? 12 : 6}
-                        justifyContent="center"
+                        justifyContent="flex-start"
                       >
                         <ListingCard data={car} layoutType={layoutType} />
                       </Grid>
                     ))}
-                </Grid>
-              )}
-
-              {responseMessage.status !== 'success' &&
-              responseData?.data &&
-              responseData?.data.result === undefined ? (
-                <Typography align="center" variant="h4">
-                  {responseMessage.message}
-                </Typography>
-              ) : null}
-              {!isLoading && responseData?.data.result && (
-                <Pagination
-                  count={pageCount}
-                  page={page}
-                  onChange={handlePageChange}
-                  variant="outlined"
-                  shape="rounded"
-                />
-              )}
+                    <Pagination
+                      count={pageCount}
+                      page={page}
+                      onChange={handlePageChange}
+                      variant="outlined"
+                      shape="rounded"
+                      />
+                </Grid>                        
+                )}                   
             </Grid>
           </Grid>
         </Grid>

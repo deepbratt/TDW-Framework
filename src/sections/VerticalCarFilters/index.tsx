@@ -22,11 +22,48 @@ import VerticalFilterStyles from './styles';
 import DialogBox from '../../components/DialogBox';
 import { ICity } from 'country-state-city/dist/lib/interface';
 import { APPLIED_FILTERS } from '../../Utils/constants/language/en/buttonLabels';
+// import NumberFormat from 'react-number-format';
 // import InputRange from './InputRange';
 
 export interface CarFiltersProps {
   filterProps: any
 }
+
+// interface NumberFormatCustomProps {
+//   inputRef: (instance: NumberFormat | null) => void;
+//   onChange: (event: { target: { name: string; value: string } }) => void;
+//   name: string;
+// }
+
+// function NumberFormatCustom(props: NumberFormatCustomProps) {
+//   const { inputRef, onChange, ...other } = props;
+
+//   return (
+//     <NumberFormat
+//       {...other}
+//       getInputRef={inputRef}
+//       onValueChange={(values: any) => {
+//         onChange({
+//           target: {
+//             name: props.name,
+//             value: values.value,
+//           },
+//         });
+//       }}
+//       thousandSeparator
+//       isNumericString
+//       thousandsGroupStyle="thousand"
+//       prefix="Rs "
+//       decimalSeparator="."
+//       displayType="input"
+//       type="text"
+//       allowNegative
+//       allowLeadingZeros
+//       mask=""
+//       decimalScale={0}
+//     />
+//   );
+// }
 
 const CarFilters: React.FC<CarFiltersProps> = ({filterProps}) => {
   const [searchResult, setSearchResult] = useState<ICity[]>();
@@ -132,6 +169,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({filterProps}) => {
                 value={priceRange[0]}
                 errors={errors.priceFrom}
                 type="number"
+                // inputComponents={NumberFormatCustom as any}
                 onChange={(e: any) => {
                   let temp = priceRange;
                   temp[0] = e.target.value;

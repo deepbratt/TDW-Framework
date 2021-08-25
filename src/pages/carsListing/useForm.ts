@@ -51,7 +51,9 @@ export const useForm = (validateOnChange = true) => {
   const [priceRange, setPriceRange] = useState<number[]>([0, 50000000]);
   const [yearRange, setYearRange] = useState<number[]>([1940, 2021]);
   const [mileageRange, setMileageRange] = useState<number[]>([0, 500000]);
-  const [engineCapacityRange, setEngineCapacityRange] = useState<number[]>([0, 5000]);
+  const [engineCapacityRange, setEngineCapacityRange] = useState<number[]>([
+    0, 5000
+  ]);
   const [values, setValues] = useState({ ...initialValues });
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState<number>(1);
@@ -246,7 +248,7 @@ export const useForm = (validateOnChange = true) => {
     if (e.target.checked) {
       if (!appliedFilters.includes(filterName)) {
         setAppliedFilters([...appliedFilters, filterName]);
-      }else{
+      } else {
         getAllCars(appliedFilters);
       }
     }
@@ -281,18 +283,18 @@ export const useForm = (validateOnChange = true) => {
     );
     let tempVal: any = values;
     tempVal[filterName] = initialValues[filterName];
-    if(filterName === "priceRange"){
-      setPriceRange(initialValues[filterName])
-    }else if(filterName === "mileageRange"){
-      setMileageRange(initialValues[filterName])
-    }else if(filterName === "yearRange"){
+    if (filterName === 'priceRange') {
+      setPriceRange(initialValues[filterName]);
+    } else if (filterName === 'mileageRange') {
+      setMileageRange(initialValues[filterName]);
+    } else if (filterName === 'yearRange') {
       setYearRange(initialValues[filterName]);
-    }else if (filterName === "engineCapacityRange"){
+    } else if (filterName === 'engineCapacityRange') {
       setEngineCapacityRange(initialValues[filterName]);
-    }else if(filterName === "keywords"){
-      setKeywords("");
-    }else {
-      tempVal[filterName] = initialValues[filterName];
+    } else if (filterName === 'keywords') {
+      setKeywords('');
+    } else {
+      tempVal[filterName] = [];
     }
     setValues(tempVal);
     // setValues({ ...values, [filterName]: initialValues[filterName] });
@@ -307,15 +309,15 @@ export const useForm = (validateOnChange = true) => {
     getAllCars(appliedFilters);
   };
 
-  const verifyAppliedFilters = (filterName:  string) => {
+  const verifyAppliedFilters = (filterName: string) => {
     if (appliedFilters.includes(filterName)) {
-      console.log("values", values[filterName])
-      if(values[filterName].length === 1){
-        console.log("All removed");
-        removeFilter(filterName)
+      console.log('values', values[filterName]);
+      if (values[filterName].length === 1) {
+        console.log('All removed');
+        removeFilter(filterName);
       }
     }
-  }
+  };
 
   const handleTextBoxSubmit = (name: any) => {
     if (!appliedFilters.includes(name)) {
@@ -341,10 +343,14 @@ export const useForm = (validateOnChange = true) => {
     pageCount,
     result,
     keywords,
-    priceRange, setPriceRange,
-    yearRange, setYearRange,
-    mileageRange, setMileageRange,
-    engineCapacityRange, setEngineCapacityRange,
+    priceRange,
+    setPriceRange,
+    yearRange,
+    setYearRange,
+    mileageRange,
+    setMileageRange,
+    engineCapacityRange,
+    setEngineCapacityRange,
     setResult,
     handlePageChange,
     handleInputChange,

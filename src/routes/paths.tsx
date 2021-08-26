@@ -19,7 +19,7 @@ export const paths = {
   home: 'home',
   dashboard: '/dashboard',
   postAd: '/post-an-ad',
-  login: 'login',
+  login: '/login',
   about: 'about',
   products: 'products',
   contact: 'contact',
@@ -29,7 +29,7 @@ export const paths = {
   carDetail: '/car-detail/',
   carComparision: '/car-comparision',
   carShortlist: 'cars-shortlist',
-  signup: 'signup',
+  signup: '/signup',
   cars: 'cars',
   forgotPassword: '/forgot-password',
   resetPassword: 'reset-password',
@@ -73,10 +73,6 @@ export const privateRoutes = {
   //   path: routes.contact,
   //   component: Home,
   // },
-  [paths.usedCars]: {
-    path: routes.usedCars,
-    component: usedCars
-  },
   [paths.verification]: {
     path: routes.verification,
     component: Verification
@@ -139,16 +135,12 @@ export const publicRoutes = {
     path: routes.carComparision,
     component: CarComparison
   },
-  [paths.usedCars]: {
-    path: routes.usedCars,
-    component: usedCars
-  },
+  // [paths.usedCars]: {
+  //   path: routes.usedCars,
+  //   component: usedCars
+  // },
   [paths.carShortlist]: {
     path: routes.carShortlist,
     component: ShortlistItem
-  },
-  [paths.carDetail]: {
-    path: routes.carDetail,
-    component: CarDetail
   },
 };

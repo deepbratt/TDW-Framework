@@ -131,7 +131,8 @@ const Footer: React.FC<FooterProps> = ({
               ))}
           </Grid>
         </Grid>
-        <Grid className={root} item xs={12}>
+        {/* will be used later when pages are added  */}
+        {/* <Grid className={root} item xs={12}>
           <Typography variant="h4" gutterBottom>
             {data.headers.leadingCategories}
           </Typography>
@@ -184,7 +185,7 @@ const Footer: React.FC<FooterProps> = ({
                 </NavLink>
               ))}
           </div>
-        </Grid>
+        </Grid> */}
         <Grid className={root} item container xs={12}>
           <Grid className={termsLinkRoot} item xs={12} md={6}>
             {data.termsAndConditions &&

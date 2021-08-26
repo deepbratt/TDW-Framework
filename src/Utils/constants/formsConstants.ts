@@ -26,5 +26,6 @@ export const fieldNames = {
   pictureAvailability: 'pictureAvailability',
   videoAvailability: 'videoAvailability',
   sortingOptions: 'sort',
-  condition: "condition"
+  condition: "condition",
+  model: "model",
 };

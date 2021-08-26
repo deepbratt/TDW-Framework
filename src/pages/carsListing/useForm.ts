@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import {useDispatch,  useSelector} from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 // import { setAppliedFilters, setFilter } from "../../redux/reducers/carFiltersSlice";
 import { getAllData } from '../../Utils/API/API';
 import useValidation from '../../Utils/hooks/useValidation';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
-import { RootState } from "../../redux/store";
-import { emptyQueryParams }  from "../../redux/reducers/queryParamsSlice";
+import { RootState } from '../../redux/store';
+import { emptyQueryParams } from '../../redux/reducers/queryParamsSlice';
 // import { useParams } from "react-router";
 
 const initialValues: any = {
@@ -23,7 +23,10 @@ const initialValues: any = {
   mileageTo: 0,
   registrationCity: [],
   mileageRange: [0, 1000000],
+  make: [],
+  model: [],
   transmission: [],
+  assembly: [],
   engineType: [],
   // engineCapacityFrom: 0,
   // engineCapacityTo: 0,
@@ -46,9 +49,11 @@ interface IData {
 }
 
 export const useForm = (validateOnChange = true) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // const {city} = useParams<any>();
-  const routeParams = useSelector((state: RootState) => state.queryParams.queryParams);
+  // const routeParams = useSelector(
+  //   (state: RootState) => state.queryParams.queryParams
+  // );
   const { ADS, CARS } = API_ENDPOINTS;
   const [priceRange, setPriceRange] = useState<number[]>([0, 50000000]);
   const [yearRange, setYearRange] = useState<number[]>([1940, 2021]);
@@ -72,31 +77,107 @@ export const useForm = (validateOnChange = true) => {
     message: ''
   });
 
-  useEffect(() => {
-    console.log("routes params", routeParams);
-     if("city" in routeParams){
-       let newValues= values;
-       newValues["city"].push(routeParams["city"])
-       setValues(newValues);
-       setAppliedFilters([...appliedFilters, "city"])
-     }
-     if("min" in routeParams && routeParams["min"] !== ""){
-       let range = priceRange;
-       range[0] = routeParams["min"] as number;
-       setPriceRange(range);
-       setAppliedFilters([...appliedFilters, "priceRange"])
-     }
-     if("max" in routeParams && routeParams["max"] !== ""){
-       let range = priceRange;
-       range[1] = routeParams["max"] as number;
-       setPriceRange(range);
-       if(!appliedFilters.includes("priceRange")){
-        setAppliedFilters([...appliedFilters, "priceRange"])
-      }    
-    }
-    dispatch(emptyQueryParams())
-    // eslint-disable-next-line
-  }, []);
+  // * We'll use later
+  // useEffect(() => {
+  //   let newValues = values;
+  //   let newPriceRange = priceRange;
+  //   let newYearRange = yearRange;
+  //   let newMileageRange = mileageRange;
+  //   let newEngineCapacityRange = engineCapacityRange;
+  //   let newAppliedFilters = appliedFilters;
+
+  //   console.log('routes params', routeParams);
+  //   if ('city' in routeParams && routeParams['city'] !== '') {
+  //     newValues.city.push(routeParams['city']);
+  //     newAppliedFilters.push('city');
+  //   }
+  //   if ('area' in routeParams && routeParams['area'] !== '') {
+  //     newValues.registrationCity.push(routeParams['area']);
+  //     newAppliedFilters.push('registrationCity');
+  //   }
+  //   if ('engine' in routeParams && routeParams['engine'] !== '') {
+  //     newValues.engineType.push(routeParams['engine']);
+  //     newAppliedFilters.push('engineType');
+  //   }
+  //   if ('allBody' in routeParams && routeParams['allBody'] !== '') {
+  //     newValues.bodyType.push(routeParams['allBody']);
+  //     newAppliedFilters.push('bodyType');
+  //   }
+  //   if ('assemblyTypes' in routeParams && routeParams['assemblyTypes'] !== '') {
+  //     newValues.assembly.push(routeParams['assemblyTypes']);
+  //     newAppliedFilters.push('assembly');
+  //   }
+  //   if ('transmissionTypes' in routeParams && routeParams['transmissionTypes'] !== '') {
+  //     newValues.transmission.push(routeParams['transmissionTypes']);
+  //     newAppliedFilters.push('transmission');
+  //   }
+  //   if ('allColors' in routeParams && routeParams['allColors'] !== '') {
+  //     newValues.color.push(routeParams['allColors']);
+  //     newAppliedFilters.push('color');
+  //   }
+  //   if ('sellerType' in routeParams && routeParams['sellerType'] !== '') {
+  //     newValues.sellerType.push(routeParams['sellerType']);
+  //     newAppliedFilters.push('sellerType');
+  //   }
+  //   if ('adWithPics' in routeParams) {
+  //     newValues.pictureAvailability = routeParams['adWithPics'];
+  //     newAppliedFilters.push('pictureAvailability');
+  //   }
+  //   if ('min' in routeParams && routeParams['min'] !== '') {
+  //     newPriceRange[0] = routeParams['min'] as number;
+  //     newAppliedFilters.push('priceRange');
+  //   }
+  //   if ('max' in routeParams && routeParams['max'] !== '') {
+  //     newPriceRange[1] = routeParams['max'] as number;
+  //     if (!newAppliedFilters.includes('priceRange')) {
+  //       newAppliedFilters.push('priceRange');
+  //     }
+  //   }
+  //   if ('yearFrom' in routeParams && routeParams['yearFrom'] !== '') {
+  //     newYearRange[0] = routeParams['yearFrom'] as number;
+  //     newAppliedFilters.push('yearRange');
+  //   }
+  //   if ('yearTo' in routeParams && routeParams['yearTo'] !== '') {
+  //     newYearRange[1] = routeParams['yearTo'] as number;
+  //     if (!newAppliedFilters.includes('yearRange')) {
+  //       newAppliedFilters.push('yearRange');
+  //     }
+  //   }
+  //   if ('mileageFrom' in routeParams && routeParams['mileageFrom'] !== '') {
+  //     newMileageRange[0] = routeParams['mileageFrom'] as number;
+  //     newAppliedFilters.push('mileageRange');
+  //   }
+  //   if ('mileageTo' in routeParams && routeParams['mileageTo'] !== '') {
+  //     newMileageRange[1] = routeParams['mileageTo'] as number;
+  //     if (!newAppliedFilters.includes('mileageRange')) {
+  //       newAppliedFilters.push('mileageRange');
+  //     }
+  //   }
+  //   if (
+  //     'engineCapacityFrom' in routeParams &&
+  //     routeParams['engineCapacityFrom'] !== ''
+  //   ) {
+  //     newEngineCapacityRange[0] = routeParams['engineCapacityFrom'] as number;
+  //     newAppliedFilters.push('engineCapacityRange');
+  //   }
+  //   if (
+  //     'engineCapacityTo' in routeParams &&
+  //     routeParams['engineCapacityTo'] !== ''
+  //   ) {
+  //     newEngineCapacityRange[1] = routeParams['engineCapacityTo'] as number;
+  //     if (!newAppliedFilters.includes('engineCapacityRange')) {
+  //       newAppliedFilters.push('engineCapacityRange');
+  //     }
+  //   }
+  //   setValues(newValues);
+  //   setPriceRange(newPriceRange);
+  //   setYearRange(newYearRange);
+  //   setMileageRange(newMileageRange);
+  //   setEngineCapacityRange(newEngineCapacityRange);
+  //   setAppliedFilters(newAppliedFilters);
+  //   dispatch(emptyQueryParams());
+  //   // eslint-disable-next-line
+  // }, []);
 
   const handlePageChange = (e: any, value: any) => {
     setPage(value);
@@ -169,6 +250,16 @@ export const useForm = (validateOnChange = true) => {
         params += '&registrationCity=' + item;
       });
     }
+    if (appliedFilters.indexOf('make') > -1) {
+      values.make.map((item: string) => {
+        params += '&make=' + item;
+      });
+    }
+    if (appliedFilters.indexOf('model') > -1) {
+      values.model.map((item: string) => {
+        params += '&model=' + item;
+      });
+    }
     if (appliedFilters.indexOf('transmission') > -1) {
       values.transmission.map((item: string) => {
         params += '&transmission=' + item;
@@ -179,9 +270,14 @@ export const useForm = (validateOnChange = true) => {
         params += '&engineType=' + item;
       });
     }
+    if (appliedFilters.indexOf('assembly') > -1) {
+      values.assembly.map((item: string) => {
+        params += '&assembly=' + item;
+      });
+    }
     if (appliedFilters.indexOf('color') > -1) {
       values.color.map((item: string) => {
-        params += '&color=' + item;
+        params += '&bodyColor=' + item;
       });
     }
     if (appliedFilters.indexOf('bodyType') > -1) {
@@ -194,14 +290,9 @@ export const useForm = (validateOnChange = true) => {
         params += '&sellerType=' + item;
       });
     }
-    if (appliedFilters.indexOf('adType') > -1) {
-      values.adType.map((item: string) => {
-        params += '&adType=' + item;
-      });
+    if (appliedFilters.indexOf('pictureAvailability') > -1) {
+        params += '&imageStatus=' + values.pictureAvailabilty;  
     }
-    // if(appliedFilters.indexOf("pictureAvailability") > -1) {
-    //   params+="&pictureAvailability="+values.pictureAvailability
-    // }
     // if(appliedFilters.indexOf("videoAvailability") > -1) {
     //   params+="&videoAvailability="+values.videoAvailability
     // }
@@ -257,7 +348,7 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const handleTextBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     setKeywords(value);
   };
 
@@ -362,7 +453,6 @@ export const useForm = (validateOnChange = true) => {
     // eslint-disable-next-line
   }, [page, appliedFilters, values]);
 
-  
   const shortListItem = (newItem: ICarCard) => {
     if (shortListItems.length < 2) {
       setShortListItems([...shortListItems, newItem]);
@@ -409,7 +499,9 @@ export const useForm = (validateOnChange = true) => {
     responseData,
     responseMessage,
     getAllCars,
-    shortListItems, setShortListItems,
-    shortListItem, removeShortListItem
+    shortListItems,
+    setShortListItems,
+    shortListItem,
+    removeShortListItem
   };
 };

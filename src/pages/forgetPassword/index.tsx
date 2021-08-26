@@ -19,6 +19,8 @@ import {
   CONTINUE,
 } from "../../Utils/constants/language/en/buttonLabels";
 import ResetPassword from "../resetPassword";
+import MetaTags from "../../components/MetaTags";
+import PageMeta from "../../Utils/constants/language/en/pageData";
 
 const ForgetPassword = () => {
   const { token } = useParams<any>();
@@ -54,6 +56,12 @@ const ForgetPassword = () => {
       justify="center"
       alignContent="center"
     >
+      <MetaTags
+        title={PageMeta.forgotPassword.title}
+        description={PageMeta.forgotPassword.description}
+        canonical={PageMeta.forgotPassword.canonical}
+        keywords={PageMeta.forgotPassword.keywords}
+      />
       <Grid item xs={10} md={8} lg={6}>
         {token ? (
           <ResetPassword token={pin} />

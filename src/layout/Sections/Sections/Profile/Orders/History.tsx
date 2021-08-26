@@ -13,6 +13,8 @@ import SideBar from "../ProfileSidebar/Sidebar";
 import ListingCard from "../../../../../components/ListingCard/";
 import { useState } from "react";
 import {Colors} from "../../../Utils/color.constants"
+import MetaTags from "../../../../../components/MetaTags";
+import PageMeta from "../../../../../Utils/constants/language/en/pageData";
 const UserHistory = () => {
   const {
     heading,
@@ -30,6 +32,12 @@ const UserHistory = () => {
   let selling = sellingTitle;
   return (
     <Grid container>
+      <MetaTags
+        title={PageMeta.orders.title}
+        description={PageMeta.orders.description}
+        canonical={PageMeta.orders.canonical}
+        keywords={PageMeta.orders.keywords}
+      />
       <Grid className={box} item lg={12} md={10} xs={12}>
         <section className={heading}>
           <Hidden mdUp>

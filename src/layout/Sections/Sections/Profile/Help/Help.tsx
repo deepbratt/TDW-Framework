@@ -14,12 +14,20 @@ import {
   callUs
 } from "../../../Utils/sidebarText";
 import SideBar from "../ProfileSidebar/Sidebar";
+import MetaTags from "../../../../../components/MetaTags";
+import PageMeta from "../../../../../Utils/constants/language/en/pageData";
 
 const Help = () => {
   const { heading, box, helpContainer, subContainer } = useStyles();
 
   return (
     <Grid container>
+      <MetaTags
+        title={PageMeta.help.title}
+        description={PageMeta.help.description}
+        canonical={PageMeta.help.canonical}
+        keywords={PageMeta.help.keywords}
+      />
       <Grid className={box} item lg={12} md={10} xs={12}>
         <section className={heading}>
           <Hidden mdUp>

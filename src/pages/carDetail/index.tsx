@@ -25,6 +25,8 @@ import { getSingleCar} from "../../Utils/hooks/endpoints";
 import { useParams } from "react-router";
 import Actions from "./useFunctions"
 import CircularProgress from '@material-ui/core/CircularProgress';
+import MetaTags from "../../components/MetaTags";
+import PageMeta from "../../Utils/constants/language/en/pageData";
 
 interface RouteProps {
   id: string;
@@ -38,6 +40,12 @@ const CarDetailContainer = () => {
 
   return (
       <Section>
+        <MetaTags
+        title={PageMeta.carDetails.title}
+        description={PageMeta.carDetails.description}
+        canonical={PageMeta.carDetails.canonical}
+        keywords={PageMeta.carDetails.keywords}
+      />
     <Grid style={{ display: "flex", justifyContent: "center" }} container>
         {isLoading || !obj ? (
           <h1 className={loader}><CircularProgress/></h1>

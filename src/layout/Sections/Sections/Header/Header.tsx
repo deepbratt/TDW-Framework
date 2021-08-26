@@ -123,7 +123,8 @@ const HeaderContext = () => {
                     aria-controls={menuId}
                     aria-haspopup="true"
                     onClick={handleProfileMenuOpen}
-                    color="inherit"
+                    color="default"
+                    style={{color:"white"}}
                     size="medium"
                   >
                     <AccountCircle fontSize="large" />

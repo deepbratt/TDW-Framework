@@ -43,6 +43,8 @@ import { RootState } from '../../redux/store';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
 import Loader from '../../components/Loader';
 import { paths } from '../../routes/paths';
+import MetaTags from '../../components/MetaTags';
+import PageMeta from '../../Utils/constants/language/en/pageData';
 
 export interface CarsListingProps {
   isShortlist?: boolean
@@ -114,6 +116,12 @@ const CarsListing: React.FC<CarsListingProps> = ({isShortlist= false}) => {
 
   return (
     <Section>
+      <MetaTags
+        title={PageMeta.carListing.title}
+        description={PageMeta.carListing.description}
+        canonical={PageMeta.carListing.canonical}
+        keywords={PageMeta.carListing.keywords}
+      />
       <Grid container justifyContent="center">
         <Grid item container xs={12} spacing={1}>
           <Grid item xs={12}>          

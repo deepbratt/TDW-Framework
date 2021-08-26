@@ -26,6 +26,8 @@ import {
 import GlobalStyles from '../../globalStyles';
 // import { handleFacebookAuth } from "../../Utils/API/API";
 import PasswordField from '../../components/InputField/PasswordField';
+import MetaTags from '../../components/MetaTags';
+import PageMeta from '../../Utils/constants/language/en/pageData';
 
 const Login = () => {
   const history = useHistory();
@@ -65,6 +67,12 @@ const Login = () => {
       justify="center"
       alignContent="center"
     >
+      <MetaTags
+        title={PageMeta.login.title}
+        description={PageMeta.login.description}
+        canonical={PageMeta.login.canonical}
+        keywords={PageMeta.login.keywords}
+      />
       <Grid item xs={10} md={8} lg={4}>
         {isLoading && <LinearProgress color="secondary" />}
         <Card className={formCard}>

@@ -7,6 +7,8 @@ import Loader from '../../components/Loader';
 import ConfirmationDialog from '../../components/ConfirmationDialog';
 import PostAd from '../postAd';
 import { Colors } from '../../Utils/constants/colors/colors';
+import MetaTags from '../../components/MetaTags';
+import PageMeta from '../../Utils/constants/language/en/pageData';
 
 const AddEditCar = () => {
   const {
@@ -33,6 +35,12 @@ const AddEditCar = () => {
         padding: lgMdSmPx("50px", "0px"),
       }}
     >
+      <MetaTags
+        title={id ? PageMeta.editCar.title :PageMeta.addCar.title}
+        description={PageMeta.addCar.description}
+        canonical={PageMeta.addCar.canonical}
+        keywords={PageMeta.addCar.keywords}
+      />
       <Loader open={isLoading} />
       <Grid container>
         <div style={{ width: '100%' }}>

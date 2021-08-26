@@ -29,6 +29,8 @@ import Actions from "./useFunctions";
 import { updateMe } from "../../../../Utils/hooks/endpoints";
 import Toast from "../../../../components/Toast";
 import ChangePassword from "./ChangePassword";
+import MetaTags from "../../../../components/MetaTags";
+import PageMeta from "../../../../Utils/constants/language/en/pageData";
 
 const Profile = () => {
   const { updateProfile,open,setOpen,responseMessage} = Actions();
@@ -84,6 +86,12 @@ const Profile = () => {
 
   return (
     <Grid container>
+      <MetaTags
+        title={PageMeta.profile.title}
+        description={PageMeta.profile.description}
+        canonical={PageMeta.profile.canonical}
+        keywords={PageMeta.profile.keywords}
+      />
       <Grid className={box} item xs={12}>
         <section className={heading}>
           <Hidden mdUp>

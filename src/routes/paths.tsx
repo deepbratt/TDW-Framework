@@ -101,7 +101,8 @@ export const publicRoutes = {
   [paths.home]: {
     name: 'Home',
     path: routes.home,
-    component: Home
+    // component: Home, =====> uncomment this and remove below line to see landing/home page
+    component: CarsListing
   },
   [paths.cars]: {
     name: 'Cars Listing',

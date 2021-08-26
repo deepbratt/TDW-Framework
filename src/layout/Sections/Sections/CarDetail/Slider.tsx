@@ -71,7 +71,7 @@ const Slider = ({
                   src={data}
                   alt=""
                 />
-                {user?._id === createdBy?._id ? null : 
+                {!user?._id || user?._id === createdBy?._id ? null : 
                 (
                   <CustomButton
                     handleClick={() => {

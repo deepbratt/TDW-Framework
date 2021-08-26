@@ -4,6 +4,8 @@ import Section from '../../components/index'
 import Actions from "./useFunctions";
 import { useParams } from "react-router-dom";
 import {Colors} from "../../Utils/constants/colors/colors"
+import MetaTags from "../../components/MetaTags";
+import PageMeta from "../../Utils/constants/language/en/pageData";
 
 interface RouterProps {
     _fId: string;
@@ -16,6 +18,12 @@ const CarComparision = () => {
     const {iceBlue} = Colors
     return (
       <Grid container style={{marginTop: "50px",display: "flex",justifyContent: "center"}}>
+        <MetaTags
+        title={PageMeta.carComparision.title}
+        description={PageMeta.carComparision.description}
+        canonical={PageMeta.carComparision.canonical}
+        keywords={PageMeta.carComparision.keywords}
+      />
       {isLoading || data.length === 0 ? (
         <h1>Loading..</h1>
       ) : (

@@ -10,6 +10,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: '0 50px',
     backgroundColor: white,
     background:"white",
+    color:"white",
     boxShadow: '0 1px 2px rgba(0,0,0,0.07)',
     [breakpoints.down('sm')]: {
       padding: '0px'

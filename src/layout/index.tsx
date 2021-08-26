@@ -14,7 +14,7 @@ export interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { flashWhite, textPrimary } = Colors;
-  const {header} = GlobalStyles();
+  const { header } = GlobalStyles();
 
   return (
     <div>

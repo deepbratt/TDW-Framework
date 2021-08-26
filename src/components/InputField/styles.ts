@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const LayoutStyle = makeStyles((theme) => ({
   root: {
     margin: "10px 0",
+    backgroundColor: "white",
   },
   input: {
     [theme.breakpoints.down("md")]: {

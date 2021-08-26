@@ -72,10 +72,6 @@ export const privateRoutes = {
   //   path: routes.contact,
   //   component: Home,
   // },
-  [paths.usedCars]: {
-    path: routes.usedCars,
-    component: usedCars
-  },
   [paths.verification]: {
     path: routes.verification,
     component: Verification
@@ -101,7 +97,7 @@ export const publicRoutes = {
   [paths.home]: {
     name: 'Home',
     path: routes.home,
-    component: Home
+    component: CarsListing
   },
   [paths.cars]: {
     name: 'Cars Listing',
@@ -137,16 +133,12 @@ export const publicRoutes = {
     path: routes.carComparision,
     component: CarComparison
   },
-  [paths.usedCars]: {
-    path: routes.usedCars,
-    component: usedCars
-  },
+  // [paths.usedCars]: {
+  //   path: routes.usedCars,
+  //   component: usedCars
+  // },
   [paths.carShortlist]: {
     path: routes.carShortlist,
     component: ShortlistItem
-  },
-  [paths.carDetail]: {
-    path: routes.carDetail,
-    component: CarDetail
   },
 };

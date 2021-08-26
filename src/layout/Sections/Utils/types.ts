@@ -210,7 +210,7 @@ export interface MoreOptions {
   registered: string;
   assemblyTypes: string;
   transmissionTypes: string;
-  adWithPics: string;
+  adWithPics: boolean;
   sellerType: string;
   adTypes: string;
 }

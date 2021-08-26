@@ -1,29 +1,29 @@
-import { Grid, Typography, Button } from "@material-ui/core";
+import { Grid, Typography, Button } from '@material-ui/core';
 import {
   usedCarsTitle,
   arrowleft,
-  arrowright,
-} from "../../Utils/usedCarsContent";
-import useStyles from "./useStyles";
-import { Colors } from "../../Utils/color.constants";
-import Section from "../../../../components/index";
-import SearchFilterContainer from "./SearchFilter/SearchFilterContainer";
-import Actions from "./useFunctions";
-import SlideContainer from "./SlideContainer";
-import ComparisonContext from "../HomeSections/CarComparison/ComparisonContext";
-import { getLimitedCars} from "../../../../Utils/hooks/endpoints";
+  arrowright
+} from '../../Utils/usedCarsContent';
+import useStyles from './useStyles';
+import { Colors } from '../../Utils/color.constants';
+import Section from '../../../../components/index';
+import SearchFilterContainer from './SearchFilter/SearchFilterContainer';
+import Actions from './useFunctions';
+import SlideContainer from './SlideContainer';
+import ComparisonContext from '../HomeSections/CarComparison/ComparisonContext';
+import { getLimitedCars } from '../../../../Utils/hooks/endpoints';
+import Loader from '../../../../components/Loader';
 
 const UsedCarsContainer = () => {
   const { root, btn, heading } = useStyles();
   const { black, iceBlue, red } = Colors;
-  const {data,isLoading} = Actions(getLimitedCars);
-
+  const { data, isLoading } = Actions(getLimitedCars);
 
   return (
     <Grid container justify="center">
       <Grid xs={12} item className={root}>
         {data.length === 0 || isLoading ? (
-          <h1 style={{ textAlign: "center" }}>Loading...</h1>
+          <Loader open={true} isBackdrop={true} />
         ) : (
           <>
             <SearchFilterContainer />
@@ -38,8 +38,8 @@ const UsedCarsContainer = () => {
               <SlideContainer payload={data} />
               <Grid
                 style={{
-                  display: "flex",
-                  justifyContent: "center",
+                  display: 'flex',
+                  justifyContent: 'center'
                 }}
                 item
                 xs={12}

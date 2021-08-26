@@ -10,6 +10,8 @@ import {
   RESET_PASSWORD,
 } from "../../Utils/constants/language/en/buttonLabels";
 import PasswordField from "../../components/InputField/PasswordField";
+import MetaTags from "../../components/MetaTags";
+import PageMeta from "../../Utils/constants/language/en/pageData";
 
 const ResetPassword = ({ token }: any) => {
   const history = useHistory();
@@ -39,6 +41,12 @@ const ResetPassword = ({ token }: any) => {
 
   return (
     <>
+    <MetaTags
+        title={PageMeta.resetToken.title}
+        description={PageMeta.resetToken.description}
+        canonical={PageMeta.resetToken.canonical}
+        keywords={PageMeta.resetToken.keywords}
+      />
       {isLoading && <LinearProgress color="secondary" />}
       <Card className={formCard}>
         <Typography variant="h3" gutterBottom>

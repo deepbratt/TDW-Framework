@@ -11,7 +11,7 @@ const CustomStepper =({activeStep, dataArray}: CustomStepperProps)=> {
     return(
         <Stepper
           activeStep={activeStep}
-          style={{padding:0}}
+          style={{padding:"10px"}}
           orientation={
             size.mobileLarge || size.mobile ? "vertical" : "horizontal"
           }

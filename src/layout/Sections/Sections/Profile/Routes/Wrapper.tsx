@@ -15,9 +15,9 @@ const Wrapper = () => {
   const {id} = useParams<{id:string}>()
 
   const handleRoute = () => {
-    if (id === "orders") {
-      return <Orders />;
-    }
+    // if (id === "orders") {
+    //   return <Orders />;
+    // }
     if (id === "help") {
       return (
         <>
@@ -45,11 +45,6 @@ const Wrapper = () => {
       return "no page found";
     }
   };
-
-  useEffect(() => {
-    console.log("location", location.pathname);
-  }, [location.pathname]);
-
 
   return (
     <>

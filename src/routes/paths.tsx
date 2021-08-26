@@ -1,24 +1,25 @@
 import { lazy } from 'react';
-const Home = lazy(() => import('../pages/home'));
+import Retry from '../components/Retry';
+const Home = lazy(()  => import('../pages/home'));
 const Login = lazy(() => import('../pages/login'));
-const CarsListing = lazy(() => import('../pages/carsListing'));
-const ForgetPassword = lazy(() => import('../pages/forgetPassword'));
-const ResetPassword = lazy(() => import('../pages/resetPassword'));
-const Signup = lazy(() => import('../pages/signup'));
-const AddEditCar = lazy(() => import('../pages/AddEditCar'));
-const usedCars = lazy(() => import('../pages/SearchUsedCars/index'));
+const CarsListing = lazy(() =>  import('../pages/carsListing'));
+const ForgetPassword = lazy(() =>  import('../pages/forgetPassword'));
+const ResetPassword = lazy(() =>  import('../pages/resetPassword'));
+const Signup = lazy(() =>  import('../pages/signup'));
+const AddEditCar = lazy(() =>  import('../pages/AddEditCar'));
+const usedCars = lazy(() =>  import('../pages/SearchUsedCars/index'));
 const Verification = lazy(() => import('../pages/verificationPage'));
-const CarDetail = lazy(() => import('../pages/carDetail/index'));
-const CarComparison = lazy(() => import('../pages/carComparision/index'));
-const ShortlistItem = lazy(() => import('../pages/shortlistItems'));
-const Dashboard = lazy(() => import('../pages/dashboard'));
-const PostAd = lazy(() => import('../pages/postAd'));
+const CarDetail = lazy(() =>  import('../pages/carDetail/index'));
+const CarComparison = lazy(() =>  import('../pages/carComparision/index'));
+const ShortlistItem = lazy(() =>  import('../pages/shortlistItems'));
+const Dashboard = lazy(() =>  import('../pages/dashboard'));
+const PostAd = lazy(() =>  import('../pages/postAd'));
 
 export const paths = {
   home: 'home',
   dashboard: '/dashboard',
   postAd: '/post-an-ad',
-  login: 'login',
+  login: '/login',
   about: 'about',
   products: 'products',
   contact: 'contact',
@@ -28,7 +29,7 @@ export const paths = {
   carDetail: '/car-detail/',
   carComparision: '/car-comparision',
   carShortlist: 'cars-shortlist',
-  signup: 'signup',
+  signup: '/signup',
   cars: 'cars',
   forgotPassword: '/forgot-password',
   resetPassword: 'reset-password',
@@ -97,6 +98,7 @@ export const publicRoutes = {
   [paths.home]: {
     name: 'Home',
     path: routes.home,
+    // component: Home, =====> uncomment this and remove below line to see landing/home page
     component: CarsListing
   },
   [paths.cars]: {

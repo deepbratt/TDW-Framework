@@ -49,6 +49,7 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    alignContent: 'center'
+    alignContent: 'center',
+    height:"50px"
   }
 }));

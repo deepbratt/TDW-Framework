@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   Grid,
   Card,
@@ -27,7 +27,7 @@ export interface ListingCardProps {
 
 const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,handleFavs, handleClick}) => {
   const history = useHistory();
-
+  const {pathname} = useLocation()
   const {
     root,
     grid,
@@ -170,6 +170,8 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
                        {transmission}
                     </Typography>
                   </Grid>
+                  {pathname.indexOf("ads") > -1 || pathname.indexOf("favorites") > -1 ? 
+                  <>
                   <Grid item>
                     <Typography
                       color="textSecondary"
@@ -179,6 +181,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
                        {isSold ? SOLD : UNSOLD}
                     </Typography>
                   </Grid>
+                  {pathname.indexOf("ads") > -1 &&
                   <Grid item>
                     <Typography
                       color="textSecondary"
@@ -187,7 +190,9 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
                     >
                        {active ? ACTIVE : INACTIVE}
                     </Typography>
-                  </Grid>
+                  </Grid>}
+                  </>
+                  : null }
                 </Grid>
                 <Grid item xs={12}>
                   <div className={location}>

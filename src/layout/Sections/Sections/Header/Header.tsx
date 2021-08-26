@@ -75,7 +75,7 @@ const HeaderContext = () => {
 
   return (
     <React.Fragment>
-      <AppBar className={root}>
+      <AppBar className={root} color="transparent">
         <Hidden mdDown>
           <img src={header} alt="logo" className={rec} />
         </Hidden>
@@ -123,7 +123,8 @@ const HeaderContext = () => {
                     aria-controls={menuId}
                     aria-haspopup="true"
                     onClick={handleProfileMenuOpen}
-                    color="inherit"
+                    color="default"
+                    style={{color:"white"}}
                     size="medium"
                   >
                     <AccountCircle fontSize="large" />

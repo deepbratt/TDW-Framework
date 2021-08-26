@@ -20,6 +20,8 @@ import TabComponent from '../../components/Tabs';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import MetaTags from '../../components/MetaTags';
+import PageMeta from '../../Utils/constants/language/en/pageData';
 export interface HomeProps {}
 
 const HomePage = () => {
@@ -35,6 +37,12 @@ useEffect(()=>{
 
   return (
     <Grid container justifyContent="center">
+      <MetaTags
+        title={PageMeta.home.title}
+        description={PageMeta.home.description}
+        canonical={PageMeta.home.canonical}
+        keywords={PageMeta.home.keywords}
+      />
       <Banner
         Title={Title}
         subTitle={subTitle}

@@ -25,6 +25,8 @@ import { fieldNames } from '../../Utils/constants/formsConstants';
 import { CONTINUE } from '../../Utils/constants/language/en/buttonLabels';
 import PasswordField from '../../components/InputField/PasswordField';
 import { useForm } from './useForm';
+import MetaTags from '../../components/MetaTags';
+import PageMeta from '../../Utils/constants/language/en/pageData';
 
 const Signup = () => {
   const history = useHistory();
@@ -64,6 +66,12 @@ const Signup = () => {
       justify="center"
       alignContent="center"
     >
+      <MetaTags
+        title={PageMeta.signup.title}
+        description={PageMeta.signup.description}
+        canonical={PageMeta.signup.canonical}
+        keywords={PageMeta.signup.keywords}
+      />
       <Grid item xs={10} md={6} lg={4}>
         {isLoading && <LinearProgress color="secondary" />}
         <Card className={formCard}>

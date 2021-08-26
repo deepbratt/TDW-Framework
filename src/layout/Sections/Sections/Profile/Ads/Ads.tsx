@@ -17,6 +17,8 @@ import LayoutToggler from "../../../../../components/LayoutToggler";
 import Pagination from "@material-ui/lab/Pagination";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { RootState } from "../../../../../redux/store";
+import MetaTags from "../../../../../components/MetaTags";
+import PageMeta from "../../../../../Utils/constants/language/en/pageData";
 
 const Container = () => {
   const {
@@ -48,6 +50,12 @@ const Container = () => {
 
   return (
     <Grid style={{ display: "flex" }} container>
+      <MetaTags
+        title={PageMeta.myAds.title}
+        description={PageMeta.myAds.description}
+        canonical={PageMeta.myAds.canonical}
+        keywords={PageMeta.myAds.keywords}
+      />
       <Grid className={layoutType === "list" ? box : layout} item xs={12}>
         <section className={heading}>
           <Hidden mdUp>

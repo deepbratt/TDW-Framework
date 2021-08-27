@@ -31,9 +31,10 @@ import Toast from "../../../../components/Toast";
 import ChangePassword from "./ChangePassword";
 import MetaTags from "../../../../components/MetaTags";
 import PageMeta from "../../../../Utils/constants/language/en/pageData";
+import Loader from "../../../../components/Loader";
 
 const Profile = () => {
-  const { updateProfile,open,setOpen,responseMessage} = Actions();
+  const { updateProfile,open,setOpen,responseMessage, isLoading} = Actions();
 
   const city = City.getCitiesOfCountry("PK");
   const {
@@ -54,7 +55,7 @@ const Profile = () => {
     handleChangeDate,
     setVal,
     Img,
-    setImg
+    setImg,
   } = useHooks();
   
 
@@ -92,6 +93,7 @@ const Profile = () => {
         canonical={PageMeta.profile.canonical}
         keywords={PageMeta.profile.keywords}
       />
+      <Loader open={isLoading} isBackdrop={true}/>
       <Grid className={box} item xs={12}>
         <section className={heading}>
           <Hidden mdUp>
@@ -171,12 +173,15 @@ const Profile = () => {
                 onChange={(e) => handleChange(e)}
                 label="City"
                 variant="outlined"
-                defaultValue={val.city}
+                // defaultValue={val.city}
               >
                 {city &&
                   city.map((data: any, index: number) => {
                     return (
-                      <MenuItem key={index} value={data.name}>
+                      <MenuItem key={index} value={data.name} selected={(val.city+"").toLowerCase() === (data.name+"").toLowerCase()}>
+                        {console.log((val.city+"").toLowerCase() === (data.name+"").toLowerCase())}
+                        {console.log((data.name+"").toLowerCase())}
+                        {console.log((val.city+"").toLowerCase())}
                         {data.name}
                       </MenuItem>
                     );

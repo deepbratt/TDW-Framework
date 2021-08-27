@@ -17,7 +17,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 const RegexInputs = () => {
-  const {changeNumber,setOpen,responseMessage,open} = Actions()
+  const {changeNumberOrEmail,setOpen,responseMessage,open} = Actions()
 
   const {
     register,
@@ -37,7 +37,8 @@ const RegexInputs = () => {
   const {user} = useSelector((state:RootState)=>state.auth)
 
   const onSubmit = (): void => {
-    changeNumber(updateMe, number,setChangeToVerification);
+    let data = user.phone !== number ? {phone : number} : {email: email}
+    changeNumberOrEmail(updateMe, data,setChangeToVerification);
   };
 
   const handleAlertClose = () => {

@@ -20,8 +20,6 @@ const ProfileUpload = ({setImg,profile} : Upload) => {
         setImg(file)
       }
     };
-
-    console.log("Img",profile)
   
     return (
       <>

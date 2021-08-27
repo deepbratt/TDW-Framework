@@ -29,44 +29,48 @@ export const addData = async (endpoint: string, requestBody?: object) => {
     return result.data;
   } 
   
-  catch (error) {
+  catch (error:any) {
     return { 
        status: 'error', message: 'Network Error' };
   }
 };
 
 export const getData = async (url: string,param: number | string) => {
+  let headers  = await getHeaders()
   try {
-    let result = await axiosInstance.get(`${url}${param}`);
+    let result = await axiosInstance.get(`${url}${param}`, {headers: headers});
     return result.data;
-  } catch (error) {
+  } catch (error:any) {
     return error.response.data;
   }
 };
 
 export const getSingleData = async (url: string, id: string) => {
+  let headers  = await getHeaders()
   try {
-    let result = await axiosInstance.get(`${url}/${id}`);
+    let result = await axiosInstance.get(`${url}/${id}`, {headers: headers});
     return result.data;
-  } catch (error) {
+  } catch (error:any) {
     return error.response.data;
   }
 };
 
 export const addToFav = async (url: string, id: string) => {
+  let headers  = await getHeaders()
   try {
-    let result = await axiosInstance.patch(`${url}/${id}`);
+    let result = await axiosInstance.patch(`${url}/${id}`, {headers: headers});
     return result.data;
-  } catch (error) {
+  } catch (error:any) {
     return error.response.data;
   }
 };
 
 export const updateData = async (url: string, id: string, data: any) => {
+  let headers  = await getHeaders()
   try {
-    let result = await axiosInstance.patch(`${url}/${id}`, data);
+    let result = await axiosInstance.patch(`${url}/${id}`, data, {headers: headers});
     return result.data;
-  } catch (error) {
+  } catch (error:any) {
     return error.response.data;
   }
 };
@@ -76,35 +80,38 @@ export const updateUser = async (url: string, data: any) => {
   try {
     let result = await axiosInstance.patch(`${url}`, data, {headers: headers});
     return result.data;
-  } catch (error) {
+  } catch (error:any) {
     return error.response.data;
   }
 };
 
 
 export const accountVerify = async (url: string, token: string) => {
+  let headers  = await getHeaders()
   try {
-    let result = await axiosInstance.patch(`${url}${token}`);
+    let result = await axiosInstance.patch(`${url}${token}`, {headers:headers});
     return result.data;
-  } catch (error) {
+  } catch (error:any) {
     return error.response.data;
   }
 };
 
 export const deleteData = async (url: string, id: string) => {
+  let headers  = await getHeaders()
   try {
-    let result = await axiosInstance.patch(`${url}/${id}`);
+    let result = await axiosInstance.patch(`${url}/${id}`, {headers:headers});
     return result.data;
-  } catch (error) {
+  } catch (error:any) {
     return error.response.data;
   }
 };
 
 export const isLoggedIn = async (url: string) => {
+  let headers  = await getHeaders()
   try {
-    let result = await axiosInstance.get(url);
+    let result = await axiosInstance.get(url, {headers: headers});
     return result.data;
-  } catch (error) {
+  } catch (error:any) {
     return error.response.data;
   }
 };

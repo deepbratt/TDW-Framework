@@ -7,11 +7,8 @@ import {
   Typography
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ListingCardStyles from './styles';
-import LocationIcon from '../../assets/icons/location.png';
 import {
   ACTIVE,
-  FEATURED,
   INACTIVE,
   SOLD,
   UNSOLD
@@ -19,6 +16,9 @@ import {
 import { Colors } from '../../Utils/constants/colors/colors';
 import ConvertDate from '../convertDate';
 import { routes } from '../../routes/paths';
+import ListingCardStyles from './styles';
+import LocationIcon from '../../assets/icons/location.png';
+import NoImg from '../../assets/no-img.png';
 export interface ListingCardProps {
   data: any;
   layoutType: string;
@@ -38,16 +38,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
 }) => {
   const history = useHistory();
   const { pathname } = useLocation();
-  const {
-    root,
-    grid,
-    featuredBadge,
-    location,
-    favsIcon,
-    label,
-    favsIconGrid
-  } = ListingCardStyles();
-  const { red, grey } = Colors;
+  const { root, grid, featuredBadge, location, favsIcon, label, favsIconGrid } =
+    ListingCardStyles();
+  const { red, grey, flashWhite } = Colors;
 
   const favs = (id: string) => {
     if (handleFavs) {
@@ -88,7 +81,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
               );
         }}
       >
-        <Grid container>
+        <Grid container style={{ border: '2px solid ' + flashWhite }}>
           <Grid item xs={12} sm={layoutType !== 'list' ? 12 : 4}>
             <CardMedia
               style={{
@@ -101,10 +94,13 @@ const ListingCard: React.FC<ListingCardProps> = ({
             >
               <img
                 style={{
-                  minWidth: '100%',
-                  minHeight: '175px'
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  overflow: 'hidden',
+                  maxHeight: '175px'
                 }}
-                src={image && image[0]}
+                src={image && image.length > 0 ? image[0] : NoImg}
                 alt=""
               />
             </CardMedia>

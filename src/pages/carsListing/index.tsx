@@ -361,6 +361,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                       >
                         <ListingCard
                           data={car}
+                          isFavs={!isShortlist}
                           layoutType={layoutType}
                           handleClick={
                             isShortlist ? () => shortListItem(car) : undefined

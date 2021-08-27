@@ -40,6 +40,7 @@ function App() {
           }
         })
         .catch((error) => {
+          setisLoading(false);
           console.log(error);
         });
     })();

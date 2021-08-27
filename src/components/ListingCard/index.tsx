@@ -19,6 +19,13 @@ import { routes } from '../../routes/paths';
 import ListingCardStyles from './styles';
 import LocationIcon from '../../assets/icons/location.png';
 import NoImg from '../../assets/no-img.png';
+import { addToFav } from '../../Utils/hooks/actions';
+import { addToFavs, removeFavs } from '../../Utils/hooks/endpoints';
+import { useState } from 'react';
+import Toast from '../Toast';
+import Loader from '../Loader';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 export interface ListingCardProps {
   data: any;
   layoutType: string;
@@ -38,15 +45,10 @@ const ListingCard: React.FC<ListingCardProps> = ({
 }) => {
   const history = useHistory();
   const { pathname } = useLocation();
+  const {user, isLoggedIn} = useSelector((state:RootState)=>state.auth)
   const { root, grid, featuredBadge, location, favsIcon, label, favsIconGrid } =
     ListingCardStyles();
   const { red, grey, flashWhite } = Colors;
-
-  const favs = (id: string) => {
-    if (handleFavs) {
-      handleFavs(id);
-    }
-  };
 
   const {
     _id,
@@ -62,11 +64,44 @@ const ListingCard: React.FC<ListingCardProps> = ({
     price,
     image,
     isSold,
-    active
+    active,
+    isFav,
+    createdBy
   } = data;
+
+  const [isFavorite, setIsfavorite] = useState(isFav)
+  const [toastMessage, setToastMessage] = useState('')
+  const [toastType, setToastType] = useState('success')
+  const [toastOpen, setToastOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const favs = (id: string) => {
+    console.log(data)
+    if (handleFavs) {
+      handleFavs(id);
+    }else{
+      setIsLoading(true)
+      addToFav(isFavorite ? removeFavs : addToFavs, id).then(response=>{
+        setIsLoading(false)
+        console.log(response)
+        if(response && response.status === "success"){
+          setToastMessage(response?.message)
+          setToastType('success')
+          setIsfavorite(!isFavorite)
+        }else{
+          setToastMessage(response?.message)
+          setToastType('error')
+        }
+        setToastOpen(true)
+      })
+    }
+  };
 
   return (
     <>
+
+    <Toast open={toastOpen} message={toastMessage} type={toastType} onClose={()=>setToastOpen(false)}/>
+    <Loader open={isLoading} isBackdrop={true}/>
       <Card
         className={layoutType === 'list' ? root : grid}
         style={{ cursor: 'pointer' }}
@@ -121,13 +156,14 @@ const ListingCard: React.FC<ListingCardProps> = ({
                     <Typography variant="body2">{SOLD}</Typography>
                   </span>
                 ) : null}
-                {isFavs || isFavs ? (
+                {isFavs && isLoggedIn && user._id !== createdBy ? (
                   <button
-                    onClick={() => {
+                    onClick={(e) => {
                       favs(_id ? _id : '');
+                      e.stopPropagation();
                     }}
                     className={layoutType === 'list' ? favsIcon : favsIconGrid}
-                    style={isFavs || isFavs ? { color: red } : { color: grey }}
+                    style={isFavorite || pathname.indexOf('favorites') > -1 ? { color: red } : { color: grey }}
                   >
                     <FavoriteIcon />
                   </button>

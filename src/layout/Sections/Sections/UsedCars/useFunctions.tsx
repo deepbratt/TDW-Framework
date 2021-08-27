@@ -57,6 +57,7 @@ const Actions = (url? : string) => {
             }
           })
           .catch((error) => {
+            setIsLoading(false);
             setOpen(true);
             setResponseMessage({
               status: "error",
@@ -72,9 +73,9 @@ const Actions = (url? : string) => {
         setOpen(false);
         await deleteData(url, id)
           .then((response) => {
+            setIsLoading(false);
             if (response.status === "success") {
               let filteredArray = data.filter((item: any) => item._id !== id);
-              setIsLoading(false);
               setData(filteredArray);
               setOpen(true);
               setResponseMessage({
@@ -90,6 +91,7 @@ const Actions = (url? : string) => {
             }
           })
           .catch((error) => {
+            setIsLoading(false);
             setOpen(true);
             setResponseMessage({
               status: "error",

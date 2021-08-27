@@ -140,7 +140,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
         className={listingContainer}
         justifyContent="center"
       >
-        <Grid item container xs={12} >
+        <Grid item container xs={12} spacing={1}>
           <Grid item xs={12}>
             <CustomTitle
               color={Color.textPrimary}

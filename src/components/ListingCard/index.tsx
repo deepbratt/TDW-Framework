@@ -9,6 +9,7 @@ import {
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ListingCardStyles from "./styles";
 import LocationIcon from "../../assets/icons/location.png";
+import NoImg from "../../assets/no-img.png";
 import { ICarCard } from "../../layout/Sections/Utils/types";
 import { ACTIVE, FEATURED, INACTIVE, SOLD, UNSOLD } from "../../Utils/constants/language/en/buttonLabels";
 import { Colors } from "../../Utils/constants/colors/colors";
@@ -40,7 +41,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
     label,
     favsIconGrid
   } = ListingCardStyles();
-  const { red,grey} = Colors;
+  const { red,grey, flashWhite} = Colors;
 
   const favs = (id: string) => {
     if (handleFavs) {
@@ -57,7 +58,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
         ? handleClick()
         : history.push(routes.carDetail.substr(0, routes.carDetail.lastIndexOf('/')+1) + _id);
     }}>
-      <Grid container>
+      <Grid container style={{border:"2px solid "+flashWhite}}>
         <Grid item xs={12} sm={layoutType !== "list" ? 12 : 4}>
           <CardMedia
             style={{
@@ -73,7 +74,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
                 minWidth: "100%",
                 minHeight: "100%",
               }}
-              src={image && image[0]}
+              src={image && image.length > 0 ? image[0] : NoImg}
               alt=""
             />
           </CardMedia>

@@ -6,8 +6,6 @@ import {
   Hidden,
   Divider,
 } from "@material-ui/core";
-import { useState } from "react";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import DatePicker from "./DatePicker";
 import { useStyles } from "./useStyles";
 import useHooks from "./useHooks";
@@ -32,9 +30,12 @@ import ChangePassword from "./ChangePassword";
 import MetaTags from "../../../../components/MetaTags";
 import PageMeta from "../../../../Utils/constants/language/en/pageData";
 import Loader from "../../../../components/Loader";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
 
 const Profile = () => {
   const { updateProfile,open,setOpen,responseMessage, isLoading} = Actions();
+  const {user} = useSelector((state:RootState)=>state.auth)
 
   const city = City.getCitiesOfCountry("PK");
   const {
@@ -45,7 +46,6 @@ const Profile = () => {
     box,
     button,
     btnBox,
-    uploadBtn,
     cancelButton,
   } = useStyles();
   const {
@@ -71,13 +71,13 @@ const Profile = () => {
   const handleCancel = (): void => {
     if (!val.currentPassword && !val.confirmPassword && !val.newPassword) {
       setVal({
-        firstName: "",
-        lastName: "",
-        gender: "",
+        firstName: user.firstName || "",
+        lastName: user.lastName||"",
+        gender: user.gender || "",
         country: "",
-        city: "",
-        userName: "",
-        email: "",
+        city: user.city || "",
+        userName: user.username || "",
+        email: user.email || "",
         currentPassword: "",
         newPassword: "",
         confirmPassword: "",
@@ -104,9 +104,6 @@ const Profile = () => {
         <Grid className={img} item xs={12}>
           <section style={{ position: "relative" }}>
             <ProfileUpload setImg={setImg} profile={Img ? Img :profile} />
-            <section className={uploadBtn}>
-              <AddAPhotoIcon />
-            </section>
           </section>
         </Grid>
         <Grid container className={root} item xs={12}>
@@ -179,9 +176,6 @@ const Profile = () => {
                   city.map((data: any, index: number) => {
                     return (
                       <MenuItem key={index} value={data.name} selected={(val.city+"").toLowerCase() === (data.name+"").toLowerCase()}>
-                        {console.log((val.city+"").toLowerCase() === (data.name+"").toLowerCase())}
-                        {console.log((data.name+"").toLowerCase())}
-                        {console.log((val.city+"").toLowerCase())}
                         {data.name}
                       </MenuItem>
                     );

@@ -1,7 +1,7 @@
 import SedanIcon from '../../../../assets/Cars/sedan.png';
 
 export const CarFiltersData = {
-  KEYWORDS: 'KEYWORDS',
+  KEYWORDS: 'SEARCH BY KEYWORDS',
   CATEGORIES: 'CATEGORIES',
   PRICE_RANGE: 'PRICE RANGE',
   YEAR: 'YEAR',

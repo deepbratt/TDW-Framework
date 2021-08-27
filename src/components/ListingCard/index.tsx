@@ -89,7 +89,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 justifyContent: 'center',
                 alignItems: 'center',
                 overflow: 'hidden',
-                maxHeight: '175px'
+                maxHeight: '175px',
+                minHeight: "100%"
               }}
             >
               <img
@@ -98,7 +99,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   justifyContent: 'center',
                   alignItems: 'center',
                   overflow: 'hidden',
-                  maxHeight: '175px'
+                  minWidth:"100%",
+                  minHeight: "175px",
                 }}
                 src={image && image.length > 0 ? image[0] : NoImg}
                 alt=""

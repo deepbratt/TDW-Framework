@@ -26,6 +26,7 @@ const useApi = (_fId: string,_sId: string) => {
       })
       .catch((error: any) => {
         console.log(error);
+        setIsLoading(false);
       });
   };
 

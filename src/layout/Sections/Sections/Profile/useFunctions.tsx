@@ -26,6 +26,7 @@ const Actions = () =>{
           })
           .catch((error: any) => {
             console.log(error);
+            setIsLoading(false);
           });
       };
 
@@ -79,6 +80,7 @@ const Actions = () =>{
             }
           })
           .catch((error) => {
+            setIsLoading(false);
             console.log('catch', error)
             setOpen(true);
             setResponseMessage({
@@ -100,8 +102,8 @@ const Actions = () =>{
           passwordConfirm: data.confirmPassword,
         })
           .then((response) => {
+            setIsLoading(false);
             if (response.status === "success") {
-              setIsLoading(false);
               console.log(response);
               setOpen(true);
               setResponseMessage({
@@ -118,6 +120,7 @@ const Actions = () =>{
             }
           })
           .catch((error) => {
+            setIsLoading(false);
             setOpen(true);
             setResponseMessage({
               status: "error",
@@ -153,6 +156,7 @@ const Actions = () =>{
             }
           })
           .catch((error) => {
+            setIsLoading(false);
             setOpen(true);
             setChangeToVerification(false);
             setResponseMessage({
@@ -171,8 +175,8 @@ const Actions = () =>{
     
         await accountVerify(url, token)
           .then((response) => {
+            setIsLoading(false);
             if (response.status === "success") {
-              setIsLoading(false);
               setCheck(true);
               setOpen(true);
               setResponseMessage({
@@ -189,6 +193,7 @@ const Actions = () =>{
             }
           })
           .catch((error) => {
+            setIsLoading(false);
             setOpen(true);
             setCheck(false);
             setResponseMessage({
@@ -206,9 +211,9 @@ const Actions = () =>{
         setOpen(false);
         await deleteData(url, id)
           .then((response) => {
+            setIsLoading(false);
             if (response.status === "success") {
               let filteredArray = data.filter((item: any) => item._id !== id);
-              setIsLoading(false);
               setData(filteredArray);
               setOpen(true);
               setResponseMessage({
@@ -224,6 +229,7 @@ const Actions = () =>{
             }
           })
           .catch((error) => {
+            setIsLoading(false);
             setOpen(true);
             setResponseMessage({
               status: "error",

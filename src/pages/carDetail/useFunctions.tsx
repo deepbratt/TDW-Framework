@@ -62,6 +62,7 @@ const Actions = ( Id?: string | "") => {
         }
       })
       .catch((error) => {
+        setIsLoading(false);
         setOpen(true);
         setResponseMessage({
           status: "error",

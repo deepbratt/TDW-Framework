@@ -24,6 +24,8 @@ import { addToFavs, removeFavs } from '../../Utils/hooks/endpoints';
 import { useState } from 'react';
 import Toast from '../Toast';
 import Loader from '../Loader';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 export interface ListingCardProps {
   data: any;
   layoutType: string;
@@ -43,6 +45,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
 }) => {
   const history = useHistory();
   const { pathname } = useLocation();
+  const {user, isLoggedIn} = useSelector((state:RootState)=>state.auth)
   const { root, grid, featuredBadge, location, favsIcon, label, favsIconGrid } =
     ListingCardStyles();
   const { red, grey, flashWhite } = Colors;
@@ -62,7 +65,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
     image,
     isSold,
     active,
-    isFav
+    isFav,
+    createdBy
   } = data;
 
   const [isFavorite, setIsfavorite] = useState(isFav)
@@ -72,6 +76,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const [isLoading, setIsLoading] = useState(false)
 
   const favs = (id: string) => {
+    console.log(data)
     if (handleFavs) {
       handleFavs(id);
     }else{
@@ -149,7 +154,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                     <Typography variant="body2">{SOLD}</Typography>
                   </span>
                 ) : null}
-                {isFavs ? (
+                {isFavs && isLoggedIn && user._id !== createdBy ? (
                   <button
                     onClick={(e) => {
                       favs(_id ? _id : '');

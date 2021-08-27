@@ -25,9 +25,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <Grid
           className={header}
           item
-          container
           xs={12}
-          justifyContent="center"
         >
           {children}
         </Grid>

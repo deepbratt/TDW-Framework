@@ -88,7 +88,7 @@ export const Carfilters = {
   ASSEMBLY: ['Local', 'Imported'],
   PICTURE_AVAILABILITY: ['With Picture'],
   VIDEO_AVAILABILITY: ['With Video'],
-  SELLER_TYPE: ['Individuals', 'Dealers'],
+  SELLER_TYPE: ['Individual', 'Dealer'],
   AD_TYPE: ['Featured Ads']
 };
 

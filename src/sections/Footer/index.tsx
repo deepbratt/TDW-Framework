@@ -22,6 +22,7 @@ const Footer: React.FC<FooterProps> = ({
 
   const {
     root,
+    container,
     logo,
     socialMedia,
     contacts,
@@ -132,7 +133,7 @@ const Footer: React.FC<FooterProps> = ({
           </Grid>
         </Grid>
         {/* will be used later when pages are added  */}
-        {/* <Grid className={root} item xs={12}>
+        {/* <Grid className={container} item xs={12}>
           <Typography variant="h4" gutterBottom>
             {data.headers.leadingCategories}
           </Typography>
@@ -167,7 +168,7 @@ const Footer: React.FC<FooterProps> = ({
             );
           })}
         </Grid>
-        <Grid className={root} item xs={12}>
+        <Grid className={container} item xs={12}>
           <Typography variant="h4" gutterBottom>
             {data.headers.MostSearched}
           </Typography>
@@ -186,7 +187,7 @@ const Footer: React.FC<FooterProps> = ({
               ))}
           </div>
         </Grid> */}
-        <Grid className={root} item container xs={12}>
+        <Grid className={container} item container xs={12}>
           <Grid className={termsLinkRoot} item xs={12} md={6}>
             {data.termsAndConditions &&
               data.termsAndConditions.map((terms, index) => (

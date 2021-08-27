@@ -291,7 +291,7 @@ export const useForm = (validateOnChange = true) => {
       });
     }
     if (appliedFilters.indexOf('pictureAvailability') > -1) {
-        params += '&imageStatus=' + values.pictureAvailabilty;  
+        params += '&imageStatus=' + values.pictureAvailability;  
     }
     // if(appliedFilters.indexOf("videoAvailability") > -1) {
     //   params+="&videoAvailability="+values.videoAvailability

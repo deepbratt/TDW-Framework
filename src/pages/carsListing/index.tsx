@@ -82,7 +82,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     engineCapacityRange,
     setEngineCapacityRange,
     shortListItems,
-    setShortListItems,
     shortListItem,
     removeShortListItem
   } = useForm();
@@ -138,7 +137,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
         style={{
           backgroundColor: Color.white,
           padding: '30px 25px',
-          borderRadius: '5px'
+          borderRadius: '5px',
+          maxWidth: "1440px"
         }}
         justifyContent="center"
       >
@@ -184,14 +184,14 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
             alignContent="flex-start"
           >
             <Hidden mdUp>
-              <Grid item container justify="space-between" xs={12} spacing={2}>
+              <Grid item container justifyContent="space-between" xs={12} spacing={2}>
                 <Grid item>
                   <Typography variant="h3">
                     Results:{' '}
                     {responseData !== null ? responseData?.totalCount : 0}
                   </Typography>
                 </Grid>
-                <Grid item container xs={6} spacing={1} justify="flex-end">
+                <Grid item container xs={6} spacing={1} justifyContent="flex-end">
                   <Grid item container xs={7} justifyContent="flex-end">
                     <Chip
                       variant="outlined"
@@ -360,7 +360,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                         xs={12}
                         sm={layoutType === 'list' ? 12 : 6}
                         xl={layoutType === 'list' ? 12 : 6}
-                        justifyContent="flex-start"
                       >
                         <ListingCard
                           data={car}
@@ -373,6 +372,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                     ))}
                   {result && (
                     <Pagination
+                    style={{margin: "15px 0"}}
                       count={pageCount}
                       page={page}
                       onChange={handlePageChange}

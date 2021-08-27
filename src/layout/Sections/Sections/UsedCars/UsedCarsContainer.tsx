@@ -20,7 +20,7 @@ const UsedCarsContainer = () => {
   const { data, isLoading } = Actions(getLimitedCars);
 
   return (
-    <Grid container justify="center">
+    <Grid container justifyContent="center">
       <Grid xs={12} item className={root}>
         {data.length === 0 || isLoading ? (
           <Loader open={true} isBackdrop={true} />

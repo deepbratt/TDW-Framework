@@ -34,7 +34,7 @@ export const useForm = (validateOnChange = false) => {
     setValues(initialValues);
     setErrors({});
   };
-
+  
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (validate()) {
@@ -42,7 +42,7 @@ export const useForm = (validateOnChange = false) => {
         data: values.data,
       };
       console.log("requestBody", requestBody);
-
+      setIsLoading(true);
       await addData(USERS + FORGOT_PASSWORD, requestBody)
         .then((response) => {
           console.log("data", response);
@@ -54,7 +54,6 @@ export const useForm = (validateOnChange = false) => {
               message: response.message,
             });
           } else {
-            setIsLoading(false);
             setAlertOpen(true);
             setResponseMessage({
               status: "error",

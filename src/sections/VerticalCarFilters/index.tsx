@@ -289,7 +289,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   })}
               </Grid>
               {provinces.map((province) => (
-                <Grid item xs={12}>
+                <Grid key={`province-${province}`} item xs={12}>
                   <Typography variant="h4" gutterBottom>
                     {province.name}
                   </Typography>
@@ -377,7 +377,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   })}
               </Grid>
               {provinces.map((province) => (
-                <Grid item xs={12}>
+                <Grid key={`province-${province}`} item xs={12}>
                   <Typography variant="h4" gutterBottom>
                     {province.name}
                   </Typography>
@@ -470,7 +470,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
         </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={MODEL}>
-      <FormGroup>
+        <FormGroup>
           {Carfilters.MODEL.map((type) => (
             <FormControlLabel
               key={`model-type-${type}`}
@@ -640,9 +640,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           <DialogBox title="Select Color">
             <Grid container spacing={2}>
               {Carfilters.COLOR.map((type) => (
-                <Grid item xs={12} md={6}>
+                <Grid key={`color-type-${type.text}`} item xs={12} md={6}>
                   <FormControlLabel
-                    key={`color-type-${type.text}`}
                     control={
                       <Checkbox
                         checked={values.color.indexOf(type.text) > -1}
@@ -728,9 +727,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           <DialogBox title="Select Body Type">
             <Grid container spacing={2}>
               {Carfilters.BODY_TYPE.map((type) => (
-                <Grid item xs={12} md={6}>
+                <Grid key={`body-type-${type.text}`} item xs={12} md={6}>
                   <FormControlLabel
-                    key={`body-type-${type.text}`}
                     control={
                       <Checkbox
                         checked={values.bodyType.indexOf(type.text) > -1}

@@ -205,7 +205,7 @@ const Signup = () => {
             </Grid>
           </form>
         </Card>
-        {responseMessage.status === 'success' && history.push(routes.home)}
+        {responseMessage.status === 'success' && history.push(routes.login)}
       </Grid>
       {responseMessage && (
         <Toast

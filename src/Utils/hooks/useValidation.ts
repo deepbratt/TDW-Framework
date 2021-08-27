@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { fieldNames } from '../constants/formsConstants';
+import { fieldNames, messages } from '../constants/formsConstants';
 import {
   validateEmail,
   validateName,
   validatePassword,
   validatePhone,
-  validateConfirmPassword
+  validateConfirmPassword,
+  validateData
 } from '../functions/validations';
 
 const useValidation = (values: any) => {
@@ -20,20 +21,17 @@ const useValidation = (values: any) => {
       temp.firstName = validateName(fieldValues.firstName);
     }
     if (fieldNames.lastName in fieldValues) {
-      temp.firstName = validateName(fieldValues.lastName);
+      temp.lastName = validateName(fieldValues.lastName);
     }
     if (fieldNames.mobile in fieldValues) {
       temp.mobile = validatePhone(fieldValues.mobile);
     }
-    // if (fieldNames.data in fieldValues) {
-    //   if (isEmailValid(fieldNames.data)) {
-    //     temp.data = "";
-    //   } else if (isPhoneValid(fieldValues.data)) {
-    //     temp.data = "";
-    //   } else {
-    //     temp.data = messages.notValid;
-    //   }
-    // }
+    if (fieldNames.data in fieldValues) {
+      temp.data = validateData(fieldValues.data);
+    }
+    if (fieldNames.username in fieldValues) {
+      temp.username = fieldValues.username.trim() === "" ? messages.isRequired : "";
+    }
     if (fieldNames.password in fieldValues) {
       temp.password = validatePassword(fieldValues.password);
     }

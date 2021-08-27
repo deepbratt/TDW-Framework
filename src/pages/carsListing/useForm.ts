@@ -212,10 +212,8 @@ export const useForm = (validateOnChange = true) => {
       }
     }
     if (appliedFilters.indexOf('yearRange') > -1) {
-      if (yearRange[0] !== 1940) {
         params += '&modelYear[gte]=' + yearRange[0];
-      }
-      if (values.yearRange[1] !== 2021) {
+      if (yearRange[1] !== 2021) {
         params += '&modelYear[lte]=' + yearRange[1];
       }
     }

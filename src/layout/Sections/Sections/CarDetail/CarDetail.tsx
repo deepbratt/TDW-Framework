@@ -168,7 +168,7 @@ const CarDetail: React.FC<any> = ({
                 </div>
               }
             >
-              <a className={link} href={`tel:${createdBy.phone}`}>{createdBy.phone.substr(0,7)}...(Show Number)</a>
+              <a className={link} href={`tel:${createdBy.phone}`}>{createdBy.phone}</a>
             </Button>
           </Grid>}
           {createdBy?.email && <Grid className={container} item xs={12}>

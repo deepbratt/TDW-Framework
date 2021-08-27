@@ -36,6 +36,7 @@ const Actions = () =>{
         Image: any,
       ) => {
         setIsLoading(true);
+        console.log(date)
         var formData = new FormData();
         if(Image){
           formData.append("image", Image);
@@ -52,22 +53,24 @@ const Actions = () =>{
         if(data.city){
           formData.append("city", data.city);
         }
-        if(data.date){
-          formData.append("dateOfBirth", data.date);
+        if(date){
+          formData.append("dateOfBirth", date+"");
         }
     
         await updateUser(url, formData)
           .then((response) => {
             console.log(response)
-            if (response.status === "success") {
-              setIsLoading(false);
+            setIsLoading(false);
+            if (response && response.status === "success") {
               setOpen(true);
               setResponseMessage({
                 status: "success",
                 message: response.message,
               });
-              dispatch(login(response))
+              // let obj = {data:response}
+              // dispatch(login(obj))
             } else {
+              console.log('error message')
               setOpen(true);
               setResponseMessage({
                 status: "error",
@@ -76,6 +79,7 @@ const Actions = () =>{
             }
           })
           .catch((error) => {
+            console.log('catch', error)
             setOpen(true);
             setResponseMessage({
               status: "error",
@@ -122,17 +126,17 @@ const Actions = () =>{
           });
       };
     
-      const changeNumber = async (
+      const changeNumberOrEmail = async (
         url: string,
-        number: any,
+        data: any,
         setChangeToVerification: any,
       ) => {
         setIsLoading(true);
     
-        await updateUser(url, { phone: number })
+        await updateUser(url, data)
           .then((response) => {
+            setIsLoading(false);
             if (response.status === "success") {
-              setIsLoading(false);
               setChangeToVerification(false);
               setOpen(true);
               setResponseMessage({
@@ -232,7 +236,7 @@ const Actions = () =>{
         removeData,
         updateProfile,
         changePassword,
-        changeNumber,
+        changeNumberOrEmail,
         accountVerification,
         responseMessage,
         open,

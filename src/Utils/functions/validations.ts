@@ -34,7 +34,7 @@ export const validatePassword = (fieldValue: string) => {
     ? messages.isRequired
     : isPasswordValid(fieldValue)
     ? ""
-    : messages.notValid;
+    : messages.password;
 }
 
 export const validateConfirmPassword = (fieldValue: string, password: string) => {

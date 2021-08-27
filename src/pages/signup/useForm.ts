@@ -64,11 +64,12 @@ export const useForm = (validateOnChange = false) => {
         firstName: values.firstName,
         lastName: values.lastName,
         username: values.username,
-        data: values.data,
-        password: values.password,
-        passwordConfirm: values.confirmPassword
-      };
-      console.log('requestBody', requestBody);
+      data: values.data,
+      password: values.password,
+      passwordConfirm: values.confirmPassword
+    };
+    setIsLoading(true);
+    console.log('requestBody', requestBody);
       await addData(USERS + SIGNUP, requestBody)
         .then((response) => {
           setIsLoading(false);
@@ -79,7 +80,6 @@ export const useForm = (validateOnChange = false) => {
               message: response.message
             });
           } else {
-            setIsLoading(false);
             setAlertOpen(true);
             setResponseMessage({
               status: 'error',
@@ -97,7 +97,7 @@ export const useForm = (validateOnChange = false) => {
         });
     }
   };
-
+  
   return {
     values,
     setValues,

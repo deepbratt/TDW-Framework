@@ -6,7 +6,7 @@ const regPhone =
 const regTypePhone = /^[+0-9 ]*$/;
 const regEmail =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const regPass = /[^A-Za-z0-9]+/g;
+const regPass = /(?=.{8,})/;
 
 export const isNameValid = (name: string) => {
   return regName.test(name);

@@ -63,7 +63,7 @@ const Signup = () => {
     <Grid
       className={loginFormGrid}
       container
-      justifyContent="center"
+      justify="center"
       alignContent="center"
     >
       <MetaTags
@@ -205,7 +205,7 @@ const Signup = () => {
             </Grid>
           </form>
         </Card>
-        {responseMessage.status === 'success' && history.push(routes.home)}
+        {responseMessage.status === 'success' && history.push(routes.login)}
       </Grid>
       {responseMessage && (
         <Toast

@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core';
+import { Color } from './theme/color';
 
 const GlobalStyles = makeStyles((theme) => ({
   multipleInput: {
@@ -24,7 +25,8 @@ const GlobalStyles = makeStyles((theme) => ({
   },
   loginFormGrid: {
     height: 'auto',
-    margin: '40px 0'
+    padding: '40px 0',
+    backgroundColor: Color.grey,
   },
   form: {
     minWidth: '100%',

@@ -13,7 +13,7 @@ export interface HorizontalFiltersProps {
 const HorizontalFilters: React.FC<HorizontalFiltersProps> = ({values, errors, handleInputChange}) => {
  
   return (
-    <Grid style={{ margin: "10px 0" }} container justify="space-between">
+    <Grid style={{ margin: "10px 0" }} container justifyContent="space-between">
       <Grid item container xs={10} spacing={2}>
         <Grid item xs={5}>
           <Dropdown

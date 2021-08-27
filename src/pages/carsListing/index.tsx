@@ -184,14 +184,14 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
             alignContent="flex-start"
           >
             <Hidden mdUp>
-              <Grid item container justify="space-between" xs={12} spacing={2}>
+              <Grid item container justifyContent="space-between" xs={12} spacing={2}>
                 <Grid item>
                   <Typography variant="h3">
                     Results:{' '}
                     {responseData !== null ? responseData?.totalCount : 0}
                   </Typography>
                 </Grid>
-                <Grid item container xs={6} spacing={1} justify="flex-end">
+                <Grid item container xs={6} spacing={1} justifyContent="flex-end">
                   <Grid item container xs={7} justifyContent="flex-end">
                     <Chip
                       variant="outlined"
@@ -350,6 +350,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                   container
                   xs={12}
                   spacing={1}
+                  justifyContent="center"
                 >
                   {result &&
                     result.map((car: any, index: any) => (
@@ -359,7 +360,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                         xs={12}
                         sm={layoutType === 'list' ? 12 : 6}
                         xl={layoutType === 'list' ? 12 : 6}
-                        justifyContent="flex-start"
                       >
                         <ListingCard
                           data={car}

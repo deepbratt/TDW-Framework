@@ -22,7 +22,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <Grid item xs={12}>
           <Header />
         </Grid>
-        <Grid className={header} item xs={12} justify="center">
+        <Grid className={header} item xs={12} justifyContent="center">
           {children}
         </Grid>
         <Grid item xs={12}>

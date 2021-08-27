@@ -53,7 +53,7 @@ const ForgetPassword = () => {
     <Grid
       className={loginFormGrid}
       container
-      justify="center"
+      justifyContent="center"
       alignContent="center"
     >
       <MetaTags

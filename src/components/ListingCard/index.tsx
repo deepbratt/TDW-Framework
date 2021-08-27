@@ -85,7 +85,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
               container
               spacing={2}
               direction="column"
-              justify="space-between"
+              justifyContent="space-between"
             >
               {isSold ? (
                 <span className={featuredBadge}>
@@ -104,7 +104,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
                       <FavoriteIcon />
                     </button>
                   ) :  null}
-              <Grid item container justify="space-between" xs={12}>
+              <Grid item container justifyContent="space-between" xs={12}>
                 <Grid item>
                   <Typography variant="h5">{modelYear}</Typography>
                 </Grid>
@@ -124,7 +124,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, layoutType,isFavs,span,
                        {`${make} ${model}`}
                   </Typography>
                 </Grid>
-                <Grid item container xs={12} spacing={1} justify="flex-start">
+                <Grid item container xs={12} spacing={1} justifyContent="flex-start">
                   <Grid item>
                     <Typography
                       color="textSecondary"

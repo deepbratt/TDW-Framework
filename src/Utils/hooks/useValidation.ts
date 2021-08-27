@@ -5,7 +5,8 @@ import {
   validateName,
   validatePassword,
   validatePhone,
-  validateConfirmPassword
+  validateConfirmPassword,
+  validateData
 } from '../functions/validations';
 
 const useValidation = (values: any) => {
@@ -25,15 +26,9 @@ const useValidation = (values: any) => {
     if (fieldNames.mobile in fieldValues) {
       temp.mobile = validatePhone(fieldValues.mobile);
     }
-    // if (fieldNames.data in fieldValues) {
-    //   if (isEmailValid(fieldNames.data)) {
-    //     temp.data = "";
-    //   } else if (isPhoneValid(fieldValues.data)) {
-    //     temp.data = "";
-    //   } else {
-    //     temp.data = messages.notValid;
-    //   }
-    // }
+    if (fieldNames.data in fieldValues) {
+      temp.data = validateData(fieldValues.data);
+    }
     if (fieldNames.password in fieldValues) {
       temp.password = validatePassword(fieldValues.password);
     }

@@ -26,7 +26,7 @@ const GlobalStyles = makeStyles((theme) => ({
   loginFormGrid: {
     height: 'auto',
     padding: '40px 0',
-    backgroundColor: Color.grey,
+    backgroundColor: Color.grey
   },
   form: {
     minWidth: '100%',
@@ -62,12 +62,13 @@ const GlobalStyles = makeStyles((theme) => ({
     }
   },
   formStyle: {
-    margin: '20px 0px'
+    margin: '20px 0px',
   },
   header: {
-    marginTop: "70px",
-    [theme.breakpoints.down("xs")]:{
-      marginTop:"50px",
+    marginTop: '70px',
+    backgroundColor: Color.grey,
+    [theme.breakpoints.down('xs')]: {
+      marginTop: '50px'
     }
   }
 }));

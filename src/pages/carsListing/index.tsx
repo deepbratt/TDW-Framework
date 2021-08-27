@@ -82,7 +82,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     engineCapacityRange,
     setEngineCapacityRange,
     shortListItems,
-    setShortListItems,
     shortListItem,
     removeShortListItem
   } = useForm();
@@ -138,7 +137,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
         style={{
           backgroundColor: Color.white,
           padding: '30px 25px',
-          borderRadius: '5px'
+          borderRadius: '5px',
+          maxWidth: "1440px"
         }}
         justifyContent="center"
       >
@@ -372,6 +372,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                     ))}
                   {result && (
                     <Pagination
+                    style={{margin: "15px 0"}}
                       count={pageCount}
                       page={page}
                       onChange={handlePageChange}

@@ -98,6 +98,17 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
 
   return (
     <div>
+      <FilterAccordion title={KEYWORDS} expanded hideExpandIcon={true}>
+        <InputFieldWithButton
+          name={fieldNames.keywords}
+          label="Search by Keywords"
+          placeholder="Eg. Honda In Lahore"
+          value={keywords}
+          errors={errors.keywords}
+          onChange={handleTextBoxChange}
+          handleClick={() => handleTextBoxSubmit('keywords')}
+        />
+      </FilterAccordion>
       {appliedFilters.length > 0 && (
         <FilterAccordion title={APPLIED_FILTERS}>
           <Grid container spacing={1}>
@@ -118,17 +129,6 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           </Grid>
         </FilterAccordion>
       )}
-      <FilterAccordion title={KEYWORDS}>
-        <InputFieldWithButton
-          name={fieldNames.keywords}
-          label="Keywords"
-          placeholder="Eg. Honda In Lahore"
-          value={keywords}
-          errors={errors.keywords}
-          onChange={handleTextBoxChange}
-          handleClick={() => handleTextBoxSubmit('keywords')}
-        />
-      </FilterAccordion>
       <FilterAccordion title={PRICE_RANGE}>
         <Grid container direction="column">
           <Grid item container spacing={1}>

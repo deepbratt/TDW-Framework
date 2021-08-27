@@ -1,5 +1,6 @@
 import {useRef} from 'react'
 import {Upload} from "../types"
+import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 
 const ProfileUpload = ({setImg,profile} : Upload) => {
 
@@ -54,6 +55,16 @@ const ProfileUpload = ({setImg,profile} : Upload) => {
               borderRadius: "50%",
             }}
           />
+          <section style={{
+            position: "absolute",
+            top: "0%",
+            zIndex: 1,
+            left: "-30px",
+            fontSize: "40px",
+            cursor: "pointer",
+          }}>
+              <AddAPhotoIcon />
+            </section>
         </div>
       </>
     );

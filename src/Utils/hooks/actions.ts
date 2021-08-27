@@ -36,8 +36,9 @@ export const addData = async (endpoint: string, requestBody?: object) => {
 };
 
 export const getData = async (url: string,param: number | string) => {
+  let headers  = await getHeaders()
   try {
-    let result = await axiosInstance.get(`${url}${param}`);
+    let result = await axiosInstance.get(`${url}${param}`, {headers: headers});
     return result.data;
   } catch (error) {
     return error.response.data;
@@ -45,8 +46,9 @@ export const getData = async (url: string,param: number | string) => {
 };
 
 export const getSingleData = async (url: string, id: string) => {
+  let headers  = await getHeaders()
   try {
-    let result = await axiosInstance.get(`${url}/${id}`);
+    let result = await axiosInstance.get(`${url}/${id}`, {headers: headers});
     return result.data;
   } catch (error) {
     return error.response.data;
@@ -54,8 +56,9 @@ export const getSingleData = async (url: string, id: string) => {
 };
 
 export const addToFav = async (url: string, id: string) => {
+  let headers  = await getHeaders()
   try {
-    let result = await axiosInstance.patch(`${url}/${id}`);
+    let result = await axiosInstance.patch(`${url}/${id}`, {headers: headers});
     return result.data;
   } catch (error) {
     return error.response.data;
@@ -63,8 +66,9 @@ export const addToFav = async (url: string, id: string) => {
 };
 
 export const updateData = async (url: string, id: string, data: any) => {
+  let headers  = await getHeaders()
   try {
-    let result = await axiosInstance.patch(`${url}/${id}`, data);
+    let result = await axiosInstance.patch(`${url}/${id}`, data, {headers: headers});
     return result.data;
   } catch (error) {
     return error.response.data;
@@ -83,8 +87,9 @@ export const updateUser = async (url: string, data: any) => {
 
 
 export const accountVerify = async (url: string, token: string) => {
+  let headers  = await getHeaders()
   try {
-    let result = await axiosInstance.patch(`${url}${token}`);
+    let result = await axiosInstance.patch(`${url}${token}`, {headers:headers});
     return result.data;
   } catch (error) {
     return error.response.data;
@@ -92,8 +97,9 @@ export const accountVerify = async (url: string, token: string) => {
 };
 
 export const deleteData = async (url: string, id: string) => {
+  let headers  = await getHeaders()
   try {
-    let result = await axiosInstance.patch(`${url}/${id}`);
+    let result = await axiosInstance.patch(`${url}/${id}`, {headers:headers});
     return result.data;
   } catch (error) {
     return error.response.data;
@@ -101,8 +107,9 @@ export const deleteData = async (url: string, id: string) => {
 };
 
 export const isLoggedIn = async (url: string) => {
+  let headers  = await getHeaders()
   try {
-    let result = await axiosInstance.get(url);
+    let result = await axiosInstance.get(url, {headers: headers});
     return result.data;
   } catch (error) {
     return error.response.data;

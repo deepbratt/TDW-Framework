@@ -153,8 +153,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               <InputFieldWithButton
                 name={fieldNames.priceTo}
                 label="To"
-                errors={errors.priceTo}
                 value={priceRange[1]}
+                errors={errors.priceTo}
                 type="number"
                 InputProps={{
                   inputComponent: PriceInput as any
@@ -181,40 +181,52 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
         </Grid>
       </FilterAccordion>
       <FilterAccordion title={YEAR}>
-        <Grid item container spacing={1}>
-          <Grid item xs={5}>
-            <InputField
-              name={fieldNames.yearFrom}
-              label="From"
-              value={yearRange[0]}
-              errors={errors.yearFrom}
-              type="number"
-              InputProps={{
-                inputComponent: NumberInput as any
-              }}
-              onChange={(e: any) => {
-                let temp = yearRange;
-                temp[0] = e.target.value;
-                setYearRange([...temp]);
-              }}
-            />
+        <Grid container direction="column">
+          <Grid item container spacing={1}>
+            <Grid item xs={5}>
+              <InputField
+                name={fieldNames.yearFrom}
+                label="From"
+                value={yearRange[0]}
+                errors={errors.yearFrom}
+                type="number"
+                InputProps={{
+                  inputComponent: NumberInput as any
+                }}
+                onChange={(e: any) => {
+                  let temp = yearRange;
+                  temp[0] = e.target.value;
+                  setYearRange([...temp]);
+                }}
+              />
+            </Grid>
+            <Grid item xs={7}>
+              <InputFieldWithButton
+                name={fieldNames.yearTo}
+                label="To"
+                value={yearRange[1]}
+                errors={errors.yearTo}
+                type="number"
+                InputProps={{
+                  inputComponent: NumberInput as any
+                }}
+                onChange={(e: any) => {
+                  let temp = yearRange;
+                  temp[1] = e.target.value;
+                  setYearRange([...temp]);
+                }}
+                handleClick={() => handleTextBoxSubmit('yearRange')}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={7}>
-            <InputFieldWithButton
-              name={fieldNames.yearTo}
-              label="To"
-              value={yearRange[1]}
-              errors={errors.yearTo}
-              type="number"
-              InputProps={{
-                inputComponent: NumberInput as any
+          <Grid item>
+            <Slider
+              value={[yearRange[0], yearRange[1]]}
+              min={1940}
+              max={2021}
+              onChange={(event: any, newValue: number | number[]) => {
+                setYearRange(newValue);
               }}
-              onChange={(e: any) => {
-                let temp = yearRange;
-                temp[1] = e.target.value;
-                setYearRange([...temp]);
-              }}
-              handleClick={() => handleTextBoxSubmit('yearRange')}
             />
           </Grid>
         </Grid>
@@ -412,40 +424,52 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
         </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={MILEAGE}>
-        <Grid item container spacing={1}>
-          <Grid item xs={5}>
-            <InputField
-              name={fieldNames.mileageFrom}
-              label="From"
-              value={mileageRange[0]}
-              errors={errors.mileageFrom}
-              type="number"
-              InputProps={{
-                inputComponent: NumberInput as any
-              }}
-              onChange={(e: any) => {
-                let temp = mileageRange;
-                temp[0] = e.target.value;
-                setMileageRange([...temp]);
-              }}
-            />
+        <Grid container direction="column">
+          <Grid item container spacing={1}>
+            <Grid item xs={5}>
+              <InputField
+                name={fieldNames.mileageFrom}
+                label="From"
+                value={mileageRange[0]}
+                errors={errors.mileageFrom}
+                type="number"
+                InputProps={{
+                  inputComponent: NumberInput as any
+                }}
+                onChange={(e: any) => {
+                  let temp = mileageRange;
+                  temp[0] = e.target.value;
+                  setMileageRange([...temp]);
+                }}
+              />
+            </Grid>
+            <Grid item xs={7}>
+              <InputFieldWithButton
+                name={fieldNames.mileageTo}
+                label="To"
+                value={mileageRange[1]}
+                errors={errors.mileageTo}
+                type="number"
+                InputProps={{
+                  inputComponent: NumberInput as any
+                }}
+                onChange={(e: any) => {
+                  let temp = mileageRange;
+                  temp[1] = e.target.value;
+                  setMileageRange([...temp]);
+                }}
+                handleClick={() => handleTextBoxSubmit('mileageRange')}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={7}>
-            <InputFieldWithButton
-              name={fieldNames.mileageTo}
-              label="To"
-              value={mileageRange[1]}
-              errors={errors.mileageTo}
-              type="number"
-              InputProps={{
-                inputComponent: NumberInput as any
+          <Grid item>
+            <Slider
+              value={[mileageRange[0], mileageRange[1]]}
+              min={0}
+              max={500000}
+              onChange={(event: any, newValue: number | number[]) => {
+                setMileageRange(newValue);
               }}
-              onChange={(e: any) => {
-                let temp = mileageRange;
-                temp[1] = e.target.value;
-                setMileageRange([...temp]);
-              }}
-              handleClick={() => handleTextBoxSubmit('mileageRange')}
             />
           </Grid>
         </Grid>
@@ -546,40 +570,52 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
         </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={ENGINE_CAPACITY}>
-        <Grid item container spacing={1}>
-          <Grid item xs={5}>
-            <InputField
-              name={fieldNames.engineCapacityFrom}
-              label="From"
-              value={engineCapacityRange[0]}
-              errors={errors.engineCapacityFrom}
-              type="number"
-              InputProps={{
-                inputComponent: NumberInput as any
-              }}
-              onChange={(e: any) => {
-                let temp = engineCapacityRange;
-                temp[0] = e.target.value;
-                setEngineCapacityRange([...temp]);
-              }}
-            />
+        <Grid container direction="column">
+          <Grid item container spacing={1}>
+            <Grid item xs={5}>
+              <InputField
+                name={fieldNames.engineCapacityFrom}
+                label="From"
+                value={engineCapacityRange[0]}
+                errors={errors.engineCapacityFrom}
+                type="number"
+                InputProps={{
+                  inputComponent: NumberInput as any
+                }}
+                onChange={(e: any) => {
+                  let temp = engineCapacityRange;
+                  temp[0] = e.target.value;
+                  setEngineCapacityRange([...temp]);
+                }}
+              />
+            </Grid>
+            <Grid item xs={7}>
+              <InputFieldWithButton
+                name={fieldNames.engineCapacityTo}
+                label="To"
+                value={engineCapacityRange[1]}
+                errors={errors.engineCapacityTo}
+                type="number"
+                InputProps={{
+                  inputComponent: NumberInput as any
+                }}
+                onChange={(e: any) => {
+                  let temp = engineCapacityRange;
+                  temp[1] = e.target.value;
+                  setEngineCapacityRange([...temp]);
+                }}
+                handleClick={() => handleTextBoxSubmit('engineCapacityRange')}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={7}>
-            <InputFieldWithButton
-              name={fieldNames.engineCapacityTo}
-              label="To"
-              value={engineCapacityRange[1]}
-              errors={errors.engineCapacityTo}
-              type="number"
-              InputProps={{
-                inputComponent: NumberInput as any
+          <Grid item>
+            <Slider
+              value={[engineCapacityRange[0], engineCapacityRange[1]]}
+              min={0}
+              max={5000}
+              onChange={(event: any, newValue: number | number[]) => {
+                setEngineCapacityRange(newValue);
               }}
-              onChange={(e: any) => {
-                let temp = engineCapacityRange;
-                temp[1] = e.target.value;
-                setEngineCapacityRange([...temp]);
-              }}
-              handleClick={() => handleTextBoxSubmit('engineCapacityRange')}
             />
           </Grid>
         </Grid>

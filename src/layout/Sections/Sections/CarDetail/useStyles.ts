@@ -65,8 +65,12 @@ export const useStyles = makeStyles(() => ({
   carousel: {
     // paddingTop: "70px",
     width: "100%",
+    "& .carousel .slider-wrapper.axis-horizontal .slider":{
+      alignItems: "center"
+    },
     "& .carousel .slide img": {
       width: "100%",
+      height:"auto",
     },
     "& .carousel carousel-slider": {
       width: "20%",
@@ -104,6 +108,7 @@ export const useStyles = makeStyles(() => ({
       margin: "0px",
       display: "flex",
       justifyContent: "center",
+      alignItems:"center"
     },
     "& .carousel .thumbs-wrapper": {
       marginTop: "10px",

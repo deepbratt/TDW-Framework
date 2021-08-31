@@ -81,6 +81,7 @@ const useAddEditCar = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
+  const [phoneRequiredDialog, setPhoneRequiredDialog] = useState(false)
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('success');
   const [formData, setFormData] = useReducer(formReducer, initialFieldValues);
@@ -128,6 +129,10 @@ const useAddEditCar = () => {
       setFormData={setFormData}
     />
   ];
+
+  const profileRedirect = () =>{
+    history.push('/dashboard/profile')
+  }
 
   const getData = useCallback(() => {
     setIsLoading(true);
@@ -186,13 +191,17 @@ const useAddEditCar = () => {
 
   useEffect(() => {
     // console.log("car add edit ", id);
+    if(!user.phone){
+      setPhoneRequiredDialog(true)
+    }
+
     if (id) {
       getData();
     }
   }, [getData, id]);
   useEffect(() => {
     // console.log("images", images);
-    console.log(user._id)
+    console.log(user)
   }, [images]);
 
   const allFalse = (obj: any) => {
@@ -415,7 +424,10 @@ const useAddEditCar = () => {
     toastType,
     setDeleteDialog,
     deleteDialog,
-    lgMdSmPx
+    lgMdSmPx,
+    profileRedirect,
+    phoneRequiredDialog,
+    setPhoneRequiredDialog
   };
 };
 

@@ -134,11 +134,10 @@ const useAddEditCar = () => {
     getAllData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/${id}`).then((response) => {
       if (response && response.data && response.status === 'success') {
         let result = response.data.result;
-        // if(result.createdBy._id !== user._id){
-        //   console.log('phans gaye')
-        //   // history.push('/')
-        //   // return
-        // }
+        if(result.createdBy._id !== user._id){
+          history.push(pathname.substr(0, pathname.lastIndexOf('/')));  
+           return
+        }
         let FieldValues = formData;
         FieldValues = {
           city: result.city,
@@ -285,11 +284,12 @@ const useAddEditCar = () => {
       }
     } else if (activeStep === 1) {
       let secondStepValidated = images.length > 0;
+      console.log(images.length > 0 && images.length < 21)
       setRequireError((requiredError) => {
         return { ...requiredError, images: !secondStepValidated };
       });
       if (!secondStepValidated) {
-        //return false; //uncomment this line to put make images mandatory/required
+        return false; //uncomment this line to put make images mandatory/required
       }
     } else {
       if (!checkValidation(initialRequireError_2)) {

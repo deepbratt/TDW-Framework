@@ -106,6 +106,25 @@ export const publicRoutes = {
     path: routes.cars,
     component: CarsListing
   },
+  [paths.carDetail]: {
+    path: routes.carDetail,
+    component: CarDetail
+  },
+  [paths.carComparision]: {
+    path: routes.carComparision,
+    component: CarComparison
+  },
+  // [paths.usedCars]: {
+  //   path: routes.usedCars,
+  //   component: usedCars
+  // },
+  [paths.carShortlist]: {
+    path: routes.carShortlist,
+    component: ShortlistItem
+  },
+};
+
+export const onlyPublicRoutes = {
   [paths.login]: {
     name: 'Login',
     path: routes.login,
@@ -127,20 +146,4 @@ export const publicRoutes = {
     path: routes.resetPassword,
     component: ResetPassword
   },
-  [paths.carDetail]: {
-    path: routes.carDetail,
-    component: CarDetail
-  },
-  [paths.carComparision]: {
-    path: routes.carComparision,
-    component: CarComparison
-  },
-  // [paths.usedCars]: {
-  //   path: routes.usedCars,
-  //   component: usedCars
-  // },
-  [paths.carShortlist]: {
-    path: routes.carShortlist,
-    component: ShortlistItem
-  },
-};
+}

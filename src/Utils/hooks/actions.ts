@@ -129,7 +129,7 @@ export const isLoggedIn = async (url: string) => {
   // let headers  = await getHeaders()
   try {
     let result = await axiosInstance.get(url);
-    return result;
+    return result.data;
   } catch (error:any) {
     return error;
   }

@@ -85,7 +85,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     shortListItem,
     removeShortListItem,
     rangeValues,
-    setRangeValues
+    setRangeValues,
+    shortListCars
   } = useForm();
 
   const [open, setOpen] = React.useState(false);
@@ -272,38 +273,39 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                 />
               </Grid>
             </Hidden>
-            {isShortlist === true && shortListItems.length > 0 && (
+            {isShortlist === true && shortListCars.length >= 1 && (
               <Grid item container xs={12}>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Typography variant="h4" gutterBottom>
                     {SHORTLIST_ITEMS}
                   </Typography>
                 </Grid>
-                <Grid item container xs={12}>
-                  {shortListItems.map((item: ICarCard) => (
-                    <Grid key={`shotlist-item-${item.model}`} item xs={2}>
-                      <ShortListCard
-                        productImg={item.image[0]}
-                        name={item.model}
-                        _id={item._id}
-                        handleClick={() => removeShortListItem(item._id)}
-                      />
-                    </Grid>
-                  ))}
-                  {shortListItems.length === 2 && (
-                    <Grid container item xs={3} alignContent="flex-end">
-                      <Button
-                        color="secondary"
-                        onClick={() =>
-                          history.push(
-                            `${paths.carComparision}/${shortListItems[0]._id}/${shortListItems[1]._id}`
-                          )
-                        }
-                      >
-                        {COMPARE}
-                      </Button>
-                    </Grid>
-                  )}
+                <Grid container item xs={6} justifyContent="flex-end">
+                  <Grid item xs={3}>
+                    <Button
+                      color="secondary"
+                      onClick={() =>
+                        history.push(
+                          `${paths.carComparision}/${shortListItems[0]._id}/${shortListItems[1]._id}`
+                        )
+                      }
+                    >
+                      {COMPARE}
+                    </Button>
+                  </Grid>
+                </Grid>
+                <Grid item container xs={12} spacing={1}>
+                  {shortListCars &&
+                    shortListCars.map((item: ICarCard) => (
+                      <Grid key={`shotlist-item-${item.model}`} item xs={2}>
+                        <ShortListCard
+                          productImg={item.image[0]}
+                          name={item.model}
+                          _id={item._id}
+                          handleClick={() => removeShortListItem(item._id)}
+                        />
+                      </Grid>
+                    ))}
                 </Grid>
               </Grid>
             )}
@@ -322,7 +324,13 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                   </Typography>
                 </Grid>
               ) : (
-                <Grid item container xs={12} justifyContent="center" spacing={1}>
+                <Grid
+                  item
+                  container
+                  xs={12}
+                  justifyContent="center"
+                  spacing={1}
+                >
                   {result &&
                     result.map((car: any, index: any) => (
                       <Grid

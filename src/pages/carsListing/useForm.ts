@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 // import { setAppliedFilters, setFilter } from "../../redux/reducers/carFiltersSlice";
 import { getAllData } from '../../Utils/API/API';
 import useValidation from '../../Utils/hooks/useValidation';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
+import { RootState } from '../../redux/store';
+import { setShortlistCars } from '../../redux/reducers/shortlistCarsSlice';
+import ShortlistItem from '../shortlistItems';
 // import { useParams } from "react-router";
 
 const initialValues: any = {
@@ -40,11 +43,14 @@ interface IData {
 }
 
 export const useForm = (validateOnChange = true) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const {city} = useParams<any>();
   // const routeParams = useSelector(
   //   (state: RootState) => state.queryParams.queryParams
   // );
+  const shortListCars = useSelector(
+    (state: RootState) => state.shortlistCars.shortlistCars
+  );
   const { ADS, CARS } = API_ENDPOINTS;
   const [rangeValues, setRangeValues] = useState<any>({
     priceRange: [0, 50000000],
@@ -80,6 +86,10 @@ export const useForm = (validateOnChange = true) => {
     status: '',
     message: ''
   });
+
+  useEffect(() => {
+    setShortListItems(shortListCars);
+  }, []);
 
   // * We'll use later
   // useEffect(() => {
@@ -468,7 +478,8 @@ export const useForm = (validateOnChange = true) => {
   }, [page, values, appliedFilters]);
 
   const shortListItem = (newItem: ICarCard) => {
-    if (shortListItems.length < 2) {
+    if (shortListItems.length < 6) {
+      // dispatch(setShortlistCars([...shortListCars, newItem]));
       setShortListItems([...shortListItems, newItem]);
     }
   };
@@ -476,8 +487,18 @@ export const useForm = (validateOnChange = true) => {
   const removeShortListItem = (itemId: string) => {
     let newItems = shortListItems;
     newItems = newItems.filter((item: ICarCard) => item._id !== itemId);
+    // dispatch(setShortlistCars(newItems));
     setShortListItems(newItems);
   };
+
+  useEffect(() => {
+    console.log("shortlist items", shortListItems)
+  }, [shortListItems])
+
+  useEffect(() => {
+    dispatch(setShortlistCars(shortListItems));
+    // eslint-disable-next-line
+  }, [shortListItem, removeShortListItem]);
 
   return {
     values,
@@ -511,6 +532,7 @@ export const useForm = (validateOnChange = true) => {
     shortListItem,
     removeShortListItem,
     rangeValues,
-    setRangeValues
+    setRangeValues,
+    shortListCars
   };
 };

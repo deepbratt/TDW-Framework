@@ -7,13 +7,17 @@ const TableRows = ({ items, array }: any) => {
     <>
       {items && items.length !== 0 && array && (
         <>
-        {array.map((feature:string, index:number)=>(
-          <TableRow key={`comparision-features-${index}`}>
-            <TableCell className={cell}>{feature}</TableCell>
-            <TableCell className={cell}>{items[0].features.indexOf(feature) > -1 ? "Yes" : "No"}</TableCell>
-            <TableCell className={cell}>{items[1].features.indexOf(feature) > -1 ? "Yes" : "No"}</TableCell>
-        </TableRow>
-        ))}
+          {array.map((feature: string, index: number) => (
+            <TableRow key={`comparision-features-${index}`}>
+              <TableCell className={cell}>{feature}</TableCell>
+              <TableCell className={cell}>
+                {items[0].features.indexOf(feature) > -1 ? 'Yes' : 'No'}
+              </TableCell>
+              <TableCell className={cell}>
+                {items[1].features.indexOf(feature) > -1 ? 'Yes' : 'No'}
+              </TableCell>
+            </TableRow>
+          ))}
           {/* <TableRow>
             <TableCell className={cell}>{array[0]}</TableCell>
             <TableCell className={cell}>{items[0].model}</TableCell>

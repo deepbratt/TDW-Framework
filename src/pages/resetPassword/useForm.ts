@@ -42,6 +42,7 @@ export const useForm = (token: any, validateOnChange = false) => {
         password: values.password,
         passwordConfirm: values.confirmPassword,
       };
+      setIsLoading(true);
       console.log("requestBody", requestBody);
       await updateData(USERS + RESET_PASSWORD, token, requestBody)
         .then((response) => {

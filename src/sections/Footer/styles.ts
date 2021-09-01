@@ -12,6 +12,14 @@ export interface FooterStylesProps {
 const FooterStyles = makeStyles<Theme, FooterStylesProps>((theme) => ({
   root: {
     padding: '40px 60px',
+    boxShadow: "0px -2px 5px -5px rgba(0,0,0,0.52)",
+    backgroundColor: ({ rootBackgroundColor }) => rootBackgroundColor,
+    [theme.breakpoints.down('sm')]: {
+      padding: '15px 25px'
+    }
+  },
+  container: {
+    padding: '40px 60px',
     backgroundColor: ({ rootBackgroundColor }) => rootBackgroundColor,
     [theme.breakpoints.down('sm')]: {
       padding: '15px 25px'

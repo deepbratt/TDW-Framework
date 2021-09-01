@@ -1,4 +1,4 @@
-import { Route, Redirect, RouteProps } from "react-router-dom";
+import { Route, Redirect, RouteProps, useHistory, useLocation } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 import Layout from "../layout";
 import { RootState } from "../redux/store";
@@ -8,22 +8,25 @@ export type ProtectedRouteProps = {
   // isLoggedIn: boolean;
 } & RouteProps;
 
-const PrivateRoutes = ({
+const OnlyPublicRoutes = ({
   component: Component,
   ...routeProps
 }: ProtectedRouteProps) => {
   const {isLoggedIn} = useSelector((state:RootState)=>state.auth)
-  console.log('isLogged in',isLoggedIn)
+  const history = useHistory()
+  const location = useLocation()
+  console.log(history)
+  console.log(location)
   return (
     <Route
       {...routeProps}
       render={(props) =>
-        isLoggedIn ? (
+        !isLoggedIn ? (
           <Layout>
             <Component {...props} />
           </Layout>
         ) : (
-          <Redirect to="/login" />
+          <Redirect to="/dashboard/profile" />
         )
       }
     />
@@ -34,4 +37,4 @@ const PrivateRoutes = ({
 //   isLoggedIn: state.persistedReducer.auth.isLoggedIn,
 // });
 
-export default PrivateRoutes;
+export default OnlyPublicRoutes;

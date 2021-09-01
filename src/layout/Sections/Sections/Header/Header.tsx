@@ -75,7 +75,7 @@ const HeaderContext = () => {
 
   return (
     <React.Fragment>
-      <AppBar className={root} style={{background:"white", color:"white"}}>
+      <AppBar className={root} style={{background:"white", backgroundColor:"white", color:"white"}}>
         <Hidden mdDown>
           <img src={header} alt="logo" className={rec} />
         </Hidden>

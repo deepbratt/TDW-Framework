@@ -94,7 +94,7 @@ const Container = () => {
                       layoutType={layoutType}
                       isFavs={isFavs}
                       handleFavs={handleFavs}
-                      handleClick={()=>console.log("")}
+                      // handleClick={()=>console.log(item)}
                       />
                   </Grid>
                 ))}

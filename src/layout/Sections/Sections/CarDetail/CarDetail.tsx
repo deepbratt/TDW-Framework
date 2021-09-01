@@ -60,7 +60,7 @@ const CarDetail: React.FC<any> = ({
   const toggleSold = () =>{
     let soldUnsold = isSold ? API_ENDPOINTS.MARK_UNSOLD : API_ENDPOINTS.MARK_SOLD
     setIsLoading(true)
-    updateData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${soldUnsold}/${data._id}`).then((response)=>{
+    updateData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${soldUnsold}/${data._id}`).then((response: any)=>{
       if(response && response.data && response.data.status==="success"){
         setIsSold(!isSold)
         setToastMessage(response.data.message)
@@ -77,7 +77,7 @@ const CarDetail: React.FC<any> = ({
   const toggleActive = () =>{
     let activeInactive = isActive ? API_ENDPOINTS.MARK_INACTIVE : API_ENDPOINTS.MARK_ACTIVE
     setIsLoading(true)
-    updateData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${activeInactive}/${data._id}`).then((response)=>{
+    updateData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${activeInactive}/${data._id}`).then((response:any)=>{
       if(response && response.data && response.data.status==="success"){
         setIsActive(!isActive)
         setToastMessage(response.data.message)
@@ -168,7 +168,7 @@ const CarDetail: React.FC<any> = ({
                 </div>
               }
             >
-              <a className={link} href={`tel:${createdBy.phone}`}>{createdBy.phone.substr(0,7)}...(Show Number)</a>
+              <a className={link} href={`tel:${createdBy.phone}`}>{createdBy.phone}</a>
             </Button>
           </Grid>}
           {createdBy?.email && <Grid className={container} item xs={12}>

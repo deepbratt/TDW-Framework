@@ -29,11 +29,11 @@ export const paths = [{
     path: "/dashboard/profile",
     icon: icon1
 },
-{
-    title: "Orders",
-    path: "/dashboard/orders",
-    icon: icon2
-},
+// {
+//     title: "Orders",
+//     path: "/dashboard/orders",
+//     icon: icon2
+// },
 {
     title: "Comparison",
     path: "/cars-shortlist",
@@ -45,7 +45,7 @@ export const paths = [{
     icon: icon4
 },
 {
-    title: "Your Ads",
+    title: "My Ads",
     path: "/dashboard/ads",
     icon: icon5
 },
@@ -157,8 +157,8 @@ export const help = "Help"
 export const helpTitle = "How can we help you?"
 export const icon = helpIcon
 export const gmail = "wwww.example@gmail.com"
-export const number = "555-555-1212"
+export const number = "+92 335 1222515"
 export const mailTo = "mailTo:wwww.example@gmail.com"
-export const dialTo = "tel:+1-555-555-1212"
+export const dialTo = "tel:+92-335-1222515"
 export const emailUs = "Email us at:"
 export const callUs = "Call us at:"

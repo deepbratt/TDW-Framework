@@ -10,7 +10,7 @@ export const FooterData = {
     leadingCategories: 'Leading Categories'
   },
   socialMedia: [
-    { path: 'www.facebook.com/tezDealz', icon: FB, name: 'Facebook' },
+    { path: 'https://www.facebook.com/Tez-Dealz-101549355474751/', icon: FB, name: 'Facebook' },
     { path: 'www.twitter.com/tezDealz', icon: TWITTER, name: 'Twitter' },
     {
       path: 'www.instagram.com/tezDealz',
@@ -20,9 +20,7 @@ export const FooterData = {
   ],
   address: {},
   contacts: [
-    { location: 'USA/Canada', phone: '713-489-0845' },
-    { location: 'Australia', phone: '(02)-9191-2621' },
-    { location: 'UK', phone: '(0)-203-514-2412' }
+    { location: 'Pakistan', phone: '+92-335-1222515' }
   ],
   services: [
     { path: '/', name: 'Services' },

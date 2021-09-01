@@ -48,7 +48,7 @@ const PageMeta = {
         description:"Tezdealz is an online platform to buy and sell products"
     },
     myAds:{
-        title:"Your Ads | Tezdealz",
+        title:"My Ads | Tezdealz",
         canonical:"dashboard/ads",
         keywords:"Tezdealz, buy, sell, cars, electronics, property",
         description:"Tezdealz is an online platform to buy and sell products"

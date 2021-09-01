@@ -9,6 +9,7 @@ import PostAd from '../postAd';
 import { Colors } from '../../Utils/constants/colors/colors';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
+import InformationDialog from '../../components/InformationDialog';
 
 const AddEditCar = () => {
   const {
@@ -26,7 +27,10 @@ const AddEditCar = () => {
     isLoading,
     deleteDialog,
     setDeleteDialog,
-    lgMdSmPx
+    lgMdSmPx,
+    profileRedirect,
+    phoneRequiredDialog,
+    setPhoneRequiredDialog
   } = useAddEditCar();
   return (
     <div
@@ -135,6 +139,7 @@ const AddEditCar = () => {
           handleConfirmation={handleDeleteAd}
           handleRejection={() => setDeleteDialog(false)}
         />
+        <InformationDialog open={phoneRequiredDialog} setOpen={setPhoneRequiredDialog} title={addEditCarData.phoneRequiredTitle} message={addEditCarData.phoneRequiredMessage} actionBtnFunc={profileRedirect}/>
       </Grid>
     </div>
   );

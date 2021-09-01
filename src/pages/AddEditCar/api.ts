@@ -28,7 +28,7 @@ export const getCurrentUser=async()=>{
         const result = await axiosInstance.get("/Users/currentUser/")
         console.log(result)
         return result
-    }catch(error){
+    }catch(error:any){
         console.log("error",error)
         console.log("error response",error.response)
         return error.response
@@ -40,7 +40,7 @@ export const addEditCarApi=async(dataBody: any, id="")=>{
         const result = id !=="" ? await axiosFormInstance.patch("/ads/cars/"+id, dataBody) : await axiosFormInstance.post("/ads/cars/", dataBody)
         console.log(result)
         return result
-    }catch(error){
+    }catch(error:any){
         console.log("error",error)
         console.log("error response",error.response)
         return error.response
@@ -51,7 +51,7 @@ export const getCarById=async(id:string)=>{
         const result = await axiosInstance.get("/ads/cars/"+id)
         console.log(result)
         return result
-    }catch(error){
+    }catch(error:any){
         console.log("error",error)
         console.log("error response",error.response)
         return error.response
@@ -62,7 +62,7 @@ export const deleteCarAd=async(id:string)=>{
         const result = await axiosInstance.delete("/ads/cars/"+id)
         console.log(result)
         return result
-    }catch(error){
+    }catch(error:any){
         console.log("error",error)
         console.log("error response",error.response)
         return error.response

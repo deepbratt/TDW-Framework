@@ -27,6 +27,7 @@ import Actions from "./useFunctions"
 import CircularProgress from '@material-ui/core/CircularProgress';
 import MetaTags from "../../components/MetaTags";
 import PageMeta from "../../Utils/constants/language/en/pageData";
+import NoImg from '../../assets/no-img.png'
 
 interface RouteProps {
   id: string;
@@ -58,7 +59,7 @@ const CarDetailContainer = () => {
                 feature={obj?.features}
                 desc={desc}
                 paragraph={obj?.description}
-                arr={obj.image}
+                arr={obj.image && obj.image.length > 0 ? obj.image : [NoImg]}
                 id={obj?._id}
                 city={obj?.registrationCity}
                 assembly={obj?.assembly}

@@ -134,6 +134,8 @@ const addEditCarData = {
   requiredImageText: 'Minimum 1 car picture is required',
   deleteDialogTitle: 'Delete!',
   deleteDialogMessage: 'Are you sure you want to delete this Car Ad?',
+  phoneRequiredMessage:"Please add your phone number in your profile to create an Ad",
+  phoneRequiredTitle:"Error!",
   features: [
     'ABS',
     'AM/FM Radio',

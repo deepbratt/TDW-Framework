@@ -106,10 +106,10 @@ const ChangePassword = () => {
         <Grid style={{ margin: '30px 10px' }} item lg={5} xs={12}></Grid>
         <Grid
           style={{ margin: '10px' }}
-          className={passContainer}
-          justify="center"
+          // className={passContainer}
+          // justify="center"
           item
-          lg={3}
+          // lg={3}
           xs={12}
         >
           <CustomButton

@@ -43,6 +43,7 @@ export const useForm = (validateOnChange = false) => {
   useEffect(() => {
     if (responseMessage.status === 'success') {
       console.log('responseData', responseData);
+      console.log('[useForm]',responseData);
       dispatch(login(responseData));
     }
   }, [responseMessage]);

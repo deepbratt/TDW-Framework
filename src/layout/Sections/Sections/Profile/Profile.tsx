@@ -4,17 +4,17 @@ import {
   MenuItem,
   TextField,
   Hidden,
-  Divider,
-} from "@material-ui/core";
-import { useState } from "react";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import DatePicker from "./DatePicker";
-import { useStyles } from "./useStyles";
-import useHooks from "./useHooks";
-import SideBar from "./ProfileSidebar/Sidebar";
-import CustomButton from "../../../../components/CustomButton";
-import ProfileUpload from "./UploadProfile/ProfileUpload";
-import RegexInputs from "./RegexInputs";
+  Divider
+} from '@material-ui/core';
+import { useState } from 'react';
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
+import DatePicker from './DatePicker';
+import { useStyles } from './useStyles';
+import useHooks from './useHooks';
+import SideBar from './ProfileSidebar/Sidebar';
+import CustomButton from '../../../../components/CustomButton';
+import ProfileUpload from './UploadProfile/ProfileUpload';
+import RegexInputs from './RegexInputs';
 import {
   paths,
   Title,
@@ -22,20 +22,21 @@ import {
   profileTitle,
   gender,
   buttonText,
-  cancelButtonText,
-} from "../../Utils/sidebarText";
-import { City } from "country-state-city";
-import Actions from "./useFunctions";
-import { updateMe } from "../../../../Utils/hooks/endpoints";
-import Toast from "../../../../components/Toast";
-import ChangePassword from "./ChangePassword";
-import MetaTags from "../../../../components/MetaTags";
-import PageMeta from "../../../../Utils/constants/language/en/pageData";
+  cancelButtonText
+} from '../../Utils/sidebarText';
+import { City } from 'country-state-city';
+import Actions from './useFunctions';
+import { updateMe } from '../../../../Utils/hooks/endpoints';
+import Toast from '../../../../components/Toast';
+import ChangePassword from './ChangePassword';
+import MetaTags from '../../../../components/MetaTags';
+import PageMeta from '../../../../Utils/constants/language/en/pageData';
+import { useEffect } from 'react';
 
 const Profile = () => {
-  const { updateProfile,open,setOpen,responseMessage} = Actions();
+  const { updateProfile, open, setOpen, responseMessage } = Actions();
 
-  const city = City.getCitiesOfCountry("PK");
+  const city = City.getCitiesOfCountry('PK');
   const {
     root,
     select,
@@ -45,18 +46,10 @@ const Profile = () => {
     button,
     btnBox,
     uploadBtn,
-    cancelButton,
+    cancelButton
   } = useStyles();
-  const {
-    handleChange,
-    val,
-    date,
-    handleChangeDate,
-    setVal,
-    Img,
-    setImg
-  } = useHooks();
-  
+  const { handleChange, val, date, handleChangeDate, setVal, Img, setImg } =
+    useHooks();
 
   const handleAlertClose = () => {
     setOpen(false);
@@ -64,23 +57,22 @@ const Profile = () => {
 
   const onSubmit = (): void => {
     updateProfile(updateMe, val, date, Img);
+    setVal({
+      firstName: val.firstName,
+      lastName: val.lastName,
+      gender: val.gender,
+      country: val.country,
+      city: val.city,
+      userName: val.userName,
+      email: val.email,
+      currentPassword: val.currentPassword,
+      newPassword: '',
+      confirmPassword: ''
+    });
   };
-  
 
   const handleCancel = (): void => {
     if (!val.currentPassword && !val.confirmPassword && !val.newPassword) {
-      setVal({
-        firstName: "",
-        lastName: "",
-        gender: "",
-        country: "",
-        city: "",
-        userName: "",
-        email: "",
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: "",
-      });
     }
   };
 
@@ -100,16 +92,21 @@ const Profile = () => {
           <Typography variant="h3">{profileTitle}</Typography>
         </section>
         <Grid className={img} item xs={12}>
-          <section style={{ position: "relative" }}>
-            <ProfileUpload setImg={setImg} profile={Img ? Img :profile} />
+          <section style={{ position: 'relative' }}>
+            <ProfileUpload setImg={setImg} profile={Img ? Img : profile} />
             <section className={uploadBtn}>
               <AddAPhotoIcon />
             </section>
           </section>
         </Grid>
         <Grid container className={root} item xs={12}>
-          <Grid item container style={{ display: "flex", flexFlow: "wrap" }} xs={12}>
-            <Grid style={{ margin: "30px 10px" }} item lg={5} xs={12}>
+          <Grid
+            item
+            container
+            style={{ display: 'flex', flexFlow: 'wrap' }}
+            xs={12}
+          >
+            <Grid style={{ margin: '30px 10px' }} item lg={5} xs={12}>
               <TextField
                 className={select}
                 name="firstName"
@@ -119,7 +116,7 @@ const Profile = () => {
                 variant="outlined"
               />
             </Grid>
-            <Grid style={{ margin: "30px 10px" }} item lg={5} xs={12}>
+            <Grid style={{ margin: '30px 10px' }} item lg={5} xs={12}>
               <TextField
                 className={select}
                 name="lastName"
@@ -129,7 +126,7 @@ const Profile = () => {
                 variant="outlined"
               />
             </Grid>
-            <Grid style={{ margin: "30px 10px" }} item lg={5} xs={12}>
+            <Grid style={{ margin: '30px 10px' }} item lg={5} xs={12}>
               <TextField
                 className={select}
                 select
@@ -146,7 +143,7 @@ const Profile = () => {
                 ))}
               </TextField>
             </Grid>
-            <Grid style={{ margin: "30px 10px" }} item lg={5} xs={12}>
+            <Grid style={{ margin: '30px 10px' }} item lg={5} xs={12}>
               <TextField
                 className={select}
                 name="userName"
@@ -158,11 +155,11 @@ const Profile = () => {
               />
             </Grid>
           </Grid>
-          <Grid item style={{ display: "flex", flexFlow: "wrap" }} xs={12}>
-            <Grid style={{ margin: "30px 10px " }} item lg={5} xs={12}>
+          <Grid item style={{ display: 'flex', flexFlow: 'wrap' }} xs={12}>
+            <Grid style={{ margin: '30px 10px ' }} item lg={5} xs={12}>
               <DatePicker date={date} handleChangeDate={handleChangeDate} />
             </Grid>
-            <Grid style={{ margin: "30px 10px " }} item lg={5} xs={12}>
+            <Grid style={{ margin: '30px 10px ' }} item lg={5} xs={12}>
               <TextField
                 className={select}
                 select
@@ -184,23 +181,23 @@ const Profile = () => {
               </TextField>
             </Grid>
             <Grid item lg={2} xs={12} className={btnBox}>
-                <CustomButton
-                  styles={button}
-                  variant="contained"
-                  handleClick={() => onSubmit()}
-                >
-                  {buttonText}
-                </CustomButton>
-              </Grid>
-               <Grid item lg={2} xs={12} className={btnBox}>
-                <CustomButton
-                  styles={cancelButton}
-                  variant="contained"
-                  handleClick={() => handleCancel()}
-                >
-                  {cancelButtonText}
-                </CustomButton>
-              </Grid>
+              <CustomButton
+                styles={button}
+                variant="contained"
+                handleClick={() => onSubmit()}
+              >
+                {buttonText}
+              </CustomButton>
+            </Grid>
+            <Grid item lg={2} xs={12} className={btnBox}>
+              <CustomButton
+                styles={cancelButton}
+                variant="contained"
+                handleClick={() => handleCancel()}
+              >
+                {cancelButtonText}
+              </CustomButton>
+            </Grid>
           </Grid>
         </Grid>
         <Divider />

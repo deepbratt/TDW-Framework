@@ -1,22 +1,22 @@
-import { Grid, TextField } from "@material-ui/core";
-import { useForm } from "react-hook-form";
-import { newPass, confirmPass, required } from "../../../Utils/sidebarText";
-import useHooks from "../useHooks";
-import { useStyles } from "../useStyles";
-import Actions from "../useFunctions";
-import { changeMyPassword } from "../../../../../Utils/hooks/endpoints";
-import CustomButton from "../../../../../components/CustomButton";
-import Toast from "../../../../../components/Toast";
+import { Grid, TextField } from '@material-ui/core';
+import { useForm } from 'react-hook-form';
+import { newPass, confirmPass, required } from '../../../Utils/sidebarText';
+import useHooks from '../useHooks';
+import { useStyles } from '../useStyles';
+import Actions from '../useFunctions';
+import { changeMyPassword } from '../../../../../Utils/hooks/endpoints';
+import CustomButton from '../../../../../components/CustomButton';
+import Toast from '../../../../../components/Toast';
 
 const ChangePassword = () => {
-  const { select,cancelButton, root,passContainer} = useStyles();
+  const { select, cancelButton, root, passContainer } = useStyles();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm();
-  const { changePassword,setOpen,open,responseMessage} = Actions();
-  const { handleChange, val, errorMessage,setVal} = useHooks();
+  const { changePassword, setOpen, open, responseMessage } = Actions();
+  const { handleChange, val, errorMessage, setVal } = useHooks();
 
   const handleAlertClose = () => {
     setOpen(false);
@@ -30,14 +30,14 @@ const ChangePassword = () => {
     <Grid item xs={12} className={root}>
       <Grid
         item
-        style={{ display: "flex", flexFlow: "wrap",paddingTop: "20px"}}
+        style={{ display: 'flex', flexFlow: 'wrap', paddingTop: '20px' }}
         xs={12}
       >
-        <Grid style={{ margin: "30px 10px" }} item lg={5} xs={12}>
+        <Grid style={{ margin: '30px 10px' }} item lg={6} xs={12}>
           <TextField
-            {...register("currentPassword", {
+            {...register('currentPassword', {
               required: true,
-               minLength: 8
+              minLength: 8
             })}
             className={select}
             name="currentPassword"
@@ -49,15 +49,15 @@ const ChangePassword = () => {
             variant="outlined"
           />
           {errors.currentPassword &&
-            errors.currentPassword.type === "required" &&
+            errors.currentPassword.type === 'required' &&
             errorMessage(required)}
           {errors.currentPassword &&
-            errors.currentPassword.type === "minLength" &&
+            errors.currentPassword.type === 'minLength' &&
             errorMessage(newPass)}
         </Grid>
-        <Grid style={{ margin: "30px 10px" }} item lg={5} xs={12}>
+        <Grid style={{ margin: '30px 10px' }} item lg={6} xs={12}>
           <TextField
-            {...register("newPassword", {
+            {...register('newPassword', {
               required: true,
               minLength: 8
             })}
@@ -71,15 +71,15 @@ const ChangePassword = () => {
             variant="outlined"
           />
           {errors.newPassword &&
-            errors.newPassword.type === "required" &&
+            errors.newPassword.type === 'required' &&
             errorMessage(required)}
           {errors.newPassword &&
-            errors.newPassword.type === "minLength" &&
+            errors.newPassword.type === 'minLength' &&
             errorMessage(newPass)}
         </Grid>
-        <Grid style={{ margin: "30px 10px" }} item lg={5} xs={12}>
+        <Grid style={{ margin: '30px 10px' }} item lg={6} xs={12}>
           <TextField
-            {...register("confirmPassword", {
+            {...register('confirmPassword', {
               required: true,
               validate: (value: string) => value === val.newPassword || newPass,
               minLength: 8
@@ -94,16 +94,24 @@ const ChangePassword = () => {
             variant="outlined"
           />
           {errors.confirmPassword &&
-            errors.confirmPassword.type === "required" &&
+            errors.confirmPassword.type === 'required' &&
             errorMessage(required)}
           {errors.confirmPassword &&
-            errors.confirmPassword.type === "validate" &&
+            errors.confirmPassword.type === 'validate' &&
             errorMessage(confirmPass)}
-             {errors.confirmPassword &&
-            errors.confirmPassword.type === "minLength" &&
+          {errors.confirmPassword &&
+            errors.confirmPassword.type === 'minLength' &&
             errorMessage(confirmPass)}
         </Grid>
-        <Grid className={passContainer} item lg={4} xs={12}>
+        <Grid style={{ margin: '30px 10px' }} item lg={5} xs={12}></Grid>
+        <Grid
+          style={{ margin: '10px' }}
+          className={passContainer}
+          justify="center"
+          item
+          lg={3}
+          xs={12}
+        >
           <CustomButton
             styles={cancelButton}
             variant="contained"

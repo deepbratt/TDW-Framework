@@ -1,4 +1,5 @@
 import { TableRow, TableCell } from '@material-ui/core';
+import { CheckCircleOutline, HighlightOff } from '@material-ui/icons';
 import { useStyles } from '../useStyles';
 
 const TableRows = ({ items, array }: any) => {
@@ -10,8 +11,8 @@ const TableRows = ({ items, array }: any) => {
         {array.map((feature:string, index:number)=>(
           <TableRow key={`comparision-features-${index}`}>
             <TableCell className={cell}>{feature}</TableCell>
-            <TableCell className={cell}>{items[0].features.indexOf(feature) > -1 ? "Yes" : "No"}</TableCell>
-            <TableCell className={cell}>{items[1].features.indexOf(feature) > -1 ? "Yes" : "No"}</TableCell>
+            <TableCell className={cell}>{items[0].features.indexOf(feature) > -1 ? <CheckCircleOutline style={{color:"green"}}/> : <HighlightOff style={{color:"red"}}/>}</TableCell>
+            <TableCell className={cell}>{items[1].features.indexOf(feature) > -1 ? <CheckCircleOutline style={{color:"green"}}/> : <HighlightOff style={{color:"red"}}/>}</TableCell>
         </TableRow>
         ))}
           {/* <TableRow>

@@ -5,13 +5,17 @@ interface DialogComponentProps {
     message:string
     open: boolean
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
-    actionBtnLabel?: string
+    actionBtnLabel?: string,
+    actionBtnFunc?:()=>void
 }
-const InformationDialog = ({title, message, open, setOpen, actionBtnLabel="OK" } : DialogComponentProps)=>{
+const InformationDialog = ({title, message, open, setOpen, actionBtnLabel="OK", actionBtnFunc } : DialogComponentProps)=>{
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const handleClose = () =>{
       setOpen(false)
+      if(actionBtnFunc){
+        actionBtnFunc()
+      }
     }
     return(
         <Dialog

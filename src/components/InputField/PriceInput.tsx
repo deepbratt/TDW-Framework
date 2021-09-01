@@ -25,7 +25,6 @@ function PriceInput(props: PriceInputProps) {
       isNumericString
       thousandsGroupStyle="thousand"
       decimalSeparator="."
-      prefix="Rs "
       displayType="input"
       type="text"
       allowNegative={false}

@@ -1,19 +1,25 @@
-import { Grid } from "@material-ui/core";
-import Dropdown from "../../components/Dropdown";
-import LayoutToggler from "../../components/LayoutToggler";
-import { fieldNames } from "../../Utils/constants/formsConstants";
-import { sortingOptions, conditionOptions } from "../../Utils/constants/language/en/filtersData";
+import { Grid } from '@material-ui/core';
+import Dropdown from '../../components/Dropdown';
+import LayoutToggler from '../../components/LayoutToggler';
+import { fieldNames } from '../../Utils/constants/formsConstants';
+import {
+  sortingOptions,
+  conditionOptions
+} from '../../Utils/constants/language/en/filtersData';
 
 export interface HorizontalFiltersProps {
   values: any;
   errors: any;
-  handleInputChange: Function
+  handleInputChange: Function;
 }
 
-const HorizontalFilters: React.FC<HorizontalFiltersProps> = ({values, errors, handleInputChange}) => {
- 
+const HorizontalFilters: React.FC<HorizontalFiltersProps> = ({
+  values,
+  errors,
+  handleInputChange
+}) => {
   return (
-    <Grid style={{ margin: "10px 0" }} container justifyContent="space-between">
+    <Grid style={{ margin: '10px 0' }} container justifyContent="space-between">
       <Grid item container xs={10} spacing={2}>
         <Grid item xs={5}>
           <Dropdown
@@ -26,13 +32,13 @@ const HorizontalFilters: React.FC<HorizontalFiltersProps> = ({values, errors, ha
           />
         </Grid>
         <Grid item xs={4}>
-          <Dropdown label="CONDITION" 
-          name={fieldNames.condition}
-          onChange={handleInputChange}
-          error={errors.condition}
-          value={values.condition}
-          options={conditionOptions} 
-          
+          <Dropdown
+            label="CONDITION"
+            name={fieldNames.condition}
+            onChange={handleInputChange}
+            error={errors.condition}
+            value={values.condition}
+            options={conditionOptions}
           />
         </Grid>
         {/* <Grid item xs={5}>
@@ -41,10 +47,10 @@ const HorizontalFilters: React.FC<HorizontalFiltersProps> = ({values, errors, ha
       </Grid>
       <Grid
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-          marginRight: "10px",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          marginRight: '10px'
         }}
         item
         xs={2}

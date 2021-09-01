@@ -55,7 +55,7 @@ export interface CarsListingProps {
 const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
   const history = useHistory();
 
-  const {listingContainer} = GlobalStyles();
+  const { listingContainer } = GlobalStyles();
 
   const {
     values,
@@ -75,18 +75,14 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     appliedFilters,
     pageCount,
     removeFilter,
+    removeFilterItem,
+    removeRangeFilter,
     keywords,
-    priceRange,
-    setPriceRange,
-    yearRange,
-    setYearRange,
-    mileageRange,
-    setMileageRange,
-    engineCapacityRange,
-    setEngineCapacityRange,
     shortListItems,
     shortListItem,
-    removeShortListItem
+    removeShortListItem,
+    rangeValues,
+    setRangeValues
   } = useForm();
 
   const [open, setOpen] = React.useState(false);
@@ -114,17 +110,13 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     setValues,
     appliedFilters,
     removeFilter,
+    removeFilterItem,
+    removeRangeFilter,
     errors,
     values,
     keywords,
-    priceRange,
-    setPriceRange,
-    yearRange,
-    setYearRange,
-    mileageRange,
-    setMileageRange,
-    engineCapacityRange,
-    setEngineCapacityRange
+    rangeValues,
+    setRangeValues
   };
 
   return (
@@ -135,11 +127,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
         canonical={PageMeta.carListing.canonical}
         keywords={PageMeta.carListing.keywords}
       />
-      <Grid
-        container
-        className={listingContainer}
-        justifyContent="center"
-      >
+      <Grid container className={listingContainer} justifyContent="center">
         <Grid item container xs={12} spacing={1}>
           <Grid item xs={12}>
             <CustomTitle
@@ -173,14 +161,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
               </Grid>
             </Hidden>
           </Grid>
-          <Grid
-            item
-            container
-            xs={12}
-            md={8}
-            
-            alignContent="flex-start"
-          >
+          <Grid item container xs={12} md={8} alignContent="flex-start">
             <Hidden mdUp>
               <Grid item container justifyContent="space-between" xs={12}>
                 <Grid item>
@@ -189,7 +170,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                     {responseData !== null ? responseData?.totalCount : 0}
                   </Typography>
                 </Grid>
-                <Grid item container xs={7}  justifyContent="flex-end">
+                <Grid item container xs={7} justifyContent="flex-end">
                   <Grid item container xs={7} justifyContent="flex-end">
                     <Chip
                       variant="outlined"
@@ -323,33 +304,20 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                 </Grid>
               </Grid>
             )}
-            <Grid
-              item
-              container
-              xs={12}
-              
-              justifyContent="flex-start"
-            >
+            <Grid item container xs={12} justifyContent="flex-start">
               {isLoading ? (
                 <Grid item xs={12}>
                   <Loader open={true} isBackdrop={false} />
                 </Grid>
               ) : responseMessage.status !== 'success' &&
                 responseData === null ? (
-                <Grid style={{margin: "50px 0"}} item xs={12}>
-                  
+                <Grid style={{ margin: '50px 0' }} item xs={12}>
                   <Typography align="center" variant="h2">
                     {CANT_FIND_RESULT}
                   </Typography>
                 </Grid>
               ) : (
-                <Grid
-                  item
-                  container
-                  xs={12}
-                  
-                  justifyContent="center"
-                >
+                <Grid item container xs={12} justifyContent="center">
                   {result &&
                     result.map((car: any, index: any) => (
                       <Grid
@@ -371,7 +339,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                     ))}
                   {result && (
                     <Pagination
-                    style={{margin: "15px 0"}}
+                      style={{ margin: '15px 0' }}
                       count={pageCount}
                       page={page}
                       onChange={handlePageChange}

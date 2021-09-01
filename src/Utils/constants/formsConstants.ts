@@ -26,6 +26,16 @@ export const fieldNames = {
   pictureAvailability: 'pictureAvailability',
   videoAvailability: 'videoAvailability',
   sortingOptions: 'sort',
-  condition: "condition",
-  model: "model",
+  condition: 'condition',
+  model: 'model',
+  city: 'city',
+  province: 'province',
+  registrationCity: 'registrationCity',
+  make: 'make',
+  transmission: 'transmission',
+  assembly: 'assembly',
+  engineType: 'engineType',
+  color: 'color',
+  bodyType: 'bodyType',
+  sellerType: 'sellerType'
 };

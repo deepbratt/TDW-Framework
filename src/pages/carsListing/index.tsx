@@ -12,7 +12,8 @@ import {
   Grid,
   Hidden,
   SwipeableDrawer,
-  Typography
+  Typography,
+  Card
 } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
@@ -47,6 +48,8 @@ import { paths } from '../../routes/paths';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import GlobalStyles from '../../globalStyles';
+import Skeletons from '../../components/Skeletons';
+import ListingCardSkeletons from '../../components/ListingCard/ListingCardSkeletons';
 
 export interface CarsListingProps {
   isShortlist?: boolean;
@@ -306,8 +309,10 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
             )}
             <Grid item container xs={12} justifyContent="flex-start">
               {isLoading ? (
-                <Grid item xs={12}>
-                  <Loader open={true} isBackdrop={false} />
+                <Grid item container xs={12}>
+                  <Skeletons length={6} layoutType={layoutType}>
+                    <ListingCardSkeletons layoutType={layoutType} />
+                  </Skeletons>
                 </Grid>
               ) : responseMessage.status !== 'success' &&
                 responseData === null ? (
@@ -317,7 +322,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                   </Typography>
                 </Grid>
               ) : (
-                <Grid item container xs={12} justifyContent="center">
+                <Grid item container xs={12} justifyContent="center" spacing={1}>
                   {result &&
                     result.map((car: any, index: any) => (
                       <Grid
@@ -325,7 +330,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                         item
                         xs={12}
                         sm={layoutType === 'list' ? 12 : 6}
-                        xl={layoutType === 'list' ? 12 : 6}
                       >
                         <ListingCard
                           data={car}

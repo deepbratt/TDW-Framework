@@ -41,7 +41,6 @@ const TableContext: React.FC<IProps> = ({
       </Typography>
       <TableContainer>
         <Table className={table} aria-label="table">
-          <TableHead></TableHead>
           <TableBody>
             <TableRows array={array} items={items} />
           </TableBody>

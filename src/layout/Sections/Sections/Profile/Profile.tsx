@@ -32,13 +32,19 @@ import PageMeta from '../../../../Utils/constants/language/en/pageData';
 import Loader from '../../../../components/Loader';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
+import SelectInputComponent from '../../../../components/SelectInputComponent';
 
 const Profile = () => {
   const { updateProfile, open, setOpen, responseMessage, isLoading } =
     Actions();
   const { user } = useSelector((state: RootState) => state.auth);
 
-  const city = City.getCitiesOfCountry('PK');
+  const cities = City.getCitiesOfCountry("PK");
+  const extractedCityNames = cities?.map((item) => item.name);
+  let cityNames = [];
+  if (extractedCityNames) {
+    cityNames.push(...extractedCityNames);
+  }
   const { root, select, img, heading, box, button, btnBox, cancelButton } =
     useStyles();
   const { handleChange, val, date, handleChangeDate, setVal, Img, setImg } =
@@ -46,6 +52,13 @@ const Profile = () => {
 
   const handleAlertClose = () => {
     setOpen(false);
+  };
+
+  const handleChangeSelect = (name: string, value: any) => {
+    setVal({
+      ...val,
+      [name]: value,
+    });
   };
 
   const onSubmit = (): void => {
@@ -163,7 +176,7 @@ const Profile = () => {
               <DatePicker date={date} handleChangeDate={handleChangeDate} />
             </Grid>
             <Grid style={{ margin: '30px 10px ' }} item lg={5} xs={12}>
-              <TextField
+              {/* <TextField
                 className={select}
                 select
                 name="city"
@@ -188,7 +201,16 @@ const Profile = () => {
                       </MenuItem>
                     );
                   })}
-              </TextField>
+              </TextField> */}
+              <SelectInputComponent
+          dataArray={cityNames}
+          name={"city"}
+          className={select}
+          value={val.city}
+          label={"City"}
+          required
+          handleChangeSelect={handleChangeSelect}
+        />
             </Grid>
             <Grid item lg={2} xs={12} className={btnBox}>
               <CustomButton

@@ -4,9 +4,9 @@ import {
   CardHeader,
   CardMedia,
   IconButton,
-  Typography,
-} from "@material-ui/core";
-import CancelRoundedIcon from "@material-ui/icons/CancelRounded";
+  Typography
+} from '@material-ui/core';
+import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
 
 export interface ShortListCardProps {
   _id: string;
@@ -19,14 +19,14 @@ const ShortListCard: React.FC<ShortListCardProps> = ({
   _id,
   name,
   productImg,
-  handleClick,
+  handleClick
 }) => {
   return (
     <Card
-      style={{ maxHeight: "200px", maxWidth: "180px", position: "relative" }}
+      style={{ maxHeight: '200px', maxWidth: '180px', position: 'relative' }}
     >
       <CardHeader
-        style={{ position: "absolute", top: "-5px", right: "-5px" }}
+        style={{ position: 'absolute', top: '-5px', right: '-5px' }}
         action={
           <IconButton
             aria-label="delete-item"
@@ -37,12 +37,12 @@ const ShortListCard: React.FC<ShortListCardProps> = ({
           </IconButton>
         }
       />
-      <CardMedia style={{maxHeight: "150px"}}>
+      <CardMedia style={{ maxHeight: '150px' }}>
         <img height="150px" src={productImg} alt={name} />
       </CardMedia>
 
       <Typography
-        style={{ padding: "10px", fontSize: "16px", lineHeight: "16px" }}
+        style={{ padding: '10px', fontSize: '16px', lineHeight: '16px' }}
         variant="h3"
         gutterBottom
       >

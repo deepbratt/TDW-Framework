@@ -13,10 +13,11 @@ import CustomTitle from '../../../../components/CustomTitle/CustomTitle';
 import { Colors } from '../../Utils/color.constants';
 import { ICarCard } from '../../../../Utils/interfaces/products.interface';
 import { fieldNames } from '../../../../Utils/constants/formsConstants';
-import Dropdown from '../../../../components/Dropdown';
+import InputField from '../../../../components/InputField';
 import Banner from './Banner';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { Autocomplete } from '@material-ui/lab';
 
 interface IData {
   data?: ICarCard[];
@@ -30,26 +31,31 @@ const Container = ({ data, shortListCars }: IData) => {
   const [secondCar, setSecondCar] = useState<any>({});
 
   useEffect(() => {
-    setFirstCar(shortListCars[0]);
+    // setSelectedCars([shortListCars[0], shortListCars[1]]);
     setSecondCar(shortListCars[1]);
+    setFirstCar(shortListCars[0]);
     let temp1 = shortListCars[0].features;
     let temp2 = shortListCars[1].features;
+    handleFeatures(temp1, temp2);
+  }, []);
+
+  const handleFeatures = (temp1: string[], temp2: string[]) => {
     let oneArray = [...temp1, ...temp2];
     let uniqueArray = oneArray.filter(function (item, pos) {
       return oneArray.indexOf(item) === pos;
     });
     setFeatures(uniqueArray);
-  }, []);
+  };
 
-  // useEffect(() => {
-  //   let temp1 = firstCar.features;
-  //   let temp2 = secondCar.features;
-  //   let oneArray = [...temp1, ...temp2];
-  //   let uniqueArray = oneArray.filter(function (item, pos) {
-  //     return oneArray.indexOf(item) === pos;
-  //   });
-  //   setFeatures(uniqueArray);
-  // }, [setFirstCar, setSecondCar]);
+  const handleFirstCar = (car: ICarCard) => {
+    setFirstCar(car);
+    handleFeatures(car.features, secondCar.features);
+  };
+
+  const handleSecondCar = (car: ICarCard) => {
+    setSecondCar(car);
+    handleFeatures(firstCar.features, car.features);
+  };
 
   return (
     <Grid container>
@@ -60,12 +66,90 @@ const Container = ({ data, shortListCars }: IData) => {
         <Grid item xs={12}>
           <Banner data={[firstCar, secondCar]} />
         </Grid>
-        {/* <Grid item xs={6}>
-          <Dropdown name={fieldNames.cars} options={} />
+        <Grid style={{marginTop: "20px"}} item container>
+          <Grid item container xs={6} justifyContent="center">
+            <Autocomplete
+              id="select-car-one"
+              options={shortListCars}
+              getOptionLabel={(option) => option.model}
+              style={{ width: 300 }}
+              renderInput={(params) => (
+                <InputField {...params} label="Select First Car" variant="outlined" />
+              )}
+              renderOption={(option) => (
+                <>
+                  <img
+                    style={{
+                      maxWidth: '50px',
+                      maxHeight: '60px',
+                      margin: '7px'
+                    }}
+                    src={option.image[0]}
+                    alt={option.model}
+                  />
+                  <span
+                    style={{
+                      margin: '7px'
+                    }}
+                  >
+                    {option.model}
+                  </span>
+                  {option.modelYear}
+                </>
+              )}
+              onChange={(event: object, value: any) => {
+                if (value !== null) {
+                  let temp = shortListCars.filter(
+                    (item: ICarCard) => item.id === value.id
+                  );
+                  handleFirstCar(temp[0]);
+                }
+              }}
+            />
+          </Grid>
+          <Grid item container xs={6} justifyContent="center">
+            <Autocomplete
+              id="select-car-two"
+              options={shortListCars}
+              getOptionLabel={(option) => option.model}
+              style={{ width: 300 }}
+              renderInput={(params) => (
+                <InputField {...params} label="Select Second Car" variant="outlined" />
+              )}
+              renderOption={(option) => (
+                <>
+                  <img
+                    style={{
+                      maxWidth: '50px',
+                      maxHeight: '60px',
+                      margin: '7px'
+                    }}
+                    src={option.image[0]}
+                    alt={option.model}
+                  />
+                  <span
+                    style={{
+                      margin: '7px'
+                    }}
+                  >
+                    {option.model}
+                  </span>
+
+                  {option.modelYear}
+                </>
+              )}
+              onChange={(event: object, value: any) => {
+                if (value !== null) {
+                  let temp = shortListCars.filter(
+                    (item: ICarCard) => item.id === value.id
+                  );
+                  handleSecondCar(temp[0]);
+                }
+              }}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <Dropdown name={fieldNames.cars} options={} />
-        </Grid> */}
+
         <Grid item xs={12}>
           <Table
             items={[firstCar, secondCar]}

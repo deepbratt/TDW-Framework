@@ -5,7 +5,7 @@ const TableRows = ({ items, array }: any) => {
   const { cell } = useStyles();
   return (
     <>
-      {items && items.length !== 0 && array && (
+      {items && items.length === 2 && array && (
         <>
           {array.map((feature: string, index: number) => (
             <TableRow key={`comparision-features-${index}`}>

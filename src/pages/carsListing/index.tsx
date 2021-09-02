@@ -15,6 +15,7 @@ import {
   Typography,
   Card
 } from '@material-ui/core';
+import Toast from '../../components/Toast';
 import Pagination from '@material-ui/lab/Pagination';
 import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
 import ListingCard from '../../components/ListingCard';
@@ -86,7 +87,9 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     removeShortListItem,
     rangeValues,
     setRangeValues,
-    shortListCars
+    shortListCars,
+    alertOpen,
+    setAlertOpen
   } = useForm();
 
   const [open, setOpen] = React.useState(false);
@@ -102,6 +105,16 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleAlertClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlertOpen(false);
   };
 
   const { layoutType } = useSelector((state: RootState) => state.layout);
@@ -360,6 +373,14 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                     />
                   )}
                 </Grid>
+              )}
+              {responseMessage && (
+                <Toast
+                  open={alertOpen}
+                  onClose={handleAlertClose}
+                  type={responseMessage.status}
+                  message={responseMessage.message}
+                />
               )}
             </Grid>
           </Grid>

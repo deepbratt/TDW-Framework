@@ -82,6 +82,7 @@ export const useForm = (validateOnChange = true) => {
   const [queryParams, setQueryParams] = useState<string>('');
   const { validate, errors, setErrors } = useValidation(values);
   const [shortListItems, setShortListItems] = useState<ICarCard[]>([]);
+  const [alertOpen, setAlertOpen] = useState(false);
   const [responseMessage, setResponseMessage] = useState({
     status: '',
     message: ''
@@ -477,23 +478,51 @@ export const useForm = (validateOnChange = true) => {
     // eslint-disable-next-line
   }, [page, values, appliedFilters]);
 
+  function ItemExists(itemId: string) {
+    return shortListItems.some(function (item: ICarCard) {
+      return item._id === itemId;
+    });
+  }
+
   const shortListItem = (newItem: ICarCard) => {
+    setAlertOpen(false);
     if (shortListItems.length < 6) {
-      // dispatch(setShortlistCars([...shortListCars, newItem]));
-      setShortListItems([...shortListItems, newItem]);
+      if (!ItemExists(newItem._id)) {
+        setShortListItems([...shortListItems, newItem]);
+        setAlertOpen(true);
+        setResponseMessage({ status: 'success', message: 'Car added' });
+      } else {
+        setAlertOpen(true);
+        setResponseMessage({
+          status: 'error',
+          message: 'Car already selected'
+        });
+      }
+    } else {
+      setAlertOpen(true);
+      setResponseMessage({
+        status: 'error',
+        message: "Can't select more than 6 cars"
+      });
     }
   };
 
   const removeShortListItem = (itemId: string) => {
+    setAlertOpen(false);
     let newItems = shortListItems;
     newItems = newItems.filter((item: ICarCard) => item._id !== itemId);
     // dispatch(setShortlistCars(newItems));
     setShortListItems(newItems);
+    setAlertOpen(true);
+    setResponseMessage({
+      status: 'success',
+      message: "Car removed"
+    });
   };
 
   useEffect(() => {
-    console.log("shortlist items", shortListItems)
-  }, [shortListItems])
+    console.log('shortlist items', shortListItems);
+  }, [shortListItems]);
 
   useEffect(() => {
     dispatch(setShortlistCars(shortListItems));
@@ -533,6 +562,8 @@ export const useForm = (validateOnChange = true) => {
     removeShortListItem,
     rangeValues,
     setRangeValues,
-    shortListCars
+    shortListCars,
+    alertOpen,
+    setAlertOpen
   };
 };

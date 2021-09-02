@@ -1,5 +1,6 @@
 export interface ICarCard {
   _id: string;
+  id: string;
   model: string;
   modelYear: number;
   createdAt: string;

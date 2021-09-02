@@ -34,7 +34,7 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
         <Chip
           size="small"
           label={
-            getKeyValue(rangeFilters)(keys) + `[${values[0]}>, <${values[1]}]`
+            getKeyValue(rangeFilters)(keys) + `[${values[0]}-${values[1]}]`
           }
           color="primary"
           onDelete={() => removeRangeFilter(keys)}

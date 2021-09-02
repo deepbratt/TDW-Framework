@@ -12,8 +12,10 @@ import {
   Grid,
   Hidden,
   SwipeableDrawer,
-  Typography
+  Typography,
+  Card
 } from '@material-ui/core';
+import Toast from '../../components/Toast';
 import Pagination from '@material-ui/lab/Pagination';
 import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
 import ListingCard from '../../components/ListingCard';
@@ -47,6 +49,8 @@ import { paths } from '../../routes/paths';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import GlobalStyles from '../../globalStyles';
+import Skeletons from '../../components/Skeletons';
+import ListingCardSkeletons from '../../components/ListingCard/ListingCardSkeletons';
 
 export interface CarsListingProps {
   isShortlist?: boolean;
@@ -82,7 +86,10 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     shortListItem,
     removeShortListItem,
     rangeValues,
-    setRangeValues
+    setRangeValues,
+    shortListCars,
+    alertOpen,
+    setAlertOpen
   } = useForm();
 
   const [open, setOpen] = React.useState(false);
@@ -98,6 +105,16 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleAlertClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlertOpen(false);
   };
 
   const { layoutType } = useSelector((state: RootState) => state.layout);
@@ -269,45 +286,48 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                 />
               </Grid>
             </Hidden>
-            {isShortlist === true && shortListItems.length > 0 && (
+            {isShortlist === true && shortListCars.length >= 1 && (
               <Grid item container xs={12}>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Typography variant="h4" gutterBottom>
                     {SHORTLIST_ITEMS}
                   </Typography>
                 </Grid>
-                <Grid item container xs={12}>
-                  {shortListItems.map((item: ICarCard) => (
-                    <Grid key={`shotlist-item-${item.model}`} item xs={2}>
-                      <ShortListCard
-                        productImg={item.image[0]}
-                        name={item.model}
-                        _id={item._id}
-                        handleClick={() => removeShortListItem(item._id)}
-                      />
-                    </Grid>
-                  ))}
-                  {shortListItems.length === 2 && (
-                    <Grid container item xs={3} alignContent="flex-end">
-                      <Button
-                        color="secondary"
-                        onClick={() =>
-                          history.push(
-                            `${paths.carComparision}/${shortListItems[0]._id}/${shortListItems[1]._id}`
-                          )
-                        }
-                      >
-                        {COMPARE}
-                      </Button>
-                    </Grid>
-                  )}
+                <Grid container item xs={6} justifyContent="flex-end">
+                  <Grid item xs={3}>
+                    <Button
+                      color="secondary"
+                      onClick={() =>
+                        history.push(
+                          `${paths.carComparision}/${shortListItems[0]._id}/${shortListItems[1]._id}`
+                        )
+                      }
+                    >
+                      {COMPARE}
+                    </Button>
+                  </Grid>
+                </Grid>
+                <Grid item container xs={12} spacing={1}>
+                  {shortListCars &&
+                    shortListCars.map((item: ICarCard) => (
+                      <Grid key={`shotlist-item-${item.model}`} item xs={2}>
+                        <ShortListCard
+                          productImg={item.image[0]}
+                          name={item.model}
+                          _id={item._id}
+                          handleClick={() => removeShortListItem(item._id)}
+                        />
+                      </Grid>
+                    ))}
                 </Grid>
               </Grid>
             )}
             <Grid item container xs={12} justifyContent="flex-start">
               {isLoading ? (
-                <Grid item xs={12}>
-                  <Loader open={true} isBackdrop={false} />
+                <Grid item container xs={12}>
+                  <Skeletons length={6} layoutType={layoutType}>
+                    <ListingCardSkeletons layoutType={layoutType} />
+                  </Skeletons>
                 </Grid>
               ) : responseMessage.status !== 'success' &&
                 responseData === null ? (
@@ -317,7 +337,13 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                   </Typography>
                 </Grid>
               ) : (
-                <Grid item container xs={12} justifyContent="center">
+                <Grid
+                  item
+                  container
+                  xs={12}
+                  justifyContent="center"
+                  spacing={1}
+                >
                   {result &&
                     result.map((car: any, index: any) => (
                       <Grid
@@ -325,7 +351,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                         item
                         xs={12}
                         sm={layoutType === 'list' ? 12 : 6}
-                        xl={layoutType === 'list' ? 12 : 6}
                       >
                         <ListingCard
                           data={car}
@@ -348,6 +373,14 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                     />
                   )}
                 </Grid>
+              )}
+              {responseMessage && (
+                <Toast
+                  open={alertOpen}
+                  onClose={handleAlertClose}
+                  type={responseMessage.status}
+                  message={responseMessage.message}
+                />
               )}
             </Grid>
           </Grid>

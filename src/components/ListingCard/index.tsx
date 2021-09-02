@@ -183,7 +183,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
                     <Typography
                       variant="h3"
                       style={{ cursor: 'pointer' }}
-                      // onClick={() => history.push(`/car-detail/${_id}`)}
                     >
                       {`${make} ${model}`}
                     </Typography>

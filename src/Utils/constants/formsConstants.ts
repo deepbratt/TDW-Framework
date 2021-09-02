@@ -37,5 +37,6 @@ export const fieldNames = {
   engineType: 'engineType',
   color: 'color',
   bodyType: 'bodyType',
-  sellerType: 'sellerType'
+  sellerType: 'sellerType',
+  cars: 'cars'
 };

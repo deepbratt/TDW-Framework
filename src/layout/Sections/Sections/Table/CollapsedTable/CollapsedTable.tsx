@@ -17,7 +17,7 @@ const EnhancedTable: React.FC<IProps> = ({
   collapsedArray,
   items
 }) => {
-  const { head, table, options, btn } = useStyles();
+  const { head, table } = useStyles();
 
   return (
     <>
@@ -26,7 +26,6 @@ const EnhancedTable: React.FC<IProps> = ({
       </Typography>
       <TableContainer>
         <Table className={table} aria-label="table">
-          <TableHead></TableHead>
           <TableBody>
             <CollapsedRows array={collapsedArray} items={items} />
           </TableBody>

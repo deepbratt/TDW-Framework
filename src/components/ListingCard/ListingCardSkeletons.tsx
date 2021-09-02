@@ -7,7 +7,7 @@ export interface ListingCardSkeletonsProps {
 }
 
 const ListingCardSkeletons: React.FC<ListingCardSkeletonsProps> = (
-  layoutType
+  {layoutType}
 ) => {
   const { root, grid } = ListingCardStyles();
   return (

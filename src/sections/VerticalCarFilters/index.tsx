@@ -5,7 +5,7 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
-  Typography,
+  Typography
   // IconButton
 } from '@material-ui/core';
 import FilterAccordion from '../../components/Accordion';
@@ -24,12 +24,18 @@ import { APPLIED_FILTERS } from '../../Utils/constants/language/en/buttonLabels'
 import PriceInput from '../../components/InputField/PriceInput';
 import NumberInput from '../../components/InputField/NumberInput';
 import AppliedFilters from './appliedFilters';
+import { Autocomplete } from '@material-ui/lab';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 export interface CarFiltersProps {
   filterProps: any;
 }
 
 const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
+  const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+  const checkedIcon = <CheckBoxIcon fontSize="small" />;
+
   const [searchResult, setSearchResult] = useState<ICity[]>();
   const {} = VerticalFilterStyles();
   const {
@@ -77,13 +83,27 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     removeFilterItem,
     removeRangeFilter,
     rangeValues,
-    setRangeValues
+    setRangeValues,
+    citiesWithCars,
+    setValues
   } = filterProps;
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let result = City.getCitiesOfCountry('PK')?.filter(
       (city: ICity) =>
         city.name.substr(0, e.target.value.length).toLowerCase() ===
+        e.target.value.toLowerCase()
+    );
+    if (e.target.value === '') {
+      result = [];
+    }
+    setSearchResult(result);
+  };
+
+  const handleSearchCities = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let result = citiesWithCars?.filter(
+      (city: any) =>
+        city.city.substr(0, e.target.value.length).toLowerCase() ===
         e.target.value.toLowerCase()
     );
     if (e.target.value === '') {
@@ -253,83 +273,83 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       </FilterAccordion>
       <FilterAccordion title={CITY}>
         <FormGroup>
-          {cityNames
-            .filter((item) => majorCities.includes(item))
-            .map((city) => (
+          {citiesWithCars
+            .filter((item: any, index: number) => index <= 4)
+            .map((city: any) => (
               <FormControlLabel
-                key={`city-${city}`}
+                key={`city-${city.city}`}
                 control={
                   <Checkbox
                     name={fieldNames.city}
-                    checked={values.city.indexOf(city) > -1}
-                    onChange={(e) => handleCheckboxChange(e, city)}
+                    checked={values.city.indexOf(city.city) > -1}
+                    onChange={(e) => handleCheckboxChange(e, city.city)}
                     color="primary"
                   />
                 }
-                label={city}
+                label={city.city}
               />
             ))}
-          <DialogBox title="Select Cities">
-            <Grid style={{ display: 'flex' }} container>
-              <Grid xs={12}>
-                <InputField
-                  variant="filled"
-                  label="Search"
-                  onChange={handleSearchInputChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="h4" gutterBottom>
-                  {'Search Result'}
-                </Typography>
-                {searchResult &&
-                  searchResult.map((city: ICity) => {
-                    return (
-                      <FormControlLabel
-                        key={`city-${city.name}`}
-                        control={
-                          <Checkbox
-                            name={fieldNames.city}
-                            checked={values.city.indexOf(city.name) > -1}
-                            onChange={(e) => handleCheckboxChange(e, city.name)}
-                            color="primary"
-                            size="small"
-                          />
-                        }
-                        label={city.name}
-                      />
-                    );
-                  })}
-              </Grid>
-              {provinces.map((province) => (
-                <Grid key={`province-${province}`} item xs={12}>
-                  <Typography variant="h4" gutterBottom>
-                    {province.name}
-                  </Typography>
-                  {City.getCitiesOfState(
-                    province.countryCode,
-                    province.isoCode
-                  ).map((city) => {
-                    return (
-                      <FormControlLabel
-                        key={`city-${city.name}`}
-                        control={
-                          <Checkbox
-                            name={fieldNames.city}
-                            checked={values.city.indexOf(city.name) > -1}
-                            onChange={(e) => handleCheckboxChange(e, city.name)}
-                            color="primary"
-                            size="small"
-                          />
-                        }
-                        label={city.name}
-                      />
-                    );
-                  })}
+
+          {citiesWithCars.length > 5 && (
+            <DialogBox title="Select Cities">
+              <Grid style={{ display: 'flex' }} container>
+                <Grid xs={12}>
+                  <InputField
+                    variant="filled"
+                    label="Search"
+                    onChange={handleSearchCities}
+                  />
                 </Grid>
-              ))}
-            </Grid>
-          </DialogBox>
+                <Grid item xs={12}>
+                  {searchResult && (
+                    <Typography variant="h4" gutterBottom>
+                      {'Search Result'}
+                    </Typography>
+                  )}
+                  {searchResult &&
+                    searchResult.map((city: any) => {
+                      return (
+                        <FormControlLabel
+                          key={`city-${city.city}`}
+                          control={
+                            <Checkbox
+                              name={fieldNames.city}
+                              checked={
+                                values.city.indexOf(city.city) > -1
+                              }
+                              onChange={(e) =>
+                                handleCheckboxChange(e, city.city)
+                              }
+                              color="primary"
+                              size="small"
+                            />
+                          }
+                          label={city.city}
+                        />
+                      );
+                    })}
+                </Grid>
+                {citiesWithCars.map((city: any) => {
+                  return (
+                    <Grid key={`city-${city.city}`} item xs={6}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            name={fieldNames.city}
+                            checked={values.city.indexOf(city.city) > -1}
+                            onChange={(e) => handleCheckboxChange(e, city.city)}
+                            color="primary"
+                            size="small"
+                          />
+                        }
+                        label={city.city}
+                      />
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </DialogBox>
+          )}
         </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={REGISTRATION_CITY}>
@@ -361,9 +381,11 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="h4" gutterBottom>
-                  {'Search Result'}
-                </Typography>
+                {searchResult && (
+                  <Typography variant="h4" gutterBottom>
+                    {'Search Result'}
+                  </Typography>
+                )}
                 {searchResult &&
                   searchResult.map((city: ICity) => {
                     return (

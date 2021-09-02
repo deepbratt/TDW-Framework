@@ -5,6 +5,8 @@ export const API_ENDPOINTS = {
   CURENT_USER: '/currentUser',
   SIGNUP: '/signup',
   LOGIN: '/login',
+  FILTER: "/filter",
+  CITIES_WITH_CARS: "/cities-with-cars",
   PHONE_VERIFICATION: '/phone-verfication',
   EMAIL_VERIFICATION: '/email-verfication',
   GOOGLE_AUTH: '/google-auth',

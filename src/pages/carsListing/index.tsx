@@ -82,7 +82,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     shortListItem,
     removeShortListItem,
     rangeValues,
-    setRangeValues
+    setRangeValues,
+    citiesWithCars
   } = useForm();
 
   const [open, setOpen] = React.useState(false);
@@ -116,7 +117,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     values,
     keywords,
     rangeValues,
-    setRangeValues
+    setRangeValues,
+    citiesWithCars
   };
 
   return (

@@ -45,17 +45,24 @@ export const useForm = (validateOnChange = true) => {
   // const routeParams = useSelector(
   //   (state: RootState) => state.queryParams.queryParams
   // );
-  const { ADS, CARS } = API_ENDPOINTS;
+  const { ADS, CARS, FILTER, CITIES_WITH_CARS } = API_ENDPOINTS;
+  const [page, setPage] = useState(1);
+  const [citiesWithCars, setCitiesWithCars] = useState([]);
+  const [keywords, setKeywords] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [pageCount, setPageCount] = useState<number>(1);
+  const [values, setValues] = useState({ ...initialValues });
+  const [responseData, setResponseData] = useState<IData | null>();
+  const [result, setResult] = useState<ICarCard[] | []>([]);
+  const [queryParams, setQueryParams] = useState<string>('');
+  const { validate, errors, setErrors } = useValidation(values);
   const [rangeValues, setRangeValues] = useState<any>({
     priceRange: [0, 50000000],
     yearRange: [1940, 2021],
     mileageRange: [0, 500000],
     engineCapacityRange: [0, 5000]
   });
-  const [values, setValues] = useState({ ...initialValues });
-  const [page, setPage] = useState(1);
-  const [pageCount, setPageCount] = useState<number>(1);
-  const [keywords, setKeywords] = useState('');
+  const [shortListItems, setShortListItems] = useState<ICarCard[]>([]);
   const [appliedFilters, setAppliedFilters] = useState<any>({
     province: [],
     city: [],
@@ -70,12 +77,6 @@ export const useForm = (validateOnChange = true) => {
     sellerType: [],
     adType: []
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const [responseData, setResponseData] = useState<IData | null>();
-  const [result, setResult] = useState<ICarCard[] | []>([]);
-  const [queryParams, setQueryParams] = useState<string>('');
-  const { validate, errors, setErrors } = useValidation(values);
-  const [shortListItems, setShortListItems] = useState<ICarCard[]>([]);
   const [responseMessage, setResponseMessage] = useState({
     status: '',
     message: ''
@@ -341,6 +342,34 @@ export const useForm = (validateOnChange = true) => {
       });
   };
 
+  const getCitiesWithCars = async () => {
+    let param = '?';
+    if (values.province !== []) {
+      values.province.map((item: string) => {
+        param += '&province=' + item;
+      });
+    }
+    await getAllData(ADS + CARS + FILTER + CITIES_WITH_CARS + param)
+      .then((response) => {
+        if (response.status === 'success') {
+          setCitiesWithCars(response.data.result);
+        }
+      })
+      .catch((error) => {
+        console.log('Error', error);
+      });
+  };
+
+  useEffect(() => {
+    getCitiesWithCars();
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    console.log('cities', citiesWithCars);
+    // eslint-disable-next-line
+  }, [citiesWithCars]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -373,6 +402,9 @@ export const useForm = (validateOnChange = true) => {
       temp = temp.filter((item: string) => item !== filterName);
     }
     setValues({ ...values, [e.target.name]: temp });
+    if (e.target.name === 'province') {
+      getCitiesWithCars();
+    }
     if (e.target.checked) {
       setAppliedFilters((previousFilters: any) => {
         if (!previousFilters[e.target.name].includes(filterName)) {
@@ -430,6 +462,9 @@ export const useForm = (validateOnChange = true) => {
       (filter: string) => filter !== filterName
     );
     setValues(tempVal);
+    if (keys === 'province') {
+      getCitiesWithCars();
+    }
   };
 
   const removeFilter = (filterName: string) => {
@@ -511,6 +546,7 @@ export const useForm = (validateOnChange = true) => {
     shortListItem,
     removeShortListItem,
     rangeValues,
-    setRangeValues
+    setRangeValues,
+    citiesWithCars
   };
 };

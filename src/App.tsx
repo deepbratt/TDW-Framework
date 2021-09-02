@@ -22,7 +22,7 @@ function App() {
   const { USERS, CURENT_USER } = API_ENDPOINTS;
   const [isLoading, setisLoading] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector((state:RootState) => state.auth.user)
+  const {user} = useSelector((state:RootState) => state.auth)
   const history = useHistory();
 
   useEffect(() => {

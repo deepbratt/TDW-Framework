@@ -81,6 +81,7 @@ const useAddEditCar = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
+  const [phoneRequiredDialog, setPhoneRequiredDialog] = useState(false)
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('success');
   const [formData, setFormData] = useReducer(formReducer, initialFieldValues);
@@ -129,16 +130,19 @@ const useAddEditCar = () => {
     />
   ];
 
+  const profileRedirect = () =>{
+    history.push('/dashboard/profile')
+  }
+
   const getData = useCallback(() => {
     setIsLoading(true);
     getAllData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/${id}`).then((response) => {
       if (response && response.data && response.status === 'success') {
         let result = response.data.result;
-        // if(result.createdBy._id !== user._id){
-        //   console.log('phans gaye')
-        //   // history.push('/')
-        //   // return
-        // }
+        if(result.createdBy._id !== user._id){
+          history.push(pathname.substr(0, pathname.lastIndexOf('/')));  
+           return
+        }
         let FieldValues = formData;
         FieldValues = {
           city: result.city,
@@ -187,13 +191,17 @@ const useAddEditCar = () => {
 
   useEffect(() => {
     // console.log("car add edit ", id);
+    if(!user.phone){
+      setPhoneRequiredDialog(true)
+    }
+
     if (id) {
       getData();
     }
   }, [getData, id]);
   useEffect(() => {
     // console.log("images", images);
-    console.log(user._id)
+    console.log(user)
   }, [images]);
 
   const allFalse = (obj: any) => {
@@ -285,11 +293,12 @@ const useAddEditCar = () => {
       }
     } else if (activeStep === 1) {
       let secondStepValidated = images.length > 0;
+      console.log(images.length > 0 && images.length < 21)
       setRequireError((requiredError) => {
         return { ...requiredError, images: !secondStepValidated };
       });
       if (!secondStepValidated) {
-        //return false; //uncomment this line to put make images mandatory/required
+        return false; //uncomment this line to put make images mandatory/required
       }
     } else {
       if (!checkValidation(initialRequireError_2)) {
@@ -415,7 +424,10 @@ const useAddEditCar = () => {
     toastType,
     setDeleteDialog,
     deleteDialog,
-    lgMdSmPx
+    lgMdSmPx,
+    profileRedirect,
+    phoneRequiredDialog,
+    setPhoneRequiredDialog
   };
 };
 

@@ -87,7 +87,7 @@ const UploadPhotosForm = ({
             )}
           </div>
         )}
-        <div className={classes.buttonWrapper}>
+        {images.length < 20 && <div className={classes.buttonWrapper}>
           <Button variant="contained" className={classes.imgUploadBtn}>
             {addEditCarData.buttons.addPhoto}
             <input
@@ -100,7 +100,7 @@ const UploadPhotosForm = ({
           <Typography variant="body1" className={classes.infoText}>
             {addEditCarData.infoText}
           </Typography>
-        </div>
+        </div>}
       </Grid>
       <InformationDialog message={infoMessage} title={infoTitle} open={openInfoModel} setOpen={()=>setOpenInfoModel(false)} />
     </Grid>

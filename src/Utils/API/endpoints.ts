@@ -20,4 +20,7 @@ export const API_ENDPOINTS = {
   MARK_UNSOLD:"/mark-unsold",
   MARK_ACTIVE:"/mark-active",
   MARK_INACTIVE:"/mark-inactive",
+  CAR_MAKES:"/makes",
+  MAKE_MODELS:"/models/?make_id=",
+  MODEL_VERSIONS:"/versions?model_id=",
 };

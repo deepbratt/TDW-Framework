@@ -87,6 +87,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     removeShortListItem,
     rangeValues,
     setRangeValues,
+    citiesWithCars,
     shortListCars,
     alertOpen,
     setAlertOpen
@@ -133,7 +134,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     values,
     keywords,
     rangeValues,
-    setRangeValues
+    setRangeValues,
+    citiesWithCars
   };
 
   return (

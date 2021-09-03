@@ -29,6 +29,11 @@ const addEditCarData = {
       defaultValue: 'Car Make',
       menu: ['Honda', 'Toyota', 'Suzuki', 'Nissan', 'Daihatsu']
     },
+    carVersion: {
+      label: 'Model Version',
+      defaultValue: 'Model Version',
+      menu: ['VXR', 'VX', 'GLI', 'VTI']
+    },
     modelYear: {
       label: 'Model Year',
       defaultValue: 'Model Year',

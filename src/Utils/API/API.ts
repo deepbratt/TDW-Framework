@@ -94,7 +94,7 @@ export const getAllData = async (url: string) => {
     let result = await axiosInstance.get(url);
     return result.data;
   } catch (error:any) {
-    return error.response.data;
+    return error.response;
   }
 };
 

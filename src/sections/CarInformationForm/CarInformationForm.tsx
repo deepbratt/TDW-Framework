@@ -6,12 +6,13 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
-import SelectComponent from "../components/SelectComponent";
+import SelectComponent from "../../components/SelectComponent";
 import { City } from "country-state-city";
-import addEditCarData from "../Utils/constants/language/en/addEditCarData";
-import { Colors } from "../Utils/constants/colors/colors";
-import SelectInputComponent from "../components/SelectInputComponent";
-import {NO_REGISTRATION_DISPLAY} from "../Utils/constants/language/en/addEditCarTexts"
+import addEditCarData from "../../Utils/constants/language/en/addEditCarData";
+import { Colors } from "../../Utils/constants/colors/colors";
+import SelectInputComponent from "../../components/SelectInputComponent";
+import {NO_REGISTRATION_DISPLAY} from "../../Utils/constants/language/en/addEditCarTexts"
+import useCarInformationForm from "./useCarInformationForm";
 
 interface CarInformationFormProps {
   formData: {
@@ -24,11 +25,13 @@ interface CarInformationFormProps {
     mileage: "",
     price: "",
     registrationNo: "",
-    description: ""
+    description: "",
+    modelVersion:""
   };
   handleChange: (event: any) => void;
   requireError: any;
   handleChangeSelect: any;
+  setFormData: React.Dispatch<any>;
 }
 
 const CarInformationForm = ({
@@ -36,8 +39,10 @@ const CarInformationForm = ({
   handleChange,
   requireError,
   handleChangeSelect,
+  setFormData
 }: CarInformationFormProps) => {
   const classes = useStyles();
+  const {toastMessage, toastType, toastOpen, isLoading, carMakesList, carModelsList, carVersionsList} = useCarInformationForm(formData, setFormData)
   const cities = City.getCitiesOfCountry("PK");
   const extractedCityNames = cities?.map((item) => item.name);
   let cityNames = [];
@@ -61,7 +66,7 @@ const CarInformationForm = ({
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
         <SelectComponent
-          menuItem={addEditCarData.fields.carMake.menu}
+          menuItem={carMakesList.length < 1 ? [formData.carMake] : carMakesList}
           name={"carMake"}
           className={classes.selectFields}
           value={formData.carMake}
@@ -91,7 +96,7 @@ const CarInformationForm = ({
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
         <SelectComponent
-          menuItem={addEditCarData.fields.carModel.menu[formData.carMake]}
+          menuItem={carModelsList.length < 1 ? [formData.carModel] : carModelsList}
           name={"carModel"}
           className={classes.selectFields}
           value={formData.carModel}
@@ -116,6 +121,21 @@ const CarInformationForm = ({
           helperText={
             requireError.modelYear ? addEditCarData.requiredFieldText : ""
           }
+          onChange={handleChange}
+        />
+      </Grid>
+      <Grid item xs={12} sm={12} md={6}>
+        <SelectComponent
+          menuItem={carVersionsList.length < 1 ? [formData.modelVersion] : carVersionsList}
+          name={"modelVersion"}
+          className={classes.selectFields}
+          value={formData.modelVersion}
+          label={addEditCarData.fields.carVersion.label}
+          // required
+          // error={requireError.carModel}
+          // helperText={
+          //   requireError.carModel ? addEditCarData.requiredFieldText : ""
+          // }
           onChange={handleChange}
         />
       </Grid>
@@ -151,21 +171,6 @@ const CarInformationForm = ({
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
         <TextField
-          name={"price"}
-          type="number"
-          className={classes.selectFields}
-          value={formData.price}
-          label={addEditCarData.fields.price.label}
-          required
-          error={requireError.price}
-          helperText={
-            requireError.price ? addEditCarData.requiredFieldText : ""
-          }
-          onChange={handleChange}
-        />
-      </Grid>
-      <Grid item xs={12} sm={12} md={6}>
-        <TextField
           name={"registrationNo"}
           type="text"
           className={classes.selectFields}
@@ -175,6 +180,21 @@ const CarInformationForm = ({
           error={requireError.registrationNo}
           helperText={
             requireError.registrationNo ? addEditCarData.requiredFieldText : ""
+          }
+          onChange={handleChange}
+        />
+      </Grid>
+      <Grid item xs={12} sm={12} md={6}>
+        <TextField
+          name={"price"}
+          type="number"
+          className={classes.selectFields}
+          value={formData.price}
+          label={addEditCarData.fields.price.label}
+          required
+          error={requireError.price}
+          helperText={
+            requireError.price ? addEditCarData.requiredFieldText : ""
           }
           onChange={handleChange}
         />

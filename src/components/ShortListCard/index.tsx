@@ -4,6 +4,7 @@ import {
   CardHeader,
   CardMedia,
   IconButton,
+  makeStyles,
   Typography
 } from '@material-ui/core';
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
@@ -15,18 +16,38 @@ export interface ShortListCardProps {
   handleClick: Function;
 }
 
+const ShortListCardStyles = makeStyles((theme) => ({
+  cardRoot: {
+    maxHeight: '200px',
+    maxWidth: '180px',
+    position: 'relative',
+  },
+  cardHeader: {
+    position: 'absolute',
+    top: '-5px',
+    right: '-5px'
+  },
+  cardMedia: {
+    maxHeight: '150px'
+  },
+  cardTitle: {
+    padding: '10px',
+    fontSize: '16px',
+    lineHeight: '16px'
+  }
+}));
+
 const ShortListCard: React.FC<ShortListCardProps> = ({
   _id,
   name,
   productImg,
   handleClick
 }) => {
+  const { cardRoot, cardHeader, cardMedia, cardTitle } = ShortListCardStyles();
   return (
-    <Card
-      style={{ maxHeight: '200px', maxWidth: '180px', position: 'relative' }}
-    >
+    <Card className={cardRoot}>
       <CardHeader
-        style={{ position: 'absolute', top: '-5px', right: '-5px' }}
+        className={cardHeader}
         action={
           <IconButton
             aria-label="delete-item"
@@ -37,15 +58,11 @@ const ShortListCard: React.FC<ShortListCardProps> = ({
           </IconButton>
         }
       />
-      <CardMedia style={{ maxHeight: '150px' }}>
+      <CardMedia className={cardMedia}>
         <img height="150px" src={productImg} alt={name} />
       </CardMedia>
 
-      <Typography
-        style={{ padding: '10px', fontSize: '16px', lineHeight: '16px' }}
-        variant="h3"
-        gutterBottom
-      >
+      <Typography className={cardTitle} variant="h3" gutterBottom>
         {name.substr(0, 20)}
       </Typography>
     </Card>

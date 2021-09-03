@@ -66,7 +66,7 @@ const Container = ({ data, shortListCars }: IData) => {
         <Grid item xs={12}>
           <Banner data={[firstCar, secondCar]} />
         </Grid>
-        <Grid style={{marginTop: "20px"}} item container>
+        <Grid style={{marginTop: "20px"}} item container spacing={1}>
           <Grid item container xs={6} justifyContent="center">
             <Autocomplete
               id="select-car-one"
@@ -74,7 +74,7 @@ const Container = ({ data, shortListCars }: IData) => {
               getOptionLabel={(option) => option.model}
               style={{ width: 300 }}
               renderInput={(params) => (
-                <InputField {...params} label="Select First Car" variant="outlined" />
+                <InputField {...params} label="First Car" variant="outlined" />
               )}
               renderOption={(option) => (
                 <>
@@ -114,7 +114,7 @@ const Container = ({ data, shortListCars }: IData) => {
               getOptionLabel={(option) => option.model}
               style={{ width: 300 }}
               renderInput={(params) => (
-                <InputField {...params} label="Select Second Car" variant="outlined" />
+                <InputField {...params} label="Second Car" variant="outlined" />
               )}
               renderOption={(option) => (
                 <>

@@ -44,7 +44,6 @@ import { Color } from '../../theme/color';
 import Section from '../../components';
 import { RootState } from '../../redux/store';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
-import Loader from '../../components/Loader';
 import { paths } from '../../routes/paths';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
@@ -82,15 +81,15 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     removeFilterItem,
     removeRangeFilter,
     keywords,
-    shortListItems,
     shortListItem,
     removeShortListItem,
     rangeValues,
     setRangeValues,
     citiesWithCars,
-    shortListCars,
     alertOpen,
-    setAlertOpen
+    setAlertOpen,
+    makes,
+    models
   } = useForm();
 
   const [open, setOpen] = React.useState(false);
@@ -99,6 +98,10 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
   const toggleDrawer = () => {
     setSortDrawerOpen(sortDrawerOpen ? false : true);
   };
+
+  const shortListCars = useSelector(
+    (state: RootState) => state.shortlistCars.shortlistCars
+  );
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -135,7 +138,9 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     keywords,
     rangeValues,
     setRangeValues,
-    citiesWithCars
+    citiesWithCars,
+    makes,
+    models
   };
 
   return (
@@ -290,20 +295,16 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
             </Hidden>
             {isShortlist === true && shortListCars.length >= 1 && (
               <Grid item container xs={12}>
-                <Grid item xs={6}>
-                  <Typography variant="h4" gutterBottom>
+                <Grid item container  xs={6} alignContent="center">
+                  <Typography variant="button" gutterBottom>
                     {SHORTLIST_ITEMS}
                   </Typography>
                 </Grid>
                 <Grid container item xs={6} justifyContent="flex-end">
-                  <Grid item xs={3}>
+                  <Grid item xs={6} sm={3}>
                     <Button
                       color="secondary"
-                      onClick={() =>
-                        history.push(
-                          `${paths.carComparision}/${shortListItems[0]._id}/${shortListItems[1]._id}`
-                        )
-                      }
+                      onClick={() => history.push(`${paths.carComparision}`)}
                     >
                       {COMPARE}
                     </Button>
@@ -312,7 +313,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                 <Grid item container xs={12} spacing={1}>
                   {shortListCars &&
                     shortListCars.map((item: ICarCard) => (
-                      <Grid key={`shotlist-item-${item.model}`} item xs={2}>
+                      <Grid key={`shotlist-item-${item.model}`} item xs={4} sm={2}>
                         <ShortListCard
                           productImg={item.image[0]}
                           name={item.model}

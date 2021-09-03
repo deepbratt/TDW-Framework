@@ -5,7 +5,8 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
-  Typography
+  Typography,
+  Divider
   // IconButton
 } from '@material-ui/core';
 import FilterAccordion from '../../components/Accordion';
@@ -85,7 +86,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     rangeValues,
     setRangeValues,
     citiesWithCars,
-    setValues
+    makes,
+    models
   } = filterProps;
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,6 +106,21 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     let result = citiesWithCars?.filter(
       (city: any) =>
         city.city.substr(0, e.target.value.length).toLowerCase() ===
+        e.target.value.toLowerCase()
+    );
+    if (e.target.value === '') {
+      result = [];
+    }
+    setSearchResult(result);
+  };
+
+  const handleMakesModelSearch = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    makeModelArray: any[]
+  ) => {
+    let result = makeModelArray?.filter(
+      (item: any) =>
+        item.name.substr(0, e.target.value.length).toLowerCase() ===
         e.target.value.toLowerCase()
     );
     if (e.target.value === '') {
@@ -301,7 +318,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  {searchResult && (
+                  {searchResult && searchResult.length > 0 && (
                     <Typography variant="h4" gutterBottom>
                       {'Search Result'}
                     </Typography>
@@ -314,9 +331,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                           control={
                             <Checkbox
                               name={fieldNames.city}
-                              checked={
-                                values.city.indexOf(city.city) > -1
-                              }
+                              checked={values.city.indexOf(city.city) > -1}
                               onChange={(e) =>
                                 handleCheckboxChange(e, city.city)
                               }
@@ -498,40 +513,176 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       </FilterAccordion>
       <FilterAccordion title={MAKE}>
         <FormGroup>
-          {Carfilters.MAKE.map((type) => (
-            <FormControlLabel
-              key={`make-type-${type}`}
-              control={
-                <Checkbox
-                  name={fieldNames.make}
-                  checked={values.make.indexOf(type) > -1}
-                  onChange={(e) => handleCheckboxChange(e, type)}
-                  color="primary"
-                  size="small"
-                />
-              }
-              label={type}
-            />
-          ))}
+          {makes
+            .filter((item: any, index: number) => index <= 4)
+            .map((type: any) => (
+              <FormControlLabel
+                key={`make-type-${type.name}`}
+                control={
+                  <Checkbox
+                    name={fieldNames.make}
+                    checked={values.make.indexOf(type.name) > -1}
+                    onChange={(e) => handleCheckboxChange(e, type.name)}
+                    color="primary"
+                    size="small"
+                  />
+                }
+                label={type.name}
+              />
+            ))}
+          {makes.length > 5 && (
+            <DialogBox title="Select Makes">
+              <Grid style={{ display: 'flex' }} container>
+                <Grid xs={12}>
+                  <InputField
+                    variant="filled"
+                    label="Search"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      handleMakesModelSearch(e, makes)
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  {searchResult && searchResult.length > 0 && (
+                    <Typography variant="h4" gutterBottom>
+                      {'Search Result'}
+                    </Typography>
+                  )}
+                  {searchResult &&
+                    searchResult.map((item: any) => {
+                      return (
+                        <FormControlLabel
+                          key={`make-${item.name}`}
+                          control={
+                            <Checkbox
+                              name={fieldNames.make}
+                              checked={values.make.indexOf(item.name) > -1}
+                              onChange={(e) =>
+                                handleCheckboxChange(e, item.name)
+                              }
+                              color="primary"
+                              size="small"
+                            />
+                          }
+                          label={item.name}
+                        />
+                      );
+                    })}
+                </Grid>
+                <Divider variant="middle" />
+                <Grid item xs={12}>
+                  <Typography variant="h4" gutterBottom>
+                    {'Makes'}
+                  </Typography>
+                </Grid>
+                {makes.map((item: any) => {
+                  return (
+                    <Grid key={`make-${item.name}`} item xs={6}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            name={fieldNames.make}
+                            checked={values.make.indexOf(item.name) > -1}
+                            onChange={(e) => handleCheckboxChange(e, item.name)}
+                            color="primary"
+                            size="small"
+                          />
+                        }
+                        label={item.name}
+                      />
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </DialogBox>
+          )}
         </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={MODEL}>
         <FormGroup>
-          {Carfilters.MODEL.map((type) => (
-            <FormControlLabel
-              key={`model-type-${type}`}
-              control={
-                <Checkbox
-                  name={fieldNames.model}
-                  checked={values.model.indexOf(type) > -1}
-                  onChange={(e) => handleCheckboxChange(e, type)}
-                  color="primary"
-                  size="small"
-                />
-              }
-              label={type}
-            />
-          ))}
+          {models
+            .filter((item: any, index: number) => index <= 4)
+            .map((type: any) => (
+              <FormControlLabel
+                key={`model-type-${type.name}`}
+                control={
+                  <Checkbox
+                    name={fieldNames.model}
+                    checked={values.model.indexOf(type.name) > -1}
+                    onChange={(e) => handleCheckboxChange(e, type.name)}
+                    color="primary"
+                    size="small"
+                  />
+                }
+                label={type.name}
+              />
+            ))}
+          {models.length > 5 && (
+            <DialogBox title="Select Model">
+              <Grid style={{ display: 'flex' }} container>
+                <Grid xs={12}>
+                  <InputField
+                    variant="filled"
+                    label="Search"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      handleMakesModelSearch(e, models)
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  {searchResult && searchResult.length > 0 && (
+                    <Typography variant="h4" gutterBottom>
+                      {'Search Result'}
+                    </Typography>
+                  )}
+                  {searchResult &&
+                    searchResult.map((item: any) => {
+                      return (
+                        <FormControlLabel
+                          key={`make-${item.name}`}
+                          control={
+                            <Checkbox
+                              name={fieldNames.model}
+                              checked={values.model.indexOf(item.name) > -1}
+                              onChange={(e) =>
+                                handleCheckboxChange(e, item.name)
+                              }
+                              color="primary"
+                              size="small"
+                            />
+                          }
+                          label={item.name}
+                        />
+                      );
+                    })}
+                </Grid>
+                <Divider variant="middle" />
+                <Grid item xs={12}>
+                  <Typography variant="h4" gutterBottom>
+                    {'Models'}
+                  </Typography>
+                </Grid>
+                {models.map((item: any) => {
+                  return (
+                    <Grid key={`model-${item.name}`} item xs={6}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            name={fieldNames.model}
+                            checked={values.model.indexOf(item.name) > -1}
+                            onChange={(e) => handleCheckboxChange(e, item.name)}
+                            color="primary"
+                            size="small"
+                          />
+                        }
+                        label={item.name}
+                      />
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </DialogBox>
+          )}
         </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={TRANSMISSION}>

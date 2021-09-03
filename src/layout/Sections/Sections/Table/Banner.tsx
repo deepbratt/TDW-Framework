@@ -16,7 +16,14 @@ const Banner: React.FC<BannerProps> = ({ data }) => {
             <Grid key={index} container item xs={6}>
               {item.image && (
                 <Grid container item xs={12} justifyContent="center">
-                  <img height="200px" src={item.image[0]} alt={item.model} />
+                  <img
+                    style={{
+                      minWidth: '100%',
+                      margin: '10px'
+                    }}
+                    src={item.image[0]}
+                    alt={item.model}
+                  />
                 </Grid>
               )}
 

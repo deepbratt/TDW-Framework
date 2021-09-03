@@ -7,7 +7,6 @@ import useValidation from '../../Utils/hooks/useValidation';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
 import { RootState } from '../../redux/store';
 import { setShortlistCars } from '../../redux/reducers/shortlistCarsSlice';
-import ShortlistItem from '../shortlistItems';
 // import { useParams } from "react-router";
 
 const initialValues: any = {
@@ -48,9 +47,11 @@ export const useForm = (validateOnChange = true) => {
   // const routeParams = useSelector(
   //   (state: RootState) => state.queryParams.queryParams
   // );
-  const { ADS, CARS, FILTER, CITIES_WITH_CARS } = API_ENDPOINTS;
+  const { ADS, CARS, FILTER, CITIES_WITH_CARS, MAKE, MODEL } = API_ENDPOINTS;
   const [page, setPage] = useState(1);
   const [citiesWithCars, setCitiesWithCars] = useState([]);
+  const [makes, setMakes] = useState([]);
+  const [models, setModels] = useState([]);
   const [keywords, setKeywords] = useState('');
   const [alertOpen, setAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -69,7 +70,6 @@ export const useForm = (validateOnChange = true) => {
     mileageRange: [0, 500000],
     engineCapacityRange: [0, 5000]
   });
-  const [shortListItems, setShortListItems] = useState<ICarCard[]>([]);
   const [appliedFilters, setAppliedFilters] = useState<any>({
     province: [],
     city: [],
@@ -88,10 +88,6 @@ export const useForm = (validateOnChange = true) => {
     status: '',
     message: ''
   });
-
-  useEffect(() => {
-    setShortListItems(shortListCars);
-  }, []);
 
   // * We'll use later
   // useEffect(() => {
@@ -371,15 +367,46 @@ export const useForm = (validateOnChange = true) => {
       });
   };
 
-  useEffect(() => {
-    getCitiesWithCars();
-    // eslint-disable-next-line
-  }, []);
+  const getMakes = async () => {
+    await getAllData(ADS + CARS + MAKE)
+      .then((response) => {
+        if (response.status === 'success') {
+          setMakes(response.data.result);
+        }
+      })
+      .catch((error) => {
+        console.log('Error', error);
+      });
+  };
+
+  const getModels = async () => {
+    let param = '?';
+    if (values.make !== []) {
+      values.make.map((item: any) => {
+        let selectedMake: any = makes.filter((make: any) => make.name === item);
+        console.log('make selected', selectedMake);
+        if (item === selectedMake[0].name) {
+          param += '&make_id=' + selectedMake[0].make_id;
+        }
+      });
+    }
+    await getAllData(ADS + CARS + MODEL + param)
+      .then((response) => {
+        if (response.status === 'success') {
+          setModels(response.data.result);
+        }
+      })
+      .catch((error) => {
+        console.log('Error', error);
+      });
+  };
 
   useEffect(() => {
-    console.log('cities', citiesWithCars);
+    getCitiesWithCars();
+    getMakes();
+    getModels();
     // eslint-disable-next-line
-  }, [citiesWithCars]);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -415,6 +442,9 @@ export const useForm = (validateOnChange = true) => {
     setValues({ ...values, [e.target.name]: temp });
     if (e.target.name === 'province') {
       getCitiesWithCars();
+    }
+    if (e.target.name === 'make') {
+      getModels();
     }
     if (e.target.checked) {
       setAppliedFilters((previousFilters: any) => {
@@ -476,6 +506,9 @@ export const useForm = (validateOnChange = true) => {
     if (keys === 'province') {
       getCitiesWithCars();
     }
+    if (keys === 'make') {
+      getModels();
+    }
   };
 
   const removeFilter = (filterName: string) => {
@@ -508,22 +541,22 @@ export const useForm = (validateOnChange = true) => {
 
   useEffect(() => {
     setIsLoading(true);
-    console.log('appliedFiltr', appliedFilters);
     getAllCars();
     // eslint-disable-next-line
   }, [page, values, appliedFilters]);
 
   function ItemExists(itemId: string) {
-    return shortListItems.some(function (item: ICarCard) {
+    let newshortListCars = shortListCars
+    return newshortListCars.some(function (item: ICarCard) {
       return item._id === itemId;
     });
   }
 
   const shortListItem = (newItem: ICarCard) => {
     setAlertOpen(false);
-    if (shortListItems.length < 6) {
+    if (shortListCars.length < 6) {
       if (!ItemExists(newItem._id)) {
-        setShortListItems([...shortListItems, newItem]);
+        dispatch(setShortlistCars([...shortListCars, newItem]));
         setAlertOpen(true);
         setResponseMessage({ status: 'success', message: 'Car added' });
       } else {
@@ -544,25 +577,19 @@ export const useForm = (validateOnChange = true) => {
 
   const removeShortListItem = (itemId: string) => {
     setAlertOpen(false);
-    let newItems = shortListItems;
+    let newItems = shortListCars;
     newItems = newItems.filter((item: ICarCard) => item._id !== itemId);
-    // dispatch(setShortlistCars(newItems));
-    setShortListItems(newItems);
+    dispatch(setShortlistCars(newItems));
     setAlertOpen(true);
     setResponseMessage({
       status: 'success',
-      message: "Car removed"
+      message: 'Car removed'
     });
   };
 
   useEffect(() => {
-    console.log('shortlist items', shortListItems);
-  }, [shortListItems]);
-
-  useEffect(() => {
-    dispatch(setShortlistCars(shortListItems));
-    // eslint-disable-next-line
-  }, [shortListItem, removeShortListItem]);
+    console.log('shortlist Cars', shortListCars);
+  }, [shortListCars]);
 
   return {
     values,
@@ -591,8 +618,6 @@ export const useForm = (validateOnChange = true) => {
     responseData,
     responseMessage,
     getAllCars,
-    shortListItems,
-    setShortListItems,
     shortListItem,
     removeShortListItem,
     rangeValues,
@@ -600,6 +625,8 @@ export const useForm = (validateOnChange = true) => {
     citiesWithCars,
     shortListCars,
     alertOpen,
-    setAlertOpen
+    setAlertOpen,
+    makes,
+    models
   };
 };

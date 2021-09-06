@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router';
 import CarAdditionalInformation from '../../sections/CarAdditionalInformation';
-import CarInformationForm from '../../sections/CarInformationForm';
+import CarInformationForm from '../../sections/CarInformationForm/CarInformationForm';
 import UploadPhotosForm from '../../sections/UploadPhotosForm';
 import { City, State } from 'country-state-city';
 import { IState } from 'country-state-city/dist/lib/interface';
@@ -24,6 +24,7 @@ const initialFieldValues = {
   carModel: '',
   carMake: '',
   modelYear: '',
+  modelVersion:'',
   bodyColor: '',
   bodyType: '',
   bodyCondition: '',
@@ -115,6 +116,7 @@ const useAddEditCar = () => {
       handleChange={handleChange}
       requireError={requireError}
       handleChangeSelect={handleChangeSelect}
+      setFormData = {setFormData}
     />,
     <UploadPhotosForm
       images={images}
@@ -148,6 +150,7 @@ const useAddEditCar = () => {
           city: result.city,
           carModel: result.model,
           carMake: result.make,
+          modelVersion: result.version,
           modelYear: result.modelYear,
           bodyColor: result.bodyColor,
           bodyType: result.bodyType,
@@ -190,19 +193,13 @@ const useAddEditCar = () => {
   }, [id]);
 
   useEffect(() => {
-    // console.log("car add edit ", id);
     if(!user.phone){
       setPhoneRequiredDialog(true)
     }
-
     if (id) {
       getData();
     }
   }, [getData, id]);
-  useEffect(() => {
-    // console.log("images", images);
-    console.log(user)
-  }, [images]);
 
   const allFalse = (obj: any) => {
     for (var o in obj) {
@@ -329,6 +326,7 @@ const useAddEditCar = () => {
     }
     fd.append('model', formData.carModel);
     fd.append('make', formData.carMake);
+    fd.append('version', formData.modelVersion);
     fd.append('transmission', formData.transmission);
     fd.append('assembly', formData.assembly);
     fd.append('registrationCity', formData.registeredIn);

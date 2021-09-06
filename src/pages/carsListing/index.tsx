@@ -295,7 +295,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
             </Hidden>
             {isShortlist === true && shortListCars.length >= 1 && (
               <Grid item container xs={12}>
-                <Grid item container  xs={6} alignContent="center">
+                <Grid item container xs={6} alignContent="center">
                   <Typography variant="button" gutterBottom>
                     {SHORTLIST_ITEMS}
                   </Typography>
@@ -313,7 +313,14 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                 <Grid item container xs={12} spacing={1}>
                   {shortListCars &&
                     shortListCars.map((item: ICarCard) => (
-                      <Grid key={`shotlist-item-${item.model}`} item xs={4} sm={2}>
+                      <Grid
+                        key={`shotlist-item-${item.model}`}
+                        container
+                        justifyContent="center"
+                        item
+                        xs={4}
+                        sm={2}
+                      >
                         <ShortListCard
                           productImg={item.image[0]}
                           name={item.model}

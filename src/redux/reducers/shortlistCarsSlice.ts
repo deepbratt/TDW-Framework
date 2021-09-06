@@ -16,12 +16,17 @@ const shortlistCarsSlice = createSlice({
     setShortlistCars: (state, action) => {
       state.shortlistCars = action.payload;
     },
-    emptyShortlistCars: (state) => {
-      state.shortlistCars = [];
+    removeShortlistCars: (state, action) => {
+      let newState = state.shortlistCars.filter((item: ICarCard) => {
+        return item._id !== action.payload;
+      });
+      console.log("new state", newState)
+      state.shortlistCars = newState;
     }
   }
 });
 
-export const { setShortlistCars, emptyShortlistCars } = shortlistCarsSlice.actions;
+export const { setShortlistCars, removeShortlistCars } =
+  shortlistCarsSlice.actions;
 
 export default shortlistCarsSlice.reducer;

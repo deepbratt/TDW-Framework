@@ -18,9 +18,14 @@ export interface ShortListCardProps {
 
 const ShortListCardStyles = makeStyles((theme) => ({
   cardRoot: {
-    maxHeight: '200px',
+    maxHeight: '150px',
+    minWidth: '100%',
     maxWidth: '180px',
     position: 'relative',
+    [theme.breakpoints.down('sm')]: {
+      maxHeight: '120px',
+      maxWidth: '120px'
+    }
   },
   cardHeader: {
     position: 'absolute',
@@ -28,12 +33,26 @@ const ShortListCardStyles = makeStyles((theme) => ({
     right: '-5px'
   },
   cardMedia: {
-    maxHeight: '150px'
+    maxHeight: '100px',
+    [theme.breakpoints.down('sm')]: {
+      maxHeight: '80px'
+    },
+    '& > img': {
+      height: '100px',
+      [theme.breakpoints.down('sm')]: {
+        maxHeight: '80px'
+      }
+    }
   },
   cardTitle: {
-    padding: '10px',
+    padding: '7px',
     fontSize: '16px',
-    lineHeight: '16px'
+    lineHeight: '16px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '5px',
+      fontSize: '12px',
+      lineHeight: '12px'
+    }
   }
 }));
 
@@ -59,7 +78,7 @@ const ShortListCard: React.FC<ShortListCardProps> = ({
         }
       />
       <CardMedia className={cardMedia}>
-        <img height="150px" src={productImg} alt={name} />
+        <img src={productImg} alt={name} />
       </CardMedia>
 
       <Typography className={cardTitle} variant="h3" gutterBottom>

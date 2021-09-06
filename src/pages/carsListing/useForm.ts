@@ -6,7 +6,10 @@ import { getAllData } from '../../Utils/API/API';
 import useValidation from '../../Utils/hooks/useValidation';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
 import { RootState } from '../../redux/store';
-import { setShortlistCars } from '../../redux/reducers/shortlistCarsSlice';
+import {
+  setShortlistCars,
+  removeShortlistCars
+} from '../../redux/reducers/shortlistCarsSlice';
 // import { useParams } from "react-router";
 
 const initialValues: any = {
@@ -546,7 +549,7 @@ export const useForm = (validateOnChange = true) => {
   }, [page, values, appliedFilters]);
 
   function ItemExists(itemId: string) {
-    let newshortListCars = shortListCars
+    let newshortListCars = shortListCars;
     return newshortListCars.some(function (item: ICarCard) {
       return item._id === itemId;
     });
@@ -577,9 +580,7 @@ export const useForm = (validateOnChange = true) => {
 
   const removeShortListItem = (itemId: string) => {
     setAlertOpen(false);
-    let newItems = shortListCars;
-    newItems = newItems.filter((item: ICarCard) => item._id !== itemId);
-    dispatch(setShortlistCars(newItems));
+    dispatch(removeShortlistCars(itemId));
     setAlertOpen(true);
     setResponseMessage({
       status: 'success',
@@ -588,7 +589,10 @@ export const useForm = (validateOnChange = true) => {
   };
 
   useEffect(() => {
-    console.log('shortlist Cars', shortListCars);
+    console.log(
+      'shortlist Cars',
+      shortListCars.map((car) => car.model)
+    );
   }, [shortListCars]);
 
   return {

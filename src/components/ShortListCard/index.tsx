@@ -4,6 +4,7 @@ import {
   CardHeader,
   CardMedia,
   IconButton,
+  makeStyles,
   Typography
 } from '@material-ui/core';
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
@@ -15,18 +16,57 @@ export interface ShortListCardProps {
   handleClick: Function;
 }
 
+const ShortListCardStyles = makeStyles((theme) => ({
+  cardRoot: {
+    maxHeight: '150px',
+    minWidth: '100%',
+    maxWidth: '180px',
+    position: 'relative',
+    [theme.breakpoints.down('sm')]: {
+      maxHeight: '120px',
+      maxWidth: '120px'
+    }
+  },
+  cardHeader: {
+    position: 'absolute',
+    top: '-5px',
+    right: '-5px'
+  },
+  cardMedia: {
+    maxHeight: '100px',
+    [theme.breakpoints.down('sm')]: {
+      maxHeight: '80px'
+    },
+    '& > img': {
+      height: '100px',
+      [theme.breakpoints.down('sm')]: {
+        maxHeight: '80px'
+      }
+    }
+  },
+  cardTitle: {
+    padding: '7px',
+    fontSize: '16px',
+    lineHeight: '16px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '5px',
+      fontSize: '12px',
+      lineHeight: '12px'
+    }
+  }
+}));
+
 const ShortListCard: React.FC<ShortListCardProps> = ({
   _id,
   name,
   productImg,
   handleClick
 }) => {
+  const { cardRoot, cardHeader, cardMedia, cardTitle } = ShortListCardStyles();
   return (
-    <Card
-      style={{ maxHeight: '200px', maxWidth: '180px', position: 'relative' }}
-    >
+    <Card className={cardRoot}>
       <CardHeader
-        style={{ position: 'absolute', top: '-5px', right: '-5px' }}
+        className={cardHeader}
         action={
           <IconButton
             aria-label="delete-item"
@@ -37,15 +77,11 @@ const ShortListCard: React.FC<ShortListCardProps> = ({
           </IconButton>
         }
       />
-      <CardMedia style={{ maxHeight: '150px' }}>
-        <img height="150px" src={productImg} alt={name} />
+      <CardMedia className={cardMedia}>
+        <img src={productImg} alt={name} />
       </CardMedia>
 
-      <Typography
-        style={{ padding: '10px', fontSize: '16px', lineHeight: '16px' }}
-        variant="h3"
-        gutterBottom
-      >
+      <Typography className={cardTitle} variant="h3" gutterBottom>
         {name.substr(0, 20)}
       </Typography>
     </Card>

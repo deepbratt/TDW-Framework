@@ -100,7 +100,6 @@ export const useForm = (validateOnChange = true) => {
   //   let newEngineCapacityRange = engineCapacityRange;
   //   let newAppliedFilters = appliedFilters;
 
-  //   console.log('routes params', routeParams);
   //   if ('city' in routeParams && routeParams['city'] !== '') {
   //     newValues.city.push(routeParams['city']);
   //     newAppliedFilters.push('city');
@@ -315,11 +314,9 @@ export const useForm = (validateOnChange = true) => {
     // if(appliedFilters.indexOf("videoAvailability") > -1) {
     //   params+="&videoAvailability="+values.videoAvailability
     // }
-    console.log('queryParams', params);
     setQueryParams(params);
     await getAllData(ADS + CARS + params)
       .then((response) => {
-        console.log('response', response);
         setIsLoading(false);
         if (response.status === 'success') {
           setResponseData(response);
@@ -386,7 +383,6 @@ export const useForm = (validateOnChange = true) => {
     if (values.make !== []) {
       values.make.map((item: any) => {
         let selectedMake: any = makes.filter((make: any) => make.name === item);
-        console.log('make selected', selectedMake);
         if (item === selectedMake[0].name) {
           param += '&make_id=' + selectedMake[0].make_id;
         }
@@ -582,7 +578,6 @@ export const useForm = (validateOnChange = true) => {
     let newState = shortListCars.filter((item: ICarCard) => {
       return item._id !== itemId;
     });
-    console.log('new state', newState);
     dispatch(setShortlistCars(newState));
     setAlertOpen(true);
     setResponseMessage({
@@ -590,10 +585,6 @@ export const useForm = (validateOnChange = true) => {
       message: 'Car removed'
     });
   };
-
-  useEffect(() => {
-    console.log('shortlist Cars', shortListCars);
-  }, [shortListCars]);
 
   return {
     values,

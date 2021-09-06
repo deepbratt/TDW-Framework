@@ -79,6 +79,8 @@ const useAddEditCar = () => {
   const { id } = useParams<{ id: string }>();
   const formRef = useRef<any>(null);
   const {user} = useSelector((state: RootState)=>state.auth)
+  const [assistanceDialog, setAssistanceDialog] = useState(false)
+  const [helpComingDialog, setHelpComingDialog] = useState(false)
   const [isLoading, setIsLoading] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
@@ -134,6 +136,14 @@ const useAddEditCar = () => {
 
   const profileRedirect = () =>{
     history.push('/dashboard/profile')
+  }
+
+  const needAssistance = (needed : boolean = false)=>{
+    if(needed){
+      // api to inform assistance needed
+      setHelpComingDialog(true)
+    }
+    setAssistanceDialog(false)
   }
 
   const getData = useCallback(() => {
@@ -195,6 +205,8 @@ const useAddEditCar = () => {
   useEffect(() => {
     if(!user.phone){
       setPhoneRequiredDialog(true)
+    }else{
+      setAssistanceDialog(true)
     }
     if (id) {
       getData();
@@ -425,7 +437,11 @@ const useAddEditCar = () => {
     lgMdSmPx,
     profileRedirect,
     phoneRequiredDialog,
-    setPhoneRequiredDialog
+    setPhoneRequiredDialog,
+    setHelpComingDialog,
+    helpComingDialog,
+    assistanceDialog,
+    needAssistance
   };
 };
 

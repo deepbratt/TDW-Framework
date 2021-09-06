@@ -30,17 +30,21 @@ const AddEditCar = () => {
     lgMdSmPx,
     profileRedirect,
     phoneRequiredDialog,
-    setPhoneRequiredDialog
+    setPhoneRequiredDialog,
+    helpComingDialog,
+    setHelpComingDialog,
+    assistanceDialog,
+    needAssistance
   } = useAddEditCar();
   return (
     <div
       style={{
         backgroundColor: Colors.greySix,
-        padding: lgMdSmPx("50px", "0px"),
+        padding: lgMdSmPx('50px', '0px')
       }}
     >
       <MetaTags
-        title={id ? PageMeta.editCar.title :PageMeta.addCar.title}
+        title={id ? PageMeta.editCar.title : PageMeta.addCar.title}
         description={PageMeta.addCar.description}
         canonical={PageMeta.addCar.canonical}
         keywords={PageMeta.addCar.keywords}
@@ -53,7 +57,11 @@ const AddEditCar = () => {
       </Grid>
       <Grid
         container
-        style={{ minHeight: '90vh', backgroundColor: 'white', marginTop: lgMdSmPx("50px", "0px") }}
+        style={{
+          minHeight: '90vh',
+          backgroundColor: 'white',
+          marginTop: lgMdSmPx('50px', '0px')
+        }}
       >
         <Grid item xs={12}>
           <CustomStepper
@@ -67,7 +75,7 @@ const AddEditCar = () => {
           xs={12}
           spacing={3}
           style={{
-            padding: lgMdSmPx("50px", "10px"),
+            padding: lgMdSmPx('50px', '10px'),
             justifyContent: 'center'
           }}
           ref={formRef}
@@ -139,7 +147,29 @@ const AddEditCar = () => {
           handleConfirmation={handleDeleteAd}
           handleRejection={() => setDeleteDialog(false)}
         />
-        <InformationDialog open={phoneRequiredDialog} setOpen={setPhoneRequiredDialog} title={addEditCarData.phoneRequiredTitle} message={addEditCarData.phoneRequiredMessage} actionBtnFunc={profileRedirect}/>
+        <InformationDialog
+          open={phoneRequiredDialog}
+          setOpen={setPhoneRequiredDialog}
+          title={addEditCarData.phoneRequiredTitle}
+          message={addEditCarData.phoneRequiredMessage}
+          actionBtnFunc={profileRedirect}
+        />
+        <ConfirmationDialog
+          open={assistanceDialog}
+          title={addEditCarData.needAssistanceTitle}
+          message={addEditCarData.needAssistanceMessage}
+          rejectBtnLabel={addEditCarData.buttons.needAssistanceReject}
+          confirmBtnLabel={addEditCarData.buttons.needAssistanceOK}
+          handleConfirmation={()=>needAssistance(true)}
+          handleRejection={()=>needAssistance(false)}
+        />
+        <InformationDialog
+          open={helpComingDialog}
+          setOpen={setHelpComingDialog}
+          title={addEditCarData.helpComingTitle}
+          message={addEditCarData.helpComingMessage}
+          actionBtnFunc={profileRedirect}
+        />
       </Grid>
     </div>
   );

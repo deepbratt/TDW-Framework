@@ -1,7 +1,6 @@
 import CarDetail from "../../layout/Sections/Sections/CarDetail/CarDetail";
 import { Grid, Hidden } from "@material-ui/core";
 import {
-  Title,
   rating,
   mainButton,
   numButton,
@@ -11,9 +10,7 @@ import {
   mailIcon,
   ratIcon,
   numbIcon,
-  arr,
   CarInfo,
-  CarFeature,
   carTitle,
 } from "../../layout/Sections/Utils/carDetail";
 import Section from "../../components/index";
@@ -21,7 +18,6 @@ import Slides from "../../layout/Sections/Sections/CarDetail/Slider";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useStyles } from "../../layout/Sections/Sections/CarDetail/useStyles";
 import CarInformation from "../../layout/Sections/Sections/CarDetail/CarInformation";
-import { getSingleCar} from "../../Utils/hooks/endpoints";
 import { useParams } from "react-router";
 import Actions from "./useFunctions"
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -34,7 +30,7 @@ interface RouteProps {
 }
 const CarDetailContainer = () => {
   const { id } = useParams<RouteProps>();
-  const {loadSingleData,obj,isLoading} = Actions(id?? '')
+  const {obj,isLoading} = Actions(id?? '')
   const { main,loader} = useStyles();
 
 

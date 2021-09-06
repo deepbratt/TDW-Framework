@@ -1,10 +1,9 @@
-import { IProp } from "../../Utils/types1";
 import { Grid, Typography, Button, Hidden } from "@material-ui/core";
 import { useStyles } from "./useStyles";
 import { Colors } from "../../Utils/color.constants";
 import SellerDetail from "./SellerDetail";
 import { ACTIVE, INACTIVE, SOLD, UNSOLD } from "../../../../Utils/constants/language/en/buttonLabels";
-import { Edit, EditOutlined } from "@material-ui/icons";
+import { EditOutlined } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { useState } from "react";
@@ -14,6 +13,8 @@ import { updateData } from "../../../../Utils/API/API";
 import { API_ENDPOINTS } from "../../../../Utils/API/endpoints";
 import Toast from "../../../../components/Toast";
 import Loader from "../../../../components/Loader";
+import ConfirmationDialog from "../../../../components/ConfirmationDialog";
+import { SOLD_HERE_DIALOG_MESSAGE, SOLD_HERE_DIALOG_OK, SOLD_HERE_DIALOG_REJECT, SOLD_HERE_DIALOG_TITLE } from "../../../../Utils/constants/language/en/addEditCarTexts";
 
 const CarDetail: React.FC<any> = ({
   Title,
@@ -43,6 +44,7 @@ const CarDetail: React.FC<any> = ({
   const [isActive, setIsActive] = useState(data.active)
   const [openToast, setOpenToast] = useState(false)
   const [toastMessage, setToastMessage] = useState("")
+  const [openDialog, setOpenDialog] = useState(false)
   const [toastType, setToastType] = useState("")
   const {
     root,
@@ -57,8 +59,14 @@ const CarDetail: React.FC<any> = ({
   } = useStyles();
   const { blue, gray } = Colors;
 
-  const toggleSold = () =>{
+  const toggleSold = (soldHere:boolean=false) =>{
     let soldUnsold = isSold ? API_ENDPOINTS.MARK_UNSOLD : API_ENDPOINTS.MARK_SOLD
+    if(!isSold && soldHere){
+      // api to add the car amount in sold on tezdealz collection
+    }
+    if(openDialog){
+      setOpenDialog(false)
+    }
     setIsLoading(true)
     updateData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${soldUnsold}/${data._id}`).then((response: any)=>{
       if(response && response.data && response.data.status==="success"){
@@ -113,7 +121,7 @@ const CarDetail: React.FC<any> = ({
         </Grid>
         {isLoggedIn && user._id === createdBy._id ? (
           <Grid item xs={12} style={{marginTop:"50px", display:"flex", flexWrap:"wrap"}} justifyContent="space-around">
-            <Button color="primary" variant="contained" onClick={()=>toggleSold()}>{isSold ? UNSOLD : SOLD}</Button>
+            <Button color="primary" variant="contained" onClick={isSold ? ()=>toggleSold() : ()=>setOpenDialog(true)}>{isSold ? UNSOLD : SOLD}</Button>
             <Button color="primary" variant="contained" onClick={()=>toggleActive()}>{isActive ? INACTIVE : ACTIVE}</Button>
             <Button color="primary" variant="contained" endIcon={<EditOutlined/>} onClick={()=>history.push(routes.addEditCar.substr(0,routes.addEditCar.lastIndexOf('/')+1)+data._id)}>
               Edit
@@ -198,6 +206,7 @@ const CarDetail: React.FC<any> = ({
           </Grid>
         </Hidden>
       </Grid>
+      <ConfirmationDialog handleConfirmation={()=>toggleSold(true)} handleRejection={()=>toggleSold(false)} open={openDialog} message={SOLD_HERE_DIALOG_MESSAGE} title={SOLD_HERE_DIALOG_TITLE} confirmBtnLabel={SOLD_HERE_DIALOG_OK} rejectBtnLabel={SOLD_HERE_DIALOG_REJECT}/>
       <Toast message={toastMessage} type={toastType} open={openToast} onClose={()=>setOpenToast(false)} />
       <Loader open={isLoading} isBackdrop={true} />
     </Grid>

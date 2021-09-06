@@ -314,7 +314,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                   {shortListCars &&
                     shortListCars.map((item: ICarCard) => (
                       <Grid
-                        key={`shotlist-item-${item.model}`}
+                        key={`shotlist-item-${item._id}`}
                         container
                         justifyContent="center"
                         item

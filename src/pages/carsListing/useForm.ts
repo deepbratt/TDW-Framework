@@ -8,7 +8,6 @@ import { ICarCard } from '../../Utils/interfaces/products.interface';
 import { RootState } from '../../redux/store';
 import {
   setShortlistCars,
-  removeShortlistCars
 } from '../../redux/reducers/shortlistCarsSlice';
 // import { useParams } from "react-router";
 
@@ -580,7 +579,11 @@ export const useForm = (validateOnChange = true) => {
 
   const removeShortListItem = (itemId: string) => {
     setAlertOpen(false);
-    dispatch(removeShortlistCars(itemId));
+    let newState = shortListCars.filter((item: ICarCard) => {
+      return item._id !== itemId;
+    });
+    console.log('new state', newState);
+    dispatch(setShortlistCars(newState));
     setAlertOpen(true);
     setResponseMessage({
       status: 'success',
@@ -589,10 +592,7 @@ export const useForm = (validateOnChange = true) => {
   };
 
   useEffect(() => {
-    console.log(
-      'shortlist Cars',
-      shortListCars.map((car) => car.model)
-    );
+    console.log('shortlist Cars', shortListCars);
   }, [shortListCars]);
 
   return {

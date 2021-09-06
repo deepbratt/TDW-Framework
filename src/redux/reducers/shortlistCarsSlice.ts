@@ -15,18 +15,10 @@ const shortlistCarsSlice = createSlice({
   reducers: {
     setShortlistCars: (state, action) => {
       state.shortlistCars = action.payload;
-    },
-    removeShortlistCars: (state, action) => {
-      let newState = state.shortlistCars.filter((item: ICarCard) => {
-        return item._id !== action.payload;
-      });
-      console.log("new state", newState)
-      state.shortlistCars = newState;
     }
   }
 });
 
-export const { setShortlistCars, removeShortlistCars } =
-  shortlistCarsSlice.actions;
+export const { setShortlistCars } = shortlistCarsSlice.actions;
 
 export default shortlistCarsSlice.reducer;

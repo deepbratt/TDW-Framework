@@ -67,8 +67,9 @@ const CarDetail: React.FC<any> = ({
     if(openDialog){
       setOpenDialog(false)
     }
+    let requestBody = {soldByUs: soldHere}
     setIsLoading(true)
-    updateData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${soldUnsold}/${data._id}`).then((response: any)=>{
+    updateData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${soldUnsold}/${data._id}`, !isSold ? requestBody : undefined).then((response: any)=>{
       if(response && response.data && response.data.status==="success"){
         setIsSold(!isSold)
         setToastMessage(response.data.message)

@@ -142,6 +142,7 @@ const Actions = () => {
         setIsLoading(false);
         if (response.status === 'success') {
           setChangeToVerification(false);
+          dispatch(updateUserData({ data: response.result }));
           setOpen(true);
           setResponseMessage({
             status: 'success',

@@ -132,7 +132,9 @@ const addEditCarData = {
     delete: 'Delete',
     confirmDelete: 'Yes',
     cancelDelete: 'Cancel',
-    addPhoto: 'Add Photos +'
+    addPhoto: 'Add Photos +',
+    needAssistanceOK:"Yes",
+    needAssistanceReject:"No",
   },
   infoText: '(Max limit 5 MB per image)',
   requiredFieldText: 'This field is required',
@@ -141,6 +143,10 @@ const addEditCarData = {
   deleteDialogMessage: 'Are you sure you want to delete this Car Ad?',
   phoneRequiredMessage:"Please add your phone number in your profile to create an Ad",
   phoneRequiredTitle:"Error!",
+  needAssistanceMessage:"Do you need assistance in creating your advertisement?",
+  needAssistanceTitle:"Need Assistance?",
+  helpComingMessage:"Thank you for contacting us!! Customer Support will contact you within 24 hours!",
+  helpComingTitle:"Help Coming!!!",
   features: [
     'ABS',
     'AM/FM Radio',

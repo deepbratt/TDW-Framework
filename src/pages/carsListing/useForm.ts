@@ -6,9 +6,8 @@ import { getAllData } from '../../Utils/API/API';
 import useValidation from '../../Utils/hooks/useValidation';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
 import { RootState } from '../../redux/store';
-import {
-  setShortlistCars,
-} from '../../redux/reducers/shortlistCarsSlice';
+import { setShortlistCars } from '../../redux/reducers/shortlistCarsSlice';
+import { emptyQueryParams } from '../../redux/reducers/queryParamsSlice';
 // import { useParams } from "react-router";
 
 const initialValues: any = {
@@ -46,9 +45,9 @@ interface IData {
 export const useForm = (validateOnChange = true) => {
   const dispatch = useDispatch();
   // const {city} = useParams<any>();
-  // const routeParams = useSelector(
-  //   (state: RootState) => state.queryParams.queryParams
-  // );
+  const routeParams = useSelector(
+    (state: RootState) => state.queryParams.queryParams
+  );
   const { ADS, CARS, FILTER, CITIES_WITH_CARS, MAKE, MODEL } = API_ENDPOINTS;
   const [page, setPage] = useState(1);
   const [citiesWithCars, setCitiesWithCars] = useState([]);
@@ -91,106 +90,20 @@ export const useForm = (validateOnChange = true) => {
     message: ''
   });
 
-  // * We'll use later
-  // useEffect(() => {
-  //   let newValues = values;
-  //   let newPriceRange = priceRange;
-  //   let newYearRange = yearRange;
-  //   let newMileageRange = mileageRange;
-  //   let newEngineCapacityRange = engineCapacityRange;
-  //   let newAppliedFilters = appliedFilters;
+  useEffect(() => {
+    let newKeywords = keywords;
+    let newAppliedFilters = appliedFilters;
 
-  //   if ('city' in routeParams && routeParams['city'] !== '') {
-  //     newValues.city.push(routeParams['city']);
-  //     newAppliedFilters.push('city');
-  //   }
-  //   if ('area' in routeParams && routeParams['area'] !== '') {
-  //     newValues.registrationCity.push(routeParams['area']);
-  //     newAppliedFilters.push('registrationCity');
-  //   }
-  //   if ('engine' in routeParams && routeParams['engine'] !== '') {
-  //     newValues.engineType.push(routeParams['engine']);
-  //     newAppliedFilters.push('engineType');
-  //   }
-  //   if ('allBody' in routeParams && routeParams['allBody'] !== '') {
-  //     newValues.bodyType.push(routeParams['allBody']);
-  //     newAppliedFilters.push('bodyType');
-  //   }
-  //   if ('assemblyTypes' in routeParams && routeParams['assemblyTypes'] !== '') {
-  //     newValues.assembly.push(routeParams['assemblyTypes']);
-  //     newAppliedFilters.push('assembly');
-  //   }
-  //   if ('transmissionTypes' in routeParams && routeParams['transmissionTypes'] !== '') {
-  //     newValues.transmission.push(routeParams['transmissionTypes']);
-  //     newAppliedFilters.push('transmission');
-  //   }
-  //   if ('allColors' in routeParams && routeParams['allColors'] !== '') {
-  //     newValues.color.push(routeParams['allColors']);
-  //     newAppliedFilters.push('color');
-  //   }
-  //   if ('sellerType' in routeParams && routeParams['sellerType'] !== '') {
-  //     newValues.sellerType.push(routeParams['sellerType']);
-  //     newAppliedFilters.push('sellerType');
-  //   }
-  //   if ('adWithPics' in routeParams) {
-  //     newValues.pictureAvailability = routeParams['adWithPics'];
-  //     newAppliedFilters.push('pictureAvailability');
-  //   }
-  //   if ('min' in routeParams && routeParams['min'] !== '') {
-  //     newPriceRange[0] = routeParams['min'] as number;
-  //     newAppliedFilters.push('priceRange');
-  //   }
-  //   if ('max' in routeParams && routeParams['max'] !== '') {
-  //     newPriceRange[1] = routeParams['max'] as number;
-  //     if (!newAppliedFilters.includes('priceRange')) {
-  //       newAppliedFilters.push('priceRange');
-  //     }
-  //   }
-  //   if ('yearFrom' in routeParams && routeParams['yearFrom'] !== '') {
-  //     newYearRange[0] = routeParams['yearFrom'] as number;
-  //     newAppliedFilters.push('yearRange');
-  //   }
-  //   if ('yearTo' in routeParams && routeParams['yearTo'] !== '') {
-  //     newYearRange[1] = routeParams['yearTo'] as number;
-  //     if (!newAppliedFilters.includes('yearRange')) {
-  //       newAppliedFilters.push('yearRange');
-  //     }
-  //   }
-  //   if ('mileageFrom' in routeParams && routeParams['mileageFrom'] !== '') {
-  //     newMileageRange[0] = routeParams['mileageFrom'] as number;
-  //     newAppliedFilters.push('mileageRange');
-  //   }
-  //   if ('mileageTo' in routeParams && routeParams['mileageTo'] !== '') {
-  //     newMileageRange[1] = routeParams['mileageTo'] as number;
-  //     if (!newAppliedFilters.includes('mileageRange')) {
-  //       newAppliedFilters.push('mileageRange');
-  //     }
-  //   }
-  //   if (
-  //     'engineCapacityFrom' in routeParams &&
-  //     routeParams['engineCapacityFrom'] !== ''
-  //   ) {
-  //     newEngineCapacityRange[0] = routeParams['engineCapacityFrom'] as number;
-  //     newAppliedFilters.push('engineCapacityRange');
-  //   }
-  //   if (
-  //     'engineCapacityTo' in routeParams &&
-  //     routeParams['engineCapacityTo'] !== ''
-  //   ) {
-  //     newEngineCapacityRange[1] = routeParams['engineCapacityTo'] as number;
-  //     if (!newAppliedFilters.includes('engineCapacityRange')) {
-  //       newAppliedFilters.push('engineCapacityRange');
-  //     }
-  //   }
-  //   setValues(newValues);
-  //   setPriceRange(newPriceRange);
-  //   setYearRange(newYearRange);
-  //   setMileageRange(newMileageRange);
-  //   setEngineCapacityRange(newEngineCapacityRange);
-  //   setAppliedFilters(newAppliedFilters);
-  //   dispatch(emptyQueryParams());
-  //   // eslint-disable-next-line
-  // }, []);
+    if ('keywords' in routeParams && routeParams['keywords'] !== '') {
+      newKeywords = routeParams['keywords'];
+      newAppliedFilters['keywords'] = routeParams['keywords'];
+    }
+
+    setKeywords(newKeywords);
+    setAppliedFilters(newAppliedFilters);
+    dispatch(emptyQueryParams());
+    // eslint-disable-next-line
+  }, []);
 
   const handlePageChange = (e: any, value: any) => {
     setPage(value);
@@ -541,7 +454,7 @@ export const useForm = (validateOnChange = true) => {
     setIsLoading(true);
     getAllCars();
     // eslint-disable-next-line
-  }, [page, values, appliedFilters]);
+  }, [page, values, keywords, rangeValues]);
 
   function ItemExists(itemId: string) {
     let newshortListCars = shortListCars;

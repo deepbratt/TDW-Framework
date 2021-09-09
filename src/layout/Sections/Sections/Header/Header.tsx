@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useStyles } from './useStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  Grid,
   ListItem,
   List,
   Toolbar,
@@ -105,35 +106,37 @@ const HeaderContext = () => {
     <React.Fragment>
       <AppBar className={root} color="inherit">
         <Toolbar className={appbarsolid}>
-          <section>
-            <img src={Logo} alt="logo" className={logo} />
-          </section>
-          <Hidden smDown>
-            <List className={list}>
-              {Paths.map((data, index) => {
-                return (
-                  <NavLink key={index} className={link} to={data.path}>
-                    <ListItem>
-                      <Typography variant="h4">{data.name}</Typography>
-                    </ListItem>
-                  </NavLink>
-                );
-              })}
-              <Button
-                className={btn}
-                onClick={() =>
-                  history.push(
-                    routes.addEditCar.substr(
-                      0,
-                      routes.addEditCar.lastIndexOf('/')
+          <Grid container justifyContent="flex-start">
+            <section>
+              <img src={Logo} alt="logo" className={logo} />
+            </section>
+            <Hidden smDown>
+              <List className={list}>
+                {Paths.map((data, index) => {
+                  return (
+                    <NavLink key={index} className={link} to={data.path}>
+                      <ListItem>
+                        <Typography variant="h4">{data.name}</Typography>
+                      </ListItem>
+                    </NavLink>
+                  );
+                })}
+                <Button
+                  className={btn}
+                  onClick={() =>
+                    history.push(
+                      routes.addEditCar.substr(
+                        0,
+                        routes.addEditCar.lastIndexOf('/')
+                      )
                     )
-                  )
-                }
-              >
-                {POST_AN_AD}
-              </Button>
-            </List>
-          </Hidden>
+                  }
+                >
+                  {POST_AN_AD}
+                </Button>
+              </List>
+            </Hidden>
+          </Grid>
           <Hidden smDown>
             <InputField
               fullWidth={false}
@@ -155,7 +158,6 @@ const HeaderContext = () => {
               {!isLoggedIn && (
                 <ListItem>
                   <NavLink className={loginLink} to={'/login'}>
-                    {' '}
                     <Typography variant="body1">{SIGNIN} |</Typography>
                   </NavLink>
                   <NavLink
@@ -163,14 +165,11 @@ const HeaderContext = () => {
                     className={loginLink}
                     to={'/signup'}
                   >
-                    {' '}
                     <Typography variant="body1">{SIGNUP}</Typography>
                   </NavLink>
                 </ListItem>
               )}
             </List>
-          </Hidden>
-          <Hidden smDown>
             {isLoggedIn && (
               <IconButton
                 edge="end"

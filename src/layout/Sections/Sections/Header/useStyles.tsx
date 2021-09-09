@@ -10,7 +10,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: '0 50px',
     boxShadow: '0 1px 2px rgba(0,0,0,0.07)',
     [breakpoints.down('sm')]: {
-      padding: '0px'
+      padding: '0px 20px'
     }
   },
   appbarsolid: {
@@ -47,7 +47,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   loginLink: {
     color: theme.palette.common.black,
-    textDecoration: 'none'
+    textDecoration: 'none',
+    width:"max-content"
   },
   active: {},
   logo: {

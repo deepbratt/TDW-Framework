@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useStyles } from './useStyles';
-import { useDispatch,  useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   ListItem,
   List,
@@ -10,32 +10,43 @@ import {
   Hidden,
   Menu,
   MenuItem,
-  IconButton
+  IconButton,
+  InputAdornment,
+  Icon,
+  Button
 } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import SideBar from './Sidebar/Sidebar';
-import CustomButton from '../../../../components/CustomButton';
 import Logo from '../../assets/logo.png';
-import header from '../../assets/header.png';
-import pattern from '../../assets/pattern.png';
 import { Paths } from './paths';
-import { Colors } from '../../Utils/color.constants';
 import { logout } from '../../../../redux/reducers/authSlice';
 import { paths, routes } from '../../../../routes/paths';
 import {
   LOGOUT,
   SIGNIN,
   SIGNUP,
-  ADD_EDIT_CAR
+  POST_AN_AD
 } from '../../../../Utils/constants/language/en/buttonLabels';
 import history from '../../../../routes/history';
 import { RootState } from '../../../../redux/store';
+import InputField from '../../../../components/InputField';
+import { SearchRounded } from '@material-ui/icons';
+import { setQueryParams } from '../../../../redux/reducers/queryParamsSlice';
 
 const HeaderContext = () => {
-  const { logo, list, appbarsolid, root, rec, link, loginLink } = useStyles();
-  const {isLoggedIn, user} = useSelector((state:RootState)=>state.auth)
-  const { white, black } = Colors;
+  const {
+    logo,
+    list,
+    appbarsolid,
+    root,
+    btn,
+    link,
+    loginLink,
+    inputRoot,
+    input
+  } = useStyles();
+  const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -46,6 +57,16 @@ const HeaderContext = () => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleKeyPress = (e: any) => {
+    if (e.key === 'Enter') {
+      let queryParams = {
+        keywords: e.target.value
+      };
+      dispatch(setQueryParams(queryParams));
+      history.push(paths.cars);
+    }
   };
 
   const menuId = 'primary-account-menu';
@@ -59,7 +80,14 @@ const HeaderContext = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => history.push(routes.dashboard.substr(0, routes.dashboard.lastIndexOf('/')+1)+"profile")}>
+      <MenuItem
+        onClick={() =>
+          history.push(
+            routes.dashboard.substr(0, routes.dashboard.lastIndexOf('/') + 1) +
+              'profile'
+          )
+        }
+      >
         {paths.profile}
       </MenuItem>
       <MenuItem
@@ -75,63 +103,87 @@ const HeaderContext = () => {
 
   return (
     <React.Fragment>
-      <AppBar className={root} style={{background:"white", backgroundColor:"white", color:"white"}}>
-        <Hidden mdDown>
-          <img src={header} alt="logo" className={rec} />
-        </Hidden>
-        <Hidden lgUp>
-          <img src={pattern} alt="pattern" className={rec} />
-        </Hidden>
-        <Toolbar className={appbarsolid} color="transparent">
+      <AppBar className={root} color="inherit">
+        <Toolbar className={appbarsolid}>
           <section>
             <img src={Logo} alt="logo" className={logo} />
           </section>
           <Hidden smDown>
-            <List style={{ paddingBottom: '0px' }} className={list}>
+            <List className={list}>
               {Paths.map((data, index) => {
                 return (
                   <NavLink key={index} className={link} to={data.path}>
                     <ListItem>
-                      <Typography variant="h6">{data.name}</Typography>
+                      <Typography variant="h4">{data.name}</Typography>
                     </ListItem>
                   </NavLink>
                 );
               })}
-              <ListItem>
-                <CustomButton style={{ background: white, color: black }} onClick={()=>history.push(routes.addEditCar.substr(0, routes.addEditCar.lastIndexOf('/')))}>
-                  Post an Ad
-                </CustomButton>
-              </ListItem>
-
+              <Button
+                className={btn}
+                onClick={() =>
+                  history.push(
+                    routes.addEditCar.substr(
+                      0,
+                      routes.addEditCar.lastIndexOf('/')
+                    )
+                  )
+                }
+              >
+                {POST_AN_AD}
+              </Button>
+            </List>
+          </Hidden>
+          <Hidden smDown>
+            <InputField
+              fullWidth={false}
+              className={inputRoot}
+              placeholder="Search ..."
+              onKeyPress={handleKeyPress}
+              InputProps={{
+                classes: { input: input },
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Icon>
+                      <SearchRounded />
+                    </Icon>
+                  </InputAdornment>
+                )
+              }}
+            />
+            <List className={list}>
               {!isLoggedIn && (
                 <ListItem>
-                  <NavLink className={loginLink} to={"/login"}>
+                  <NavLink className={loginLink} to={'/login'}>
                     {' '}
-                    <Typography variant="body1">{SIGNIN} /</Typography>
+                    <Typography variant="body1">{SIGNIN} |</Typography>
                   </NavLink>
-                  <NavLink className={loginLink} to={"/signup"}>
+                  <NavLink
+                    style={{ marginLeft: '5px' }}
+                    className={loginLink}
+                    to={'/signup'}
+                  >
                     {' '}
                     <Typography variant="body1">{SIGNUP}</Typography>
                   </NavLink>
                 </ListItem>
               )}
-              <Hidden smDown>
-                {isLoggedIn && (
-                  <IconButton
-                    edge="end"
-                    aria-label="account of current user"
-                    aria-controls={menuId}
-                    aria-haspopup="true"
-                    onClick={handleProfileMenuOpen}
-                    color="default"
-                    style={{color:"white"}}
-                    size="medium"
-                  >
-                    <AccountCircle fontSize="large" />
-                  </IconButton>
-                )}
-              </Hidden>
             </List>
+          </Hidden>
+          <Hidden smDown>
+            {isLoggedIn && (
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+                size="medium"
+              >
+                <AccountCircle fontSize="large" />
+              </IconButton>
+            )}
           </Hidden>
           <Hidden mdUp>
             <SideBar />

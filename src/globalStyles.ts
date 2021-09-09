@@ -65,7 +65,7 @@ const GlobalStyles = makeStyles((theme) => ({
     margin: '20px 0px',
   },
   header: {
-    marginTop: '70px',
+    marginTop: '60px',
     backgroundColor: Color.grey,
     [theme.breakpoints.down('xs')]: {
       marginTop: '50px'

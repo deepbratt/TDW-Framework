@@ -13,7 +13,7 @@ export interface LayoutProps {
 **/
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const { flashWhite, textPrimary } = Colors;
+  const { footerLinks, footerBackground } = Colors;
   const { header } = GlobalStyles();
 
   return (
@@ -22,18 +22,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <Grid item xs={12}>
           <Header />
         </Grid>
-        <Grid
-          className={header}
-          item
-          xs={12}
-        >
+        <Grid className={header} item xs={12}>
           {children}
         </Grid>
         <Grid item xs={12}>
           <Footer
             data={FooterData}
-            rootBackgroundColor={flashWhite}
-            textPrimary={textPrimary}
+            rootBackgroundColor={footerBackground}
+            textPrimary={footerLinks}
           />
         </Grid>
       </Grid>

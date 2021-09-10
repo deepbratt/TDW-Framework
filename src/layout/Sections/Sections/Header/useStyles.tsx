@@ -1,16 +1,14 @@
 import { makeStyles } from '@material-ui/core/styles';
 import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
-import { Colors } from '../../Utils/color.constants';
 
 const breakpoints = createBreakpoints({});
-const { white } = Colors;
 export const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    padding: '0 50px',
+    padding: '0 30px',
     boxShadow: '0 1px 2px rgba(0,0,0,0.07)',
     [breakpoints.down('sm')]: {
-      padding: '0px'
+      padding: '0px 20px'
     }
   },
   appbarsolid: {
@@ -32,11 +30,10 @@ export const useStyles = makeStyles((theme) => ({
   },
   list: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     alignItems: 'center'
   },
   listItem: {
-    marginRight: '15px',
     '&:hover': {
       cursor: 'pointer'
     }
@@ -47,10 +44,12 @@ export const useStyles = makeStyles((theme) => ({
   },
   loginLink: {
     color: theme.palette.common.black,
-    textDecoration: 'none'
+    textDecoration: 'none',
+    width: 'max-content'
   },
   active: {},
   logo: {
+    marginRight: '15px',
     width: '5rem',
     padding: '10px 0px 0px 10px',
     [breakpoints.down('sm')]: {
@@ -99,7 +98,7 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   btn: {
-    margin: '0 5px',
+    margin: '0 15px',
     borderRadius: '7px',
     padding: '10px 15px',
     color: theme.palette.common.white,

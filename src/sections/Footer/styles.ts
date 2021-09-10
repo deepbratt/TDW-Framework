@@ -12,43 +12,73 @@ export interface FooterStylesProps {
 const FooterStyles = makeStyles<Theme, FooterStylesProps>((theme) => ({
   root: {
     padding: '40px 60px',
-    boxShadow: "0px -2px 5px -5px rgba(0,0,0,0.52)",
+    boxShadow: '0px -2px 5px -5px rgba(0,0,0,0.52)',
+    display: 'flex',
+    justifyContent: 'center',
     backgroundColor: ({ rootBackgroundColor }) => rootBackgroundColor,
     [theme.breakpoints.down('sm')]: {
       padding: '15px 25px'
     }
   },
   container: {
-    padding: '40px 60px',
-    backgroundColor: ({ rootBackgroundColor }) => rootBackgroundColor,
-    [theme.breakpoints.down('sm')]: {
-      padding: '15px 25px'
-    }
+    maxWidth: '1240px'
   },
   logo: { marginBottom: '20px' },
-  socialMedia: {
-    marginRight: '30px'
+  socialMediaLinks: {
+    cursor: 'pointer',
+    marginRight: '10px'
   },
-  contacts: { marginTop: '20px' },
   pageLinks: {
-    paddingBottom: '15px',
-    color: ({ textPrimary }) => textPrimary
-  },
-  termsLinkRoot: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    [theme.breakpoints.down('sm')]: {
-      margin: '10px 0',
-      justifyContent: 'space-around'
+    color: ({ textPrimary }) => textPrimary,
+    margin: '7px 0',
+    cursor: 'pointer',
+    '&:hover': {
+      color: theme.palette.common.white
     }
   },
-  termsLink: { marginRight: '20px' },
-  socialMediaLinks: {
-    display: 'flex',
-    justifyContent: 'flex-end',
+  text: {
+    color: ({ textPrimary }) => textPrimary,
+    margin: '7px 0'
+  },
+  filterTitle: {
+    margin: '15px 0',
+    color: theme.palette.common.white
+  },
+  divider: {
+    borderTop: `2px solid #181C20`,
+    paddingTop: '10px'
+  },
+  textFiedld: {
+    backgroundColor: theme.palette.common.white,
+    outline: 'none',
+    border: 'none',
+    maxHeight: '40px',
+    position: 'relative',
+    maxWidth: '97%',
+    padding: '8px 0 8px 10px',
+    '& > *': {
+      maxHeight: '40px',
+      border: 'none',
+      outline: 'none'
+    },
+    [theme.breakpoints.down('md')]: {
+      maxWidth: '90%'
+    },
     [theme.breakpoints.down('sm')]: {
-      margin: '10px 0',
-      justifyContent: 'space-around'
+      maxWidth: '100%'
+    }
+  },
+  btn: {
+    backgroundColor: theme.palette.success.main,
+    borderRadius: 0,
+    color: theme.palette.common.white,
+    boxShadow: 'none',
+    padding: '12px 15px',
+    position: 'absolute',
+    right: '0px',
+    '&:hover': {
+      backgroundColor: theme.palette.success.dark,
+      boxShadow: 'none'
     }
   }
 }));

@@ -65,6 +65,9 @@ const MUITheme = createTheme({
       main: secondary,
     },
     text: { secondary: "#828282" },
+    common: {
+      black: "#484848"
+    }
   }),
   typography: {
     fontFamily: "'IBM Plex Sans', sans-serif",

@@ -20,17 +20,31 @@ export interface ICategories {
   cars: IRoutes[];
 }
 
+export interface IFooterFilter {
+  filterName: string;
+  text: string;
+  value: string;
+}
+
 export interface IData {
   logo: string;
-  headers: IHeaders;
   socialMedia: IRoutes[];
-  contacts: IContact[];
-  services: IRoutes[];
-  about: IRoutes[];
-  help: IRoutes[];
-  categories: ICategories;
+  appLinks: string[];
+  sell: IRoutes[];
+  explore: IRoutes[];
+  tezDealz: IRoutes[];
   mostSearched: IRoutes[];
   termsAndConditions: IRoutes[];
+  copyrights: string;
+  notice: string;
+  filters: {
+    City: IFooterFilter[];
+    Province: IFooterFilter[];
+    Make: IFooterFilter[];
+    Color: IFooterFilter[];
+    BodyType: IFooterFilter[];
+    Categories: IFooterFilter[];
+  };
 }
 
 export interface FooterProps {

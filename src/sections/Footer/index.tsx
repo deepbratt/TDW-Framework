@@ -112,7 +112,7 @@ const Footer: React.FC<FooterProps> = ({
               ))}
             </Grid>
             <Grid item container xs={12} lg={3}>
-              <Grid item container xs={12}>
+              <Grid item container xs={12} md={4} lg={12}>
                 <Grid item xs={12}>
                   <Typography className={filterTitle} variant="h3">
                     Sell On TezDeals
@@ -135,65 +135,62 @@ const Footer: React.FC<FooterProps> = ({
                       </NavLink>
                     ))}
                 </Grid>
-                <Grid item container xs={12}>
-                  <Grid item xs={12}>
-                    <Typography className={filterTitle} variant="h3">
-                      Subscribe to our Newsletter
-                    </Typography>
-                    <TextField
-                      className={textFiedld}
-                      fullWidth
-                      placeholder="name@email.com"
-                      variant="standard"
-                      InputProps={{
-                        endAdornment: (
-                          <Button className={btn} variant="contained">
-                            Subscribe
-                          </Button>
-                        ),
-                        disableUnderline: true
-                      }}
-                    />
-                  </Grid>
+              </Grid>
+              <Grid item container xs={12} md={4} lg={12}>
+                <Grid item xs={12}>
+                  <Typography className={filterTitle} variant="h3">
+                    Subscribe to our Newsletter
+                  </Typography>
+                  <TextField
+                    className={textFiedld}
+                    fullWidth
+                    placeholder="name@email.com"
+                    variant="standard"
+                    InputProps={{
+                      endAdornment: (
+                        <Button className={btn} variant="contained">
+                          Subscribe
+                        </Button>
+                      ),
+                      disableUnderline: true
+                    }}
+                  />
                 </Grid>
-                <Grid item container xs={12}>
-                  <Grid item xs={12}>
-                    <Typography className={filterTitle} variant="h3">
-                      Follow Us
-                    </Typography>
-                  </Grid>
-                  {data.socialMedia &&
-                    data.socialMedia.map((item, index) => (
-                      <Grid
-                        className={socialMediaLinks}
-                        item
-                        key={`social-media-link-${index}`}
-                      >
-                        <img height="30px" src={item.icon} alt={item.name} />
-                      </Grid>
-                    ))}
+              </Grid>
+              <Grid item container xs={12} md={4} lg={12}>
+                <Grid item xs={12}>
+                  <Typography className={filterTitle} variant="h3">
+                    Follow Us
+                  </Typography>
                 </Grid>
-                <Grid item container xs={12}>
-                  <Grid item xs={12}>
-                    <Typography className={filterTitle} variant="h3">
-                      Download Mobile App
-                    </Typography>
-                  </Grid>
-                  {data.appLinks &&
-                    data.appLinks.map((item, index) => (
-                      <Grid
-                        item
-                        className={socialMediaLinks}
-                        key={`app-link-${index}`}
-                      >
-                        <img
-                          height="34px"
-                          src={item}
-                          alt={'App Links Button'}
-                        />
-                      </Grid>
-                    ))}
+                {data.socialMedia &&
+                  data.socialMedia.map((item, index) => (
+                    <Grid
+                      className={socialMediaLinks}
+                      item
+                      key={`social-media-link-${index}`}
+                    >
+                      <img height="30px" src={item.icon} alt={item.name} />
+                    </Grid>
+                  ))}
+              </Grid>
+              <Grid item container xs={12} md={4} lg={12}>
+                <Grid item xs={12}>
+                  <Typography className={filterTitle} variant="h3">
+                    Download Mobile App
+                  </Typography>
                 </Grid>
+                {data.appLinks &&
+                  data.appLinks.map((item, index) => (
+                    <Grid
+                      item
+                      xs={5}
+                      className={socialMediaLinks}
+                      key={`app-link-${index}`}
+                    >
+                      <img width="100%" src={item} alt={'App Links Button'} />
+                    </Grid>
+                  ))}
               </Grid>
             </Grid>
           </Grid>

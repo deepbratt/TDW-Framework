@@ -26,9 +26,8 @@ const FooterStyles = makeStyles<Theme, FooterStylesProps>((theme) => ({
   logo: { marginBottom: '20px' },
   socialMediaLinks: {
     cursor: 'pointer',
-    margin: '10px'
+    marginRight: '10px'
   },
-  contacts: { marginTop: '20px' },
   pageLinks: {
     color: ({ textPrimary }) => textPrimary,
     margin: '7px 0',
@@ -42,7 +41,7 @@ const FooterStyles = makeStyles<Theme, FooterStylesProps>((theme) => ({
     margin: '7px 0'
   },
   filterTitle: {
-    margin: '7px 0',
+    margin: '15px 0',
     color: theme.palette.common.white
   },
   divider: {
@@ -61,6 +60,9 @@ const FooterStyles = makeStyles<Theme, FooterStylesProps>((theme) => ({
       maxHeight: '40px',
       border: 'none',
       outline: 'none'
+    },
+    [theme.breakpoints.down('md')]: {
+      maxWidth: '90%'
     },
     [theme.breakpoints.down('sm')]: {
       maxWidth: '100%'

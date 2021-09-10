@@ -3,8 +3,8 @@ import FB from '../../../../assets/icons/fb.png';
 import TWITTER from '../../../../assets/icons/twitter.png';
 import INSTAGRAM from '../../../../assets/icons/instagram.png';
 import PINTEREST from '../../../../assets/icons/pinterest.png';
-import PLAY_STORE from '../../../../assets/icons/playStorebtn.png';
-import APPLE_STORE from '../../../../assets/icons/appleStorebtn.png';
+import PLAY_STORE from '../../../../assets/icons/google-play-badge.svg';
+import APPLE_STORE from '../../../../assets/icons/app-store-badge.svg';
 
 export const FooterData = {
   logo: LOGO,

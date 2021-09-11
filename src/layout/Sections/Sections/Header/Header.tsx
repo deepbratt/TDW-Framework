@@ -123,6 +123,8 @@ const HeaderContext = () => {
                 })}
                 <Button
                   className={btn}
+                  variant="contained"
+                  color="primary"
                   onClick={() =>
                     history.push(
                       routes.addEditCar.substr(
@@ -139,7 +141,7 @@ const HeaderContext = () => {
           </Grid>
           <Hidden smDown>
             <InputField
-              fullWidth={false}
+              fullWidth
               className={inputRoot}
               placeholder="Search ..."
               onKeyPress={handleKeyPress}

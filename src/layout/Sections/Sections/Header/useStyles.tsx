@@ -70,13 +70,13 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   inputRoot: {
-    maxWidth: '400px',
     borderRadius: '20px',
+    maxWidth: '400px',
     [theme.breakpoints.down('md')]: {
       maxWidth: '150px'
     },
     [theme.breakpoints.up('lg')]: {
-      minWidth: '400px'
+      minWidth: '500px'
     },
     '& > .MuiOutlinedInput-root-293': {
       borderRadius: '10px'
@@ -102,6 +102,9 @@ export const useStyles = makeStyles((theme) => ({
     borderRadius: '7px',
     padding: '10px 15px',
     color: theme.palette.common.white,
-    background: 'linear-gradient(180deg, #182FFF 0%, #092C4C 100%)'
+    background: 'linear-gradient(180deg, #ec4040 0%, #C20000 100%)',
+    '& > span, *': {
+      color: theme.palette.common.white
+    }
   }
 }));

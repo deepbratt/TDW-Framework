@@ -1,6 +1,5 @@
-import Banner from '../../layout/Sections/Sections/Banner/Banner';
 import CategorySection from '../../layout/Sections/Sections/HomeSections/Category/CategorySection';
-import ComparisonContext from '../../layout/Sections/Sections/HomeSections/CarComparison/ComparisonContext';
+import CarComparision from '../../sections/CarComparision';
 import {
   Data,
   Title,
@@ -15,32 +14,72 @@ import {
   browseUsedCards,
   PostAdData
 } from '../../Utils/constants/language/en/homePageData';
-import { Grid } from '@material-ui/core';
+import { Grid, Container, Typography, makeStyles } from '@material-ui/core';
 import TabComponent from '../../components/Tabs';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
+import CarComaprisonImg from '../../assets/Cars/carsComparision.png';
+// import DownloadAppImg from '../../assets/Cars/';
 import HomeBanner from '../../sections/HomeBanner';
+import DownloadApp from '../../sections/DownloadApp';
+import {
+  CAR_COMPARISIONS,
+  ALL_CARS_COMPARISIONS
+} from '../../Utils/constants/language/en/buttonLabels';
+
+const HomePageStyles = makeStyles((theme) => ({
+  carComparisionsRoot: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    margin: '10px 0'
+  },
+  carComparisionsLink: {
+    color: theme.palette.secondary.main,
+    cursor: 'pointer'
+  }
+}));
+
 export interface HomeProps {}
 
 const HomePage = () => {
+  const { carComparisionsRoot, carComparisionsLink } = HomePageStyles();
   return (
-    <Grid container justifyContent="center">
+    <>
       <MetaTags
         title={PageMeta.home.title}
         description={PageMeta.home.description}
         canonical={PageMeta.home.canonical}
         keywords={PageMeta.home.keywords}
       />
+      {/* <CategorySection data={Data} />
+      <Grid item xs={12}>
+      <PostAd data={PostAdData} />
+      </Grid>
+      <Grid item xs={12}>
+      <TabComponent data={browseUsedCards} />
+    </Grid> */}
       <HomeBanner />
-      <CategorySection data={Data} />
-      <Grid item xs={12}>
-        <PostAd data={PostAdData} />
-      </Grid>
-      <Grid item xs={12}>
-        <TabComponent data={browseUsedCards} />
-      </Grid>
-      <ComparisonContext />
-    </Grid>
+      <Container>
+        <Grid container justifyContent="center">
+          <Grid item container xs={12}>
+            <Grid className={carComparisionsRoot} item xs={12} md={6}>
+              <Typography variant="h3">{CAR_COMPARISIONS}</Typography>
+              <Typography className={carComparisionsLink} variant="h3">
+                {ALL_CARS_COMPARISIONS}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid item container xs={12} spacing={2}>
+            <Grid item xs={12} md={6}>
+              <CarComparision featureImg={CarComaprisonImg} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <DownloadApp featureImg={CarComaprisonImg} />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Container>
+    </>
   );
 };
 

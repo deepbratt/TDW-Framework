@@ -1,23 +1,20 @@
-import { makeStyles } from "@material-ui/core";
-import { Colors } from "../../Utils/constants/colors/colors";
-const { primary } = Colors;
+import { makeStyles } from '@material-ui/core';
 
-const CarsComparisonStyles = makeStyles(() => ({
+const CarsComparisonStyles = makeStyles((theme) => ({
   root: {
-    
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    alignContent: "center",
-    flexDirection: "column",
-    padding: "20px 30px",
-    border: `1px solid ${primary}`,
-    boxShadow: "none",
-    borderRadius: "6px",
-    "& img": {
-      margin: "20px 0",
-    },
-  },
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    flexDirection: 'column',
+    padding: '20px 30px',
+    border: `1px solid ${theme.palette.secondary.main}`,
+    boxShadow: 'none',
+    borderRadius: '6px',
+    '& img': {
+      margin: '20px 0'
+    }
+  }
 }));
 
 export default CarsComparisonStyles;

@@ -1,7 +1,7 @@
-import { Card, CardMedia, CardActions } from "@material-ui/core";
-import CustomButton from "../../CustomButton";
-import { CAR_COMPARISIONS } from "../../Utils/constants/language/en/buttonLabels";
-import CarsComparisonStyles from "./styles";
+import { Card, CardMedia, CardActions } from '@material-ui/core';
+import CustomButton from '../../components/CustomButton';
+import { CAR_COMPARISIONS } from '../../Utils/constants/language/en/buttonLabels';
+import CarsComparisonStyles from './styles';
 
 export interface CarComparisionProps {
   featureImg: string;

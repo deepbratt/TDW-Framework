@@ -41,3 +41,4 @@ export const LOGOUT: string = 'Logout';
 export const CANT_FIND_RESULT: string =
   'Sorry! No results found against your search criteria.';
 export const FIND_YOUR_CAR: string = 'Find Your Car';
+export const ALL_CARS_COMPARISIONS: string = 'All Car Comparisons';

@@ -1,5 +1,6 @@
 import { Card, Typography, makeStyles } from '@material-ui/core';
 import BannerImg from '../../assets/Home/Banner.png';
+import WheelImg from '../../assets/icons/wheel_black.png';
 import CustomButton from '../../components/CustomButton';
 import { FIND_YOUR_CAR } from '../../Utils/constants/language/en/buttonLabels';
 import { BannerData } from '../../Utils/constants/language/en/homePageData';
@@ -42,7 +43,8 @@ const HomeBannerStyles = makeStyles((theme) => ({
   cardContent: {
     margin: '20px 0',
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center'
   }
 }));
 
@@ -61,6 +63,7 @@ const HomeBanner: React.FC = () => {
           <Typography variant="h4">
             {BannerData.CARD_SUBTITLES.TEST_DRIVE}
           </Typography>
+          <img height="25px" src={WheelImg} alt="steering wheel icon" />
           <Typography variant="h4">
             {BannerData.CARD_SUBTITLES.RETURN}
           </Typography>

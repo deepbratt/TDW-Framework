@@ -19,6 +19,7 @@ import TabComponent from '../../components/Tabs';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import CarComaprisonImg from '../../assets/Cars/carsComparision.png';
+import ShopCarImg from '../../assets/Cars/ShopCar.png';
 // import DownloadAppImg from '../../assets/Cars/';
 import HomeBanner from '../../sections/HomeBanner';
 import DownloadApp from '../../sections/DownloadApp';
@@ -26,6 +27,7 @@ import {
   CAR_COMPARISIONS,
   ALL_CARS_COMPARISIONS
 } from '../../Utils/constants/language/en/buttonLabels';
+import ShopCars from '../../sections/ShopCars';
 
 const HomePageStyles = makeStyles((theme) => ({
   carComparisionsRoot: {
@@ -61,15 +63,18 @@ const HomePage = () => {
       <HomeBanner />
       <Container>
         <Grid container justifyContent="center">
-          <Grid item container xs={12}>
-            <Grid className={carComparisionsRoot} item xs={12} md={6}>
-              <Typography variant="h3">{CAR_COMPARISIONS}</Typography>
-              <Typography className={carComparisionsLink} variant="h3">
-                {ALL_CARS_COMPARISIONS}
-              </Typography>
-            </Grid>
-          </Grid>
           <Grid item container xs={12} spacing={2}>
+            <Grid item xs={12}>
+              <ShopCars featureImg={ShopCarImg} />
+            </Grid>
+            <Grid item container xs={12}>
+              <Grid className={carComparisionsRoot} item xs={12} md={6}>
+                <Typography variant="h3">{CAR_COMPARISIONS}</Typography>
+                <Typography className={carComparisionsLink} variant="h3">
+                  {ALL_CARS_COMPARISIONS}
+                </Typography>
+              </Grid>
+            </Grid>
             <Grid item xs={12} md={6}>
               <CarComparision featureImg={CarComaprisonImg} />
             </Grid>

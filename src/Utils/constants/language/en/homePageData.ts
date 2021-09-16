@@ -1,5 +1,6 @@
 import InstallmentIcon from '../../../../assets/icons/installmentsOption.svg';
 import PostAdCoverImg from '../../../../assets/Cars/forSale.png';
+import WheelWhite from '../../../../assets/icons/wheel_white 1.png';
 import { Carfilters } from './filtersData';
 
 export const BannerData = {
@@ -9,6 +10,30 @@ export const BannerData = {
     RETURN: '30-day returns'
   }
 };
+
+export const shopCarHeader = 'The Way It Should Be';
+export const shopCarData = [
+  {
+    heading: 'Do more from home',
+    subTitle: 'The Way It Should Be',
+    icon: WheelWhite
+  },
+  {
+    heading: 'Do more from home',
+    subTitle: 'The Way It Should Be',
+    icon: WheelWhite
+  },
+  {
+    heading: 'Do more from home',
+    subTitle: 'The Way It Should Be',
+    icon: WheelWhite
+  },
+  {
+    heading: 'Do more from home',
+    subTitle: 'The Way It Should Be',
+    icon: WheelWhite
+  }
+];
 
 export const PostAdData = {
   heading: 'Sell Your Car Now and Get the Best Price',

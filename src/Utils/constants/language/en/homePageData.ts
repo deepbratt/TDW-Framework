@@ -2,6 +2,14 @@ import InstallmentIcon from '../../../../assets/icons/installmentsOption.svg';
 import PostAdCoverImg from '../../../../assets/Cars/forSale.png';
 import { Carfilters } from './filtersData';
 
+export const BannerData = {
+  CARD_HEADER: 'Love Your Car Guarantee',
+  CARD_SUBTITLES: {
+    TEST_DRIVE: '24-hr test drives',
+    RETURN: '30-day returns'
+  }
+};
+
 export const PostAdData = {
   heading: 'Sell Your Car Now and Get the Best Price',
   coverImg: PostAdCoverImg,

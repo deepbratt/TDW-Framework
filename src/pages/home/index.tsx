@@ -19,6 +19,7 @@ import { Grid } from '@material-ui/core';
 import TabComponent from '../../components/Tabs';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
+import HomeBanner from '../../sections/HomeBanner';
 export interface HomeProps {}
 
 const HomePage = () => {
@@ -30,14 +31,7 @@ const HomePage = () => {
         canonical={PageMeta.home.canonical}
         keywords={PageMeta.home.keywords}
       />
-      <Banner
-        Title={Title}
-        subTitle={subTitle}
-        category={category}
-        filter={filter}
-        range={priceRange}
-        carModel={carModel}
-      />
+      <HomeBanner />
       <CategorySection data={Data} />
       <Grid item xs={12}>
         <PostAd data={PostAdData} />

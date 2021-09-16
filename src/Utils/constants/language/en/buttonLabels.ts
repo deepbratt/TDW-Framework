@@ -38,4 +38,6 @@ export const POST_AN_AD: string = 'Post An Ad';
 export const PROFILE: string = 'Profile';
 export const ADD_EDIT_CAR: string = 'Add/Edit Car';
 export const LOGOUT: string = 'Logout';
-export const CANT_FIND_RESULT: string = 'Sorry! No results found against your search criteria.';
+export const CANT_FIND_RESULT: string =
+  'Sorry! No results found against your search criteria.';
+export const FIND_YOUR_CAR: string = 'Find Your Car';

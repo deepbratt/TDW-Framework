@@ -14,7 +14,7 @@ export const Colors = {
   black: '#000000',
   navyBlue: '#092C4C',
   blue: '#1A75FF',
-  darkBlue: '#111B47',
+  darkBlue: '#053361',
   berry: '#530000',
   iceBlue: '#EFF3FA',
   footerBackground: '#23292F',

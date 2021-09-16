@@ -58,10 +58,10 @@ const ShopCars: React.FC<IShopCarProps> = ({ featureImg }) => {
   return (
     <Card className={root}>
       <Grid container>
-        <Grid item xs={9}>
+        <Grid item xs={8}>
           <img width="100%" className={cardMedia} src={featureImg} alt="Car" />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <CardContent className={cardContent}>
             <Typography align="center" variant="h2">
               {shopCarHeader}

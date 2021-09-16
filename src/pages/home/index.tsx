@@ -28,6 +28,7 @@ import {
   ALL_CARS_COMPARISIONS
 } from '../../Utils/constants/language/en/buttonLabels';
 import ShopCars from '../../sections/ShopCars';
+import PointsSection from '../../sections/PointsSection';
 
 const HomePageStyles = makeStyles((theme) => ({
   carComparisionsRoot: {
@@ -74,6 +75,9 @@ const HomePage = () => {
                   {ALL_CARS_COMPARISIONS}
                 </Typography>
               </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <PointsSection />
             </Grid>
             <Grid item xs={12} md={6}>
               <CarComparision featureImg={CarComaprisonImg} />

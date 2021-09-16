@@ -38,6 +38,10 @@ export const shopCarData = [
   }
 ];
 
+export const findCarsData = {
+  heading: "See cars your budget will love"
+}
+
 export const PointsSectionData = [
   {
     heading: 'Choose From Closed To Million Used Cars',

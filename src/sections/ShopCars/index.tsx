@@ -24,6 +24,7 @@ const ShopCarsStyles = makeStyles((theme) => ({
     boxShadow: 'none',
     backgroundColor: Colors.darkBlue
   },
+
   cardContent: {
     display: 'flex',
     flexDirection: 'column',
@@ -57,6 +58,9 @@ const ShopCars: React.FC<IShopCarProps> = ({ featureImg }) => {
   const { root, cardContent, cardMedia, list, btn } = ShopCarsStyles();
   return (
     <Card className={root}>
+      {/* <div className={findCars}>
+          <FindCars />
+        </div> */}
       <Grid container>
         <Grid item xs={8}>
           <img width="100%" className={cardMedia} src={featureImg} alt="Car" />

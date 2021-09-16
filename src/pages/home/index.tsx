@@ -29,6 +29,7 @@ import {
 } from '../../Utils/constants/language/en/buttonLabels';
 import ShopCars from '../../sections/ShopCars';
 import PointsSection from '../../sections/PointsSection';
+import FindCars from '../../sections/FindCars';
 
 const HomePageStyles = makeStyles((theme) => ({
   carComparisionsRoot: {
@@ -64,9 +65,15 @@ const HomePage = () => {
       <HomeBanner />
       <Container>
         <Grid container justifyContent="center">
-          <Grid item container xs={12} spacing={2}>
+          <Grid item container xs={12} spacing={2} justifyContent="center">
+            <Grid item xs={12} md={10} lg={7}>
+              <FindCars />
+            </Grid>
             <Grid item xs={12}>
               <ShopCars featureImg={ShopCarImg} />
+            </Grid>
+            <Grid item xs={12}>
+              <PointsSection />
             </Grid>
             <Grid item container xs={12}>
               <Grid className={carComparisionsRoot} item xs={12} md={6}>
@@ -75,9 +82,6 @@ const HomePage = () => {
                   {ALL_CARS_COMPARISIONS}
                 </Typography>
               </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <PointsSection />
             </Grid>
             <Grid item xs={12} md={6}>
               <CarComparision featureImg={CarComaprisonImg} />

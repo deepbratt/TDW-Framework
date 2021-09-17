@@ -90,6 +90,8 @@ const useAddEditCar = () => {
   const [formData, setFormData] = useReducer(formReducer, initialFieldValues);
   const [activeStep, setActiveStep] = useState(0);
   const [images, setImages] = useState<Array<any>>([]);
+  const [featuresArray, setFeaturesArray] = useState<Array<any>>([]);
+  const [bodyTypesArray, setBodyTypesArray] = useState<Array<any>>([]);
   const [requireError, setRequireError] = useState({
     ...initialRequireError,
     ...initialRequireError_2
@@ -131,8 +133,55 @@ const useAddEditCar = () => {
       handleChange={handleChange}
       requireError={requireError}
       setFormData={setFormData}
+      bodyTypesArray={bodyTypesArray}
+      featuresArray={featuresArray}
     />
   ];
+
+  const getFeaturesAndBodyTypes = () => {
+    // get features
+    getAllData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.CAR_FEATURES}`
+    )
+      .then((response) => {
+        if (response && response.status === "success") {
+          let result = response.data.result;
+          let featureName = result.map((el: any) => el.name);
+          setFeaturesArray(featureName);
+        } else {
+          let msg = response.response
+            ? response.response
+            : response.message
+            ? response.message
+            : "Network Error";
+          setToastMessage(msg);
+          setToastType("error");
+          setToastOpen(true);
+        }
+      })
+      .then(() => setIsLoading(false));
+      // get bodyTypes
+    getAllData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.BODY_TYPES}`
+    )
+      .then((response) => {
+        if (response && response.status === "success") {
+          let result = response.data.result;
+          let bodyTypesName = result.map((el: any) => el.bodyType);
+          setBodyTypesArray(bodyTypesName);
+        } else {
+          let msg = response.response
+            ? response.response
+            : response.message
+            ? response.message
+            : "Network Error";
+          setToastMessage(msg);
+          setToastType("error");
+          setToastOpen(true);
+        }
+      })
+      .then(() => setIsLoading(false));
+  };
 
   const profileRedirect = () =>{
     history.push('/dashboard/profile')
@@ -198,8 +247,7 @@ const useAddEditCar = () => {
           history.push(pathname.substr(0, pathname.lastIndexOf('/')));
         }
       }
-      setIsLoading(false);
-    });
+    }).then(()=>setIsLoading(false));
   }, [id]);
 
   useEffect(() => {
@@ -209,7 +257,10 @@ const useAddEditCar = () => {
       setAssistanceDialog(true)
     }
     if (id) {
+      getFeaturesAndBodyTypes()
       getData();
+    }else{
+      getFeaturesAndBodyTypes()
     }
   }, [getData, id]);
 

@@ -48,11 +48,12 @@ export const useForm = (validateOnChange = true) => {
   const routeParams = useSelector(
     (state: RootState) => state.queryParams.queryParams
   );
-  const { ADS, CARS, FILTER, CITIES_WITH_CARS, MAKE, MODEL } = API_ENDPOINTS;
+  const { ADS, CARS, FILTER, CITIES_WITH_CARS, MAKE, MODEL, BODY_TYPES } = API_ENDPOINTS;
   const [page, setPage] = useState(1);
   const [citiesWithCars, setCitiesWithCars] = useState([]);
   const [makes, setMakes] = useState([]);
   const [models, setModels] = useState([]);
+  const [bodyTypes, setBodyTypes] = useState<any>([]);
   const [keywords, setKeywords] = useState('');
   const [alertOpen, setAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -291,6 +292,17 @@ export const useForm = (validateOnChange = true) => {
       });
   };
 
+  const getBodyTypes = () =>{
+    getAllData(ADS+CARS+BODY_TYPES).then(response=>{
+      if(response && response.status==="success"){
+        setBodyTypes(response.data.result)
+      }else{
+        console.log("error", response)
+      }
+    })
+
+  }
+
   const getModels = async () => {
     let param = '?';
     if (values.make !== []) {
@@ -316,6 +328,7 @@ export const useForm = (validateOnChange = true) => {
     getCitiesWithCars();
     getMakes();
     getModels();
+    getBodyTypes()
     // eslint-disable-next-line
   }, []);
 
@@ -535,6 +548,7 @@ export const useForm = (validateOnChange = true) => {
     alertOpen,
     setAlertOpen,
     makes,
-    models
+    models,
+    bodyTypes
   };
 };

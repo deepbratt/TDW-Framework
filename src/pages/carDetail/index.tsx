@@ -1,5 +1,5 @@
-import CarDetail from "../../layout/Sections/Sections/CarDetail/CarDetail";
-import { Grid, Hidden } from "@material-ui/core";
+import CarDetail from '../../layout/Sections/Sections/CarDetail/CarDetail';
+import { Grid, Hidden } from '@material-ui/core';
 import {
   rating,
   mainButton,
@@ -11,48 +11,56 @@ import {
   ratIcon,
   numbIcon,
   CarInfo,
-  carTitle,
-} from "../../layout/Sections/Utils/carDetail";
-import Section from "../../components/index";
-import Slides from "../../layout/Sections/Sections/CarDetail/Slider";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { useStyles } from "../../layout/Sections/Sections/CarDetail/useStyles";
-import CarInformation from "../../layout/Sections/Sections/CarDetail/CarInformation";
-import { useParams } from "react-router";
-import Actions from "./useFunctions"
+  carTitle
+} from '../../layout/Sections/Utils/carDetail';
+import Section from '../../components/index';
+import Slides from '../../layout/Sections/Sections/CarDetail/Slider';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { useStyles } from '../../layout/Sections/Sections/CarDetail/useStyles';
+import CarInformation from '../../layout/Sections/Sections/CarDetail/CarInformation';
+import { useParams } from 'react-router';
+import Actions from './useFunctions';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import MetaTags from "../../components/MetaTags";
-import PageMeta from "../../Utils/constants/language/en/pageData";
-import NoImg from '../../assets/no-img.png'
+import MetaTags from '../../components/MetaTags';
+import PageMeta from '../../Utils/constants/language/en/pageData';
+import NoImg from '../../assets/no-img.png';
+import Loader from '../../components/Loader';
+import Toast from '../../components/Toast';
 
 interface RouteProps {
   id: string;
 }
 const CarDetailContainer = () => {
   const { id } = useParams<RouteProps>();
-  const {obj,isLoading} = Actions(id?? '')
-  const { main,loader} = useStyles();
-
-
+  const {
+    obj,
+    isLoading,
+    open,
+    setOpen,
+    responseMessage,
+    carFeatures
+  } = Actions(id ?? '');
+  const { main, loader } = useStyles();
 
   return (
-      <Section>
-        <MetaTags
+    <Section>
+      <MetaTags
         title={PageMeta.carDetails.title}
         description={PageMeta.carDetails.description}
         canonical={PageMeta.carDetails.canonical}
         keywords={PageMeta.carDetails.keywords}
       />
-    <Grid style={{ display: "flex", justifyContent: "center" }} container>
-        {isLoading || !obj ? (
-          <h1 className={loader}><CircularProgress/></h1>
+      <Loader open={isLoading} isBackdrop={true} />
+      <Grid style={{ display: 'flex', justifyContent: 'center' }} container>
+        {!obj ? (
+          <h1 className={loader}>No Data</h1>
         ) : (
           <>
             <Grid className={main} item xs={12}>
               <Slides
                 carTitle={carTitle}
                 info={CarInfo}
-                feature={obj?.features}
+                feature={carFeatures}
                 desc={desc}
                 paragraph={obj?.description}
                 arr={obj.image && obj.image.length > 0 ? obj.image : [NoImg]}
@@ -109,8 +117,14 @@ const CarDetailContainer = () => {
             </Hidden>
           </>
         )}
-    </Grid>
-      </Section>
+      </Grid>
+      <Toast
+        open={open}
+        message={responseMessage.message}
+        type={responseMessage.status}
+        onClose={() => setOpen(false)}
+      />
+    </Section>
   );
 };
 

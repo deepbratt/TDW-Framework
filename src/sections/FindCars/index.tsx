@@ -23,13 +23,22 @@ const FindCarsStyles = makeStyles((theme) => ({
     marginBottom: '-120px',
     position: 'relative',
     boxShadow: '0px 2px 4px 4px rgba(0, 0, 0, 0.2)',
-    border: `1px solid ${theme.palette.text.primary}`
+    border: `1px solid ${theme.palette.text.primary}`,
+    [theme.breakpoints.down('sm')]: {
+      margin: '20px 0'
+    }
   },
   content: {
-    padding: '30px 140px'
+    padding: '30px 140px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '30px 35px'
+    }
   },
   subtitleStyle: {
-    marginLeft: '60px'
+    marginLeft: '60px',
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: '20px'
+    }
   },
   textFields: {
     backgroundColor: Colors.flashWhite
@@ -53,6 +62,7 @@ const FindCarsStyles = makeStyles((theme) => ({
     border: `1px solid ${Colors.textPrimary}`,
     backgroundColor: Colors.lightBlue,
     borderRadius: '5px',
+    padding: '0 10px',
     '&:hover': {
       boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
     }
@@ -78,18 +88,15 @@ const FindCars: React.FC = () => {
       <Typography className={content} align="center" variant="h2">
         {findCarsData.heading}
       </Typography>
-      <Typography
-        className={subtitleStyle}
-        align="left"
-        variant="caption"
-        gutterBottom
-      >
-        {findCarsData.subTitle}
-      </Typography>
+      <div className={subtitleStyle}>
+        <Typography align="left" variant="caption" gutterBottom>
+          {findCarsData.subTitle}
+        </Typography>
+      </div>
       <Tabs
         classes={{ indicator: tabIndicator, flexContainer: tabContainer }}
         variant="scrollable"
-        scrollButtons="on"
+        scrollButtons="auto"
         value={false}
       >
         <Tab

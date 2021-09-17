@@ -29,6 +29,9 @@ const ShopCarsStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     marginTop: '110px',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '10px'
+    },
     minHeight: '100%',
     '& > h2': {
       color: theme.palette.common.white
@@ -62,10 +65,10 @@ const ShopCars: React.FC<IShopCarProps> = ({ featureImg }) => {
           <FindCars />
         </div> */}
       <Grid container>
-        <Grid item xs={8}>
+        <Grid item xs={12} sm={7} md={8}>
           <img width="100%" className={cardMedia} src={featureImg} alt="Car" />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={5} md={4}>
           <CardContent className={cardContent}>
             <Typography align="center" variant="h2">
               {shopCarHeader}

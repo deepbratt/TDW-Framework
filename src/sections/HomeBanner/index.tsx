@@ -33,17 +33,23 @@ const HomeBannerStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.white,
     opacity: 0.9,
     borderRadius: '10px',
-    padding: '32px 50px'
+    padding: '32px 50px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '15px 20px'
+    }
   },
   cardHeading: {
     fontSize: '45px',
     lineHeight: '52px',
-    margin: '0 20px'
+    margin: '0 20px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '24px',
+      lineHeight: '26px'
+    }
   },
   cardContent: {
     margin: '20px 0',
     display: 'flex',
-    justifyContent: 'space-between',
     alignItems: 'center'
   }
 }));
@@ -63,7 +69,12 @@ const HomeBanner: React.FC = () => {
           <Typography variant="h4">
             {BannerData.CARD_SUBTITLES.TEST_DRIVE}
           </Typography>
-          <img height="25px" src={WheelImg} alt="steering wheel icon" />
+          <img
+            style={{ margin: '5px' }}
+            height="25px"
+            src={WheelImg}
+            alt="steering wheel icon"
+          />
           <Typography variant="h4">
             {BannerData.CARD_SUBTITLES.RETURN}
           </Typography>

@@ -1,21 +1,5 @@
-import CategorySection from '../../layout/Sections/Sections/HomeSections/Category/CategorySection';
 import CarComparision from '../../sections/CarComparision';
-import {
-  Data,
-  Title,
-  subTitle,
-  filter,
-  category,
-  carModel,
-  priceRange
-} from '../../Utils/constants/language/Text';
-import PostAd from '../../sections/PostAd';
-import {
-  browseUsedCards,
-  PostAdData
-} from '../../Utils/constants/language/en/homePageData';
 import { Grid, Container, Typography, makeStyles } from '@material-ui/core';
-import TabComponent from '../../components/Tabs';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import CarComaprisonImg from '../../assets/Cars/carsComparision.png';
@@ -31,7 +15,6 @@ import {
 import ShopCars from '../../sections/ShopCars';
 import PointsSection from '../../sections/PointsSection';
 import FindCars from '../../sections/FindCars';
-import CustomButton from '../../CustomButton';
 
 const HomePageStyles = makeStyles((theme) => ({
   carComparisionsRoot: {
@@ -57,13 +40,6 @@ const HomePage = () => {
         canonical={PageMeta.home.canonical}
         keywords={PageMeta.home.keywords}
       />
-      {/* <CategorySection data={Data} />
-      <Grid item xs={12}>
-      <PostAd data={PostAdData} />
-      </Grid>
-      <Grid item xs={12}>
-      <TabComponent data={browseUsedCards} />
-    </Grid> */}
       <HomeBanner />
       <Container style={{ marginBottom: '60px' }}>
         <Grid container justifyContent="center">
@@ -85,10 +61,10 @@ const HomePage = () => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} sm={6}>
               <CarComparision featureImg={CarComaprisonImg} />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} sm={6}>
               <DownloadApp featureImg={DownloadAppImg} />
             </Grid>
           </Grid>

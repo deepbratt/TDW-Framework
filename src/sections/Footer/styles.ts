@@ -11,17 +11,11 @@ export interface FooterStylesProps {
 
 const FooterStyles = makeStyles<Theme, FooterStylesProps>((theme) => ({
   root: {
-    padding: '40px 60px',
-    boxShadow: '0px -2px 5px -5px rgba(0,0,0,0.52)',
-    display: 'flex',
-    justifyContent: 'center',
-    backgroundColor: ({ rootBackgroundColor }) => rootBackgroundColor,
-    [theme.breakpoints.down('sm')]: {
-      padding: '15px 25px'
-    }
+    marginTop: '30px',
+    backgroundColor: ({ rootBackgroundColor }) => rootBackgroundColor
   },
   container: {
-    maxWidth: '1240px'
+    marginBottom: '20px'
   },
   logo: { marginBottom: '20px' },
   socialMediaLinks: {

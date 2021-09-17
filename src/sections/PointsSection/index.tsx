@@ -13,11 +13,19 @@ const PointsSectionStyles = makeStyles((theme) => ({
   },
   title: {
     fontSize: '30px',
-    lineHeight: '35px'
+    lineHeight: '35px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '22px',
+      lineHeight: '24px'
+    }
   },
   subtitle: {
     fontSize: '20px',
-    lineHeight: '23.5px'
+    lineHeight: '23.5px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '16px',
+      lineHeight: '17px'
+    }
   }
 }));
 
@@ -28,7 +36,7 @@ const PointsSection: React.FC = () => {
       {PointsSectionData &&
         PointsSectionData.map((item, index) => (
           <Grid key={index} item container xs={12} className={root}>
-            <Grid xs={12} md={6} lg={5}>
+            <Grid xs={12} sm={6}>
               <Typography
                 className={title}
                 color="textPrimary"
@@ -46,8 +54,10 @@ const PointsSection: React.FC = () => {
                 {item.subTitle}
               </Typography>
             </Grid>
-            <Grid xs={12} md={6} lg={5}>
-              <img height="100%" width="100%" src={item.image} alt="" />
+            <Grid xs={12} sm={5}>
+              <div>
+                <img width="100%" height="100%" src={item.image} alt="" />
+              </div>
             </Grid>
           </Grid>
         ))}

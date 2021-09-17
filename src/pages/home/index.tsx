@@ -19,6 +19,7 @@ import TabComponent from '../../components/Tabs';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import CarComaprisonImg from '../../assets/Cars/carsComparision.png';
+import DownloadAppImg from '../../assets/Cars/downloadApp.png';
 import ShopCarImg from '../../assets/Cars/ShopCar.png';
 // import DownloadAppImg from '../../assets/Cars/';
 import HomeBanner from '../../sections/HomeBanner';
@@ -87,7 +88,7 @@ const HomePage = () => {
               <CarComparision featureImg={CarComaprisonImg} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <DownloadApp featureImg={CarComaprisonImg} />
+              <DownloadApp featureImg={DownloadAppImg} />
             </Grid>
           </Grid>
         </Grid>

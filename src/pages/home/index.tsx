@@ -31,6 +31,7 @@ import {
 import ShopCars from '../../sections/ShopCars';
 import PointsSection from '../../sections/PointsSection';
 import FindCars from '../../sections/FindCars';
+import CustomButton from '../../CustomButton';
 
 const HomePageStyles = makeStyles((theme) => ({
   carComparisionsRoot: {
@@ -64,7 +65,7 @@ const HomePage = () => {
       <TabComponent data={browseUsedCards} />
     </Grid> */}
       <HomeBanner />
-      <Container>
+      <Container style={{ marginBottom: '60px' }}>
         <Grid container justifyContent="center">
           <Grid item container xs={12} spacing={2} justifyContent="center">
             <Grid item xs={12} md={10} lg={7}>

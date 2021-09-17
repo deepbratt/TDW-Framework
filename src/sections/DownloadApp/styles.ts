@@ -9,27 +9,20 @@ const DownloadAppStyles = makeStyles((theme) => ({
     boxShadow: 'none',
     borderRadius: '6px',
     position: 'relative',
-    minHeight: '100%',
-    maxHeight: '300px',
-    zIndex: 20
-  },
-  cardAction: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    height: '100%',
-    maxWidth: '180px',
-    minWidth: '180px',
+    height: '320px'
   },
-
   cardMedia: {
     position: 'absolute',
     top: '-10px',
-    right: '50px',
-    zIndex: 20
+    right: '50px'
   },
   btn: {
+    maxWidth: '180px',
+    minWidth: '180px',
     backgroundColor: Colors.darkBlue,
     border: `1px solid ${theme.palette.common.white}`,
     color: theme.palette.common.white,

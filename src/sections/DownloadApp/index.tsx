@@ -12,31 +12,29 @@ export interface DownloadAppProps {
 }
 
 const DownloadApp: React.FC<DownloadAppProps> = ({ featureImg }) => {
-  const { root, btn, cardMedia, cardAction } = DownloadAppStyles();
+  const { root, btn, cardMedia } = DownloadAppStyles();
   return (
-    <Card className={root}>
-      <div className={cardAction}>
-        <CustomButton
-          fullWidth
-          className={btn}
-          startIcon={<AppleIcon />}
-          color="undefined"
-        >
-          {FOR_IOS}
-        </CustomButton>
-        <CustomButton
-          fullWidth
-          className={btn}
-          color="undefined"
-          startIcon={
-            <img height="18px" src={PlayStoreIcon} alt="play store icon" />
-          }
-        >
-          {FOR_ANDROID}
-        </CustomButton>
-      </div>
+    <div className={root}>
+      <CustomButton
+        fullWidth
+        className={btn}
+        startIcon={<AppleIcon />}
+        color="undefined"
+      >
+        {FOR_IOS}
+      </CustomButton>
+      <CustomButton
+        fullWidth
+        className={btn}
+        color="undefined"
+        startIcon={
+          <img height="18px" src={PlayStoreIcon} alt="play store icon" />
+        }
+      >
+        {FOR_ANDROID}
+      </CustomButton>
       <img className={cardMedia} src={featureImg} alt="" />
-    </Card>
+    </div>
   );
 };
 

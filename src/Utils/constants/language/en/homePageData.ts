@@ -39,8 +39,9 @@ export const shopCarData = [
 ];
 
 export const findCarsData = {
-  heading: "See cars your budget will love"
-}
+  heading: 'See cars your budget will love',
+  subTitle: 'Which car types do you prefer? Pick all that apply'
+};
 
 export const PointsSectionData = [
   {

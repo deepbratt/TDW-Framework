@@ -12,7 +12,10 @@ const HomeBannerStyles = makeStyles((theme) => ({
 
     '& > img': {
       minWidth: '100%',
-      maxHeight: '580px'
+      maxHeight: '580px',
+      [theme.breakpoints.up('xl')]: {
+        maxHeight: '800px'
+      }
     }
   },
   after: {

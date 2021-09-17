@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getSingleData, addToFav } from '../../Utils/hooks/actions';
+import {  addToFav } from '../../Utils/hooks/actions';
 import { ICarCard } from '../../layout/Sections/Utils/types1';
 import { getSingleCar } from '../../Utils/hooks/endpoints';
 import { useEffect } from 'react';
@@ -11,7 +11,6 @@ const Actions = (Id?: string | '') => {
   const [obj, setObj] = useState<ICarCard>();
   const [open, setOpen] = useState(false);
   const [featuresArray, setFeaturesArray] = useState<Array<any>>([]);
-  const [bodyTypesArray, setBodyTypesArray] = useState<Array<any>>([]);
   const [carFeatures, setCarFeatures] = useState<Array<any>>([]);
   const [responseMessage, setResponseMessage] = useState({
     status: '',
@@ -26,9 +25,6 @@ const Actions = (Id?: string | '') => {
   }, []);
 
   useEffect(() => {
-    console.log(featuresArray.length > 0 && obj)
-    console.log(obj)
-    console.log(featuresArray.length > 0)
     if (featuresArray.length > 0 && obj) {
       makeFeatureArray();
     }
@@ -41,7 +37,6 @@ const Actions = (Id?: string | '') => {
         obj.features?.some((el: any) => item.name === el)
       );
     }
-    console.log('temp', temp)
     setCarFeatures(temp);
   };
 
@@ -50,7 +45,6 @@ const Actions = (Id?: string | '') => {
       `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.CAR_FEATURES}`
     )
       .then((response) => {
-        console.log("featressss", response)
         if (response && response.data && response.status === 'success') {
           let result = response.data.result;
           // let featureName = result.map((el: any) => el.name);
@@ -134,7 +128,6 @@ const Actions = (Id?: string | '') => {
     setOpen,
     obj,
     featuresArray,
-    bodyTypesArray,
     carFeatures
   };
 };

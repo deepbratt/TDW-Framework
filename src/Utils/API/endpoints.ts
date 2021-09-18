@@ -26,5 +26,8 @@ export const API_ENDPOINTS = {
   MAKE_MODELS:"/models/?make_id=",
   MODEL_VERSIONS:"/versions?model_id=",
   BODY_TYPES:"/body-types",
-  CAR_FEATURES:"/features"
+  CAR_FEATURES:"/features",
+  TICKETS:"/tickets",
+  AD_TICKETS:"/advAssistance",
+  TECH_TICKETS:"/techAssistance",
 };

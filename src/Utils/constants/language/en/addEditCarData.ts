@@ -133,6 +133,7 @@ const addEditCarData = {
     confirmDelete: 'Yes',
     cancelDelete: 'Cancel',
     addPhoto: 'Add Photos +',
+    needAssistance: "Need Assistance?",
     needAssistanceOK:"Yes",
     needAssistanceReject:"No",
   },

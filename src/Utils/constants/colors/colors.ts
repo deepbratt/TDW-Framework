@@ -14,11 +14,12 @@ export const Colors = {
   black: '#000000',
   navyBlue: '#092C4C',
   blue: '#1A75FF',
-  darkBlue: '#111B47',
+  darkBlue: '#053361',
   berry: '#530000',
   iceBlue: '#EFF3FA',
   footerBackground: '#23292F',
   footerLinks: '#999999',
   whiteTranparent: 'rgba(255,255,255,0.5)',
-  greyTranparent: 'rgba(255,255,255,0.5)'
+  greyTranparent: 'rgba(255,255,255,0.5)',
+  lightBlue: '#F0F1F2'
 };

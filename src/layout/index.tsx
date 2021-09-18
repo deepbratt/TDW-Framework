@@ -25,7 +25,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <Grid className={header} item xs={12}>
           {children}
         </Grid>
-        <Grid item xs={12}>
+        <Grid style={{ backgroundColor: footerBackground }} item xs={12}>
           <Footer
             data={FooterData}
             rootBackgroundColor={footerBackground}

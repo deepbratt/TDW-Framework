@@ -1,10 +1,10 @@
 import {
   Button as MuiButton,
   ButtonProps,
-  Typography,
-} from "@material-ui/core";
-import Breakpoints from "../Utils/Breakpoints";
-import useStyles from "../components/CustomTitle/style";
+  Typography
+} from '@material-ui/core';
+import Breakpoints from '../Utils/Breakpoints';
+import useStyles from '../components/CustomTitle/style';
 
 interface IButtonProps extends ButtonProps {
   fullWidth?: boolean;
@@ -12,7 +12,7 @@ interface IButtonProps extends ButtonProps {
   variant?: any;
   radius?: string;
   styles?: string;
-  size?: "small" | "medium" | "large";
+  size?: 'small' | 'medium' | 'large';
   handleClick?: () => void;
 }
 
@@ -33,23 +33,22 @@ function CustomButton({
       onClick={handleClick}
       size={size ? size : Breakpoints()}
       className={styles ? styles : btn}
-      style={{ borderRadius: radius, boxShadow: "none" }}
+      style={{ borderRadius: radius, boxShadow: 'none' }}
       variant={variant}
       color={color}
       fullWidth={fullWidth}
       {...rest}
     >
-      <Typography variant="h6">{children}</Typography>
+      {children}
     </MuiButton>
   );
 }
 
 CustomButton.defaultProps = {
   fullWidth: false,
-  color: "primary",
-  variant: "contained",
-  radius: "4px",
-  handleClick: () => console.log("buttonClicked"),
+  color: 'primary',
+  variant: 'contained',
+  radius: '4px',
 };
 
 export default CustomButton;

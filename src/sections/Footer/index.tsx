@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink, BrowserRouter } from 'react-router-dom';
 import {
   Grid,
+  Container,
   Typography,
   Divider,
   TextField,
@@ -10,7 +11,6 @@ import {
 import FooterStyles from './styles';
 import {
   FooterProps,
-  IRoutes,
   IFooterFilter
 } from '../../Utils/interfaces/footer.interface';
 
@@ -44,9 +44,9 @@ const Footer: React.FC<FooterProps> = ({
 
   return (
     <BrowserRouter>
-      <Grid className={root} container>
-        <Grid className={container} item container xs={12}>
-          <Grid style={{ marginBottom: '20px' }} item xs={12} container>
+      <Container>
+        <Grid className={root} item container xs={12}>
+          <Grid className={container} item xs={12} container>
             <Grid item container xs={12} lg={9}>
               <Grid item xs={12} sm={4} lg={3}>
                 <Typography className={filterTitle} variant="h3" gutterBottom>
@@ -233,7 +233,7 @@ const Footer: React.FC<FooterProps> = ({
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </BrowserRouter>
   );
 };

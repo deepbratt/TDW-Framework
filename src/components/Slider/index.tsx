@@ -1,29 +1,13 @@
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import SliderStyles from "./styles";
-export interface SliderProps {
-  children: React.ReactChild[];
-  styles?: string
-}
+import Carousel from 'react-material-ui-carousel';
+import SliderStyles from './styles';
 
-const Slider: React.FC<SliderProps> = ({ children, styles}) => {
+const Slider: React.FC<any> = ({ children, styles }, props) => {
   const { dotsIndicator } = SliderStyles();
   return (
-    <Carousel
-      className={styles ? styles : dotsIndicator}
-      autoPlay
-      showStatus={false}
-      interval={2500}
-      showArrows={false}
-      infiniteLoop={true}
-      transitionTime={500}
-      showIndicators={false}
-      showThumbs={false}
-    >
+    <Carousel className={styles ? styles : dotsIndicator} {...props}>
       {children}
     </Carousel>
   );
 };
 
 export default Slider;
-

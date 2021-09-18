@@ -99,7 +99,7 @@ export const publicRoutes = {
     name: 'Home',
     path: routes.home,
     // component: Home, =====> uncomment this and remove below line to see landing/home page
-    component: CarsListing
+    component: Home
   },
   [paths.cars]: {
     name: 'Cars Listing',

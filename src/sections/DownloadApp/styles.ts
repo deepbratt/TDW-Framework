@@ -15,7 +15,6 @@ const DownloadAppStyles = makeStyles((theme) => ({
     alignItems: 'flex-start',
     height: '100%',
     [theme.breakpoints.down('sm')]: {
-      height: '198px',
       padding: '15px'
     },
     [theme.breakpoints.down('xs')]: {
@@ -26,6 +25,10 @@ const DownloadAppStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: '-10px',
     right: '50px',
+    [theme.breakpoints.down('md')]: {
+      right: '20px',
+      height: '400px'
+    },
     [theme.breakpoints.down('sm')]: {
       right: '10px',
       height: '280px'
@@ -42,6 +45,10 @@ const DownloadAppStyles = makeStyles((theme) => ({
       backgroundColor: Colors.navyBlue
     },
 
+    [theme.breakpoints.down('xs')]: {
+      maxWidth: '140px',
+      minWidth: '140px'
+    },
     [theme.breakpoints.down('xs')]: {
       maxWidth: '130px',
       minWidth: '130px'

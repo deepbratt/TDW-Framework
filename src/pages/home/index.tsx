@@ -41,7 +41,7 @@ const HomePage = () => {
         keywords={PageMeta.home.keywords}
       />
       <HomeBanner />
-      <Container style={{ marginBottom: '80px' }}>
+      <Container style={{ marginBottom: '120px' }}>
         <Grid container justifyContent="center">
           <Grid item container xs={12} spacing={2} justifyContent="center">
             <Grid item xs={12} md={10} lg={7}>

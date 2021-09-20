@@ -44,7 +44,6 @@ const DownloadAppStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: Colors.navyBlue
     },
-
     [theme.breakpoints.down('xs')]: {
       maxWidth: '140px',
       minWidth: '140px'

@@ -48,7 +48,7 @@ const ShopCarsStyles = makeStyles((theme) => ({
     border: `1px solid ${theme.palette.common.white}`,
     color: theme.palette.common.white,
     '&:hover': {
-      color: Colors.darkBlue
+      backgroundColor: Colors.navyBlue
     }
   }
 }));
@@ -92,9 +92,7 @@ const ShopCars: React.FC<IShopCarProps> = ({ featureImg }) => {
                   </ListItem>
                 ))}
             </List>
-            <CustomButton className={btn} color="undefined">
-              {SHOP_ALL_CARS}
-            </CustomButton>
+            <CustomButton className={btn}>{SHOP_ALL_CARS}</CustomButton>
           </CardContent>
         </Grid>
       </Grid>

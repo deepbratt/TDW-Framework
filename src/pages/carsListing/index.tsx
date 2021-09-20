@@ -50,6 +50,7 @@ import PageMeta from '../../Utils/constants/language/en/pageData';
 import GlobalStyles from '../../globalStyles';
 import Skeletons from '../../components/Skeletons';
 import ListingCardSkeletons from '../../components/ListingCard/ListingCardSkeletons';
+import { Colors } from '../../Utils/constants/colors/colors';
 
 export interface CarsListingProps {
   isShortlist?: boolean;
@@ -362,7 +363,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                         key={`cars-card-${index}`}
                         item
                         xs={12}
-                        sm={layoutType === 'list' ? 12 : 6}
+                        sm={layoutType === 'list' ? 12 : 4}
                       >
                         <ListingCard
                           data={car}
@@ -375,14 +376,17 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                       </Grid>
                     ))}
                   {result && (
-                    <Pagination
-                      style={{ margin: '15px 0' }}
-                      count={pageCount}
-                      page={page}
-                      onChange={handlePageChange}
-                      variant="outlined"
-                      shape="rounded"
-                    />
+                    <Grid item xs={12} container justifyContent="center">
+                      <Pagination
+                        style={{ margin: '15px 0'}}
+                        count={pageCount}
+                        page={page}
+                        onChange={handlePageChange}
+                        variant="outlined"
+                        shape="round"
+                        color="primary"
+                      />
+                    </Grid>
                   )}
                 </Grid>
               )}

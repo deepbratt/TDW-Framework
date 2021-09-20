@@ -103,7 +103,7 @@ const CarDetailContainer = () => {
                   carTitle={carTitle}
                   info={CarInfo}
                   // #empty array of feature from api so temporary static feature
-                  feature={obj.features}
+                  feature={carFeatures}
                   city={obj?.registrationCity}
                   assembly={obj?.assembly}
                   color={obj?.bodyColor}

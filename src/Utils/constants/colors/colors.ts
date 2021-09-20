@@ -10,6 +10,7 @@ export const Colors = {
   carminePink: '#E94040',
   white: '#FDFEFF',
   grey: '#565656',
+  greyTwo: '#484848',
   red: '#ff0000',
   black: '#000000',
   navyBlue: '#092C4C',

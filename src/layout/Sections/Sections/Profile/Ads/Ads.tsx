@@ -79,7 +79,7 @@ const Container = () => {
                 <LayoutToggler />
               </Grid>
               {data.map((item:any, index:number)=>(
-                <Grid item lg={layoutType === "list" ? 12 : 6} xs={12} sm={10}>
+                <Grid item lg={layoutType === "list" ? 12 : 4} xs={12} sm={10}>
                   <CarListing
                     data={item}
                     layoutType={layoutType}

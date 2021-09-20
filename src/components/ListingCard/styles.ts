@@ -1,12 +1,12 @@
 import { makeStyles } from "@material-ui/core";
 import { Colors } from "../../Utils/constants/colors/colors";
-const { flashWhite, carminePink, white, greyFour, blueOne, spanishGrey,black} =
+const { flashWhite, carminePink, white, greyFour, blueOne, spanishGrey,black, lightBlue} =
   Colors;
 
 const ListingCardStyles = makeStyles(() => ({
   root: {
     display: "flex",
-    backgroundColor: flashWhite,
+    backgroundColor: lightBlue,
     boxShadow: "none",
     position: "relative",
     maxWidth: "800px",
@@ -16,7 +16,7 @@ const ListingCardStyles = makeStyles(() => ({
   grid: {
     display: "flex",
     flexDirection: "column",
-    backgroundColor: flashWhite,
+    backgroundColor: lightBlue,
     boxShadow: "none",
     position: "relative",
     cursor: "pointer",

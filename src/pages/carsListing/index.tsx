@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 import {
+  Container,
   Chip,
   RadioGroup,
   Radio,
@@ -50,6 +51,7 @@ import PageMeta from '../../Utils/constants/language/en/pageData';
 import GlobalStyles from '../../globalStyles';
 import Skeletons from '../../components/Skeletons';
 import ListingCardSkeletons from '../../components/ListingCard/ListingCardSkeletons';
+import CarListingStyles from './style';
 
 export interface CarsListingProps {
   isShortlist?: boolean;
@@ -58,7 +60,7 @@ export interface CarsListingProps {
 const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
   const history = useHistory();
 
-  const { listingContainer } = GlobalStyles();
+  const { root, listingContainer, contentRoot } = CarListingStyles();
 
   const {
     values,
@@ -146,48 +148,33 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
   };
 
   return (
-    <Section backColor={Color.grey}>
+    <Container>
       <MetaTags
         title={PageMeta.carListing.title}
         description={PageMeta.carListing.description}
         canonical={PageMeta.carListing.canonical}
         keywords={PageMeta.carListing.keywords}
       />
-      <Grid container className={listingContainer} justifyContent="center">
-        <Grid item container xs={12} spacing={1}>
-          <Grid item xs={12}>
-            <CustomTitle
-              color={Color.textPrimary}
-              text={`${LISTING_PAGE_HEADER} (${
-                responseData !== null || undefined
-                  ? responseData?.totalCount
-                  : '0'
-              })`}
-            />
-          </Grid>
-          <Grid item xs={12}>
+      <Grid
+        container
+        className={listingContainer}
+        justifyContent="space-between"
+        spacing={5}
+      >
+        {/* <Grid item xs={12}>
             <BreadCrumbs />
-          </Grid>
-          <Grid xs={12} md={4} item container>
+          </Grid> */}
+        <Grid xs={12} md={4} item container>
+          <Grid item xs={12} className={contentRoot}>
             <Hidden smDown>
               <Grid item xs={12}>
-                <div
-                  style={{
-                    padding: '20px 15px',
-                    margin: '10px 0',
-                    backgroundColor: Color.textPrimary,
-                    border: '2px solid'
-                  }}
-                >
-                  <Typography style={{ color: 'white' }} variant="h4">
-                    {SHOW_RESULT}
-                  </Typography>
-                </div>
                 <CarFilters filterProps={filtersProps} />
               </Grid>
             </Hidden>
           </Grid>
-          <Grid item container xs={12} md={8} alignContent="flex-start">
+        </Grid>
+        <Grid item container xs={12} md={8}>
+          <Grid item xs={12} className={contentRoot}>
             <Hidden mdUp>
               <Grid item container justifyContent="space-between" xs={12}>
                 <Grid item>
@@ -398,7 +385,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
           </Grid>
         </Grid>
       </Grid>
-    </Section>
+    </Container>
   );
 };
 

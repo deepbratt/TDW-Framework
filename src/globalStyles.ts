@@ -71,15 +71,7 @@ const GlobalStyles = makeStyles((theme) => ({
       marginTop: '50px'
     }
   },
-  listingContainer: {
-    backgroundColor: Color.white,
-    padding: '30px 25px',
-    borderRadius: '5px',
-    maxWidth: "1440px",
-    [theme.breakpoints.down("xs")]: {
-      padding: '10px',
-    }
-  }
+
 }));
 
 export default GlobalStyles;

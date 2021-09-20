@@ -10,6 +10,7 @@ import { Colors } from '../../Utils/constants/colors/colors';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import InformationDialog from '../../components/InformationDialog';
+import { Delete, Help } from '@material-ui/icons';
 
 const AddEditCar = () => {
   const {
@@ -34,7 +35,8 @@ const AddEditCar = () => {
     helpComingDialog,
     setHelpComingDialog,
     assistanceDialog,
-    needAssistance
+    needAssistance,
+    setAssistanceDialog
   } = useAddEditCar();
   return (
     <div
@@ -92,16 +94,28 @@ const AddEditCar = () => {
             <Typography variant="h2">
               {addEditCarData.steps[activeStep]}
             </Typography>
+            <div>
+            <Button
+                color="secondary"
+                variant="contained"
+                style={{ marginRight: '16px' }}
+                onClick={() => setAssistanceDialog(true)}
+                startIcon={<Help/>}
+              >
+                {addEditCarData.buttons.needAssistance}
+              </Button>
             {id ? (
               <Button
                 color="primary"
                 variant="outlined"
                 style={{ marginRight: '16px' }}
                 onClick={() => setDeleteDialog(true)}
+                startIcon={<Delete/>}
               >
                 {addEditCarData.buttons.delete}
               </Button>
             ) : null}
+            </div>
           </Grid>
           <Grid item xs={12}>
             {ComponentContent[activeStep]}

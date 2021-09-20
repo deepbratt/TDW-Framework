@@ -1,44 +1,91 @@
-import { useState } from "react";
-import {
-  getSingleData,
-  addToFav,
-} from "../../Utils/hooks/actions";
-import {ICarCard} from "../../layout/Sections/Utils/types1"
-import { getSingleCar} from "../../Utils/hooks/endpoints";
-import { useEffect} from "react";
+import { useState } from 'react';
+import {  addToFav } from '../../Utils/hooks/actions';
+import { ICarCard } from '../../layout/Sections/Utils/types1';
+import { getSingleCar } from '../../Utils/hooks/endpoints';
+import { useEffect } from 'react';
+import { getAllData } from '../../Utils/API/API';
+import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 
-
-const Actions = ( Id?: string | "") => {
+const Actions = (Id?: string | '') => {
   const [isLoading, setIsLoading] = useState(false);
   const [obj, setObj] = useState<ICarCard>();
   const [open, setOpen] = useState(false);
+  const [featuresArray, setFeaturesArray] = useState<Array<any>>([]);
+  const [carFeatures, setCarFeatures] = useState<Array<any>>([]);
   const [responseMessage, setResponseMessage] = useState({
-    status: "",
-    message: "",
+    status: '',
+    message: ''
   });
 
   useEffect(() => {
-    if(Id){
-      loadSingleData(getSingleCar,Id);
+    if (Id) {
+      getFeatures();
+      loadSingleData(getSingleCar, Id);
     }
-
   }, []);
+
+  useEffect(() => {
+    if (featuresArray.length > 0 && obj) {
+      makeFeatureArray();
+    }
+  }, [featuresArray, obj]);
+
+  const makeFeatureArray = () => {
+    let temp: Array<any> = [];
+    if (obj) {
+      temp = featuresArray.filter((item: any) =>
+        obj.features?.some((el: any) => item.name === el)
+      );
+    }
+    setCarFeatures(temp);
+  };
+
+  const getFeatures = () => {
+    getAllData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.CAR_FEATURES}`
+    )
+      .then((response) => {
+        if (response && response.data && response.status === 'success') {
+          let result = response.data.result;
+          // let featureName = result.map((el: any) => el.name);
+          setFeaturesArray(result);
+        } else {
+          let msg = !response ? "Network Error" : response.response
+          ? response.response
+          : response.message
+          ? response.message
+          : 'Network Error';
+          console.log("Error", msg)
+          setOpen(true);
+          setResponseMessage({
+            status: 'error',
+            message: msg
+          });
+        }
+      })
+      .then(() => setIsLoading(false));
+  };
 
   const loadSingleData = async (url: string, Id: string) => {
     setIsLoading(true);
-    await getSingleData(url, Id)
+    getAllData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/${Id}`)
       .then((response) => {
-        setIsLoading(false);
-        console.log("getSingleData", response)
-        if (response.status === "success") {
+        if (response && response.data && response.status === 'success') {
           setObj(response.data.result);
         } else {
-          return "error";
+          console.log('error', response);
+          setOpen(true);
+          let msg =
+            response && response.message
+              ? response.message
+              : 'Something went wrong!!';
+          setResponseMessage({
+            status: 'error',
+            message: msg
+          });
         }
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .then(() => setIsLoading(false));
   };
 
   const addFavs = async (url: string, Id: string) => {
@@ -47,17 +94,17 @@ const Actions = ( Id?: string | "") => {
     await addToFav(url, Id)
       .then((response) => {
         setIsLoading(false);
-        if (response.status === "fail") {
+        if (response.status === 'fail') {
           setOpen(true);
           setResponseMessage({
-            status: "error",
-            message: response.message,
+            status: 'error',
+            message: response.message
           });
         } else {
           setOpen(true);
           setResponseMessage({
-            status: "success",
-            message: response.message,
+            status: 'success',
+            message: response.message
           });
         }
       })
@@ -65,17 +112,11 @@ const Actions = ( Id?: string | "") => {
         setIsLoading(false);
         setOpen(true);
         setResponseMessage({
-          status: "error",
-          message: error.message,
+          status: 'error',
+          message: error.message
         });
       });
-
-   
   };
-
-
-
-
 
   return {
     responseMessage,
@@ -86,6 +127,8 @@ const Actions = ( Id?: string | "") => {
     open,
     setOpen,
     obj,
+    featuresArray,
+    carFeatures
   };
 };
 

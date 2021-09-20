@@ -118,7 +118,7 @@ interface IArray {
   
   export interface ICar {
     info: IInfo
-    feature: Array<string> | undefined;
+    feature: Array<string | any> | undefined;
     carTitle: string;
     city?: string;
     assembly?: string;

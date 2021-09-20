@@ -14,6 +14,7 @@ const CarComparison = lazy(() => Retry(()=> import('../pages/carComparision/inde
 const ShortlistItem = lazy(() => Retry(()=> import('../pages/shortlistItems')));
 const Dashboard = lazy(() => Retry(()=> import('../pages/dashboard')));
 const PostAd = lazy(() => Retry(()=> import('../pages/postAd')));
+const Help = lazy(() => Retry(()=> import('../layout/Sections/Sections/Profile/Help/Help')));
 
 export const paths = {
   home: 'home',
@@ -33,7 +34,8 @@ export const paths = {
   cars: 'cars',
   forgotPassword: '/forgot-password',
   resetPassword: 'reset-password',
-  addEditCar: 'add-edit/car/'
+  addEditCar: 'add-edit/car/',
+  help:"help"
 };
 
 export const routes = {
@@ -54,7 +56,8 @@ export const routes = {
   cars: '/cars/:city?',
   forgotPassword: '/forgot-password/:token?',
   resetPassword: '/reset-password/:token',
-  addEditCar: '/add-edit/car/:id?'
+  addEditCar: '/add-edit/car/:id?',
+  help:"/help"
 };
 
 export const privateRoutes = {
@@ -145,5 +148,10 @@ export const onlyPublicRoutes = {
     name: 'Reset Password',
     path: routes.resetPassword,
     component: ResetPassword
+  },
+  [paths.help]: {
+    name: 'Help',
+    path: routes.help,
+    component: Help
   },
 }

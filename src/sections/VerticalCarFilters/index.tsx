@@ -28,6 +28,7 @@ import AppliedFilters from './appliedFilters';
 import { Autocomplete } from '@material-ui/lab';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import defaultBodyType from '../../assets/Cars/sedan.png'
 
 export interface CarFiltersProps {
   filterProps: any;
@@ -87,7 +88,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     setRangeValues,
     citiesWithCars,
     makes,
-    models
+    models,
+    bodyTypes
   } = filterProps;
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -915,29 +917,29 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       </FilterAccordion>
       <FilterAccordion title={BODY_TYPE}>
         <FormGroup>
-          {Carfilters.BODY_TYPE.filter((item) =>
-            mainCarTypes.includes(item.text)
-          ).map((type) => (
+          {bodyTypes.filter((item:any) =>
+            mainCarTypes.includes(item.bodyType)
+          ).map((type:any) => (
             <FormControlLabel
-              key={`body-type-${type.text}`}
+              key={`body-type-${type.bodyType}`}
               control={
                 <Checkbox
                   name={fieldNames.bodyType}
                   checked={values.bodyType.indexOf(type.text) > -1}
-                  onChange={(e) => handleCheckboxChange(e, type.text)}
+                  onChange={(e) => handleCheckboxChange(e, type.bodyType)}
                   color="primary"
                   size="small"
                 />
               }
               label={
-                <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex', alignItems:"center" }}>
                   <img
                     width="60px"
                     style={{ margin: '0 10px' }}
-                    src={type.icon}
-                    alt={type.text}
+                    src={type.image || defaultBodyType}
+                    alt={type.bodyType}
                   />
-                  <Typography>{type.text}</Typography>
+                  <Typography>{type.bodyType}</Typography>
                 </div>
               }
             />
@@ -945,27 +947,27 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
 
           <DialogBox title="Select Body Type">
             <Grid container spacing={2}>
-              {Carfilters.BODY_TYPE.map((type) => (
-                <Grid key={`body-type-${type.text}`} item xs={12} md={6}>
+              {bodyTypes.map((type:any) => (
+                <Grid key={`body-type-${type.bodyType}`} item xs={12} md={6}>
                   <FormControlLabel
                     control={
                       <Checkbox
                         name={fieldNames.bodyType}
-                        checked={values.bodyType.indexOf(type.text) > -1}
-                        onChange={(e) => handleCheckboxChange(e, type.text)}
+                        checked={values.bodyType.indexOf(type.bodyType) > -1}
+                        onChange={(e) => handleCheckboxChange(e, type.bodyType)}
                         color="primary"
                         size="small"
                       />
                     }
                     label={
-                      <div style={{ display: 'flex' }}>
+                      <div style={{ display: 'flex', alignItems:"center" }}>
                         <img
                           width="60px"
                           style={{ margin: '0 10px' }}
-                          src={type.icon}
-                          alt={type.text}
+                          src={type.image || defaultBodyType}
+                          alt={type.bodyType}
                         />
-                        <Typography>{type.text}</Typography>
+                        <Typography>{type.bodyType}</Typography>
                       </div>
                     }
                   />

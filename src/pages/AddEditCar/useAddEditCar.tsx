@@ -9,9 +9,11 @@ import { useCallback } from 'react';
 import { useRef } from 'react';
 import {  useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import {  addFormData, deleteData, getAllData, updateFormData } from '../../Utils/API/API';
+import {  addData, addFormData, deleteData, getAllData, updateFormData } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import Sizes from '../../Utils/themeConstants';
+import { NEED_ASSISTANCE } from '../../Utils/constants/language/en/addEditCarTexts';
+
 const formReducer = (state: any, event: any) => {
   return {
     ...state,
@@ -90,6 +92,8 @@ const useAddEditCar = () => {
   const [formData, setFormData] = useReducer(formReducer, initialFieldValues);
   const [activeStep, setActiveStep] = useState(0);
   const [images, setImages] = useState<Array<any>>([]);
+  const [featuresArray, setFeaturesArray] = useState<Array<any>>([]);
+  const [bodyTypesArray, setBodyTypesArray] = useState<Array<any>>([]);
   const [requireError, setRequireError] = useState({
     ...initialRequireError,
     ...initialRequireError_2
@@ -131,8 +135,55 @@ const useAddEditCar = () => {
       handleChange={handleChange}
       requireError={requireError}
       setFormData={setFormData}
+      bodyTypesArray={bodyTypesArray}
+      featuresArray={featuresArray}
     />
   ];
+
+  const getFeaturesAndBodyTypes = () => {
+    // get features
+    getAllData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.CAR_FEATURES}`
+    )
+      .then((response) => {
+        if (response && response.status === "success") {
+          let result = response.data.result;
+          let featureName = result.map((el: any) => el.name);
+          setFeaturesArray(featureName);
+        } else {
+          let msg = response.response
+            ? response.response
+            : response.message
+            ? response.message
+            : "Network Error";
+          setToastMessage(msg);
+          setToastType("error");
+          setToastOpen(true);
+        }
+      })
+      .then(() => setIsLoading(false));
+      // get bodyTypes
+    getAllData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.BODY_TYPES}`
+    )
+      .then((response) => {
+        if (response && response.status === "success") {
+          let result = response.data.result;
+          let bodyTypesName = result.map((el: any) => el.bodyType);
+          setBodyTypesArray(bodyTypesName);
+        } else {
+          let msg = response.response
+            ? response.response
+            : response.message
+            ? response.message
+            : "Network Error";
+          setToastMessage(msg);
+          setToastType("error");
+          setToastOpen(true);
+        }
+      })
+      .then(() => setIsLoading(false));
+  };
 
   const profileRedirect = () =>{
     history.push('/dashboard/profile')
@@ -140,8 +191,26 @@ const useAddEditCar = () => {
 
   const needAssistance = (needed : boolean = false)=>{
     if(needed){
-      // api to inform assistance needed
-      setHelpComingDialog(true)
+      setIsLoading(true)
+      let body = {description: NEED_ASSISTANCE}
+      addData(`${API_ENDPOINTS.TICKETS}${API_ENDPOINTS.AD_TICKETS}`, body).then(response=>{
+        if(response && response.data && response.data.status==="success"){
+          setToastMessage(response.data.message);
+          setToastType("success");
+          setToastOpen(true);
+          setHelpComingDialog(true)
+        }else{
+          let msg = response.message
+            ? response.message
+            : response.response
+            ? response.response
+            : "Network Error";
+          setToastMessage(msg);
+          setToastType("error");
+          setToastOpen(true);
+        }
+        setIsLoading(false)
+      })
     }
     setAssistanceDialog(false)
   }
@@ -198,18 +267,18 @@ const useAddEditCar = () => {
           history.push(pathname.substr(0, pathname.lastIndexOf('/')));
         }
       }
-      setIsLoading(false);
-    });
+    }).then(()=>setIsLoading(false));
   }, [id]);
 
   useEffect(() => {
     if(!user.phone){
       setPhoneRequiredDialog(true)
-    }else{
-      setAssistanceDialog(true)
     }
     if (id) {
+      getFeaturesAndBodyTypes()
       getData();
+    }else{
+      getFeaturesAndBodyTypes()
     }
   }, [getData, id]);
 
@@ -441,7 +510,8 @@ const useAddEditCar = () => {
     setHelpComingDialog,
     helpComingDialog,
     assistanceDialog,
-    needAssistance
+    needAssistance,
+    setAssistanceDialog
   };
 };
 

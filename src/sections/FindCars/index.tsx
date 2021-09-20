@@ -123,6 +123,18 @@ const FindCars: React.FC = () => {
           icon={<img height="64px" src={SedanIcon} alt="" />}
           label="Sedans"
         />
+        <Tab
+          disableTouchRipple
+          classes={{ root: tabRoot, wrapper: tabWrapper }}
+          icon={<img height="64px" src={SedanIcon} alt="" />}
+          label="Sedans"
+        />
+        <Tab
+          disableTouchRipple
+          classes={{ root: tabRoot, wrapper: tabWrapper }}
+          icon={<img height="64px" src={SedanIcon} alt="" />}
+          label="Sedans"
+        />
       </Tabs>
       <CardContent className={content}>
         <form>

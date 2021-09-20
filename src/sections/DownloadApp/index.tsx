@@ -19,14 +19,14 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ featureImg }) => {
         fullWidth
         className={btn}
         startIcon={<AppleIcon />}
-        color="undefined"
+        
       >
         {FOR_IOS}
       </CustomButton>
       <CustomButton
         fullWidth
         className={btn}
-        color="undefined"
+        
         startIcon={
           <img height="18px" src={PlayStoreIcon} alt="play store icon" />
         }

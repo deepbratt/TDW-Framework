@@ -48,7 +48,7 @@ const ShopCarsStyles = makeStyles((theme) => ({
     border: `1px solid ${theme.palette.common.white}`,
     color: theme.palette.common.white,
     '&:hover': {
-      color: Colors.darkBlue
+      backgroundColor: Colors.navyBlue
     }
   }
 }));
@@ -61,9 +61,6 @@ const ShopCars: React.FC<IShopCarProps> = ({ featureImg }) => {
   const { root, cardContent, cardMedia, list, btn } = ShopCarsStyles();
   return (
     <Card className={root}>
-      {/* <div className={findCars}>
-          <FindCars />
-        </div> */}
       <Grid container>
         <Grid item xs={12} sm={7} md={8}>
           <img width="100%" className={cardMedia} src={featureImg} alt="Car" />
@@ -75,8 +72,8 @@ const ShopCars: React.FC<IShopCarProps> = ({ featureImg }) => {
             </Typography>
             <List className={list}>
               {shopCarData &&
-                shopCarData.map((item) => (
-                  <ListItem>
+                shopCarData.map((item, index) => (
+                  <ListItem key={`${index}`}>
                     <ListItemIcon>
                       <img height="26px" src={item.icon} alt="" />
                     </ListItemIcon>
@@ -95,9 +92,7 @@ const ShopCars: React.FC<IShopCarProps> = ({ featureImg }) => {
                   </ListItem>
                 ))}
             </List>
-            <CustomButton className={btn} color="undefined">
-              {SHOP_ALL_CARS}
-            </CustomButton>
+            <CustomButton className={btn}>{SHOP_ALL_CARS}</CustomButton>
           </CardContent>
         </Grid>
       </Grid>

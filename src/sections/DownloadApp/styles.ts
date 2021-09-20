@@ -13,27 +13,25 @@ const DownloadAppStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    height: '320px',
+    height: '100%',
     [theme.breakpoints.down('sm')]: {
-      height: '198px',
       padding: '15px'
     },
     [theme.breakpoints.down('xs')]: {
-      height: '150px',
-      padding: '15px'
+      marginTop: '50px'
     }
   },
   cardMedia: {
     position: 'absolute',
     top: '-10px',
     right: '50px',
+    [theme.breakpoints.down('md')]: {
+      right: '20px',
+      height: '400px'
+    },
     [theme.breakpoints.down('sm')]: {
       right: '10px',
       height: '280px'
-    },
-    [theme.breakpoints.down('xs')]: {
-      right: '10px',
-      height: '250px'
     }
   },
   btn: {
@@ -46,7 +44,10 @@ const DownloadAppStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: Colors.navyBlue
     },
-
+    [theme.breakpoints.down('xs')]: {
+      maxWidth: '140px',
+      minWidth: '140px'
+    },
     [theme.breakpoints.down('xs')]: {
       maxWidth: '130px',
       minWidth: '130px'

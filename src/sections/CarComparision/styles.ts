@@ -11,6 +11,7 @@ const CarsComparisonStyles = makeStyles((theme) => ({
     border: `1px solid ${theme.palette.secondary.main}`,
     boxShadow: 'none',
     borderRadius: '6px',
+    height:"100%",
     [theme.breakpoints.down('sm')]: {
       padding: '15px'
     },

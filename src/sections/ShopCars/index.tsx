@@ -72,8 +72,8 @@ const ShopCars: React.FC<IShopCarProps> = ({ featureImg }) => {
             </Typography>
             <List className={list}>
               {shopCarData &&
-                shopCarData.map((item) => (
-                  <ListItem>
+                shopCarData.map((item, index) => (
+                  <ListItem key={`${index}`}>
                     <ListItemIcon>
                       <img height="26px" src={item.icon} alt="" />
                     </ListItemIcon>

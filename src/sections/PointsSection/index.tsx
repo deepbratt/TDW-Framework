@@ -36,7 +36,7 @@ const PointsSection: React.FC = () => {
       {PointsSectionData &&
         PointsSectionData.map((item, index) => (
           <Grid key={index} item container xs={12} className={root}>
-            <Grid xs={12} sm={6}>
+            <Grid item xs={12} sm={6}>
               <Typography
                 className={title}
                 color="textPrimary"
@@ -54,7 +54,7 @@ const PointsSection: React.FC = () => {
                 {item.subTitle}
               </Typography>
             </Grid>
-            <Grid xs={12} sm={5}>
+            <Grid item xs={12} sm={5}>
               <div>
                 <img width="100%" height="100%" src={item.image} alt="" />
               </div>

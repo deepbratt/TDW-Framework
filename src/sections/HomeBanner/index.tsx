@@ -53,7 +53,8 @@ const HomeBannerStyles = makeStyles((theme) => ({
   cardContent: {
     margin: '20px 0',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 }));
 

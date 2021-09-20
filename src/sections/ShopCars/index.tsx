@@ -61,9 +61,6 @@ const ShopCars: React.FC<IShopCarProps> = ({ featureImg }) => {
   const { root, cardContent, cardMedia, list, btn } = ShopCarsStyles();
   return (
     <Card className={root}>
-      {/* <div className={findCars}>
-          <FindCars />
-        </div> */}
       <Grid container>
         <Grid item xs={12} sm={7} md={8}>
           <img width="100%" className={cardMedia} src={featureImg} alt="Car" />

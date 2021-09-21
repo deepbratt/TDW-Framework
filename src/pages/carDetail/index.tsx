@@ -20,7 +20,6 @@ import { useStyles } from '../../layout/Sections/Sections/CarDetail/useStyles';
 import CarInformation from '../../layout/Sections/Sections/CarDetail/CarInformation';
 import { useParams } from 'react-router';
 import Actions from './useFunctions';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import NoImg from '../../assets/no-img.png';

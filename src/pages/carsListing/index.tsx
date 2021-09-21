@@ -14,25 +14,21 @@ import {
   Hidden,
   SwipeableDrawer,
   Typography,
-  Card
 } from '@material-ui/core';
 import Toast from '../../components/Toast';
 import Pagination from '@material-ui/lab/Pagination';
 import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
 import ListingCard from '../../components/ListingCard';
-import BreadCrumbs from '../../components/BreadCrumbs';
 import CarFilters from '../../sections/VerticalCarFilters';
 import { SortRounded } from '@material-ui/icons';
 import HorizontalFilters from '../../sections/HorizontalFilters';
 import ShortListCard from '../../components/ShortListCard';
-import { LISTING_PAGE_HEADER } from '../../Utils/constants/language/en/listingData';
 import {
   conditionOptions,
   sortingOptions
 } from '../../Utils/constants/language/en/filtersData';
 import {
   APPLY_FILTERS,
-  SHOW_RESULT,
   SHORTLIST_ITEMS,
   COMPARE,
   CANT_FIND_RESULT
@@ -40,18 +36,13 @@ import {
 import FullScreenDialog from '../../components/DialogBox/FullScreenDialog';
 import { useForm } from './useForm';
 import { fieldNames } from '../../Utils/constants/formsConstants';
-import CustomTitle from '../../components/CustomTitle/CustomTitle';
-import { Color } from '../../theme/color';
-import Section from '../../components';
 import { RootState } from '../../redux/store';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
 import { paths } from '../../routes/paths';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
-import GlobalStyles from '../../globalStyles';
 import Skeletons from '../../components/Skeletons';
 import ListingCardSkeletons from '../../components/ListingCard/ListingCardSkeletons';
-import { Colors } from '../../Utils/constants/colors/colors';
 import CarListingStyles from './style';
 import CustomButton from '../../CustomButton';
 

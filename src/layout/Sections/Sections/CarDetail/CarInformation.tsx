@@ -5,7 +5,6 @@ import { Colors } from '../../Utils/color.constants';
 // import tyreIcon from "../assets/carDetail/tyre 2.png"
 import tyreIcon from '../../assets/carDetail/tyre 2.png';
 import moment from 'moment';
-import { desc } from '../../Utils/carDetail';
 const CarInformation = ({
   info,
   feature,

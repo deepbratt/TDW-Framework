@@ -129,6 +129,7 @@ interface IArray {
     date: string;
     createdBy: any;
     updatedAt: string;
+    paragraph?:string
   }
   
 

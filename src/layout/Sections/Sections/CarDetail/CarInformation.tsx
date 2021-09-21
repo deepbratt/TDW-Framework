@@ -5,6 +5,7 @@ import { Colors } from '../../Utils/color.constants';
 // import tyreIcon from "../assets/carDetail/tyre 2.png"
 import tyreIcon from '../../assets/carDetail/tyre 2.png';
 import moment from 'moment';
+import { desc } from '../../Utils/carDetail';
 const CarInformation = ({
   info,
   feature,
@@ -14,12 +15,19 @@ const CarInformation = ({
   bodyType,
   color,
   engineCapacity,
-  updatedAt
+  updatedAt,
+  paragraph
 }: ICar) => {
   const { featureBox, title, greyBackground } = useStyles();
   const { gray } = Colors;
   return (
     <Grid container>
+      {/* <Grid item xs={12} className={greyBackground}>
+        <Typography variant="h6">{desc}</Typography>
+        <Typography style={{ marginTop: '10px' }} variant="subtitle1">
+          {paragraph}
+        </Typography>
+      </Grid> */}
       <Grid
         className={greyBackground}
         item
@@ -28,7 +36,7 @@ const CarInformation = ({
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          marginTop:"20px"
+          marginTop: '20px'
         }}
       >
         <Grid item lg={3}>
@@ -51,14 +59,16 @@ const CarInformation = ({
           </Typography>
         </Grid>
       </Grid>
-      <Grid className={greyBackground} item xs={12}  style={{ marginTop: '20px' }}>
+      <Grid
+        className={greyBackground}
+        item
+        xs={12}
+        style={{ marginTop: '20px' }}
+      >
         <div style={{ color: gray, display: 'flex' }}>
           <Typography variant="h2">{carTitle}</Typography>
         </div>
-        <Grid
-          container
-          style={{ display: 'flex', flexFlow: 'wrap'}}
-        >
+        <Grid container style={{ display: 'flex', flexFlow: 'wrap' }}>
           {feature ? (
             feature.map((data, index) => {
               return (

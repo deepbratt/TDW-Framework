@@ -354,8 +354,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                   item
                   container
                   xs={12}
-                  justifyContent="center"
-                  spacing={1}
+                  // justifyContent="center";
+                  spacing={2}
                 >
                   {result &&
                     result.map((car: any, index: any) => (

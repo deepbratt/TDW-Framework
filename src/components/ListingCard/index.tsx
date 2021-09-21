@@ -81,7 +81,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const favs = (id: string) => {
-    console.log(data);
     if (handleFavs) {
       handleFavs(id);
     } else {

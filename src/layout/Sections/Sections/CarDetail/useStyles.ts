@@ -7,7 +7,7 @@ const { navyBlue, grey, blue, white, green, gray, malibuBlue } = Colors;
 export const useStyles = makeStyles(() => ({
   root: {
     // padding: "70px 0px 0px 0px",
-    margin: '20px 0px 0px 20px',
+    // margin: '20px 0px 0px 20px',
     position: 'relative',
     [breakpoints.down('md')]: {
       margin: '0px'
@@ -122,7 +122,7 @@ export const useStyles = makeStyles(() => ({
     }
   },
   detail: {
-    marginTop: '20px',
+    // marginTop: '20px',
     display: 'flex',
     flexDirection: 'column'
   },

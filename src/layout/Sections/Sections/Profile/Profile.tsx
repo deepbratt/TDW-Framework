@@ -4,7 +4,8 @@ import {
   MenuItem,
   TextField,
   Hidden,
-  Divider
+  Divider,
+  Paper
 } from '@material-ui/core';
 import DatePicker from './DatePicker';
 import { useStyles } from './useStyles';

@@ -66,7 +66,7 @@ const Slider = ({
             return (
               <>
                 <img
-                  style={{ position: 'relative' }}
+                  style={{ position: 'relative', borderRadius:"5px" }}
                   key={`img ${index}`}
                   // width="10%"
                   height="100%"
@@ -95,14 +95,13 @@ const Slider = ({
             );
           })}
         </Carousel>
-        <Hidden mdDown>
+        {/* <Hidden mdDown>
             <Grid item xs={12} className={greyBackground}>
               <Typography variant="h6">{desc}</Typography>
               <Typography style={{ marginTop: '10px' }} variant="subtitle1">
                 {paragraph}
               </Typography>
             </Grid>
-            {/* <Grid item xs={12}> */}
             <CarInformation
               carTitle={carTitle}
               info={info}
@@ -115,9 +114,8 @@ const Slider = ({
               date={date}
               updatedAt={updatedAt}
               createdBy={createdBy}
-            />
-            {/* </Grid> */}
-        </Hidden>
+            />9'o
+        </Hidden> */}
         <Toast
           open={open}
           type={responseMessage.status}

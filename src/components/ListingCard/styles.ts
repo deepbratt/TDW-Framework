@@ -11,7 +11,7 @@ const ListingCardStyles = makeStyles(() => ({
     position: "relative",
     maxWidth: "800px",
     width: "100%",
-    marginTop: '20px'
+    marginTop: '10px'
   },
   grid: {
     display: "flex",
@@ -21,7 +21,7 @@ const ListingCardStyles = makeStyles(() => ({
     position: "relative",
     cursor: "pointer",
     minWidth: "100%",
-    marginTop: '20px'
+    // marginTop: '20px'
   },
   featuredBadge: {
     position: "absolute",

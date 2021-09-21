@@ -1,6 +1,6 @@
-import * as React from "react";
-import { Grid } from "@material-ui/core";
-import LayoutStyle from "./CustomTitle/style";
+import * as React from 'react';
+import { Container, Grid } from '@material-ui/core';
+import LayoutStyle from './CustomTitle/style';
 
 interface IProps {
   backColor?: string;
@@ -8,21 +8,17 @@ interface IProps {
 }
 
 const Section = ({ children, backColor }: IProps) => {
-  const { root, content } = LayoutStyle();
+  const { root } = LayoutStyle();
 
   return (
-    <div className={root} style={{ backgroundColor: backColor }}>
-      <div className={content}>
-        <Grid item xs={12}>
-          {children}
-        </Grid>
-      </div>
-    </div>
+    <Container className={root} style={{ backgroundColor: backColor }}>
+      <Grid container>{children}</Grid>
+    </Container>
   );
 };
 
 Section.defaultProps = {
-  backColor: "white",
+  backColor: 'white'
 };
 
 export default Section;

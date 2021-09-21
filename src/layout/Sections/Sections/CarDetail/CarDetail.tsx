@@ -55,7 +55,8 @@ const CarDetail: React.FC<any> = ({
     mailBtn,
     icon,
     container,
-    link
+    link,
+    greyBackground
   } = useStyles();
   const { blue, gray } = Colors;
 
@@ -103,7 +104,8 @@ const CarDetail: React.FC<any> = ({
 
   return (
     <Grid container style={{display: "inline-block"}}>
-      <Grid className={root} item xs={12}>
+      <Grid className={root} container item xs={12}>
+        <Grid container className={greyBackground}>
         <Grid item xs={12}>
           <Typography variant="h2">{Title}</Typography>
         </Grid>
@@ -130,8 +132,8 @@ const CarDetail: React.FC<any> = ({
           </Grid>
         ) : null}
         <Grid style={{ display: "flex" , marginTop:"50px"}} item container lg={12} xs={12}>
-          <Grid className={type} item lg={3} sm={12} xs={12} md={6}>
-            <img className={icon} src={array?.yearIcon} alt="" />
+          <Grid className={type} item lg={3} sm={3} xs={3} md={3}>
+            <img className={icon} src={array?.yearIcon} alt="" width="30px" />
             <Typography
               style={{ paddingTop: "10px", fontWeight: 600 }}
               variant="subtitle1"
@@ -139,7 +141,7 @@ const CarDetail: React.FC<any> = ({
               {modelYear}
             </Typography>
           </Grid>
-          <Grid className={type} item lg={3} sm={12} xs={12} md={6}>
+          <Grid className={type} item lg={3} sm={3} xs={3} md={3}>
             <img className={icon} src={array?.mileageIcon} alt="" />
             <Typography
               style={{ paddingTop: "10px", fontWeight: 600 }}
@@ -148,7 +150,7 @@ const CarDetail: React.FC<any> = ({
               {mileage?.toLocaleString()}
             </Typography>
           </Grid>
-          <Grid className={type} item lg={3} sm={12} xs={12} md={6}>
+          <Grid className={type} item lg={3} sm={3} xs={3} md={3}>
             <img className={icon} src={array?.petrolIcon} alt="" />
             <Typography
               style={{ paddingTop: "10px", fontWeight: 600 }}
@@ -157,7 +159,7 @@ const CarDetail: React.FC<any> = ({
               {engineType}
             </Typography>
           </Grid>
-          <Grid className={type} item lg={3} sm={12} xs={12} md={6}>
+          <Grid className={type} item lg={3} sm={3} xs={3} md={3}>
             <img className={icon} src={array?.typeIcon} alt="" />
             <Typography
               style={{ paddingTop: "10px", fontWeight: 600 }}
@@ -193,11 +195,12 @@ const CarDetail: React.FC<any> = ({
             </Button>
           </Grid>}
         </Grid>
-        {createdBy && <Grid item xs={12}>
+        </Grid>
+        {createdBy && <Grid item xs={12} className={greyBackground} style={{ marginTop: '20px' }}>
           <SellerDetail createdBy={createdBy} />
         </Grid>}
         <Hidden lgUp>
-          <Grid style={{ color: gray }} item xs={12}>
+          <Grid style={{ color: gray, marginTop:"10px" }} className={greyBackground} item xs={12}>
             <Typography style={{ marginTop: "20px" }} variant="h6">
               {desc}
             </Typography>

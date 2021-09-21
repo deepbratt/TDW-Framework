@@ -14,7 +14,7 @@ const Skeletons: React.FC<ISkeletonsProps> = ({
   return (
     <Grid container spacing={1}>
       {[...Array(length)].map((item, index) => (
-        <Grid item xs={12} sm={layoutType === 'list' ? 12 : 6} key={index}>
+        <Grid item xs={12} sm={layoutType === 'list' ? 12 : 4} key={index}>
           {children}
         </Grid>
       ))}

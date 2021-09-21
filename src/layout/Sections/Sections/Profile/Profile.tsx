@@ -5,7 +5,8 @@ import {
   TextField,
   Hidden,
   Divider,
-  Paper
+  Paper,
+  Button
 } from '@material-ui/core';
 import DatePicker from './DatePicker';
 import { useStyles } from './useStyles';
@@ -34,13 +35,14 @@ import Loader from '../../../../components/Loader';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import SelectInputComponent from '../../../../components/SelectInputComponent';
+import Breakpoints from '../../../../Utils/Breakpoints';
 
 const Profile = () => {
   const { updateProfile, open, setOpen, responseMessage, isLoading } =
     Actions();
   const { user } = useSelector((state: RootState) => state.auth);
 
-  const cities = City.getCitiesOfCountry("PK");
+  const cities = City.getCitiesOfCountry('PK');
   const extractedCityNames = cities?.map((item) => item.name);
   let cityNames = [];
   if (extractedCityNames) {
@@ -58,7 +60,7 @@ const Profile = () => {
   const handleChangeSelect = (name: string, value: any) => {
     setVal({
       ...val,
-      [name]: value,
+      [name]: value
     });
   };
 
@@ -104,54 +106,48 @@ const Profile = () => {
         keywords={PageMeta.profile.keywords}
       />
       <Loader open={isLoading} isBackdrop={true} />
-      <Grid className={box} item xs={12}>
-        <section className={heading}>
-          <Hidden mdUp>
-            <SideBar Title={Title} sidebar={paths} />
-          </Hidden>
-          <Typography variant="h3">{profileTitle}</Typography>
-        </section>
-        <Grid className={img} item xs={12}>
-          <section style={{ position: 'relative' }}>
-            <ProfileUpload setImg={setImg} profile={Img ? Img : profile} />
+      <Paper elevation={4} className={box}>
+        <Grid item xs={12}>
+          <section className={heading}>
+            <Hidden mdUp>
+              <SideBar Title={Title} sidebar={paths} />
+            </Hidden>
+            <Typography variant="h3" style={{ fontWeight: 'normal' }}>
+              {profileTitle}
+            </Typography>
           </section>
-        </Grid>
-        <Grid container className={root} item xs={12}>
-          <Grid
-            item
-            container
-            style={{ display: 'flex', flexFlow: 'wrap' }}
-            xs={12}
-          >
-            <Grid style={{ margin: '30px 10px' }} item lg={5} xs={12}>
+          <Grid container item xs={12} spacing={4}>
+          <Grid item xs={12} container justifyContent="center">
+            <section style={{ position: 'relative' }}>
+              <ProfileUpload setImg={setImg} profile={Img ? Img : profile} />
+            </section>
+          </Grid>
+            <Grid item lg={6} xs={12}>
               <TextField
-                className={select}
                 name="firstName"
                 value={val.firstName}
                 onChange={(e) => handleChange(e)}
                 label="First Name"
-                variant="outlined"
+                fullWidth
               />
             </Grid>
-            <Grid style={{ margin: '30px 10px' }} item lg={5} xs={12}>
+            <Grid item lg={6} xs={12}>
               <TextField
-                className={select}
                 name="lastName"
                 value={val.lastName}
                 onChange={(e) => handleChange(e)}
                 label="Last Name"
-                variant="outlined"
+                fullWidth
               />
             </Grid>
-            <Grid style={{ margin: '30px 10px' }} item lg={5} xs={12}>
+            <Grid item lg={6} xs={12}>
               <TextField
-                className={select}
                 select
                 name="gender"
                 value={val.gender}
                 onChange={(e) => handleChange(e)}
                 label="Gender"
-                variant="outlined"
+                fullWidth
               >
                 {gender.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -160,84 +156,62 @@ const Profile = () => {
                 ))}
               </TextField>
             </Grid>
-            <Grid style={{ margin: '30px 10px' }} item lg={5} xs={12}>
+            <Grid item lg={6} xs={12}>
               <TextField
-                className={select}
                 name="userName"
                 value={val.userName}
                 onChange={(e) => handleChange(e)}
                 label="UserName"
-                variant="outlined"
                 disabled={true}
+                fullWidth
               />
             </Grid>
-          </Grid>
-          <Grid item style={{ display: 'flex', flexFlow: 'wrap' }} xs={12}>
-            <Grid style={{ margin: '30px 10px ' }} item lg={5} xs={12}>
+            <Grid item lg={6} xs={12}>
               <DatePicker date={date} handleChangeDate={handleChangeDate} />
             </Grid>
-            <Grid style={{ margin: '30px 10px ' }} item lg={5} xs={12}>
-              {/* <TextField
-                className={select}
-                select
-                name="city"
-                value={val.city}
-                onChange={(e) => handleChange(e)}
-                label="City"
-                variant="outlined"
-                // defaultValue={val.city}
-              >
-                {city &&
-                  city.map((data: any, index: number) => {
-                    return (
-                      <MenuItem
-                        key={index}
-                        value={data.name}
-                        selected={
-                          (val.city + '').toLowerCase() ===
-                          (data.name + '').toLowerCase()
-                        }
-                      >
-                        {data.name}
-                      </MenuItem>
-                    );
-                  })}
-              </TextField> */}
+            <Grid item lg={6} xs={12}>
               <SelectInputComponent
-          dataArray={cityNames}
-          name={"city"}
-          className={select}
-          value={val.city}
-          label={"City"}
-          required
-          handleChangeSelect={handleChangeSelect}
-        />
+                dataArray={cityNames}
+                name={'city'}
+                value={val.city}
+                label={'City'}
+                required
+                handleChangeSelect={handleChangeSelect}
+              />
             </Grid>
-            <Grid item lg={2} xs={12} className={btnBox}>
-              <CustomButton
-                styles={button}
+            <Grid item xs={12}>
+              <Button
                 variant="contained"
-                handleClick={() => onSubmit()}
+                color="secondary"
+                onClick={() => onSubmit()}
+                className={button}
               >
                 {buttonText}
-              </CustomButton>
-            </Grid>
-            <Grid item lg={2} xs={12} className={btnBox}>
-              <CustomButton
-                styles={cancelButton}
+              </Button>
+              <Button
                 variant="contained"
-                handleClick={() => handleCancel()}
+                onClick={() => handleCancel()}
+                color="primary"
+                className={cancelButton}
               >
                 {cancelButtonText}
-              </CustomButton>
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Divider style={{ width: '100%' }} />
+            </Grid>
+            <Grid item xs={12}>
+              <RegexInputs />
+            </Grid>
+            <Grid item xs={12}>
+              <Divider style={{ width: '100%' }} />
+            </Grid>
+            <Grid item xs={12}>
+              <ChangePassword />
             </Grid>
           </Grid>
         </Grid>
-        <Divider />
-        <RegexInputs />
-        <Divider />
-        <ChangePassword />
-      </Grid>
+      </Paper>
       <Toast
         open={open}
         type={responseMessage.status}

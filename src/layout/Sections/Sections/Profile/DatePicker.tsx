@@ -8,8 +8,7 @@ const DatePicker = ({ date,handleChangeDate }: any) => {
   return (
     <>
       <TextField
-        className={select}
-        variant="outlined"
+        fullWidth
         name="date"
         id="date"
         label="Date of birth"

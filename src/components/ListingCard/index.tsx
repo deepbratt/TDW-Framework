@@ -137,13 +137,13 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 justifyContent: 'center',
                 alignItems: 'center',
                 overflow: 'hidden',
-                width: '100%',
+                width: '100%'
               }}
             >
               <img
                 style={{
                   // overflow: 'hidden',
-                  minHeight: "200px",
+                  minHeight: '200px',
                   width: '100%',
                   borderRadius: '5px'
                 }}
@@ -158,8 +158,13 @@ const ListingCard: React.FC<ListingCardProps> = ({
             </CardMedia>
           </Grid>
           <Grid item container xs={12} sm={layoutType !== 'list' ? 12 : 8}>
-            <CardContent style={{padding:"5px"}}>
-              <Grid item container xs={12} spacing={layoutType==="list" ? 2 : 1}>
+            <CardContent style={{ padding: '5px' }}>
+              <Grid
+                item
+                container
+                xs={12}
+                spacing={layoutType === 'list' ? 2 : 1}
+              >
                 <Grid
                   item
                   xs={12}
@@ -167,16 +172,14 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <Typography variant="h5">
-                    {ConvertDate(createdAt)}
-                  </Typography>
+                  <Typography variant="h5">{ConvertDate(createdAt)}</Typography>
                   {isLoggedIn && user._id !== createdBy ? (
                     <IconButton
                       onClick={(e) => {
                         favs(_id ? _id : '');
                         e.stopPropagation();
                       }}
-                      style={{padding:0}}
+                      style={{ padding: 0 }}
                     >
                       {isFavorite || pathname.indexOf('favorites') > -1 ? (
                         <Favorite color="primary" />
@@ -282,7 +285,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                     </span>
                     <span>
                       <Typography variant="subtitle2">
-                          {moment(updatedAt).format('DD MMMM')}
+                        {moment(updatedAt).format('DD MMMM')}
                       </Typography>
                     </span>
                   </div>

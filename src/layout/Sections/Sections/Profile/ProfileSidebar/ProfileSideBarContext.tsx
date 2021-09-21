@@ -33,7 +33,7 @@ const ProfileSideBarContext = ({ children }: IProp) => {
   const { user } = useSelector((state: RootState) => state.auth);
   return (
     <Grid style={{ display: 'block' }} container>
-      <Grid style={{ display: 'flex', paddingTop: '90px' }} item xs={12}>
+      <Grid style={{ display: 'flex' }} item xs={12}>
         <Hidden smDown>
           <Grid item lg={4} md={4}>
             <Paper elevation={4} className={userContainer}>

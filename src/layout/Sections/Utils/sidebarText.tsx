@@ -14,7 +14,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Commute, Compare, Favorite, Help } from '@material-ui/icons';
 
 export const Title = 'DashBoard';
-export const profileTitle = 'Profile';
+export const profileTitle = 'Personal Information';
 export const buttonText = 'Save';
 export const profile = profileIcon;
 export const cancelButtonText = 'Cancel';
@@ -32,7 +32,7 @@ export const paths = [
   {
     title: 'Profile',
     path: '/dashboard/profile',
-    icon: <AccountCircle style={{}} />
+    icon: <AccountCircle />
   },
   // {
   //     title: "Orders",
@@ -125,13 +125,13 @@ export const country = [
 
 // favs
 
-export const fav = 'Favorites';
+export const fav = 'Your Favourites';
 export const favTitle = 'Your Favorites';
 export const createdAt = 'Created at:';
 
 // favs
 
-export const ads = 'Ads';
+export const ads = 'Your Ads';
 export const adsTitle = 'Your Ads';
 
 // history

@@ -4,7 +4,8 @@ import { Colors } from "../../Utils/constants/colors/colors";
 const { grey, blue } = Colors;
 const LayoutStyle = makeStyles((theme) => ({
   root: {
-    margin: "50px 0",
+    display:"flex",
+    padding: "50px 0",
     position: "relative",
   },
   content: {

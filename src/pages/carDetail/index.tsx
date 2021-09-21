@@ -45,8 +45,8 @@ const CarDetailContainer = () => {
         keywords={PageMeta.carDetails.keywords}
       />
       <Loader open={isLoading} isBackdrop={true} />
-      <Paper elevation={4} style={{padding:"10px"}}>
-        <Grid container spacing={2} style={{ display: 'flex' }}>
+      <Paper elevation={4} style={{padding:"10px", width:"100%"}}>
+        <Grid container spacing={2}>
           {!obj ? (
             <Grid
               item

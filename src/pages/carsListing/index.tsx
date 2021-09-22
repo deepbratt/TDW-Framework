@@ -14,6 +14,7 @@ import {
   Hidden,
   SwipeableDrawer,
   Typography,
+  Fab
 } from '@material-ui/core';
 import Toast from '../../components/Toast';
 import Pagination from '@material-ui/lab/Pagination';
@@ -31,20 +32,23 @@ import {
   APPLY_FILTERS,
   SHORTLIST_ITEMS,
   COMPARE,
-  CANT_FIND_RESULT
+  CANT_FIND_RESULT,
+  CHOOSE_CARS_TO_COMPARE
+
 } from '../../Utils/constants/language/en/buttonLabels';
 import FullScreenDialog from '../../components/DialogBox/FullScreenDialog';
 import { useForm } from './useForm';
 import { fieldNames } from '../../Utils/constants/formsConstants';
 import { RootState } from '../../redux/store';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
-import { paths } from '../../routes/paths';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import Skeletons from '../../components/Skeletons';
 import ListingCardSkeletons from '../../components/ListingCard/ListingCardSkeletons';
+import CompareRoundedIcon from '@material-ui/icons/CompareRounded';
 import CarListingStyles from './style';
 import CustomButton from '../../CustomButton';
+import { paths } from '../../routes/paths';
 
 export interface CarsListingProps {
   isShortlist?: boolean;
@@ -53,8 +57,15 @@ export interface CarsListingProps {
 const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
   const history = useHistory();
 
-  const { listingContainer, contentRoot, filtersRoot, filtersContent } =
-    CarListingStyles();
+  const {
+    root,
+    listingContainer,
+    contentRoot,
+    filtersRoot,
+    filtersContent,
+    comparebutton,
+    compareButtonIcon
+  } = CarListingStyles();
 
   const {
     values,
@@ -142,7 +153,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
   };
 
   return (
-    <Container>
+    <Container className={root}>
       <MetaTags
         title={PageMeta.carListing.title}
         description={PageMeta.carListing.description}
@@ -153,11 +164,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
         container
         className={listingContainer}
         justifyContent="space-between"
-        spacing={3}
+        spacing={2}
       >
-        {/* <Grid item xs={12}>
-            <BreadCrumbs />
-          </Grid> */}
         <Grid style={{ height: '100%' }} xs={12} md={4} item container>
           <Hidden smDown>
             <Grid item xs={12} className={filtersRoot}>
@@ -188,6 +196,11 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
         </Grid>
         <Grid item container xs={12} md={8}>
           <Grid item xs={12} className={contentRoot}>
+            {isShortlist && (
+              <Typography style={{marginBottom: "20px"}} variant="h3" color="secondary" gutterBottom>
+                {CHOOSE_CARS_TO_COMPARE}
+              </Typography>
+            )}
             <Hidden mdUp>
               <Grid item container justifyContent="space-between" xs={12}>
                 <Grid item>
@@ -302,16 +315,17 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                     {SHORTLIST_ITEMS}
                   </Typography>
                 </Grid>
-                <Grid container item xs={6} justifyContent="flex-end">
-                  <Grid item xs={6} sm={3}>
-                    <Button
-                      color="secondary"
-                      onClick={() => history.push(`${paths.carComparision}`)}
-                    >
-                      {COMPARE}
-                    </Button>
-                  </Grid>
-                </Grid>
+                <Fab
+                  variant="extended"
+                  color="primary"
+                  aria-label="compare"
+                  size="large"
+                  className={comparebutton}
+                  onClick={() => history.push(`${paths.carComparision}`)}
+                >
+                  <CompareRoundedIcon className={compareButtonIcon} />
+                  {COMPARE}
+                </Fab>
                 <Grid item container xs={12} spacing={1}>
                   {shortListCars &&
                     shortListCars.map((item: ICarCard) => (

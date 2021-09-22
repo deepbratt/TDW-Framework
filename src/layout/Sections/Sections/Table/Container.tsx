@@ -1,5 +1,5 @@
 import Table from './Table';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import {
   Title,
   moreBtn,
@@ -9,7 +9,6 @@ import {
   collapsedArray,
   heading
 } from '../../Utils/carComparision';
-import CustomTitle from '../../../../components/CustomTitle/CustomTitle';
 import { Colors } from '../../Utils/color.constants';
 import { ICarCard } from '../../../../Utils/interfaces/products.interface';
 import { fieldNames } from '../../../../Utils/constants/formsConstants';
@@ -61,12 +60,14 @@ const Container = ({ data, shortListCars }: IData) => {
     <Grid container>
       <Grid style={{ paddingTop: '30px' }} item xs={12}>
         <Grid style={{ borderBottom: `5px solid ${blue}` }} item xs={12}>
-          <CustomTitle color={black} text={heading} />
+          <Typography style={{ marginLeft: '15px' }} variant="h2" gutterBottom>
+            {heading}
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Banner data={[firstCar, secondCar]} />
         </Grid>
-        <Grid style={{marginTop: "20px"}} item container spacing={1}>
+        <Grid style={{ marginTop: '20px' }} item container spacing={1}>
           <Grid item container xs={6} justifyContent="center">
             <Autocomplete
               id="select-car-one"

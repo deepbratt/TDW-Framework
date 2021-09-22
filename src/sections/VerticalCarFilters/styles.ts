@@ -8,6 +8,8 @@ const VerticalFilterStyles = makeStyles(() => ({
       padding: '10px 15px',
       fontSize: '20px'
     }
+  },lastAccordion:{
+    borderBottom :"none"
   }
 }));
 export default VerticalFilterStyles;

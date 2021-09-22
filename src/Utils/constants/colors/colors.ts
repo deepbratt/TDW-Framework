@@ -2,7 +2,7 @@ export const Colors = {
   primary: '#C20000',
   textPrimary: '#092C4C',
   greythree: '#828282',
-  greyFour: '#BDBDBD',
+  greyFour: '#EEEEEE',
   greySix: '#F2F2F2',
   spanishGrey: '#979797',
   blueOne: '#2F80ED',
@@ -23,5 +23,6 @@ export const Colors = {
   footerLinks: '#999999',
   whiteTranparent: 'rgba(255,255,255,0.5)',
   greyTranparent: 'rgba(255,255,255,0.5)',
-  lightBlue: '#F0F1F2'
+  lightBlue: '#F0F1F2',
+  lightGrey: "#DEDFE0",
 };

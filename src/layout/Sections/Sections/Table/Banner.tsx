@@ -1,15 +1,26 @@
-import { Paper, Grid, Typography } from '@material-ui/core';
+import { makeStyles, Paper, Grid, Typography } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { paths } from '../../../../routes/paths';
 import { ICarCard } from '../../../../Utils/interfaces/products.interface';
+
+const TableBannerStyles = makeStyles((theme) => ({
+  root: {
+    boxShadow: 'none',
+    padding: '50px 30px 0 30px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '10px'
+    }
+  }
+}));
 
 export interface BannerProps {
   data: ICarCard[];
 }
 
 const Banner: React.FC<BannerProps> = ({ data }) => {
+  const { root } = TableBannerStyles();
   return (
-    <Paper style={{ boxShadow: 'none', padding: '50px 30px' }}>
+    <Paper className={root}>
       <Grid container justifyContent="center" spacing={2}>
         {data &&
           data.map((item: ICarCard, index) => (

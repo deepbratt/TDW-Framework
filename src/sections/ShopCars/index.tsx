@@ -43,6 +43,9 @@ const ShopCarsStyles = makeStyles((theme) => ({
   list: {
     color: theme.palette.common.white
   },
+  listItem: {
+    padding: "2px"
+  },
   btn: {
     backgroundColor: Colors.darkBlue,
     border: `1px solid ${theme.palette.common.white}`,
@@ -58,7 +61,8 @@ interface IShopCarProps {
 }
 
 const ShopCars: React.FC<IShopCarProps> = ({ featureImg }) => {
-  const { root, cardContent, cardMedia, list, btn } = ShopCarsStyles();
+  const { root, cardContent, cardMedia, list, listItem, btn } =
+    ShopCarsStyles();
   return (
     <Card className={root}>
       <Grid container>
@@ -73,7 +77,7 @@ const ShopCars: React.FC<IShopCarProps> = ({ featureImg }) => {
             <List className={list}>
               {shopCarData &&
                 shopCarData.map((item, index) => (
-                  <ListItem key={`${index}`}>
+                  <ListItem className={listItem} key={`${index}`}>
                     <ListItemIcon>
                       <img height="26px" src={item.icon} alt="" />
                     </ListItemIcon>

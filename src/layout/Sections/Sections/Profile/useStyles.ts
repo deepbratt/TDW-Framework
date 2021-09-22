@@ -51,6 +51,7 @@ export const useStyles = makeStyles((theme) => ({
     color: navyBlue,
     display: "flex",
     justifyContent: "space-between",
+    marginBottom:"15px",
   },
   box: {
     marginLeft: "20px",

@@ -74,7 +74,7 @@ const RegexInputs = () => {
         />
       </Grid>
       {val.email || number ? (
-        <Grid item lg={12} xs={12}>
+        <Grid item lg={12} xs={12} style={{display:"flex"}}>
           <Button
             className={button}
             variant="contained"

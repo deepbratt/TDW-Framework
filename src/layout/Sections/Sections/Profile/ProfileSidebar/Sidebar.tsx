@@ -1,10 +1,12 @@
 import { Drawer, Typography, List, ListItem } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useHistory } from "react-router-dom";
 import { useStyles } from "./sidebarStyles";
 import { useState } from "react";
 import { IProps } from "../types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../redux/store";
 
 const SideBar = ({ sidebar, Title }: IProps) => {
   const classes = useStyles();
@@ -18,8 +20,14 @@ const SideBar = ({ sidebar, Title }: IProps) => {
     content,
     heading,
     link,
+    selectedContent,
+    selectedIcon,
+    pathIcon
   } = classes;
   const [open, setOpen] = useState<boolean>(false);
+  const { pathname } = useLocation();
+  const {user} = useSelector((state:RootState)=>state.auth)
+  const history = useHistory()
   return (
     <>
       <Drawer
@@ -33,7 +41,10 @@ const SideBar = ({ sidebar, Title }: IProps) => {
       >
         <div className={drawerHeader}></div>
         <section className={heading}>
-          <Typography variant="h3">{Title}</Typography>
+          <div>
+          <Typography variant="h3">{"Hello"}</Typography>
+          <Typography variant="h3" onClick={()=>history.push('/dashboard/profile')}>{user.firstName}&nbsp;{user.lastName}</Typography>
+          </div>
           <CloseIcon className={closeIcon} onClick={() => setOpen(!open)} />
         </section>
         <section className={container}>
@@ -42,18 +53,35 @@ const SideBar = ({ sidebar, Title }: IProps) => {
               return (
                 <>
                   <NavLink className={link} to={data.path}>
-                    <ListItem
-                      key={`sidebar ${index}`}
-                      className={content}
-                      button
-                    >
-                      {/* <section className={icon}>
-                        <img width="50%" src={data.icon} alt="img" />
-                      </section> */}
-                      {data.icon}
-                      <Typography variant="subtitle1">{data.title}</Typography>
-                    </ListItem>
-                  </NavLink>
+                          <ListItem
+                            key={`sidebar ${index}`}
+                            className={
+                              pathname.indexOf(data.path) > -1
+                                ? selectedContent
+                                : content
+                            }
+                            button
+                          >
+                            {/* <section className={icon}>
+                            </section> */}
+                            {/* <img width="30px" src={data.icon} alt="img"/> */}
+                            <span
+                              className={
+                                pathname.indexOf(data.path) > -1
+                                  ? selectedIcon
+                                  : pathIcon
+                              }
+                            >
+                              {data.icon}
+                            </span>
+                            <Typography
+                              variant="subtitle1"
+                              style={{ marginLeft: '10px' }}
+                            >
+                              {data.title}
+                            </Typography>
+                          </ListItem>
+                        </NavLink>
                 </>
               );
             })}

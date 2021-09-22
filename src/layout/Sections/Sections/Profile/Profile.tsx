@@ -36,8 +36,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import SelectInputComponent from '../../../../components/SelectInputComponent';
 import Breakpoints from '../../../../Utils/Breakpoints';
+import Sizes from '../../../../Utils/themeConstants';
 
 const Profile = () => {
+  const {desktop} = Sizes()
   const { updateProfile, open, setOpen, responseMessage, isLoading } =
     Actions();
   const { user } = useSelector((state: RootState) => state.auth);
@@ -116,7 +118,8 @@ const Profile = () => {
               {profileTitle}
             </Typography>
           </section>
-          <Grid container item xs={12} spacing={4}>
+          <Grid container spacing={4}>
+            {/* <Grid container spacing={4}></Grid> */}
           <Grid item xs={12} container justifyContent="center">
             <section style={{ position: 'relative' }}>
               <ProfileUpload setImg={setImg} profile={Img ? Img : profile} />
@@ -179,7 +182,7 @@ const Profile = () => {
                 handleChangeSelect={handleChangeSelect}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{display:"flex"}}>
               <Button
                 variant="contained"
                 color="secondary"

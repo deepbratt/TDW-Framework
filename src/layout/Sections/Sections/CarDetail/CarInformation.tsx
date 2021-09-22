@@ -1,4 +1,4 @@
-import { Typography, Grid } from '@material-ui/core';
+import { Typography, Grid, Divider } from '@material-ui/core';
 import { useStyles } from './useStyles';
 import { ICar } from '../../Utils/types1';
 import { Colors } from '../../Utils/color.constants';
@@ -34,28 +34,39 @@ const CarInformation = ({
         xs={12}
         style={{
           display: 'flex',
-          justifyContent: 'space-between',
           marginTop: '20px'
         }}
       >
-        <Grid item lg={3}>
+        <Grid item lg={6}>
           <Typography variant="subtitle1">{info.cityName}</Typography>
+          <Divider style={{width:"100%"}}/>
           <Typography variant="subtitle1">{info.assemblyName}</Typography>
+          <Divider style={{width:"100%"}}/>
           <Typography variant="subtitle1">{info.bodyName}</Typography>
+          <Divider style={{width:"100%"}}/>
           {/* <Typography variant="subtitle1">{info.adName}</Typography> */}
           <Typography variant="subtitle1">{info.colorName}</Typography>
+          <Divider style={{width:"100%"}}/>
           <Typography variant="subtitle1">{info.engineName}</Typography>
+          <Divider style={{width:"100%"}}/>
           <Typography variant="subtitle1">{info.dateName}</Typography>
+          <Divider style={{width:"100%"}}/>
         </Grid>
-        <Grid item lg={3}>
+        <Grid item lg={6} style={{textAlign:"right"}}>
           <Typography variant="subtitle1">{city}</Typography>
+          <Divider style={{width:"100%"}}/>
           <Typography variant="subtitle1">{assembly}</Typography>
+          <Divider style={{width:"100%"}}/>
           <Typography variant="subtitle1">{bodyType}</Typography>
+          <Divider style={{width:"100%"}}/>
           <Typography variant="subtitle1">{color}</Typography>
+          <Divider style={{width:"100%"}}/>
           <Typography variant="subtitle1">{engineCapacity}</Typography>
+          <Divider style={{width:"100%"}}/>
           <Typography variant="subtitle1">
             {updatedAt && moment(updatedAt).format('MMM D, YYYY')}
           </Typography>
+          <Divider style={{width:"100%"}}/>
         </Grid>
       </Grid>
       <Grid

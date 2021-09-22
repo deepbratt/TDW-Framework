@@ -180,7 +180,7 @@ export const useStyles = makeStyles(() => ({
   greyBackground: {
     color: gray,
     backgroundColor: ColorConstant.lightBlue,
-    border: '1px solid ' + ColorConstant.greyTwo,
+    border: '1px solid ' + ColorConstant.greyFive,
     padding: '5px',
     borderRadius: '5px',
     // marginTop:"20px"

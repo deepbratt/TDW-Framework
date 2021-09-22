@@ -1,5 +1,16 @@
-import { Grid, Typography, IconButton, Chip } from '@material-ui/core';
-import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
+import { makeStyles, Grid, Chip } from '@material-ui/core';
+import { Colors } from '../../Utils/constants/colors/colors';
+
+const AppliedFiltersStyles = makeStyles((theme) => ({
+  root: {
+    borderRadius: '5px',
+    backgroundColor: Colors.lightGrey,
+    border: `0.2px solid ${theme.palette.common.black}`
+  },
+  icon: {
+    color: theme.palette.common.black
+  }
+}));
 
 export interface AppliedFiltersProps {
   values: any;
@@ -16,6 +27,8 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
   removeRangeFilter,
   keys
 }) => {
+  const { root, icon } = AppliedFiltersStyles();
+
   const rangeFilters = {
     priceRange: 'Price',
     mileageRange: 'Mileage',
@@ -32,11 +45,11 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
     return (
       <Grid item>
         <Chip
+          classes={{ root: root, deleteIcon: icon }}
           size="small"
           label={
             getKeyValue(rangeFilters)(keys) + `[${values[0]}-${values[1]}]`
           }
-          color="primary"
           onDelete={() => removeRangeFilter(keys)}
         />
       </Grid>
@@ -47,9 +60,9 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
       return (
         <Grid item>
           <Chip
+            classes={{ root: root, deleteIcon: icon }}
             size="small"
             label={`Recent`}
-            color="primary"
             onDelete={() => removeFilter(keys)}
           />
         </Grid>
@@ -58,9 +71,9 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
       return (
         <Grid item>
           <Chip
+            classes={{ root: root, deleteIcon: icon }}
             size="small"
             label={`Oldest`}
-            color="primary"
             onDelete={() => removeFilter(keys)}
           />
         </Grid>
@@ -69,21 +82,20 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
       return (
         <Grid item>
           <Chip
+            classes={{ root: root, deleteIcon: icon }}
             size="small"
             label={`Price High to Low`}
-            color="primary"
             onDelete={() => removeFilter(keys)}
           />
         </Grid>
       );
-    }
-    else{
+    } else {
       return (
         <Grid item>
           <Chip
+            classes={{ root: root, deleteIcon: icon }}
             size="small"
             label={`Price Low to High`}
-            color="primary"
             onDelete={() => removeFilter(keys)}
           />
         </Grid>
@@ -95,9 +107,9 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
     return (
       <Grid item>
         <Chip
+          classes={{ root: root, deleteIcon: icon }}
           size="small"
           label={`Condition ${values}`}
-          color="primary"
           onDelete={() => removeFilter(keys)}
         />
       </Grid>
@@ -109,9 +121,9 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
       {typeof values !== typeof [] ? (
         <Grid item>
           <Chip
+            classes={{ root: root, deleteIcon: icon }}
             size="small"
             label={keys}
-            color="primary"
             onDelete={() => removeFilter(keys)}
           />
         </Grid>
@@ -121,9 +133,9 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
         values.map((filter: any) => (
           <Grid key={`filter-${keys}`} item>
             <Chip
+              classes={{ root: root, deleteIcon: icon }}
               size="small"
               label={filter}
-              color="primary"
               onDelete={() => removeFilterItem(filter, keys)}
             />
           </Grid>

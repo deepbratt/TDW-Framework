@@ -5,7 +5,6 @@ const breakpoints = createBreakpoints({});
 const { white, blue, darkGray } = Colors;
 export const useStyles = makeStyles({
   table: {
-    minWidth: 90,
     background: white
   },
   head: {
@@ -21,7 +20,6 @@ export const useStyles = makeStyles({
   },
   btn: {
     background: 'transparent',
-    padding: '0px',
     boxShadow: 'none',
     color: blue,
     textTransform: 'none',

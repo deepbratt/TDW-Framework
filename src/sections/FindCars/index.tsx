@@ -19,7 +19,7 @@ import { findCarsData } from '../../Utils/constants/language/en/homePageData';
 
 const FindCarsStyles = makeStyles((theme) => ({
   root: {
-    marginTop: '-45px',
+    marginTop: '-100px',
     marginBottom: '-120px',
     position: 'relative',
     boxShadow: '0px 2px 4px 4px rgba(0, 0, 0, 0.2)',

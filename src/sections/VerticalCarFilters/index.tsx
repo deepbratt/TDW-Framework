@@ -39,7 +39,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
   const [searchResult, setSearchResult] = useState<ICity[]>();
-  const {filtersCollection} = VerticalFilterStyles();
+  const {filtersCollection, lastAccordion} = VerticalFilterStyles();
   const {
     KEYWORDS,
     PRICE_RANGE,
@@ -134,7 +134,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   return (
     <div>
       {appliedFilters !== {} && (
-        <Grid style={{ padding: '20px' }} container spacing={1}>
+        <Grid style={{ padding: '0 0 5px 20px' }} container spacing={1}>
           {Object.entries(appliedFilters).map(([keys, values]: any) => (
             <AppliedFilters
               values={values}
@@ -1023,7 +1023,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           ))}
         </FormGroup>
       </FilterAccordion>
-      <FilterAccordion title={SELLER_TYPE}>
+      <FilterAccordion title={SELLER_TYPE} className={lastAccordion}>
         <FormGroup>
           {Carfilters.SELLER_TYPE.map((type) => (
             <FormControlLabel

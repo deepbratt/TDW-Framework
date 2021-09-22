@@ -21,5 +21,6 @@ export const Colors = {
   footerLinks: '#999999',
   whiteTranparent: 'rgba(255,255,255,0.5)',
   greyTranparent: 'rgba(255,255,255,0.5)',
-  lightBlue: '#F0F1F2'
+  lightBlue: '#F0F1F2',
+  lightGrey: "#DEDFE0",
 };

@@ -4,7 +4,8 @@ import { Colors } from '../../Utils/constants/colors/colors';
 const AppliedFiltersStyles = makeStyles((theme) => ({
   root: {
     borderRadius: '5px',
-    backgroundColor: Colors.lightGrey
+    backgroundColor: Colors.lightGrey,
+    border: `0.2px solid ${theme.palette.common.black}`
   },
   icon: {
     color: theme.palette.common.black

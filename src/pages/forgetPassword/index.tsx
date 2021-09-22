@@ -62,7 +62,7 @@ const ForgetPassword = () => {
         canonical={PageMeta.forgotPassword.canonical}
         keywords={PageMeta.forgotPassword.keywords}
       />
-      <Grid item xs={10} md={8} lg={6}>
+      <Grid item xs={10} md={8} lg={4}>
         {token ? (
           <ResetPassword token={pin} />
         ) : resetLinkMessage ? (

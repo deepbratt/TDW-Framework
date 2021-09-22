@@ -23,6 +23,7 @@ import { paths } from '../../../../../routes/paths';
 import {
   ADD_EDIT_CAR,
   LOGOUT,
+  POST_AN_AD,
   PROFILE,
   SIGNIN,
   SIGNUP
@@ -93,7 +94,12 @@ const SideBar = () => {
                 <List component="div" disablePadding dense>
                   <ListItem button className={nested}>
                     <NavLink className={link} to={paths.addEditCar}>
-                      <ListItemText primary={ADD_EDIT_CAR} />
+                      <ListItemText primary={POST_AN_AD} />
+                    </NavLink>
+                  </ListItem>
+                  <ListItem button className={nested}>
+                    <NavLink className={link} to={paths.dashboard+"/profile"}>
+                      <ListItemText primary={PROFILE} />
                     </NavLink>
                   </ListItem>
                   <ListItem button className={nested} onClick={() => dispatch(logout())}>              

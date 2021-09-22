@@ -33,7 +33,7 @@ const HomeBannerStyles = makeStyles((theme) => ({
     maxWidth: '330px',
     top: "40%",
     left: '10%',
-    zIndex: 11111,
+    zIndex: 111,
     backgroundColor: theme.palette.common.white,
     opacity: 0.9,
     borderRadius: '10px',

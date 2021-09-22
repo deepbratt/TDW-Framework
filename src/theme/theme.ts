@@ -7,6 +7,16 @@ const { berryRed, white, secondary } = Color;
 
 const MUITheme = createTheme({
   overrides: {
+    MuiContainer: {
+      root: {
+        marginTop: '50px',
+        marginBottom: '50px',
+        [theme.breakpoints.down('xs')]: {
+          marginTop: '20px',
+          marginBottom: '20px'
+        },
+      }
+    },
     MuiFormLabel: {
       asterisk: {
         color: '#db3131',

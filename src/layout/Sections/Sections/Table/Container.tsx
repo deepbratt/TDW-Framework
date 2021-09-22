@@ -60,7 +60,7 @@ const Container = ({ data, shortListCars }: IData) => {
     <Grid container>
       <Grid style={{ paddingTop: '30px' }} item xs={12}>
         <Grid style={{ borderBottom: `5px solid ${blue}` }} item xs={12}>
-          <Typography style={{marginLeft: "15px"}} variant="h2" gutterBottom>
+          <Typography style={{ marginLeft: '15px' }} variant="h2" gutterBottom>
             {heading}
           </Typography>
         </Grid>

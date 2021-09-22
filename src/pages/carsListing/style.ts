@@ -13,7 +13,7 @@ const CarListingStyles = makeStyles((theme) => ({
   contentRoot: {
     backgroundColor: theme.palette.common.white,
     borderRadius: '5px',
-    border: `0.5px solid ${Colors.footerLinks}`,
+    border: `0.2px solid ${Colors.lightGrey}`,
     padding: '20px',
     [theme.breakpoints.down('sm')]: {
       padding: '10px 5px'
@@ -22,7 +22,7 @@ const CarListingStyles = makeStyles((theme) => ({
   filtersRoot: {
     backgroundColor: theme.palette.common.white,
     borderRadius: '5px',
-    border: `0.5px solid ${Colors.footerLinks}`
+    border: `0.5px solid ${Colors.lightGrey}`
   },
   filtersContent: {
     padding: '20px',

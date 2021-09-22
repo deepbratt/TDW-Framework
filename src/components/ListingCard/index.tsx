@@ -45,7 +45,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
 }) => {
   const history = useHistory();
   const { pathname } = useLocation();
-  const {user, isLoggedIn} = useSelector((state:RootState)=>state.auth)
+  const { user, isLoggedIn } = useSelector((state: RootState) => state.auth);
   const { root, grid, featuredBadge, location, favsIcon, label, favsIconGrid } =
     ListingCardStyles();
   const { red, grey, flashWhite } = Colors;
@@ -69,39 +69,43 @@ const ListingCard: React.FC<ListingCardProps> = ({
     createdBy
   } = data;
 
-  const [isFavorite, setIsfavorite] = useState(isFav)
-  const [toastMessage, setToastMessage] = useState('')
-  const [toastType, setToastType] = useState('success')
-  const [toastOpen, setToastOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isFavorite, setIsfavorite] = useState(isFav);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('success');
+  const [toastOpen, setToastOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const favs = (id: string) => {
-    console.log(data)
+    console.log(data);
     if (handleFavs) {
       handleFavs(id);
-    }else{
-      setIsLoading(true)
-      addToFav(isFavorite ? removeFavs : addToFavs, id).then(response=>{
-        setIsLoading(false)
-        console.log(response)
-        if(response && response.status === "success"){
-          setToastMessage(response?.message)
-          setToastType('success')
-          setIsfavorite(!isFavorite)
-        }else{
-          setToastMessage(response?.message)
-          setToastType('error')
+    } else {
+      setIsLoading(true);
+      addToFav(isFavorite ? removeFavs : addToFavs, id).then((response) => {
+        setIsLoading(false);
+        console.log(response);
+        if (response && response.status === 'success') {
+          setToastMessage(response?.message);
+          setToastType('success');
+          setIsfavorite(!isFavorite);
+        } else {
+          setToastMessage(response?.message);
+          setToastType('error');
         }
-        setToastOpen(true)
-      })
+        setToastOpen(true);
+      });
     }
   };
 
   return (
     <>
-
-    <Toast open={toastOpen} message={toastMessage} type={toastType} onClose={()=>setToastOpen(false)}/>
-    <Loader open={isLoading} isBackdrop={true}/>
+      <Toast
+        open={toastOpen}
+        message={toastMessage}
+        type={toastType}
+        onClose={() => setToastOpen(false)}
+      />
+      <Loader open={isLoading} isBackdrop={true} />
       <Card
         className={layoutType === 'list' ? root : grid}
         style={{ cursor: 'pointer' }}
@@ -125,7 +129,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 alignItems: 'center',
                 overflow: 'hidden',
                 maxHeight: '175px',
-                minHeight: "100%"
+                minHeight: '100%'
               }}
             >
               <img
@@ -134,8 +138,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   justifyContent: 'center',
                   alignItems: 'center',
                   overflow: 'hidden',
-                  minWidth:"100%",
-                  minHeight: "175px",
+                  minWidth: '100%',
+                  minHeight: '175px'
                 }}
                 src={image && image.length > 0 ? image[0] : NoImg}
                 alt=""
@@ -163,7 +167,11 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       e.stopPropagation();
                     }}
                     className={layoutType === 'list' ? favsIcon : favsIconGrid}
-                    style={isFavorite || pathname.indexOf('favorites') > -1 ? { color: red } : { color: grey }}
+                    style={
+                      isFavorite || pathname.indexOf('favorites') > -1
+                        ? { color: red }
+                        : { color: grey }
+                    }
                   >
                     <FavoriteIcon />
                   </button>
@@ -180,10 +188,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 </Grid>
                 <Grid item container xs={12} spacing={2}>
                   <Grid item xs={12}>
-                    <Typography
-                      variant="h3"
-                      style={{ cursor: 'pointer' }}
-                    >
+                    <Typography variant="h3" style={{ cursor: 'pointer' }}>
                       {`${make} ${model}`}
                     </Typography>
                   </Grid>

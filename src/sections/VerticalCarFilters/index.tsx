@@ -134,7 +134,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   return (
     <div>
       {appliedFilters !== {} && (
-        <Grid style={{ padding: '20px' }} container spacing={1}>
+        <Grid style={{ padding: '0 0 5px 20px' }} container spacing={1}>
           {Object.entries(appliedFilters).map(([keys, values]: any) => (
             <AppliedFilters
               values={values}

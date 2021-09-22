@@ -3,7 +3,7 @@ import ratingIcon from "../assets/carDetail/rating.png";
 import icon1 from "../assets/carDetail/icon1.png";
 import icon2 from "../assets/carDetail/icon2.png";
 import icon3 from "../assets/carDetail/icon3.png";
-import icon4 from "../assets/carDetail/icon5.png";
+import icon4 from "../assets/carDetail/gear-shift.png";
 import num from "../assets/carDetail/number.png";
 import mail from "../assets/carDetail/mail.png";
 import img from "../assets/carDetail/image 6.png";

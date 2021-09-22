@@ -1,6 +1,7 @@
 export const API_ENDPOINTS = {
   ADS: '/ads',
   CARS: '/cars',
+  MY_CARS: '/myCars',
   USERS: '/Users',
   CURENT_USER: '/currentUser',
   SIGNUP: '/signup',
@@ -27,6 +28,7 @@ export const API_ENDPOINTS = {
   MODEL_VERSIONS:"/versions?model_id=",
   BODY_TYPES:"/body-types",
   CAR_FEATURES:"/features",
+  FAVOURITES:"/favourites",
   TICKETS:"/tickets",
   AD_TICKETS:"/advAssistance",
   TECH_TICKETS:"/techAssistance",

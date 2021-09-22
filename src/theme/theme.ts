@@ -83,6 +83,7 @@ const MUITheme = createTheme({
   props: {
     MuiTextField: {
       variant: 'outlined',
+      color:"secondary",
       InputLabelProps: {
         shrink: true
       }

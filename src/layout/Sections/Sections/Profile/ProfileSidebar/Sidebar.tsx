@@ -47,9 +47,10 @@ const SideBar = ({ sidebar, Title }: IProps) => {
                       className={content}
                       button
                     >
-                      <section className={icon}>
+                      {/* <section className={icon}>
                         <img width="50%" src={data.icon} alt="img" />
-                      </section>
+                      </section> */}
+                      {data.icon}
                       <Typography variant="subtitle1">{data.title}</Typography>
                     </ListItem>
                   </NavLink>

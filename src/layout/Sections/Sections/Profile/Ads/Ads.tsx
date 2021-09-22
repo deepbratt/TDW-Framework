@@ -1,85 +1,75 @@
-import { Grid, Typography, Hidden } from "@material-ui/core";
-import { useStyles } from "../useStyles";
-import { useEffect, useState } from "react";
-import CarListing from "../../../../../components/ListingCard/";
+import { Grid, Typography, Hidden, Paper } from '@material-ui/core';
+import { useStyles } from '../useStyles';
+import { useEffect } from 'react';
+import CarListing from '../../../../../components/ListingCard/';
 import {
   adsTitle,
   paths,
   Title,
   ads,
-  createdAt,
-} from "../../../Utils/sidebarText";
-import SideBar from "../ProfileSidebar/Sidebar";
-import Actions from "../useFunctions";
-import { getAds } from "../../../../../Utils/hooks/endpoints";
-import { useSelector } from "react-redux";
-import LayoutToggler from "../../../../../components/LayoutToggler";
-import Pagination from "@material-ui/lab/Pagination";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { RootState } from "../../../../../redux/store";
-import MetaTags from "../../../../../components/MetaTags";
-import PageMeta from "../../../../../Utils/constants/language/en/pageData";
+  createdAt
+} from '../../../Utils/sidebarText';
+import SideBar from '../ProfileSidebar/Sidebar';
+import Actions from '../useFunctions';
+import { useSelector } from 'react-redux';
+import LayoutToggler from '../../../../../components/LayoutToggler';
+import Pagination from '@material-ui/lab/Pagination';
+import { RootState } from '../../../../../redux/store';
+import MetaTags from '../../../../../components/MetaTags';
+import PageMeta from '../../../../../Utils/constants/language/en/pageData';
+import Loader from '../../../../../components/Loader';
+import { API_ENDPOINTS } from '../../../../../Utils/API/endpoints';
 
 const Container = () => {
-  const {
-    heading,
-    box,
-    favContainer,
-    loading,
-    pagination,
-    layout,
-  } = useStyles();
-  const { loadAllData,isLoading,data} = Actions();
+  const { heading, box, favContainer, loading, pagination, layout } =
+    useStyles();
+  const { isLoading, data, page, pageCount, dataLimit, fetchData } = Actions();
 
-  const {layoutType} = useSelector(
-    (state: RootState) => state.layout
-  );
+  const { layoutType } = useSelector((state: RootState) => state.layout);
 
-  const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    loadAllData(getAds, currentPage);
-    window.scrollTo(0, 0)
-  }, [currentPage]);
-
-  const handlePageChange = (e: any) => {
-    setCurrentPage(e.target.innerText);
+  const getMyCars = (pageValue = page) => {
+    fetchData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.MY_CARS}?limit=${dataLimit}&page=${pageValue}`
+    );
   };
 
-  let isFavs = false;
+  useEffect(() => {
+    getMyCars(1);
+  }, []);
 
   return (
-    <Grid style={{ display: "flex" }} container>
+    <Grid style={{ display: 'flex' }} container>
       <MetaTags
         title={PageMeta.myAds.title}
         description={PageMeta.myAds.description}
         canonical={PageMeta.myAds.canonical}
         keywords={PageMeta.myAds.keywords}
       />
-      <Grid className={layoutType === "list" ? box : layout} item xs={12}>
-        <section className={heading}>
-          <Hidden mdUp>
-            <SideBar Title={Title} sidebar={paths} />
-          </Hidden>
-          <Typography variant="h3">{ads}</Typography>
-        </section>
-        {data.length === 0 || isLoading ? (
-          <h2 className={loading}>
-            <CircularProgress />
-          </h2>
-        ) : (
-          <Grid className={favContainer} item xs={12}>
-            <Grid item xs={12}>
-              <Typography style={{ textAlign: "center" }} variant="h2">
-                {adsTitle}
-              </Typography>
-            </Grid>
-            <Grid item container lg={12} xs={12} sm={10} spacing={2}>
-              <Grid item xs={12} lg={12}>
+      <Loader open={isLoading} isBackdrop={true} />
+      <Paper
+        elevation={4}
+        className={layoutType === 'list' ? box : layout}
+      >
+        <Grid item xs={12}>
+          <section className={heading}>
+            <Hidden mdUp>
+              <SideBar Title={Title} sidebar={paths} />
+            </Hidden>
+            <Typography variant="h3" style={{ fontWeight: 'normal' }}>
+              {ads}
+            </Typography>
+          </section>
+          {data.length === 0 ? (
+            <Typography variant="h2" className={loading}>
+              No Result Found
+            </Typography>
+          ) : (
+            <Grid container spacing={2}>
+              <Grid item xs={12} justifyContent="flex-start" container>
                 <LayoutToggler />
               </Grid>
-              {data.map((item:any, index:number)=>(
-                <Grid item lg={layoutType === "list" ? 12 : 6} xs={12} sm={10}>
+              {data.map((item: any, index: number) => (
+                <Grid item lg={layoutType === 'list' ? 12 : 4} xs={12} sm={12}>
                   <CarListing
                     data={item}
                     layoutType={layoutType}
@@ -89,17 +79,16 @@ const Container = () => {
                 </Grid>
               ))}
             </Grid>
-          </Grid>
-        )}
-      </Grid>
-      <Grid className={pagination} item xs={12}>
-        <Pagination
-          count={10}
-          hidePrevButton
-          hideNextButton
-          onChange={(e) => handlePageChange(e)}
-        />
-      </Grid>
+          )}
+        </Grid>
+        <Grid className={pagination} item xs={12}>
+          <Pagination
+            count={pageCount}
+            onChange={(event, value) => getMyCars(value)}
+            color="secondary"
+          />
+        </Grid>
+      </Paper>
     </Grid>
   );
 };

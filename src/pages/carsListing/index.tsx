@@ -14,7 +14,6 @@ import {
   Hidden,
   SwipeableDrawer,
   Typography,
-  Fab
 } from '@material-ui/core';
 import Toast from '../../components/Toast';
 import Pagination from '@material-ui/lab/Pagination';
@@ -30,7 +29,6 @@ import {
 } from '../../Utils/constants/language/en/filtersData';
 import {
   APPLY_FILTERS,
-  CHOOSE_CARS_TO_COMPARE,
   SHORTLIST_ITEMS,
   COMPARE,
   CANT_FIND_RESULT
@@ -42,7 +40,6 @@ import { RootState } from '../../redux/store';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
-import CompareRoundedIcon from '@material-ui/icons/CompareRounded';
 import Skeletons from '../../components/Skeletons';
 import ListingCardSkeletons from '../../components/ListingCard/ListingCardSkeletons';
 import CarListingStyles from './style';
@@ -366,8 +363,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                   item
                   container
                   xs={12}
-                  justifyContent="center"
-                  spacing={1}
+                  // justifyContent="center";
+                  spacing={2}
                 >
                   {result &&
                     result.map((car: any, index: any) => (
@@ -375,7 +372,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                         key={`cars-card-${index}`}
                         item
                         xs={12}
-                        sm={layoutType === 'list' ? 12 : 6}
+                        sm={layoutType === 'list' ? 12 : 4}
                       >
                         <ListingCard
                           data={car}
@@ -388,14 +385,17 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                       </Grid>
                     ))}
                   {result && (
-                    <Pagination
-                      style={{ margin: '15px 0' }}
-                      count={pageCount}
-                      page={page}
-                      onChange={handlePageChange}
-                      variant="outlined"
-                      shape="rounded"
-                    />
+                    <Grid item xs={12} container justifyContent="center">
+                      <Pagination
+                        style={{ margin: '15px 0'}}
+                        count={pageCount}
+                        page={page}
+                        onChange={handlePageChange}
+                        variant="outlined"
+                        shape="round"
+                        color="primary"
+                      />
+                    </Grid>
                   )}
                 </Grid>
               )}

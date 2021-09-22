@@ -3,7 +3,7 @@ import { Dispatch,SetStateAction } from "react";
 interface IArray {
   title: string;
   path: string;
-  icon: string;
+  icon: any;
 }
 
 interface Currencies {

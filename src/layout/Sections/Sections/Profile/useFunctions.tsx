@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateUserData } from '../../../../redux/reducers/authSlice';
+import { getAllData } from '../../../../Utils/API/API';
+import { API_ENDPOINTS } from '../../../../Utils/API/endpoints';
 import {
   updateUser,
   accountVerify,
@@ -9,10 +11,14 @@ import {
 } from '../../../../Utils/hooks/actions';
 
 const Actions = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const [data, setData] = useState<any>([]);
   const [open, setOpen] = useState(false);
+  const dataLimit = 10;
+  const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
   const [responseMessage, setResponseMessage] = useState({
     status: '',
     message: ''
@@ -33,6 +39,30 @@ const Actions = () => {
         console.log(error);
         setIsLoading(false);
       });
+  };
+
+  const fetchData = (endpoint: string ,pageValue = page) => {
+    setIsLoading(true)
+    getAllData(
+      `${endpoint}`
+    ).then((response) => {
+      setIsLoading(false)
+      if (response && response.data && response.status === 'success') {
+        window.scrollTo(0, 0);
+        setPage(pageValue);
+        let totalPages = Math.ceil(response.totalCount / dataLimit);
+        setPageCount(totalPages);
+        setData(response.data.result);
+      } else {
+        let msg = response.message
+          ? response.message
+          : response.response
+          ? response.response
+          : 'Network Error';
+        setOpen(true);
+        setResponseMessage({ message: msg, status: 'error' });
+      }
+    });
   };
 
   const updateProfile = async (
@@ -248,7 +278,11 @@ const Actions = () => {
     isLoading,
     setOpen,
     loadAllData,
-    data
+    data,
+    fetchData,
+    pageCount,
+    page,
+    dataLimit
   };
 };
 

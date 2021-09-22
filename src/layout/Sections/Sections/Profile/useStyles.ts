@@ -6,14 +6,13 @@ const { red, white, navyBlue, blue, black } = Colors;
 
 export const useStyles = makeStyles((theme) => ({
   root: {
-    justifyContent: "center",
-    display: "flex",
-    flexFlow: "wrap",
-    paddingLeft: "70px",
-    paddingBottom: "30px",
-    [breakpoints.down("md")]: {
-      padding: "40px",
-    },
+    // justifyContent: "center",
+    // display: "flex",
+    // // paddingLeft: "70px",
+    // // paddingBottom: "30px",
+    // [breakpoints.down("md")]: {
+    //   padding: "40px",
+    // },
   },
   img: {
     justifyContent: "flex-end",
@@ -49,20 +48,20 @@ export const useStyles = makeStyles((theme) => ({
     color: red,
   },
   heading: {
-    background: navyBlue,
-    color: white,
-    padding: "20px 10px 20px 10px",
+    color: navyBlue,
     display: "flex",
     justifyContent: "space-between",
   },
   box: {
     marginLeft: "20px",
     background: white,
-    paddingBottom: "20px",
+    width: "100%",
     minHeight: "965px",
     position: "relative",
+    padding:"20px",
     [breakpoints.down("sm")]: {
       marginLeft: "0px",
+      padding:"10px"
     },
   },
   layout: {
@@ -71,8 +70,11 @@ export const useStyles = makeStyles((theme) => ({
     paddingBottom: "20px",
     minHeight: "1500px",
     position: "relative",
+    padding:"20px",
     [breakpoints.down("sm")]: {
       marginLeft: "0px",
+      padding:"10px"
+
     },
     [breakpoints.down("xs")]: {
       minHeight: "1650px",
@@ -80,19 +82,16 @@ export const useStyles = makeStyles((theme) => ({
   },
 
   button: {
-    background: blue,
+    background: navyBlue,
     color: white,
-    margin: "10px 10px 0px 10px",
     textTransform: "none",
-    "&:hover": {
-      background: blue,
-      color: white,
-    },
+    padding:"10px 50px"
   },
   cancelButton: {
     color: white,
-    margin: "10px 10px 0px 10px",
     textTransform: "none",
+    marginLeft:"10px",
+    padding:"10px 50px"
   },
   icon: {
     width: "15%",
@@ -118,7 +117,7 @@ export const useStyles = makeStyles((theme) => ({
   favContainer: {
     display: "flex",
     justifyContent: "center",
-    marginTop: "30px",
+    // marginTop: "30px",
     flexDirection: "column",
     alignItems: "center",
     [breakpoints.down("md")]: {
@@ -141,21 +140,10 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   pagination: {
-    position: "absolute",
-    bottom: "0%",
-    left: "50%",
-    transform: "translate(-50% , -50%)",
-    [breakpoints.up("lg")]: {
-      left: "60%",
-      marginLeft: "20px",
-    },
-    [breakpoints.only("md")]: {
-      left: "60%",
-      marginLeft: "10px",
-    },
-    [breakpoints.down("xs")]: {
-      marginLeft: "10px",
-    },
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
+    padding:"10px"
   },
   passContainer:{
     display: "flex",

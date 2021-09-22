@@ -1,37 +1,34 @@
-import { Grid, Typography, Hidden } from "@material-ui/core";
-import { useStyles } from "./useStyles";
-import CarListing from "../../../../components/ListingCard/";
-import { useState, useEffect } from "react";
-import { favTitle, paths, Title, fav } from "../../Utils/sidebarText";
-import SideBar from "./ProfileSidebar/Sidebar";
-import Actions from "./useFunctions";
-import { getFavs, removeFavs } from "../../../../Utils/hooks/endpoints";
-import Toast from "../../../../components/Toast";
-import { useSelector } from "react-redux";
-import Pagination from "@material-ui/lab/Pagination";
-import LayoutToggler from "../../../../components/LayoutToggler";
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { RootState } from "../../../../redux/store";
-import MetaTags from "../../../../components/MetaTags";
-import PageMeta from "../../../../Utils/constants/language/en/pageData";
+import { Grid, Typography, Hidden, Paper } from '@material-ui/core';
+import { useStyles } from './useStyles';
+import CarListing from '../../../../components/ListingCard/';
+import { useEffect } from 'react';
+import { paths, Title, fav } from '../../Utils/sidebarText';
+import SideBar from './ProfileSidebar/Sidebar';
+import Actions from './useFunctions';
+import { removeFavs } from '../../../../Utils/hooks/endpoints';
+import Toast from '../../../../components/Toast';
+import { useSelector } from 'react-redux';
+import Pagination from '@material-ui/lab/Pagination';
+import LayoutToggler from '../../../../components/LayoutToggler';
+import { RootState } from '../../../../redux/store';
+import MetaTags from '../../../../components/MetaTags';
+import PageMeta from '../../../../Utils/constants/language/en/pageData';
+import Loader from '../../../../components/Loader';
+import { API_ENDPOINTS } from '../../../../Utils/API/endpoints';
 const Container = () => {
+  const { heading, box, favContainer, loading, pagination, layout } =
+    useStyles();
   const {
-    heading,
-    box,
-    favContainer,
-    loading,
-    pagination,
-    layout,
-  } = useStyles();
-  const [currentPage, setCurrentPage] = useState(1);
-  const {
-    loadAllData,
     removeData,
     open,
     setOpen,
     responseMessage,
     data,
-    isLoading
+    isLoading,
+    fetchData,
+    pageCount,
+    page,
+    dataLimit
   } = Actions();
 
   const handleClose = (): void => {
@@ -41,21 +38,19 @@ const Container = () => {
   const handleFavs = (id: string) => {
     removeData(removeFavs, id);
   };
-
-  useEffect(() => {
-    loadAllData(getFavs, currentPage);
-    console.log(data)
-  }, [currentPage]);
-
-  const {layoutType} = useSelector(
-    (state: RootState) => state.layout
-  );
-
-  const handlePageChange = (e: any) => {
-    setCurrentPage(e.target.innerText);
+  const getFavs = (pageValue = page) => {
+    fetchData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.FAVOURITES}?limit=${dataLimit}&page=${pageValue}`
+    );
   };
 
-  let isFavs = true
+  useEffect(() => {
+    getFavs(1);
+  }, []);
+
+  const { layoutType } = useSelector((state: RootState) => state.layout);
+
+  let isFavs = true;
 
   return (
     <Grid container>
@@ -65,58 +60,62 @@ const Container = () => {
         canonical={PageMeta.favorites.canonical}
         keywords={PageMeta.favorites.keywords}
       />
-      <Grid className={layoutType === "list" ? box : layout} item xs={12}>
-        <section className={heading}>
-          <Hidden mdUp>
-            <SideBar Title={Title} sidebar={paths} />
-          </Hidden>
-          <Grid item xs={12}>
-            <Typography variant="h3">{fav}</Typography>
+      <Loader isBackdrop={true} open={isLoading} />
+      <Paper elevation={4} className={layoutType === 'list' ? box : layout}>
+        <Grid item xs={12}>
+          <section className={heading}>
+            <Hidden mdUp>
+              <SideBar Title={Title} sidebar={paths} />
+            </Hidden>
+            <Typography variant="h3" style={{ fontWeight: 'normal' }}>
+              {fav}
+            </Typography>
+          </section>
           </Grid>
-        </section>
-        {isLoading ? (
-          <h2 className={loading}><CircularProgress/></h2>
-        ) : data.length === 0 ? <Typography variant="h2" className={loading}>No Result Found</Typography> :(
-          <Grid className={favContainer} item xs={12}>
-            <Grid item xs={12}>
-              <Typography style={{ textAlign: "center" }} variant="h2">
-                {favTitle}
-              </Typography>
+          <Grid item xs={12}>
+          {data.length === 0 ? (
+            <Typography variant="h2" className={loading}>
+              No Result Found
+            </Typography>
+          ) : (
+            <Grid container spacing={2}>
+              <Grid item xs={12} justifyContent="flex-start" container>
+                <LayoutToggler />
               </Grid>
-              <Grid item container lg={12} xs={12} sm={10} spacing={2}>
-                <Grid item xs={12} lg={12}>
-                  <LayoutToggler />
-                </Grid>
-                {data.map((item:any, index:number)=>(
-                  <Grid item lg={layoutType === "list" ? 12 : 6} xs={12} sm={10}>
+                {data.map((item: any, index: number) => (
+                  <Grid
+                    item
+                    lg={layoutType === 'list' ? 12 : 4}
+                    xs={12}
+                    sm={12}
+                  >
                     <CarListing
                       data={item}
                       layoutType={layoutType}
                       isFavs={isFavs}
                       handleFavs={handleFavs}
                       // handleClick={()=>console.log(item)}
-                      />
+                    />
                   </Grid>
                 ))}
-              </Grid>
-       
-            <Toast
-              open={open}
-              type={responseMessage.status}
-              message={responseMessage.message}
-              onClose={handleClose}
-            />
-          </Grid>
-        )}
-      </Grid>
-      <Grid className={pagination} item xs={12}>
-        <Pagination
-          count={10}
-          hidePrevButton
-          hideNextButton
-          onChange={(e) => handlePageChange(e)}
-        />
-      </Grid>
+
+              <Toast
+                open={open}
+                type={responseMessage.status}
+                message={responseMessage.message}
+                onClose={handleClose}
+              />
+            </Grid>
+          )}
+        </Grid>
+        <Grid className={pagination} item xs={12}>
+          <Pagination
+            count={pageCount}
+            onChange={(event, value) => getFavs(value)}
+            color="secondary"
+          />
+        </Grid>
+      </Paper>
     </Grid>
   );
 };

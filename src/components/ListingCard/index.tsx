@@ -4,7 +4,9 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Typography
+  Typography,
+  Paper,
+  IconButton
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import {
@@ -26,6 +28,8 @@ import Toast from '../Toast';
 import Loader from '../Loader';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { Favorite, FavoriteBorder } from '@material-ui/icons';
+import moment from 'moment';
 export interface ListingCardProps {
   data: any;
   layoutType: string;
@@ -61,6 +65,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     transmission,
     city,
     createdAt,
+    updatedAt,
     price,
     image,
     isSold,
@@ -76,7 +81,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const favs = (id: string) => {
-    console.log(data);
     if (handleFavs) {
       handleFavs(id);
     } else {
@@ -99,10 +103,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
   return (
     <>
-      <Toast
-        open={toastOpen}
+
+    <Paper elevation={4}>
         message={toastMessage}
-        type={toastType}
         onClose={() => setToastOpen(false)}
       />
       <Loader open={isLoading} isBackdrop={true} />
@@ -120,16 +123,20 @@ const ListingCard: React.FC<ListingCardProps> = ({
               );
         }}
       >
-        <Grid container style={{ border: '2px solid ' + flashWhite }}>
-          <Grid item xs={12} sm={layoutType !== 'list' ? 12 : 4}>
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            sm={layoutType !== 'list' ? 12 : 4}
+            style={{ padding: '5px' }}
+          >
             <CardMedia
               style={{
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 overflow: 'hidden',
-                maxHeight: '175px',
-                minHeight: '100%'
+                width: '100%'
               }}
             >
               <img
@@ -138,165 +145,155 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   justifyContent: 'center',
                   alignItems: 'center',
                   overflow: 'hidden',
-                  minWidth: '100%',
-                  minHeight: '175px'
                 }}
                 src={image && image.length > 0 ? image[0] : NoImg}
                 alt=""
               />
+                <span className={featuredBadge}>
+                  <Typography variant="body2">{SOLD}</Typography>
+                </span>
+              ) : null}
             </CardMedia>
           </Grid>
           <Grid item container xs={12} sm={layoutType !== 'list' ? 12 : 8}>
-            <CardContent style={{ margin: '0' }}>
+            <CardContent style={{ padding: '5px' }}>
               <Grid
                 item
                 container
-                spacing={2}
-                direction="column"
-                justifyContent="space-between"
+                xs={12}
+                spacing={layoutType === 'list' ? 2 : 1}
               >
-                {isSold ? (
-                  <span className={featuredBadge}>
-                    <Typography variant="body2">{SOLD}</Typography>
-                  </span>
-                ) : null}
-                {isFavs && isLoggedIn && user._id !== createdBy ? (
-                  <button
-                    onClick={(e) => {
-                      favs(_id ? _id : '');
-                      e.stopPropagation();
-                    }}
-                    className={layoutType === 'list' ? favsIcon : favsIconGrid}
-                    style={
-                      isFavorite || pathname.indexOf('favorites') > -1
-                        ? { color: red }
-                        : { color: grey }
-                    }
-                  >
-                    <FavoriteIcon />
-                  </button>
-                ) : null}
-                <Grid item container justifyContent="space-between" xs={12}>
-                  <Grid item>
-                    <Typography variant="h5">{modelYear}</Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography color="secondary" variant="h4">
-                      {price && `PKR ${price?.toLocaleString()}`}
-                    </Typography>
-                  </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  container
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Typography variant="h5">{ConvertDate(createdAt)}</Typography>
+                  {isLoggedIn && user._id !== createdBy ? (
+                    <IconButton
+                      onClick={(e) => {
+                        favs(_id ? _id : '');
+                        e.stopPropagation();
+                      }}
+                      style={{ padding: 0 }}
+                    >
+                      {isFavorite || pathname.indexOf('favorites') > -1 ? (
+                        <Favorite color="primary" />
+                      ) : (
+                        <FavoriteBorder />
+                      )}
+                    </IconButton>
+                  ) : null}
                 </Grid>
-                <Grid item container xs={12} spacing={2}>
-                  <Grid item xs={12}>
-                    <Typography variant="h3" style={{ cursor: 'pointer' }}>
-                      {`${make} ${model}`}
+                <Grid item xs={12}>
+                  <Typography variant="h4" style={{ cursor: 'pointer' }}>
+                    {`${make} ${model}`}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography color="secondary" variant="h3">
+                    {price && `PKR ${price?.toLocaleString()}`}
+                  </Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={12}
+                  spacing={1}
+                  justifyContent="flex-start"
+                >
+                  <Grid item>
+                    <Typography
+                      color="textSecondary"
+                      variant="body2"
+                      component="span"
+                    >
+                      {modelYear}
                     </Typography>
                   </Grid>
-                  <Grid
-                    item
-                    container
-                    xs={12}
-                    spacing={1}
-                    justifyContent="flex-start"
-                  >
-                    <Grid item>
-                      <Typography
-                        color="textSecondary"
-                        variant="body2"
-                        component="span"
-                      >
-                        {modelYear}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography
-                        color="textSecondary"
-                        variant="body2"
-                        component="span"
-                      >
-                        {mileage?.toLocaleString()}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography
-                        color="textSecondary"
-                        variant="body2"
-                        component="span"
-                      >
-                        {engineType}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography
-                        color="textSecondary"
-                        variant="body2"
-                        component="span"
-                      >
-                        {`${engineCapacity} cc`}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography
-                        color="textSecondary"
-                        variant="body2"
-                        component="span"
-                      >
-                        {transmission}
-                      </Typography>
-                    </Grid>
-                    {pathname.indexOf('ads') > -1 ||
-                    pathname.indexOf('favorites') > -1 ? (
-                      <>
+                  <Grid item>
+                    <Typography
+                      color="textSecondary"
+                      variant="body2"
+                      component="span"
+                    >
+                      {mileage?.toLocaleString()}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      color="textSecondary"
+                      variant="body2"
+                      component="span"
+                    >
+                      {engineType}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      color="textSecondary"
+                      variant="body2"
+                      component="span"
+                    >
+                      {`${engineCapacity} cc`}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      color="textSecondary"
+                      variant="body2"
+                      component="span"
+                    >
+                      {transmission}
+                    </Typography>
+                  </Grid>
+                  {pathname.indexOf('ads') > -1 ||
+                  pathname.indexOf('favorites') > -1 ? (
+                    <>
+                      <Grid item>
+                        <Typography
+                          color="textSecondary"
+                          variant="body2"
+                          component="span"
+                        >
+                          {isSold ? SOLD : UNSOLD}
+                        </Typography>
+                      </Grid>
+                      {pathname.indexOf('ads') > -1 && (
                         <Grid item>
                           <Typography
                             color="textSecondary"
                             variant="body2"
                             component="span"
                           >
-                            {isSold ? SOLD : UNSOLD}
+                            {active ? ACTIVE : INACTIVE}
                           </Typography>
                         </Grid>
-                        {pathname.indexOf('ads') > -1 && (
-                          <Grid item>
-                            <Typography
-                              color="textSecondary"
-                              variant="body2"
-                              component="span"
-                            >
-                              {active ? ACTIVE : INACTIVE}
-                            </Typography>
-                          </Grid>
-                        )}
-                      </>
-                    ) : null}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <div className={location}>
-                      <span>
-                        <img src={LocationIcon} alt={city} />
-                        <Typography variant="subtitle2">{city}</Typography>
-                      </span>
-                      <span>
-                        <Typography variant="subtitle2">
-                          {' '}
-                          {span ? (
-                            <span className={label}>{`${span} ${ConvertDate(
-                              createdAt
-                            )}`}</span>
-                          ) : (
-                            ConvertDate(createdAt)
-                          )}
-                        </Typography>
-                      </span>
-                    </div>
-                  </Grid>
+                      )}
+                    </>
+                  ) : null}
+                </Grid>
+                <Grid item xs={12}>
+                  <div className={location}>
+                    <span>
+                      <img src={LocationIcon} alt={city} />
+                      <Typography variant="subtitle2">{city}</Typography>
+                    </span>
+                    <span>
+                      <Typography variant="subtitle2">
+                        {moment(updatedAt).format('DD MMMM')}
+                      </Typography>
+                    </span>
+                  </div>
                 </Grid>
               </Grid>
             </CardContent>
           </Grid>
         </Grid>
       </Card>
-    </>
+    </Paper>
   );
 };
 

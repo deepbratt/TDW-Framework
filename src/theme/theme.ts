@@ -11,10 +11,12 @@ const MUITheme = createTheme({
       root: {
         marginTop: '50px',
         marginBottom: '50px',
+        paddingLeft: 0,
+        paddingRight: 0,
         [theme.breakpoints.down('xs')]: {
           marginTop: '20px',
           marginBottom: '20px'
-        },
+        }
       }
     },
     MuiFormLabel: {

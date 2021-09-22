@@ -59,7 +59,7 @@ const HomeBannerStyles = makeStyles((theme) => ({
 }));
 
 const HomeBanner: React.FC = () => {
-  const { root, after, cardRoot, cardHeading, cardContent } =
+  const { root, after, cardRoot, cardHeading } =
     HomeBannerStyles();
   return (
     <div className={root}>
@@ -69,20 +69,7 @@ const HomeBanner: React.FC = () => {
         <Typography align="center" className={cardHeading} variant="h2">
           {BannerData.CARD_HEADER}
         </Typography>
-        <div className={cardContent}>
-          <Typography variant="h4">
-            {BannerData.CARD_SUBTITLES.TEST_DRIVE}
-          </Typography>
-          <img
-            style={{ margin: '5px' }}
-            height="25px"
-            src={WheelImg}
-            alt="steering wheel icon"
-          />
-          <Typography variant="h4">
-            {BannerData.CARD_SUBTITLES.RETURN}
-          </Typography>
-        </div>
+
         <CustomButton fullWidth>{FIND_YOUR_CAR}</CustomButton>
       </Card>
     </div>

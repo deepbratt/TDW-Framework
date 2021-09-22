@@ -19,6 +19,13 @@ const MUITheme = createTheme({
         color: Color.textPrimary
       }
     },
+    MuiAccordion: {
+      root: {
+        '&$expanded': {
+          margin: '0'
+        }
+      }
+    },
     MuiTab: {
       root: {
         textAlign: 'left',

@@ -1,38 +1,41 @@
-import React from "react";
+import React from 'react';
 import {
   Typography,
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  AccordionProps,
-} from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import AccordionStyles from "./styles";
+  AccordionProps
+} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import AccordionStyles from './styles';
 
 export interface FilterAccordionProps {
   title: string;
   children: React.ReactNode;
-  hideExpandIcon? : boolean
+  hideExpandIcon?: boolean;
 }
 
 const FilterAccordion: React.FC<FilterAccordionProps & AccordionProps> = ({
   title,
   children,
-  hideExpandIcon=false,
+  hideExpandIcon = false,
   ...accordionProps
 }) => {
-  const { root } = AccordionStyles();
+  const { root, expanded, summaryContent, detailRoot } = AccordionStyles();
 
   return (
-    <Accordion className={root} {...accordionProps}>
+    <Accordion classes={{ root: root, expanded: expanded }} {...accordionProps}>
       <AccordionSummary
+        classes={{ content: summaryContent }}
         expandIcon={!hideExpandIcon && <ExpandMoreIcon />}
         aria-controls="panel1bh-content"
         id="panel1bh-header"
       >
         <Typography>{title}</Typography>
       </AccordionSummary>
-      <AccordionDetails>{children}</AccordionDetails>
+      <AccordionDetails classes={{ root: detailRoot }}>
+        {children}
+      </AccordionDetails>
     </Accordion>
   );
 };

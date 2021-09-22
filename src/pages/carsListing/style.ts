@@ -2,6 +2,14 @@ import { makeStyles } from '@material-ui/core';
 import { Colors } from '../../Utils/constants/colors/colors';
 
 const CarListingStyles = makeStyles((theme) => ({
+  root: {
+    [theme.breakpoints.down('sm')]: {
+      padding: '10px'
+    },
+    [theme.breakpoints.down('xs')]: {
+      padding: '5px'
+    }
+  },
   listingContainer: {
     marginTop: '50px',
     marginBottom: '50px',
@@ -29,6 +37,19 @@ const CarListingStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       padding: '10px'
     }
+  },
+  comparebutton: {
+    margin: theme.spacing(1),
+    position: 'fixed',
+    right: '10%',
+    bottom: '20px',
+    zIndex: 99999,
+    [theme.breakpoints.down('xs')]: {
+      bottom: '10px'
+    }
+  },
+  compareButtonIcon: {
+    margin: theme.spacing(1)
   }
 }));
 

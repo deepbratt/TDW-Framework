@@ -26,6 +26,7 @@ export const DONOT_HAVE_ACCOUNT: string = "Don't have an account?";
 export const FORGOT_PASS: string = 'Forgot Password';
 export const APPLY_FILTERS: string = 'Apply Filters';
 export const APPLIED_FILTERS: string = 'APPLIED FILTERS';
+export const CHOOSE_CARS_TO_COMPARE: string = 'Choose Cars To Compare';
 export const RESET: string = 'Reset';
 export const CANCEL: string = 'CANCEL';
 export const FOR_ANDROID: string = 'For Android';

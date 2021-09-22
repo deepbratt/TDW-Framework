@@ -14,6 +14,7 @@ import {
   Hidden,
   SwipeableDrawer,
   Typography,
+  Fab
 } from '@material-ui/core';
 import Toast from '../../components/Toast';
 import Pagination from '@material-ui/lab/Pagination';
@@ -31,7 +32,9 @@ import {
   APPLY_FILTERS,
   SHORTLIST_ITEMS,
   COMPARE,
-  CANT_FIND_RESULT
+  CANT_FIND_RESULT,
+  CHOOSE_CARS_TO_COMPARE
+
 } from '../../Utils/constants/language/en/buttonLabels';
 import FullScreenDialog from '../../components/DialogBox/FullScreenDialog';
 import { useForm } from './useForm';
@@ -42,6 +45,7 @@ import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import Skeletons from '../../components/Skeletons';
 import ListingCardSkeletons from '../../components/ListingCard/ListingCardSkeletons';
+import CompareRoundedIcon from '@material-ui/icons/CompareRounded';
 import CarListingStyles from './style';
 import CustomButton from '../../CustomButton';
 import { paths } from '../../routes/paths';

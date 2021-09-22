@@ -20,7 +20,6 @@ export const useStyles = makeStyles({
   },
   btn: {
     background: 'transparent',
-    padding: '0px',
     boxShadow: 'none',
     color: blue,
     textTransform: 'none',

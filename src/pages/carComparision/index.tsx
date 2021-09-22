@@ -5,15 +5,14 @@ import MetaTags from '../../components/MetaTags';
 import Table from '../../layout/Sections/Sections/Table/Container';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import Loader from '../../components/Loader';
-
+import { Colors } from '../../Utils/constants/colors/colors';
 const CarComparision = () => {
-
   const shortListCars = useSelector(
     (state: RootState) => state.shortlistCars.shortlistCars
   );
 
   return (
-    <Container style={{ backgroundColor:"white" }}>
+    <Container>
       <MetaTags
         title={PageMeta.carComparision.title}
         description={PageMeta.carComparision.description}
@@ -23,7 +22,15 @@ const CarComparision = () => {
       {shortListCars.length === 0 ? (
         <Loader open={true} />
       ) : (
-        <Grid item xs={12}>
+        <Grid
+          style={{
+            backgroundColor: Colors.white,
+            border: `0.5px solid ${Colors.lightGrey}`,
+            borderRadius: '5px',            
+          }}
+          item
+          xs={12}
+        >
           <Table shortListCars={shortListCars} />
         </Grid>
       )}

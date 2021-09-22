@@ -52,7 +52,7 @@ const TableContext: React.FC<IProps> = ({
           styles={btn}
           endIcon={<ArrowDropDownIcon />}
         >
-          {!isChecked ?  moreBtn :  lessBtn}
+          {!isChecked ? moreBtn : lessBtn}
         </CustomButton>
       </section>
       <Collapse in={isChecked}>

@@ -11,9 +11,6 @@ const AccordionStyles = makeStyles((theme) => ({
     backgroundColor: Colors.greyFour,
     margin: '0'
   },
-  summaryContent: {
-    margin: '0'
-  },
   detailRoot: {
     backgroundColor: theme.palette.common.white
   }

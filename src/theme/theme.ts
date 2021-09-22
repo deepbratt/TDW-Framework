@@ -26,6 +26,20 @@ const MUITheme = createTheme({
         }
       }
     },
+    MuiAccordionSummary: {
+      root: {
+        margin: '0',
+        '&$expanded': {
+          minHeight: '48px'
+        }
+      },
+      content: {
+        margin: '0',
+        '&$expanded': {
+          margin: '0'
+        }
+      }
+    },
     MuiTab: {
       root: {
         textAlign: 'left',

@@ -21,14 +21,16 @@ const FilterAccordion: React.FC<FilterAccordionProps & AccordionProps> = ({
   hideExpandIcon = false,
   ...accordionProps
 }) => {
-  const { root, expanded, summaryContent, detailRoot } = AccordionStyles();
+  const {
+    root,
+    expanded,
+   
+    detailRoot
+  } = AccordionStyles();
 
   return (
     <Accordion classes={{ root: root, expanded: expanded }} {...accordionProps}>
       <AccordionSummary
-        classes={{
-          content: summaryContent
-        }}
         expandIcon={!hideExpandIcon && <ExpandMoreIcon />}
         aria-controls="panel1bh-content"
         id="panel1bh-header"

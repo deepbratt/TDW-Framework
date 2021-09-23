@@ -30,14 +30,14 @@ const HomeBannerStyles = makeStyles((theme) => ({
   cardRoot: {
     position: 'absolute',
     maxWidth: '330px',
-    top: '40%',
+    top: '30%',
     left: '10%',
     zIndex: 111,
     backgroundColor: theme.palette.common.white,
     opacity: 0.9,
     borderRadius: '10px',
     padding: '32px 50px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       padding: '15px 20px',
       top: '110%',
       left: 'auto',

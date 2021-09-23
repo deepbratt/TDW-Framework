@@ -16,6 +16,8 @@ import PickUpIcon from '../../assets/Cars/pickup-truck.png';
 import SedanIcon from '../../assets/Cars/sedans.png';
 import { FIND_YOUR_CAR } from '../../Utils/constants/language/en/buttonLabels';
 import { findCarsData } from '../../Utils/constants/language/en/homePageData';
+import { useForm } from './useForm';
+import { fieldNames } from '../../Utils/constants/formsConstants';
 
 const FindCarsStyles = makeStyles((theme) => ({
   root: {
@@ -87,6 +89,8 @@ const FindCars: React.FC = () => {
     tabContainer,
     inputFieldRoot
   } = FindCarsStyles();
+
+  const { values, handleInputChange, handleSubmit } = useForm();
   return (
     <Card className={root}>
       <Typography className={content} align="center" variant="h2">
@@ -141,39 +145,53 @@ const FindCars: React.FC = () => {
         />
       </Tabs>
       <CardContent className={content}>
-        <form>
+        <form onSubmit={handleSubmit}>
           <Grid container spacing={1}>
             <Grid item xs={12} sm={6}>
               <InputField
                 classes={{ root: inputFieldRoot }}
+                name={fieldNames.make}
+                value={values.make}
                 label="Make"
                 placeholder="e.g. Honda, Toyota"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <InputField
                 classes={{ root: inputFieldRoot }}
+                name={fieldNames.model}
+                value={values.model}
                 label="Model"
                 placeholder="e.g Civic, Corolla"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <InputField
                 classes={{ root: inputFieldRoot }}
+                name={fieldNames.priceFrom}
+                value={values.priceFrom}
                 label="Price Range (Min)"
                 placeholder="0"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <InputField
                 classes={{ root: inputFieldRoot }}
+                name={fieldNames.priceTo}
+                value={values.priceTo}
                 label="Price Range (Max)"
                 placeholder="50000000"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item container xs={12} justifyContent="center">
               <Grid item xs={12} md={6}>
-                <CustomButton fullWidth>{FIND_YOUR_CAR}</CustomButton>
+                <CustomButton type="submit" fullWidth>
+                  {FIND_YOUR_CAR}
+                </CustomButton>
               </Grid>
             </Grid>
           </Grid>

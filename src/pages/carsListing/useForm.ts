@@ -94,6 +94,7 @@ export const useForm = (validateOnChange = true) => {
 
   useEffect(() => {
     let newKeywords = keywords;
+    let newRangeValues = rangeValues;
     let newAppliedFilters = appliedFilters;
 
     if ('keywords' in routeParams && routeParams['keywords'] !== '') {
@@ -101,7 +102,17 @@ export const useForm = (validateOnChange = true) => {
       newAppliedFilters['keywords'] = routeParams['keywords'];
     }
 
+    if ('priceMin' in routeParams && routeParams['priceMin'] !== '') {
+      newRangeValues.priceRange[0] = routeParams['priceMin'];
+      newAppliedFilters['priceRange'] = newRangeValues.priceRange;
+    }
+    if ('priceMax' in routeParams && routeParams['priceMax'] !== '') {
+      newRangeValues.priceRange[1] = routeParams['priceMax'];
+      newAppliedFilters['priceRange'] = newRangeValues.priceRange;
+    }
+
     setKeywords(newKeywords);
+    setRangeValues(newRangeValues);
     setAppliedFilters(newAppliedFilters);
     dispatch(emptyQueryParams());
     // eslint-disable-next-line
@@ -128,7 +139,7 @@ export const useForm = (validateOnChange = true) => {
     if ('condition' in appliedFilters) {
       params += '&condition=' + values.condition;
     }
-    if (keywords !== "") {
+    if (keywords !== '') {
       params += '&keyword=' + keywords;
     }
     if ('priceRange' in appliedFilters) {

@@ -48,7 +48,8 @@ export const useForm = (validateOnChange = true) => {
   const routeParams = useSelector(
     (state: RootState) => state.queryParams.queryParams
   );
-  const { ADS, CARS, FILTER, CITIES_WITH_CARS, MAKE, MODEL, BODY_TYPES } = API_ENDPOINTS;
+  const { ADS, CARS, FILTER, CITIES_WITH_CARS, MAKE, MODEL, BODY_TYPES } =
+    API_ENDPOINTS;
   const [page, setPage] = useState(1);
   const [citiesWithCars, setCitiesWithCars] = useState([]);
   const [makes, setMakes] = useState([]);
@@ -127,7 +128,7 @@ export const useForm = (validateOnChange = true) => {
     if ('condition' in appliedFilters) {
       params += '&condition=' + values.condition;
     }
-    if ('keywords' in appliedFilters) {
+    if (keywords !== "") {
       params += '&keyword=' + keywords;
     }
     if ('priceRange' in appliedFilters) {
@@ -292,16 +293,15 @@ export const useForm = (validateOnChange = true) => {
       });
   };
 
-  const getBodyTypes = () =>{
-    getAllData(ADS+CARS+BODY_TYPES).then(response=>{
-      if(response && response.status==="success"){
-        setBodyTypes(response.data.result)
-      }else{
-        console.log("error", response)
+  const getBodyTypes = () => {
+    getAllData(ADS + CARS + BODY_TYPES).then((response) => {
+      if (response && response.status === 'success') {
+        setBodyTypes(response.data.result);
+      } else {
+        console.log('error', response);
       }
-    })
-
-  }
+    });
+  };
 
   const getModels = async () => {
     let param = '?';
@@ -328,7 +328,7 @@ export const useForm = (validateOnChange = true) => {
     getCitiesWithCars();
     getMakes();
     getModels();
-    getBodyTypes()
+    getBodyTypes();
     // eslint-disable-next-line
   }, []);
 
@@ -467,7 +467,7 @@ export const useForm = (validateOnChange = true) => {
     setIsLoading(true);
     getAllCars();
     // eslint-disable-next-line
-  }, [page, values, keywords, rangeValues]);
+  }, [page, values, rangeValues, keywords]);
 
   function ItemExists(itemId: string) {
     let newshortListCars = shortListCars;

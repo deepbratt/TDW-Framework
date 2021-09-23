@@ -10,6 +10,7 @@ export const fieldNames = {
   firstName: 'firstName',
   lastName: 'lastName',
   data: 'data',
+  method: 'method',
   email: 'email',
   mobile: 'mobile',
   password: 'password',

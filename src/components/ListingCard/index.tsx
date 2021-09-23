@@ -141,18 +141,14 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 }}
               >
                 <img
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    overflow: 'hidden'
-                  }}
+                  height="200px"
+                  width="100%"
                   src={image && image.length > 0 ? image[0] : NoImg}
                   alt=""
                 />
-                <span className={featuredBadge}>
+                {isSold && <span className={featuredBadge}>
                   <Typography variant="body2">{SOLD}</Typography>
-                </span>
+                </span>}
               </CardMedia>
             </Grid>
             <Grid item container xs={12} sm={layoutType !== 'list' ? 12 : 8}>

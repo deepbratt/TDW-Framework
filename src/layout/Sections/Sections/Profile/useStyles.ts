@@ -57,7 +57,7 @@ export const useStyles = makeStyles((theme) => ({
     marginLeft: "20px",
     background: white,
     width: "100%",
-    minHeight: "965px",
+    // minHeight: "965px",
     position: "relative",
     padding:"20px",
     [breakpoints.down("sm")]: {
@@ -69,7 +69,8 @@ export const useStyles = makeStyles((theme) => ({
     marginLeft: "20px",
     background: white,
     paddingBottom: "20px",
-    minHeight: "1500px",
+    // minHeight: "1500px",
+    width:"100%",
     position: "relative",
     padding:"20px",
     [breakpoints.down("sm")]: {

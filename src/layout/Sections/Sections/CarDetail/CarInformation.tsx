@@ -5,6 +5,7 @@ import { Colors } from '../../Utils/color.constants';
 // import tyreIcon from "../assets/carDetail/tyre 2.png"
 import tyreIcon from '../../assets/carDetail/tyre 2.png';
 import moment from 'moment';
+import { desc } from '../../Utils/carDetail';
 const CarInformation = ({
   info,
   feature,
@@ -21,12 +22,12 @@ const CarInformation = ({
   const { gray } = Colors;
   return (
     <Grid container>
-      {/* <Grid item xs={12} className={greyBackground}>
+      <Grid item xs={12} className={greyBackground} style={{ marginTop: '20px' }}>
         <Typography variant="h6">{desc}</Typography>
         <Typography style={{ marginTop: '10px' }} variant="subtitle1">
           {paragraph}
         </Typography>
-      </Grid> */}
+      </Grid>
       <Grid
         className={greyBackground}
         item
@@ -37,7 +38,7 @@ const CarInformation = ({
           marginTop: '20px'
         }}
       >
-        <Grid item lg={6}>
+        <Grid item xs={6}>
           <Typography variant="subtitle1">{info.cityName}</Typography>
           <Divider style={{width:"100%"}}/>
           <Typography variant="subtitle1">{info.assemblyName}</Typography>
@@ -52,7 +53,7 @@ const CarInformation = ({
           <Typography variant="subtitle1">{info.dateName}</Typography>
           <Divider style={{width:"100%"}}/>
         </Grid>
-        <Grid item lg={6} style={{textAlign:"right"}}>
+        <Grid item xs={6} style={{textAlign:"right"}}>
           <Typography variant="subtitle1">{city}</Typography>
           <Divider style={{width:"100%"}}/>
           <Typography variant="subtitle1">{assembly}</Typography>

@@ -1,4 +1,4 @@
-import { Grid, Typography, Button, Hidden } from "@material-ui/core";
+import { Grid, Typography, Button } from "@material-ui/core";
 import { useStyles } from "./useStyles";
 import { Colors } from "../../Utils/color.constants";
 import SellerDetail from "./SellerDetail";
@@ -58,7 +58,7 @@ const CarDetail: React.FC<any> = ({
     link,
     greyBackground
   } = useStyles();
-  const { blue, gray } = Colors;
+  const { blue } = Colors;
 
   const toggleSold = (soldHere:boolean=false) =>{
     let soldUnsold = isSold ? API_ENDPOINTS.MARK_UNSOLD : API_ENDPOINTS.MARK_SOLD
@@ -199,16 +199,6 @@ const CarDetail: React.FC<any> = ({
         {createdBy && <Grid item xs={12} className={greyBackground} style={{ marginTop: '20px' }}>
           <SellerDetail createdBy={createdBy} />
         </Grid>}
-        <Hidden lgUp>
-          <Grid style={{ color: gray, marginTop:"10px" }} className={greyBackground} item xs={12}>
-            <Typography style={{ marginTop: "20px" }} variant="h6">
-              {desc}
-            </Typography>
-            <Typography style={{ marginTop: "10px" }} variant="subtitle1">
-              {paragraph}
-            </Typography>
-          </Grid>
-        </Hidden>
       </Grid>
       <ConfirmationDialog handleConfirmation={()=>toggleSold(true)} handleRejection={()=>toggleSold(false)} open={openDialog} message={SOLD_HERE_DIALOG_MESSAGE} title={SOLD_HERE_DIALOG_TITLE} confirmBtnLabel={SOLD_HERE_DIALOG_OK} rejectBtnLabel={SOLD_HERE_DIALOG_REJECT}/>
       <Toast message={toastMessage} type={toastType} open={openToast} onClose={()=>setOpenToast(false)} />

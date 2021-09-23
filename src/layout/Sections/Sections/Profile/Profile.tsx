@@ -110,7 +110,7 @@ const Profile = () => {
             <Hidden mdUp>
               <SideBar Title={Title} sidebar={paths} />
             </Hidden>
-            <Typography variant="h3" style={{ fontWeight: 'normal' }}>
+            <Typography variant="h3">
               {profileTitle}
             </Typography>
           </section>

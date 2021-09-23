@@ -145,7 +145,7 @@ export const sellingTitle = 'Selling History';
 // help
 
 export const help = 'Help';
-export const helpTitle = 'How can we help you?';
+export const helpTitle = 'We are here to help.';
 export const icon = helpIcon;
 export const gmail = 'wwww.example@gmail.com';
 export const number = '+92 335 1222515';

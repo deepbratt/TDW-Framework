@@ -14,8 +14,7 @@ const HomeBannerStyles = makeStyles((theme) => ({
       width: '100%',
       [theme.breakpoints.up('xl')]: {
         maxHeight: '800px'
-      },
-      
+      }
     }
   },
   after: {
@@ -31,7 +30,7 @@ const HomeBannerStyles = makeStyles((theme) => ({
   cardRoot: {
     position: 'absolute',
     maxWidth: '330px',
-    top: "40%",
+    top: '40%',
     left: '10%',
     zIndex: 111,
     backgroundColor: theme.palette.common.white,
@@ -40,15 +39,17 @@ const HomeBannerStyles = makeStyles((theme) => ({
     padding: '32px 50px',
     [theme.breakpoints.down('sm')]: {
       padding: '15px 20px',
-      top: "20%",
+      top: '110%',
       left: 'auto',
-      margin:"10px 15px",
+      margin: '10px 15px',
+      opacity: 1,
     }
   },
   cardHeading: {
     fontSize: '45px',
     lineHeight: '52px',
     margin: '0 20px',
+    marginBottom: '10px',
     [theme.breakpoints.down('sm')]: {
       fontSize: '24px',
       lineHeight: '26px'

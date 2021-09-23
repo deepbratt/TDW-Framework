@@ -25,7 +25,8 @@ const FindCarsStyles = makeStyles((theme) => ({
     boxShadow: '0px 2px 4px 4px rgba(0, 0, 0, 0.2)',
     border: `1px solid ${theme.palette.text.primary}`,
     [theme.breakpoints.down('sm')]: {
-      margin: '20px 0'
+      marginTop: '150px',
+      marginBottom: '20px'
     }
   },
   content: {

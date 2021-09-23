@@ -10,7 +10,16 @@ const TableBannerStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       padding: '10px'
     }
-  }
+  },
+  bannerImage:{
+    width:"100%",
+    height:"500px",
+    margin:"10px",
+    [theme.breakpoints.down('sm')]: {
+      margin: '5px',
+      height:"150px"
+    }
+  },
 }));
 
 export interface BannerProps {
@@ -18,7 +27,7 @@ export interface BannerProps {
 }
 
 const Banner: React.FC<BannerProps> = ({ data }) => {
-  const { root } = TableBannerStyles();
+  const { root, bannerImage } = TableBannerStyles();
   return (
     <Paper className={root}>
       <Grid container justifyContent="center" spacing={2}>
@@ -28,10 +37,7 @@ const Banner: React.FC<BannerProps> = ({ data }) => {
               {item.image && (
                 <Grid container item xs={12} justifyContent="center">
                   <img
-                    style={{
-                      minWidth: '100%',
-                      margin: '10px'
-                    }}
+                    className={bannerImage}
                     src={item.image[0]}
                     alt={item.model}
                   />

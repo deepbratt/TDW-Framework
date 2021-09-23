@@ -12,7 +12,6 @@ import DatePicker from './DatePicker';
 import { useStyles } from './useStyles';
 import useHooks from './useHooks';
 import SideBar from './ProfileSidebar/Sidebar';
-import CustomButton from '../../../../components/CustomButton';
 import ProfileUpload from './UploadProfile/ProfileUpload';
 import RegexInputs from './RegexInputs';
 import {
@@ -35,11 +34,8 @@ import Loader from '../../../../components/Loader';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import SelectInputComponent from '../../../../components/SelectInputComponent';
-import Breakpoints from '../../../../Utils/Breakpoints';
-import Sizes from '../../../../Utils/themeConstants';
 
 const Profile = () => {
-  const {desktop} = Sizes()
   const { updateProfile, open, setOpen, responseMessage, isLoading } =
     Actions();
   const { user } = useSelector((state: RootState) => state.auth);
@@ -50,7 +46,7 @@ const Profile = () => {
   if (extractedCityNames) {
     cityNames.push(...extractedCityNames);
   }
-  const { root, select, img, heading, box, button, btnBox, cancelButton } =
+  const { heading, box, button, cancelButton } =
     useStyles();
   const { handleChange, val, date, handleChangeDate, setVal, Img, setImg } =
     useHooks();

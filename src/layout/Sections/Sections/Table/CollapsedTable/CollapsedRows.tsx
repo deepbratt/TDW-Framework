@@ -5,10 +5,8 @@ import { useStyles } from '../useStyles';
 const TableRows = ({ items, array }: any) => {
   const { cell } = useStyles();
   return (
-    <>
-      {items && items.length === 2 && array && (
-        <>
-          {array.map((feature: string, index: number) => (
+      items && items.length === 2 && array && (
+          array.map((feature: string, index: number) => (
             <TableRow key={`comparision-features-${index}`}>
               <TableCell align="left" className={cell}>
                 {feature}
@@ -28,10 +26,8 @@ const TableRows = ({ items, array }: any) => {
                 )}
               </TableCell>
             </TableRow>
-          ))}
-        </>
-      )}
-    </>
+          ))
+      )
   );
 };
 

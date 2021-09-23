@@ -29,7 +29,8 @@ export const useStyles = makeStyles({
     }
   },
   cell: {
-    padding: '20px'
+    padding: '20px',
+    width:"33%"
   },
   icon: {
     width: '10%',

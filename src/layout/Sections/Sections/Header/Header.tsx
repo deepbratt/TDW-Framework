@@ -13,7 +13,6 @@ import {
   MenuItem,
   IconButton,
   InputAdornment,
-  Icon,
   Button
 } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
@@ -62,12 +61,16 @@ const HeaderContext = () => {
 
   const handleKeyPress = (e: any) => {
     if (e.key === 'Enter') {
-      let queryParams = {
-        keywords: e.target.value
-      };
-      dispatch(setQueryParams(queryParams));
-      history.push(paths.cars);
+      handleSearch(e);
     }
+  };
+
+  const handleSearch = (e: any) => {
+    let queryParams = {
+      keywords: e.target.value
+    };
+    dispatch(setQueryParams(queryParams));
+    history.push(paths.cars);
   };
 
   const menuId = 'primary-account-menu';
@@ -149,9 +152,13 @@ const HeaderContext = () => {
                 classes: { input: input },
                 endAdornment: (
                   <InputAdornment position="end">
-                    <Icon>
+                    <IconButton
+                      size="small"
+                      onClick={handleSearch}
+                      disableRipple
+                    >
                       <SearchRounded />
-                    </Icon>
+                    </IconButton>
                   </InputAdornment>
                 )
               }}

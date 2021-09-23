@@ -12,7 +12,8 @@ export interface FooterStylesProps {
 const FooterStyles = makeStyles<Theme, FooterStylesProps>((theme) => ({
   root: {
     marginTop: '30px',
-    backgroundColor: ({ rootBackgroundColor }) => rootBackgroundColor
+    backgroundColor: ({ rootBackgroundColor }) => rootBackgroundColor,
+    padding: '0 10px'
   },
   container: {
     marginBottom: '20px'

@@ -55,12 +55,11 @@ export const useForm = (validateOnChange = false) => {
     await getAllData(ADS + CARS + BODY_TYPES)
       .then((response) => {
         setIsLoading(false);
-        if (response.status === 'success') {
-          console.log('response', response);
-          setResponseData(response.data.result);
+        if (response && response.data && response.data.status === 'success') {
+          setResponseData(response.data.data.result);
           setResponseMessage({
-            status: response.status,
-            message: response.message
+            status: response.data.status,
+            message: response.data.message
           });
         } else {
           setIsLoading(false);

@@ -4,7 +4,7 @@ import { login } from '../../redux/reducers/authSlice';
 import { handleGoogleAuth } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import useValidation from '../../Utils/hooks/useValidation';
-import { addData } from '../../Utils/hooks/actions';
+import { addData } from '../../Utils/API/API';
 
 const initialValues: any = {
   data: '',
@@ -42,8 +42,6 @@ export const useForm = (validateOnChange = false) => {
 
   useEffect(() => {
     if (responseMessage.status === 'success') {
-      console.log('responseData', responseData);
-      console.log('[useForm]',responseData);
       dispatch(login(responseData));
     }
   }, [responseMessage]);
@@ -61,12 +59,12 @@ export const useForm = (validateOnChange = false) => {
         .then((response) => {
           console.log('data', response);
           setIsLoading(false);
-          if (response.status === 'success') {
+          if (response && response.data && response.data.status === 'success') {
             setAlertOpen(true);
-            setResponseData(response);
+            setResponseData(response.data);
             setResponseMessage({
-              status: response.status,
-              message: response.message
+              status: response.data.status,
+              message: response.data.message
             });
           } else {
             setAlertOpen(true);
@@ -75,10 +73,10 @@ export const useForm = (validateOnChange = false) => {
               message: response.message
             });
           }
+          setIsLoading(false);
         })
         .catch((error) => {
           setIsLoading(false);
-          console.log('Error log', error);
           setAlertOpen(true);
           setResponseMessage({
             status: error.status,

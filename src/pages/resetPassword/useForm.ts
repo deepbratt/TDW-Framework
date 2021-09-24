@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { API_ENDPOINTS } from "../../Utils/API/endpoints";
-import useValidation from "../../Utils/hooks/useValidation";
-import { updateData } from "../../Utils/hooks/actions";
+import { useState } from 'react';
+import { API_ENDPOINTS } from '../../Utils/API/endpoints';
+import useValidation from '../../Utils/hooks/useValidation';
+import { updateData } from '../../Utils/API/API';
 
 const initialValues: any = {
-  password: "",
-  confirmPassword: "",
+  password: '',
+  confirmPassword: ''
 };
 
 export const useForm = (token: any, validateOnChange = false) => {
@@ -16,8 +16,8 @@ export const useForm = (token: any, validateOnChange = false) => {
   // const [responseData, setResponseData] = useState({});
   const { validate, errors, setErrors } = useValidation(values);
   const [responseMessage, setResponseMessage] = useState({
-    status: "",
-    message: "",
+    status: '',
+    message: ''
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +25,7 @@ export const useForm = (token: any, validateOnChange = false) => {
 
     setValues({
       ...values,
-      [name]: value,
+      [name]: value
     });
     if (validateOnChange) validate({ [name]: value });
   };
@@ -40,26 +40,26 @@ export const useForm = (token: any, validateOnChange = false) => {
     if (validate()) {
       let requestBody = {
         password: values.password,
-        passwordConfirm: values.confirmPassword,
+        passwordConfirm: values.confirmPassword
       };
       setIsLoading(true);
-      console.log("requestBody", requestBody);
-      await updateData(USERS + RESET_PASSWORD, token, requestBody)
+      console.log('requestBody', requestBody);
+      await updateData(USERS + RESET_PASSWORD + '/' + token, requestBody)
         .then((response) => {
-          console.log("data", response);
+          console.log('data', response);
           setIsLoading(false);
-          if (response.status === "success") {
+          if (response && response.data && response.data.status === 'success') {
             setAlertOpen(true);
             setResponseMessage({
-              status: response.status,
-              message: response.message,
+              status: response.data.status,
+              message: response.data.message
             });
           } else {
             setIsLoading(false);
             setAlertOpen(true);
             setResponseMessage({
-              status: "error",
-              message: response.message,
+              status: 'error',
+              message: response.message
             });
           }
         })
@@ -68,7 +68,7 @@ export const useForm = (token: any, validateOnChange = false) => {
           setAlertOpen(true);
           setResponseMessage({
             status: error.status,
-            message: error.message,
+            message: error.message
           });
         });
     }
@@ -85,6 +85,6 @@ export const useForm = (token: any, validateOnChange = false) => {
     isLoading,
     alertOpen,
     setAlertOpen,
-    responseMessage,
+    responseMessage
   };
 };

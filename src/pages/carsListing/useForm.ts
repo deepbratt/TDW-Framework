@@ -255,15 +255,17 @@ export const useForm = (validateOnChange = true) => {
     await getAllData(ADS + CARS + params)
       .then((response) => {
         setIsLoading(false);
-        if (response.status === 'success') {
-          setResponseData(response);
+        if (response && response.data && response.data.status === 'success') {
+          setResponseData(response.data);
           setPageCount(
-            response.totalCount < 10 ? 1 : Math.ceil(response.totalCount / 10)
+            response.totalCount < 10
+              ? 1
+              : Math.ceil(response.data.totalCount / 10)
           );
-          setResult(response.data.result);
+          setResult(response.data.data.result);
           setResponseMessage({
-            status: response.status,
-            message: response.message
+            status: response.data.status,
+            message: response.data.message
           });
         } else {
           setResponseData(null);
@@ -294,8 +296,8 @@ export const useForm = (validateOnChange = true) => {
     }
     await getAllData(ADS + CARS + FILTER + CITIES_WITH_CARS + param)
       .then((response) => {
-        if (response.status === 'success') {
-          setCitiesWithCars(response.data.result);
+        if (response && response.data && response.data.status === 'success') {
+          setCitiesWithCars(response.data.data.result);
         }
       })
       .catch((error) => {
@@ -306,8 +308,8 @@ export const useForm = (validateOnChange = true) => {
   const getMakes = async () => {
     await getAllData(ADS + CARS + MAKE)
       .then((response) => {
-        if (response.status === 'success') {
-          setMakes(response.data.result);
+        if (response && response.data && response.data.status === 'success') {
+          setMakes(response.data.data.result);
         }
       })
       .catch((error) => {
@@ -317,8 +319,8 @@ export const useForm = (validateOnChange = true) => {
 
   const getBodyTypes = () => {
     getAllData(ADS + CARS + BODY_TYPES).then((response) => {
-      if (response && response.status === 'success') {
-        setBodyTypes(response.data.result);
+      if (response && response.data && response.data.status === 'success') {
+        setBodyTypes(response.data.data.result);
       } else {
         console.log('error', response);
       }
@@ -337,19 +339,14 @@ export const useForm = (validateOnChange = true) => {
     }
     await getAllData(ADS + CARS + MODEL + param)
       .then((response) => {
-        if (response.status === 'success') {
-          setModels(response.data.result);
+        if (response && response.data && response.data.status === 'success') {
+          setModels(response.data.data.result);
         }
       })
       .catch((error) => {
         console.log('Error', error);
       });
   };
-
-  useEffect(() => {
-    console.log('queryParams', routeParams);
-    // eslint-disable-next-line
-  }, [routeParams]);
 
   useEffect(() => {
     getCitiesWithCars();

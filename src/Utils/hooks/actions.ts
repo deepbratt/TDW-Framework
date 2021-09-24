@@ -1,7 +1,7 @@
-import axios from "axios";
-import {store} from '../../redux/store'
+import axios from 'axios';
+import { store } from '../../redux/store';
 
-const BASE_URL = "https://api.tezdealz.com/v1";
+const BASE_URL = 'https://api.tezdealz.com/v1';
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -32,34 +32,34 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(function (config) {
   const token = store.getState().auth.token;
-  const localToken = localStorage.getItem("tezdealzjwt")
-  if(token){
-    config.headers.Authorization =  "Bearer "+token
-  }else{
-    config.headers.Authorization =  "Bearer "+localToken
+  const localToken = localStorage.getItem('tezdealzjwt');
+  if (token) {
+    config.headers.Authorization = 'Bearer ' + token;
+  } else {
+    config.headers.Authorization = 'Bearer ' + localToken;
   }
 
   return config;
-})
+});
 
 export const addData = async (endpoint: string, requestBody?: object) => {
   try {
-      const result = await axiosInstance.post(endpoint, requestBody);
+    const result = await axiosInstance.post(endpoint, requestBody);
     return result.data;
-  } 
-  
-  catch (error:any) {
-    return { 
-       status: 'error', message: 'Network Error' };
+  } catch (error: any) {
+    return {
+      status: 'error',
+      message: 'Network Error'
+    };
   }
 };
 
-export const getData = async (url: string,param: number | string) => {
+export const getData = async (url: string, param: number | string) => {
   // // let headers  = await getHeaders()
   try {
     let result = await axiosInstance.get(`${url}${param}`);
     return result.data;
-  } catch (error:any) {
+  } catch (error: any) {
     return error.response.data;
   }
 };
@@ -69,7 +69,7 @@ export const getSingleData = async (url: string, id: string) => {
   try {
     let result = await axiosInstance.get(`${url}/${id}`);
     return result.data;
-  } catch (error:any) {
+  } catch (error: any) {
     return error.response.data;
   }
 };
@@ -79,7 +79,7 @@ export const addToFav = async (url: string, id: string) => {
   try {
     let result = await axiosInstance.patch(`${url}/${id}`);
     return result.data;
-  } catch (error:any) {
+  } catch (error: any) {
     return error.response.data;
   }
 };
@@ -89,7 +89,7 @@ export const updateData = async (url: string, id: string, data: any) => {
   try {
     let result = await axiosInstance.patch(`${url}/${id}`, data);
     return result.data;
-  } catch (error:any) {
+  } catch (error: any) {
     return error.response.data;
   }
 };
@@ -99,18 +99,17 @@ export const updateUser = async (url: string, data: any) => {
   try {
     let result = await axiosInstance.patch(`${url}`, data);
     return result.data;
-  } catch (error:any) {
+  } catch (error: any) {
     return error.response.data;
   }
 };
-
 
 export const accountVerify = async (url: string, token: string) => {
   // let headers  = await getHeaders()
   try {
     let result = await axiosInstance.patch(`${url}${token}`);
     return result.data;
-  } catch (error:any) {
+  } catch (error: any) {
     return error.response.data;
   }
 };
@@ -120,7 +119,7 @@ export const deleteData = async (url: string, id: string) => {
   try {
     let result = await axiosInstance.patch(`${url}/${id}`);
     return result.data;
-  } catch (error:any) {
+  } catch (error: any) {
     return error.response.data;
   }
 };
@@ -130,7 +129,7 @@ export const isLoggedIn = async (url: string) => {
   try {
     let result = await axiosInstance.get(url);
     return result.data;
-  } catch (error:any) {
+  } catch (error: any) {
     return error;
   }
 };

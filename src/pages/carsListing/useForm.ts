@@ -93,15 +93,15 @@ export const useForm = (validateOnChange = true) => {
   });
 
   useEffect(() => {
+    let newValues = values;
     let newKeywords = keywords;
     let newRangeValues = rangeValues;
     let newAppliedFilters = appliedFilters;
 
-    if ('keywords' in routeParams && routeParams['keywords'] !== '') {
+    if ('keywords' in routeParams && routeParams['keywords'].trim() !== '') {
       newKeywords = routeParams['keywords'];
       newAppliedFilters['keywords'] = routeParams['keywords'];
     }
-
     if ('priceMin' in routeParams && routeParams['priceMin'] !== '') {
       newRangeValues.priceRange[0] = routeParams['priceMin'];
       newAppliedFilters['priceRange'] = newRangeValues.priceRange;
@@ -110,13 +110,21 @@ export const useForm = (validateOnChange = true) => {
       newRangeValues.priceRange[1] = routeParams['priceMax'];
       newAppliedFilters['priceRange'] = newRangeValues.priceRange;
     }
+    if ('bodyType' in routeParams && routeParams['bodyType'] !== '') {
+      newValues.bodyType = [...newValues.bodyType, routeParams['bodyType']];
+      newAppliedFilters.bodyType = [
+        ...newAppliedFilters.bodyType,
+        routeParams['bodyType']
+      ];
+    }
 
+    setValues(newValues);
     setKeywords(newKeywords);
     setRangeValues(newRangeValues);
     setAppliedFilters(newAppliedFilters);
-    dispatch(emptyQueryParams());
+    // dispatch(emptyQueryParams());
     // eslint-disable-next-line
-  }, []);
+  }, [routeParams]);
 
   const handlePageChange = (e: any, value: any) => {
     setPage(value);
@@ -139,7 +147,7 @@ export const useForm = (validateOnChange = true) => {
     if ('condition' in appliedFilters) {
       params += '&condition=' + values.condition;
     }
-    if (keywords !== '') {
+    if ('keywords' in appliedFilters) {
       params += '&keyword=' + keywords;
     }
     if ('priceRange' in appliedFilters) {
@@ -334,6 +342,11 @@ export const useForm = (validateOnChange = true) => {
         console.log('Error', error);
       });
   };
+
+  useEffect(() => {
+    console.log('queryParams', routeParams);
+    // eslint-disable-next-line
+  }, [routeParams]);
 
   useEffect(() => {
     getCitiesWithCars();

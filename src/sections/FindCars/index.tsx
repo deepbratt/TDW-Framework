@@ -18,6 +18,7 @@ import { FIND_YOUR_CAR } from '../../Utils/constants/language/en/buttonLabels';
 import { findCarsData } from '../../Utils/constants/language/en/homePageData';
 import { useForm } from './useForm';
 import { fieldNames } from '../../Utils/constants/formsConstants';
+import Loader from '../../components/Loader';
 
 const FindCarsStyles = makeStyles((theme) => ({
   root: {
@@ -70,8 +71,18 @@ const FindCarsStyles = makeStyles((theme) => ({
     borderRadius: '5px',
     padding: '0 10px',
     '&:hover': {
-      boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+      boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.15)'
     }
+  },
+  tabWrapperSelected: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    border: `1px solid ${Colors.textPrimary}`,
+    backgroundColor: Colors.lightGrey,
+    borderRadius: '5px',
+    padding: '0 10px',
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
   },
   inputFieldRoot: {
     backgroundColor: Colors.lightBlue
@@ -86,11 +97,19 @@ const FindCars: React.FC = () => {
     tabIndicator,
     tabRoot,
     tabWrapper,
+    tabWrapperSelected,
     tabContainer,
     inputFieldRoot
   } = FindCarsStyles();
 
-  const { values, handleInputChange, handleSubmit } = useForm();
+  const {
+    isLoading,
+    responseData,
+    setBodyType,
+    values,
+    handleInputChange,
+    handleSubmit
+  } = useForm();
   return (
     <Card className={root}>
       <Typography className={content} align="center" variant="h2">
@@ -107,13 +126,33 @@ const FindCars: React.FC = () => {
         scrollButtons="auto"
         value={false}
       >
-        <Tab
-          disableTouchRipple
-          classes={{ root: tabRoot, wrapper: tabWrapper }}
-          icon={<img height="64px" src={SUVIcon} alt="" />}
-          label="SUVs"
-        />
-        <Tab
+        {isLoading && <Loader open={true} />}
+        {!isLoading &&
+          responseData &&
+          responseData.map((item) => (
+            <Tab
+              key={item._id}
+              disableTouchRipple
+              classes={{
+                root: tabRoot,
+                wrapper:
+                  values.bodyType === item.bodyType
+                    ? tabWrapperSelected
+                    : tabWrapper
+              }}
+              icon={
+                <img
+                  height="64px"
+                  src={item.image ? item.image : SedanIcon}
+                  alt={item.bodyType}
+                />
+              }
+              label={item.bodyType}
+              onClick={() => setBodyType(item.bodyType)}
+            />
+          ))}
+
+        {/* <Tab
           disableTouchRipple
           classes={{ root: tabRoot, wrapper: tabWrapper }}
           icon={<img height="64px" src={PickUpIcon} alt="" />}
@@ -142,7 +181,7 @@ const FindCars: React.FC = () => {
           classes={{ root: tabRoot, wrapper: tabWrapper }}
           icon={<img height="64px" src={SedanIcon} alt="" />}
           label="Sedans"
-        />
+        /> */}
       </Tabs>
       <CardContent className={content}>
         <form onSubmit={handleSubmit}>

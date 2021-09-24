@@ -13,6 +13,7 @@ import Loader from './components/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from './redux/reducers/authSlice';
 import { RootState } from './redux/store';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const generateClassName = createGenerateClassName({
   disableGlobal: true // or seed: 'something_unique' ?
@@ -22,7 +23,7 @@ function App() {
   const { USERS, CURENT_USER } = API_ENDPOINTS;
   const [isLoading, setisLoading] = useState(false);
   const dispatch = useDispatch();
-  const {user} = useSelector((state:RootState) => state.auth)
+  const { user } = useSelector((state: RootState) => state.auth);
   const history = useHistory();
 
   useEffect(() => {
@@ -30,7 +31,7 @@ function App() {
       await isLoggedIn(USERS + CURENT_USER)
         .then((response) => {
           if (response.user) {
-            if(response.user === user){
+            if (response.user === user) {
               history.goBack();
               setisLoading(false);
             }
@@ -47,11 +48,17 @@ function App() {
   }, []);
 
   return (
-    <StylesProvider generateClassName={generateClassName}>
-      <ThemeProvider theme={MUITheme}>
-        {isLoading ? <Loader open={isLoading} isBackdrop={true} /> : <Routes />}
-      </ThemeProvider>
-    </StylesProvider>
+    <ErrorBoundary>
+      <StylesProvider generateClassName={generateClassName}>
+        <ThemeProvider theme={MUITheme}>
+          {isLoading ? (
+            <Loader open={isLoading} isBackdrop={true} />
+          ) : (
+            <Routes />
+          )}
+        </ThemeProvider>
+      </StylesProvider>
+    </ErrorBoundary>
   );
 }
 

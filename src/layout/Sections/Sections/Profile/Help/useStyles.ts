@@ -17,19 +17,21 @@ export const useStyles = makeStyles((theme) => ({
   },
  
   heading:{
-    background: navyBlue,
-    color: white,
-    padding: "20px 10px 20px 10px",
+    color: navyBlue,
     display: "flex",
     justifyContent: "space-between",
+    marginBottom:"15px",
   },
-  box:{
+  box: {
     marginLeft: "20px",
+    background: white,
+    width: "100%",
+    position: "relative",
+    padding:"20px",
     [breakpoints.down("sm")]: {
       marginLeft: "0px",
+      padding:"10px"
     },
-    background: white,
-    paddingBottom: "20px"
   },
   helpContainer:{
     display: "flex",

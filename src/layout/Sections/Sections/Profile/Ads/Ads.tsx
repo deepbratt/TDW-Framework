@@ -55,7 +55,7 @@ const Container = () => {
             <Hidden mdUp>
               <SideBar Title={Title} sidebar={paths} />
             </Hidden>
-            <Typography variant="h3" style={{ fontWeight: 'normal' }}>
+            <Typography variant="h3">
               {ads}
             </Typography>
           </section>

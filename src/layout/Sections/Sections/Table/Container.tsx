@@ -6,12 +6,10 @@ import {
   lessBtn,
   subTitle,
   array,
-  collapsedArray,
   heading
 } from '../../Utils/carComparision';
 import { Colors } from '../../Utils/color.constants';
 import { ICarCard } from '../../../../Utils/interfaces/products.interface';
-import { fieldNames } from '../../../../Utils/constants/formsConstants';
 import InputField from '../../../../components/InputField';
 import Banner from './Banner';
 import { useEffect } from 'react';
@@ -23,8 +21,8 @@ interface IData {
   shortListCars: ICarCard[];
 }
 
-const Container = ({ data, shortListCars }: IData) => {
-  const { black, blue } = Colors;
+const Container = ({  shortListCars }: IData) => {
+  const {  blue } = Colors;
   const [features, setFeatures] = useState<any>([]);
   const [firstCar, setFirstCar] = useState<any>({});
   const [secondCar, setSecondCar] = useState<any>({});

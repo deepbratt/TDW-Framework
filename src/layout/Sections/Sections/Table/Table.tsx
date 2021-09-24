@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Table,
   Typography,
-  TableHead,
   TableContainer,
   TableBody,
   Collapse
@@ -11,7 +10,7 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CustomButton from '../../../../components/CustomButton';
 import { useStyles } from './useStyles';
 import { IProps } from '../../Utils/types';
-import EnhancedTable from './CollapsedTable/CollapsedTable';
+import CollapsedRows from './CollapsedTable/CollapsedRows';
 
 import TableRows from './TableRows';
 const TableContext: React.FC<IProps> = ({
@@ -56,14 +55,16 @@ const TableContext: React.FC<IProps> = ({
         </CustomButton>
       </section>
       <Collapse in={isChecked}>
-        <EnhancedTable
-          subTitle={subTitle}
-          items={items}
-          Title={Title}
-          moreBtn={moreBtn}
-          lessBtn={lessBtn}
-          collapsedArray={collapsedArray}
-        />
+        <Typography className={head} variant="h3">
+          {subTitle}
+        </Typography>
+        <TableContainer>
+          <Table aria-label="simple table">
+            <TableBody>
+              <CollapsedRows array={collapsedArray} items={items} />
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Collapse>
     </>
   );

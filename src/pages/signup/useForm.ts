@@ -4,6 +4,7 @@ import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import useApi from '../../Utils/hooks/useApi';
 import { addData } from '../../Utils/API/API';
 import useValidation from '../../Utils/hooks/useValidation';
+import { extractError } from '../../Utils/helperFunctions';
 
 const initialValues: any = {
   firstName: '',
@@ -86,10 +87,7 @@ export const useForm = (validateOnChange = false) => {
             });
           } else {
             setAlertOpen(true);
-            setResponseMessage({
-              status: 'error',
-              message: response.message
-            });
+            setResponseMessage(extractError(response));
           }
         })
         .catch((error) => {

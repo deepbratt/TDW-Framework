@@ -5,6 +5,7 @@ import { handleGoogleAuth } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import useValidation from '../../Utils/hooks/useValidation';
 import { addData } from '../../Utils/API/API';
+import { extractError } from '../../Utils/helperFunctions';
 
 const initialValues: any = {
   data: '',
@@ -55,34 +56,25 @@ export const useForm = (validateOnChange = false) => {
       };
       setIsLoading(true);
       console.log('requestBody', requestBody);
-      await addData(USERS + LOGIN, requestBody)
-        .then((response) => {
-          console.log('data', response);
-          setIsLoading(false);
-          if (response && response.data && response.data.status === 'success') {
-            setAlertOpen(true);
-            setResponseData(response.data);
-            setResponseMessage({
-              status: response.data.status,
-              message: response.data.message
-            });
-          } else {
-            setAlertOpen(true);
-            setResponseMessage({
-              status: 'error',
-              message: response.message
-            });
-          }
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          setIsLoading(false);
+      await addData(USERS + LOGIN, requestBody).then((response) => {
+        console.log('data', response);
+        console.log('response.data', response.data);
+        console.log('response.message', response.message);
+        console.log('response.response', response.response);
+        setIsLoading(false);
+        if (response && response.data && response.data.status === 'success') {
           setAlertOpen(true);
+          setResponseData(response.data);
           setResponseMessage({
-            status: error.status,
-            message: error.message
+            status: response.data.status,
+            message: response.data.message
           });
-        });
+        } else {
+          setAlertOpen(true);
+          setResponseMessage(extractError(response));
+        }
+        setIsLoading(false);
+      });
     }
   };
 

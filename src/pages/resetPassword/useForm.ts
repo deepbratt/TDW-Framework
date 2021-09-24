@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import useValidation from '../../Utils/hooks/useValidation';
 import { updateData } from '../../Utils/API/API';
+import { extractError } from '../../Utils/helperFunctions';
 
 const initialValues: any = {
   password: '',
@@ -57,10 +58,7 @@ export const useForm = (token: any, validateOnChange = false) => {
           } else {
             setIsLoading(false);
             setAlertOpen(true);
-            setResponseMessage({
-              status: 'error',
-              message: response.message
-            });
+            setResponseMessage(extractError(response));
           }
         })
         .catch((error) => {

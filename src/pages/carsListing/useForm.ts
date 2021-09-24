@@ -8,6 +8,7 @@ import { ICarCard } from '../../Utils/interfaces/products.interface';
 import { RootState } from '../../redux/store';
 import { setShortlistCars } from '../../redux/reducers/shortlistCarsSlice';
 import { emptyQueryParams } from '../../redux/reducers/queryParamsSlice';
+import { extractError } from '../../Utils/helperFunctions';
 // import { useParams } from "react-router";
 
 const initialValues: any = {
@@ -271,10 +272,7 @@ export const useForm = (validateOnChange = true) => {
           setResponseData(null);
           setResult([]);
           setIsLoading(false);
-          setResponseMessage({
-            status: 'error',
-            message: response.message
-          });
+          setResponseMessage(extractError(response));
         }
       })
       .catch((error) => {
@@ -354,6 +352,12 @@ export const useForm = (validateOnChange = true) => {
     getModels();
     getBodyTypes();
     // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      dispatch(emptyQueryParams());
+    };
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

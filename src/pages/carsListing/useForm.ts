@@ -121,7 +121,10 @@ export const useForm = (validateOnChange = true) => {
     setValues(newValues);
     setKeywords(newKeywords);
     setRangeValues(newRangeValues);
-    setAppliedFilters(newAppliedFilters);
+    setAppliedFilters((previousState: any) => {
+      previousState = newAppliedFilters;
+      return { ...previousState };
+    });
     // dispatch(emptyQueryParams());
     // eslint-disable-next-line
   }, [routeParams]);
@@ -491,7 +494,7 @@ export const useForm = (validateOnChange = true) => {
     setIsLoading(true);
     getAllCars();
     // eslint-disable-next-line
-  }, [page, values, rangeValues, keywords]);
+  }, [page, appliedFilters]);
 
   function ItemExists(itemId: string) {
     let newshortListCars = shortListCars;

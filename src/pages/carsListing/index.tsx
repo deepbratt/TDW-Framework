@@ -34,7 +34,6 @@ import {
   COMPARE,
   CANT_FIND_RESULT,
   CHOOSE_CARS_TO_COMPARE
-
 } from '../../Utils/constants/language/en/buttonLabels';
 import FullScreenDialog from '../../components/DialogBox/FullScreenDialog';
 import { useForm } from './useForm';
@@ -179,14 +178,14 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
               >
                 <Grid item>
                   <Typography color="textPrimary" variant="h3" component="span">
-                    10,000 + Matches
+                    {responseData !== null ? responseData?.totalCount : 0} Match
                   </Typography>
                 </Grid>
-                <Grid item>
+                {/* <Grid item>
                   <CustomButton variant="text" color="secondary">
                     Save Search
                   </CustomButton>
-                </Grid>
+                </Grid> */}
               </Grid>
               <Grid item xs={12}>
                 <CarFilters filterProps={filtersProps} />
@@ -197,7 +196,12 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
         <Grid item container xs={12} md={8}>
           <Grid item xs={12} className={contentRoot}>
             {isShortlist && (
-              <Typography style={{marginBottom: "20px"}} variant="h3" color="secondary" gutterBottom>
+              <Typography
+                style={{ marginBottom: '20px' }}
+                variant="h3"
+                color="secondary"
+                gutterBottom
+              >
                 {CHOOSE_CARS_TO_COMPARE}
               </Typography>
             )}
@@ -391,7 +395,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                   {result && (
                     <Grid item xs={12} container justifyContent="center">
                       <Pagination
-                        style={{ margin: '15px 0'}}
+                        style={{ margin: '15px 0' }}
                         count={pageCount}
                         page={page}
                         onChange={handlePageChange}

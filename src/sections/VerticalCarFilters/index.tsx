@@ -7,7 +7,6 @@ import {
   Checkbox,
   Typography,
   Divider
-  // IconButton
 } from '@material-ui/core';
 import FilterAccordion from '../../components/Accordion';
 import {
@@ -21,13 +20,9 @@ import { fieldNames } from '../../Utils/constants/formsConstants';
 import VerticalFilterStyles from './styles';
 import DialogBox from '../../components/DialogBox';
 import { ICity } from 'country-state-city/dist/lib/interface';
-import { APPLIED_FILTERS } from '../../Utils/constants/language/en/buttonLabels';
 import PriceInput from '../../components/InputField/PriceInput';
 import NumberInput from '../../components/InputField/NumberInput';
 import AppliedFilters from './appliedFilters';
-import { Autocomplete } from '@material-ui/lab';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import defaultBodyType from '../../assets/Cars/sedan.png';
 
 export interface CarFiltersProps {
@@ -35,13 +30,10 @@ export interface CarFiltersProps {
 }
 
 const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
-  const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-  const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
   const [searchResult, setSearchResult] = useState<ICity[]>();
   const {filtersCollection, lastAccordion} = VerticalFilterStyles();
   const {
-    KEYWORDS,
     PRICE_RANGE,
     YEAR,
     MAKE,
@@ -75,10 +67,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const {
     values,
     errors,
-    handleTextBoxChange,
     handleCheckboxChange,
     // handleSingleCheckBoxChange,
-    keywords,
     handleTextBoxSubmit,
     appliedFilters,
     removeFilter,

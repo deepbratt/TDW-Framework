@@ -5,7 +5,10 @@ import {
   LinearProgress,
   Typography,
   Card,
-  Button
+  Button,
+  Radio,
+  RadioGroup,
+  FormControlLabel
 } from '@material-ui/core';
 import {
   // OR,
@@ -13,7 +16,9 @@ import {
   SIGNUP,
   // CONTINUE_WITH_GOOGLE,
   // CONTINUE_WITH_FACEBOOK,
-  ALREADY_HAVE_ACCOUNT
+  ALREADY_HAVE_ACCOUNT,
+  CONTINUE_WITH_EMAIL,
+  CONTINUE_WITH_PHONE
 } from '../../Utils/constants/language/en/buttonLabels';
 // import GoogleIcon from "../../assets/icons/googleIcon.png";
 // import FacebookIcon from "../../assets/icons/fbIcon.png";
@@ -46,7 +51,9 @@ const Signup = () => {
     handleSubmit,
     values,
     errors,
-    responseMessage
+    responseMessage,
+    continueWith,
+    handleRadioChange
   } = useForm();
 
   const handleAlertClose = (
@@ -142,17 +149,56 @@ const Signup = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <InputField
-                  id="input-data"
-                  name={fieldNames.data}
-                  fullWidth
-                  variant="outlined"
-                  label="Email/Phone Number"
-                  value={values.data}
-                  error={errors.data}
-                  onChange={handleInputChange}
-                />
+                <RadioGroup
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center'
+                  }}
+                  aria-label="continue with"
+                  value={continueWith}
+                  onChange={handleRadioChange}
+                >
+                  <FormControlLabel
+                    value="mobile"
+                    control={<Radio size="small" />}
+                    label={CONTINUE_WITH_PHONE}
+                  />
+                  <FormControlLabel
+                    value="email"
+                    control={<Radio size="small" />}
+                    label={CONTINUE_WITH_EMAIL}
+                  />
+                </RadioGroup>
               </Grid>
+              {continueWith !== '' &&
+                (continueWith === 'mobile' ? (
+                  <Grid item xs={12}>
+                    <InputField
+                      id="input-phone"
+                      name={fieldNames.method}
+                      fullWidth
+                      variant="outlined"
+                      label="Phone"
+                      value={values.method}
+                      error={errors.method}
+                      onChange={handleInputChange}
+                    />
+                  </Grid>
+                ) : (
+                  <Grid item xs={12}>
+                    <InputField
+                      id="input-email"
+                      name={fieldNames.method}
+                      fullWidth
+                      variant="outlined"
+                      label="Email"
+                      value={values.method}
+                      error={errors.method}
+                      onChange={handleInputChange}
+                    />
+                  </Grid>
+                ))}
               <Grid item xs={12}>
                 <PasswordField
                   id="input-password"

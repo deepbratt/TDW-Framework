@@ -11,7 +11,7 @@ import {
 
 const useValidation = (values: any) => {
   const [errors, setErrors] = useState(values);
-  const validate = (fieldValues = values) => {
+  const validate = (fieldValues = values, method?: string) => {
     let temp = { ...errors };
 
     if (fieldNames.email in fieldValues) {
@@ -29,8 +29,16 @@ const useValidation = (values: any) => {
     if (fieldNames.data in fieldValues) {
       temp.data = validateData(fieldValues.data);
     }
+    if (fieldNames.method in fieldValues) {
+      if (method === 'mobile') {
+        temp.method = validatePhone(fieldValues.method);
+      } else if (method === 'email') {
+        temp.method = validateEmail(fieldValues.method);
+      }
+    }
     if (fieldNames.username in fieldValues) {
-      temp.username = fieldValues.username.trim() === "" ? messages.isRequired : "";
+      temp.username =
+        fieldValues.username.trim() === '' ? messages.isRequired : '';
     }
     if (fieldNames.password in fieldValues) {
       temp.password = validatePassword(fieldValues.password);

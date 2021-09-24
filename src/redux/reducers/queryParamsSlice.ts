@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface IInitialState {
-  queryParams:object | any
+  queryParams: object | any;
 }
 
 const initialState: IInitialState = {
-  queryParams:{}
+  queryParams: {}
 };
 
 const querySlice = createSlice({

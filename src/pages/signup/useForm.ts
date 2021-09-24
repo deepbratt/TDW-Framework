@@ -2,14 +2,15 @@ import { useState } from 'react';
 import { handleGoogleAuth } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import useApi from '../../Utils/hooks/useApi';
-import { addData } from '../../Utils/hooks/actions';
+import { addData } from '../../Utils/API/API';
 import useValidation from '../../Utils/hooks/useValidation';
+import { extractError } from '../../Utils/helperFunctions';
 
 const initialValues: any = {
   firstName: '',
   lastName: '',
   username: '',
-  data: '',
+  method: '',
   password: '',
   confirmPassword: ''
 };
@@ -18,6 +19,7 @@ export const useForm = (validateOnChange = false) => {
   const [values, setValues] = useState(initialValues);
   const [alertOpen, setAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [continueWith, setContinueWith] = useState('');
   const { validate, errors, setErrors } = useValidation(values);
   const [responseMessage, setResponseMessage] = useState({
     status: '',
@@ -26,6 +28,10 @@ export const useForm = (validateOnChange = false) => {
 
   const { addRequest } = useApi();
   const { USERS, GOOGLE_AUTH, SIGNUP } = API_ENDPOINTS;
+
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setContinueWith(event.target.value);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -59,32 +65,29 @@ export const useForm = (validateOnChange = false) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (validate()) {
+    if (validate(values, continueWith)) {
       let requestBody = {
         firstName: values.firstName,
         lastName: values.lastName,
         username: values.username,
-      data: values.data,
-      password: values.password,
-      passwordConfirm: values.confirmPassword
-    };
-    setIsLoading(true);
-    console.log('requestBody', requestBody);
+        data: values.method,
+        password: values.password,
+        passwordConfirm: values.confirmPassword
+      };
+      setIsLoading(true);
+      console.log('requestBody', requestBody);
       await addData(USERS + SIGNUP, requestBody)
         .then((response) => {
           setIsLoading(false);
-          if (response.status === 'success') {
+          if (response && response.data && response.data.status === 'success') {
             setAlertOpen(true);
             setResponseMessage({
-              status: response.status,
-              message: response.message
+              status: response.data.status,
+              message: response.data.message
             });
           } else {
             setAlertOpen(true);
-            setResponseMessage({
-              status: 'error',
-              message: response.message
-            });
+            setResponseMessage(extractError(response));
           }
         })
         .catch((error) => {
@@ -97,7 +100,7 @@ export const useForm = (validateOnChange = false) => {
         });
     }
   };
-  
+
   return {
     values,
     setValues,
@@ -111,6 +114,8 @@ export const useForm = (validateOnChange = false) => {
     isLoading,
     alertOpen,
     setAlertOpen,
-    responseMessage
+    responseMessage,
+    continueWith,
+    handleRadioChange
   };
 };

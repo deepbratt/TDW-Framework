@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { addData } from "../../Utils/hooks/actions";
+import { addData } from "../../Utils/API/API";
 import { API_ENDPOINTS } from "../../Utils/API/endpoints";
+import { extractError } from "../../Utils/helperFunctions";
 import useValidation from "../../Utils/hooks/useValidation";
 
 const initialValues: any = {
@@ -47,18 +48,15 @@ export const useForm = (validateOnChange = false) => {
         .then((response) => {
           console.log("data", response);
           setIsLoading(false);
-          if (response.status === "success") {
+          if (response && response.data && response.data.status === "success") {
             setAlertOpen(true);
             setResponseMessage({
-              status: response.status,
-              message: response.message,
+              status: response.data.status,
+              message: response.data.message,
             });
           } else {
             setAlertOpen(true);
-            setResponseMessage({
-              status: "error",
-              message: response.message,
-            });
+            setResponseMessage(extractError(response));
           }
         })
         .catch((error) => {

@@ -123,7 +123,7 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
           <Chip
             classes={{ root: root, deleteIcon: icon }}
             size="small"
-            label={keys}
+            label={keys + ': ' + values}
             onDelete={() => removeFilter(keys)}
           />
         </Grid>

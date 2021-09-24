@@ -8,6 +8,7 @@ import { ICarCard } from '../../Utils/interfaces/products.interface';
 import { RootState } from '../../redux/store';
 import { setShortlistCars } from '../../redux/reducers/shortlistCarsSlice';
 import { emptyQueryParams } from '../../redux/reducers/queryParamsSlice';
+import { extractError } from '../../Utils/helperFunctions';
 // import { useParams } from "react-router";
 
 const initialValues: any = {
@@ -48,7 +49,8 @@ export const useForm = (validateOnChange = true) => {
   const routeParams = useSelector(
     (state: RootState) => state.queryParams.queryParams
   );
-  const { ADS, CARS, FILTER, CITIES_WITH_CARS, MAKE, MODEL, BODY_TYPES } = API_ENDPOINTS;
+  const { ADS, CARS, FILTER, CITIES_WITH_CARS, MAKE, MODEL, BODY_TYPES } =
+    API_ENDPOINTS;
   const [page, setPage] = useState(1);
   const [citiesWithCars, setCitiesWithCars] = useState([]);
   const [makes, setMakes] = useState([]);
@@ -92,19 +94,41 @@ export const useForm = (validateOnChange = true) => {
   });
 
   useEffect(() => {
+    let newValues = values;
     let newKeywords = keywords;
+    let newRangeValues = rangeValues;
     let newAppliedFilters = appliedFilters;
 
-    if ('keywords' in routeParams && routeParams['keywords'] !== '') {
+    if ('keywords' in routeParams && routeParams['keywords'].trim() !== '') {
       newKeywords = routeParams['keywords'];
       newAppliedFilters['keywords'] = routeParams['keywords'];
     }
+    if ('priceMin' in routeParams && routeParams['priceMin'] !== '') {
+      newRangeValues.priceRange[0] = routeParams['priceMin'];
+      newAppliedFilters['priceRange'] = newRangeValues.priceRange;
+    }
+    if ('priceMax' in routeParams && routeParams['priceMax'] !== '') {
+      newRangeValues.priceRange[1] = routeParams['priceMax'];
+      newAppliedFilters['priceRange'] = newRangeValues.priceRange;
+    }
+    if ('bodyType' in routeParams && routeParams['bodyType'] !== '') {
+      newValues.bodyType = [...newValues.bodyType, routeParams['bodyType']];
+      newAppliedFilters.bodyType = [
+        ...newAppliedFilters.bodyType,
+        routeParams['bodyType']
+      ];
+    }
 
+    setValues(newValues);
     setKeywords(newKeywords);
-    setAppliedFilters(newAppliedFilters);
-    dispatch(emptyQueryParams());
+    setRangeValues(newRangeValues);
+    setAppliedFilters((previousState: any) => {
+      previousState = newAppliedFilters;
+      return { ...previousState };
+    });
+    // dispatch(emptyQueryParams());
     // eslint-disable-next-line
-  }, []);
+  }, [routeParams]);
 
   const handlePageChange = (e: any, value: any) => {
     setPage(value);
@@ -232,24 +256,23 @@ export const useForm = (validateOnChange = true) => {
     await getAllData(ADS + CARS + params)
       .then((response) => {
         setIsLoading(false);
-        if (response.status === 'success') {
-          setResponseData(response);
+        if (response && response.data && response.data.status === 'success') {
+          setResponseData(response.data);
           setPageCount(
-            response.totalCount < 10 ? 1 : Math.ceil(response.totalCount / 10)
+            response.totalCount < 10
+              ? 1
+              : Math.ceil(response.data.totalCount / 10)
           );
-          setResult(response.data.result);
+          setResult(response.data.data.result);
           setResponseMessage({
-            status: response.status,
-            message: response.message
+            status: response.data.status,
+            message: response.data.message
           });
         } else {
           setResponseData(null);
           setResult([]);
           setIsLoading(false);
-          setResponseMessage({
-            status: 'error',
-            message: response.message
-          });
+          setResponseMessage(extractError(response));
         }
       })
       .catch((error) => {
@@ -271,8 +294,8 @@ export const useForm = (validateOnChange = true) => {
     }
     await getAllData(ADS + CARS + FILTER + CITIES_WITH_CARS + param)
       .then((response) => {
-        if (response.status === 'success') {
-          setCitiesWithCars(response.data.result);
+        if (response && response.data && response.data.status === 'success') {
+          setCitiesWithCars(response.data.data.result);
         }
       })
       .catch((error) => {
@@ -283,8 +306,8 @@ export const useForm = (validateOnChange = true) => {
   const getMakes = async () => {
     await getAllData(ADS + CARS + MAKE)
       .then((response) => {
-        if (response.status === 'success') {
-          setMakes(response.data.result);
+        if (response && response.data && response.data.status === 'success') {
+          setMakes(response.data.data.result);
         }
       })
       .catch((error) => {
@@ -292,16 +315,15 @@ export const useForm = (validateOnChange = true) => {
       });
   };
 
-  const getBodyTypes = () =>{
-    getAllData(ADS+CARS+BODY_TYPES).then(response=>{
-      if(response && response.status==="success"){
-        setBodyTypes(response.data.result)
-      }else{
-        console.log("error", response)
+  const getBodyTypes = () => {
+    getAllData(ADS + CARS + BODY_TYPES).then((response) => {
+      if (response && response.data && response.data.status === 'success') {
+        setBodyTypes(response.data.data.result);
+      } else {
+        console.log('error', response);
       }
-    })
-
-  }
+    });
+  };
 
   const getModels = async () => {
     let param = '?';
@@ -315,8 +337,8 @@ export const useForm = (validateOnChange = true) => {
     }
     await getAllData(ADS + CARS + MODEL + param)
       .then((response) => {
-        if (response.status === 'success') {
-          setModels(response.data.result);
+        if (response && response.data && response.data.status === 'success') {
+          setModels(response.data.data.result);
         }
       })
       .catch((error) => {
@@ -328,8 +350,14 @@ export const useForm = (validateOnChange = true) => {
     getCitiesWithCars();
     getMakes();
     getModels();
-    getBodyTypes()
+    getBodyTypes();
     // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      dispatch(emptyQueryParams());
+    };
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -467,7 +495,7 @@ export const useForm = (validateOnChange = true) => {
     setIsLoading(true);
     getAllCars();
     // eslint-disable-next-line
-  }, [page, values, keywords, rangeValues]);
+  }, [page, appliedFilters]);
 
   function ItemExists(itemId: string) {
     let newshortListCars = shortListCars;

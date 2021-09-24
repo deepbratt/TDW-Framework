@@ -4,7 +4,8 @@ import { login } from '../../redux/reducers/authSlice';
 import { handleGoogleAuth } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import useValidation from '../../Utils/hooks/useValidation';
-import { addData } from '../../Utils/hooks/actions';
+import { addData } from '../../Utils/API/API';
+import { extractError } from '../../Utils/helperFunctions';
 
 const initialValues: any = {
   data: '',
@@ -42,8 +43,6 @@ export const useForm = (validateOnChange = false) => {
 
   useEffect(() => {
     if (responseMessage.status === 'success') {
-      console.log('responseData', responseData);
-      console.log('[useForm]',responseData);
       dispatch(login(responseData));
     }
   }, [responseMessage]);
@@ -57,34 +56,25 @@ export const useForm = (validateOnChange = false) => {
       };
       setIsLoading(true);
       console.log('requestBody', requestBody);
-      await addData(USERS + LOGIN, requestBody)
-        .then((response) => {
-          console.log('data', response);
-          setIsLoading(false);
-          if (response.status === 'success') {
-            setAlertOpen(true);
-            setResponseData(response);
-            setResponseMessage({
-              status: response.status,
-              message: response.message
-            });
-          } else {
-            setAlertOpen(true);
-            setResponseMessage({
-              status: 'error',
-              message: response.message
-            });
-          }
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          console.log('Error log', error);
+      await addData(USERS + LOGIN, requestBody).then((response) => {
+        console.log('data', response);
+        console.log('response.data', response.data);
+        console.log('response.message', response.message);
+        console.log('response.response', response.response);
+        setIsLoading(false);
+        if (response && response.data && response.data.status === 'success') {
           setAlertOpen(true);
+          setResponseData(response.data);
           setResponseMessage({
-            status: error.status,
-            message: error.message
+            status: response.data.status,
+            message: response.data.message
           });
-        });
+        } else {
+          setAlertOpen(true);
+          setResponseMessage(extractError(response));
+        }
+        setIsLoading(false);
+      });
     }
   };
 

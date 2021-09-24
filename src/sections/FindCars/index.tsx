@@ -16,6 +16,9 @@ import PickUpIcon from '../../assets/Cars/pickup-truck.png';
 import SedanIcon from '../../assets/Cars/sedans.png';
 import { FIND_YOUR_CAR } from '../../Utils/constants/language/en/buttonLabels';
 import { findCarsData } from '../../Utils/constants/language/en/homePageData';
+import { useForm } from './useForm';
+import { fieldNames } from '../../Utils/constants/formsConstants';
+import Loader from '../../components/Loader';
 
 const FindCarsStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +56,7 @@ const FindCarsStyles = makeStyles((theme) => ({
   },
   tabRoot: {
     margin: '0',
-    color: Colors.textPrimary
+    color: Colors.textPrimary,
   },
   tabContainer: {
     borderBottom: 'none'
@@ -68,8 +71,17 @@ const FindCarsStyles = makeStyles((theme) => ({
     borderRadius: '5px',
     padding: '0 10px',
     '&:hover': {
-      boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+      boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.15)'
     }
+  },
+  tabWrapperSelected: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    border: `2px solid ${Colors.darkBlue}`,
+    backgroundColor: Colors.lightGrey,
+    borderRadius: '5px',
+    padding: '0 10px'
   },
   inputFieldRoot: {
     backgroundColor: Colors.lightBlue
@@ -84,9 +96,19 @@ const FindCars: React.FC = () => {
     tabIndicator,
     tabRoot,
     tabWrapper,
+    tabWrapperSelected,
     tabContainer,
     inputFieldRoot
   } = FindCarsStyles();
+
+  const {
+    isLoading,
+    responseData,
+    setBodyType,
+    values,
+    handleInputChange,
+    handleSubmit
+  } = useForm();
   return (
     <Card className={root}>
       <Typography className={content} align="center" variant="h2">
@@ -103,13 +125,33 @@ const FindCars: React.FC = () => {
         scrollButtons="auto"
         value={false}
       >
-        <Tab
-          disableTouchRipple
-          classes={{ root: tabRoot, wrapper: tabWrapper }}
-          icon={<img height="64px" src={SUVIcon} alt="" />}
-          label="SUVs"
-        />
-        <Tab
+        {isLoading && <Loader open={true} />}
+        {!isLoading &&
+          responseData &&
+          responseData.map((item) => (
+            <Tab
+              key={item._id}
+              disableTouchRipple
+              classes={{
+                root: tabRoot,
+                wrapper:
+                  values.bodyType === item.bodyType
+                    ? tabWrapperSelected
+                    : tabWrapper
+              }}
+              icon={
+                <img
+                  height="64px"
+                  src={item.image ? item.image : SedanIcon}
+                  alt={item.bodyType}
+                />
+              }
+              label={item.bodyType}
+              onClick={() => setBodyType(item.bodyType)}
+            />
+          ))}
+
+        {/* <Tab
           disableTouchRipple
           classes={{ root: tabRoot, wrapper: tabWrapper }}
           icon={<img height="64px" src={PickUpIcon} alt="" />}
@@ -138,42 +180,56 @@ const FindCars: React.FC = () => {
           classes={{ root: tabRoot, wrapper: tabWrapper }}
           icon={<img height="64px" src={SedanIcon} alt="" />}
           label="Sedans"
-        />
+        /> */}
       </Tabs>
       <CardContent className={content}>
-        <form>
+        <form onSubmit={handleSubmit}>
           <Grid container spacing={1}>
             <Grid item xs={12} sm={6}>
               <InputField
                 classes={{ root: inputFieldRoot }}
+                name={fieldNames.make}
+                value={values.make}
                 label="Make"
                 placeholder="e.g. Honda, Toyota"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <InputField
                 classes={{ root: inputFieldRoot }}
+                name={fieldNames.model}
+                value={values.model}
                 label="Model"
                 placeholder="e.g Civic, Corolla"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <InputField
                 classes={{ root: inputFieldRoot }}
+                name={fieldNames.priceFrom}
+                value={values.priceFrom}
                 label="Price Range (Min)"
                 placeholder="0"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <InputField
                 classes={{ root: inputFieldRoot }}
+                name={fieldNames.priceTo}
+                value={values.priceTo}
                 label="Price Range (Max)"
                 placeholder="50000000"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item container xs={12} justifyContent="center">
               <Grid item xs={12} md={6}>
-                <CustomButton fullWidth>{FIND_YOUR_CAR}</CustomButton>
+                <CustomButton type="submit" fullWidth>
+                  {FIND_YOUR_CAR}
+                </CustomButton>
               </Grid>
             </Grid>
           </Grid>

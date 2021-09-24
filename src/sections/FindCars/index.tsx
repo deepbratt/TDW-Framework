@@ -56,7 +56,7 @@ const FindCarsStyles = makeStyles((theme) => ({
   },
   tabRoot: {
     margin: '0',
-    color: Colors.textPrimary
+    color: Colors.textPrimary,
   },
   tabContainer: {
     borderBottom: 'none'
@@ -78,11 +78,10 @@ const FindCarsStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    border: `1px solid ${Colors.textPrimary}`,
+    border: `2px solid ${Colors.darkBlue}`,
     backgroundColor: Colors.lightGrey,
     borderRadius: '5px',
-    padding: '0 10px',
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+    padding: '0 10px'
   },
   inputFieldRoot: {
     backgroundColor: Colors.lightBlue

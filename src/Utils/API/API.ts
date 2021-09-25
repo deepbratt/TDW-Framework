@@ -95,8 +95,8 @@ export const getAllData = async (url: string) => {
   // const headers = await getHeaders()
   try {
     let result = await axiosInstance.get(url);
-    return result;
-  } catch (error: any) {
+    return result.data;
+  } catch (error:any) {
     return error.response;
   }
 };

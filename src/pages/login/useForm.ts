@@ -57,17 +57,13 @@ export const useForm = (validateOnChange = false) => {
       setIsLoading(true);
       console.log('requestBody', requestBody);
       await addData(USERS + LOGIN, requestBody).then((response) => {
-        console.log('data', response);
-        console.log('response.data', response.data);
-        console.log('response.message', response.message);
-        console.log('response.response', response.response);
         setIsLoading(false);
-        if (response && response.data && response.data.status === 'success') {
+        if (response && response && response.status === 'success') {
           setAlertOpen(true);
           setResponseData(response.data);
           setResponseMessage({
-            status: response.data.status,
-            message: response.data.message
+            status: response.status,
+            message: response.message
           });
         } else {
           setAlertOpen(true);

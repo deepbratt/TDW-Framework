@@ -256,17 +256,17 @@ export const useForm = (validateOnChange = true) => {
     await getAllData(ADS + CARS + params)
       .then((response) => {
         setIsLoading(false);
-        if (response && response.data && response.data.status === 'success') {
-          setResponseData(response.data);
+        if (response && response && response.status === 'success') {
+          setResponseData(response);
           setPageCount(
             response.totalCount < 10
               ? 1
-              : Math.ceil(response.data.totalCount / 10)
+              : Math.ceil(response.totalCount / 10)
           );
-          setResult(response.data.data.result);
+          setResult(response.data.result);
           setResponseMessage({
-            status: response.data.status,
-            message: response.data.message
+            status: response.status,
+            message: response.message
           });
         } else {
           setResponseData(null);
@@ -294,8 +294,8 @@ export const useForm = (validateOnChange = true) => {
     }
     await getAllData(ADS + CARS + FILTER + CITIES_WITH_CARS + param)
       .then((response) => {
-        if (response && response.data && response.data.status === 'success') {
-          setCitiesWithCars(response.data.data.result);
+        if (response && response && response.status === 'success') {
+          setCitiesWithCars(response.data.result);
         }
       })
       .catch((error) => {
@@ -306,8 +306,8 @@ export const useForm = (validateOnChange = true) => {
   const getMakes = async () => {
     await getAllData(ADS + CARS + MAKE)
       .then((response) => {
-        if (response && response.data && response.data.status === 'success') {
-          setMakes(response.data.data.result);
+        if (response && response && response.status === 'success') {
+          setMakes(response.data.result);
         }
       })
       .catch((error) => {
@@ -317,8 +317,8 @@ export const useForm = (validateOnChange = true) => {
 
   const getBodyTypes = () => {
     getAllData(ADS + CARS + BODY_TYPES).then((response) => {
-      if (response && response.data && response.data.status === 'success') {
-        setBodyTypes(response.data.data.result);
+      if (response && response && response.status === 'success') {
+        setBodyTypes(response.data.result);
       } else {
         console.log('error', response);
       }
@@ -337,8 +337,8 @@ export const useForm = (validateOnChange = true) => {
     }
     await getAllData(ADS + CARS + MODEL + param)
       .then((response) => {
-        if (response && response.data && response.data.status === 'success') {
-          setModels(response.data.data.result);
+        if (response && response && response.status === 'success') {
+          setModels(response.data.result);
         }
       })
       .catch((error) => {

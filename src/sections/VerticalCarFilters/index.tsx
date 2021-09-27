@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Grid,
   Slider,
@@ -30,9 +31,8 @@ export interface CarFiltersProps {
 }
 
 const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
-
   const [searchResult, setSearchResult] = useState<ICity[]>();
-  const {filtersCollection, lastAccordion} = VerticalFilterStyles();
+  const { filtersCollection, lastAccordion } = VerticalFilterStyles();
   const {
     PRICE_RANGE,
     YEAR,
@@ -125,8 +125,9 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     <div>
       {appliedFilters !== {} && (
         <Grid style={{ padding: '0 0 5px 20px' }} container spacing={1}>
-          {Object.entries(appliedFilters).map(([keys, values]: any) => (
+          {Object.entries(appliedFilters).map(([keys, values], index) => (
             <AppliedFilters
+              key={uuidv4()}
               values={values}
               keys={keys}
               removeFilter={removeFilter}
@@ -212,7 +213,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             .filter((item: any, index: number) => index <= 4)
             .map((type: any) => (
               <FormControlLabel
-                key={`make-type-${type.name}`}
+                key={uuidv4()}
                 control={
                   <Checkbox
                     name={fieldNames.make}
@@ -247,7 +248,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                     searchResult.map((item: any) => {
                       return (
                         <FormControlLabel
-                          key={`make-${item.name}`}
+                          key={uuidv4()}
                           control={
                             <Checkbox
                               name={fieldNames.make}
@@ -272,7 +273,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 </Grid>
                 {makes.map((item: any) => {
                   return (
-                    <Grid key={`make-${item.name}`} item xs={6}>
+                    <Grid key={uuidv4()} item xs={6}>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -299,7 +300,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             .filter((item: any, index: number) => index <= 4)
             .map((type: any) => (
               <FormControlLabel
-                key={`model-type-${type.name}`}
+                key={uuidv4()}
                 control={
                   <Checkbox
                     name={fieldNames.model}
@@ -334,7 +335,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                     searchResult.map((item: any) => {
                       return (
                         <FormControlLabel
-                          key={`make-${item.name}`}
+                          key={uuidv4()}
                           control={
                             <Checkbox
                               name={fieldNames.model}
@@ -359,7 +360,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 </Grid>
                 {models.map((item: any) => {
                   return (
-                    <Grid key={`model-${item.name}`} item xs={6}>
+                    <Grid key={uuidv4()} item xs={6}>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -480,7 +481,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           <Grid item>
             <Slider
               value={[rangeValues.yearRange[0], rangeValues.yearRange[1]]}
-              min={1940}
+              min={1971}
               max={2021}
               onChange={(event: any, newValue: number | number[]) => {
                 setRangeValues((previousValue: any) => {
@@ -499,7 +500,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
         <FormGroup>
           {provinces.map((province) => (
             <FormControlLabel
-              key={`province-${province.name}`}
+              key={uuidv4()}
               control={
                 <Checkbox
                   name={fieldNames.province}
@@ -520,7 +521,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             .filter((item: any, index: number) => index <= 4)
             .map((city: any) => (
               <FormControlLabel
-                key={`city-${city.city}`}
+                key={uuidv4()}
                 control={
                   <Checkbox
                     name={fieldNames.city}
@@ -553,7 +554,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                     searchResult.map((city: any) => {
                       return (
                         <FormControlLabel
-                          key={`city-${city.city}`}
+                          key={uuidv4()}
                           control={
                             <Checkbox
                               name={fieldNames.city}
@@ -572,7 +573,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 </Grid>
                 {citiesWithCars.map((city: any) => {
                   return (
-                    <Grid key={`city-${city.city}`} item xs={6}>
+                    <Grid key={uuidv4()} item xs={6}>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -599,7 +600,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             .filter((item) => majorCities.includes(item))
             .map((city) => (
               <FormControlLabel
-                key={`city-${city}`}
+                key={uuidv4()}
                 control={
                   <Checkbox
                     name={fieldNames.registrationCity}
@@ -631,7 +632,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   searchResult.map((city: ICity) => {
                     return (
                       <FormControlLabel
-                        key={`city-${city.name}`}
+                        key={uuidv4()}
                         control={
                           <Checkbox
                             name={fieldNames.registrationCity}
@@ -649,7 +650,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   })}
               </Grid>
               {provinces.map((province) => (
-                <Grid key={`province-${province}`} item xs={12}>
+                <Grid key={uuidv4()} item xs={12}>
                   <Typography variant="h4" gutterBottom>
                     {province.name}
                   </Typography>
@@ -659,7 +660,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   ).map((city) => {
                     return (
                       <FormControlLabel
-                        key={`city-${city.name}`}
+                        key={uuidv4()}
                         control={
                           <Checkbox
                             name={fieldNames.registrationCity}
@@ -688,7 +689,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
         <FormGroup>
           {Carfilters.TRANSMISSION.map((type) => (
             <FormControlLabel
-              key={`transmission-type-${type}`}
+              key={uuidv4()}
               control={
                 <Checkbox
                   name={fieldNames.transmission}
@@ -707,7 +708,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
         <FormGroup>
           {Carfilters.ENGINE_TYPE.map((type) => (
             <FormControlLabel
-              key={`engine-type-${type}`}
+              key={uuidv4()}
               control={
                 <Checkbox
                   name={fieldNames.engineType}
@@ -772,7 +773,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 rangeValues.engineCapacityRange[1]
               ]}
               min={0}
-              max={5000}
+              max={15000}
               onChange={(event: any, newValue: number | number[]) => {
                 setRangeValues((previousValue: any) => {
                   previousValue.engineCapacityRange = newValue;
@@ -792,7 +793,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             .filter((item: any) => mainCarTypes.includes(item.bodyType))
             .map((type: any) => (
               <FormControlLabel
-                key={`body-type-${type.bodyType}`}
+                key={uuidv4()}
                 control={
                   <Checkbox
                     name={fieldNames.bodyType}
@@ -819,7 +820,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           <DialogBox title="Select Body Type">
             <Grid container spacing={2}>
               {bodyTypes.map((type: any) => (
-                <Grid key={`body-type-${type.bodyType}`} item xs={12} md={6}>
+                <Grid key={uuidv4()} item xs={12} md={6}>
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -854,7 +855,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             mainColors.includes(item.text)
           ).map((type) => (
             <FormControlLabel
-              key={`color-type-${type.text}`}
+              key={uuidv4()}
               control={
                 <Checkbox
                   name={fieldNames.color}
@@ -884,7 +885,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             />
           ))}
           <FormControlLabel
-            key={`color-type-other`}
+            key={uuidv4()}
             control={
               <Checkbox
                 name={fieldNames.color}
@@ -904,7 +905,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           <DialogBox title="Select Color">
             <Grid container spacing={2}>
               {Carfilters.COLOR.map((type) => (
-                <Grid key={`color-type-${type.text}`} item xs={12} md={6}>
+                <Grid key={uuidv4()} item xs={12} md={6}>
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -937,7 +938,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               ))}
               <Grid item xs={12}>
                 <FormControlLabel
-                  key={`color-type-other`}
+                  key={uuidv4()}
                   control={
                     <Checkbox
                       name={fieldNames.color}
@@ -991,14 +992,14 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           />
         </FormGroup>
       </FilterAccordion> */}
-        <div className={filtersCollection}>
+      <div className={filtersCollection}>
         <Typography variant="h3">Others</Typography>
       </div>
       <FilterAccordion title={ASSEMBLY}>
         <FormGroup>
           {Carfilters.ASSEMBLY.map((type) => (
             <FormControlLabel
-              key={`assembly-type-${type}`}
+              key={uuidv4()}
               control={
                 <Checkbox
                   name={fieldNames.assembly}
@@ -1017,7 +1018,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
         <FormGroup>
           {Carfilters.SELLER_TYPE.map((type) => (
             <FormControlLabel
-              key={`seller-type-${type}`}
+              key={uuidv4()}
               control={
                 <Checkbox
                   name={fieldNames.sellerType}
@@ -1036,7 +1037,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
         <FormGroup>
           {Carfilters.AD_TYPE.map((type) => (
             <FormControlLabel
-              key={`ad-type-${type}`}
+              key={uuidv4()}
               control={
                 <Checkbox
                   checked={values.adType.indexOf(type) > -1}

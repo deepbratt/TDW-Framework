@@ -3,6 +3,7 @@ import {
   CardContent,
   Grid,
   makeStyles,
+  MenuItem,
   Tab,
   Tabs,
   Typography
@@ -19,6 +20,7 @@ import { findCarsData } from '../../Utils/constants/language/en/homePageData';
 import { useForm } from './useForm';
 import { fieldNames } from '../../Utils/constants/formsConstants';
 import Loader from '../../components/Loader';
+import Dropdown from '../../components/Dropdown';
 
 const FindCarsStyles = makeStyles((theme) => ({
   root: {
@@ -56,7 +58,7 @@ const FindCarsStyles = makeStyles((theme) => ({
   },
   tabRoot: {
     margin: '0',
-    color: Colors.textPrimary,
+    color: Colors.textPrimary
   },
   tabContainer: {
     borderBottom: 'none'
@@ -85,6 +87,11 @@ const FindCarsStyles = makeStyles((theme) => ({
   },
   inputFieldRoot: {
     backgroundColor: Colors.lightBlue
+  },
+  loaderContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
   }
 }));
 
@@ -98,7 +105,8 @@ const FindCars: React.FC = () => {
     tabWrapper,
     tabWrapperSelected,
     tabContainer,
-    inputFieldRoot
+    inputFieldRoot,
+    loaderContainer
   } = FindCarsStyles();
 
   const {
@@ -106,6 +114,8 @@ const FindCars: React.FC = () => {
     responseData,
     setBodyType,
     values,
+    makes,
+    models,
     handleInputChange,
     handleSubmit
   } = useForm();
@@ -125,7 +135,11 @@ const FindCars: React.FC = () => {
         scrollButtons="auto"
         value={false}
       >
-        {isLoading && <Loader open={true} />}
+        {isLoading && (
+          <div className={loaderContainer}>
+            <Loader open={true} isBackdrop={false} />
+          </div>
+        )}
         {!isLoading &&
           responseData &&
           responseData.map((item) => (
@@ -135,10 +149,11 @@ const FindCars: React.FC = () => {
               classes={{
                 root: tabRoot,
                 wrapper:
-                  values.bodyType === item.bodyType
+                  values.bodyType.includes(item.bodyType)
                     ? tabWrapperSelected
                     : tabWrapper
               }}
+
               icon={
                 <img
                   height="64px"
@@ -150,60 +165,49 @@ const FindCars: React.FC = () => {
               onClick={() => setBodyType(item.bodyType)}
             />
           ))}
-
-        {/* <Tab
-          disableTouchRipple
-          classes={{ root: tabRoot, wrapper: tabWrapper }}
-          icon={<img height="64px" src={PickUpIcon} alt="" />}
-          label="Pick Ups"
-        />
-        <Tab
-          disableTouchRipple
-          classes={{ root: tabRoot, wrapper: tabWrapper }}
-          icon={<img height="64px" src={SedanIcon} alt="" />}
-          label="Sedans"
-        />
-        <Tab
-          disableTouchRipple
-          classes={{ root: tabRoot, wrapper: tabWrapper }}
-          icon={<img height="64px" src={SedanIcon} alt="" />}
-          label="Sedans"
-        />
-        <Tab
-          disableTouchRipple
-          classes={{ root: tabRoot, wrapper: tabWrapper }}
-          icon={<img height="64px" src={SedanIcon} alt="" />}
-          label="Sedans"
-        />
-        <Tab
-          disableTouchRipple
-          classes={{ root: tabRoot, wrapper: tabWrapper }}
-          icon={<img height="64px" src={SedanIcon} alt="" />}
-          label="Sedans"
-        /> */}
       </Tabs>
       <CardContent className={content}>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={1}>
             <Grid item xs={12} sm={6}>
               <InputField
+                select
                 classes={{ root: inputFieldRoot }}
                 name={fieldNames.make}
                 value={values.make}
+                options={makes}
                 label="Make"
+                disabled={isLoading}
                 placeholder="e.g. Honda, Toyota"
                 onChange={handleInputChange}
-              />
+              >
+                {makes &&
+                  makes.map((option: any) => (
+                    <MenuItem key={option._id} value={option.name}>
+                      {`${option.name}`}
+                    </MenuItem>
+                  ))}
+              </InputField>
             </Grid>
             <Grid item xs={12} sm={6}>
               <InputField
+                select
                 classes={{ root: inputFieldRoot }}
                 name={fieldNames.model}
                 value={values.model}
+                options={models}
+                disabled={isLoading}
                 label="Model"
                 placeholder="e.g Civic, Corolla"
                 onChange={handleInputChange}
-              />
+              >
+                {models &&
+                  models.map((option: any) => (
+                    <MenuItem key={option._id} value={option.name}>
+                      {`${option.name}`}
+                    </MenuItem>
+                  ))}
+              </InputField>
             </Grid>
             <Grid item xs={12} sm={6}>
               <InputField

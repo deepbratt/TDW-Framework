@@ -10,7 +10,7 @@ import useValidation from '../../Utils/hooks/useValidation';
 const initialValues: any = {
   make: '',
   model: '',
-  bodyType: '',
+  bodyType: [],
   priceFrom: '',
   priceTo: ''
 };
@@ -23,6 +23,8 @@ interface IBodyType {
 
 export const useForm = (validateOnChange = false) => {
   const [values, setValues] = useState(initialValues);
+  const [makes, setMakes] = useState([]);
+  const [models, setModels] = useState([]);
   const [alertOpen, setAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [responseData, setResponseData] = useState<IBodyType[]>();
@@ -32,7 +34,7 @@ export const useForm = (validateOnChange = false) => {
     message: ''
   });
 
-  const { ADS, CARS, BODY_TYPES } = API_ENDPOINTS;
+  const { ADS, CARS, BODY_TYPES, MAKE, MODEL } = API_ENDPOINTS;
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -52,60 +54,85 @@ export const useForm = (validateOnChange = false) => {
   };
 
   const getBodyTypes = async () => {
-    await getAllData(ADS + CARS + BODY_TYPES)
-      .then((response) => {
-        setIsLoading(false);
-        if (response && response && response.status === 'success') {
-          setResponseData(response.data.result);
-          setResponseMessage({
-            status: response.status,
-            message: response.message
-          });
-        } else {
-          setIsLoading(false);
-          setResponseMessage({
-            status: 'error',
-            message: response.message
-          });
-        }
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        console.log('Error log', error);
-        setResponseMessage({
-          status: error.status,
-          message: error.message
-        });
-      });
+    setIsLoading(true);
+    await getAllData(ADS + CARS + BODY_TYPES).then((response) => {
+      setIsLoading(false);
+      if (response && response && response.status === 'success') {
+        setResponseData(response.data.result);
+      }
+    });
+  };
+
+  const getMakes = async () => {
+    setIsLoading(true);
+    await getAllData(ADS + CARS + MAKE).then((response) => {
+      setIsLoading(false);
+      if (response && response && response.status === 'success') {
+        setMakes(response.data.result);
+      }
+    });
+  };
+
+  const getModels = async () => {
+    setIsLoading(true);
+    let param = '?';
+    if (values.make !== '') {
+      let selectedMake: any = makes.filter(
+        (make: any) => make.name === values.make
+      );
+      param += '&make_id=' + selectedMake[0].make_id;
+    }
+    await getAllData(ADS + CARS + MODEL + param).then((response) => {
+      setIsLoading(false);
+      if (response && response && response.status === 'success') {
+        setModels(response.data.result);
+      }
+    });
   };
 
   useEffect(() => {
     getBodyTypes();
+    getMakes();
+    getModels();
   }, []);
 
+  useEffect(() => {
+    getModels();
+  }, [values.make]);
+
   const setBodyType = (value: string) => {
-    setValues({
-      ...values,
-      bodyType: value
+    let newValues = values;
+    if (newValues.bodyType.includes(value)) {
+      newValues.bodyType = values.bodyType.filter(
+        (item: string) => item !== value
+      );
+    } else {
+      newValues.bodyType.push(value);
+    }
+    setValues((previouseState: any) => {
+      previouseState = newValues;
+      return { ...previouseState };
     });
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     let queryParams = {
-      keywords: values.make + ' ' + values.model,
+      make: values.make,
+      model: values.model,
       bodyType: values.bodyType,
       priceMin: values.priceFrom,
       priceMax: values.priceTo
     };
     setIsLoading(true);
-    console.log('queryParams', queryParams);
     dispatch(setQueryParams(queryParams));
     history.push(paths.cars);
   };
 
   return {
     values,
+    makes,
+    models,
     setValues,
     errors,
     setErrors,

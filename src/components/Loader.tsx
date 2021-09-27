@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      minHeight: '70vh',
+      minHeight: '150px',
       backgroundColor: Colors.greyTranparent
     }
   })

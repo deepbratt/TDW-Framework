@@ -15,6 +15,8 @@ import MetaTags from '../../../../components/MetaTags';
 import PageMeta from '../../../../Utils/constants/language/en/pageData';
 import Loader from '../../../../components/Loader';
 import { API_ENDPOINTS } from '../../../../Utils/API/endpoints';
+import { Link } from 'react-router-dom';
+import { routes } from '../../../../routes/paths';
 const Container = () => {
   const { heading, box, favContainer, loading, pagination, layout } =
     useStyles();
@@ -67,12 +69,10 @@ const Container = () => {
             <Hidden mdUp>
               <SideBar Title={Title} sidebar={paths} />
             </Hidden>
-            <Typography variant="h3">
-              {fav}
-            </Typography>
+            <Typography variant="h3">{fav}</Typography>
           </section>
-          </Grid>
-          <Grid item xs={12}>
+        </Grid>
+        <Grid item xs={12}>
           {data.length === 0 ? (
             <Typography variant="h2" className={loading}>
               No Result Found
@@ -82,12 +82,16 @@ const Container = () => {
               <Grid item xs={12} justifyContent="flex-start" container>
                 <LayoutToggler />
               </Grid>
-                {data.map((item: any, index: number) => (
-                  <Grid
-                    item
-                    lg={layoutType === 'list' ? 12 : 4}
-                    xs={12}
-                    sm={12}
+              {data.map((item: any, index: number) => (
+                <Grid item lg={layoutType === 'list' ? 12 : 4} xs={12} sm={12}>
+                  <Link
+                    to={
+                      routes.carDetail.substr(
+                        0,
+                        routes.carDetail.lastIndexOf('/') + 1
+                      ) + item._id
+                    }
+                    target="_blank"
                   >
                     <CarListing
                       data={item}
@@ -96,8 +100,9 @@ const Container = () => {
                       handleFavs={handleFavs}
                       // handleClick={()=>console.log(item)}
                     />
-                  </Grid>
-                ))}
+                  </Link>
+                </Grid>
+              ))}
 
               <Toast
                 open={open}

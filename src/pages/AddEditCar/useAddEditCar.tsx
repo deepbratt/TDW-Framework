@@ -13,6 +13,8 @@ import {  addData, addFormData, deleteData, getAllData, updateFormData } from '.
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import Sizes from '../../Utils/themeConstants';
 import { NEED_ASSISTANCE } from '../../Utils/constants/language/en/addEditCarTexts';
+import { paths } from '../../routes/paths';
+import {paths as dashboardPath} from '../../layout/Sections/Utils/sidebarText'
 
 const formReducer = (state: any, event: any) => {
   return {
@@ -297,7 +299,7 @@ const useAddEditCar = () => {
           setToastMessage(response.data.message);
           setToastType('success');
           setToastOpen(true);
-          history.push(pathname.substr(0, pathname.lastIndexOf('/')));
+          history.push(paths.dashboard+"/ads");
       } else {
         console.log('error', response);
         if (!response.response) {

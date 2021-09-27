@@ -20,8 +20,9 @@ const ListingCardStyles = makeStyles(() => ({
     boxShadow: 'none',
     position: 'relative',
     cursor: 'pointer',
-    minWidth: '100%'
-    // marginTop: '20px'
+    minWidth: '100%',
+    marginTop: '10px',
+    height:"100%"
   },
   featuredBadge: {
     position: 'absolute',

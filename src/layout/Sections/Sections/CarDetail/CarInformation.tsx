@@ -83,12 +83,12 @@ const CarInformation = ({
           {feature ? (
             feature.map((data, index) => {
               return (
-                <>
                   <Grid
                     className={featureBox}
                     key={`title ${index}`}
                     item
                     lg={6}
+                    md={4}
                     sm={3}
                     xs={8}
                   >
@@ -104,7 +104,6 @@ const CarInformation = ({
                       </Typography>
                     </section>
                   </Grid>
-                </>
               );
             })
           ) : (

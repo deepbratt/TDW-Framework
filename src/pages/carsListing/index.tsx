@@ -47,7 +47,8 @@ import ListingCardSkeletons from '../../components/ListingCard/ListingCardSkelet
 import CompareRoundedIcon from '@material-ui/icons/CompareRounded';
 import CarListingStyles from './style';
 import CustomButton from '../../CustomButton';
-import { paths } from '../../routes/paths';
+import { paths, routes } from '../../routes/paths';
+import { Link } from 'react-router-dom';
 
 export interface CarsListingProps {
   isShortlist?: boolean;
@@ -382,14 +383,27 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                         xs={12}
                         sm={layoutType === 'list' ? 12 : 4}
                       >
-                        <ListingCard
-                          data={car}
-                          isFavs={!isShortlist}
-                          layoutType={layoutType}
-                          handleClick={
-                            isShortlist ? () => shortListItem(car) : undefined
-                          }
-                        />
+                        {isShortlist ? (
+                          <ListingCard
+                            data={car}
+                            isFavs={!isShortlist}
+                            layoutType={layoutType}
+                            handleClick={
+                              isShortlist ? () => shortListItem(car) : undefined
+                            }
+                          />
+                        ) : (
+                          <Link to={routes.carDetail.substr(0, routes.carDetail.lastIndexOf('/') + 1) + car._id} target="_blank">
+                          <ListingCard
+                            data={car}
+                            isFavs={!isShortlist}
+                            layoutType={layoutType}
+                            handleClick={
+                              isShortlist ? () => shortListItem(car) : undefined
+                            }
+                          />
+                          </Link>
+                        )}
                       </Grid>
                     ))}
                   {result && (

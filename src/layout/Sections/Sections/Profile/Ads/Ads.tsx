@@ -19,6 +19,8 @@ import MetaTags from '../../../../../components/MetaTags';
 import PageMeta from '../../../../../Utils/constants/language/en/pageData';
 import Loader from '../../../../../components/Loader';
 import { API_ENDPOINTS } from '../../../../../Utils/API/endpoints';
+import { routes } from '../../../../../routes/paths';
+import { Link } from 'react-router-dom';
 
 const Container = () => {
   const { heading, box, favContainer, loading, pagination, layout } =
@@ -46,18 +48,13 @@ const Container = () => {
         keywords={PageMeta.myAds.keywords}
       />
       <Loader open={isLoading} isBackdrop={true} />
-      <Paper
-        elevation={4}
-        className={layoutType === 'list' ? box : layout}
-      >
+      <Paper elevation={4} className={layoutType === 'list' ? box : layout}>
         <Grid item xs={12}>
           <section className={heading}>
             <Hidden mdUp>
               <SideBar Title={Title} sidebar={paths} />
             </Hidden>
-            <Typography variant="h3">
-              {ads}
-            </Typography>
+            <Typography variant="h3">{ads}</Typography>
           </section>
           {data.length === 0 ? (
             <Typography variant="h2" className={loading}>
@@ -70,12 +67,22 @@ const Container = () => {
               </Grid>
               {data.map((item: any, index: number) => (
                 <Grid item lg={layoutType === 'list' ? 12 : 4} xs={12} sm={12}>
-                  <CarListing
-                    data={item}
-                    layoutType={layoutType}
-                    isFavs={false}
-                    span={createdAt}
-                  />
+                  <Link
+                    to={
+                      routes.carDetail.substr(
+                        0,
+                        routes.carDetail.lastIndexOf('/') + 1
+                      ) + item._id
+                    }
+                    target="_blank"
+                  >
+                    <CarListing
+                      data={item}
+                      layoutType={layoutType}
+                      isFavs={false}
+                      span={createdAt}
+                    />
+                  </Link>
                 </Grid>
               ))}
             </Grid>

@@ -145,7 +145,7 @@ export const useStyles = makeStyles((theme) => ({
     display:"flex",
     justifyContent:"center",
     alignItems:"center",
-    padding:"10px"
+    padding:"30px"
   },
   passContainer:{
     display: "flex",

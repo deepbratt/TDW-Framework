@@ -1,7 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
 import { Colors } from '../../Utils/color.constants';
-import { Colors as ColorConstant } from "../../../../Utils/constants/colors/colors";
+import { Colors as ColorConstant } from '../../../../Utils/constants/colors/colors';
+import { theme } from '../../../../theme/globalFontSize';
 const breakpoints = createBreakpoints({});
 const { navyBlue, grey, blue, white, green, gray, malibuBlue } = Colors;
 export const useStyles = makeStyles(() => ({
@@ -182,7 +183,24 @@ export const useStyles = makeStyles(() => ({
     backgroundColor: ColorConstant.lightBlue,
     border: '1px solid ' + ColorConstant.greyFive,
     padding: '5px',
-    borderRadius: '5px',
+    borderRadius: '5px'
     // marginTop:"20px"
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+  fullScreenImageStyle:{
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'auto',
+    width: '90vw',
+    height: '80vh',
   }
 }));

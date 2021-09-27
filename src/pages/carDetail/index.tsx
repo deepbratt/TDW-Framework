@@ -59,7 +59,7 @@ const CarDetailContainer = () => {
             </Grid>
           ) : (
             <>
-              <Grid className={main} container item xs={12} lg={6}>
+              <Grid className={main} container item xs={12} lg={6} md={6}>
                 <Slides
                   carTitle={carTitle}
                   info={CarInfo}
@@ -79,7 +79,7 @@ const CarDetailContainer = () => {
                   updatedAt={obj.updatedAt}
                 />
 
-                <Hidden mdDown>
+                <Hidden smDown>
                   <CarInformation
                     carTitle={carTitle}
                     info={CarInfo}
@@ -118,7 +118,7 @@ const CarDetailContainer = () => {
                 data={obj}
               /> */}
               </Grid>
-              <Grid item xs={12} lg={6}>
+              <Grid item xs={12} lg={6} md={6}>
                 <CarDetail
                   mainButton={mainButton}
                   numButton={numButton}
@@ -140,7 +140,7 @@ const CarDetailContainer = () => {
                   createdBy={obj.createdBy}
                   data={obj}
                 />
-                <Hidden lgUp>
+                <Hidden mdUp>
                   <CarInformation
                     carTitle={carTitle}
                     info={CarInfo}

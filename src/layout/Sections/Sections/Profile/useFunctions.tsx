@@ -14,7 +14,7 @@ const Actions = () => {
   const dispatch = useDispatch();
   const [data, setData] = useState<any>([]);
   const [open, setOpen] = useState(false);
-  const dataLimit = 10;
+  const dataLimit = 9;
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);

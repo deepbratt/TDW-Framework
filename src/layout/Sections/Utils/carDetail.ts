@@ -146,5 +146,6 @@ export const sellerInfo = {
   firstName:"First Name",
   lastName:"Last Name",
   gender:"Gender",
-  notAvailable:"Not Available"
+  notAvailable:"Not Available",
+  memberSince: "Member Since"
 }

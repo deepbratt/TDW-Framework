@@ -89,7 +89,7 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
           />
         </Grid>
       );
-    } else {
+    } else if (values === 'price'){
       return (
         <Grid item>
           <Chip

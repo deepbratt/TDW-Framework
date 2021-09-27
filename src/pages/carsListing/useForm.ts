@@ -32,7 +32,7 @@ const initialValues: any = {
 
 const initialRangeValues: any = {
   priceRange: [0, 50000000],
-  yearRange: [1940, 2021],
+  yearRange: [1971, 2021],
   mileageRange: [0, 500000],
   engineCapacityRange: [0, 5000]
 };
@@ -70,7 +70,7 @@ export const useForm = (validateOnChange = true) => {
   );
   const [rangeValues, setRangeValues] = useState<any>({
     priceRange: [0, 50000000],
-    yearRange: [1940, 2021],
+    yearRange: [1971, 2021],
     mileageRange: [0, 500000],
     engineCapacityRange: [0, 5000]
   });

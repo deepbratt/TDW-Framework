@@ -480,7 +480,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           <Grid item>
             <Slider
               value={[rangeValues.yearRange[0], rangeValues.yearRange[1]]}
-              min={1940}
+              min={1971}
               max={2021}
               onChange={(event: any, newValue: number | number[]) => {
                 setRangeValues((previousValue: any) => {

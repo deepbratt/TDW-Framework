@@ -773,7 +773,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 rangeValues.engineCapacityRange[1]
               ]}
               min={0}
-              max={5000}
+              max={15000}
               onChange={(event: any, newValue: number | number[]) => {
                 setRangeValues((previousValue: any) => {
                   previousValue.engineCapacityRange = newValue;

@@ -59,15 +59,6 @@ export const useForm = (validateOnChange = false) => {
       setIsLoading(false);
       if (response && response && response.status === 'success') {
         setResponseData(response.data.result);
-        setResponseMessage({
-          status: response.status,
-          message: response.message
-        });
-      } else {
-        setResponseMessage({
-          status: 'error',
-          message: response.message
-        });
       }
     });
   };
@@ -78,11 +69,6 @@ export const useForm = (validateOnChange = false) => {
       setIsLoading(false);
       if (response && response && response.status === 'success') {
         setMakes(response.data.result);
-      } else {
-        setResponseMessage({
-          status: 'error',
-          message: response.message
-        });
       }
     });
   };
@@ -100,11 +86,6 @@ export const useForm = (validateOnChange = false) => {
       setIsLoading(false);
       if (response && response && response.status === 'success') {
         setModels(response.data.result);
-      } else {
-        setResponseMessage({
-          status: 'error',
-          message: response.message
-        });
       }
     });
   };
@@ -122,24 +103,28 @@ export const useForm = (validateOnChange = false) => {
   const setBodyType = (value: string) => {
     let newValues = values;
     if (newValues.bodyType.includes(value)) {
-      newValues.bodyType = values.bodyType.filter((item: string) => item !== value);
+      newValues.bodyType = values.bodyType.filter(
+        (item: string) => item !== value
+      );
     } else {
       newValues.bodyType.push(value);
     }
-    console.log("bodyType", newValues)
-    setValues(newValues);
+    setValues((previouseState: any) => {
+      previouseState = newValues;
+      return { ...previouseState };
+    });
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     let queryParams = {
-      keywords: values.make + ' ' + values.model,
+      make: values.make,
+      model: values.model,
       bodyType: values.bodyType,
       priceMin: values.priceFrom,
       priceMax: values.priceTo
     };
     setIsLoading(true);
-    console.log('queryParams', queryParams);
     dispatch(setQueryParams(queryParams));
     history.push(paths.cars);
   };

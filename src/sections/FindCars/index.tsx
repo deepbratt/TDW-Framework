@@ -149,10 +149,11 @@ const FindCars: React.FC = () => {
               classes={{
                 root: tabRoot,
                 wrapper:
-                  values.bodyType.includes(item.bodyType) === true
+                  values.bodyType.includes(item.bodyType)
                     ? tabWrapperSelected
                     : tabWrapper
               }}
+
               icon={
                 <img
                   height="64px"

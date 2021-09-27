@@ -111,15 +111,29 @@ export const useForm = (validateOnChange = true) => {
       newRangeValues.priceRange[1] = routeParams['priceMax'];
       newAppliedFilters['priceRange'] = newRangeValues.priceRange;
     }
-    if ('bodyType' in routeParams && routeParams['bodyType'] !== '') {
+    if ('bodyType' in routeParams && routeParams['bodyType'].length > 0) {
       newValues.bodyType = [...newValues.bodyType, routeParams['bodyType']];
       newAppliedFilters.bodyType = [
         ...newAppliedFilters.bodyType,
         routeParams['bodyType']
       ];
     }
+    if ('make' in routeParams && routeParams['make'] !== '') {
+      newValues.make = [...newValues.make, routeParams['make']];
+      newAppliedFilters.make = [...newAppliedFilters.make, routeParams['make']];
+    }
+    if ('model' in routeParams && routeParams['model'] !== '') {
+      newValues.model = [...newValues.model, routeParams['model']];
+      newAppliedFilters.model = [
+        ...newAppliedFilters.model,
+        routeParams['model']
+      ];
+    }
 
-    setValues(newValues);
+    setValues((previousState: any) => {
+      previousState = newValues;
+      return { ...previousState };
+    });
     setKeywords(newKeywords);
     setRangeValues(newRangeValues);
     setAppliedFilters((previousState: any) => {
@@ -259,9 +273,7 @@ export const useForm = (validateOnChange = true) => {
         if (response && response && response.status === 'success') {
           setResponseData(response);
           setPageCount(
-            response.totalCount < 10
-              ? 1
-              : Math.ceil(response.totalCount / 10)
+            response.totalCount < 10 ? 1 : Math.ceil(response.totalCount / 10)
           );
           setResult(response.data.result);
           setResponseMessage({
@@ -330,20 +342,16 @@ export const useForm = (validateOnChange = true) => {
     if (values.make !== []) {
       values.make.map((item: any) => {
         let selectedMake: any = makes.filter((make: any) => make.name === item);
-        if (item === selectedMake[0].name) {
+        if (selectedMake.length > 0) {
           param += '&make_id=' + selectedMake[0].make_id;
         }
       });
     }
-    await getAllData(ADS + CARS + MODEL + param)
-      .then((response) => {
-        if (response && response && response.status === 'success') {
-          setModels(response.data.result);
-        }
-      })
-      .catch((error) => {
-        console.log('Error', error);
-      });
+    await getAllData(ADS + CARS + MODEL + param).then((response) => {
+      if (response && response && response.status === 'success') {
+        setModels(response.data.result);
+      }
+    });
   };
 
   useEffect(() => {
@@ -353,6 +361,11 @@ export const useForm = (validateOnChange = true) => {
     getBodyTypes();
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    getModels();
+    // eslint-disable-next-line
+  }, [values.make]);
 
   useEffect(() => {
     return () => {

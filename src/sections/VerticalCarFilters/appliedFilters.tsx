@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { makeStyles, Grid, Chip } from '@material-ui/core';
 import { Colors } from '../../Utils/constants/colors/colors';
 
@@ -89,7 +90,7 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
           />
         </Grid>
       );
-    } else if (values === 'price'){
+    } else if (values === 'price') {
       return (
         <Grid item>
           <Chip
@@ -131,7 +132,7 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
         values.length !== 0 &&
         typeof values === typeof [] &&
         values.map((filter: any) => (
-          <Grid key={`filter-${keys}`} item>
+          <Grid key={uuidv4()} item>
             <Chip
               classes={{ root: root, deleteIcon: icon }}
               size="small"

@@ -10,14 +10,8 @@ import Toast from '../../../../components/Toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import Favorite from '@material-ui/icons/Favorite';
-import {
-  Add,
-  FavoriteBorder,
-  ZoomIn,
-  ZoomOut,
-  ZoomOutMap
-} from '@material-ui/icons';
-const initialSize = { scale: 1, width: 'auto' };
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import { Close, FavoriteBorder, ZoomIn, ZoomOut } from '@material-ui/icons';
 const Slider = ({
   desc,
   paragraph,
@@ -40,9 +34,14 @@ const Slider = ({
   const { user } = useSelector((state: RootState) => state.auth);
   const [isFavorite, setIsFavorite] = useState<boolean | undefined>(isFavs);
   const [fullScreen, setFullScreen] = useState(false);
-  const [zoom, setZoom] = useState(initialSize.scale);
   const [fullScreenImage, setFullScreenImage] = useState('');
-  const { carousel, detail, btn, backdrop, fullScreenImageStyle } = useStyles();
+  const {
+    carousel,
+    detail,
+    btn,
+    backdrop,
+    fullScreenImageStyle,
+  } = useStyles();
   const { mobile } = Sizes();
 
   const handleAlertClose = () => {
@@ -56,29 +55,12 @@ const Slider = ({
     e.stopPropagation();
     setFullScreen(true);
     setFullScreenImage(img);
-    setZoom(initialSize.scale);
     document.body.style.overflow = 'hidden';
   };
   const closeFullScreen = () => {
     setFullScreen(false);
-    setZoom(initialSize.scale);
     setFullScreenImage('');
     document.body.style.overflow = 'auto';
-  };
-
-  const zoomIn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.stopPropagation();
-    if (zoom > 4) {
-      return;
-    }
-    setZoom(zoom + 0.5);
-  };
-  const zoomOut = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.stopPropagation();
-    if (zoom < 1) {
-      return;
-    }
-    setZoom(zoom - 0.5);
   };
 
   return (
@@ -133,34 +115,72 @@ const Slider = ({
         </Carousel>
         <Backdrop
           className={backdrop}
-          onClick={() => closeFullScreen()}
+          // onClick={() => closeFullScreen()}
           open={fullScreen}
         >
-          <div className={fullScreenImageStyle}>
-            <div>
-              <img
-                src={fullScreenImage}
-                alt=""
-                style={{ transform: `scale(${zoom})` }}
-                height={!mobile ? "500px": "auto"}
-                width={mobile ? "100%" : "auto"}
-              />
-            </div>
-          </div>
+          <TransformWrapper
+            initialScale={1}
+            initialPositionX={0}
+            initialPositionY={0}
+          >
+            {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+              <div>
+                <div className={fullScreenImageStyle} style={{justifyContent: !mobile ? "space-between" : "center"}}>
+                  <div>
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      zoomIn();
+                    }}
+                    variant="contained"
+                    color="primary"
+                  >
+                    <ZoomIn />
+                  </Button>
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      zoomOut();
+                    }}
+                    style={{margin:"0 10px"}}
+                    variant="contained"
+                    color="secondary"
+                  >
+                    <ZoomOut />
+                  </Button>
+                  </div>
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      resetTransform();
+                      closeFullScreen();
+                    }}
+                    variant="contained"
+                    color="default"
+                  >
+                    <Close/>
+                  </Button>
+                </div>
+                <TransformComponent  contentStyle={{ cursor:"move"}}>
+                  <img src={fullScreenImage} alt=""/>
+                </TransformComponent>
+              </div>
+            )}
+          </TransformWrapper>
           <div>
             {arr.map((thumb: string, index: number) => (
               <img
                 src={thumb}
                 alt=""
                 height="50px"
-                width="50px"
+                width="auto"
                 onClick={(e) => openFullScreen(thumb, e)}
                 style={{ margin: '5px', cursor: 'pointer' }}
                 key={thumb + index}
               />
             ))}
           </div>
-          <div>
+          {/* <div>
             <Button onClick={zoomIn} variant="contained" color="primary">
               <ZoomIn />
             </Button>
@@ -168,7 +188,7 @@ const Slider = ({
             <Button onClick={zoomOut} variant="contained" color="secondary">
               <ZoomOut />
             </Button>
-          </div>
+          </div> */}
         </Backdrop>
         <Toast
           open={open}

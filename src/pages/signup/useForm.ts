@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { handleGoogleAuth } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import useApi from '../../Utils/hooks/useApi';
@@ -15,7 +15,7 @@ const initialValues: any = {
   confirmPassword: ''
 };
 
-export const useForm = (validateOnChange = false) => {
+export const useForm = (validateOnChange = true) => {
   const [values, setValues] = useState(initialValues);
   const [alertOpen, setAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +40,15 @@ export const useForm = (validateOnChange = false) => {
       ...values,
       [name]: value
     });
-    if (validateOnChange) validate({ [name]: value });
+    if (name === 'confirmPassword') {
+      if (validateOnChange)
+        validate(
+          { [name]: value, password: values.password },
+          continueWith
+        );
+    } else {
+      if (validateOnChange) validate({ [name]: value }, continueWith);
+    }
   };
 
   const resetForm = () => {

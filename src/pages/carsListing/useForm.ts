@@ -112,11 +112,8 @@ export const useForm = (validateOnChange = true) => {
       newAppliedFilters['priceRange'] = newRangeValues.priceRange;
     }
     if ('bodyType' in routeParams && routeParams['bodyType'].length > 0) {
-      newValues.bodyType = [...newValues.bodyType, routeParams['bodyType']];
-      newAppliedFilters.bodyType = [
-        ...newAppliedFilters.bodyType,
-        routeParams['bodyType']
-      ];
+      newValues.bodyType = routeParams['bodyType'];
+      newAppliedFilters.bodyType = routeParams['bodyType'];
     }
     if ('make' in routeParams && routeParams['make'] !== '') {
       newValues.make = [...newValues.make, routeParams['make']];

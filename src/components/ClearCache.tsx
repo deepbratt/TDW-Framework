@@ -42,7 +42,6 @@ const WithClearCache:React.FC <WithClearCacheProps> = ({ChildComponent, ...props
          }
   
       }).then(response=>{
-        console.log("meta", response)
         if(response.ok){
           return response.json()
         }else{
@@ -50,7 +49,6 @@ const WithClearCache:React.FC <WithClearCacheProps> = ({ChildComponent, ...props
         }
       })
         .then((meta) => {
-          console.log("meta2",meta)
           if(!meta){
             setIsLatestBuildDate(true);
           }else{
@@ -62,9 +60,12 @@ const WithClearCache:React.FC <WithClearCacheProps> = ({ChildComponent, ...props
               currentVersionDate
             );
             if (shouldForceRefresh) {
+              console.log("New Version Found.")
+              console.log("Fetching New Version...")
               setIsLatestBuildDate(false);
               refreshCacheAndReload();
             } else {
+              console.log("Getting Cahced Version")
               setIsLatestBuildDate(true);
             }
           }

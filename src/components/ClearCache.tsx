@@ -65,7 +65,7 @@ const WithClearCache:React.FC <WithClearCacheProps> = ({ChildComponent, ...props
               setIsLatestBuildDate(false);
               refreshCacheAndReload();
             } else {
-              console.log("Getting Cahced Version")
+              console.log("Getting Cached Version")
               setIsLatestBuildDate(true);
             }
           }

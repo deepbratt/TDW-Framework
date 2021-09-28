@@ -34,7 +34,7 @@ const initialRangeValues: any = {
   priceRange: [0, 50000000],
   yearRange: [1971, 2021],
   mileageRange: [0, 500000],
-  engineCapacityRange: [0, 15000]
+  engineCapacityRange: [0, 10000]
 };
 interface IData {
   data: {
@@ -72,7 +72,7 @@ export const useForm = (validateOnChange = true) => {
     priceRange: [0, 50000000],
     yearRange: [1971, 2021],
     mileageRange: [0, 500000],
-    engineCapacityRange: [0, 15000]
+    engineCapacityRange: [0, 10000]
   });
   const [appliedFilters, setAppliedFilters] = useState<any>({
     province: [],

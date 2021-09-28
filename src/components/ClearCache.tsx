@@ -3,7 +3,7 @@ import packageJson from "../../package.json";
 import moment from "moment";
 
 
-const buildDateGreaterThan= (latestDate:string, currentDate:string) => {
+const buildDateGreaterThan= (latestDate:any, currentDate:any) => {
   const momLatestDateTime = moment(latestDate);
   const momCurrentDateTime = moment(currentDate);
 

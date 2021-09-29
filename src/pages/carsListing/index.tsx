@@ -33,7 +33,8 @@ import {
   SHORTLIST_ITEMS,
   COMPARE,
   CANT_FIND_RESULT,
-  CHOOSE_CARS_TO_COMPARE
+  CHOOSE_CARS_TO_COMPARE,
+  RESET
 } from '../../Utils/constants/language/en/buttonLabels';
 import FullScreenDialog from '../../components/DialogBox/FullScreenDialog';
 import { useForm } from './useForm';
@@ -98,6 +99,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     makes,
     models,
     bodyTypes,
+    resetForm,
     bodyColors
   } = useForm();
 
@@ -184,11 +186,15 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                     {responseData !== null ? responseData?.totalCount : 0} Match
                   </Typography>
                 </Grid>
-                {/* <Grid item>
-                  <CustomButton variant="text" color="secondary">
-                    Save Search
+                <Grid item>
+                  <CustomButton
+                    variant="text"
+                    color="secondary"
+                    handleClick={() => resetForm()}
+                  >
+                    {RESET}
                   </CustomButton>
-                </Grid> */}
+                </Grid>
               </Grid>
               <Grid item xs={12}>
                 <CarFilters filterProps={filtersProps} />
@@ -266,7 +272,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                     </Typography>
                     <RadioGroup
                       aria-label="sortingOptions"
-                      value={values.sortingOptions}
+                      value={values.sort}
                       name={fieldNames.sortingOptions}
                       onChange={handleInputChange}
                     >
@@ -395,15 +401,25 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                             }
                           />
                         ) : (
-                          <Link to={routes.carDetail.substr(0, routes.carDetail.lastIndexOf('/') + 1) + car._id} target="_blank">
-                          <ListingCard
-                            data={car}
-                            isFavs={!isShortlist}
-                            layoutType={layoutType}
-                            handleClick={
-                              isShortlist ? () => shortListItem(car) : undefined
+                          <Link
+                            to={
+                              routes.carDetail.substr(
+                                0,
+                                routes.carDetail.lastIndexOf('/') + 1
+                              ) + car._id
                             }
-                          />
+                            target="_blank"
+                          >
+                            <ListingCard
+                              data={car}
+                              isFavs={!isShortlist}
+                              layoutType={layoutType}
+                              handleClick={
+                                isShortlist
+                                  ? () => shortListItem(car)
+                                  : undefined
+                              }
+                            />
                           </Link>
                         )}
                       </Grid>

@@ -20,7 +20,7 @@ export const validatePhone = (fieldValue: string) => {
     ? messages.isRequired
     : isPhoneValid(fieldValue)
     ? ''
-    : messages.notValid + " Number must start with +92 prefix";
+    : messages.notValid;
 };
 export const validateName = (fieldValue: string) => {
   return fieldValue.trim() === ''

@@ -31,6 +31,14 @@ export const useForm = (validateOnChange = true) => {
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setContinueWith(event.target.value);
+    setValues({
+      ...values,
+      method: ''
+    });
+    setErrors({
+      ...errors,
+      method: ''
+    });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,12 +50,19 @@ export const useForm = (validateOnChange = true) => {
     });
     if (name === 'confirmPassword') {
       if (validateOnChange)
-        validate(
-          { [name]: value, password: values.password },
-          continueWith
-        );
+        validate({ [name]: value, password: values.password }, continueWith);
     } else {
       if (validateOnChange) validate({ [name]: value }, continueWith);
+    }
+  };
+
+  const handlePhoneInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (value[0] !== '0' && value[0] !== '+') {
+      let newValues = values;
+      newValues.method = value;
+      setValues(newValues);
+      if (validateOnChange) validate({ [name]: '+92' + value }, continueWith);
     }
   };
 
@@ -73,40 +88,38 @@ export const useForm = (validateOnChange = true) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (validate(values, continueWith)) {
-      let requestBody = {
-        firstName: values.firstName,
-        lastName: values.lastName,
-        username: values.username,
-        data: values.method,
-        password: values.password,
-        passwordConfirm: values.confirmPassword
-      };
-      setIsLoading(true);
-      console.log('requestBody', requestBody);
-      await addData(USERS + SIGNUP, requestBody)
-        .then((response) => {
-          setIsLoading(false);
-          if (response && response.data && response.data.status === 'success') {
-            setAlertOpen(true);
-            setResponseMessage({
-              status: response.data.status,
-              message: response.data.message
-            });
-          } else {
-            setAlertOpen(true);
-            setResponseMessage(extractError(response));
-          }
-        })
-        .catch((error) => {
-          setIsLoading(false);
+    let requestBody = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      username: values.username,
+      data: continueWith === 'mobile' ? '+92' + values.method : values.method,
+      password: values.password,
+      passwordConfirm: values.confirmPassword
+    };
+    setIsLoading(true);
+    console.log('requestBody', requestBody);
+    await addData(USERS + SIGNUP, requestBody)
+      .then((response) => {
+        setIsLoading(false);
+        if (response && response.data && response.data.status === 'success') {
           setAlertOpen(true);
           setResponseMessage({
-            status: error.status,
-            message: error.message
+            status: response.data.status,
+            message: response.data.message
           });
+        } else {
+          setAlertOpen(true);
+          setResponseMessage(extractError(response));
+        }
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setAlertOpen(true);
+        setResponseMessage({
+          status: error.status,
+          message: error.message
         });
-    }
+      });
   };
 
   return {
@@ -115,6 +128,7 @@ export const useForm = (validateOnChange = true) => {
     errors,
     setErrors,
     handleInputChange,
+    handlePhoneInputChange,
     resetForm,
     validate,
     handleSubmit,

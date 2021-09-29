@@ -5,6 +5,8 @@ export const messages = {
   password: 'Password must be 8 charactors long'
 };
 
+export const SANDBOX_GOOGLE_API_KEY = "AIzaSyCj8BrPjz-At0aLEBScQZMoGac81ihYXxA"
+
 export const fieldNames = {
   username: 'username',
   firstName: 'firstName',

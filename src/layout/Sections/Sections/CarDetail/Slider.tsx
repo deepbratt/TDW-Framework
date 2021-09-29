@@ -162,7 +162,7 @@ const Slider = ({
                   </Button>
                 </div>
                 <TransformComponent  contentStyle={{ cursor:"move"}}>
-                  <img src={fullScreenImage} alt=""/>
+                  <img src={fullScreenImage} alt="" width={!mobile ? "900" : "auto"}/>
                 </TransformComponent>
               </div>
             )}

@@ -25,6 +25,7 @@ import PriceInput from '../../components/InputField/PriceInput';
 import NumberInput from '../../components/InputField/NumberInput';
 import AppliedFilters from './appliedFilters';
 import defaultBodyType from '../../assets/Cars/sedan.png';
+// import MapSearch from '../../components/MapSearch/MapSearch';
 
 export interface CarFiltersProps {
   filterProps: any;
@@ -1052,6 +1053,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           ))}
         </FormGroup>
       </FilterAccordion> */}
+      {/* <MapSearch/> */}
     </div>
   );
 };

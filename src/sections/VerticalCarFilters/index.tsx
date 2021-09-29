@@ -861,7 +861,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               control={
                 <Checkbox
                   name={fieldNames.color}
-                  checked={values.color.indexOf(type.text) > -1}
+                  checked={values.color.indexOf(type.name) > -1}
                   onChange={(e) => handleCheckboxChange(e, type.name)}
                   color="primary"
                   size="small"

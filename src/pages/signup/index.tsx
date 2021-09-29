@@ -8,7 +8,8 @@ import {
   Button,
   Radio,
   RadioGroup,
-  FormControlLabel
+  FormControlLabel,
+  InputAdornment
 } from '@material-ui/core';
 import {
   // OR,
@@ -48,6 +49,7 @@ const Signup = () => {
     alertOpen,
     setAlertOpen,
     handleInputChange,
+    handlePhoneInputChange,
     handleSubmit,
     values,
     errors,
@@ -178,11 +180,17 @@ const Signup = () => {
                       id="input-phone"
                       name={fieldNames.method}
                       fullWidth
+                      placeholder="349xxxxxxx"
                       variant="outlined"
                       label="Phone"
                       value={values.method}
                       error={errors.method}
-                      onChange={handleInputChange}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">+92</InputAdornment>
+                        )
+                      }}
+                      onChange={handlePhoneInputChange}
                     />
                   </Grid>
                 ) : (

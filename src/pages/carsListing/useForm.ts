@@ -36,6 +36,20 @@ const initialRangeValues: any = {
   mileageRange: [0, 500000],
   engineCapacityRange: [0, 10000]
 };
+const initialAppliedFiltersValues: any = {
+  province: [],
+  city: [],
+  registrationCity: [],
+  make: [],
+  model: [],
+  transmission: [],
+  assembly: [],
+  engineType: [],
+  color: [],
+  bodyType: [],
+  sellerType: [],
+  adType: []
+};
 interface IData {
   data: {
     result: ICarCard[];
@@ -60,7 +74,24 @@ export const useForm = (validateOnChange = true) => {
   const [alertOpen, setAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [pageCount, setPageCount] = useState<number>(1);
-  const [values, setValues] = useState({ ...initialValues });
+  const [values, setValues] = useState<any>({
+    province: [],
+    city: [],
+    registrationCity: [],
+    make: [],
+    model: [],
+    transmission: [],
+    assembly: [],
+    engineType: [],
+    color: [],
+    bodyType: [],
+    pictureAvailability: false,
+    videoAvailability: false,
+    sellerType: [],
+    adType: [],
+    sort: '',
+    condition: ''
+  });
   const [responseData, setResponseData] = useState<IData | null>();
   const [result, setResult] = useState<ICarCard[] | []>([]);
   const [queryParams, setQueryParams] = useState<string>('');
@@ -486,7 +517,11 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const resetForm = () => {
+    console.log('reset filters');
     setValues(initialValues);
+    setAppliedFilters(initialAppliedFiltersValues);
+    setKeywords('');
+    setRangeValues(initialRangeValues);
     setErrors({});
   };
 

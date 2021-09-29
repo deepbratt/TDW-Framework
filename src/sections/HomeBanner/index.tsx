@@ -1,6 +1,5 @@
 import { Card, Typography, makeStyles } from '@material-ui/core';
 import BannerImg from '../../assets/Home/Banner.png';
-import WheelImg from '../../assets/icons/wheel_black.png';
 import CustomButton from '../../components/CustomButton';
 import { FIND_YOUR_CAR } from '../../Utils/constants/language/en/buttonLabels';
 import { BannerData } from '../../Utils/constants/language/en/homePageData';
@@ -9,6 +8,13 @@ const HomeBannerStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
     minWidth: '100%',
+    minHeight: '420px',
+    [theme.breakpoints.down('sm')]: {
+      minHeight: '280px'
+    },
+    [theme.breakpoints.down('xs')]: {
+      minHeight: '150px'
+    },
     '& > img': {
       maxHeight: '580px',
       width: '100%',
@@ -42,7 +48,7 @@ const HomeBannerStyles = makeStyles((theme) => ({
       top: '110%',
       left: 'auto',
       margin: '10px 15px',
-      opacity: 1,
+      opacity: 1
     }
   },
   cardHeading: {

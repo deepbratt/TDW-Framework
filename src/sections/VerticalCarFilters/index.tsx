@@ -774,7 +774,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 rangeValues.engineCapacityRange[1]
               ]}
               min={0}
-              max={15000}
+              max={10000}
               onChange={(event: any, newValue: number | number[]) => {
                 setRangeValues((previousValue: any) => {
                   previousValue.engineCapacityRange = newValue;
@@ -798,7 +798,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 control={
                   <Checkbox
                     name={fieldNames.bodyType}
-                    checked={values.bodyType.indexOf(type.text) > -1}
+                    checked={values.bodyType.indexOf(type.bodyType) > -1}
                     onChange={(e) => handleCheckboxChange(e, type.bodyType)}
                     color="primary"
                     size="small"

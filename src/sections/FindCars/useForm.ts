@@ -107,7 +107,7 @@ export const useForm = (validateOnChange = false) => {
         (item: string) => item !== value
       );
     } else {
-      newValues.bodyType.push(value);
+      newValues.bodyType = [...newValues.bodyType, value];
     }
     setValues((previouseState: any) => {
       previouseState = newValues;

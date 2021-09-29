@@ -96,6 +96,7 @@ const useAddEditCar = () => {
   const [images, setImages] = useState<Array<any>>([]);
   const [featuresArray, setFeaturesArray] = useState<Array<any>>([]);
   const [bodyTypesArray, setBodyTypesArray] = useState<Array<any>>([]);
+  const [bodyColorArray, setBodyColorArray] = useState<Array<any>>([]);
   const [requireError, setRequireError] = useState({
     ...initialRequireError,
     ...initialRequireError_2
@@ -125,6 +126,7 @@ const useAddEditCar = () => {
       requireError={requireError}
       handleChangeSelect={handleChangeSelect}
       setFormData = {setFormData}
+      bodyColorArray={bodyColorArray}
     />,
     <UploadPhotosForm
       images={images}
@@ -142,7 +144,35 @@ const useAddEditCar = () => {
     />
   ];
 
+  const getColors = () => {
+    setIsLoading(true);
+    getAllData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.CAR_COLORS}`
+    )
+      .then((response: any) => {
+        if (response && response.data && response.status === "success") {
+          let result = response.data.result
+          let temp:any[] = []
+          result.forEach((element:any) => {
+            temp.push(element.name)
+          });
+          setBodyColorArray(temp);
+        } else {
+          if (response.message) {
+            setToastMessage(response.message);
+          } else {
+            setToastMessage(response.response);
+          }
+          setToastOpen(true);
+          setToastType("error");
+        }
+      })
+      .then(() => setIsLoading(false));
+  };
+
   const getFeaturesAndBodyTypes = () => {
+    // get colors
+    getColors()
     // get features
     getAllData(
       `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.CAR_FEATURES}`

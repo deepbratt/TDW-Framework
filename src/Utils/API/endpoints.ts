@@ -10,6 +10,7 @@ export const API_ENDPOINTS = {
   MAKE: '/makes',
   MODEL: '/models',
   BODY_TYPES: '/body-types',
+  CAR_COLORS: '/colors',
   CITIES_WITH_CARS: '/cities-with-cars',
   PHONE_VERIFICATION: '/phone-verfication',
   EMAIL_VERIFICATION: '/email-verfication',

@@ -32,6 +32,7 @@ interface CarInformationFormProps {
   requireError: any;
   handleChangeSelect: any;
   setFormData: React.Dispatch<any>;
+  bodyColorArray: any[]
 }
 
 const CarInformationForm = ({
@@ -39,7 +40,8 @@ const CarInformationForm = ({
   handleChange,
   requireError,
   handleChangeSelect,
-  setFormData
+  setFormData,
+  bodyColorArray
 }: CarInformationFormProps) => {
   const classes = useStyles();
   const {toastMessage, toastType, toastOpen, isLoading, carMakesList, carModelsList, carVersionsList} = useCarInformationForm(formData, setFormData)
@@ -141,7 +143,7 @@ const CarInformationForm = ({
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
         <SelectComponent
-          menuItem={addEditCarData.fields.bodyColor.menu}
+          menuItem={bodyColorArray}
           name={"bodyColor"}
           className={classes.selectFields}
           value={formData.bodyColor}

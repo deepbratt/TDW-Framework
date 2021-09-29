@@ -196,11 +196,7 @@ export const useStyles = makeStyles(() => ({
   },
   fullScreenImageStyle:{
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'auto',
-    width: '90vw',
-    height: '80vh',
-  }
+    marginBottom:"5px"
+  },
 }));

@@ -99,7 +99,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     makes,
     models,
     bodyTypes,
-    resetForm
+    resetForm,
+    bodyColors
   } = useForm();
 
   const [open, setOpen] = React.useState(false);
@@ -151,7 +152,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     citiesWithCars,
     makes,
     models,
-    bodyTypes
+    bodyTypes,
+    bodyColors
   };
 
   return (

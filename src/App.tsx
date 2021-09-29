@@ -14,12 +14,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from './redux/reducers/authSlice';
 import { RootState } from './redux/store';
 import ErrorBoundary from './components/ErrorBoundary';
+import WithClearCache from './components/ClearCache';
 
 const generateClassName = createGenerateClassName({
   disableGlobal: true // or seed: 'something_unique' ?
 });
+const App = () =>{
+  return <WithClearCache ChildComponent={MainApp}/>
+}
 
-function App() {
+function MainApp() {
   const { USERS, CURENT_USER } = API_ENDPOINTS;
   const [isLoading, setisLoading] = useState(false);
   const dispatch = useDispatch();

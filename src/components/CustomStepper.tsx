@@ -11,13 +11,13 @@ const CustomStepper =({activeStep, dataArray}: CustomStepperProps)=> {
     return(
         <Stepper
           activeStep={activeStep}
-          style={{ marginTop: "50px" }}
+          style={{padding:"10px"}}
           orientation={
             size.mobileLarge || size.mobile ? "vertical" : "horizontal"
           }
         >
           {dataArray.map((label, index) => (
-            <Step key={label} style={{ width: "100%" }}>
+            <Step key={label} style={{ width: "100%", padding:0 }}>
               {size.mobileLarge || size.mobile ? (
                 <StepLabel>{label}</StepLabel>
               ) : (

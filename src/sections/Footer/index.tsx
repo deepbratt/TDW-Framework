@@ -1,8 +1,18 @@
-import React from "react";
-import { NavLink, BrowserRouter } from "react-router-dom";
-import { Grid, Typography } from "@material-ui/core";
-import FooterStyles from "./styles";
-import { FooterProps, IRoutes } from "../../Utils/interfaces/footer.interface";
+import React from 'react';
+import { NavLink, BrowserRouter } from 'react-router-dom';
+import {
+  Grid,
+  Container,
+  Typography,
+  Divider,
+  TextField,
+  Button
+} from '@material-ui/core';
+import FooterStyles from './styles';
+import {
+  FooterProps,
+  IFooterFilter
+} from '../../Utils/interfaces/footer.interface';
 
 /** 
  @param data 
@@ -13,212 +23,217 @@ import { FooterProps, IRoutes } from "../../Utils/interfaces/footer.interface";
 const Footer: React.FC<FooterProps> = ({
   data,
   rootBackgroundColor,
-  textPrimary,
+  textPrimary
 }) => {
   const footerStylesProps = {
     rootBackgroundColor,
-    textPrimary,
+    textPrimary
   };
 
   const {
     root,
-    logo,
-    socialMedia,
-    contacts,
-    pageLinks,
-    termsLinkRoot,
-    termsLink,
+    container,
+    filterTitle,
     socialMediaLinks,
+    pageLinks,
+    divider,
+    textFiedld,
+    btn,
+    text
   } = FooterStyles(footerStylesProps);
 
   return (
     <BrowserRouter>
-      <Grid container>
+      <Container>
         <Grid className={root} item container xs={12}>
-          <Grid item container xs={12} lg={3}>
-            <Grid item xs={12}>
-              <img
-                height="46px"
-                className={logo}
-                src={data.logo}
-                alt="tezDealz logo"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              {data.socialMedia &&
-                data.socialMedia.map((item) => (
-                  <a
-                    className={socialMedia}
-                    key={`${item.name}-link`}
-                    href={item.path}
-                  >
-                    <img height="17px" src={item.icon} alt={item.name} />
-                  </a>
-                ))}
-            </Grid>
-
-            <Grid item xs={12}>
-              <div className={contacts}>
-                {data.contacts &&
-                  data.contacts.map((contact, index) => (
-                    <Typography
-                      key={`${contact.location}-${index}`}
-                      variant="body2"
-                      gutterBottom
-                      component="h5"
+          <Grid className={container} item xs={12} container>
+            <Grid item container xs={12} lg={9}>
+              <Grid item xs={12} sm={4} lg={3}>
+                <Typography className={filterTitle} variant="h3" gutterBottom>
+                  Explore TezDeals
+                </Typography>
+                {data.explore &&
+                  data.explore.map((item, index) => (
+                    <NavLink
+                      className={pageLinks}
+                      key={`explore-link-${index}`}
+                      to={item.path}
                     >
-                      {contact.location}: {contact.phone}
+                      <Typography
+                        className={pageLinks}
+                        variant="body2"
+                        component="h5"
+                        gutterBottom
+                      >
+                        {item.name}
+                      </Typography>
+                    </NavLink>
+                  ))}
+              </Grid>
+              <Grid item xs={12} sm={4} lg={3}>
+                <Typography className={filterTitle} variant="h3" gutterBottom>
+                  TezDeals.com
+                </Typography>
+                {data.tezDealz &&
+                  data.tezDealz.map((item, index) => (
+                    <NavLink
+                      className={pageLinks}
+                      key={`tezDealz-link-${index}`}
+                      to={item.path}
+                    >
+                      <Typography
+                        className={pageLinks}
+                        variant="body2"
+                        component="h5"
+                        gutterBottom
+                      >
+                        {item.name}
+                      </Typography>
+                    </NavLink>
+                  ))}
+              </Grid>
+              {Object.entries(data.filters).map(([keys, values], index) => (
+                <Grid key={`filters-${index}`} item xs={12} sm={4} lg={3}>
+                  <Typography className={filterTitle} variant="h3" gutterBottom>
+                    Cars By {keys}
+                  </Typography>
+                  {values.map((value: IFooterFilter, index) => (
+                    <Typography
+                      key={`filter-${index}`}
+                      className={pageLinks}
+                      variant="body2"
+                      component="h5"
+                      gutterBottom
+                    >
+                      {value.text}
                     </Typography>
                   ))}
-              </div>
+                </Grid>
+              ))}
+            </Grid>
+            <Grid item container xs={12} lg={3}>
+              <Grid item container xs={12} md={4} lg={12}>
+                <Grid item xs={12}>
+                  <Typography className={filterTitle} variant="h3">
+                    Sell On TezDeals
+                  </Typography>
+                  {data.sell &&
+                    data.sell.map((item, index) => (
+                      <NavLink
+                        className={pageLinks}
+                        key={`sell-links-${index}`}
+                        to={item.path}
+                      >
+                        <Typography
+                          className={pageLinks}
+                          variant="body2"
+                          component="h5"
+                          gutterBottom
+                        >
+                          {item.name}
+                        </Typography>
+                      </NavLink>
+                    ))}
+                </Grid>
+              </Grid>
+              <Grid item container xs={12} md={4} lg={12}>
+                <Grid item xs={12}>
+                  <Typography className={filterTitle} variant="h3">
+                    Subscribe to our Newsletter
+                  </Typography>
+                  <TextField
+                    className={textFiedld}
+                    fullWidth
+                    placeholder="name@email.com"
+                    variant="standard"
+                    InputProps={{
+                      endAdornment: (
+                        <Button className={btn} variant="contained">
+                          Subscribe
+                        </Button>
+                      ),
+                      disableUnderline: true
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item container xs={12} md={4} lg={12}>
+                <Grid item xs={12}>
+                  <Typography className={filterTitle} variant="h3">
+                    Follow Us
+                  </Typography>
+                </Grid>
+                {data.socialMedia &&
+                  data.socialMedia.map((item, index) => (
+                    <Grid
+                      className={socialMediaLinks}
+                      item
+                      key={`social-media-link-${index}`}
+                    >
+                      <img height="30px" src={item.icon} alt={item.name} />
+                    </Grid>
+                  ))}
+              </Grid>
+              <Grid item container xs={12} md={4} lg={12}>
+                <Grid item xs={12}>
+                  <Typography className={filterTitle} variant="h3">
+                    Download Mobile App
+                  </Typography>
+                </Grid>
+                {data.appLinks &&
+                  data.appLinks.map((item, index) => (
+                    <Grid
+                      item
+                      xs={5}
+                      className={socialMediaLinks}
+                      key={`app-link-${index}`}
+                    >
+                      <img width="100%" src={item} alt={'App Links Button'} />
+                    </Grid>
+                  ))}
+              </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} lg={3}>
-            {data.services &&
-              data.services.map((service, index) => (
-                <NavLink
-                  className={pageLinks}
-                  key={`page-link-${index}`}
-                  to={service.path}
-                >
-                  <Typography
-                    className={pageLinks}
-                    variant="body2"
-                    component="h5"
-                    gutterBottom
-                  >
-                    {service.name}
-                  </Typography>
-                </NavLink>
-              ))}
-          </Grid>
-          <Grid item xs={12} lg={3}>
-            {data.about &&
-              data.about.map((about, index) => (
-                <NavLink
-                  className={pageLinks}
-                  key={`page-link-${index}`}
-                  to={about.path}
-                >
-                  <Typography
-                    className={pageLinks}
-                    variant="body2"
-                    component="h5"
-                    gutterBottom
-                  >
-                    {about.name}
-                  </Typography>
-                </NavLink>
-              ))}
-          </Grid>
-          <Grid item xs={12} lg={3}>
-            {data.help &&
-              data.help.map((help, index) => (
-                <NavLink
-                  className={pageLinks}
-                  key={`page-link-${index}`}
-                  to={help.path}
-                >
-                  <Typography
-                    className={pageLinks}
-                    variant="body2"
-                    component="h5"
-                    gutterBottom
-                  >
-                    {help.name}
-                  </Typography>
-                </NavLink>
-              ))}
-          </Grid>
-        </Grid>
-        <Grid className={root} item xs={12}>
-          <Typography variant="h4" gutterBottom>
-            {data.headers.leadingCategories}
-          </Typography>
-          {Object.entries(data.categories).map(([keys, values]) => {
-            return (
-              <div className={contacts} key={`category-${keys}`}>
-                <Typography
-                  variant="h3"
-                  color="textPrimary"
-                  gutterBottom
-                  component="span"
-                >
-                  {`${keys}`}:
-                </Typography>
-                {values.map((item: IRoutes, index: any) => (
-                  <NavLink
-                    key={`most-popular-item-${index}`}
-                    className={pageLinks}
-                    to={item.path}
-                  >
-                    <Typography
-                      variant="body2"
-                      color="textPrimary"
-                      gutterBottom
-                      component="span"
-                    >
-                      {` ${item.name}`} |
+
+          <Divider className={divider} />
+          <Grid
+            style={{ borderTop: '1px solid black', paddingTop: '10px' }}
+            item
+            container
+            justifyContent="center"
+          >
+            <Grid item>
+              <Typography className={text} align="center" variant="body2">
+                {data.copyrights}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} container justifyContent="center">
+              {data.termsAndConditions &&
+                data.termsAndConditions.map((item, index) => (
+                  <Grid item key={`terms-and-conditions-${index}`}>
+                    <NavLink className={pageLinks} to={item.path}>
+                      <Typography
+                        style={{ marginLeft: '5px' }}
+                        variant="body2"
+                        component="span"
+                      >
+                        {` ${item.name}`}{' '}
+                      </Typography>
+                    </NavLink>
+                    <Typography style={{ color: textPrimary }} component="span">
+                      {index < data.termsAndConditions.length - 1 ? '| ' : ''}
                     </Typography>
-                  </NavLink>
+                  </Grid>
                 ))}
-              </div>
-            );
-          })}
-        </Grid>
-        <Grid className={root} item xs={12}>
-          <Typography variant="h4" gutterBottom>
-            {data.headers.MostSearched}
-          </Typography>
-          <div className={contacts}>
-            {data.mostSearched &&
-              data.mostSearched.map((item, index) => (
-                <NavLink
-                  className={pageLinks}
-                  key={`most-searched-item-${index}`}
-                  to={item.path}
-                >
-                  <Typography variant="body2" gutterBottom component="span">
-                    {` ${item.name}`} |
-                  </Typography>
-                </NavLink>
-              ))}
-          </div>
-        </Grid>
-        <Grid className={root} item container xs={12}>
-          <Grid className={termsLinkRoot} item xs={12} md={6}>
-            {data.termsAndConditions &&
-              data.termsAndConditions.map((terms, index) => (
-                <NavLink
-                  className={pageLinks}
-                  key={`page-link-${index}`}
-                  to={terms.path}
-                >
-                  <Typography
-                    className={termsLink}
-                    variant="body2"
-                    component="span"
-                    gutterBottom
-                  >
-                    {terms.name}
-                  </Typography>
-                </NavLink>
-              ))}
-          </Grid>
-          <Grid className={socialMediaLinks} item xs={12} md={6}>
-            {data.socialMedia &&
-              data.socialMedia.map((item) => (
-                <a
-                  className={socialMedia}
-                  key={`${item.name}-link`}
-                  href={item.path}
-                >
-                  <img height="17px" src={item.icon} alt={item.name} />
-                </a>
-              ))}
+            </Grid>
+            <Grid item>
+              <Typography className={text} align="center" variant="body2">
+                {data.notice}
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </BrowserRouter>
   );
 };

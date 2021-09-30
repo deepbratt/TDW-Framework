@@ -1,9 +1,19 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core';
+import { Colors } from '../../Utils/constants/colors/colors';
 
-const AccordionStyles = makeStyles(() => ({
+const AccordionStyles = makeStyles((theme) => ({
   root: {
-    boxShadow: "none",
+    margin: '0 0',
+    boxShadow: 'none',
+    borderBottom: `0.5px solid ${theme.palette.text.primary}`
   },
+  expanded: {
+    backgroundColor: Colors.greyFour,
+    margin: '0'
+  },
+  detailRoot: {
+    backgroundColor: theme.palette.common.white
+  }
 }));
 
 export default AccordionStyles;

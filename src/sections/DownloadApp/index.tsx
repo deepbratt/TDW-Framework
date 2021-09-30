@@ -1,23 +1,40 @@
-import { Card, CardMedia, CardActions } from "@material-ui/core";
-import CustomButton from "../../CustomButton";
-import DownloadAppStyles from "./styles";
-import { CAR_COMPARISIONS } from "../../Utils/constants/language/en/buttonLabels";
+import { Card, CardMedia, CardActions, Icon } from '@material-ui/core';
+import CustomButton from '../../components/CustomButton';
+import AppleIcon from '@material-ui/icons/Apple';
+import PlayStoreIcon from '../../assets/icons/playStore.png';
+import DownloadAppStyles from './styles';
+import {
+  FOR_ANDROID,
+  FOR_IOS
+} from '../../Utils/constants/language/en/buttonLabels';
 export interface DownloadAppProps {
   featureImg: string;
 }
 
 const DownloadApp: React.FC<DownloadAppProps> = ({ featureImg }) => {
-  const { root } = DownloadAppStyles();
+  const { root, btn, cardMedia } = DownloadAppStyles();
   return (
-    <Card className={root}>
-      <CardActions>
-        <CustomButton>{CAR_COMPARISIONS}</CustomButton>
-        <CustomButton>{CAR_COMPARISIONS}</CustomButton>
-      </CardActions>
-      <CardMedia>
-        <img src={featureImg} alt="cars-comparisons" />
-      </CardMedia>
-    </Card>
+    <div className={root}>
+      <CustomButton
+        fullWidth
+        className={btn}
+        startIcon={<AppleIcon />}
+        
+      >
+        {FOR_IOS}
+      </CustomButton>
+      <CustomButton
+        fullWidth
+        className={btn}
+        
+        startIcon={
+          <img height="18px" src={PlayStoreIcon} alt="play store icon" />
+        }
+      >
+        {FOR_ANDROID}
+      </CustomButton>
+      <img className={cardMedia} src={featureImg} alt="" />
+    </div>
   );
 };
 

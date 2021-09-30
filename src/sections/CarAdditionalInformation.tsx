@@ -17,6 +17,8 @@ interface CarAdditionalInformationProps {
   handleChange: (event: any) => void;
   requireError: any;
   setFormData: React.Dispatch<any>;
+  bodyTypesArray: Array<string>
+  featuresArray: Array<string>
 }
 
 const CarAdditionalInformation = ({
@@ -24,6 +26,8 @@ const CarAdditionalInformation = ({
   handleChange,
   requireError,
   setFormData,
+  featuresArray,
+  bodyTypesArray
 }: CarAdditionalInformationProps) => {
   const classes = useStyles();
 
@@ -107,7 +111,7 @@ const CarAdditionalInformation = ({
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
         <SelectComponent
-          menuItem={addEditCarData.fields.bodyType.menu}
+          menuItem={bodyTypesArray}
           name={"bodyType"}
           className={classes.selectFields}
           value={formData.bodyType}
@@ -135,13 +139,28 @@ const CarAdditionalInformation = ({
           onChange={handleChange}
         />
       </Grid>
+      <Grid item xs={12} sm={12} md={6}>
+        <SelectComponent
+          menuItem={addEditCarData.fields.sellerType.menu}
+          name={"sellerType"}
+          className={classes.selectFields}
+          value={formData.sellerType}
+          label={addEditCarData.fields.sellerType.label}
+          required
+          error={requireError.sellerType}
+          helperText={
+            requireError.sellerType ? addEditCarData.requiredFieldText : ""
+          }
+          onChange={handleChange}
+        />
+      </Grid>
       <Grid container item xs={12}>
         <Grid item xs={12}>
           <Typography variant="body1" className={classes.checkBoxLabel}>
             Features
           </Typography>
         </Grid>
-        {addEditCarData.features.map((feature: string, index: number) => (
+        {featuresArray.map((feature: string, index: number) => (
           <Grid item xs={12} sm={6} md={4} style={{ display: "flex" }} key={'cai-features'+index}>
             <FormControlLabel
               control={

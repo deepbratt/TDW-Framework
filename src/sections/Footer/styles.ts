@@ -1,4 +1,4 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles, Theme } from '@material-ui/core';
 export interface FooterStylesProps {
   rootBackgroundColor: string;
   textPrimary: string;
@@ -6,43 +6,76 @@ export interface FooterStylesProps {
 
 /**
  * @rootBackgroundColor Background Color of footer
- * @textPrimary 
+ * @textPrimary
  **/
 
 const FooterStyles = makeStyles<Theme, FooterStylesProps>((theme) => ({
   root: {
-    padding: "40px 60px",
+    marginTop: '30px',
     backgroundColor: ({ rootBackgroundColor }) => rootBackgroundColor,
-    [theme.breakpoints.down("sm")]: {
-      padding: "15px 25px",
-    },
+    padding: '0 10px'
   },
-  logo: { marginBottom: "20px" },
-  socialMedia: {
-    marginRight: "30px",
+  container: {
+    marginBottom: '20px'
   },
-  contacts: { marginTop: "20px" },
-  pageLinks: {
-    paddingBottom: "15px",
-    color: ({ textPrimary }) => textPrimary,
-  },
-  termsLinkRoot: {
-    display: "flex",
-    justifyContent: "flex-start",
-    [theme.breakpoints.down("sm")]: {
-      margin: "10px 0",
-      justifyContent: "space-around",
-    },
-  },
-  termsLink: { marginRight: "20px" },
+  logo: { marginBottom: '20px' },
   socialMediaLinks: {
-    display: "flex",
-    justifyContent: "flex-end",
-    [theme.breakpoints.down("sm")]: {
-      margin: "10px 0",
-      justifyContent: "space-around",
-    },
+    cursor: 'pointer',
+    marginRight: '10px'
   },
+  pageLinks: {
+    color: ({ textPrimary }) => textPrimary,
+    margin: '7px 0',
+    cursor: 'pointer',
+    '&:hover': {
+      color: theme.palette.common.white
+    }
+  },
+  text: {
+    color: ({ textPrimary }) => textPrimary,
+    margin: '7px 0'
+  },
+  filterTitle: {
+    margin: '15px 0',
+    color: theme.palette.common.white
+  },
+  divider: {
+    borderTop: `2px solid #181C20`,
+    paddingTop: '10px'
+  },
+  textFiedld: {
+    backgroundColor: theme.palette.common.white,
+    outline: 'none',
+    border: 'none',
+    maxHeight: '40px',
+    position: 'relative',
+    maxWidth: '97%',
+    padding: '8px 0 8px 10px',
+    '& > *': {
+      maxHeight: '40px',
+      border: 'none',
+      outline: 'none'
+    },
+    [theme.breakpoints.down('md')]: {
+      maxWidth: '90%'
+    },
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: '100%'
+    }
+  },
+  btn: {
+    backgroundColor: theme.palette.success.main,
+    borderRadius: 0,
+    color: theme.palette.common.white,
+    boxShadow: 'none',
+    padding: '12px 15px',
+    position: 'absolute',
+    right: '0px',
+    '&:hover': {
+      backgroundColor: theme.palette.success.dark,
+      boxShadow: 'none'
+    }
+  }
 }));
 
 export default FooterStyles;

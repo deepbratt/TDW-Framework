@@ -1,121 +1,211 @@
-import { useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import {
   Grid,
   Card,
   CardContent,
   CardMedia,
   Typography,
-} from "@material-ui/core";
-import { routes } from "../../routes/paths";
-import ListingCardStyles from "./styles";
-import LocationIcon from "../../assets/icons/location.png";
-import { ICarCard } from "../../Utils/interfaces/products.interface";
-import { FEATURED } from "../../Utils/constants/language/en/buttonLabels";
+  Paper,
+  IconButton
+} from '@material-ui/core';
+import {
+  ACTIVE,
+  INACTIVE,
+  SOLD,
+  UNSOLD
+} from '../../Utils/constants/language/en/buttonLabels';
+import { Colors } from '../../Utils/constants/colors/colors';
+import ConvertDate from '../convertDate';
+import { routes } from '../../routes/paths';
+import ListingCardStyles from './styles';
+import LocationIcon from '../../assets/icons/location.png';
+import NoImg from '../../assets/no-img.png';
+import { addToFav } from '../../Utils/hooks/actions';
+import { addToFavs, removeFavs } from '../../Utils/hooks/endpoints';
+import { useState } from 'react';
+import Toast from '../Toast';
+import Loader from '../Loader';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { Favorite, FavoriteBorder } from '@material-ui/icons';
+import moment from 'moment';
 export interface ListingCardProps {
-  data: {
-    product: ICarCard;
-    productImage: string;
-  };
+  data: any;
   layoutType: string;
+  span?: string;
+  isFavs?: boolean;
+  handleFavs?: (id: string) => void;
   handleClick?: Function;
 }
 
 const ListingCard: React.FC<ListingCardProps> = ({
   data,
   layoutType,
-  handleClick,
+  isFavs,
+  span,
+  handleFavs,
+  handleClick
 }) => {
   const history = useHistory();
+  const { pathname } = useLocation();
+  const { user, isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const { root, grid, featuredBadge, location, favsIcon, label, favsIconGrid } =
+    ListingCardStyles();
+  const { red, grey, flashWhite } = Colors;
 
-  const { root, grid, featuredBadge, location } = ListingCardStyles();
-
-  const { product, productImage } = data;
   const {
     _id,
-    date,
-    price,
-    name,
-    year,
-    driven,
-    fuel,
+    model,
+    make,
+    modelYear,
+    milage,
+    engineType,
     engineCapacity,
     transmission,
     city,
-    isFeatured,
-  } = product;
+    createdAt,
+    updatedAt,
+    price,
+    image,
+    isSold,
+    active,
+    isFav,
+    createdBy
+  } = data;
+
+  const [isFavorite, setIsfavorite] = useState(isFav);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('success');
+  const [toastOpen, setToastOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const favs = (id: string) => {
+    if (handleFavs) {
+      handleFavs(id);
+    } else {
+      setIsLoading(true);
+      addToFav(isFavorite ? removeFavs : addToFavs, id).then((response) => {
+        setIsLoading(false);
+        console.log(response);
+        if (response && response.status === 'success') {
+          setToastMessage(response?.message);
+          setToastType('success');
+          setIsfavorite(!isFavorite);
+        } else {
+          setToastMessage(response?.message);
+          setToastType('error');
+        }
+        setToastOpen(true);
+      });
+    }
+  };
+
+  const handleCardClick = () => {
+    if (handleClick) {
+      handleClick();
+    }
+  };
 
   return (
-    <Card className={layoutType === "list" ? root : grid}>
-      <Grid container>
-        <Grid item xs={12} sm={layoutType !== "list" ? 12 : 4}>
-          <CardMedia
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              overflow: "hidden",
-              maxHeight: "200px",
-            }}
+    <>
+    <Paper elevation={4} style={{ height: layoutType !== 'list' ? '100%' : "auto"}}>
+      <Toast
+        open={toastOpen}
+        message={toastMessage}
+        type={toastType}
+        onClose={() => setToastOpen(false)}
+      />
+      <Loader open={isLoading} isBackdrop={true} />
+      <Card
+        className={layoutType === 'list' ? root : grid}
+        style={{ cursor: 'pointer'}}
+        onClick={() => handleCardClick()}
+      >
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            sm={layoutType !== 'list' ? 12 : 4}
+            style={{ padding: '5px' }}
           >
-            <img
+            <CardMedia
               style={{
-                minWidth: "100%",
-                minHeight: "100%",
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                overflow: 'hidden',
+                width: '100%'
               }}
-              src={productImage}
-              alt=""
-            />
-          </CardMedia>
-        </Grid>
-        <Grid item container xs={12} sm={layoutType !== "list" ? 12 : 8}>
-          <CardContent style={{ margin: "0" }}>
-            <Grid
-              item
-              container
-              spacing={2}
-              direction="column"
-              justify="space-between"
             >
-              {isFeatured ? (
+              <img
+                height="200px"
+                width="100%"
+                src={image && image.length > 0 ? image[0] : NoImg}
+                alt=""
+              />
+              {isSold && (
                 <span className={featuredBadge}>
-                  <Typography variant="body2">{FEATURED}</Typography>
+                  <Typography variant="body2">{SOLD}</Typography>
                 </span>
-              ) : null}
-              <Grid item container justify="space-between" xs={12}>
-                <Grid item>
-                  <Typography variant="h5">{date}</Typography>
+              )}
+            </CardMedia>
+          </Grid>
+          <Grid item container xs={12} sm={layoutType !== 'list' ? 12 : 8}>
+            <CardContent style={{ padding: '5px' }}>
+              <Grid
+                // item
+                container
+                // xs={12}
+                spacing={layoutType === 'list' ? 2 : 1}
+              >
+                <Grid
+                  item
+                  xs={12}
+                  container
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Typography variant="h5">{ConvertDate(createdAt)}</Typography>
+                  {isLoggedIn && user._id !== createdBy ? (
+                    <IconButton
+                      onClick={(e) => {
+                        favs(_id ? _id : '');
+                        e.stopPropagation();
+                      }}
+                      style={{ padding: 0 }}
+                    >
+                      {isFavorite || pathname.indexOf('favorites') > -1 ? (
+                        <Favorite color="primary" />
+                      ) : (
+                        <FavoriteBorder />
+                      )}
+                    </IconButton>
+                  ) : null}
                 </Grid>
-                <Grid item>
-                  <Typography color="secondary" variant="h4">
-                    PKR{" "}
-                    {price.toLocaleString(navigator.language, {
-                      minimumFractionDigits: 0,
-                    })}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid item container xs={12} spacing={2}>
                 <Grid item xs={12}>
-                  <Typography
-                    variant="h3"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      handleClick
-                        ? handleClick()
-                        : history.push(routes.carDetail + _id);
-                    }}
-                  >
-                    {name}
+                  <Typography variant="h4" style={{ cursor: 'pointer' }}>
+                    {`${make} ${model}`}
                   </Typography>
                 </Grid>
-                <Grid item container xs={12} spacing={1} justify="flex-start">
+                <Grid item xs={12}>
+                  <Typography color="secondary" variant="h3">
+                    {price && `PKR ${price?.toLocaleString()}`}
+                  </Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={12}
+                  spacing={1}
+                  justifyContent="flex-start"
+                >
                   <Grid item>
                     <Typography
                       color="textSecondary"
                       variant="body2"
                       component="span"
                     >
-                      {year}
+                      {modelYear}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -124,9 +214,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       variant="body2"
                       component="span"
                     >
-                      {driven.toLocaleString(navigator.language, {
-                        minimumFractionDigits: 0,
-                      })}
+                      &bull;&nbsp;{milage?.toLocaleString() + ' KM'}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -135,7 +223,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       variant="body2"
                       component="span"
                     >
-                      {fuel}
+                      &bull;&nbsp;{engineType}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -144,7 +232,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       variant="body2"
                       component="span"
                     >
-                      {`${engineCapacity} cc`}
+                      &bull;&nbsp;{`${engineCapacity} cc`}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -153,9 +241,34 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       variant="body2"
                       component="span"
                     >
-                      {transmission}
+                      &bull;&nbsp;{transmission}
                     </Typography>
                   </Grid>
+                  {pathname.indexOf('ads') > -1 ||
+                  pathname.indexOf('favorites') > -1 ? (
+                    <>
+                      {/* <Grid item>
+                        <Typography
+                          color="textSecondary"
+                          variant="body2"
+                          component="span"
+                        >
+                          &bull;&nbsp;{isSold ? SOLD : UNSOLD}
+                        </Typography>
+                      </Grid> */}
+                      {pathname.indexOf('ads') > -1 && (
+                        <Grid item>
+                          <Typography
+                            color="textSecondary"
+                            variant="body2"
+                            component="span"
+                          >
+                            &bull;&nbsp;{active ? ACTIVE : INACTIVE}
+                          </Typography>
+                        </Grid>
+                      )}
+                    </>
+                  ) : null}
                 </Grid>
                 <Grid item xs={12}>
                   <div className={location}>
@@ -164,16 +277,19 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       <Typography variant="subtitle2">{city}</Typography>
                     </span>
                     <span>
-                      <Typography variant="subtitle2">{date}</Typography>
+                      <Typography variant="subtitle2">
+                        {moment(updatedAt).fromNow()}
+                      </Typography>
                     </span>
                   </div>
                 </Grid>
               </Grid>
-            </Grid>
-          </CardContent>
+            </CardContent>
+          </Grid>
         </Grid>
-      </Grid>
-    </Card>
+      </Card>
+    </Paper>
+   </>
   );
 };
 

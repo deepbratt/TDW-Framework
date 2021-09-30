@@ -1,72 +1,110 @@
-import { makeStyles } from "@material-ui/core/styles";
-import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
-import { Colors } from "../../Utils/color.constants";
+import { makeStyles } from '@material-ui/core/styles';
+import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
 
 const breakpoints = createBreakpoints({});
-const {white} = Colors
 export const useStyles = makeStyles((theme) => ({
   root: {
-    boxShadow: "none",
-    width: "100%",
-    padding: "30px 50px 10px 50px",
-    backgroundColor: white,
-    [breakpoints.down("sm")]: {
-      padding: "0px",
-    },
+    width: '100%',
+    padding: '0 10px',
+    boxShadow: '0 1px 2px rgba(0,0,0,0.07)',
+    [breakpoints.down('sm')]: {
+      padding: '0px 20px'
+    }
   },
   appbarsolid: {
-    width: "100%",
-    fontSize: "16px",
-    display: "flex",
-    alignItems: "center",
+    width: '100%',
+    fontSize: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    alignContent: 'center',
     zIndex: 1,
-    justifyContent: "space-between",
-    transition: "all .5s linear",
-    padding: "0 !important",
-    [breakpoints.down("sm")]: {
-      justifyContent: "space-around",
-    },
+    justifyContent: 'space-between',
+    transition: 'all .5s linear',
+    padding: '0 !important',
+    [breakpoints.down('sm')]: {
+      justifyContent: 'space-around'
+    }
   },
   menuButton: {
-    paddingRight: theme.spacing(2),
+    paddingRight: theme.spacing(2)
   },
   list: {
-    display: "flex",
-    whiteSpace: "nowrap",
-    justifyContent: "space-around",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
   },
   listItem: {
-    marginRight: "20px",
-    "&:hover": {
-      cursor: "pointer",
-    },
+    '&:hover': {
+      cursor: 'pointer'
+    }
   },
-
   link: {
-    textDecoration: "none",
-    color: white,
+    color: theme.palette.common.black,
+    textDecoration: 'none'
   },
-  active: {
+  loginLink: {
+    color: theme.palette.common.black,
+    textDecoration: 'none',
+    width: 'max-content'
   },
+  active: {},
   logo: {
-    width: "8rem",
-    padding: "10px 0px 0px 10px",
-    [breakpoints.down("sm")]: {
-      paddingLeft: "0px",
-      width: "6rem",
-    },
+    marginRight: '15px',
+    width: '5rem',
+    padding: '10px 0px 0px 10px',
+    [breakpoints.down('sm')]: {
+      paddingLeft: '0px',
+      width: '4rem'
+    }
   },
   rec: {
-    position: "absolute",
-    right: "0px",
-    height: "75px",
-    [breakpoints.down("md")]: {
-      width: "70%",
+    position: 'absolute',
+    right: '0px',
+    height: '74.5px',
+    [breakpoints.down('md')]: {
+      width: '70%'
     },
-    [breakpoints.down("sm")]: {
-      width: "50%",
-      height: "100%",
+    [breakpoints.down('sm')]: {
+      width: '50%',
+      height: '100%'
+    }
+  },
+  inputRoot: {
+    borderRadius: '20px',
+    maxWidth: '400px',
+    [theme.breakpoints.down('md')]: {
+      maxWidth: '150px'
     },
+    [theme.breakpoints.up('lg')]: {
+      minWidth: '500px'
+    },
+    '& > .MuiOutlinedInput-root-293': {
+      borderRadius: '10px'
+    }
+  },
+  input: {
+    fontSize: '16px',
+    borderRadius: '10px',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '14px'
+    },
+    '&::placeholder': {
+      [theme.breakpoints.down('md')]: {
+        fontSize: '16px'
+      },
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '14px'
+      }
+    }
+  },
+  btn: {
+    margin: '0 15px',
+    borderRadius: '7px',
+    padding: '10px 15px',
+    color: theme.palette.common.white,
+    background: 'linear-gradient(180deg, #ec4040 0%, #C20000 100%)',
+    '& > span, *': {
+      color: theme.palette.common.white
+    }
   }
 }));

@@ -1,11 +1,11 @@
-import { Grid, Typography } from "@material-ui/core";
-import { useHistory } from "react-router";
-import AprroveIcon from "../../assets/icons/approve.png";
-import Section from "../../components";
-import CustomButton from "../../components/CustomButton";
-import { routes } from "../../routes/paths";
-import { POST_YOUR_AD } from "../../Utils/constants/language/en/buttonLabels";
-import PostAdStyles from "./styles";
+import { Grid, Typography } from '@material-ui/core';
+import { useHistory } from 'react-router';
+import AprroveIcon from '../../assets/icons/approve.png';
+import Section from '../../components';
+import CustomButton from '../../components/CustomButton';
+import { routes } from '../../routes/paths';
+import { POST_YOUR_AD } from '../../Utils/constants/language/en/buttonLabels';
+import PostAdStyles from './styles';
 
 export interface PostAdProps {
   data: {
@@ -47,7 +47,7 @@ const PostAd: React.FC<PostAdProps> = ({ data }) => {
           <img className={featureImgStyle} src={coverImg} alt="" />
         </Grid>
         <Grid item xs={12}>
-          <CustomButton onClick={() => history.push(routes.carListing)}>
+          <CustomButton onClick={() => history.push(routes.addEditCar.substr(0, routes.addEditCar.lastIndexOf('/')))}>
             {POST_YOUR_AD}
           </CustomButton>
         </Grid>

@@ -4,6 +4,7 @@ const LayoutStyle = makeStyles((theme) => ({
   input: {
     [theme.breakpoints.down("md")]: {
       fontSize: "16px",
+      backgroundcolor:"white"
     },
     [theme.breakpoints.down("xs")]: {
       fontSize: "14px",

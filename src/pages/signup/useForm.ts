@@ -1,65 +1,44 @@
-import { useState } from "react";
-import { handleGoogleAuth } from "../../Utils/API/API";
-import { API_ENDPOINTS } from "../../Utils/API/endpoints";
-import { fieldNames, messages } from "../../Utils/constants/formsConstants";
-import useApi from "../../Utils/hooks/useApi";
-import { isEmailValid, isPhoneValid } from "../../Utils/regex";
+import { useState, useEffect } from 'react';
+import { handleGoogleAuth } from '../../Utils/API/API';
+import { API_ENDPOINTS } from '../../Utils/API/endpoints';
+import useApi from '../../Utils/hooks/useApi';
+import { addData } from '../../Utils/API/API';
+import useValidation from '../../Utils/hooks/useValidation';
+import { extractError } from '../../Utils/helperFunctions';
 
 const initialValues: any = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  mobile: "",
-  password: "",
-  confirmPassword: "",
+  firstName: '',
+  lastName: '',
+  username: '',
+  method: '',
+  password: '',
+  confirmPassword: ''
 };
 
-export const useForm = (validateOnChange = false) => {
-  const { USERS, SIGNUP_WITH_EMAIL, SIGNUP_WITH_MOBILE, GOOGLE_AUTH } =
-    API_ENDPOINTS;
-  const {
-    loading,
-    alertOpen,
-    setAlertOpen,
-
-    responseMessage,
-    addRequest,
-  } = useApi();
+export const useForm = (validateOnChange = true) => {
   const [values, setValues] = useState(initialValues);
-  const [errors, setErrors] = useState(initialValues);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [continueWith, setContinueWith] = useState('');
+  const { validate, errors, setErrors } = useValidation(values);
+  const [responseMessage, setResponseMessage] = useState({
+    status: '',
+    message: ''
+  });
 
-  const validate = (fieldValues = values) => {
-    let temp = { ...errors };
+  const { addRequest } = useApi();
+  const { USERS, GOOGLE_AUTH, SIGNUP } = API_ENDPOINTS;
 
-    if (fieldNames.email in fieldValues) {
-      temp.email =
-        fieldValues.email.trim() === ""
-          ? messages.isRequired
-          : isEmailValid(fieldValues.email)
-          ? ""
-          : messages.notValid;
-    }
-    if (fieldNames.mobile in fieldValues) {
-      temp.mobile =
-        fieldValues.mobile.trim() === ""
-          ? messages.isRequired
-          : isPhoneValid(fieldValues.mobile)
-          ? ""
-          : messages.notValid;
-    }
-    if (fieldNames.password in fieldValues) {
-      temp.password =
-        fieldValues.password.length < 5
-          ? "Password must be 8 charactors long"
-          : "";
-    }
-
-    setErrors({
-      ...temp,
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setContinueWith(event.target.value);
+    setValues({
+      ...values,
+      method: ''
     });
-
-    if (fieldValues === values)
-      return Object.values(temp).every((x) => x === "");
+    setErrors({
+      ...errors,
+      method: ''
+    });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,42 +46,29 @@ export const useForm = (validateOnChange = false) => {
 
     setValues({
       ...values,
-      [name]: value,
+      [name]: value
     });
-    if (validateOnChange) validate({ [name]: value });
+    if (name === 'confirmPassword') {
+      if (validateOnChange)
+        validate({ [name]: value, password: values.password }, continueWith);
+    } else {
+      if (validateOnChange) validate({ [name]: value }, continueWith);
+    }
+  };
+
+  const handlePhoneInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (value[0] !== '0' && value[0] !== '+') {
+      let newValues = values;
+      newValues.method = value;
+      setValues(newValues);
+      if (validateOnChange) validate({ [name]: '+92' + value }, continueWith);
+    }
   };
 
   const resetForm = () => {
     setValues(initialValues);
     setErrors({});
-  };
-
-  const handleEmailSubmit = async (e: any) => {
-    e.preventDefault();
-
-    let requestBody: any = {
-      firstName: values.firstName,
-      lastName: values.lastName,
-      email: values.email,
-      password: values.password,
-      passwordConfirm: values.confirmPassword,
-    };
-    console.log("requestBody", requestBody);
-    await addRequest(USERS + SIGNUP_WITH_EMAIL, requestBody);
-  };
-
-  const handleMobileSubmit = async (e: any) => {
-    e.preventDefault();
-
-    let requestBody = {
-      firstName: values.firstName,
-      lastName: values.lastName,
-      phone: values.mobile,
-      password: values.password,
-      passwordConfirm: values.confirmPassword,
-    };
-    console.log("requestBody", requestBody);
-    await addRequest(USERS + SIGNUP_WITH_MOBILE, requestBody);
   };
 
   const handleGoogleSubmit = async () => {
@@ -113,16 +79,47 @@ export const useForm = (validateOnChange = false) => {
         firstName: response.given_name,
         lastName: response.family_name,
         image: response.picture,
-        email: response.email,
+        email: response.email
       };
-      console.log("request body", requestBody);
+      console.log('request body', requestBody);
       await addRequest(USERS + GOOGLE_AUTH, requestBody);
     });
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("btn clicked", values);
+    let requestBody = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      username: values.username,
+      data: continueWith === 'mobile' ? '+92' + values.method : values.method,
+      password: values.password,
+      passwordConfirm: values.confirmPassword
+    };
+    setIsLoading(true);
+    console.log('requestBody', requestBody);
+    await addData(USERS + SIGNUP, requestBody)
+      .then((response) => {
+        setIsLoading(false);
+        if (response && response.data && response.data.status === 'success') {
+          setAlertOpen(true);
+          setResponseMessage({
+            status: response.data.status,
+            message: response.data.message
+          });
+        } else {
+          setAlertOpen(true);
+          setResponseMessage(extractError(response));
+        }
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setAlertOpen(true);
+        setResponseMessage({
+          status: error.status,
+          message: error.message
+        });
+      });
   };
 
   return {
@@ -131,16 +128,16 @@ export const useForm = (validateOnChange = false) => {
     errors,
     setErrors,
     handleInputChange,
+    handlePhoneInputChange,
     resetForm,
     validate,
     handleSubmit,
-    handleEmailSubmit,
-    handleMobileSubmit,
     handleGoogleSubmit,
-    loading,
+    isLoading,
     alertOpen,
     setAlertOpen,
-
     responseMessage,
+    continueWith,
+    handleRadioChange
   };
 };

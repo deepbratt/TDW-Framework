@@ -1,1 +1,6 @@
 export const NO_REGISTRATION_DISPLAY = "Registeration Number will not be displayed on the platform"
+export const SOLD_HERE_DIALOG_MESSAGE = "Did you sell this car on TEZDEALZ?"
+export const SOLD_HERE_DIALOG_TITLE = "Mark As Sold!"
+export const SOLD_HERE_DIALOG_OK = "Yes"
+export const SOLD_HERE_DIALOG_REJECT = "No"
+export const NEED_ASSISTANCE = "I Need assistance in creating my advertisement."

@@ -46,7 +46,7 @@ const InputFieldWithButton: React.FC<InputFieldWithButtonProps | any> = (
               className={btn}
               color="primary"
               variant="contained"
-              onClick={() => handleClick()}
+              onClick={handleClick}
             >
               {buttonlabel}
             </Button>

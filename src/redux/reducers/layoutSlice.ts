@@ -1,21 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface IInitialState {
   layoutType: string;
 }
 
 const initialState: IInitialState = {
-  layoutType: "list",
+  layoutType: 'list'
 };
 
 const layoutSlice = createSlice({
-  name: "layout",
+  name: 'layout',
   initialState,
   reducers: {
     setLayout: (state, action: any) => {
       state.layoutType = action.payload;
-    },
-  },
+    }
+  }
 });
 
 export const { setLayout } = layoutSlice.actions;

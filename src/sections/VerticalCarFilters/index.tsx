@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useForm } from "../../Pages/carsListing/useForm";
+import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Grid,
   Slider,
@@ -7,33 +7,38 @@ import {
   FormControlLabel,
   Checkbox,
   Typography,
-  IconButton,
-} from "@material-ui/core";
-import FilterAccordion from "../../components/Accordion";
+  Divider
+} from '@material-ui/core';
+import FilterAccordion from '../../components/Accordion';
 import {
   Carfilters,
-  CarFiltersData,
-} from "../../Utils/constants/language/en/filtersData";
-import { City, State } from "country-state-city";
-import HighlightOffRoundedIcon from "@material-ui/icons/HighlightOffRounded";
-import InputFieldWithButton from "../../components/InputField/InputFieldWithButton";
-import InputField from "../../components/InputField";
-import { fieldNames } from "../../Utils/constants/formsConstants";
-import VerticalFilterStyles from "./styles";
-import DialogBox from "../../components/DialogBox";
-import { ICity } from "country-state-city/dist/lib/interface";
-import { APPLIED_FILTERS } from "../../Utils/constants/language/en/buttonLabels";
+  CarFiltersData
+} from '../../Utils/constants/language/en/filtersData';
+import { City, State } from 'country-state-city';
+import InputFieldWithButton from '../../components/InputField/InputFieldWithButton';
+import InputField from '../../components/InputField';
+import { fieldNames } from '../../Utils/constants/formsConstants';
+import VerticalFilterStyles from './styles';
+import DialogBox from '../../components/DialogBox';
+import { ICity } from 'country-state-city/dist/lib/interface';
+import PriceInput from '../../components/InputField/PriceInput';
+import NumberInput from '../../components/InputField/NumberInput';
+import AppliedFilters from './appliedFilters';
+import defaultBodyType from '../../assets/Cars/sedan.png';
+// import MapSearch from '../../components/MapSearch/MapSearch';
 
-export interface CarFiltersProps {}
+export interface CarFiltersProps {
+  filterProps: any;
+}
 
-const CarFilters: React.FC<CarFiltersProps> = () => {
+const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const [searchResult, setSearchResult] = useState<ICity[]>();
-  const {} = VerticalFilterStyles();
+  const { filtersCollection, lastAccordion } = VerticalFilterStyles();
   const {
-    KEYWORDS,
     PRICE_RANGE,
     YEAR,
     MAKE,
+    MODEL,
     PROVINCE,
     CITY,
     REGISTRATION_CITY,
@@ -43,17 +48,18 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
     ENGINE_CAPACITY,
     COLOR,
     BODY_TYPE,
-    PICTURE_AVAILABILITY,
-    VIDEO_AVAILABILITY,
-    SELLER_TYPE,
-    AD_TYPE
+    ASSEMBLY,
+    // PICTURE_AVAILABILITY,
+    // VIDEO_AVAILABILITY,
+    SELLER_TYPE
+    // AD_TYPE
   } = CarFiltersData;
 
-  const majorCities = ["Karachi", "Islamabad", "Lahore", "Peshawar", "Quetta"];
-  const mainCarTypes = ["Sedan", "Hatchback", "Pick Up"];
-  const mainColors = ["Black", "White", "Red"];
-  const cities = City.getCitiesOfCountry("PK");
-  const provinces = State.getStatesOfCountry("PK");
+  const majorCities = ['Karachi', 'Islamabad', 'Lahore', 'Peshawar', 'Quetta'];
+  const mainCarTypes = ['Sedan', 'Hatchback', 'Pick Up'];
+  const mainColors = ['Black', 'White', 'Red'];
+  const cities = City.getCitiesOfCountry('PK');
+  const provinces = State.getStatesOfCountry('PK');
   const extractedCityNames = cities?.map((item) => item.name);
   let cityNames = [];
   if (extractedCityNames) {
@@ -61,23 +67,57 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
   }
   const {
     values,
-    setValues,
     errors,
-    handleInputChange,
     handleCheckboxChange,
-    handleSingleCheckBoxChange,
+    // handleSingleCheckBoxChange,
+    handleTextBoxSubmit,
     appliedFilters,
     removeFilter,
-    handleSubmit,
-  } = useForm(true);
+    removeFilterItem,
+    removeRangeFilter,
+    rangeValues,
+    setRangeValues,
+    citiesWithCars,
+    makes,
+    models,
+    bodyTypes,
+    bodyColors
+  } = filterProps;
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let result = City.getCitiesOfCountry("PK")?.filter(
+    let result = City.getCitiesOfCountry('PK')?.filter(
       (city: ICity) =>
         city.name.substr(0, e.target.value.length).toLowerCase() ===
         e.target.value.toLowerCase()
     );
-    if (e.target.value === "") {
+    if (e.target.value === '') {
+      result = [];
+    }
+    setSearchResult(result);
+  };
+
+  const handleSearchCities = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let result = citiesWithCars?.filter(
+      (city: any) =>
+        city.city.substr(0, e.target.value.length).toLowerCase() ===
+        e.target.value.toLowerCase()
+    );
+    if (e.target.value === '') {
+      result = [];
+    }
+    setSearchResult(result);
+  };
+
+  const handleMakesModelSearch = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    makeModelArray: any[]
+  ) => {
+    let result = makeModelArray?.filter(
+      (item: any) =>
+        item.name.substr(0, e.target.value.length).toLowerCase() ===
+        e.target.value.toLowerCase()
+    );
+    if (e.target.value === '') {
       result = [];
     }
     setSearchResult(result);
@@ -85,37 +125,34 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
 
   return (
     <div>
-      {appliedFilters.length > 0 && (
-        <FilterAccordion title={APPLIED_FILTERS}>
-          <Grid container spacing={1}>
-            {appliedFilters.map((filter: any) => (
-              <Grid
-                key={`filter-${filter}`}
-                item
-                container
-                justifyContent="space-between"
-                xs={12}
-              >
-                <Typography variant="body2">{filter}</Typography>
-                <IconButton size="small" onClick={() => removeFilter(filter)}>
-                  <HighlightOffRoundedIcon color="secondary" fontSize="small" />
-                </IconButton>
-              </Grid>
-            ))}
-          </Grid>
-        </FilterAccordion>
+      {appliedFilters !== {} && (
+        <Grid style={{ padding: '0 0 5px 20px' }} container spacing={1}>
+          {Object.entries(appliedFilters).map(([keys, values], index) => (
+            <AppliedFilters
+              key={uuidv4()}
+              values={values}
+              keys={keys}
+              removeFilter={removeFilter}
+              removeFilterItem={removeFilterItem}
+              removeRangeFilter={removeRangeFilter}
+            />
+          ))}
+        </Grid>
       )}
-      <FilterAccordion title={KEYWORDS}>
+      {/* <FilterAccordion title={KEYWORDS} expanded hideExpandIcon={true}>
         <InputFieldWithButton
           name={fieldNames.keywords}
-          label="Keywords"
+          label="Search by Keywords"
           placeholder="Eg. Honda In Lahore"
-          value={values.keywords}
-          error={errors.keywords}
-          onChange={handleInputChange}
-          handleClick={handleSubmit}
+          value={keywords}
+          errors={errors.keywords}
+          onChange={handleTextBoxChange}
+          handleClick={() => handleTextBoxSubmit('keywords')}
         />
-      </FilterAccordion>
+      </FilterAccordion> */}
+      <div className={filtersCollection}>
+        <Typography variant="h3">Basics</Typography>
+      </div>
       <FilterAccordion title={PRICE_RANGE}>
         <Grid container direction="column">
           <Grid item container spacing={1}>
@@ -123,12 +160,16 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
               <InputField
                 name={fieldNames.priceFrom}
                 label="From"
-                value={values.priceRange[0]}
-                error={errors.priceFrom}
+                value={rangeValues.priceRange[0]}
+                errors={errors.priceFrom}
+                type="number"
+                InputProps={{
+                  inputComponent: PriceInput as any
+                }}
                 onChange={(e: any) => {
-                  setValues((previousState: any) => {
-                    previousState.priceRange[0] = e.target.value;
-                    return { ...previousState };
+                  setRangeValues((previousValue: any) => {
+                    previousValue.priceRange[0] = e.target.value as number;
+                    return { ...previousValue };
                   });
                 }}
               />
@@ -137,28 +178,261 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
               <InputFieldWithButton
                 name={fieldNames.priceTo}
                 label="To"
-                value={values.priceRange[1]}
-                error={errors.priceTo}
+                value={rangeValues.priceRange[1]}
+                errors={errors.priceTo}
+                type="number"
+                InputProps={{
+                  inputComponent: PriceInput as any
+                }}
                 onChange={(e: any) => {
-                  setValues((previousState: any) => {
-                    previousState.priceRange[1] = e.target.value;
-                    return { ...previousState };
+                  setRangeValues((previousValue: any) => {
+                    previousValue.priceRange[1] = e.target.value as number;
+                    return { ...previousValue };
                   });
                 }}
-                handleClick={handleSubmit}
+                handleClick={() => handleTextBoxSubmit('priceRange')}
               />
             </Grid>
           </Grid>
           <Grid item>
             <Slider
-              value={[values.priceRange[0], values.priceRange[1]]}
-              min={50000}
+              value={[rangeValues.priceRange[0], rangeValues.priceRange[1]]}
+              min={0}
               max={5000000}
               onChange={(event: any, newValue: number | number[]) => {
-                setValues((previousState: any) => {
-                  console.log(newValue);
-                  previousState.priceRange = newValue as number[];
-                  return { ...previousState };
+                setRangeValues((previousValue: any) => {
+                  previousValue.priceRange = newValue;
+                  return { ...previousValue };
+                });
+              }}
+            />
+          </Grid>
+        </Grid>
+      </FilterAccordion>
+      <FilterAccordion title={MAKE}>
+        <FormGroup>
+          {makes
+            .filter((item: any, index: number) => index <= 4)
+            .map((type: any) => (
+              <FormControlLabel
+                key={uuidv4()}
+                control={
+                  <Checkbox
+                    name={fieldNames.make}
+                    checked={values.make.indexOf(type.name) > -1}
+                    onChange={(e) => handleCheckboxChange(e, type.name)}
+                    color="primary"
+                    size="small"
+                  />
+                }
+                label={type.name}
+              />
+            ))}
+          {makes.length > 5 && (
+            <DialogBox title="Select Makes">
+              <Grid style={{ display: 'flex' }} container>
+                <Grid xs={12}>
+                  <InputField
+                    variant="filled"
+                    label="Search"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      handleMakesModelSearch(e, makes)
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  {searchResult && searchResult.length > 0 && (
+                    <Typography variant="h4" gutterBottom>
+                      {'Search Result'}
+                    </Typography>
+                  )}
+                  {searchResult &&
+                    searchResult.map((item: any) => {
+                      return (
+                        <FormControlLabel
+                          key={uuidv4()}
+                          control={
+                            <Checkbox
+                              name={fieldNames.make}
+                              checked={values.make.indexOf(item.name) > -1}
+                              onChange={(e) =>
+                                handleCheckboxChange(e, item.name)
+                              }
+                              color="primary"
+                              size="small"
+                            />
+                          }
+                          label={item.name}
+                        />
+                      );
+                    })}
+                </Grid>
+                <Divider variant="middle" />
+                <Grid item xs={12}>
+                  <Typography variant="h4" gutterBottom>
+                    {'Makes'}
+                  </Typography>
+                </Grid>
+                {makes.map((item: any) => {
+                  return (
+                    <Grid key={uuidv4()} item xs={6}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            name={fieldNames.make}
+                            checked={values.make.indexOf(item.name) > -1}
+                            onChange={(e) => handleCheckboxChange(e, item.name)}
+                            color="primary"
+                            size="small"
+                          />
+                        }
+                        label={item.name}
+                      />
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </DialogBox>
+          )}
+        </FormGroup>
+      </FilterAccordion>
+      <FilterAccordion title={MODEL}>
+        <FormGroup>
+          {models
+            .filter((item: any, index: number) => index <= 4)
+            .map((type: any) => (
+              <FormControlLabel
+                key={uuidv4()}
+                control={
+                  <Checkbox
+                    name={fieldNames.model}
+                    checked={values.model.indexOf(type.name) > -1}
+                    onChange={(e) => handleCheckboxChange(e, type.name)}
+                    color="primary"
+                    size="small"
+                  />
+                }
+                label={type.name}
+              />
+            ))}
+          {models.length > 5 && (
+            <DialogBox title="Select Model">
+              <Grid style={{ display: 'flex' }} container>
+                <Grid xs={12}>
+                  <InputField
+                    variant="filled"
+                    label="Search"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      handleMakesModelSearch(e, models)
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  {searchResult && searchResult.length > 0 && (
+                    <Typography variant="h4" gutterBottom>
+                      {'Search Result'}
+                    </Typography>
+                  )}
+                  {searchResult &&
+                    searchResult.map((item: any) => {
+                      return (
+                        <FormControlLabel
+                          key={uuidv4()}
+                          control={
+                            <Checkbox
+                              name={fieldNames.model}
+                              checked={values.model.indexOf(item.name) > -1}
+                              onChange={(e) =>
+                                handleCheckboxChange(e, item.name)
+                              }
+                              color="primary"
+                              size="small"
+                            />
+                          }
+                          label={item.name}
+                        />
+                      );
+                    })}
+                </Grid>
+                <Divider variant="middle" />
+                <Grid item xs={12}>
+                  <Typography variant="h4" gutterBottom>
+                    {'Models'}
+                  </Typography>
+                </Grid>
+                {models.map((item: any) => {
+                  return (
+                    <Grid key={uuidv4()} item xs={6}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            name={fieldNames.model}
+                            checked={values.model.indexOf(item.name) > -1}
+                            onChange={(e) => handleCheckboxChange(e, item.name)}
+                            color="primary"
+                            size="small"
+                          />
+                        }
+                        label={item.name}
+                      />
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </DialogBox>
+          )}
+        </FormGroup>
+      </FilterAccordion>
+      <FilterAccordion title={MILEAGE}>
+        <Grid container direction="column">
+          <Grid item container spacing={1}>
+            <Grid item xs={5}>
+              <InputField
+                name={fieldNames.mileageFrom}
+                label="From"
+                value={rangeValues.mileageRange[0]}
+                errors={errors.mileageFrom}
+                type="number"
+                InputProps={{
+                  inputComponent: NumberInput as any
+                }}
+                onChange={(e: any) => {
+                  setRangeValues((previousValue: any) => {
+                    previousValue.mileageRange[0] = e.target.value as number;
+                    return { ...previousValue };
+                  });
+                }}
+              />
+            </Grid>
+            <Grid item xs={7}>
+              <InputFieldWithButton
+                name={fieldNames.mileageTo}
+                label="To"
+                value={rangeValues.mileageRange[1]}
+                errors={errors.mileageTo}
+                type="number"
+                InputProps={{
+                  inputComponent: NumberInput as any
+                }}
+                onChange={(e: any) => {
+                  setRangeValues((previousValue: any) => {
+                    previousValue.mileageRange[1] = e.target.value as number;
+                    return { ...previousValue };
+                  });
+                }}
+                handleClick={() => handleTextBoxSubmit('mileageRange')}
+              />
+            </Grid>
+          </Grid>
+          <Grid item>
+            <Slider
+              value={[rangeValues.mileageRange[0], rangeValues.mileageRange[1]]}
+              min={0}
+              max={500000}
+              onChange={(event: any, newValue: number | number[]) => {
+                setRangeValues((previousValue: any) => {
+                  previousValue.mileageRange = newValue;
+                  return { ...previousValue };
                 });
               }}
             />
@@ -166,52 +440,75 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
         </Grid>
       </FilterAccordion>
       <FilterAccordion title={YEAR}>
-        <Grid item container spacing={1}>
-          <Grid item xs={5}>
-            <InputField
-              name={fieldNames.yearFrom}
-              label="From"
-              value={values.yearRange[0]}
-              error={errors.yearFrom}
-              onChange={(e: any) => {
-                setValues((previousState: any) => {
-                  previousState.priceRange[0] = e.target.value;
-                  return { ...previousState };
-                });
-              }}
-            />
+        <Grid container direction="column">
+          <Grid item container spacing={1}>
+            <Grid item xs={5}>
+              <InputField
+                name={fieldNames.yearFrom}
+                label="From"
+                value={rangeValues.yearRange[0]}
+                errors={errors.yearFrom}
+                type="number"
+                InputProps={{
+                  inputComponent: NumberInput as any
+                }}
+                onChange={(e: any) => {
+                  setRangeValues((previousValue: any) => {
+                    previousValue.yearRange[0] = e.target.value as number;
+                    return { ...previousValue };
+                  });
+                }}
+              />
+            </Grid>
+            <Grid item xs={7}>
+              <InputFieldWithButton
+                name={fieldNames.yearTo}
+                label="To"
+                value={rangeValues.yearRange[1]}
+                errors={errors.yearTo}
+                type="number"
+                InputProps={{
+                  inputComponent: NumberInput as any
+                }}
+                onChange={(e: any) => {
+                  setRangeValues((previousValue: any) => {
+                    previousValue.yearRange[1] = e.target.value as number;
+                    return { ...previousValue };
+                  });
+                }}
+                handleClick={() => handleTextBoxSubmit('yearRange')}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={7}>
-            <InputFieldWithButton
-              name={fieldNames.yearTo}
-              label="To"
-              value={values.yearRange[1]}
-              error={errors.yearTo}
-              onChange={(e: any) => {
-                setValues((previousState: any) => {
-                  previousState.priceRange[1] = e.target.value;
-                  return { ...previousState };
+          <Grid item>
+            <Slider
+              value={[rangeValues.yearRange[0], rangeValues.yearRange[1]]}
+              min={1971}
+              max={2021}
+              onChange={(event: any, newValue: number | number[]) => {
+                setRangeValues((previousValue: any) => {
+                  previousValue.yearRange = newValue;
+                  return { ...previousValue };
                 });
               }}
-              handleClick={handleSubmit}
             />
           </Grid>
         </Grid>
       </FilterAccordion>
-      <FilterAccordion title={MAKE}>
-        <InputField label="Eg. Honda In Lahore" />
-      </FilterAccordion>
+      <div className={filtersCollection}>
+        <Typography variant="h3">Location</Typography>
+      </div>
       <FilterAccordion title={PROVINCE}>
         <FormGroup>
           {provinces.map((province) => (
             <FormControlLabel
-              key={`province-${province.name}`}
+              key={uuidv4()}
               control={
                 <Checkbox
+                  name={fieldNames.province}
                   checked={values.province.indexOf(province.name) > -1}
-                  onChange={(e) => handleCheckboxChange(e, "province")}
-                  name={province.name}
-                  color="secondary"
+                  onChange={(e) => handleCheckboxChange(e, province.name)}
+                  color="primary"
                   size="small"
                 />
               }
@@ -222,83 +519,81 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
       </FilterAccordion>
       <FilterAccordion title={CITY}>
         <FormGroup>
-          {cityNames
-            .filter((item) => majorCities.includes(item))
-            .map((city) => (
+          {citiesWithCars
+            .filter((item: any, index: number) => index <= 4)
+            .map((city: any) => (
               <FormControlLabel
-                key={`city-${city}`}
+                key={uuidv4()}
                 control={
                   <Checkbox
-                    checked={values.city.indexOf(city) > -1}
-                    onChange={(e) => handleCheckboxChange(e, "city")}
-                    name={city}
-                    color="secondary"
+                    name={fieldNames.city}
+                    checked={values.city.indexOf(city.city) > -1}
+                    onChange={(e) => handleCheckboxChange(e, city.city)}
+                    color="primary"
                   />
                 }
-                label={city}
+                label={city.city}
               />
             ))}
-          <DialogBox title="Select Cities">
-            <Grid style={{ display: "flex" }} container>
-              <Grid xs={12}>
-                <InputField
-                  variant="filled"
-                  label="Search"
-                  onChange={handleSearchInputChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="h4" gutterBottom>
-                  {"Search Result"}
-                </Typography>
-                {searchResult &&
-                  searchResult.map((city: ICity) => {
-                    return (
-                      <FormControlLabel
-                        key={`city-${city.name}`}
-                        control={
-                          <Checkbox
-                            checked={values.city.indexOf(city.name) > -1}
-                            onChange={(e) => handleCheckboxChange(e, "city")}
-                            name={city.name}
-                            color="secondary"
-                            size="small"
-                          />
-                        }
-                        label={city.name}
-                      />
-                    );
-                  })}
-              </Grid>
-              {provinces.map((province) => (
-                <Grid item xs={12}>
-                  <Typography variant="h4" gutterBottom>
-                    {province.name}
-                  </Typography>
-                  {City.getCitiesOfState(
-                    province.countryCode,
-                    province.isoCode
-                  ).map((city) => {
-                    return (
-                      <FormControlLabel
-                        key={`city-${city.name}`}
-                        control={
-                          <Checkbox
-                            checked={values.city.indexOf(city.name) > -1}
-                            onChange={(e) => handleCheckboxChange(e, "city")}
-                            name={city.name}
-                            color="secondary"
-                            size="small"
-                          />
-                        }
-                        label={city.name}
-                      />
-                    );
-                  })}
+
+          {citiesWithCars.length > 5 && (
+            <DialogBox title="Select Cities">
+              <Grid style={{ display: 'flex' }} container>
+                <Grid xs={12}>
+                  <InputField
+                    variant="filled"
+                    label="Search"
+                    onChange={handleSearchCities}
+                  />
                 </Grid>
-              ))}
-            </Grid>
-          </DialogBox>
+                <Grid item xs={12}>
+                  {searchResult && searchResult.length > 0 && (
+                    <Typography variant="h4" gutterBottom>
+                      {'Search Result'}
+                    </Typography>
+                  )}
+                  {searchResult &&
+                    searchResult.map((city: any) => {
+                      return (
+                        <FormControlLabel
+                          key={uuidv4()}
+                          control={
+                            <Checkbox
+                              name={fieldNames.city}
+                              checked={values.city.indexOf(city.city) > -1}
+                              onChange={(e) =>
+                                handleCheckboxChange(e, city.city)
+                              }
+                              color="primary"
+                              size="small"
+                            />
+                          }
+                          label={city.city}
+                        />
+                      );
+                    })}
+                </Grid>
+                {citiesWithCars.map((city: any) => {
+                  return (
+                    <Grid key={uuidv4()} item xs={6}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            name={fieldNames.city}
+                            checked={values.city.indexOf(city.city) > -1}
+                            onChange={(e) => handleCheckboxChange(e, city.city)}
+                            color="primary"
+                            size="small"
+                          />
+                        }
+                        label={city.city}
+                      />
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </DialogBox>
+          )}
         </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={REGISTRATION_CITY}>
@@ -307,15 +602,13 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
             .filter((item) => majorCities.includes(item))
             .map((city) => (
               <FormControlLabel
-                key={`city-${city}`}
+                key={uuidv4()}
                 control={
                   <Checkbox
+                    name={fieldNames.registrationCity}
                     checked={values.registrationCity.indexOf(city) > -1}
-                    onChange={(e) =>
-                      handleCheckboxChange(e, "registrationCity")
-                    }
-                    name={city}
-                    color="secondary"
+                    onChange={(e) => handleCheckboxChange(e, city)}
+                    color="primary"
                   />
                 }
                 label={city}
@@ -323,9 +616,43 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
             ))}
 
           <DialogBox title="Select Cities">
-            <Grid style={{ display: "flex" }} container>
+            <Grid style={{ display: 'flex' }} container>
+              <Grid xs={12}>
+                <InputField
+                  variant="filled"
+                  label="Search"
+                  onChange={handleSearchInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                {searchResult && (
+                  <Typography variant="h4" gutterBottom>
+                    {'Search Result'}
+                  </Typography>
+                )}
+                {searchResult &&
+                  searchResult.map((city: ICity) => {
+                    return (
+                      <FormControlLabel
+                        key={uuidv4()}
+                        control={
+                          <Checkbox
+                            name={fieldNames.registrationCity}
+                            checked={
+                              values.registrationCity.indexOf(city.name) > -1
+                            }
+                            onChange={(e) => handleCheckboxChange(e, city.name)}
+                            color="primary"
+                            size="small"
+                          />
+                        }
+                        label={city.name}
+                      />
+                    );
+                  })}
+              </Grid>
               {provinces.map((province) => (
-                <Grid item xs={12} md={6}>
+                <Grid key={uuidv4()} item xs={12}>
                   <Typography variant="h4" gutterBottom>
                     {province.name}
                   </Typography>
@@ -335,13 +662,15 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                   ).map((city) => {
                     return (
                       <FormControlLabel
-                        key={`city-${city.name}`}
+                        key={uuidv4()}
                         control={
                           <Checkbox
-                            checked={values.city.indexOf(city.name) > -1}
-                            onChange={(e) => handleCheckboxChange(e, "city")}
-                            name={city.name}
-                            color="secondary"
+                            name={fieldNames.registrationCity}
+                            checked={
+                              values.registrationCity.indexOf(city.name) > -1
+                            }
+                            onChange={(e) => handleCheckboxChange(e, city.name)}
+                            color="primary"
                             size="small"
                           />
                         }
@@ -355,50 +684,20 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
           </DialogBox>
         </FormGroup>
       </FilterAccordion>
-      <FilterAccordion title={MILEAGE}>
-        <Grid item container spacing={1}>
-          <Grid item xs={5}>
-            <InputField
-              name={fieldNames.mileageFrom}
-              label="From"
-              value={values.mileageRange[0]}
-              error={errors.mileageFrom}
-              onChange={(e: any) => {
-                setValues((previousState: any) => {
-                  previousState.mileageRange[0] = e.target.value;
-                  return { ...previousState };
-                });
-              }}
-            />
-          </Grid>
-          <Grid item xs={7}>
-            <InputFieldWithButton
-              name={fieldNames.mileageTo}
-              label="To"
-              value={values.mileageRange[1]}
-              error={errors.mileageTo}
-              onChange={(e: any) => {
-                setValues((previousState: any) => {
-                  previousState.mileageRange[1] = e.target.value;
-                  return { ...previousState };
-                });
-              }}
-              handleClick={handleSubmit}
-            />
-          </Grid>
-        </Grid>
-      </FilterAccordion>
+      <div className={filtersCollection}>
+        <Typography variant="h3">Performance</Typography>
+      </div>
       <FilterAccordion title={TRANSMISSION}>
         <FormGroup>
           {Carfilters.TRANSMISSION.map((type) => (
             <FormControlLabel
-              key={`transmission-type-${type}`}
+              key={uuidv4()}
               control={
                 <Checkbox
+                  name={fieldNames.transmission}
                   checked={values.transmission.indexOf(type) > -1}
-                  onChange={(e) => handleCheckboxChange(e, "transmission")}
-                  name={type}
-                  color="secondary"
+                  onChange={(e) => handleCheckboxChange(e, type)}
+                  color="primary"
                   size="small"
                 />
               }
@@ -411,13 +710,13 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
         <FormGroup>
           {Carfilters.ENGINE_TYPE.map((type) => (
             <FormControlLabel
-              key={`engine-type-${type}`}
+              key={uuidv4()}
               control={
                 <Checkbox
+                  name={fieldNames.engineType}
                   checked={values.engineType.indexOf(type) > -1}
-                  onChange={(e) => handleCheckboxChange(e, "engineType")}
-                  name={type}
-                  color="secondary"
+                  onChange={(e) => handleCheckboxChange(e, type)}
+                  color="primary"
                   size="small"
                 />
               }
@@ -427,86 +726,179 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
         </FormGroup>
       </FilterAccordion>
       <FilterAccordion title={ENGINE_CAPACITY}>
-        <Grid item container spacing={1}>
-          <Grid item xs={5}>
-            <InputField
-              name={fieldNames.engineCapacityFrom}
-              label="From"
-              value={values.engineCapacityRange[0]}
-              error={errors.engineCapacityFrom}
-              onChange={(e: any) => {
-                setValues((previousState: any) => {
-                  previousState.mileageRange[0] = e.target.value;
-                  return { ...previousState };
-                });
-              }}
-            />
+        <Grid container direction="column">
+          <Grid item container spacing={1}>
+            <Grid item xs={5}>
+              <InputField
+                name={fieldNames.engineCapacityFrom}
+                label="From"
+                value={rangeValues.engineCapacityRange[0]}
+                errors={errors.engineCapacityFrom}
+                type="number"
+                InputProps={{
+                  inputComponent: NumberInput as any
+                }}
+                onChange={(e: any) => {
+                  setRangeValues((previousValue: any) => {
+                    previousValue.engineCapacityRange[0] = e.target
+                      .value as number;
+                    return { ...previousValue };
+                  });
+                }}
+              />
+            </Grid>
+            <Grid item xs={7}>
+              <InputFieldWithButton
+                name={fieldNames.engineCapacityTo}
+                label="To"
+                value={rangeValues.engineCapacityRange[1]}
+                errors={errors.engineCapacityTo}
+                type="number"
+                InputProps={{
+                  inputComponent: NumberInput as any
+                }}
+                onChange={(e: any) => {
+                  setRangeValues((previousValue: any) => {
+                    previousValue.engineCapacityRange[1] = e.target
+                      .value as number;
+                    return { ...previousValue };
+                  });
+                }}
+                handleClick={() => handleTextBoxSubmit('engineCapacityRange')}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={7}>
-            <InputFieldWithButton
-              name={fieldNames.engineCapacityTo}
-              label="To"
-              value={values.engineCapacityRange[1]}
-              error={errors.engineCapacityTo}
-              onChange={(e: any) => {
-                setValues((previousState: any) => {
-                  previousState.mileageRange[1] = e.target.value;
-                  return { ...previousState };
+          <Grid item>
+            <Slider
+              value={[
+                rangeValues.engineCapacityRange[0],
+                rangeValues.engineCapacityRange[1]
+              ]}
+              min={0}
+              max={10000}
+              onChange={(event: any, newValue: number | number[]) => {
+                setRangeValues((previousValue: any) => {
+                  previousValue.engineCapacityRange = newValue;
+                  return { ...previousValue };
                 });
               }}
-              handleClick={handleSubmit}
             />
           </Grid>
         </Grid>
       </FilterAccordion>
+      <div className={filtersCollection}>
+        <Typography variant="h3">Style</Typography>
+      </div>
+      <FilterAccordion title={BODY_TYPE}>
+        <FormGroup>
+          {bodyTypes
+            .filter((item: any) => mainCarTypes.includes(item.bodyType))
+            .map((type: any) => (
+              <FormControlLabel
+                key={uuidv4()}
+                control={
+                  <Checkbox
+                    name={fieldNames.bodyType}
+                    checked={values.bodyType.indexOf(type.bodyType) > -1}
+                    onChange={(e) => handleCheckboxChange(e, type.bodyType)}
+                    color="primary"
+                    size="small"
+                  />
+                }
+                label={
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <img
+                      width="60px"
+                      style={{ margin: '0 10px' }}
+                      src={type.image || defaultBodyType}
+                      alt={type.bodyType}
+                    />
+                    <Typography>{type.bodyType}</Typography>
+                  </div>
+                }
+              />
+            ))}
+
+          <DialogBox title="Select Body Type">
+            <Grid container spacing={2}>
+              {bodyTypes.map((type: any) => (
+                <Grid key={uuidv4()} item xs={12} md={6}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        name={fieldNames.bodyType}
+                        checked={values.bodyType.indexOf(type.bodyType) > -1}
+                        onChange={(e) => handleCheckboxChange(e, type.bodyType)}
+                        color="primary"
+                        size="small"
+                      />
+                    }
+                    label={
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <img
+                          width="60px"
+                          style={{ margin: '0 10px' }}
+                          src={type.image || defaultBodyType}
+                          alt={type.bodyType}
+                        />
+                        <Typography>{type.bodyType}</Typography>
+                      </div>
+                    }
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </DialogBox>
+        </FormGroup>
+      </FilterAccordion>
       <FilterAccordion title={COLOR}>
         <FormGroup>
-          {Carfilters.COLOR.filter((item) =>
-            mainColors.includes(item.text)
-          ).map((type) => (
+          {bodyColors && bodyColors.filter((item:any) =>
+            mainColors.indexOf(item.name) > -1
+          ).map((type:any) => (
             <FormControlLabel
-              key={`color-type-${type.text}`}
+              key={uuidv4()}
               control={
                 <Checkbox
-                  checked={values.color.indexOf(type.text) > -1}
-                  onChange={(e) => handleCheckboxChange(e, "color")}
-                  name={type.text}
-                  color="secondary"
+                  name={fieldNames.color}
+                  checked={values.color.indexOf(type.name) > -1}
+                  onChange={(e) => handleCheckboxChange(e, type.name)}
+                  color="primary"
                   size="small"
                 />
               }
               label={
-                <div style={{ display: "flex" }}>
+                <div style={{ display: 'flex' }}>
                   <span
                     style={{
-                      borderRadius: "50%",
-                      maxWidth: "20px",
-                      maxHeight: "20px",
-                      minWidth: "20px",
-                      minHeight: "20px",
-                      backgroundColor: type.hex,
-                      border: "0.2px solid grey",
-                      marginRight: "7px",
+                      borderRadius: '50%',
+                      maxWidth: '20px',
+                      maxHeight: '20px',
+                      minWidth: '20px',
+                      minHeight: '20px',
+                      backgroundColor: type.code,
+                      border: '0.2px solid grey',
+                      marginRight: '7px'
                     }}
                   />
-                  <Typography>{type.text}</Typography>
+                  <Typography>{type.name}</Typography>
                 </div>
               }
             />
           ))}
           <FormControlLabel
-            key={`color-type-other`}
+            key={uuidv4()}
             control={
               <Checkbox
-                checked={values.color.indexOf("Other") > -1}
-                onChange={(e) => handleCheckboxChange(e, "color")}
-                name="Other"
-                color="secondary"
+                name={fieldNames.color}
+                checked={values.color.indexOf('Other Colors') > -1}
+                onChange={(e) => handleCheckboxChange(e, 'Other Colors')}
+                color="primary"
                 size="small"
               />
             }
             label={
-              <div style={{ display: "flex" }}>
+              <div style={{ display: 'flex' }}>
                 <Typography>Other Colors</Typography>
               </div>
             }
@@ -514,34 +906,33 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
 
           <DialogBox title="Select Color">
             <Grid container spacing={2}>
-              {Carfilters.COLOR.map((type) => (
-                <Grid item xs={12} md={6}>
+              {bodyColors && bodyColors.map((type:any) => (
+                <Grid key={uuidv4()} item xs={12} md={6}>
                   <FormControlLabel
-                    key={`color-type-${type.text}`}
                     control={
                       <Checkbox
-                        checked={values.color.indexOf(type.text) > -1}
-                        onChange={(e) => handleCheckboxChange(e, "color")}
-                        name={type.text}
-                        color="secondary"
+                        name={fieldNames.color}
+                        checked={values.color.indexOf(type.name) > -1}
+                        onChange={(e) => handleCheckboxChange(e, type.name)}
+                        color="primary"
                         size="small"
                       />
                     }
                     label={
-                      <div style={{ display: "flex" }}>
+                      <div style={{ display: 'flex' }}>
                         <span
                           style={{
-                            borderRadius: "50%",
-                            maxWidth: "20px",
-                            maxHeight: "20px",
-                            minWidth: "20px",
-                            minHeight: "20px",
-                            backgroundColor: type.hex,
-                            border: "0.2px solid grey",
-                            marginRight: "7px",
+                            borderRadius: '50%',
+                            maxWidth: '20px',
+                            maxHeight: '20px',
+                            minWidth: '20px',
+                            minHeight: '20px',
+                            backgroundColor: type.code,
+                            border: '0.2px solid grey',
+                            marginRight: '7px'
                           }}
                         />
-                        <Typography>{type.text}</Typography>
+                        <Typography>{type.name}</Typography>
                       </div>
                     }
                   />
@@ -549,18 +940,18 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
               ))}
               <Grid item xs={12}>
                 <FormControlLabel
-                  key={`color-type-other`}
+                  key={uuidv4()}
                   control={
                     <Checkbox
-                      checked={values.color.indexOf("Other") > -1}
-                      onChange={(e) => handleCheckboxChange(e, "color")}
-                      name="Other"
-                      color="secondary"
+                      name={fieldNames.color}
+                      checked={values.color.indexOf('Other Colors') > -1}
+                      onChange={(e) => handleCheckboxChange(e, 'Other Colors')}
+                      color="primary"
                       size="small"
                     />
                   }
                   label={
-                    <div style={{ display: "flex" }}>
+                    <div style={{ display: 'flex' }}>
                       <Typography>Other Colors</Typography>
                     </div>
                   }
@@ -570,70 +961,8 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
           </DialogBox>
         </FormGroup>
       </FilterAccordion>
-      <FilterAccordion title={BODY_TYPE}>
-        <FormGroup>
-          {Carfilters.BODY_TYPE.filter((item) =>
-            mainCarTypes.includes(item.text)
-          ).map((type) => (
-            <FormControlLabel
-              key={`body-type-${type.text}`}
-              control={
-                <Checkbox
-                  checked={values.bodyType.indexOf(type.text) > -1}
-                  onChange={(e) => handleCheckboxChange(e, "bodyType")}
-                  name={type.text}
-                  color="secondary"
-                  size="small"
-                />
-              }
-              label={
-                <div style={{ display: "flex" }}>
-                  <img
-                    width="60px"
-                    style={{ margin: "0 10px" }}
-                    src={type.icon}
-                    alt={type.text}
-                  />
-                  <Typography>{type.text}</Typography>
-                </div>
-              }
-            />
-          ))}
 
-          <DialogBox title="Select Body Type">
-            <Grid container spacing={2}>
-              {Carfilters.BODY_TYPE.map((type) => (
-                <Grid item xs={12} md={6}>
-                  <FormControlLabel
-                    key={`body-type-${type.text}`}
-                    control={
-                      <Checkbox
-                        checked={values.bodyType.indexOf(type.text) > -1}
-                        onChange={(e) => handleCheckboxChange(e, "bodyType")}
-                        name={type.text}
-                        color="secondary"
-                        size="small"
-                      />
-                    }
-                    label={
-                      <div style={{ display: "flex" }}>
-                        <img
-                          width="60px"
-                          style={{ margin: "0 10px" }}
-                          src={type.icon}
-                          alt={type.text}
-                        />
-                        <Typography>{type.text}</Typography>
-                      </div>
-                    }
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </DialogBox>
-        </FormGroup>
-      </FilterAccordion>
-      <FilterAccordion title={PICTURE_AVAILABILITY}>
+      {/* <FilterAccordion title={PICTURE_AVAILABILITY}>
         <FormGroup>
           <FormControlLabel
             control={
@@ -641,15 +970,15 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                 checked={values.withPicture}
                 onChange={handleSingleCheckBoxChange}
                 name={fieldNames.pictureAvailability}
-                color="secondary"
+                color="primary"
                 size="small"
               />
             }
             label={Carfilters.PICTURE_AVAILABILITY[0]}
           />
         </FormGroup>
-      </FilterAccordion>
-      <FilterAccordion title={VIDEO_AVAILABILITY}>
+      </FilterAccordion> */}
+      {/*<FilterAccordion title={VIDEO_AVAILABILITY}>
         <FormGroup>
           <FormControlLabel
             control={
@@ -657,25 +986,28 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
                 checked={values.withVideo}
                 onChange={handleSingleCheckBoxChange}
                 name={fieldNames.videoAvailability}
-                color="secondary"
+                color="primary"
                 size="small"
               />
             }
             label={Carfilters.VIDEO_AVAILABILITY[0]}
           />
         </FormGroup>
-      </FilterAccordion>
-      <FilterAccordion title={SELLER_TYPE}>
+      </FilterAccordion> */}
+      <div className={filtersCollection}>
+        <Typography variant="h3">Others</Typography>
+      </div>
+      <FilterAccordion title={ASSEMBLY}>
         <FormGroup>
-          {Carfilters.SELLER_TYPE.map((type) => (
+          {Carfilters.ASSEMBLY.map((type) => (
             <FormControlLabel
-              key={`seller-type-${type}`}
+              key={uuidv4()}
               control={
                 <Checkbox
-                  checked={values.sellerType.indexOf(type) > -1}
-                  onChange={(e) => handleCheckboxChange(e, "sellerType")}
-                  name={type}
-                  color="secondary"
+                  name={fieldNames.assembly}
+                  checked={values.assembly.indexOf(type) > -1}
+                  onChange={(e) => handleCheckboxChange(e, type)}
+                  color="primary"
                   size="small"
                 />
               }
@@ -684,17 +1016,36 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
           ))}
         </FormGroup>
       </FilterAccordion>
-      <FilterAccordion title={AD_TYPE}>
+      <FilterAccordion title={SELLER_TYPE} className={lastAccordion}>
+        <FormGroup>
+          {Carfilters.SELLER_TYPE.map((type) => (
+            <FormControlLabel
+              key={uuidv4()}
+              control={
+                <Checkbox
+                  name={fieldNames.sellerType}
+                  checked={values.sellerType.indexOf(type) > -1}
+                  onChange={(e) => handleCheckboxChange(e, type)}
+                  color="primary"
+                  size="small"
+                />
+              }
+              label={type}
+            />
+          ))}
+        </FormGroup>
+      </FilterAccordion>
+      {/* <FilterAccordion title={AD_TYPE}>
         <FormGroup>
           {Carfilters.AD_TYPE.map((type) => (
             <FormControlLabel
-              key={`ad-type-${type}`}
+              key={uuidv4()}
               control={
                 <Checkbox
                   checked={values.adType.indexOf(type) > -1}
                   onChange={(e) => handleCheckboxChange(e, "adType")}
                   name={type}
-                  color="secondary"
+                  color="primary"
                   size="small"
                 />
               }
@@ -702,7 +1053,8 @@ const CarFilters: React.FC<CarFiltersProps> = () => {
             />
           ))}
         </FormGroup>
-      </FilterAccordion>
+      </FilterAccordion> */}
+      {/* <MapSearch/> */}
     </div>
   );
 };

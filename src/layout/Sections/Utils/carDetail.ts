@@ -3,7 +3,7 @@ import ratingIcon from "../assets/carDetail/rating.png";
 import icon1 from "../assets/carDetail/icon1.png";
 import icon2 from "../assets/carDetail/icon2.png";
 import icon3 from "../assets/carDetail/icon3.png";
-import icon4 from "../assets/carDetail/icon5.png";
+import icon4 from "../assets/carDetail/gear-shift.png";
 import num from "../assets/carDetail/number.png";
 import mail from "../assets/carDetail/mail.png";
 import img from "../assets/carDetail/image 6.png";
@@ -120,3 +120,32 @@ export const CarFeature = [{
   icon: tyreIcon    
 }
 ]
+
+
+// seller info 
+export const sellerInfo2 = [{
+  title: "City"
+},
+{
+  title: "First Name"
+},
+{
+  title: "Last Name"
+},
+{
+  title: "Gender"
+},
+{
+  title: "Country"
+}
+
+]
+export const sellerInfo = {
+  city:"City",
+  province:"Province",
+  firstName:"First Name",
+  lastName:"Last Name",
+  gender:"Gender",
+  notAvailable:"Not Available",
+  memberSince: "Member Since"
+}

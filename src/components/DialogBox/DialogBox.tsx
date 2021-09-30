@@ -3,12 +3,13 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Button,
-} from "@material-ui/core";
+  Button
+} from '@material-ui/core';
 import {
   APPLY_FILTERS,
   CANCEL,
-} from "../../Utils/constants/language/en/buttonLabels";
+  CLOSE
+} from '../../Utils/constants/language/en/buttonLabels';
 
 export interface DialogBoxContentProps {
   title: string;
@@ -32,10 +33,7 @@ const DialogBoxContent: React.FC<DialogBoxContentProps> = (
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button onClick={() => handleClose()} color="primary">
-          {CANCEL}
-        </Button>
-        <Button onClick={() => handleClose()} color="primary">
-          {APPLY_FILTERS}
+          {CLOSE}
         </Button>
       </DialogActions>
     </Dialog>

@@ -1,16 +1,17 @@
-import { useState } from "react";
-import { Grid, Typography, Hidden } from "@material-ui/core";
-import { Carousel } from "react-responsive-carousel";
-import { useStyles } from "./useStyles";
-import { Detail } from "../../Utils/types";
-import CarInformation from "./CarInformation";
-import { Colors } from "../../Utils/color.constants";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import CustomButton from "../../../../components/CustomButton";
-import Sizes from "../../../../Utils/themeConstants";
-import { addToFavs } from "../../../../Utils/hooks/endpoints";
-import useApi from "../../../../Utils/hooks/useApi";
-import Toast from "../../../../components/Toast";
+import { useState } from 'react';
+import { Backdrop, Button, Grid, IconButton } from '@material-ui/core';
+import { Carousel } from 'react-responsive-carousel';
+import { useStyles } from './useStyles';
+import { Detail } from '../../Utils/types1';
+import Sizes from '../../../../Utils/themeConstants';
+import { addToFavs, removeFavs } from '../../../../Utils/hooks/endpoints';
+import Actions from '../../../../pages/carDetail/useFunctions';
+import Toast from '../../../../components/Toast';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../redux/store';
+import Favorite from '@material-ui/icons/Favorite';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import { Close, FavoriteBorder, ZoomIn, ZoomOut } from '@material-ui/icons';
 const Slider = ({
   desc,
   paragraph,
@@ -26,16 +27,40 @@ const Slider = ({
   engineCapacity,
   date,
   isFavs,
+  createdBy,
+  updatedAt
 }: Detail) => {
-  const [colorChange, setColorChange] = useState(false);
-
-  const { addFavs, setOpen, responseMessage, open } = useApi();
-  const { carousel, detail, btn, sec } = useStyles();
+  const { addFavs, open, setOpen, responseMessage } = Actions();
+  const { user } = useSelector((state: RootState) => state.auth);
+  const [isFavorite, setIsFavorite] = useState<boolean | undefined>(isFavs);
+  const [fullScreen, setFullScreen] = useState(false);
+  const [fullScreenImage, setFullScreenImage] = useState('');
+  const {
+    carousel,
+    detail,
+    btn,
+    backdrop,
+    fullScreenImageStyle,
+  } = useStyles();
   const { mobile } = Sizes();
-  const { gray, red, white } = Colors;
 
   const handleAlertClose = () => {
     setOpen(false);
+  };
+
+  const openFullScreen = (
+    img: string,
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    setFullScreen(true);
+    setFullScreenImage(img);
+    document.body.style.overflow = 'hidden';
+  };
+  const closeFullScreen = () => {
+    setFullScreen(false);
+    setFullScreenImage('');
+    document.body.style.overflow = 'auto';
   };
 
   return (
@@ -43,7 +68,7 @@ const Slider = ({
       <Grid className={detail} item xs={12}>
         <Carousel
           className={carousel}
-          autoPlay
+          autoPlay={!fullScreen}
           showStatus={false}
           interval={2400}
           showArrows={mobile ? false : true}
@@ -54,68 +79,117 @@ const Slider = ({
         >
           {arr.map((data, index) => {
             return (
-              <>
+              <div
+                style={{ cursor: 'pointer' }}
+                onClick={(e) => openFullScreen(data, e)}
+              >
                 <img
-                  style={{ position: "relative" }}
+                  style={{ position: 'relative', borderRadius: '5px' }}
                   key={`img ${index}`}
-                  width="10%"
-                  src={data.image}
+                  // width="10%"
+                  height="100%"
+                  src={data}
                   alt=""
                 />
-                {isFavs === false ? (
-                  <CustomButton
-                    handleClick={() => {
+                {!user?._id || user?._id === createdBy?._id ? null : (
+                  <IconButton
+                    onClick={() => {
                       if (id) {
-                        addFavs(addToFavs, id);
-                        setColorChange(true);
+                        addFavs(isFavorite ? removeFavs : addToFavs, id);
+                        // setColorChange(isFavorite ? true : false);
+                        setIsFavorite(!isFavorite);
                       }
                     }}
-                    styles={btn}
+                    className={btn}
                   >
-                    <section className={sec}>
-                      <FavoriteIcon
-                        style={
-                          colorChange
-                            ? {
-                                color: red,
-                                fontSize: "20px",
-                                marginTop: "10px",
-                              }
-                            : {
-                                color: white,
-                                fontSize: "20px",
-                                marginTop: "10px",
-                              }
-                        }
-                      />
-                    </section>
-                  </CustomButton>
-                ) : null}
-              </>
+                    {isFavorite ? (
+                      <Favorite color="primary" />
+                    ) : (
+                      <FavoriteBorder />
+                    )}
+                  </IconButton>
+                )}
+              </div>
             );
           })}
         </Carousel>
-        <Hidden mdDown>
-          <Grid style={{ color: gray }} item xs={12}>
-            <Typography variant="h6">{desc}</Typography>
-            <Typography style={{ marginTop: "10px" }} variant="subtitle1">
-              {paragraph}
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <CarInformation
-              carTitle={carTitle}
-              info={info}
-              feature={feature}
-              city={city}
-              assembly={assembly}
-              color={color}
-              bodyType={bodyType}
-              engineCapacity={engineCapacity}
-              date={date}
-            />
-          </Grid>
-        </Hidden>
+        <Backdrop
+          className={backdrop}
+          // onClick={() => closeFullScreen()}
+          open={fullScreen}
+        >
+          <TransformWrapper
+            initialScale={1}
+            initialPositionX={0}
+            initialPositionY={0}
+          >
+            {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+              <div>
+                <div className={fullScreenImageStyle} style={{justifyContent: !mobile ? "space-between" : "center"}}>
+                  <div>
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      zoomIn();
+                    }}
+                    variant="contained"
+                    color="primary"
+                  >
+                    <ZoomIn />
+                  </Button>
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      zoomOut();
+                    }}
+                    style={{margin:"0 10px"}}
+                    variant="contained"
+                    color="secondary"
+                  >
+                    <ZoomOut />
+                  </Button>
+                  </div>
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      resetTransform();
+                      closeFullScreen();
+                    }}
+                    variant="contained"
+                    color="default"
+                  >
+                    <Close/>
+                  </Button>
+                </div>
+                <TransformComponent  contentStyle={{ cursor:"move"}}>
+                  <img src={fullScreenImage} alt="" width={!mobile ? "900" : "auto"}/>
+                </TransformComponent>
+              </div>
+            )}
+          </TransformWrapper>
+          <div>
+            {arr.map((thumb: string, index: number) => (
+              <img
+                src={thumb}
+                alt=""
+                height="50px"
+                width="auto"
+                onClick={(e) => openFullScreen(thumb, e)}
+                style={{ margin: '5px', cursor: 'pointer' }}
+                key={thumb + index}
+              />
+            ))}
+          </div>
+          {/* <div>
+            <Button onClick={zoomIn} variant="contained" color="primary">
+              <ZoomIn />
+            </Button>
+            &nbsp;
+            <Button onClick={zoomOut} variant="contained" color="secondary">
+              <ZoomOut />
+            </Button>
+          </div> */}
+        </Backdrop>
         <Toast
           open={open}
           type={responseMessage.status}

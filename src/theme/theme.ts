@@ -1,73 +1,109 @@
-import { createTheme } from "@material-ui/core/styles";
-import { theme } from "./globalFontSize";
-import createPalette from "@material-ui/core/styles/createPalette";
-import { Color } from "./color";
-
+import { createTheme } from '@material-ui/core/styles';
+import { theme } from './globalFontSize';
+import createPalette from '@material-ui/core/styles/createPalette';
+import { Color } from './color';
 
 const { berryRed, white, secondary } = Color;
 
 const MUITheme = createTheme({
   overrides: {
+    MuiContainer: {
+      root: {
+        marginTop: '50px',
+        marginBottom: '50px',
+        paddingLeft: 0,
+        paddingRight: 0,
+        [theme.breakpoints.down('xs')]: {
+          marginTop: '20px',
+          marginBottom: '20px'
+        }
+      }
+    },
     MuiFormLabel: {
       asterisk: {
         color: '#db3131',
         '&$error': {
           color: '#db3131'
-        },
+        }
       },
-      root:{
-        fontSize: "16px",
-        color: Color.textPrimary,
+      root: {
+        fontSize: '16px',
+        color: Color.textPrimary
+      }
+    },
+    MuiAccordion: {
+      root: {
+        '&$expanded': {
+          margin: '0'
+        }
+      }
+    },
+    MuiAccordionSummary: {
+      root: {
+        margin: '0',
+        '&$expanded': {
+          minHeight: '48px'
+        }
+      },
+      content: {
+        margin: '0',
+        '&$expanded': {
+          margin: '0'
+        }
       }
     },
     MuiTab: {
       root: {
-        textAlign: "left",
-        textTransform: "capitalize",
-        fontSize: "18px",
+        textAlign: 'left',
+        textTransform: 'capitalize',
+        fontSize: '18px',
         fontWeight: 400,
-        "&$selected": {
-          fontSize: "24px",
-          fontWeight: 700,
-        },
+        '&$selected': {
+          fontSize: '24px',
+          fontWeight: 700
+        }
       },
       wrapper: {
-        display: "flex",
-        alignItems: "flex-start",
-      },
+        display: 'flex',
+        alignItems: 'flex-start'
+      }
     },
     MuiTabs: {
       flexContainer: {
-        marginLeft: "10px",
-        borderBottom: "1px solid #bdbdbd",
+        marginLeft: '10px',
+        borderBottom: '1px solid #bdbdbd'
       },
       indicator: {
-        backgroundColor: "#2F80ED",
-        height: "2px",
-        borderRadius: "5px",
-      },
-    },
-  },
-  props:{
-    MuiTextField:{
-      variant:"outlined",
-      InputLabelProps:{
-        shrink:true
+        backgroundColor: '#2F80ED',
+        height: '2px',
+        borderRadius: '5px'
       }
-    },
+    }
+  },
+  props: {
+    MuiTextField: {
+      variant: 'outlined',
+      color:"secondary",
+      InputLabelProps: {
+        shrink: true
+      }
+    }
   },
   palette: createPalette({
     primary: {
       main: berryRed,
-      contrastText: white,
+      contrastText: white
     },
     secondary: {
-      main: secondary,
+      main: secondary
     },
-    text: { secondary: "#828282" },
+    text: { primary: '#484848', secondary: '#828282' },
+    common: {
+      black: '#484848'
+    }
   }),
   typography: {
-    fontFamily: "'IBM Plex Sans', sans-serif",
+    fontFamily: "'Roboto', sans-serif",
     fontWeightLight: 400,
     fontWeightRegular: 400,
     fontWeightMedium: 700,
@@ -83,8 +119,8 @@ const MUITheme = createTheme({
     button: theme.typography.button,
     caption: theme.typography.caption,
     subtitle2: theme.typography.subtitle2,
-    subtitle1: theme.typography.subtitle1,
-  },
+    subtitle1: theme.typography.subtitle1
+  }
 });
 
 export default MUITheme;

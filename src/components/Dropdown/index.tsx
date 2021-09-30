@@ -1,5 +1,5 @@
-import { TextField, MenuItem } from "@material-ui/core";
-import LayoutStyle from "./styles";
+import { TextField, MenuItem } from '@material-ui/core';
+import LayoutStyle from './styles';
 
 export interface DropdownProps {
   options: { value: string; label: string }[];
@@ -14,7 +14,7 @@ const Dropdown: React.FC<DropdownProps | any> = (props) => {
     size,
     error = null,
     onChange,
-    options,
+    options
   } = props;
   const { root, input } = LayoutStyle();
   return (
@@ -29,13 +29,13 @@ const Dropdown: React.FC<DropdownProps | any> = (props) => {
       onChange={onChange}
       {...(error && { error: true, helperText: error })}
       InputProps={{
-        classes: { input: input },
+        classes: { input: input }
       }}
       {...props}
     >
       {options.map((option: any) => (
         <MenuItem key={option.value} value={option.value}>
-          {`Sort by ${option.label}`}
+          {`${option.label}`}
         </MenuItem>
       ))}
     </TextField>
@@ -43,9 +43,9 @@ const Dropdown: React.FC<DropdownProps | any> = (props) => {
 };
 
 Dropdown.defaultProps = {
-  size: "small",
+  size: 'small',
   fullWidth: true,
-  variant: "outlined",
+  variant: 'outlined'
 };
 
 export default Dropdown;

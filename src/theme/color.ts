@@ -1,6 +1,6 @@
 export const Color = {
   // theme primary color
-  grey:"#eeeee",
+  grey:"#eeeeee",
   textPrimary: "#092C4C",
   berryRed: "#C20000",
   white: "#fff",

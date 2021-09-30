@@ -14,7 +14,7 @@ const Routes = () => {
   
 
   return (
-    <Suspense fallback={<Loader open={true} isBackdrop={true} />}>
+    // <Suspense fallback={<Loader open={true} isBackdrop={true} />}>
       <Router history={history}>
         <Switch>
           {_privateRoutes.map((route, index) => (
@@ -43,7 +43,7 @@ const Routes = () => {
           ))}
         </Switch>
       </Router>
-    </Suspense>
+    // </Suspense>
   );
 };
 

@@ -2,7 +2,7 @@
   "name": "app",
   "version": "1.0.0",
   "private": true,
-  "buildDate": 1633024509935,
+  "buildDate": 1633029867386,
   "dependencies": {
     "@material-ui/core": "^4.12.1",
     "@material-ui/icons": "^4.11.2",
@@ -52,8 +52,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "node ./update-build.ts && react-scripts build && npm run compress-gzipper",
-    "compress-gzipper": "gzipper compress --verbose --level 9 --include js,css --output-file-format [filename].[ext] ./build",
+    "build": "node ./update-build.ts && react-scripts build",
+    "compress": "gzipper compress --verbose --level 9 --include js,css --output-file-format [filename].[ext] ./build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' 'src/**/*.tsx' --write",

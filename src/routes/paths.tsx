@@ -3,39 +3,39 @@ import Retry from '../components/Retry';
 // ===========================================================================================
 //                                      component imports without lazy loading
 // =========================================================================================
-import CarsListing from '../pages/carsListing'
-import AddEditCar from '../pages/AddEditCar'
-import CarDetail from '../pages/carDetail/index'
-import CarComparison from '../pages/carComparision/index'
-import ShortlistItem from '../pages/shortlistItems'
-import Dashboard from '../pages/dashboard'
-import PostAd from '../pages/postAd'
-import Help from '../layout/Sections/Sections/Profile/Help/Help'
-import Home from'../pages/home';
-import Login from '../pages/login';
-import ForgetPassword from '../pages/forgetPassword';
-import ResetPassword from '../pages/resetPassword';
-import Signup from '../pages/signup'
-import usedCars from '../pages/SearchUsedCars/index';
-import Verification from '../pages/verificationPage'
+// import CarsListing from '../pages/carsListing'
+// import AddEditCar from '../pages/AddEditCar'
+// import CarDetail from '../pages/carDetail/index'
+// import CarComparison from '../pages/carComparision/index'
+// import ShortlistItem from '../pages/shortlistItems'
+// import Dashboard from '../pages/dashboard'
+// import PostAd from '../pages/postAd'
+// import Help from '../layout/Sections/Sections/Profile/Help/Help'
+// import Home from'../pages/home';
+// import Login from '../pages/login';
+// import ForgetPassword from '../pages/forgetPassword';
+// import ResetPassword from '../pages/resetPassword';
+// import Signup from '../pages/signup'
+// import usedCars from '../pages/SearchUsedCars/index';
+// import Verification from '../pages/verificationPage'
 // ===========================================================================================
 //                                      lazy loading
 // =========================================================================================
-// const Home = lazy(()  =>  import('../pages/home'));
-// const Login = lazy(() => import('../pages/login'));
-// const CarsListing = lazy(() =>  import('../pages/carsListing'));
-// const ForgetPassword = lazy(() =>  import('../pages/forgetPassword'));
-// const ResetPassword = lazy(() =>  import('../pages/resetPassword'));
-// const Signup = lazy(() =>  import('../pages/signup'));
-// const AddEditCar = lazy(() =>  import('../pages/AddEditCar'));
-// const usedCars = lazy(() =>  import('../pages/SearchUsedCars/index'));
-// const Verification = lazy(() => import('../pages/verificationPage'));
-// const CarDetail = lazy(() =>  import('../pages/carDetail/index'));
-// const CarComparison = lazy(() =>  import('../pages/carComparision/index'));
-// const ShortlistItem = lazy(() =>  import('../pages/shortlistItems'));
-// const Dashboard = lazy(() =>  import('../pages/dashboard'));
-// const PostAd = lazy(() =>  import('../pages/postAd'));
-// const Help = lazy(() =>  import('../layout/Sections/Sections/Profile/Help/Help'));
+const Home = lazy(()  =>  import('../pages/home'));
+const Login = lazy(() => import('../pages/login'));
+const CarsListing = lazy(() =>  import('../pages/carsListing'));
+const ForgetPassword = lazy(() =>  import('../pages/forgetPassword'));
+const ResetPassword = lazy(() =>  import('../pages/resetPassword'));
+const Signup = lazy(() =>  import('../pages/signup'));
+const AddEditCar = lazy(() =>  import('../pages/AddEditCar'));
+const usedCars = lazy(() =>  import('../pages/SearchUsedCars/index'));
+const Verification = lazy(() => import('../pages/verificationPage'));
+const CarDetail = lazy(() =>  import('../pages/carDetail/index'));
+const CarComparison = lazy(() =>  import('../pages/carComparision/index'));
+const ShortlistItem = lazy(() =>  import('../pages/shortlistItems'));
+const Dashboard = lazy(() =>  import('../pages/dashboard'));
+const PostAd = lazy(() =>  import('../pages/postAd'));
+const Help = lazy(() =>  import('../layout/Sections/Sections/Profile/Help/Help'));
 // ===========================================================================================
 //            lazy loading with retry if chunk fails to load
 // =========================================================================================

@@ -22,12 +22,15 @@ jobs:
         run: npm install && npm run build
         env:
          CI: false
-      - name: Deploy Gzipped app build to Development S3 bucket - Prelaunch
+     # - name: Deploy Gzipped app build to Development S3 bucket - Prelaunch
+     #   if: github.ref == 'refs/heads/prelaunch'
+     #   run: aws s3 sync ./build/ s3://dev.tezdealz.com --exclude "*" --include "*.css" --include "*.js" --content-encoding gzip --delete
+     # - name: Deploy Regular app build to Development S3 bucket - Prelaunch
+     #   if: github.ref == 'refs/heads/prelaunch'
+     #   run: aws s3 sync ./build/ s3://dev.tezdealz.com --exclude "*.js" --exclude "*.css" --delete
+      - name: Deploy app build to Development S3 bucket - Prelaunch
         if: github.ref == 'refs/heads/prelaunch'
-        run: aws s3 sync ./build/ s3://dev.tezdealz.com --exclude "*" --include "*.css" --include "*.js" --content-encoding gzip --delete
-      - name: Deploy Regular app build to Development S3 bucket - Prelaunch
-        if: github.ref == 'refs/heads/prelaunch'
-        run: aws s3 sync ./build/ s3://dev.tezdealz.com --exclude "*.js" --exclude "*.css" --delete
+        run: aws s3 sync ./build/ s3://dev.tezdealz.com --delete
       - name: Deploy app build to Production S3 bucket
         if: github.ref == 'refs/heads/production'
         run: aws s3 sync ./build/ s3://tezdealz.com --delete

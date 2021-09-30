@@ -2,7 +2,7 @@
   "name": "app",
   "version": "1.0.0",
   "private": true,
-  "buildDate": "",
+  "buildDate": 1633008551623,
   "dependencies": {
     "@material-ui/core": "^4.12.1",
     "@material-ui/icons": "^4.11.2",
@@ -52,7 +52,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "node ./update-build.ts && react-scripts build",
+    "build": "node ./update-build.ts && react-scripts build && gzipper compress ./build",
+    "compress": "gzipper compress --verbose ./build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' 'src/**/*.tsx' --write",
@@ -105,6 +106,7 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "gzipper": "^5.0.1",
     "husky": "^7.0.1",
     "lint-staged": "^11.1.2",
     "prettier": "^2.3.2",

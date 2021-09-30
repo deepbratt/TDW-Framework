@@ -63,8 +63,16 @@ export const useForm = (validateOnChange = true) => {
   const routeParams = useSelector(
     (state: RootState) => state.queryParams.queryParams
   );
-  const { ADS, CARS, FILTER, CITIES_WITH_CARS, MAKE, MODEL, BODY_TYPES, CAR_COLORS } =
-    API_ENDPOINTS;
+  const {
+    ADS,
+    CARS,
+    FILTER,
+    CITIES_WITH_CARS,
+    MAKE,
+    MODEL,
+    BODY_TYPES,
+    CAR_COLORS
+  } = API_ENDPOINTS;
   const [page, setPage] = useState(1);
   const [citiesWithCars, setCitiesWithCars] = useState([]);
   const [makes, setMakes] = useState([]);
@@ -93,6 +101,7 @@ export const useForm = (validateOnChange = true) => {
     sort: '',
     condition: ''
   });
+
   const [responseData, setResponseData] = useState<IData | null>();
   const [result, setResult] = useState<ICarCard[] | []>([]);
   const [queryParams, setQueryParams] = useState<string>('');
@@ -124,6 +133,14 @@ export const useForm = (validateOnChange = true) => {
     status: '',
     message: ''
   });
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }, [page]);
 
   useEffect(() => {
     let newValues = values;
@@ -367,8 +384,8 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const getBodyColors = () => {
-    getAllData(ADS + CARS + CAR_COLORS ).then((response) => {
-      console.log(response)
+    getAllData(ADS + CARS + CAR_COLORS).then((response) => {
+      console.log(response);
       if (response && response && response.status === 'success') {
         setBodyColors(response.data.result);
       } else {
@@ -399,7 +416,7 @@ export const useForm = (validateOnChange = true) => {
     getMakes();
     getModels();
     getBodyTypes();
-    getBodyColors()
+    getBodyColors();
     // eslint-disable-next-line
   }, []);
 

@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import Retry from '../components/Retry';
 // ===========================================================================================
-//                                      component imports with some lazy loading
+//                                      component imports without lazy loading
 // =========================================================================================
 import CarsListing from '../pages/carsListing'
 import AddEditCar from '../pages/AddEditCar'
@@ -11,13 +11,13 @@ import ShortlistItem from '../pages/shortlistItems'
 import Dashboard from '../pages/dashboard'
 import PostAd from '../pages/postAd'
 import Help from '../layout/Sections/Sections/Profile/Help/Help'
-const Home = lazy(()  =>  import('../pages/home'));
-const Login = lazy(() => import('../pages/login'));
-const ForgetPassword = lazy(() =>  import('../pages/forgetPassword'));
-const ResetPassword = lazy(() =>  import('../pages/resetPassword'));
-const Signup = lazy(() =>  import('../pages/signup'));
-const usedCars = lazy(() =>  import('../pages/SearchUsedCars/index'));
-const Verification = lazy(() => import('../pages/verificationPage'));
+import Home from'../pages/home';
+import Login from '../pages/login';
+import ForgetPassword from '../pages/forgetPassword';
+import ResetPassword from '../pages/resetPassword';
+import Signup from '../pages/signup'
+import usedCars from '../pages/SearchUsedCars/index';
+import Verification from '../pages/verificationPage'
 // ===========================================================================================
 //                                      lazy loading
 // =========================================================================================

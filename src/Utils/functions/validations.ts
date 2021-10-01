@@ -1,4 +1,3 @@
-import { message } from '../../layout/Sections/Utils/Text';
 import { messages } from '../constants/formsConstants';
 import {
   isEmailValid,

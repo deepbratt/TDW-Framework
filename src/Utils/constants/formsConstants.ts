@@ -1,6 +1,7 @@
 export const messages = {
   isRequired: 'This field is required.',
   notValid: 'Input value is not Valid',
+  username: "Username must be 5 characters long.",
   notMatch: "Password doesn't match",
   password: 'Password must be 8 charactors long'
 };

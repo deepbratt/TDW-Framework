@@ -176,6 +176,7 @@ const Signup = () => {
                   <Grid item xs={12}>
                     <InputField
                       id="input-phone"
+                      type="number"
                       name={fieldNames.method}
                       fullWidth
                       placeholder="349xxxxxxx"

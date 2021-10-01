@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { handleGoogleAuth } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import useApi from '../../Utils/hooks/useApi';
 import { addData } from '../../Utils/API/API';
 import useValidation from '../../Utils/hooks/useValidation';
 import { extractError } from '../../Utils/helperFunctions';
+import { fieldNames } from '../../Utils/constants/formsConstants';
+import { isTypeAlphaSpace } from '../../Utils/regex';
 
 const initialValues: any = {
   firstName: '',
@@ -43,6 +45,10 @@ export const useForm = (validateOnChange = true) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    if (name === fieldNames.firstName && !isTypeAlphaSpace(value)) {
+      return;
+    }
 
     setValues({
       ...values,

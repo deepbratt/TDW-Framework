@@ -36,20 +36,6 @@ const initialRangeValues: any = {
   mileageRange: [0, 500000],
   engineCapacityRange: [0, 10000]
 };
-const initialAppliedFiltersValues: any = {
-  province: [],
-  city: [],
-  registrationCity: [],
-  make: [],
-  model: [],
-  transmission: [],
-  assembly: [],
-  engineType: [],
-  color: [],
-  bodyType: [],
-  sellerType: [],
-  adType: []
-};
 interface IData {
   data: {
     result: ICarCard[];

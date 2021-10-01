@@ -1,14 +1,12 @@
 import addEditCarData from "../Utils/constants/language/en/addEditCarData";
-import {
-  Checkbox,
-  createStyles,
-  FormControlLabel,
-  Grid,
-  makeStyles,
-  TextField,
-  Theme,
-  Typography,
-} from "@material-ui/core";
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import {Theme} from '@material-ui/core/styles/createTheme';
 import SelectComponent from "../components/SelectComponent";
 import { Colors } from "../Utils/constants/colors/colors";
 

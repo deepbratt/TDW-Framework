@@ -1,4 +1,5 @@
-import { Grid, Typography } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import SearchFilterContext from './SearchFilterContext';
 import Section from '../../../../../components';
 import OtherDetailContext from './OtherDetails';

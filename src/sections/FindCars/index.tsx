@@ -1,26 +1,20 @@
-import {
-  Card,
-  CardContent,
-  Grid,
-  makeStyles,
-  MenuItem,
-  Tab,
-  Tabs,
-  Typography
-} from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import MenuItem from '@material-ui/core/MenuItem';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import InputField from '../../components/InputField';
 import CustomButton from '../../components/CustomButton';
-import Slider from '../../components/Slider';
 import { Colors } from '../../Utils/constants/colors/colors';
-import SUVIcon from '../../assets/Cars/SUV.png';
-import PickUpIcon from '../../assets/Cars/pickup-truck.png';
 import SedanIcon from '../../assets/Cars/sedans.png';
 import { FIND_YOUR_CAR } from '../../Utils/constants/language/en/buttonLabels';
 import { findCarsData } from '../../Utils/constants/language/en/homePageData';
 import { useForm } from './useForm';
 import { fieldNames } from '../../Utils/constants/formsConstants';
 import Loader from '../../components/Loader';
-import Dropdown from '../../components/Dropdown';
 
 const FindCarsStyles = makeStyles((theme) => ({
   root: {

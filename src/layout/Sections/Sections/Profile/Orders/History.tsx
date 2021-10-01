@@ -1,16 +1,15 @@
-import { Grid, Typography, Hidden } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid"
+import Typography from "@material-ui/core/Typography"
+import Hidden from "@material-ui/core/Hidden"
 import { useStyles } from "./useStyles";
 import {
   paths,
   Title,
   history,
   purchaseTitle,
-  purchasedOn,
-  soldOn,
   sellingTitle,
 } from "../../../Utils/sidebarText";
 import SideBar from "../ProfileSidebar/Sidebar";
-import ListingCard from "../../../../../components/ListingCard/";
 import { useState } from "react";
 import {Colors} from "../../../Utils/color.constants"
 import MetaTags from "../../../../../components/MetaTags";

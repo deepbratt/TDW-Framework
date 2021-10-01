@@ -1,4 +1,3 @@
-import { Card, CardMedia, CardActions, Icon } from '@material-ui/core';
 import CustomButton from '../../components/CustomButton';
 import AppleIcon from '@material-ui/icons/Apple';
 import PlayStoreIcon from '../../assets/icons/playStore.png';

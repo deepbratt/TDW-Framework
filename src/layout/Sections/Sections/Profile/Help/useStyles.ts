@@ -1,8 +1,8 @@
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import { Colors } from "../../../Utils/color.constants";
 import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
 const breakpoints = createBreakpoints({});
-const {red,white,navyBlue,blue,lightGreen} = Colors
+const {white,navyBlue} = Colors
 
 export const useStyles = makeStyles((theme) => ({
   root:{

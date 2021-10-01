@@ -1,11 +1,9 @@
-import {
-  Grid,
-  Typography,
-  InputLabel,
-  MenuItem,
-  Select,
-  InputBase
-} from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import InputBase from '@material-ui/core/InputBase';
 import CustomButton from '../../../../../components/CustomButton';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import useStyles from './useStyles';
@@ -27,7 +25,7 @@ const AdProperyContext = ({
   handleAdvanceFilters
 }: any) => {
   const { white, blue } = Colors;
-  const { adGrid, optionsBtn, text, btnGrid, select } = useStyles();
+  const { optionsBtn, text, btnGrid, select } = useStyles();
   const { withPicture, sellerType } = adProperty;
 
   return (

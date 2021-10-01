@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Grid, Tabs, Tab } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 import Slider from "../Slider";
 import TabsPanels from "./tabsPanel";
 import OptionsCard from "../OptionsCard";

@@ -1,13 +1,11 @@
 import { useForm } from "./useForm";
 import { useParams } from "react-router";
 import Toast from "../../components/Toast";
-import {
-  Grid,
-  LinearProgress,
-  Card,
-  Button,
-  Typography,
-} from "@material-ui/core";
+import Grid from "@material-ui/core/Grid"
+import LinearProgress from "@material-ui/core/LinearProgress"
+import Card from "@material-ui/core/Card"
+import Button from "@material-ui/core/Button"
+import Typography from "@material-ui/core/Typography"
 import GlobalStyles from "../../globalStyles";
 import InputField from "../../components/InputField";
 import CodeVerification from "../../sections/CodeVerification";

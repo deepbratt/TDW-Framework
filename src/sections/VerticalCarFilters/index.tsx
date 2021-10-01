@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  Grid,
-  Slider,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-  Typography,
-  Divider
-} from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Slider from '@material-ui/core/Slider';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 import FilterAccordion from '../../components/Accordion';
 import {
   Carfilters,

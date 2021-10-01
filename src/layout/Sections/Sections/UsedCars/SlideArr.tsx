@@ -1,4 +1,8 @@
-import { Grid, Button, Typography, Hidden } from "@material-ui/core";
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Hidden from '@material-ui/core/Hidden';
+
 import useStyles from "./useStyles";
 import { Colors } from "../../Utils/color.constants";
 import FavoriteIcon from "@material-ui/icons/Favorite";

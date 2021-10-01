@@ -1,11 +1,12 @@
-import { Button, Grid, TextField } from '@material-ui/core';
+import Grid from "@material-ui/core/Grid"
+import Button from "@material-ui/core/Button"
+import TextField from "@material-ui/core/TextField"
 import { useForm } from 'react-hook-form';
 import { newPass, confirmPass, required } from '../../../Utils/sidebarText';
 import useHooks from '../useHooks';
 import { useStyles } from '../useStyles';
 import Actions from '../useFunctions';
 import { changeMyPassword } from '../../../../../Utils/hooks/endpoints';
-import CustomButton from '../../../../../components/CustomButton';
 import Toast from '../../../../../components/Toast';
 
 const ChangePassword = () => {
@@ -16,7 +17,7 @@ const ChangePassword = () => {
     formState: { errors }
   } = useForm();
   const { changePassword, setOpen, open, responseMessage } = Actions();
-  const { handleChange, val, errorMessage, setVal } = useHooks();
+  const { handleChange, val, errorMessage } = useHooks();
 
   const handleAlertClose = () => {
     setOpen(false);

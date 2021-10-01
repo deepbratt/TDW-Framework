@@ -1,7 +1,10 @@
 import { useHistory } from "react-router";
 import Toast from "../../components/Toast";
 import { routes } from "../../routes/paths";
-import { LinearProgress, Card, Button, Typography } from "@material-ui/core";
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Card from '@material-ui/core/Card';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import GlobalStyles from "../../globalStyles";
 import { fieldNames } from "../../Utils/constants/formsConstants";
 import { useForm } from "./useForm";

@@ -5,7 +5,7 @@ import CustomButton from "../../components/CustomButton";
 import { paths } from "../../routes/paths";
 import { VERIFY } from "../../Utils/constants/language/en/buttonLabels";
 import { regex, pin as pinStyle, err } from "../../layout/Sections/Utils/Text";
-import { Grid } from "@material-ui/core";
+import Grid from '@material-ui/core/Grid';
 
 export interface CodeVerficationProps {
   setPin: Function;

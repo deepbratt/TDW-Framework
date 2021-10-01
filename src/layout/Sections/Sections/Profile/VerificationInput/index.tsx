@@ -1,4 +1,5 @@
-import { Grid, Typography } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid"
 import PinInput from "react-pin-input";
 import { useState } from "react";
 import CustomButton from "../../../../../components/CustomButton";

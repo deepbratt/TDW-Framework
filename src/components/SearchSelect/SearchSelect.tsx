@@ -1,6 +1,8 @@
-import * as React from "react";
 import SearchIcon from "@material-ui/icons/Search";
-import { Grid, MenuItem, Button, TextField } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import selectStyles from "./selectStyles";
 import Breakpoints from "../../Utils/Breakpoints";
 import { City } from "country-state-city";
@@ -16,9 +18,9 @@ interface IProps {
   };
 }
 
-const SearchSelect: React.FC<IProps> = ({ setVal, val, carModel, range, handleChange, handleNavigation }) => {
+const SearchSelect: React.FC<IProps> = ({ val, carModel, range, handleChange, handleNavigation }) => {
   const { root, grid, button, selection, cssLabel, select } = selectStyles();
-  const { model, city, min, max } = val;
+  const { model, city } = val;
   // const handleChange = (e: any) => {
   //   const { value, name } = e.target;
   //   setVal({

@@ -1,17 +1,14 @@
-import {
-  Grid,
-  Typography,
-  Hidden,
-  ListItem,
-  List,
-  Paper
-} from '@material-ui/core';
+import Grid from "@material-ui/core/Grid"
+import Typography from "@material-ui/core/Typography"
+import Hidden from "@material-ui/core/Hidden"
+import ListItem from "@material-ui/core/ListItem"
+import List from "@material-ui/core/List"
+import Paper from "@material-ui/core/Paper"
 import { useStyles } from './sidebarStyles';
 import { NavLink, useHistory, useLocation } from 'react-router-dom';
-import { paths, Title, profile } from '../../../Utils/sidebarText';
+import { paths,  profile } from '../../../Utils/sidebarText';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../redux/store';
-import { Colors } from '../../../../../Utils/constants/colors/colors';
 
 interface IProp {
   children: React.ReactNode;

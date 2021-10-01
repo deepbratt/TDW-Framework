@@ -2,7 +2,7 @@
   "name": "app",
   "version": "1.0.0",
   "private": true,
-  "buildDate": 1633029867386,
+  "buildDate": 1633107357433,
   "dependencies": {
     "@material-ui/core": "^4.12.1",
     "@material-ui/icons": "^4.11.2",
@@ -34,6 +34,7 @@
     "react-zoom-pan-pinch": "^2.1.3",
     "recompose": "^0.30.0",
     "redux-persist": "^6.0.0",
+    "source-map-explorer": "^2.5.2",
     "typescript": "^4.1.2",
     "uuid": "^8.3.2",
     "web-vitals": "^1.0.1",
@@ -53,6 +54,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "node ./update-build.ts && react-scripts build",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "compress": "gzipper compress --verbose --level 9 --include js,css --output-file-format [filename].[ext] ./build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

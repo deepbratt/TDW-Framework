@@ -30,12 +30,15 @@ const authSlice = createSlice({
       localStorage.removeItem('tezdealzjwt');
     },
      updateUserData:(state,action)=>{
-      console.log('[UpdateuserData]',action.payload)
       state.user = action.payload.data.user;
+    },
+    updateToken:(state,action)=>{
+      state.token = action.payload;
+      localStorage.setItem('tezdealzjwt', action.payload);
     }
   }
 });
 
-export const { login, logout,updateUserData } = authSlice.actions;
+export const { login, logout,updateUserData, updateToken } = authSlice.actions;
 
 export default authSlice.reducer;

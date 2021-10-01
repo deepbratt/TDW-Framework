@@ -8,6 +8,7 @@ import { useStyles } from '../useStyles';
 import Actions from '../useFunctions';
 import { changeMyPassword } from '../../../../../Utils/hooks/endpoints';
 import Toast from '../../../../../components/Toast';
+import Loader from "../../../../../components/Loader";
 
 const ChangePassword = () => {
   const { button } = useStyles();
@@ -16,19 +17,20 @@ const ChangePassword = () => {
     handleSubmit,
     formState: { errors }
   } = useForm();
-  const { changePassword, setOpen, open, responseMessage } = Actions();
-  const { handleChange, val, errorMessage } = useHooks();
+  const {isLoading, changePassword, setOpen, open, responseMessage } = Actions();
+  const { handleChange, val, errorMessage, setVal } = useHooks();
 
   const handleAlertClose = () => {
     setOpen(false);
   };
 
   const onSubmit = (): void => {
-    changePassword(changeMyPassword, val);
+    changePassword(changeMyPassword, val, setVal);
   };
 
   return (
     <Grid container spacing={4}>
+      <Loader open={isLoading} isBackdrop={true}/>
         <Grid item lg={6} xs={12}>
           <TextField
             {...register('currentPassword', {

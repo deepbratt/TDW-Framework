@@ -18,6 +18,7 @@ import ZoomIn from '@material-ui/icons/ZoomIn';
 import ZoomOut from '@material-ui/icons/ZoomOut';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import { Box, Tabs, Typography } from '@material-ui/core';
 const Slider = ({
   desc,
   paragraph,
@@ -34,20 +35,16 @@ const Slider = ({
   date,
   isFavs,
   createdBy,
-  updatedAt
+  updatedAt,
+  data
 }: Detail) => {
   const { addFavs, open, setOpen, responseMessage } = Actions();
   const { user } = useSelector((state: RootState) => state.auth);
   const [isFavorite, setIsFavorite] = useState<boolean | undefined>(isFavs);
   const [fullScreen, setFullScreen] = useState(false);
   const [fullScreenImage, setFullScreenImage] = useState('');
-  const {
-    carousel,
-    detail,
-    btn,
-    backdrop,
-    fullScreenImageStyle,
-  } = useStyles();
+  const { carousel, detail, btn, backdrop, fullScreenImageStyle } = useStyles();
+  const [zooming, setZooming] = useState(false);
   const { mobile } = Sizes();
 
   const handleAlertClose = () => {
@@ -131,29 +128,38 @@ const Slider = ({
           >
             {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
               <div>
-                <div className={fullScreenImageStyle} style={{justifyContent: !mobile ? "space-between" : "center"}}>
+                <div
+                  className={fullScreenImageStyle}
+                  style={{
+                    justifyContent: !mobile ? 'space-between' : 'center'
+                  }}
+                >
                   <div>
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      zoomIn();
-                    }}
-                    variant="contained"
-                    color="primary"
-                  >
-                    <ZoomIn />
-                  </Button>
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      zoomOut();
-                    }}
-                    style={{margin:"0 10px"}}
-                    variant="contained"
-                    color="secondary"
-                  >
-                    <ZoomOut />
-                  </Button>
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log('ooming', zooming);
+                        if (!zooming) {
+                          setZooming(true);
+                        }
+                        zoomIn();
+                      }}
+                      variant="contained"
+                      color="primary"
+                    >
+                      <ZoomIn />
+                    </Button>
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        zoomOut();
+                      }}
+                      style={{ margin: '0 10px' }}
+                      variant="contained"
+                      color="secondary"
+                    >
+                      <ZoomOut />
+                    </Button>
                   </div>
                   <Button
                     onClick={(e) => {
@@ -164,28 +170,115 @@ const Slider = ({
                     variant="contained"
                     color="default"
                   >
-                    <Close/>
+                    <Close />
                   </Button>
                 </div>
-                <TransformComponent  contentStyle={{ cursor:"move", height:"100%"}} wrapperStyle={{height: !mobile ? "80vh" : "auto"}}>
-                  <img src={fullScreenImage} alt="" height="100%"/>
+                <TransformComponent
+                  contentStyle={{
+                    cursor: 'move',
+                    height: '100%',
+                    display: !zooming ? 'block' : 'absolute',
+                    transform: 'translateX(50%)',
+                    margin: !zooming ? 'auto' : 0
+                  }}
+                  wrapperStyle={{
+                    height: !mobile ? '60vh' : 'auto',
+                    width: !mobile ? '70vw' : 'auto',
+                    backgroundColor: 'black',
+                    display: !zooming ? 'flex' : 'block',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <img src={fullScreenImage} alt="" />
                 </TransformComponent>
               </div>
             )}
           </TransformWrapper>
-          <div>
-            {arr.map((thumb: string, index: number) => (
-              <img
-                src={thumb}
-                alt=""
-                height="50px"
-                width="auto"
-                onClick={(e) => openFullScreen(thumb, e)}
-                style={{ margin: '5px', cursor: 'pointer' }}
-                key={thumb + index}
-              />
-            ))}
-          </div>
+          <Box
+            width={!mobile ? '70vw' : '100vw'}
+            height= {!mobile ? '30vh' : 'auto'}
+            color="white"
+            style={{ background: 'black', paddingBottom: mobile ? "20px":0, overflowY:"auto", overflowX:"hidden" }}
+          >
+            <Grid
+              container
+              justifyContent="center"
+              spacing={2}
+              style={{ padding: !mobile ? '10px' : '0'}}
+            >
+              <Grid item xs={12} container style={{display:"flex", justifyContent:"center"}}>
+                <Tabs
+                  variant="scrollable"
+                  scrollButtons="auto"
+                  aria-label="scrollable auto tabs example"
+                >
+                  {arr.map((thumb: string, index: number) => (
+                    <img
+                      src={thumb}
+                      alt=""
+                      height="50px"
+                      width="auto"
+                      onClick={(e) => openFullScreen(thumb, e)}
+                      style={{ margin: '5px', cursor: 'pointer' }}
+                      key={thumb + index}
+                    />
+                  ))}
+                </Tabs>
+              </Grid>
+              <Grid
+                item
+                xs={10}
+                lg={5}
+                style={{
+                  display: 'flex',
+                  justifyContent: mobile ? "center" : 'space-between',
+                  alignItems: 'center',
+                  flexWrap:"wrap",
+                }}
+              >
+                <Typography variant="body2">{data.modelYear}</Typography>
+                <span>&bull;</span>
+                <Typography variant="body2">{data.milage}&nbsp;KM</Typography>
+                <span>&bull;</span>
+                <Typography variant="body2">{data.engineType}</Typography>
+                <span>&bull;</span>
+                <Typography variant="body2">
+                  {data.engineCapacity}&nbsp;cc
+                </Typography>
+                <span>&bull;</span>
+                <Typography variant="body2">{data.transmission}</Typography>
+              </Grid>
+              <Grid xs={10} item lg={3} style={{justifyContent:"center", display:"flex", alignItems:"center"}}>
+              <Typography variant="h3">PKR&nbsp;{data.price}</Typography>
+              </Grid>
+              <Grid
+                item
+                xs={10}
+                lg={4}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexWrap:"wrap"
+                }}
+              >
+                {data.createdBy.phone && (
+                  <a href={'tel:' + data.createdBy.phone}>
+                    <Button variant="contained" color="primary">
+                      {data.createdBy.phone}
+                    </Button>
+                  </a>
+                )}
+                {data.createdBy.email && (
+                  <a href={'mailto:' + data.createdBy.email}>
+                    <Button variant="contained" color="secondary">
+                      {'Send Message'}
+                    </Button>
+                  </a>
+                )}
+              </Grid>
+            </Grid>
+          </Box>
           {/* <div>
             <Button onClick={zoomIn} variant="contained" color="primary">
               <ZoomIn />

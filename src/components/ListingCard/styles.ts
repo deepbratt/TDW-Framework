@@ -79,21 +79,19 @@ const ListingCardStyles = makeStyles(() => ({
       }
     }
   },
-  favsIcon: {
+  favsIconList: {
     position: 'absolute',
-    left: '200px',
-    top: '3px',
-    border: 'none',
-    background: 'none',
-    cursor: 'pointer'
+    right: '5px',
+    top: '5px',
+    padding:0,
+    zIndex:1
   },
   favsIconGrid: {
     position: 'absolute',
-    left: '0px',
-    top: '3px',
-    border: 'none',
-    background: 'none',
-    cursor: 'pointer'
+    right: '5px',
+    top: '215px',
+    zIndex:1,
+    padding:0,
   },
   label: {
     fontWeight: 'bold',

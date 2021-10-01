@@ -16,8 +16,9 @@ import Toast from '../../../../components/Toast';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
+import Loader from "../../../../components/Loader";
 const RegexInputs = () => {
-  const { changeNumberOrEmail, setOpen, responseMessage, open } = Actions();
+  const {isLoading, changeNumberOrEmail, setOpen, responseMessage, open } = Actions();
 
   const {
     register,
@@ -27,11 +28,11 @@ const RegexInputs = () => {
   const { handleChange, val, number, NumericOnly, errorMessage, setNumber } =
     useHooks();
   const [changeToVerification, setChangeToVerification] = useState(false);
-  const { select, root, btnBox, cancelButton, button } = useStyles();
+  const {cancelButton, button } = useStyles();
   const { user } = useSelector((state: RootState) => state.auth);
 
   const onSubmit = (): void => {
-    let data = user.phone !== number ? { phone: number } : { email: email };
+    let data = user.phone !== number ? { phone: number } : { email: val.email };
     changeNumberOrEmail(updateMe, data, setChangeToVerification);
   };
 
@@ -47,6 +48,7 @@ const RegexInputs = () => {
 
   return (
     <Grid container spacing={4}>
+      <Loader isBackdrop={true} open={isLoading}/>
       {/* {changeToVerification ? (
           <Verification slicedNumber={number && number} />
         ) : ( */}
@@ -72,6 +74,9 @@ const RegexInputs = () => {
           label="Mobile Number"
           disabled={user.signedUpWithPhone}
           fullWidth
+          type="tel"
+          placeholder={"3XXXXXXXXX"}
+          InputProps={{startAdornment:<span>+92&nbsp;</span>}}
         />
       </Grid>
       {val.email || number ? (

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Typography, TypographyProps} from "@material-ui/core";
+import Typography, {TypographyProps} from "@material-ui/core/Typography";
 import LayoutStyle from "./style";
 import Size from "./Size";
 

@@ -1,4 +1,5 @@
-import { Button, InputAdornment } from "@material-ui/core";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import LayoutStyle from "./styles";
 

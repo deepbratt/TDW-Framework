@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 import { useState } from "react";
 import DialogBoxContent from "./DialogBox";
 export interface DialogBoxProps {

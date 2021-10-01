@@ -1,4 +1,4 @@
-import { createTheme } from '@material-ui/core/styles';
+import createTheme from '@material-ui/core/styles/createTheme';
 import { theme } from './globalFontSize';
 import createPalette from '@material-ui/core/styles/createPalette';
 import { Color } from './color';

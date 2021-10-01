@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  SwipeableDrawer,
-  List,
-  ListItem,
-  ListItemText,
-  IconButton,
-  Divider,
-  ListItemIcon,
-  Collapse
-} from '@material-ui/core';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton';
+import Divider from '@material-ui/core/Divider';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Collapse from '@material-ui/core/Collapse';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -18,7 +16,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { NavLink } from 'react-router-dom';
 import { useStyles } from './sidebarStyles';
 import Logo from '../../../assets/logo.png';
-import { Paths } from '../paths';
+import { Paths as sideBarPath } from '../paths';
 import { paths } from '../../../../../routes/paths';
 import {
   ADD_EDIT_CAR,
@@ -72,7 +70,7 @@ const SideBar = () => {
         </div>
         <Divider />
         <List>
-          {Paths.map((data, index) => {
+          {sideBarPath.map((data, index) => {
             return (
               <ListItem key={index} button>
                 <NavLink className={link} to={data.path}>

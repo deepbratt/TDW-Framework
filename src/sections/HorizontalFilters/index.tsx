@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import Dropdown from '../../components/Dropdown';
 import LayoutToggler from '../../components/LayoutToggler';
 import { fieldNames } from '../../Utils/constants/formsConstants';

@@ -1,6 +1,7 @@
 import PinInput from "react-pin-input";
 import { useState } from "react";
-import { Grid, LinearProgress, Typography } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import CustomTitle from "../../../../components/CustomTitle/CustomTitle";
 import CustomButton from "../../../../components/CustomButton";
 import { Colors } from "../../Utils/color.constants";

@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import { Colors } from "../../Utils/constants/colors/colors";
 import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
 const { white, navyBlue} = Colors;

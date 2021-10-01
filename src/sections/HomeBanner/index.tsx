@@ -1,4 +1,7 @@
-import { Card, Typography, makeStyles } from '@material-ui/core';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import Typography from '@material-ui/core/Typography';
 import BannerImg from '../../assets/Home/Banner.png';
 import CustomButton from '../../components/CustomButton';
 import { FIND_YOUR_CAR } from '../../Utils/constants/language/en/buttonLabels';

@@ -1,4 +1,5 @@
-import { TableRow, TableCell } from '@material-ui/core';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
 import { useStyles } from './useStyles';
 
 const TableRows = ({ items, array }: any) => {

@@ -1,4 +1,5 @@
-import { Container, Grid } from '@material-ui/core';
+import  Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import MetaTags from '../../components/MetaTags';

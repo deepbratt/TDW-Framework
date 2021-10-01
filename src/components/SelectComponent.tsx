@@ -1,4 +1,5 @@
-import { MenuItem, TextField, TextFieldProps } from "@material-ui/core";
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField, {TextFieldProps } from "@material-ui/core/TextField";
 
 interface ICustomSelectProps {
   menuItem: Array<string>;

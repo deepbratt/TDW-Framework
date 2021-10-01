@@ -52,7 +52,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "node ./update-build.ts && react-scripts build",
+    "build": "node ./update-build.ts && react-scripts build && npm run compress",
     "compress": "gzipper compress --verbose --level 9 --include js,css --output-file-format [filename].[ext] ./build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

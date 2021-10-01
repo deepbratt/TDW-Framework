@@ -1,4 +1,6 @@
-import { Typography, Grid, Divider } from '@material-ui/core';
+import Typography from "@material-ui/core/Typography"
+import Grid from "@material-ui/core/Grid"
+import Divider from "@material-ui/core/Divider"
 import { useStyles } from './useStyles';
 import { ICar } from '../../Utils/types1';
 import { Colors } from '../../Utils/color.constants';

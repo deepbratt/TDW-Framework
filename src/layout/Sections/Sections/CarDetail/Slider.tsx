@@ -1,5 +1,8 @@
 import { useState } from 'react';
-import { Backdrop, Button, Grid, IconButton } from '@material-ui/core';
+import Backdrop from '@material-ui/core/Backdrop';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import { Carousel } from 'react-responsive-carousel';
 import { useStyles } from './useStyles';
 import { Detail } from '../../Utils/types1';
@@ -10,8 +13,11 @@ import Toast from '../../../../components/Toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import Favorite from '@material-ui/icons/Favorite';
+import Close from '@material-ui/icons/Close';
+import ZoomIn from '@material-ui/icons/ZoomIn';
+import ZoomOut from '@material-ui/icons/ZoomOut';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
-import { Close, FavoriteBorder, ZoomIn, ZoomOut } from '@material-ui/icons';
 const Slider = ({
   desc,
   paragraph,
@@ -161,8 +167,8 @@ const Slider = ({
                     <Close/>
                   </Button>
                 </div>
-                <TransformComponent  contentStyle={{ cursor:"move"}}>
-                  <img src={fullScreenImage} alt="" width={!mobile ? "900" : "auto"}/>
+                <TransformComponent  contentStyle={{ cursor:"move", height:"100%"}} wrapperStyle={{height: !mobile ? "80vh" : "auto"}}>
+                  <img src={fullScreenImage} alt="" height="100%"/>
                 </TransformComponent>
               </div>
             )}

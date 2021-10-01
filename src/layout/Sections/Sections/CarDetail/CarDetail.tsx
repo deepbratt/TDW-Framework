@@ -1,9 +1,11 @@
-import { Grid, Typography, Button } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import { useStyles } from "./useStyles";
 import { Colors } from "../../Utils/color.constants";
 import SellerDetail from "./SellerDetail";
 import { ACTIVE, INACTIVE, SOLD, UNSOLD } from "../../../../Utils/constants/language/en/buttonLabels";
-import { EditOutlined } from "@material-ui/icons";
+import EditOutlined from "@material-ui/icons/EditOutlined";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { useState } from "react";

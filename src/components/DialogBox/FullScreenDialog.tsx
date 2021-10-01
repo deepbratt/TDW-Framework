@@ -8,9 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 import Slide from '@material-ui/core/Slide';
 import { TransitionProps } from '@material-ui/core/transitions';
-import { DialogActions, DialogContent } from '@material-ui/core';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
 import {
-  APPLY_FILTERS,
   CLOSE
 } from '../../Utils/constants/language/en/buttonLabels';
 

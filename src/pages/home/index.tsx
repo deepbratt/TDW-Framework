@@ -1,5 +1,8 @@
 import CarComparision from '../../sections/CarComparision';
-import { Grid, Container, Typography, makeStyles } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import CarComaprisonImg from '../../assets/Cars/carsComparision.png';

@@ -1,4 +1,7 @@
-import { Step, StepIcon, StepLabel, Stepper } from "@material-ui/core"
+import Step from "@material-ui/core/Step"
+import StepIcon from "@material-ui/core/StepIcon"
+import StepLabel from "@material-ui/core/StepLabel"
+import Stepper from "@material-ui/core/Stepper"
 import Sizes from "../Utils/themeConstants"
 import CustomStepperIcon from "./CustomStepperIcon"
 

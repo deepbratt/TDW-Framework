@@ -38,7 +38,7 @@ const useValidation = (values: any) => {
     }
     if (fieldNames.username in fieldValues) {
       temp.username =
-        fieldValues.username.trim() === '' ? messages.isRequired : '';
+        fieldValues.username.trim().length >= 5 ? '' : messages.username;
     }
     if (fieldNames.password in fieldValues) {
       temp.password = validatePassword(fieldValues.password);

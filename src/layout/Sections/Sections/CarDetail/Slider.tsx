@@ -167,8 +167,8 @@ const Slider = ({
                     <Close/>
                   </Button>
                 </div>
-                <TransformComponent  contentStyle={{ cursor:"move"}}>
-                  <img src={fullScreenImage} alt="" width={!mobile ? "900" : "auto"}/>
+                <TransformComponent  contentStyle={{ cursor:"move", height:"100%"}} wrapperStyle={{height: !mobile ? "80vh" : "auto"}}>
+                  <img src={fullScreenImage} alt="" height="100%"/>
                 </TransformComponent>
               </div>
             )}

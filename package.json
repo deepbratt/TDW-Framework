@@ -53,7 +53,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "node ./update-build.ts && react-scripts build",
-    "compress": "gzipper compress --verbose --level 9 --include js,css --output-file-format [filename].[ext] ./build",
+    "compress": "gzipper compress --verbose --level 9 --include js,css --output-file-format [filename].[ext].[compressExt] ./build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' 'src/**/*.tsx' --write",

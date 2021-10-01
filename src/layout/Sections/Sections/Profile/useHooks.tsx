@@ -1,6 +1,5 @@
 import { useState } from "react";
 import moment from "moment";
-import { numberReg } from "../../Utils/sidebarText";
 import {Colors} from "../../Utils/color.constants"
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
@@ -22,8 +21,7 @@ const useHooks = () => {
     newPassword: "",
     confirmPassword: ""
   });
-
-  const [number, setNumber] = useState(user.phone);
+  const [number, setNumber] = useState(user.phone.slice(3));
   const handleChange = (e: any) => {
     const { value, name } = e.target;
     setVal({
@@ -34,9 +32,10 @@ const useHooks = () => {
 
   const NumericOnly = (e: any) => {
     let preval = e.target.value;
-    if (e.target.value === "" || numberReg.test(e.target.value))
-      return setNumber(preval);
-    else e.target.value = preval.substring(0, preval.length - 1);
+    if(preval==="e" || preval.length === 11 || (preval.length === 1 && parseInt(preval)===0)){
+      return
+    }
+    setNumber(preval)
   };
 
   const handleChangeDate = (e: any) => {

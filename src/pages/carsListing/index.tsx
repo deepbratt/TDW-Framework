@@ -1,18 +1,18 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
-import Container from "@material-ui/core/Container"
-import Chip from "@material-ui/core/Chip"
-import RadioGroup from "@material-ui/core/RadioGroup"
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import DialogContent from "@material-ui/core/DialogContent"
-import DialogActions from "@material-ui/core/DialogActions"
-import Button from "@material-ui/core/Button"
-import Grid from "@material-ui/core/Grid"
-import Hidden from "@material-ui/core/Hidden"
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer"
-import Typography from "@material-ui/core/Typography"
-import Fab from "@material-ui/core/Fab"
+import Container from '@material-ui/core/Container';
+import Chip from '@material-ui/core/Chip';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import Typography from '@material-ui/core/Typography';
+import Fab from '@material-ui/core/Fab';
 
 import Toast from '../../components/Toast';
 import Pagination from '@material-ui/lab/Pagination';
@@ -46,8 +46,7 @@ import ListingCardSkeletons from '../../components/ListingCard/ListingCardSkelet
 import CompareRoundedIcon from '@material-ui/icons/CompareRounded';
 import CarListingStyles from './style';
 import CustomButton from '../../CustomButton';
-import { paths, routes } from '../../routes/paths';
-import { Link } from 'react-router-dom';
+import { paths } from '../../routes/paths';
 import Radio from '@material-ui/core/Radio';
 
 export interface CarsListingProps {
@@ -392,37 +391,14 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                         xs={12}
                         sm={layoutType === 'list' ? 12 : 4}
                       >
-                        {isShortlist ? (
-                          <ListingCard
-                            data={car}
-                            isFavs={!isShortlist}
-                            layoutType={layoutType}
-                            handleClick={
-                              isShortlist ? () => shortListItem(car) : undefined
-                            }
-                          />
-                        ) : (
-                          <Link
-                            to={
-                              routes.carDetail.substr(
-                                0,
-                                routes.carDetail.lastIndexOf('/') + 1
-                              ) + car._id
-                            }
-                            target="_blank"
-                          >
-                            <ListingCard
-                              data={car}
-                              isFavs={!isShortlist}
-                              layoutType={layoutType}
-                              handleClick={
-                                isShortlist
-                                  ? () => shortListItem(car)
-                                  : undefined
-                              }
-                            />
-                          </Link>
-                        )}
+                        <ListingCard
+                          data={car}
+                          isFavs={!isShortlist}
+                          layoutType={layoutType}
+                          handleClick={
+                            isShortlist ? () => shortListItem(car) : undefined
+                          }
+                        />
                       </Grid>
                     ))}
                   {result && (

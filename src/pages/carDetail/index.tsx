@@ -79,6 +79,7 @@ const CarDetailContainer = () => {
                   isFavs={obj.isFav}
                   createdBy={obj.createdBy}
                   updatedAt={obj.updatedAt}
+                  data={obj}
                 />
 
                 <Hidden smDown>

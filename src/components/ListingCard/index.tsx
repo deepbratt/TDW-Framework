@@ -1,4 +1,4 @@
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,11 +9,9 @@ import IconButton from '@material-ui/core/IconButton';
 import {
   ACTIVE,
   INACTIVE,
-  SOLD,
+  SOLD
 } from '../../Utils/constants/language/en/buttonLabels';
-import { Colors } from '../../Utils/constants/colors/colors';
 import ConvertDate from '../convertDate';
-import { routes } from '../../routes/paths';
 import ListingCardStyles from './styles';
 import LocationIcon from '../../assets/icons/location.png';
 import NoImg from '../../assets/no-img.png';
@@ -26,6 +24,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { Favorite, FavoriteBorder } from '@material-ui/icons';
 import moment from 'moment';
+import ConditionalLink from '../ConditionalLink';
+import { routes } from '../../routes/paths';
+import Sizes from '../../Utils/themeConstants';
 export interface ListingCardProps {
   data: any;
   layoutType: string;
@@ -38,18 +39,14 @@ export interface ListingCardProps {
 const ListingCard: React.FC<ListingCardProps> = ({
   data,
   layoutType,
-  isFavs,
-  span,
   handleFavs,
   handleClick
 }) => {
-  const history = useHistory();
   const { pathname } = useLocation();
+  const { mobile } = Sizes();
   const { user, isLoggedIn } = useSelector((state: RootState) => state.auth);
-  const { root, grid, featuredBadge, location, favsIcon, label, favsIconGrid } =
+  const { root, grid, featuredBadge, location, favsIconGrid, favsIconList } =
     ListingCardStyles();
-  const { red, grey, flashWhite } = Colors;
-
   const {
     _id,
     model,
@@ -76,7 +73,11 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const [toastOpen, setToastOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const favs = (id: string) => {
+  const favs = (
+    id: string,
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
     if (handleFavs) {
       handleFavs(id);
     } else {
@@ -97,7 +98,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
     }
   };
 
-  const handleCardClick = () => {
+  const handleCardClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
     if (handleClick) {
       handleClick();
     }
@@ -105,71 +107,107 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
   return (
     <>
-    <Paper elevation={4} style={{ height: layoutType !== 'list' ? '100%' : "auto"}}>
-      <Toast
-        open={toastOpen}
-        message={toastMessage}
-        type={toastType}
-        onClose={() => setToastOpen(false)}
-      />
-      <Loader open={isLoading} isBackdrop={true} />
-      <Card
-        className={layoutType === 'list' ? root : grid}
-        style={{ cursor: 'pointer'}}
-        onClick={() => handleCardClick()}
+      <Paper
+        elevation={4}
+        style={{
+          height: layoutType !== 'list' ? '100%' : 'auto',
+          position: 'relative'
+        }}
       >
-        <Grid container>
-          <Grid
-            item
-            xs={12}
-            sm={layoutType !== 'list' ? 12 : 4}
-            style={{ padding: '5px' }}
+        <Toast
+          open={toastOpen}
+          message={toastMessage}
+          type={toastType}
+          onClose={(e: any) => {
+            e.stopPropagation();
+            setToastOpen(false);
+          }}
+        />
+        <Loader open={isLoading} isBackdrop={true} />
+        {isLoggedIn && user._id !== createdBy ? (
+          <IconButton
+            onClick={(e) => {
+              favs(_id ? _id : '', e);
+            }}
+            className={
+              layoutType === 'grid' || mobile
+                ? favsIconGrid
+                : favsIconList
+            }
           >
-            <CardMedia
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                overflow: 'hidden',
-                width: '100%'
-              }}
-            >
-              <img
-                height="200px"
-                width="100%"
-                src={image && image.length > 0 ? image[0] : NoImg}
-                alt=""
-              />
-              {isSold && (
-                <span className={featuredBadge}>
-                  <Typography variant="body2">{SOLD}</Typography>
-                </span>
-              )}
-            </CardMedia>
-          </Grid>
-          <Grid item container xs={12} sm={layoutType !== 'list' ? 12 : 8}>
-            <CardContent style={{ padding: '5px' }}>
+            {isFavorite || pathname.indexOf('favorites') > -1 ? (
+              <Favorite color="primary" />
+            ) : (
+              <FavoriteBorder />
+            )}
+          </IconButton>
+        ) : null}
+        <ConditionalLink
+          to={
+            routes.carDetail.substr(0, routes.carDetail.lastIndexOf('/') + 1) +
+            _id
+          }
+          target="_blank"
+          condition={!handleClick ? true : false}
+        >
+          <Card
+            className={layoutType === 'list' ? root : grid}
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => handleCardClick(e)}
+          >
+            <Grid container>
               <Grid
-                // item
-                container
-                // xs={12}
-                spacing={layoutType === 'list' ? 2 : 1}
+                item
+                xs={12}
+                sm={layoutType !== 'list' ? 12 : 4}
+                style={{ padding: '5px' }}
               >
-                <Grid
-                  item
-                  xs={12}
-                  container
-                  justifyContent="space-between"
-                  alignItems="center"
+                <CardMedia
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    overflow: 'hidden',
+                    width: '100%'
+                  }}
                 >
-                  <Typography variant="h5">{ConvertDate(createdAt)}</Typography>
-                  {isLoggedIn && user._id !== createdBy ? (
+                  <img
+                    height="200px"
+                    width="100%"
+                    src={image && image.length > 0 ? image[0] : NoImg}
+                    alt=""
+                  />
+                  {isSold && (
+                    <span className={featuredBadge}>
+                      <Typography variant="body2">{SOLD}</Typography>
+                    </span>
+                  )}
+                </CardMedia>
+              </Grid>
+              <Grid item container xs={12} sm={layoutType !== 'list' ? 12 : 8}>
+                <CardContent style={{ padding: '5px' }}>
+                  <Grid
+                    // item
+                    container
+                    // xs={12}
+                    spacing={layoutType === 'list' ? 2 : 1}
+                  >
+                    <Grid
+                      item
+                      xs={12}
+                      container
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <Typography variant="h5" style={{ paddingTop: '5px' }}>
+                        {ConvertDate(createdAt)}
+                      </Typography>
+                      {/* {isLoggedIn && user._id !== createdBy ? (
                     <IconButton
                       onClick={(e) => {
-                        favs(_id ? _id : '');
-                        e.stopPropagation();
+                        favs(_id ? _id : '', e);
                       }}
-                      style={{ padding: 0 }}
+                      style={{ padding: 0}}
                     >
                       {isFavorite || pathname.indexOf('favorites') > -1 ? (
                         <Favorite color="primary" />
@@ -177,74 +215,74 @@ const ListingCard: React.FC<ListingCardProps> = ({
                         <FavoriteBorder />
                       )}
                     </IconButton>
-                  ) : null}
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="h4" style={{ cursor: 'pointer' }}>
-                    {`${make} ${model}`}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography color="secondary" variant="h3">
-                    {price && `PKR ${price?.toLocaleString()}`}
-                  </Typography>
-                </Grid>
-                <Grid
-                  item
-                  container
-                  xs={12}
-                  spacing={1}
-                  justifyContent="flex-start"
-                >
-                  <Grid item>
-                    <Typography
-                      color="textSecondary"
-                      variant="body2"
-                      component="span"
+                  ) : null} */}
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="h4" style={{ cursor: 'pointer' }}>
+                        {`${make} ${model}`}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography color="secondary" variant="h3">
+                        {price && `PKR ${price?.toLocaleString()}`}
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      container
+                      xs={12}
+                      spacing={1}
+                      justifyContent="flex-start"
                     >
-                      {modelYear}
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      color="textSecondary"
-                      variant="body2"
-                      component="span"
-                    >
-                      &bull;&nbsp;{milage?.toLocaleString() + ' KM'}
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      color="textSecondary"
-                      variant="body2"
-                      component="span"
-                    >
-                      &bull;&nbsp;{engineType}
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      color="textSecondary"
-                      variant="body2"
-                      component="span"
-                    >
-                      &bull;&nbsp;{`${engineCapacity} cc`}
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      color="textSecondary"
-                      variant="body2"
-                      component="span"
-                    >
-                      &bull;&nbsp;{transmission}
-                    </Typography>
-                  </Grid>
-                  {pathname.indexOf('ads') > -1 ||
-                  pathname.indexOf('favorites') > -1 ? (
-                    <>
-                      {/* <Grid item>
+                      <Grid item>
+                        <Typography
+                          color="textSecondary"
+                          variant="body2"
+                          component="span"
+                        >
+                          {modelYear}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography
+                          color="textSecondary"
+                          variant="body2"
+                          component="span"
+                        >
+                          &bull;&nbsp;{milage?.toLocaleString() + ' KM'}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography
+                          color="textSecondary"
+                          variant="body2"
+                          component="span"
+                        >
+                          &bull;&nbsp;{engineType}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography
+                          color="textSecondary"
+                          variant="body2"
+                          component="span"
+                        >
+                          &bull;&nbsp;{`${engineCapacity} cc`}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography
+                          color="textSecondary"
+                          variant="body2"
+                          component="span"
+                        >
+                          &bull;&nbsp;{transmission}
+                        </Typography>
+                      </Grid>
+                      {pathname.indexOf('ads') > -1 ||
+                      pathname.indexOf('favorites') > -1 ? (
+                        <>
+                          {/* <Grid item>
                         <Typography
                           color="textSecondary"
                           variant="body2"
@@ -253,40 +291,41 @@ const ListingCard: React.FC<ListingCardProps> = ({
                           &bull;&nbsp;{isSold ? SOLD : UNSOLD}
                         </Typography>
                       </Grid> */}
-                      {pathname.indexOf('ads') > -1 && (
-                        <Grid item>
-                          <Typography
-                            color="textSecondary"
-                            variant="body2"
-                            component="span"
-                          >
-                            &bull;&nbsp;{active ? ACTIVE : INACTIVE}
+                          {pathname.indexOf('ads') > -1 && (
+                            <Grid item>
+                              <Typography
+                                color="textSecondary"
+                                variant="body2"
+                                component="span"
+                              >
+                                &bull;&nbsp;{active ? ACTIVE : INACTIVE}
+                              </Typography>
+                            </Grid>
+                          )}
+                        </>
+                      ) : null}
+                    </Grid>
+                    <Grid item xs={12}>
+                      <div className={location}>
+                        <span>
+                          <img src={LocationIcon} alt={city} />
+                          <Typography variant="subtitle2">{city}</Typography>
+                        </span>
+                        <span>
+                          <Typography variant="subtitle2">
+                            {moment(updatedAt).fromNow()}
                           </Typography>
-                        </Grid>
-                      )}
-                    </>
-                  ) : null}
-                </Grid>
-                <Grid item xs={12}>
-                  <div className={location}>
-                    <span>
-                      <img src={LocationIcon} alt={city} />
-                      <Typography variant="subtitle2">{city}</Typography>
-                    </span>
-                    <span>
-                      <Typography variant="subtitle2">
-                        {moment(updatedAt).fromNow()}
-                      </Typography>
-                    </span>
-                  </div>
-                </Grid>
+                        </span>
+                      </div>
+                    </Grid>
+                  </Grid>
+                </CardContent>
               </Grid>
-            </CardContent>
-          </Grid>
-        </Grid>
-      </Card>
-    </Paper>
-   </>
+            </Grid>
+          </Card>
+        </ConditionalLink>
+      </Paper>
+    </>
   );
 };
 

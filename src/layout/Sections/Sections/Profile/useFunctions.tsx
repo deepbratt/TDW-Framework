@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateUserData } from '../../../../redux/reducers/authSlice';
+import { updateToken, updateUserData } from '../../../../redux/reducers/authSlice';
 import { getAllData } from '../../../../Utils/API/API';
-import { API_ENDPOINTS } from '../../../../Utils/API/endpoints';
 import {
   updateUser,
   accountVerify,
@@ -124,7 +123,7 @@ const Actions = () => {
       });
   };
 
-  const changePassword = async (url: string, data: any) => {
+  const changePassword = async (url: string, data: any, setVal : React.Dispatch<React.SetStateAction<any>>) => {
     setIsLoading(true);
 
     await updateUser(url, {
@@ -137,6 +136,12 @@ const Actions = () => {
         if (response.status === 'success') {
           console.log(response);
           setOpen(true);
+          dispatch(updateToken(response.token));
+          let temp = data
+          temp.currentPassword = ""
+          temp.newPassword = ""
+          temp.confirmPassword = ""
+          setVal(temp)
           setResponseMessage({
             status: 'success',
             message: response.message

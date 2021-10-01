@@ -190,13 +190,16 @@ export const useStyles = makeStyles(() => ({
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    padding:"10px",
     alignItems: 'center',
     flexDirection: 'column',
+    background:"rgba(0,0,0,0.75)",
+    // overflowY:"auto"
   },
   fullScreenImageStyle:{
     display: 'flex',
     alignItems: 'center',
-    marginBottom:"5px"
+    marginBottom:"5px",
   },
 }));

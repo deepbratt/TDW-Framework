@@ -426,8 +426,8 @@ const useAddEditCar = () => {
     fd.append('city', formData.city);
     fd.append('province', formData.province);
     fd.append('location.address', formData.location.address);
-    fd.append('location.coordinates.lat', formData.location.coordinate.lat);
-    fd.append('location.coordinates.long', formData.location.coordinate.long);
+    fd.append('location.coordinates[0]', formData.location.coordinate.long);
+    fd.append('location.coordinates[1]', formData.location.coordinate.lat);
     let StringUrls = 0;
     for (let i = 0; i < formData.images.length; i++) {
       if (typeof formData.images[i] === typeof 'string') {

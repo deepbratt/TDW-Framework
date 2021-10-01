@@ -1,4 +1,5 @@
-import { Grid, Typography } from "@material-ui/core";
+import  Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import CustomTitle from "../CustomTitle/CustomTitle";
 import useStyles from "./useStyles";
 import { IProp} from "../../Utils/interfaces/banner.interface";

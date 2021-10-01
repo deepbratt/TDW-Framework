@@ -1,4 +1,7 @@
-import { Drawer, Typography, List, ListItem } from "@material-ui/core";
+import Drawer from "@material-ui/core/Drawer"
+import Typography from "@material-ui/core/Typography"
+import List from "@material-ui/core/List"
+import ListItem from "@material-ui/core/ListItem"
 import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
@@ -16,7 +19,6 @@ const SideBar = ({ sidebar, Title }: IProps) => {
     drawerHeader,
     closeIcon,
     container,
-    icon,
     content,
     heading,
     link,

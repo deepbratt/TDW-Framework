@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Colors } from '../../Utils/constants/colors/colors';
 const { carminePink, white, greyFour, blueOne, spanishGrey, black, lightBlue } =
   Colors;

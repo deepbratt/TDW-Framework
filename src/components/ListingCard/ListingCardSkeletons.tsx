@@ -1,14 +1,15 @@
-import { Grid, Card } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
+import Card from '@material-ui/core/Card';
+import Grid from '@material-ui/core/Grid';
+import Skeleton from '@material-ui/lab/Skeleton';
 import ListingCardStyles from './styles';
 
 export interface ListingCardSkeletonsProps {
   layoutType: string;
 }
 
-const ListingCardSkeletons: React.FC<ListingCardSkeletonsProps> = (
-  {layoutType}
-) => {
+const ListingCardSkeletons: React.FC<ListingCardSkeletonsProps> = ({
+  layoutType
+}) => {
   const { root, grid } = ListingCardStyles();
   return (
     <Card className={layoutType === 'list' ? root : grid}>

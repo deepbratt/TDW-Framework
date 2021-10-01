@@ -1,5 +1,4 @@
-import * as React from "react";
-import { Grid } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 import CustomButton from "../../../../components/CustomButton";
 import CustomTitle from "../../../../components/CustomTitle/CustomTitle";
 import SearchSelect from "../../../../components/SearchSelect/SearchSelect";

@@ -1,5 +1,7 @@
 import CarDetail from '../../layout/Sections/Sections/CarDetail/CarDetail';
-import { Grid, Hidden, Paper } from '@material-ui/core';
+import Grid from "@material-ui/core/Grid"
+import Hidden from "@material-ui/core/Hidden"
+import Paper from "@material-ui/core/Paper"
 import {
   rating,
   mainButton,

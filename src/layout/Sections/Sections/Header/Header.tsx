@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import { useStyles } from './useStyles';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Grid,
-  ListItem,
-  List,
-  Toolbar,
-  AppBar,
-  Typography,
-  Hidden,
-  Menu,
-  MenuItem,
-  IconButton,
-  InputAdornment,
-  Button
-} from '@material-ui/core';
+import Grid from "@material-ui/core/Grid"
+import ListItem from "@material-ui/core/ListItem"
+import List from "@material-ui/core/List"
+import Toolbar from "@material-ui/core/Toolbar"
+import AppBar from "@material-ui/core/AppBar"
+import Typography from "@material-ui/core/Typography"
+import Menu from "@material-ui/core/Menu"
+import MenuItem from "@material-ui/core/MenuItem"
+import IconButton from "@material-ui/core/IconButton"
+import InputAdornment from "@material-ui/core/InputAdornment"
+import Button from "@material-ui/core/Button"
+import Hidden from "@material-ui/core/Hidden"
 import { NavLink } from 'react-router-dom';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import SideBar from './Sidebar/Sidebar';
@@ -46,7 +44,7 @@ const HeaderContext = () => {
     inputRoot,
     input
   } = useStyles();
-  const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
+  const { isLoggedIn} = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);

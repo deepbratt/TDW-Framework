@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import {
-  Table,
-  Typography,
-  TableContainer,
-  TableBody,
-  Collapse
-} from '@material-ui/core';
+import { useState } from 'react';
+import Table from '@material-ui/core/Table';
+import Collapse from '@material-ui/core/Collapse';
+import TableBody from '@material-ui/core/TableBody';
+import TableContainer from '@material-ui/core/TableContainer';
+import Typography from '@material-ui/core/Typography';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CustomButton from '../../../../components/CustomButton';
 import { useStyles } from './useStyles';

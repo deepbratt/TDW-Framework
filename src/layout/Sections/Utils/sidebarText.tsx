@@ -1,18 +1,11 @@
-import icon1 from '../assets/Profile/icon1.png';
-import icon2 from '../assets/Profile/icon2.png';
-import icon3 from '../assets/Profile/icon3.png';
-import icon4 from '../assets/Profile/icon4.png';
-import icon5 from '../assets/Profile/icon5.png';
-import icon6 from '../assets/Profile/icon6.png';
-import icon7 from '../assets/Profile/icon7.png';
-import icon8 from '../assets/Profile/icon8.png';
-import { Colors } from '../../../Utils/constants/colors/colors';
 import profileIcon from '../assets/Profile/profile 1.png';
 // import helpIcon from "../assets/Profile/customer-service.png"
 import helpIcon from '../assets/Profile/customer-service.png';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { Commute, Compare, Favorite, Help } from '@material-ui/icons';
-
+import Commute from '@material-ui/icons/Commute';
+import Compare from '@material-ui/icons/Compare';
+import Favorite from '@material-ui/icons/Favorite';
+import Help from '@material-ui/icons/Help';
 export const Title = 'DashBoard';
 export const profileTitle = 'Personal Information';
 export const buttonText = 'Save';

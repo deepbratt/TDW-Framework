@@ -1,18 +1,15 @@
-import { Link, useHistory, useLocation } from 'react-router-dom';
-import {
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-  Paper,
-  IconButton
-} from '@material-ui/core';
+import { useHistory, useLocation } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
 import {
   ACTIVE,
   INACTIVE,
   SOLD,
-  UNSOLD
 } from '../../Utils/constants/language/en/buttonLabels';
 import { Colors } from '../../Utils/constants/colors/colors';
 import ConvertDate from '../convertDate';

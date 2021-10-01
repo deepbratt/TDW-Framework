@@ -1,11 +1,8 @@
 import React from 'react';
-import {
-  Typography,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  AccordionProps
-} from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Accordion, {AccordionProps} from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AccordionStyles from './styles';
 

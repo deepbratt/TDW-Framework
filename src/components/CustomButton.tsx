@@ -1,8 +1,4 @@
-import {
-  Button as MuiButton,
-  ButtonProps,
-  Typography
-} from '@material-ui/core';
+import Button, {ButtonProps} from '@material-ui/core/Button';
 import Breakpoints from '../Utils/Breakpoints';
 import useStyles from '../components/CustomTitle/style';
 
@@ -29,7 +25,7 @@ function CustomButton({
 }: IButtonProps) {
   const { btn } = useStyles();
   return (
-    <MuiButton
+    <Button
       onClick={handleClick}
       size={size ? size : Breakpoints()}
       className={styles ? styles : btn}
@@ -40,7 +36,7 @@ function CustomButton({
       {...rest}
     >
       {children}
-    </MuiButton>
+    </Button>
   );
 }
 

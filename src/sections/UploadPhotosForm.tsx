@@ -1,11 +1,9 @@
-import {
-  Button,
-  createStyles,
-  Grid,
-  makeStyles,
-  Theme,
-  Typography,
-} from "@material-ui/core";
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import createStyles from '@material-ui/core/styles/createStyles';
+import {Theme} from '@material-ui/core/styles/createTheme';
 import { useState } from "react";
 import UploadPicIcon from "../assets/icons/uploadPicIcon.png";
 import InformationDialog from "../components/InformationDialog";

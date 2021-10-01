@@ -1,10 +1,8 @@
-import {
-  createStyles,
-  Theme,
-  Typography,
-} from "@material-ui/core";
+import createStyles from "@material-ui/core/styles/createStyles";
+import Typography from "@material-ui/core/Typography";
+import { Theme } from "@material-ui/core/styles/createTheme";
 import clsx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import Arrow1 from "../assets/icons/arrow1.png";
 import Arrow2 from "../assets/icons/arrow2.png";
 import Arrow3 from "../assets/icons/arrow3.png";

@@ -1,4 +1,7 @@
-import { Grid, InputLabel, MenuItem, Select } from '@material-ui/core';
+import Grid from "@material-ui/core/Grid"
+import InputLabel from "@material-ui/core/InputLabel"
+import MenuItem from "@material-ui/core/MenuItem"
+import Select from "@material-ui/core/Select"
 import { Colors } from '../../../Utils/color.constants';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CustomButton from '../../../../../components/CustomButton';

@@ -1,4 +1,7 @@
-import { Grid, Typography, Hidden, Paper } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Hidden from '@material-ui/core/Hidden';
+import Paper from '@material-ui/core/Paper';
 import { useStyles } from './useStyles';
 import CarListing from '../../../../components/ListingCard/';
 import { useEffect } from 'react';

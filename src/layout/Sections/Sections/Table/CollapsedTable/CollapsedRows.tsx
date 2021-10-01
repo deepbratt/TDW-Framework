@@ -1,5 +1,7 @@
-import { TableRow, TableCell } from '@material-ui/core';
-import { CheckCircleOutline, HighlightOff } from '@material-ui/icons';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
+import HighlightOff from '@material-ui/icons/HighlightOff';
 import { useStyles } from '../useStyles';
 
 const TableRows = ({ items, array }: any) => {

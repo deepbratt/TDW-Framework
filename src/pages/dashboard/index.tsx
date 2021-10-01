@@ -1,4 +1,3 @@
-import { Typography } from "@material-ui/core";
 import { useEffect } from "react";
 import { useLocation } from "react-router";
 import Section from "../../components"

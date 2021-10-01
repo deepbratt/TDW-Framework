@@ -1,4 +1,6 @@
-import { Button, Grid, Typography } from '@material-ui/core';
+import  Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import useAddEditCar from './useAddEditCar';
 import addEditCarData from '../../Utils/constants/language/en/addEditCarData';
 import CustomStepper from '../../components/CustomStepper';
@@ -10,7 +12,8 @@ import { Colors } from '../../Utils/constants/colors/colors';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import InformationDialog from '../../components/InformationDialog';
-import { Delete, Help } from '@material-ui/icons';
+import Help from '@material-ui/icons/Help';
+import Delete from '@material-ui/icons/Delete';
 
 const AddEditCar = () => {
   const {

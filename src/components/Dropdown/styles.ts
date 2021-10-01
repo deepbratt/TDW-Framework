@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 const LayoutStyle = makeStyles((theme) => ({
   root: {},
   input: {

@@ -1,5 +1,6 @@
 import Table from './Table';
-import { Grid, Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import  Grid from '@material-ui/core/Grid';
 import {
   Title,
   moreBtn,
@@ -14,7 +15,7 @@ import InputField from '../../../../components/InputField';
 import Banner from './Banner';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { Autocomplete } from '@material-ui/lab';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 interface IData {
   data?: ICarCard[];

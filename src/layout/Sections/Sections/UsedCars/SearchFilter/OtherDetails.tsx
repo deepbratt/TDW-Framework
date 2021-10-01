@@ -1,10 +1,8 @@
-import {
-  Grid,
-  Typography,
-  InputLabel,
-  MenuItem,
-  Select
-} from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import useStyles from './useStyles';
 import { Colors } from '../../../Utils/color.constants';
 import {
@@ -15,7 +13,6 @@ import {
   assembly,
   transmission
 } from '../../../Utils/usedCarsContent';
-import { Options } from '../../../Utils/types';
 const OtherDetailContext = ({ moreOp, handleMoreChange }: any) => {
   
   const { detailGrid, text, select } = useStyles();

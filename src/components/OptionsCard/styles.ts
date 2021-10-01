@@ -1,4 +1,5 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { Theme } from "@material-ui/core/styles/createTheme";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import { Colors } from "../../Utils/constants/colors/colors";
 
 export interface OptionsCardStylesProps {

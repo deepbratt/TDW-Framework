@@ -3,13 +3,12 @@ import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import Toast from '../../components/Toast';
 import { routes, paths } from '../../routes/paths';
-import {
-  Grid,
-  LinearProgress,
-  Typography,
-  Card,
-  Button
-} from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import Button from '@material-ui/core/Button';
+
 import InputField from '../../components/InputField';
 import { fieldNames } from '../../Utils/constants/formsConstants';
 import {

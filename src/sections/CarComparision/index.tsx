@@ -1,4 +1,5 @@
-import { Card, CardActions } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
 import { useHistory } from 'react-router';
 import CustomButton from '../../components/CustomButton';
 import { paths } from '../../routes/paths';

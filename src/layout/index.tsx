@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import Header from './Sections/Sections/Header/Header';
 import Footer from '../sections/Footer';
 import { FooterData } from '../Utils/constants/language/en/footerData';

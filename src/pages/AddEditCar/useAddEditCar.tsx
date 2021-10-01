@@ -14,7 +14,6 @@ import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import Sizes from '../../Utils/themeConstants';
 import { NEED_ASSISTANCE } from '../../Utils/constants/language/en/addEditCarTexts';
 import { paths } from '../../routes/paths';
-import {paths as dashboardPath} from '../../layout/Sections/Utils/sidebarText'
 
 const formReducer = (state: any, event: any) => {
   return {

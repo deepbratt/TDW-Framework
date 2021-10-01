@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setLayout } from "../../redux/reducers/layoutSlice";
-import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab";
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import ToggleButton from "@material-ui/lab/ToggleButton";
 import ViewListRoundedIcon from "@material-ui/icons/ViewListRounded";
 import ViewModuleRoundedIcon from "@material-ui/icons/ViewModuleRounded";
 import { RootState } from "../../redux/store";

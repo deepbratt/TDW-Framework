@@ -1,4 +1,4 @@
-import { Snackbar } from "@material-ui/core";
+import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 interface IProp {
   open: boolean;

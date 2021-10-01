@@ -1,5 +1,4 @@
-import { Button } from '@material-ui/core';
-import { createPortal } from 'react-dom';
+import Button from '@material-ui/core/Button';
 
 interface DrawBtnProps {
   draw: boolean;
@@ -9,7 +8,7 @@ interface DrawBtnProps {
 
 const DrawBtn = ({ draw, setDraw, position }: DrawBtnProps) => {
   // const mapContext = position[MAP]
-  const controlDiv = document.createElement('div');
+  // const controlDiv = document.createElement('div');
   return (
     <Button
       onClick={() => setDraw(!draw)}

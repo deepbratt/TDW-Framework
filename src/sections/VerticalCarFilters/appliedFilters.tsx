@@ -8,7 +8,8 @@ const AppliedFiltersStyles = makeStyles((theme) => ({
   root: {
     borderRadius: '5px',
     backgroundColor: Colors.lightGrey,
-    border: `0.2px solid ${theme.palette.common.black}`
+    border: `0.2px solid ${theme.palette.common.black}`,
+    marginTop: "10px"
   },
   icon: {
     color: theme.palette.common.black

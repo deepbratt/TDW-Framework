@@ -27,12 +27,12 @@ import {
   sortingOptions
 } from '../../Utils/constants/language/en/filtersData';
 import {
-  APPLY_FILTERS,
   SHORTLIST_ITEMS,
   COMPARE,
   CANT_FIND_RESULT,
   CHOOSE_CARS_TO_COMPARE,
-  RESET
+  RESET,
+  CLOSE
 } from '../../Utils/constants/language/en/buttonLabels';
 import FullScreenDialog from '../../components/DialogBox/FullScreenDialog';
 import { useForm } from './useForm';
@@ -251,6 +251,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                   title="Filters"
                   open={open}
                   handleClose={handleClose}
+                  buttonLabel={RESET}
+                  buttonAction={() => resetForm()}
                 >
                   <CarFilters filterProps={filtersProps} />
                 </FullScreenDialog>
@@ -305,7 +307,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                   </DialogContent>
                   <DialogActions>
                     <Button color="secondary" onClick={toggleDrawer}>
-                      {APPLY_FILTERS}
+                      {CLOSE}
                     </Button>
                   </DialogActions>
                 </SwipeableDrawer>

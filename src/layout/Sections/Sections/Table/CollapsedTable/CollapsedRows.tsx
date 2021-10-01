@@ -3,6 +3,8 @@ import TableCell from '@material-ui/core/TableCell';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import HighlightOff from '@material-ui/icons/HighlightOff';
 import { useStyles } from '../useStyles';
+import TickRight from "../../../../../assets/icons/right-green.png"
+import CrossRed from "../../../../../assets/icons/cross-red.png"
 
 const TableRows = ({ items, array }: any) => {
   const { cell } = useStyles();
@@ -15,16 +17,20 @@ const TableRows = ({ items, array }: any) => {
               </TableCell>
               <TableCell align="left" className={cell}>
                 {items[0].features.indexOf(feature) > -1 ? (
-                  <CheckCircleOutline style={{ color: 'green' }} />
+                  // <CheckCircleOutline style={{ color: 'green' }} />
+                  <img src={TickRight} alt="" width="30px"/>
                 ) : (
-                  <HighlightOff style={{ color: 'red' }} />
+                  // <HighlightOff style={{ color: 'red' }} />
+                  <img src={CrossRed} alt="" width="30px"/>
                 )}
               </TableCell>
               <TableCell align="left" className={cell}>
                 {items[1].features.indexOf(feature) > -1 ? (
-                  <CheckCircleOutline style={{ color: 'green' }} />
+                  // <CheckCircleOutline style={{ color: 'green' }} />
+                  <img src={TickRight} alt="" width="30px"/>
                 ) : (
-                  <HighlightOff style={{ color: 'red' }} />
+                  // <HighlightOff style={{ color: 'red' }} />
+                  <img src={CrossRed} alt="" width="30px"/>
                 )}
               </TableCell>
             </TableRow>

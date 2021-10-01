@@ -22,18 +22,18 @@ jobs:
         run: npm install && npm run build
         env:
          CI: false
-#       - name: Deploy Gzipped CSS files to Development S3 bucket - Prelaunch
-#         if: github.ref == 'refs/heads/prelaunch'
-#         run: aws s3 sync ./build/ s3://dev.tezdealz.com --exclude "*" --include "*.css" --content-type text/css --content-encoding gzip --delete
-#       - name: Deploy Gzipped JS files to Development S3 bucket - Prelaunch
-#         if: github.ref == 'refs/heads/prelaunch'
-#         run: aws s3 sync ./build/ s3://dev.tezdealz.com --exclude "*" --include "*.js" --content-type text/javascript --content-encoding gzip --delete
-#       - name: Deploy remaining files to Development S3 bucket - Prelaunch
-#         if: github.ref == 'refs/heads/prelaunch'
-#         run: aws s3 sync ./build/ s3://dev.tezdealz.com --exclude "*.js" --exclude "*.css" --delete
-      - name: Deploy app build to Development S3 bucket - Prelaunch
+      - name: Deploy Gzipped CSS files to Development S3 bucket - Prelaunch
         if: github.ref == 'refs/heads/prelaunch'
-        run: aws s3 sync ./build/ s3://dev.tezdealz.com --delete
+        run: aws s3 sync ./build/ s3://dev.tezdealz.com --exclude "*" --include "*.css" --content-type text/css --content-encoding gzip --delete
+      - name: Deploy Gzipped JS files to Development S3 bucket - Prelaunch
+        if: github.ref == 'refs/heads/prelaunch'
+        run: aws s3 sync ./build/ s3://dev.tezdealz.com --exclude "*" --include "*.js" --content-type text/javascript --content-encoding gzip --delete
+      - name: Deploy remaining files to Development S3 bucket - Prelaunch
+        if: github.ref == 'refs/heads/prelaunch'
+        run: aws s3 sync ./build/ s3://dev.tezdealz.com --exclude "*.js" --exclude "*.css" --delete
+#       - name: Deploy app build to Development S3 bucket - Prelaunch
+#         if: github.ref == 'refs/heads/prelaunch'
+#         run: aws s3 sync ./build/ s3://dev.tezdealz.com --delete
       - name: Deploy app build to Production S3 bucket
         if: github.ref == 'refs/heads/production'
         run: aws s3 sync ./build/ s3://tezdealz.com --delete

@@ -548,11 +548,47 @@ export const useForm = (validateOnChange = true) => {
 
   const resetForm = () => {
     console.log('reset filters');
-    setValues(initialValues);
-    setAppliedFilters(initialAppliedFiltersValues);
+    setValues({
+      province: [],
+      city: [],
+      registrationCity: [],
+      make: [],
+      model: [],
+      transmission: [],
+      assembly: [],
+      engineType: [],
+      color: [],
+      bodyType: [],
+      pictureAvailability: false,
+      videoAvailability: false,
+      sellerType: [],
+      adType: [],
+      sort: '',
+      condition: ''
+    });
+    setAppliedFilters({
+      province: [],
+      city: [],
+      registrationCity: [],
+      make: [],
+      model: [],
+      transmission: [],
+      assembly: [],
+      engineType: [],
+      color: [],
+      bodyType: [],
+      sellerType: [],
+      adType: []
+    });
     setKeywords('');
-    setRangeValues(initialRangeValues);
+    setRangeValues({
+      priceRange: [0, 50000000],
+      yearRange: [1971, 2021],
+      mileageRange: [0, 500000],
+      engineCapacityRange: [0, 10000]
+    });
     setErrors({});
+    resetFormCALL();
   };
 
   const handleSubmit = () => {
@@ -571,6 +607,12 @@ export const useForm = (validateOnChange = true) => {
     getAllCars();
     // eslint-disable-next-line
   }, [page, appliedFilters]);
+
+  const resetFormCALL = () => {
+    console.log('values', values);
+    console.log('appliedFilters', appliedFilters);
+    // eslint-disable-next-line
+  };
 
   function ItemExists(itemId: string) {
     let newshortListCars = shortListCars;

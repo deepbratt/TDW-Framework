@@ -32,7 +32,8 @@ const RegexInputs = () => {
   const { user } = useSelector((state: RootState) => state.auth);
 
   const onSubmit = (): void => {
-    let data = user.phone !== number ? { phone: number } : { email: val.email };
+    let phone = "+92"+number
+    let data = user.phone !== phone ? { phone: phone } : { email: val.email };
     changeNumberOrEmail(updateMe, data, setChangeToVerification);
   };
 

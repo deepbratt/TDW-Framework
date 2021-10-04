@@ -89,7 +89,7 @@ const ListingCardStyles = makeStyles(() => ({
   favsIconGrid: {
     position: 'absolute',
     right: '5px',
-    top: '215px',
+    top: '315px',
     zIndex:1,
     padding:0,
   },

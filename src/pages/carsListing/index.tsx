@@ -67,7 +67,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
   } = CarListingStyles();
 
   const {
-    values,
     isLoading,
     errors,
     responseData,
@@ -83,8 +82,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     setValues,
     appliedFilters,
     pageCount,
-    removeFilter,
-    removeFilterItem,
     removeRangeFilter,
     keywords,
     shortListItem,
@@ -131,6 +128,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
   };
 
   const { layoutType } = useSelector((state: RootState) => state.layout);
+  const values = useSelector((state: RootState) => state.carFilters.filters);
 
   const filtersProps = {
     handleTextBoxChange,
@@ -139,11 +137,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     handleTextBoxSubmit,
     setValues,
     appliedFilters,
-    removeFilter,
-    removeFilterItem,
     removeRangeFilter,
-    errors,
-    values,
     keywords,
     rangeValues,
     setRangeValues,

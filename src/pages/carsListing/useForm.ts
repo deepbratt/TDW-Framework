@@ -9,6 +9,14 @@ import { RootState } from '../../redux/store';
 import { setShortlistCars } from '../../redux/reducers/shortlistCarsSlice';
 import { emptyQueryParams } from '../../redux/reducers/queryParamsSlice';
 import { extractError } from '../../Utils/helperFunctions';
+import {
+  removeArrayFilter,
+  setArrayFilter,
+  setFilter,
+  resetFilters,
+  removeFilter
+} from '../../redux/reducers/carFiltersSlice';
+// import CarFilters from '../../sections/VerticalCarFilters';
 // import { useParams } from "react-router";
 
 const initialValues: any = {
@@ -48,6 +56,9 @@ export const useForm = (validateOnChange = true) => {
   // const {city} = useParams<any>();
   const routeParams = useSelector(
     (state: RootState) => state.queryParams.queryParams
+  );
+  const carFilters = useSelector(
+    (state: RootState) => state.carFilters.filters
   );
   const {
     ADS,
@@ -412,6 +423,11 @@ export const useForm = (validateOnChange = true) => {
   }, [values.make]);
 
   useEffect(() => {
+    console.log('filters', carFilters);
+    // eslint-disable-next-line
+  }, [carFilters]);
+
+  useEffect(() => {
     return () => {
       dispatch(emptyQueryParams());
     };
@@ -419,18 +435,17 @@ export const useForm = (validateOnChange = true) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
+    let filter = {
+      name: name,
+      value: value
+    };
+    dispatch(setFilter(filter));
     setValues({
       ...values,
       [name]: value
     });
+
     if (validateOnChange) validate({ [name]: value });
-    if (values[name] !== value) {
-      setAppliedFilters((previousFilters: any) => {
-        previousFilters[name] = value;
-        return { ...previousFilters };
-      });
-    }
   };
 
   const handleTextBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -442,32 +457,20 @@ export const useForm = (validateOnChange = true) => {
     e: React.ChangeEvent<HTMLInputElement>,
     filterName: string
   ) => {
-    let temp = values[e.target.name];
+    let filter = {
+      name: e.target.name,
+      value: filterName
+    };
     if (e.target.checked) {
-      temp.push(filterName);
+      dispatch(setArrayFilter(filter));
     } else {
-      temp = temp.filter((item: string) => item !== filterName);
+      dispatch(removeArrayFilter(filter));
     }
-    setValues({ ...values, [e.target.name]: temp });
     if (e.target.name === 'province') {
       getCitiesWithCars();
     }
     if (e.target.name === 'make') {
       getModels();
-    }
-    if (e.target.checked) {
-      setAppliedFilters((previousFilters: any) => {
-        if (!previousFilters[e.target.name].includes(filterName)) {
-          previousFilters[e.target.name].push(filterName);
-        }
-        return { ...previousFilters };
-      });
-    } else {
-      getAllCars();
-    }
-
-    if (!e.target.checked) {
-      removeFilterItem(filterName, e.target.name);
     }
   };
 
@@ -475,21 +478,11 @@ export const useForm = (validateOnChange = true) => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const { name, checked } = e.target;
-
-    setValues({
-      ...values,
-      [name]: checked
-    });
-    if (validateOnChange) validate({ [name]: checked });
-    if (e.target.checked) {
-      setAppliedFilters((previousFilters: any) => {
-        previousFilters[e.target.name] = e.target.checked;
-        return { ...previousFilters };
-      });
-    }
-    if (!e.target.checked) {
-      removeFilter(name);
-    }
+    let filter = {
+      name: name,
+      value: checked
+    };
+    dispatch(setFilter(filter));
   };
 
   const removeRangeFilter = (filterName: string) => {
@@ -501,36 +494,36 @@ export const useForm = (validateOnChange = true) => {
     setRangeValues(tempVal);
   };
 
-  const removeFilterItem = (filterName: string, keys: string) => {
-    let newAppliedFilter = { ...appliedFilters };
-    newAppliedFilter[keys] = appliedFilters[keys].filter(
-      (filter: string) => filter !== filterName
-    );
-    setAppliedFilters(newAppliedFilter);
-    let tempVal: any = values;
-    tempVal[keys] = values[keys].filter(
-      (filter: string) => filter !== filterName
-    );
-    setValues(tempVal);
-    if (keys === 'province') {
-      getCitiesWithCars();
-    }
-    if (keys === 'make') {
-      getModels();
-    }
-  };
+  // const removeFilterItem = (filterName: string, keys: string) => {
+  //   let newAppliedFilter = { ...appliedFilters };
+  //   newAppliedFilter[keys] = appliedFilters[keys].filter(
+  //     (filter: string) => filter !== filterName
+  //   );
+  //   setAppliedFilters(newAppliedFilter);
+  //   let tempVal: any = values;
+  //   tempVal[keys] = values[keys].filter(
+  //     (filter: string) => filter !== filterName
+  //   );
+  //   setValues(tempVal);
+  //   if (keys === 'province') {
+  //     getCitiesWithCars();
+  //   }
+  //   if (keys === 'make') {
+  //     getModels();
+  //   }
+  // };
 
-  const removeFilter = (filterName: string) => {
-    let newAppliedFilter = { ...appliedFilters };
-    delete newAppliedFilter[filterName];
-    setAppliedFilters(newAppliedFilter);
-    let tempVal: any = values;
-    tempVal[filterName] = initialValues[filterName];
-    setValues(tempVal);
-    if (filterName === 'keywords') {
-      setKeywords('');
-    }
-  };
+  // const removeFilter = (filterName: string) => {
+  //   let newAppliedFilter = { ...appliedFilters };
+  //   delete newAppliedFilter[filterName];
+  //   setAppliedFilters(newAppliedFilter);
+  //   let tempVal: any = values;
+  //   tempVal[filterName] = initialValues[filterName];
+  //   setValues(tempVal);
+  //   if (filterName === 'keywords') {
+  //     setKeywords('');
+  //   }
+  // };
 
   const resetForm = () => {
     console.log('reset filters');
@@ -575,6 +568,7 @@ export const useForm = (validateOnChange = true) => {
     });
     setErrors({});
     resetFormCALL();
+    dispatch(resetFilters());
   };
 
   const handleSubmit = () => {
@@ -660,8 +654,6 @@ export const useForm = (validateOnChange = true) => {
     handleTextBoxChange,
     handleTextBoxSubmit,
     appliedFilters,
-    removeFilter,
-    removeFilterItem,
     removeRangeFilter,
     resetForm,
     validate,

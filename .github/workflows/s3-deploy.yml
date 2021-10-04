@@ -23,7 +23,7 @@ jobs:
          CI: false
       - name: Deploy app build to Development S3 bucket
         if: github.ref == 'refs/heads/develop'
-        run: aws s3 sync ./build/ s3://dev.tezdealz.com --delete
+        run: aws s3 sync ./build/ s3://dev.carokta.com --delete
       - name: Deploy app build to Production S3 bucket
         if: github.ref == 'refs/heads/production'
-        run: aws s3 sync ./build/ s3://tezdealz.com --delete
+        run: aws s3 sync ./build/ s3://carokta.com --delete

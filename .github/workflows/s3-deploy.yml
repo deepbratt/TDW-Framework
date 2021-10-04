@@ -3,8 +3,8 @@ name: s3-depl
 on:
   push:
     branches:
-      - develop
-      - production
+      - prelaunch
+#       - production
 
 jobs:
   build:
@@ -22,10 +22,10 @@ jobs:
         env:
          CI: false
       - name: Deploy app build to Development S3 bucket
-        if: github.ref == 'refs/heads/develop'
+        if: github.ref == 'refs/heads/prelaunch'
         run: aws s3 sync ./build/ s3://dev.carokta.com --delete
       - name: cache clear  
         run:  aws cloudfront create-invalidation --distribution-id "E14GK8241BCUI1" --paths "/*"
-      - name: Deploy app build to Production S3 bucket
-        if: github.ref == 'refs/heads/production'
-        run: aws s3 sync ./build/ s3://carokta.com --delete
+#       - name: Deploy app build to Production S3 bucket
+#         if: github.ref == 'refs/heads/production'
+#         run: aws s3 sync ./build/ s3://carokta.com --delete

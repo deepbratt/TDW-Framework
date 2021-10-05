@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getKeyValue } from '../../Utils/helperFunctions';
 
 export interface IInitialState {
   filters: any;
@@ -19,12 +20,11 @@ export interface IInitialState {
   // adType: [];
   // sort: string;
   // condition: string;
-  // priceRange: number[];
-  // yearRange: number[];
-  // mileageRange: number[];
-  // engineCapacityRange: number[];
+  // price: number[];
+  // modelYear: number[];
+  // milage: number[];
+  // engineCapacity: number[];
   // };
-  appliedFilters: any[];
 }
 
 const initialState: IInitialState = {
@@ -37,20 +37,18 @@ const initialState: IInitialState = {
     transmission: [],
     assembly: [],
     engineType: [],
-    color: [],
+    bodyColor: [],
     bodyType: [],
-    pictureAvailability: false,
-    videoAvailability: false,
     sellerType: [],
     adType: [],
     sort: '',
     condition: '',
-    priceRange: [0, 50000000],
-    yearRange: [1971, 2021],
-    mileageRange: [0, 500000],
-    engineCapacityRange: [0, 10000]
-  },
-  appliedFilters: []
+    keyword: '',
+    price: [0, 50000000],
+    modelYear: [1971, 2021],
+    milage: [0, 500000],
+    engineCapacity: [0, 10000]
+  }
 };
 
 const carFiltersSlice = createSlice({
@@ -67,10 +65,9 @@ const carFiltersSlice = createSlice({
       ];
     },
     setFilters: (state, actions) => {
-      state.filters = actions.payload;
-    },
-    setAppliedFilters: (state, actions) => {
-      state.appliedFilters = actions.payload;
+      Object.entries(actions.payload).map(([keys, values]: any) => {
+        state.filters[keys] = values;
+      });
     },
     removeArrayFilter: (state, actions) => {
       state.filters[actions.payload.name] = state.filters[
@@ -78,8 +75,7 @@ const carFiltersSlice = createSlice({
       ].filter((item: string) => item !== actions.payload.value);
     },
     removeFilter: (state, actions) => {
-      state.filters[actions.payload] =
-        initialState[actions.payload as keyof IInitialState];
+      state.filters[actions.payload.name] = actions.payload.value;
     },
     resetFilters: (state) => {
       state.filters = {
@@ -91,18 +87,17 @@ const carFiltersSlice = createSlice({
         transmission: [],
         assembly: [],
         engineType: [],
-        color: [],
+        bodyColor: [],
         bodyType: [],
-        pictureAvailability: false,
-        videoAvailability: false,
         sellerType: [],
         adType: [],
         sort: '',
         condition: '',
-        priceRange: [0, 50000000],
-        yearRange: [1971, 2021],
-        mileageRange: [0, 500000],
-        engineCapacityRange: [0, 10000]
+        keyword: '',
+        price: [0, 50000000],
+        modelYear: [1971, 2021],
+        milage: [0, 500000],
+        engineCapacity: [0, 10000]
       };
     }
   }
@@ -112,7 +107,6 @@ export const {
   setFilter,
   setArrayFilter,
   setFilters,
-  setAppliedFilters,
   removeFilter,
   removeArrayFilter,
   resetFilters

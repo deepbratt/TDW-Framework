@@ -39,7 +39,7 @@ export const fieldNames = {
   transmission: 'transmission',
   assembly: 'assembly',
   engineType: 'engineType',
-  color: 'color',
+  color: 'bodyColor',
   bodyType: 'bodyType',
   sellerType: 'sellerType',
   cars: 'cars'

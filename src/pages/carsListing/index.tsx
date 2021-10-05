@@ -68,7 +68,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
 
   const {
     isLoading,
-    errors,
     responseData,
     handleInputChange,
     page,
@@ -79,8 +78,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     handleCheckboxChange,
     handleSingleCheckBoxChange,
     handleTextBoxSubmit,
-    setValues,
-    appliedFilters,
     pageCount,
     removeRangeFilter,
     keywords,
@@ -135,8 +132,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     handleCheckboxChange,
     handleSingleCheckBoxChange,
     handleTextBoxSubmit,
-    setValues,
-    appliedFilters,
     removeRangeFilter,
     keywords,
     rangeValues,
@@ -308,11 +303,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
             </Hidden>
             <Hidden xsDown>
               <Grid item xs={12}>
-                <HorizontalFilters
-                  values={values}
-                  errors={errors}
-                  handleInputChange={handleInputChange}
-                />
+                <HorizontalFilters handleInputChange={handleInputChange} />
               </Grid>
             </Hidden>
             {isShortlist === true && shortListCars.length >= 1 && (

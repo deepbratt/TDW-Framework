@@ -1,14 +1,13 @@
+import { RootState } from '../../redux/store';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
-// import { setAppliedFilters, setFilter } from "../../redux/reducers/carFiltersSlice";
 import { getAllData } from '../../Utils/API/API';
 import useValidation from '../../Utils/hooks/useValidation';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
-import { RootState } from '../../redux/store';
 import { setShortlistCars } from '../../redux/reducers/shortlistCarsSlice';
 import { emptyQueryParams } from '../../redux/reducers/queryParamsSlice';
-import { extractError } from '../../Utils/helperFunctions';
+import { extractError, getKeyValue } from '../../Utils/helperFunctions';
 import {
   removeArrayFilter,
   setArrayFilter,
@@ -16,8 +15,6 @@ import {
   resetFilters,
   removeFilter
 } from '../../redux/reducers/carFiltersSlice';
-// import CarFilters from '../../sections/VerticalCarFilters';
-// import { useParams } from "react-router";
 
 const initialValues: any = {
   province: [],
@@ -28,21 +25,20 @@ const initialValues: any = {
   transmission: [],
   assembly: [],
   engineType: [],
-  color: [],
+  bodyColor: [],
   bodyType: [],
-  pictureAvailability: false,
-  videoAvailability: false,
   sellerType: [],
   adType: [],
   sort: '',
-  condition: ''
+  condition: '',
+  keyword: ''
 };
 
 const initialRangeValues: any = {
-  priceRange: [0, 50000000],
-  yearRange: [1971, 2021],
-  mileageRange: [0, 500000],
-  engineCapacityRange: [0, 10000]
+  price: [0, 50000000],
+  modelYear: [1971, 2021],
+  milage: [0, 500000],
+  engineCapacity: [0, 10000]
 };
 interface IData {
   data: {
@@ -54,9 +50,6 @@ interface IData {
 export const useForm = (validateOnChange = true) => {
   const dispatch = useDispatch();
   // const {city} = useParams<any>();
-  const routeParams = useSelector(
-    (state: RootState) => state.queryParams.queryParams
-  );
   const carFilters = useSelector(
     (state: RootState) => state.carFilters.filters
   );
@@ -80,52 +73,20 @@ export const useForm = (validateOnChange = true) => {
   const [alertOpen, setAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [pageCount, setPageCount] = useState<number>(1);
-  const [values, setValues] = useState<any>({
-    province: [],
-    city: [],
-    registrationCity: [],
-    make: [],
-    model: [],
-    transmission: [],
-    assembly: [],
-    engineType: [],
-    color: [],
-    bodyType: [],
-    pictureAvailability: false,
-    videoAvailability: false,
-    sellerType: [],
-    adType: [],
-    sort: '',
-    condition: ''
-  });
-
   const [responseData, setResponseData] = useState<IData | null>();
   const [result, setResult] = useState<ICarCard[] | []>([]);
   const [queryParams, setQueryParams] = useState<string>('');
-  const { validate, errors, setErrors } = useValidation(values);
+  const { validate, errors, setErrors } = useValidation(carFilters);
   const shortListCars = useSelector(
     (state: RootState) => state.shortlistCars.shortlistCars
   );
   const [rangeValues, setRangeValues] = useState<any>({
-    priceRange: [0, 50000000],
-    yearRange: [1971, 2021],
-    mileageRange: [0, 500000],
-    engineCapacityRange: [0, 10000]
+    price: [0, 50000000],
+    modelYear: [1971, 2021],
+    milage: [0, 500000],
+    engineCapacity: [0, 10000]
   });
-  const [appliedFilters, setAppliedFilters] = useState<any>({
-    province: [],
-    city: [],
-    registrationCity: [],
-    make: [],
-    model: [],
-    transmission: [],
-    assembly: [],
-    engineType: [],
-    color: [],
-    bodyType: [],
-    sellerType: [],
-    adType: []
-  });
+
   const [responseMessage, setResponseMessage] = useState({
     status: '',
     message: ''
@@ -139,176 +100,32 @@ export const useForm = (validateOnChange = true) => {
     });
   }, [page]);
 
-  useEffect(() => {
-    let newValues = values;
-    let newKeywords = keywords;
-    let newRangeValues = rangeValues;
-    let newAppliedFilters = appliedFilters;
-
-    if ('keywords' in routeParams && routeParams['keywords'].trim() !== '') {
-      newKeywords = routeParams['keywords'];
-      newAppliedFilters['keywords'] = routeParams['keywords'];
-    }
-    if ('priceMin' in routeParams && routeParams['priceMin'] !== '') {
-      newRangeValues.priceRange[0] = routeParams['priceMin'];
-      newAppliedFilters['priceRange'] = newRangeValues.priceRange;
-    }
-    if ('priceMax' in routeParams && routeParams['priceMax'] !== '') {
-      newRangeValues.priceRange[1] = routeParams['priceMax'];
-      newAppliedFilters['priceRange'] = newRangeValues.priceRange;
-    }
-    if ('bodyType' in routeParams && routeParams['bodyType'].length > 0) {
-      newValues.bodyType = routeParams['bodyType'];
-      newAppliedFilters.bodyType = routeParams['bodyType'];
-    }
-    if ('make' in routeParams && routeParams['make'] !== '') {
-      newValues.make = [...newValues.make, routeParams['make']];
-      newAppliedFilters.make = [...newAppliedFilters.make, routeParams['make']];
-    }
-    if ('model' in routeParams && routeParams['model'] !== '') {
-      newValues.model = [...newValues.model, routeParams['model']];
-      newAppliedFilters.model = [
-        ...newAppliedFilters.model,
-        routeParams['model']
-      ];
-    }
-
-    setValues((previousState: any) => {
-      previousState = newValues;
-      return { ...previousState };
-    });
-    setKeywords(newKeywords);
-    setRangeValues(newRangeValues);
-    setAppliedFilters((previousState: any) => {
-      previousState = newAppliedFilters;
-      return { ...previousState };
-    });
-    // dispatch(emptyQueryParams());
-    // eslint-disable-next-line
-  }, [routeParams]);
-
   const handlePageChange = (e: any, value: any) => {
     setPage(value);
   };
 
-  // eslint-disable-next-line
-  function inArray(needle: string, haystack: []) {
-    var length = haystack.length;
-    for (var i = 0; i < length; i++) {
-      if (haystack[i] === needle) return true;
-    }
-    return false;
-  }
-
   const getAllCars = async () => {
     let params = `?limit=9&page=${page.toString()}`;
-    if ('sort' in appliedFilters) {
-      params += '&sort=' + values.sort;
-    }
-    if ('condition' in appliedFilters) {
-      params += '&condition=' + values.condition;
-    }
-    if ('keywords' in appliedFilters) {
-      params += '&keyword=' + keywords;
-    }
-    if ('priceRange' in appliedFilters) {
-      if (rangeValues.priceRange[0] !== 0) {
-        params += '&price[gte]=' + rangeValues.priceRange[0];
+    Object.entries(carFilters).map(([keys, values]: any) => {
+      if (values !== initialValues[keys]) {
+        if (typeof values === typeof [] && !(keys in initialRangeValues)) {
+          values.map((value: string) => {
+            params += `&${keys}=${value}`;
+          });
+        } else if (keys in initialRangeValues) {
+          if (values[0] !== initialRangeValues[keys][0]) {
+            params += `&${keys}[gte]=${values[0]}`;
+          }
+          if (values[1] !== initialRangeValues[keys][1]) {
+            params += `&${keys}[lte]=${values[1]}`;
+          }
+        } else {
+          params += `&${keys}=${values}`;
+        }
       }
-      if (rangeValues.priceRange[1] !== initialRangeValues.priceRange[1]) {
-        params += '&price[lte]=' + rangeValues.priceRange[1];
-      }
-    }
-    if ('yearRange' in appliedFilters) {
-      params += '&modelYear[gte]=' + rangeValues.yearRange[0];
-      if (rangeValues.yearRange[1] !== initialRangeValues.yearRange[1]) {
-        params += '&modelYear[lte]=' + rangeValues.yearRange[1];
-      }
-    }
-    if ('mileageRange' in appliedFilters) {
-      if (rangeValues.mileageRange[0] !== 0) {
-        params += '&milage[gte]=' + rangeValues.mileageRange[0];
-      }
-      if (rangeValues.mileageRange[1] !== initialRangeValues.mileageRange[1]) {
-        params += '&milage[lte]=' + rangeValues.mileageRange[1];
-      }
-    }
-    if ('engineCapacityRange' in appliedFilters) {
-      if (
-        rangeValues.engineCapacityRange[0] !==
-        initialRangeValues.engineCapacityRange[0]
-      ) {
-        params += '&engineCapacity[gte]=' + rangeValues.engineCapacityRange[0];
-      }
-      if (
-        rangeValues.engineCapacityRange[1] !==
-        initialRangeValues.engineCapacityRange[1]
-      ) {
-        params += '&engineCapacity[lte]=' + rangeValues.engineCapacityRange[1];
-      }
-    }
-    if (values.province !== []) {
-      values.province.map((item: string) => {
-        params += '&province=' + item;
-      });
-    }
-    if (values.city !== []) {
-      values.city.map((item: string) => {
-        params += '&city=' + item;
-      });
-    }
-    if (values.registrationCity !== []) {
-      values.registrationCity.map((item: string) => {
-        params += '&registrationCity=' + item;
-      });
-    }
-    if (values.make !== []) {
-      values.make.map((item: string) => {
-        params += '&make=' + item;
-      });
-    }
-    if (values.model !== []) {
-      values.model.map((item: string) => {
-        params += '&model=' + item;
-      });
-    }
-    if (values.transmission !== []) {
-      values.transmission.map((item: string) => {
-        params += '&transmission=' + item;
-      });
-    }
-    if (values.engineType !== []) {
-      values.engineType.map((item: string) => {
-        params += '&engineType=' + item;
-      });
-    }
-    if (values.assembly !== []) {
-      values.assembly.map((item: string) => {
-        params += '&assembly=' + item;
-      });
-    }
-    if (values.color !== []) {
-      values.color.map((item: string) => {
-        params += '&bodyColor=' + item;
-      });
-    }
-    if (values.bodyType !== []) {
-      values.bodyType.map((item: string) => {
-        params += '&bodyType=' + item;
-      });
-    }
-    if (values.sellerType !== []) {
-      values.sellerType.map((item: string) => {
-        params += '&sellerType=' + item;
-      });
-    }
-    // * Not being used right now
-    // if (values.pictureAvailability === true) {
-    //   params += '&imageStatus=' + values.pictureAvailability;
-    // }
-    // if(appliedFilters.indexOf("videoAvailability") > -1) {
-    //   params+="&videoAvailability="+values.videoAvailability
-    // }
+    });
+
+    console.log('queryparams', params);
     setQueryParams(params);
     await getAllData(ADS + CARS + params)
       .then((response) => {
@@ -342,8 +159,8 @@ export const useForm = (validateOnChange = true) => {
 
   const getCitiesWithCars = async () => {
     let param = '?';
-    if (values.province !== []) {
-      values.province.map((item: string) => {
+    if (carFilters.province !== []) {
+      carFilters.province.map((item: string) => {
         param += '&province=' + item;
       });
     }
@@ -393,8 +210,8 @@ export const useForm = (validateOnChange = true) => {
 
   const getModels = async () => {
     let param = '?';
-    if (values.make !== []) {
-      values.make.map((item: any) => {
+    if (carFilters.make !== []) {
+      carFilters.make.map((item: any) => {
         let selectedMake: any = makes.filter((make: any) => make.name === item);
         if (selectedMake.length > 0) {
           param += '&make_id=' + selectedMake[0].make_id;
@@ -420,12 +237,7 @@ export const useForm = (validateOnChange = true) => {
   useEffect(() => {
     getModels();
     // eslint-disable-next-line
-  }, [values.make]);
-
-  useEffect(() => {
-    console.log('filters', carFilters);
-    // eslint-disable-next-line
-  }, [carFilters]);
+  }, [carFilters.make]);
 
   useEffect(() => {
     return () => {
@@ -440,11 +252,6 @@ export const useForm = (validateOnChange = true) => {
       value: value
     };
     dispatch(setFilter(filter));
-    setValues({
-      ...values,
-      [name]: value
-    });
-
     if (validateOnChange) validate({ [name]: value });
   };
 
@@ -486,88 +293,24 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const removeRangeFilter = (filterName: string) => {
-    let newAppliedFilter = { ...appliedFilters };
-    delete newAppliedFilter[filterName];
-    setAppliedFilters(newAppliedFilter);
     let tempVal: any = rangeValues;
     tempVal[filterName] = initialRangeValues[filterName];
     setRangeValues(tempVal);
+    dispatch(
+      removeFilter({ name: filterName, value: initialRangeValues[filterName] })
+    );
   };
-
-  // const removeFilterItem = (filterName: string, keys: string) => {
-  //   let newAppliedFilter = { ...appliedFilters };
-  //   newAppliedFilter[keys] = appliedFilters[keys].filter(
-  //     (filter: string) => filter !== filterName
-  //   );
-  //   setAppliedFilters(newAppliedFilter);
-  //   let tempVal: any = values;
-  //   tempVal[keys] = values[keys].filter(
-  //     (filter: string) => filter !== filterName
-  //   );
-  //   setValues(tempVal);
-  //   if (keys === 'province') {
-  //     getCitiesWithCars();
-  //   }
-  //   if (keys === 'make') {
-  //     getModels();
-  //   }
-  // };
-
-  // const removeFilter = (filterName: string) => {
-  //   let newAppliedFilter = { ...appliedFilters };
-  //   delete newAppliedFilter[filterName];
-  //   setAppliedFilters(newAppliedFilter);
-  //   let tempVal: any = values;
-  //   tempVal[filterName] = initialValues[filterName];
-  //   setValues(tempVal);
-  //   if (filterName === 'keywords') {
-  //     setKeywords('');
-  //   }
-  // };
 
   const resetForm = () => {
     console.log('reset filters');
-    setValues({
-      province: [],
-      city: [],
-      registrationCity: [],
-      make: [],
-      model: [],
-      transmission: [],
-      assembly: [],
-      engineType: [],
-      color: [],
-      bodyType: [],
-      pictureAvailability: false,
-      videoAvailability: false,
-      sellerType: [],
-      adType: [],
-      sort: '',
-      condition: ''
-    });
-    setAppliedFilters({
-      province: [],
-      city: [],
-      registrationCity: [],
-      make: [],
-      model: [],
-      transmission: [],
-      assembly: [],
-      engineType: [],
-      color: [],
-      bodyType: [],
-      sellerType: [],
-      adType: []
-    });
     setKeywords('');
     setRangeValues({
-      priceRange: [0, 50000000],
-      yearRange: [1971, 2021],
-      mileageRange: [0, 500000],
-      engineCapacityRange: [0, 10000]
+      price: [0, 50000000],
+      modelYear: [1971, 2021],
+      milage: [0, 500000],
+      engineCapacity: [0, 10000]
     });
     setErrors({});
-    resetFormCALL();
     dispatch(resetFilters());
   };
 
@@ -576,23 +319,19 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const handleTextBoxSubmit = (name: any) => {
-    setAppliedFilters((previousFilters: any) => {
-      previousFilters[name] = rangeValues[name];
-      return { ...previousFilters };
-    });
+    let filter = {
+      name: name,
+      value: getKeyValue(rangeValues)(name)
+    };
+    dispatch(setFilter(filter));
   };
 
   useEffect(() => {
+    console.log('filters', carFilters);
     setIsLoading(true);
     getAllCars();
     // eslint-disable-next-line
-  }, [page, appliedFilters]);
-
-  const resetFormCALL = () => {
-    console.log('values', values);
-    console.log('appliedFilters', appliedFilters);
-    // eslint-disable-next-line
-  };
+  }, [page, carFilters]);
 
   function ItemExists(itemId: string) {
     let newshortListCars = shortListCars;
@@ -638,8 +377,6 @@ export const useForm = (validateOnChange = true) => {
   };
 
   return {
-    values,
-    setValues,
     errors,
     setErrors,
     page,
@@ -653,7 +390,6 @@ export const useForm = (validateOnChange = true) => {
     handleSingleCheckBoxChange,
     handleTextBoxChange,
     handleTextBoxSubmit,
-    appliedFilters,
     removeRangeFilter,
     resetForm,
     validate,

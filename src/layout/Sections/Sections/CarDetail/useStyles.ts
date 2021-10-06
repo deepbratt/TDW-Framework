@@ -73,10 +73,12 @@ export const useStyles = makeStyles(() => ({
       width: '20%'
     },
     '& .carousel.carousel-slider .control-arrow': {
-      // background: white,
-      // height: '13%',
-      // top: '180px',
-      // borderRadius: '50px',
+      background: "black",
+      height: '50px',
+      width:"50px",
+      top: '50%',
+      transform:"translateY(-50%)",
+      borderRadius: '50px',
       // padding: '5px 15px 5px 15px',
       opacity: 0.5,
       '&:hover': {

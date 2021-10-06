@@ -18,13 +18,12 @@ import ZoomIn from '@material-ui/icons/ZoomIn';
 import ZoomOut from '@material-ui/icons/ZoomOut';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
-import { Box, Tabs, Typography } from '@material-ui/core';
-// import Lightbox from 'react-image-lightbox';
-// import 'react-image-lightbox/style.css';
+import { Box, Tab, Tabs, Typography } from '@material-ui/core';
 
-import Lightbox from 'react-awesome-lightbox';
+// import Lightbox from 'react-awesome-lightbox';
+import FullScreenImage from '../../../../components/FullScreenImageJS/FullScreenImage';
 // You need to import the CSS only once
-import 'react-awesome-lightbox/build/style.css';
+import '../../../../components/FullScreenImageJS/style.css';
 
 const Slider = ({
   desc,
@@ -124,175 +123,74 @@ const Slider = ({
           })}
         </Carousel>
         {fullScreen && (
-          <Lightbox
+          <FullScreenImage
             images={arr}
             onClose={() => closeFullScreen()}
             startIndex={imageIndex}
-          />
-        )}
-        {/* <Backdrop
-          className={backdrop}
-          open={false}
-        >
-          <TransformWrapper
-            initialScale={1}
-            initialPositionX={0}
-            initialPositionY={0}
+            thumbnail={arr}
+            onNavigateImage={(index: any) => setImageIndex(index)}
           >
-            {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-              <div>
-                <div
-                  className={fullScreenImageStyle}
-                  style={{
-                    justifyContent: !mobile ? 'space-between' : 'center'
-                  }}
-                >
-                  <div>
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        console.log('ooming', zooming);
-                        if (!zooming) {
-                          setZooming(true);
-                        }
-                        zoomIn();
-                      }}
-                      variant="contained"
-                      color="primary"
-                    >
-                      <ZoomIn />
-                    </Button>
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        zoomOut();
-                      }}
-                      style={{ margin: '0 10px' }}
-                      variant="contained"
-                      color="secondary"
-                    >
-                      <ZoomOut />
-                    </Button>
-                  </div>
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      resetTransform();
-                      closeFullScreen();
-                    }}
-                    variant="contained"
-                    color="default"
-                  >
-                    <Close />
-                  </Button>
-                </div>
-                <TransformComponent
-                  contentStyle={{
-                    cursor: 'move',
-                    height: '100%',
-                    display: !zooming ? 'block' : 'absolute',
-                    transform: 'translateX(50%)',
-                    margin: !zooming ? 'auto' : 0
-                  }}
-                  wrapperStyle={{
-                    height: !mobile ? '60vh' : 'auto',
-                    width: !mobile ? '70vw' : 'auto',
-                    backgroundColor: 'black',
-                    display: !zooming ? 'flex' : 'block',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <img src={fullScreenImage} alt="" />
-                </TransformComponent>
-              </div>
-            )}
-          </TransformWrapper>
-          <Box
-            width={!mobile ? '70vw' : '100vw'}
-            height= {!mobile ? '30vh' : 'auto'}
-            color="white"
-            style={{ background: 'black', paddingBottom: mobile ? "20px":0, overflowY:"auto", overflowX:"hidden" }}
-          >
-            <Grid
-              container
-              justifyContent="center"
-              spacing={2}
-              style={{ padding: !mobile ? '10px' : '0'}}
-            >
-              <Grid item xs={12} container style={{display:"flex", justifyContent:"center"}}>
-                <Tabs
-                  variant="scrollable"
-                  scrollButtons="auto"
-                  aria-label="scrollable auto tabs example"
-                >
-                  {arr.map((thumb: string, index: number) => (
-                    <img
-                      src={thumb}
-                      alt=""
-                      height="50px"
-                      width="auto"
-                      onClick={(e) => openFullScreen(thumb, e)}
-                      style={{ margin: '5px', cursor: 'pointer' }}
-                      key={thumb + index}
-                    />
-                  ))}
-                </Tabs>
-              </Grid>
-              <Grid
-                item
-                xs={10}
-                lg={5}
-                style={{
-                  display: 'flex',
-                  justifyContent: mobile ? "center" : 'space-between',
-                  alignItems: 'center',
-                  flexWrap:"wrap",
-                }}
+            <Box display="flex" justifyContent="center">
+              <Tabs
+                variant="scrollable"
+                scrollButtons="auto"
+                aria-label="scrollable auto tabs example"
+                selectionFollowsFocus
+                indicatorColor="secondary"
+                value={imageIndex}
               >
-                <Typography variant="body2">{data.modelYear}</Typography>
-                <span>&bull;</span>
-                <Typography variant="body2">{data.milage}&nbsp;KM</Typography>
-                <span>&bull;</span>
-                <Typography variant="body2">{data.engineType}</Typography>
-                <span>&bull;</span>
-                <Typography variant="body2">
+                {arr.map((thumb: string, index: number) => (
+                  <Tab
+                    onClick={(e) => setImageIndex(index)}
+                    key={thumb + index}
+                    icon={
+                      <img
+                        src={thumb}
+                        alt=""
+                        height="100px"
+                        width="auto"
+                        onClick={(e) => setImageIndex(index)}
+                        style={{ margin: '5px', cursor: 'pointer' }}
+                      />
+                    }
+                  />
+                ))}
+              </Tabs>
+            </Box>
+            <Box
+              display="flex"
+              padding="10px"
+              color="white"
+              justifyContent="space-between"
+              alignItems="center"
+              flexWrap="wrap"
+              style={{ background: 'black' }}
+            >
+              <Box display="flex">
+                <Typography variant="body2" style={{ marginRight: '15px' }}>
+                  {data.modelYear}
+                </Typography>
+                <Typography variant="body2" style={{ marginRight: '15px' }}>
+                  {data.milage}&nbsp;KM
+                </Typography>
+                <Typography variant="body2" style={{ marginRight: '15px' }}>
+                  {data.engineType}
+                </Typography>
+                <Typography variant="body2" style={{ marginRight: '15px' }}>
                   {data.engineCapacity}&nbsp;cc
                 </Typography>
-                <span>&bull;</span>
-                <Typography variant="body2">{data.transmission}</Typography>
-              </Grid>
-              <Grid xs={10} item lg={3} style={{justifyContent:"center", display:"flex", alignItems:"center"}}>
-              <Typography variant="h3">PKR&nbsp;{data.price}</Typography>
-              </Grid>
-              <Grid
-                item
-                xs={10}
-                lg={4}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  flexWrap:"wrap"
-                }}
-              >
-                {data.createdBy.phone && (
-                  <a href={'tel:' + data.createdBy.phone}>
-                    <Button variant="contained" color="primary">
-                      {data.createdBy.phone}
-                    </Button>
-                  </a>
-                )}
-                {data.createdBy.email && (
-                  <a href={'mailto:' + data.createdBy.email}>
-                    <Button variant="contained" color="secondary">
-                      {'Send Message'}
-                    </Button>
-                  </a>
-                )}
-              </Grid>
-            </Grid>
-          </Box>
-        </Backdrop> */}
+              </Box>
+              <Box>
+                <Typography variant="h3">PKR&nbsp;{data.price}</Typography>
+              </Box>
+              <Box>
+                <Button variant="contained" color="primary">
+                  Send Appointment Request
+                </Button>
+              </Box>
+            </Box>
+          </FullScreenImage>
+        )}
         <Toast
           open={open}
           type={responseMessage.status}

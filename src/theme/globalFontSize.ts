@@ -40,8 +40,8 @@ theme.typography.subtitle2 = {
 theme.typography.body1 = {};
 theme.typography.body2 = {
   fontWeight: 400,
-  fontSize: "16px",
-  lineHeight: "16px",
+  fontSize: "0.9rem",
+  lineHeight: "0.9rem",
 };
 
 theme.typography.caption = {};

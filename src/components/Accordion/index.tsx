@@ -21,8 +21,8 @@ const FilterAccordion: React.FC<FilterAccordionProps & AccordionProps> = ({
   const {
     root,
     expanded,
-   
-    detailRoot
+    detailRoot,
+    headerStyles
   } = AccordionStyles();
 
   return (
@@ -32,7 +32,7 @@ const FilterAccordion: React.FC<FilterAccordionProps & AccordionProps> = ({
         aria-controls="panel1bh-content"
         id="panel1bh-header"
       >
-        <Typography>{title}</Typography>
+        <Typography className={headerStyles}>{title}</Typography>
       </AccordionSummary>
       <AccordionDetails classes={{ root: detailRoot }}>
         {children}

@@ -19,6 +19,13 @@ import ZoomOut from '@material-ui/icons/ZoomOut';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import { Box, Tabs, Typography } from '@material-ui/core';
+// import Lightbox from 'react-image-lightbox';
+// import 'react-image-lightbox/style.css';
+
+import Lightbox from 'react-awesome-lightbox';
+// You need to import the CSS only once
+import 'react-awesome-lightbox/build/style.css';
+
 const Slider = ({
   desc,
   paragraph,
@@ -42,7 +49,7 @@ const Slider = ({
   const { user } = useSelector((state: RootState) => state.auth);
   const [isFavorite, setIsFavorite] = useState<boolean | undefined>(isFavs);
   const [fullScreen, setFullScreen] = useState(false);
-  const [fullScreenImage, setFullScreenImage] = useState('');
+  const [imageIndex, setImageIndex] = useState(0);
   const { carousel, detail, btn, backdrop, fullScreenImageStyle } = useStyles();
   const [zooming, setZooming] = useState(false);
   const { mobile } = Sizes();
@@ -52,17 +59,17 @@ const Slider = ({
   };
 
   const openFullScreen = (
-    img: string,
+    imgIndex: number,
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     e.stopPropagation();
     setFullScreen(true);
-    setFullScreenImage(img);
+    setImageIndex(imgIndex);
     document.body.style.overflow = 'hidden';
   };
   const closeFullScreen = () => {
     setFullScreen(false);
-    setFullScreenImage('');
+    setImageIndex(0);
     document.body.style.overflow = 'auto';
   };
 
@@ -84,7 +91,7 @@ const Slider = ({
             return (
               <div
                 style={{ cursor: 'pointer' }}
-                onClick={(e) => openFullScreen(data, e)}
+                onClick={(e) => openFullScreen(index, e)}
               >
                 <img
                   style={{ position: 'relative', borderRadius: '5px' }}
@@ -116,10 +123,16 @@ const Slider = ({
             );
           })}
         </Carousel>
-        <Backdrop
+        {fullScreen && (
+          <Lightbox
+            images={arr}
+            onClose={() => closeFullScreen()}
+            startIndex={imageIndex}
+          />
+        )}
+        {/* <Backdrop
           className={backdrop}
-          // onClick={() => closeFullScreen()}
-          open={fullScreen}
+          open={false}
         >
           <TransformWrapper
             initialScale={1}
@@ -279,16 +292,7 @@ const Slider = ({
               </Grid>
             </Grid>
           </Box>
-          {/* <div>
-            <Button onClick={zoomIn} variant="contained" color="primary">
-              <ZoomIn />
-            </Button>
-            &nbsp;
-            <Button onClick={zoomOut} variant="contained" color="secondary">
-              <ZoomOut />
-            </Button>
-          </div> */}
-        </Backdrop>
+        </Backdrop> */}
         <Toast
           open={open}
           type={responseMessage.status}

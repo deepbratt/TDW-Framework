@@ -2,21 +2,15 @@ import { useState } from 'react';
 import Backdrop from '@material-ui/core/Backdrop';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import { Carousel } from 'react-responsive-carousel';
 import { useStyles } from './useStyles';
 import { Detail } from '../../Utils/types1';
 import Sizes from '../../../../Utils/themeConstants';
-import { addToFavs, removeFavs } from '../../../../Utils/hooks/endpoints';
 import Actions from '../../../../pages/carDetail/useFunctions';
 import Toast from '../../../../components/Toast';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../redux/store';
-import Favorite from '@material-ui/icons/Favorite';
 import Close from '@material-ui/icons/Close';
 import ZoomIn from '@material-ui/icons/ZoomIn';
 import ZoomOut from '@material-ui/icons/ZoomOut';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import { Box, Tabs, Typography } from '@material-ui/core';
 const Slider = ({
@@ -38,12 +32,10 @@ const Slider = ({
   updatedAt,
   data
 }: Detail) => {
-  const { addFavs, open, setOpen, responseMessage } = Actions();
-  const { user } = useSelector((state: RootState) => state.auth);
-  const [isFavorite, setIsFavorite] = useState<boolean | undefined>(isFavs);
+  const {  open, setOpen, responseMessage } = Actions();
   const [fullScreen, setFullScreen] = useState(false);
   const [fullScreenImage, setFullScreenImage] = useState('');
-  const { carousel, detail, btn, backdrop, fullScreenImageStyle } = useStyles();
+  const { carousel, detail,  backdrop, fullScreenImageStyle } = useStyles();
   const [zooming, setZooming] = useState(false);
   const { mobile } = Sizes();
 
@@ -90,28 +82,10 @@ const Slider = ({
                   style={{ position: 'relative', borderRadius: '5px' }}
                   key={`img ${index}`}
                   // width="10%"
-                  height="100%"
+                  width="100%"
                   src={data}
                   alt=""
                 />
-                {!user?._id || user?._id === createdBy?._id ? null : (
-                  <IconButton
-                    onClick={() => {
-                      if (id) {
-                        addFavs(isFavorite ? removeFavs : addToFavs, id);
-                        // setColorChange(isFavorite ? true : false);
-                        setIsFavorite(!isFavorite);
-                      }
-                    }}
-                    className={btn}
-                  >
-                    {isFavorite ? (
-                      <Favorite color="primary" />
-                    ) : (
-                      <FavoriteBorder />
-                    )}
-                  </IconButton>
-                )}
               </div>
             );
           })}
@@ -279,15 +253,6 @@ const Slider = ({
               </Grid>
             </Grid>
           </Box>
-          {/* <div>
-            <Button onClick={zoomIn} variant="contained" color="primary">
-              <ZoomIn />
-            </Button>
-            &nbsp;
-            <Button onClick={zoomOut} variant="contained" color="secondary">
-              <ZoomOut />
-            </Button>
-          </div> */}
         </Backdrop>
         <Toast
           open={open}

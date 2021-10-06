@@ -21,7 +21,7 @@ const useHooks = () => {
     newPassword: "",
     confirmPassword: ""
   });
-  const [number, setNumber] = useState(user.phone.slice(3));
+  const [number, setNumber] = useState(user.phone && user.phone.slice(3));
   const handleChange = (e: any) => {
     const { value, name } = e.target;
     setVal({

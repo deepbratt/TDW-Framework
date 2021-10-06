@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Backdrop from '@material-ui/core/Backdrop';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -13,44 +12,17 @@ import Toast from '../../../../components/Toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import Favorite from '@material-ui/icons/Favorite';
-import Close from '@material-ui/icons/Close';
-import ZoomIn from '@material-ui/icons/ZoomIn';
-import ZoomOut from '@material-ui/icons/ZoomOut';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
-import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import { Box, Tab, Tabs, Typography } from '@material-ui/core';
+import FullScreenImage from '../../../../components/FullScreenImage/index';
 
-// import Lightbox from 'react-awesome-lightbox';
-import FullScreenImage from '../../../../components/FullScreenImageJS/FullScreenImage';
-// You need to import the CSS only once
-import '../../../../components/FullScreenImageJS/style.css';
-
-const Slider = ({
-  desc,
-  paragraph,
-  arr,
-  feature,
-  info,
-  carTitle,
-  id,
-  city,
-  assembly,
-  bodyType,
-  color,
-  engineCapacity,
-  date,
-  isFavs,
-  createdBy,
-  updatedAt,
-  data
-}: Detail) => {
+const Slider = ({ arr, id, isFavs, createdBy, data }: Detail) => {
   const { addFavs, open, setOpen, responseMessage } = Actions();
   const { user } = useSelector((state: RootState) => state.auth);
   const [isFavorite, setIsFavorite] = useState<boolean | undefined>(isFavs);
   const [fullScreen, setFullScreen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
-  const { carousel, detail, btn, backdrop, fullScreenImageStyle } = useStyles();
-  const [zooming, setZooming] = useState(false);
+  const { carousel, detail, btn } = useStyles();
   const { mobile } = Sizes();
 
   const handleAlertClose = () => {
@@ -144,14 +116,7 @@ const Slider = ({
                     onClick={(e) => setImageIndex(index)}
                     key={thumb + index}
                     icon={
-                      <img
-                        src={thumb}
-                        alt=""
-                        height="100px"
-                        width="auto"
-                        onClick={(e) => setImageIndex(index)}
-                        style={{ margin: '5px', cursor: 'pointer' }}
-                      />
+                      <img src={thumb} alt="" height="100px" width="auto" />
                     }
                   />
                 ))}

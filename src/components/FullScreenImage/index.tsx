@@ -1,8 +1,10 @@
-import { Tabs } from '@material-ui/core';
+import './style.css';
 import React from 'react';
+import { NavigateBefore, NavigateNext } from '@material-ui/icons';
+import { IconButton } from '@material-ui/core';
 const DEFAULT_ZOOM_STEP = 0.3;
 const DEFAULT_LARGE_ZOOM = 4;
-function getXY(e) {
+function getXY(e: any) {
   let x = 0;
   let y = 0;
   if (e.touches && e.touches.length) {
@@ -14,16 +16,16 @@ function getXY(e) {
   }
   return { x, y };
 }
-function Cond(props) {
+function Cond(props: any) {
   if (!props.condition) return null;
   return <React.Fragment>{props.children}</React.Fragment>;
 }
-export default class Lightbox extends React.Component {
+export default class FullScreenImage extends React.Component<any> {
   initX = 0;
   initY = 0;
   lastX = 0;
   lastY = 0;
-  _cont = React.createRef();
+  _cont: any = React.createRef();
   state = {
     x: 0,
     y: 0,
@@ -34,19 +36,19 @@ export default class Lightbox extends React.Component {
     current: this.props?.startIndex ?? 0,
     multi: this.props?.images?.length ? true : false
   };
-  createTransform = (x, y, zoom, rotate) =>
+  createTransform = (x: any, y: any, zoom: any, rotate: any) =>
     `translate3d(${x}px,${y}px,0px) scale(${zoom}) rotate(${rotate}deg)`;
-  stopSideEffect = (e) => e.stopPropagation();
-  getCurrentImage = (s, p) => {
+  stopSideEffect = (e: any) => e.stopPropagation();
+  getCurrentImage = (s: any, p: any) => {
     if (!s.multi) return p.image ?? '';
     return p.images[s.current]?.url ?? p.images?.[s.current] ?? '';
   };
-  getCurrentTitle = (s, p) => {
+  getCurrentTitle = (s: any, p: any) => {
     if (!s.multi) return p.title ?? '';
     return p.images?.[s.current]?.title ?? '';
   };
   resetZoom = () => this.setState({ x: 0, y: 0, zoom: 1 });
-  shockZoom = (e) => {
+  shockZoom = (e: any) => {
     let {
       zoomStep = DEFAULT_ZOOM_STEP,
       allowZoom = true,
@@ -66,7 +68,7 @@ export default class Lightbox extends React.Component {
     const y = (_xy.y - _ccy) * -1 * _z;
     this.setState({ x, y, zoom: _z });
   };
-  navigateImage = (direction, e) => {
+  navigateImage = (direction: any, e: any) => {
     this.stopSideEffect(e);
     let current = 0;
     switch (direction) {
@@ -84,14 +86,14 @@ export default class Lightbox extends React.Component {
       this.props.onNavigateImage(current);
     }
   };
-  startMove = (e) => {
+  startMove = (e: any) => {
     if (this.state.zoom <= 1) return false;
     this.setState({ moving: true });
     let xy = getXY(e);
     this.initX = xy.x - this.lastX;
     this.initY = xy.y - this.lastY;
   };
-  duringMove = (e) => {
+  duringMove = (e: any) => {
     if (!this.state.moving) return false;
     let xy = getXY(e);
     this.lastX = xy.x - this.initX;
@@ -101,8 +103,8 @@ export default class Lightbox extends React.Component {
       y: xy.y - this.initY
     });
   };
-  endMove = (e) => this.setState({ moving: false });
-  applyZoom = (type) => {
+  endMove = (e: any) => this.setState({ moving: false });
+  applyZoom = (type: any) => {
     let { zoomStep = DEFAULT_ZOOM_STEP } = this.props;
     switch (type) {
       case 'in':
@@ -119,7 +121,7 @@ export default class Lightbox extends React.Component {
         break;
     }
   };
-  applyRotate = (type) => {
+  applyRotate = (type: any) => {
     switch (type) {
       case 'cw':
         this.setState({ rotate: this.state.rotate + 90 });
@@ -129,11 +131,11 @@ export default class Lightbox extends React.Component {
         break;
     }
   };
-  reset = (e) => {
+  reset = (e: any) => {
     this.stopSideEffect(e);
     this.setState({ x: 0, y: 0, zoom: 1, rotate: 0 });
   };
-  exit = (e) => {
+  exit = (e: any) => {
     if (typeof this.props.onClose === 'function') return this.props.onClose(e);
     console.error(
       'No Exit function passed on prop: onClose. Clicking the close button will do nothing'
@@ -144,11 +146,11 @@ export default class Lightbox extends React.Component {
     this.state.y ||
     this.state.zoom !== 1 ||
     this.state.rotate !== 0;
-  canvasClick = (e) => {
+  canvasClick = (e: any) => {
     let { clickOutsideToExit = true } = this.props;
     if (clickOutsideToExit && this.state.zoom <= 1) return this.exit(e);
   };
-  keyboardNavigation = (e) => {
+  keyboardNavigation = (e: any) => {
     let { allowZoom = true, allowReset = true } = this.props;
     let { multi, x, y, zoom } = this.state;
     switch (e.key) {
@@ -219,7 +221,7 @@ export default class Lightbox extends React.Component {
               className="lb-title"
               style={{
                 display: buttonAlign === 'center' ? 'none' : 'flex',
-                order: buttonAlign === 'flex-start' ? '2' : 'unset'
+                order: buttonAlign === 'flex-start' ? 2 : 'unset'
               }}
             >
               <span
@@ -235,14 +237,14 @@ export default class Lightbox extends React.Component {
           <Cond condition={buttonAlign === 'center' || _reset}>
             <div
               title="Reset"
-              style={{ order: buttonAlign === 'flex-start' ? '1' : 'unset' }}
+              style={{ order: buttonAlign === 'flex-start' ? 1 : 'unset' }}
               className={`lb-button lb-icon-reset lb-hide-mobile reload ${
                 _reset ? '' : 'lb-disabled'
               }`}
               onClick={this.reset}
             ></div>
           </Cond>
-          <Cond condition={multi}>
+          {/* <Cond condition={multi}>
             <div
               title="Previous"
               className="lb-button lb-icon-arrow prev lb-hide-mobile"
@@ -253,7 +255,7 @@ export default class Lightbox extends React.Component {
               className="lb-button lb-icon-arrow next lb-hide-mobile"
               onClick={(e) => this.navigateImage('next', e)}
             ></div>
-          </Cond>
+          </Cond> */}
           <Cond condition={allowZoom}>
             <div
               title="Zoom In"
@@ -283,7 +285,7 @@ export default class Lightbox extends React.Component {
           <div
             title="Close"
             className="lb-button lb-icon-close close"
-            style={{ order: buttonAlign === 'flex-start' ? '-1' : 'unset' }}
+            style={{ order: buttonAlign === 'flex-start' ? -1 : 'unset' }}
             onClick={(e) => this.exit(e)}
           ></div>
         </div>
@@ -292,6 +294,15 @@ export default class Lightbox extends React.Component {
           ref={this._cont}
           onClick={(e) => this.canvasClick(e)}
         >
+          {multi ? (
+            <IconButton
+              className="lb-hide-mobile"
+              style={{ background: 'white', marginLeft:"10px" }}
+              onClick={(e) => this.navigateImage('next', e)}
+            >
+              <NavigateBefore />
+            </IconButton>
+          ) : null}
           <img
             draggable="false"
             style={{
@@ -314,6 +325,17 @@ export default class Lightbox extends React.Component {
             src={image}
             alt={title}
           />
+
+          {multi ? (
+            <IconButton
+              className="lb-hide-mobile"
+              style={{ background: 'white', marginRight:"10px" }}
+              onClick={(e) => this.navigateImage('next', e)}
+            >
+              <NavigateNext />
+            </IconButton>
+          ) : null}
+
           <div className="mobile-controls lb-show-mobile">
             {multi ? (
               <div
@@ -338,7 +360,7 @@ export default class Lightbox extends React.Component {
             ) : null}
           </div>
         </div>
-        <div display="flex">{this.props.children}</div>
+        <div>{this.props.children}</div>
       </div>
     );
   }

@@ -30,7 +30,7 @@ import history from '../../../../routes/history';
 import { RootState } from '../../../../redux/store';
 import InputField from '../../../../components/InputField';
 import { SearchRounded } from '@material-ui/icons';
-import { setQueryParams } from '../../../../redux/reducers/queryParamsSlice';
+import { setFilters } from '../../../../redux/reducers/carFiltersSlice';
 
 const HeaderContext = () => {
   const {
@@ -65,9 +65,9 @@ const HeaderContext = () => {
 
   const handleSearch = (e: any) => {
     let queryParams = {
-      keywords: e.target.value
+      keyword: e.target.value
     };
-    dispatch(setQueryParams(queryParams));
+    dispatch(setFilters(queryParams));
     history.push(paths.cars);
   };
 

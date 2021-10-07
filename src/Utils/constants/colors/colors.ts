@@ -12,6 +12,7 @@ export const Colors = {
   grey: '#565656',
   greyTwo: '#484848',
   greyFive: 'rgba(72, 72, 72, 0.5)',
+  greySeven: "#e0e0e0",
   red: '#ff0000',
   black: '#000000',
   navyBlue: '#092C4C',

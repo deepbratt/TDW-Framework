@@ -1,31 +1,21 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import makeStyles from '@material-ui/core/styles/makeStyles';
 const LayoutStyle = makeStyles((theme) => ({
   root: {
-    margin: "10px 0",
-    backgroundColor: "white",
+    margin: '8px 0',
+    backgroundColor: 'white'
   },
   input: {
-    [theme.breakpoints.down("md")]: {
-      fontSize: "16px",
-    },
-    [theme.breakpoints.down("xs")]: {
-      fontSize: "14px",
-    },
-    "&::placeholder": {
-      [theme.breakpoints.down("md")]: {
-        fontSize: "16px",
-      },
-      [theme.breakpoints.down("xs")]: {
-        fontSize: "14px",
-      },
-    },
+    fontSize: '0.9rem',
+    '&::placeholder': {
+      fontSize: '0.9rem'
+    }
   },
   btn: {
-    padding: "5px 7px",
-    boxShadow: "none",
-    minWidth: "20px",
-    lineHeight: "18px",
-  },
+    padding: '5px 7px',
+    boxShadow: 'none',
+    minWidth: '20px',
+    lineHeight: '18px'
+  }
 }));
 
 export default LayoutStyle;

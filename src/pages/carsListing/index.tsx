@@ -67,9 +67,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
   } = CarListingStyles();
 
   const {
-    values,
     isLoading,
-    errors,
     responseData,
     handleInputChange,
     page,
@@ -80,11 +78,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     handleCheckboxChange,
     handleSingleCheckBoxChange,
     handleTextBoxSubmit,
-    setValues,
-    appliedFilters,
     pageCount,
-    removeFilter,
-    removeFilterItem,
     removeRangeFilter,
     keywords,
     shortListItem,
@@ -131,19 +125,14 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
   };
 
   const { layoutType } = useSelector((state: RootState) => state.layout);
+  const values = useSelector((state: RootState) => state.carFilters.filters);
 
   const filtersProps = {
     handleTextBoxChange,
     handleCheckboxChange,
     handleSingleCheckBoxChange,
     handleTextBoxSubmit,
-    setValues,
-    appliedFilters,
-    removeFilter,
-    removeFilterItem,
     removeRangeFilter,
-    errors,
-    values,
     keywords,
     rangeValues,
     setRangeValues,
@@ -314,11 +303,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
             </Hidden>
             <Hidden xsDown>
               <Grid item xs={12}>
-                <HorizontalFilters
-                  values={values}
-                  errors={errors}
-                  handleInputChange={handleInputChange}
-                />
+                <HorizontalFilters handleInputChange={handleInputChange} />
               </Grid>
             </Hidden>
             {isShortlist === true && shortListCars.length >= 1 && (

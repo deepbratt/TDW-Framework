@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { setFilters } from '../../redux/reducers/carFiltersSlice';
 import { setQueryParams } from '../../redux/reducers/queryParamsSlice';
 import { paths } from '../../routes/paths';
 import { getAllData } from '../../Utils/API/API';
@@ -121,11 +122,9 @@ export const useForm = (validateOnChange = false) => {
       make: values.make,
       model: values.model,
       bodyType: values.bodyType,
-      priceMin: values.priceFrom,
-      priceMax: values.priceTo
+      price: [values.priceFrom, values.priceTo]
     };
-    setIsLoading(true);
-    dispatch(setQueryParams(queryParams));
+    dispatch(setFilters(queryParams));
     history.push(paths.cars);
   };
 

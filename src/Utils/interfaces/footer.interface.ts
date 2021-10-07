@@ -43,7 +43,7 @@ export interface IData {
     Make: IFooterFilter[];
     Color: IFooterFilter[];
     BodyType: IFooterFilter[];
-    Categories: IFooterFilter[];
+    Models: IFooterFilter[];
   };
 }
 

@@ -6,7 +6,6 @@ import { getAllData } from '../../Utils/API/API';
 import useValidation from '../../Utils/hooks/useValidation';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
 import { setShortlistCars } from '../../redux/reducers/shortlistCarsSlice';
-import { emptyQueryParams } from '../../redux/reducers/queryParamsSlice';
 import { extractError, getKeyValue } from '../../Utils/helperFunctions';
 import {
   removeArrayFilter,
@@ -159,7 +158,7 @@ export const useForm = (validateOnChange = true) => {
 
   const getCitiesWithCars = async () => {
     let param = '?';
-    if (carFilters.province !== []) {
+    if (carFilters.province.length > 0) {
       carFilters.province.map((item: string) => {
         param += '&province=' + item;
       });
@@ -210,7 +209,7 @@ export const useForm = (validateOnChange = true) => {
 
   const getModels = async () => {
     let param = '?';
-    if (carFilters.make !== []) {
+    if (carFilters.make.length > 0) {
       carFilters.make.map((item: any) => {
         let selectedMake: any = makes.filter((make: any) => make.name === item);
         if (selectedMake.length > 0) {
@@ -241,7 +240,7 @@ export const useForm = (validateOnChange = true) => {
 
   useEffect(() => {
     return () => {
-      dispatch(emptyQueryParams());
+      dispatch(resetFilters());
     };
   }, []);
 

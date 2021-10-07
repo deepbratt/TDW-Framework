@@ -106,5 +106,5 @@ export const sortingOptions = [
 export const conditionOptions = [
   { value: 'excellent', label: 'Excellent' },
   { value: 'good', label: 'Good' },
-  { value: 'bad', label: 'Bad' }
+  { value: 'fair', label: 'Fair' }
 ];

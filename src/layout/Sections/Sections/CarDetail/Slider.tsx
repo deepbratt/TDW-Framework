@@ -15,7 +15,7 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
   const { open, setOpen, responseMessage } = Actions();
   const [fullScreen, setFullScreen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
-  const { carousel, detail } = useStyles();
+  const { carousel, detail, sliderImageWrapper } = useStyles();
   const { mobile } = Sizes();
 
   const handleAlertClose = () => {
@@ -54,8 +54,8 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
           {arr.map((data, index) => {
             return (
               <div
-                style={{ cursor: 'pointer',  background: Colors.lightBlue, height:"600px", }}
                 onClick={(e) => openFullScreen(index, e)}
+                className={sliderImageWrapper}
               >
                 <img
                   style={{ position: 'relative', borderRadius: '5px', }}
@@ -72,7 +72,8 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
         </Carousel>
         {fullScreen && (
           <FullScreenImage
-            images={arr}
+            images={arr.length > 1 ? arr : false}
+            image={arr.length < 2 ? arr : false}
             onClose={() => closeFullScreen()}
             startIndex={imageIndex}
             thumbnail={arr}

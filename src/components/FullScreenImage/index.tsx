@@ -291,6 +291,7 @@ export default class FullScreenImage extends React.Component<any> {
         </div>
         <div
           className={`lb-canvas${loading ? ' lb-loading' : ''}`}
+          style={{justifyContent: multi ? "space-between" : "center"}}
           ref={this._cont}
           onClick={(e) => this.canvasClick(e)}
         >

@@ -73,18 +73,18 @@ export const useStyles = makeStyles(() => ({
       width: '20%'
     },
     '& .carousel.carousel-slider .control-arrow': {
-      background: "black",
+      background: 'black',
       height: '50px',
-      width:"50px",
+      width: '50px',
       top: '50%',
-      transform:"translateY(-50%)",
+      transform: 'translateY(-50%)',
       borderRadius: '50px',
       // padding: '5px 15px 5px 15px',
       opacity: 0.5,
       '&:hover': {
-        background: "black",
-        opacity:1
-      },
+        background: 'black',
+        opacity: 1
+      }
       // [breakpoints.only('md')]: {
       //   top: '250px'
       // },
@@ -109,12 +109,12 @@ export const useStyles = makeStyles(() => ({
     },
     '& .carousel .thumbs-wrapper': {
       marginTop: '10px',
-      marginBottom: '0px',
+      marginBottom: '0px'
     },
     '& .carousel .thumbs-wrapper ul li': {
       borderRadius: '15px',
-      height:"100px",
-    },
+      height: '100px'
+    }
     // '&  .carousel .control-prev.control-arrow:before': {
     //   color: 'black',
     //   borderRight: '8px solid black'
@@ -127,7 +127,7 @@ export const useStyles = makeStyles(() => ({
   detail: {
     // marginTop: '20px',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   main: {
     display: 'flex',
@@ -188,15 +188,26 @@ export const useStyles = makeStyles(() => ({
     color: '#fff',
     display: 'flex',
     justifyContent: 'flex-start',
-    padding:"10px",
+    padding: '10px',
     alignItems: 'center',
     flexDirection: 'column',
-    background:"rgba(0,0,0,0.75)",
+    background: 'rgba(0,0,0,0.75)'
     // overflowY:"auto"
   },
-  fullScreenImageStyle:{
+  fullScreenImageStyle: {
     display: 'flex',
     alignItems: 'center',
-    marginBottom:"5px",
+    marginBottom: '5px'
   },
+  sliderImageWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    cursor: 'pointer',
+    backgroundColor: ColorConstant.lightBlue,
+    height: '600px',
+    [theme.breakpoints.down("md")]:{
+      height:"auto"
+    }
+  }
 }));

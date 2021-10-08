@@ -43,9 +43,12 @@ const UploadPhotosForm = ({
       setOpenInfoModel(true);
       e.target.value = null;
       return;
-    }else{
-      setSrcImg(e.target.files[0]);
-      setOpenCropModal(true);
+    } else {
+      // setSrcImg(e.target.files[0]);
+      // setOpenCropModal(true);
+      let temp = [...images];
+      temp.push(e.target.files[0]);
+      updateImagesState(temp);
     }
     e.target.value = null;
   };
@@ -55,7 +58,7 @@ const UploadPhotosForm = ({
       return;
     }
     try {
-      tempImg.onload = async function(){
+      tempImg.onload = async function () {
         const canvas = document.createElement('canvas');
         const scaleX = tempImg.naturalWidth / tempImg.width;
         const scaleY = tempImg.naturalHeight / tempImg.height;
@@ -78,30 +81,31 @@ const UploadPhotosForm = ({
           crop.width,
           crop.height
         );
-          toBlobFunc(canvas).then(blob=>{
-          let temp = [...images];
-          temp.push(blob);
-          updateImagesState(temp);
-        }).then(()=>cancelUploadImg())
-        
-      }
+        toBlobFunc(canvas)
+          .then((blob) => {
+            let temp = [...images];
+            temp.push(blob);
+            updateImagesState(temp);
+          })
+          .then(() => cancelUploadImg());
+      };
     } catch (e) {
       console.log('crop the image', e);
     }
   };
 
-  const toBlobFunc = async(canvas:HTMLCanvasElement) =>{
+  const toBlobFunc = async (canvas: HTMLCanvasElement) => {
     return new Promise((resolve, reject) => {
       canvas.toBlob(
-        (blob:any) => {
-          blob.name = "filename"+images.length;
+        (blob: any) => {
+          blob.name = 'filename' + images.length;
           resolve(blob);
         },
-        "image/jpeg",
+        'image/jpeg',
         1
       );
     });
-  }
+  };
 
   const cancelUploadImg = () => {
     setSrcImg('');

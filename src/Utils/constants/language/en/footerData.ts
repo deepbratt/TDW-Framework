@@ -103,23 +103,22 @@ export const FooterData = {
       { filterName: 'make', text: 'Hyundai Cars for Sale', value: 'Hyundai' },
       { filterName: 'make', text: 'Daihatsu Cars for Sale', value: 'Daihatsu' }
     ],
-    Categories: [
-      { filterName: 'categories', text: 'Jeep', value: 'Jeep' },
-      { filterName: 'categories', text: 'Japanese Cars', value: 'Japanese' },
-      { filterName: 'categories', text: 'Imported Cars', value: 'Imported' },
-      { filterName: 'categories', text: 'Automatic Cars', value: 'Automatic' },
-      { filterName: 'categories', text: 'Low Priced Cars', value: 'Low Price' },
-      { filterName: 'categories', text: '4x4 Cars', value: '4x4' },
-      { filterName: 'categories', text: '660cc Cars', value: '660cc' },
-      { filterName: 'categories', text: '1000cc Cars', value: '1000cc' }
+    Models: [
+      { filterName: 'models', text: 'Honda City', value: 'City' },
+      { filterName: 'models', text: 'Honda Civic', value: 'Civic' },
+      { filterName: 'models', text: 'Toyota Corolla', value: 'Corolla' },
+      { filterName: 'models', text: 'Suzuki Alto', value: 'Alto' },
+      { filterName: 'models', text: 'Suzuki Cultus', value: 'Cultus' },
+      { filterName: 'models', text: 'Suzuki Mehran', value: 'Mehran' },
+      { filterName: 'models', text: 'Suzuki Swift', value: 'Swift' },
     ],
     Color: [
-      { filterName: 'color', text: 'White Cars', value: 'White' },
-      { filterName: 'color', text: 'Black Cars', value: 'Black' },
-      { filterName: 'color', text: 'Red Cars', value: 'Red' },
-      { filterName: 'color', text: 'Blue Cars', value: 'Blue' },
-      { filterName: 'color', text: 'Silver Cars', value: 'Silver' },
-      { filterName: 'color', text: 'Gold Cars', value: 'Gold' }
+      { filterName: 'bodyColor', text: 'White Cars', value: 'White' },
+      { filterName: 'bodyColor', text: 'Black Cars', value: 'Black' },
+      { filterName: 'bodyColor', text: 'Red Cars', value: 'Red' },
+      { filterName: 'bodyColor', text: 'Blue Cars', value: 'Blue' },
+      { filterName: 'bodyColor', text: 'Silver Cars', value: 'Silver' },
+      { filterName: 'bodyColor', text: 'Gold Cars', value: 'Gold' }
     ],
     BodyType: [
       { filterName: 'bodyType', text: 'Sedans for Sale', value: 'Sedan' },
@@ -145,7 +144,8 @@ export const FooterData = {
   },
   termsAndConditions: [
     { name: 'Terms & Conditions', path: '/' },
-    { name: 'Privacy Policy', path: '/' }
+    { name: 'Privacy Policy', path: '/' },
+    { name: 'Help', path: '/help' }
   ],
   copyrights: 'Copyright © 2021 TezDeals. - All Rights Reserved.',
   notice:

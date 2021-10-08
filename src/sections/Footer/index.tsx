@@ -1,4 +1,5 @@
-import { NavLink, BrowserRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { BrowserRouter, useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -10,6 +11,8 @@ import {
   FooterProps,
   IFooterFilter
 } from '../../Utils/interfaces/footer.interface';
+import { paths } from '../../routes/paths';
+import { setArrayFilter} from '../../redux/reducers/carFiltersSlice';
 
 /** 
  @param data 
@@ -39,6 +42,14 @@ const Footer: React.FC<FooterProps> = ({
     text
   } = FooterStyles(footerStylesProps);
 
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const handleFilters = (filter: IFooterFilter) => {
+    dispatch(setArrayFilter({ name: filter.filterName, value: filter.value }));
+    history.push(paths.cars);
+  };
+
   return (
     <BrowserRouter>
       <Container>
@@ -51,20 +62,16 @@ const Footer: React.FC<FooterProps> = ({
                 </Typography>
                 {data.explore &&
                   data.explore.map((item, index) => (
-                    <NavLink
-                      className={pageLinks}
+                    <Typography
                       key={`explore-link-${index}`}
-                      to={item.path}
+                      onClick={() => history.push(item.path)}
+                      className={pageLinks}
+                      variant="body2"
+                      component="h5"
+                      gutterBottom
                     >
-                      <Typography
-                        className={pageLinks}
-                        variant="body2"
-                        component="h5"
-                        gutterBottom
-                      >
-                        {item.name}
-                      </Typography>
-                    </NavLink>
+                      {item.name}
+                    </Typography>
                   ))}
               </Grid>
               <Grid item xs={12} sm={4} lg={3}>
@@ -73,20 +80,16 @@ const Footer: React.FC<FooterProps> = ({
                 </Typography>
                 {data.tezDealz &&
                   data.tezDealz.map((item, index) => (
-                    <NavLink
-                      className={pageLinks}
+                    <Typography
                       key={`tezDealz-link-${index}`}
-                      to={item.path}
+                      onClick={() => history.push(item.path)}
+                      className={pageLinks}
+                      variant="body2"
+                      component="h5"
+                      gutterBottom
                     >
-                      <Typography
-                        className={pageLinks}
-                        variant="body2"
-                        component="h5"
-                        gutterBottom
-                      >
-                        {item.name}
-                      </Typography>
-                    </NavLink>
+                      {item.name}
+                    </Typography>
                   ))}
               </Grid>
               {Object.entries(data.filters).map(([keys, values], index) => (
@@ -96,6 +99,7 @@ const Footer: React.FC<FooterProps> = ({
                   </Typography>
                   {values.map((value: IFooterFilter, index) => (
                     <Typography
+                      onClick={() => handleFilters(value)}
                       key={`filter-${index}`}
                       className={pageLinks}
                       variant="body2"
@@ -116,20 +120,16 @@ const Footer: React.FC<FooterProps> = ({
                   </Typography>
                   {data.sell &&
                     data.sell.map((item, index) => (
-                      <NavLink
-                        className={pageLinks}
+                      <Typography
                         key={`sell-links-${index}`}
-                        to={item.path}
+                        onClick={() => history.push(item.path)}
+                        className={pageLinks}
+                        variant="body2"
+                        component="h5"
+                        gutterBottom
                       >
-                        <Typography
-                          className={pageLinks}
-                          variant="body2"
-                          component="h5"
-                          gutterBottom
-                        >
-                          {item.name}
-                        </Typography>
-                      </NavLink>
+                        {item.name}
+                      </Typography>
                     ))}
                 </Grid>
               </Grid>
@@ -208,15 +208,15 @@ const Footer: React.FC<FooterProps> = ({
               {data.termsAndConditions &&
                 data.termsAndConditions.map((item, index) => (
                   <Grid item key={`terms-and-conditions-${index}`}>
-                    <NavLink className={pageLinks} to={item.path}>
-                      <Typography
-                        style={{ marginLeft: '5px' }}
-                        variant="body2"
-                        component="span"
-                      >
-                        {` ${item.name}`}{' '}
-                      </Typography>
-                    </NavLink>
+                    <Typography
+                      className={pageLinks}
+                      onClick={() => history.push(item.path)}
+                      style={{ marginLeft: '5px' }}
+                      variant="body2"
+                      component="span"
+                    >
+                      {` ${item.name}`}{' '}
+                    </Typography>
                     <Typography style={{ color: textPrimary }} component="span">
                       {index < data.termsAndConditions.length - 1 ? '| ' : ''}
                     </Typography>

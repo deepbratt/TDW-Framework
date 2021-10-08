@@ -1,66 +1,115 @@
-import {  createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+import { getKeyValue } from '../../Utils/helperFunctions';
 
 export interface IInitialState {
-  filters: {
-    keywords: string;
-    province: string[] | [];
-    city: string[] | [];
-    registrationCity: string[] | [];
-    transmission: string | [];
-    engineType: string[] | [];
-    color: string[];
-    bodyType: string[];
-    pictureAvailability: boolean;
-    videoAvailability: boolean;
-    sellerType: string[];
-    adType: string[];
-  },
-  appliedFilters: []
+  filters: any;
+  // {
+  // province: [];
+  // city: [];
+  // registrationCity: [];
+  // make: [];
+  // model: [];
+  // transmission: [];
+  // assembly: [];
+  // engineType: [];
+  // color: [];
+  // bodyType: [];
+  // pictureAvailability: boolean;
+  // videoAvailability: boolean;
+  // sellerType: [];
+  // adType: [];
+  // sort: string;
+  // condition: string;
+  // price: number[];
+  // modelYear: number[];
+  // milage: number[];
+  // engineCapacity: number[];
+  // };
 }
 
 const initialState: IInitialState = {
   filters: {
-    keywords: "",
-  // priceFrom: 0,
-  // priceTo: 0,
-  // priceRange: [0, 50000000],
-  // yearFrom: 0,
-  // yearTo: 0,
-  // yearRange: [1900, 2021],
-  province: [],
-  city: [],
-  registrationCity: [],
-  // mileageFrom: 0,
-  // mileageTo: 0,
-  // mileageRange: [0, 1000000],
-  transmission: [],
-  engineType: [],
-  // engineCapacityFrom: 0,
-  // engineCapacityTo: 0,
-  // engineCapacityRange: [600, 30000],
-  color: [],
-  bodyType: [],
-  pictureAvailability: false,
-  videoAvailability: false,
-  sellerType: [],
-  adType: [],
-  },
-  appliedFilters: []
+    province: [],
+    city: [],
+    registrationCity: [],
+    make: [],
+    model: [],
+    transmission: [],
+    assembly: [],
+    engineType: [],
+    bodyColor: [],
+    bodyType: [],
+    sellerType: [],
+    adType: [],
+    sort: '',
+    condition: '',
+    keyword: '',
+    price: [0, 50000000],
+    modelYear: [1971, 2021],
+    milage: [0, 500000],
+    engineCapacity: [0, 10000]
+  }
 };
 
 const carFiltersSlice = createSlice({
-  name: "carFilters",
+  name: 'carFilters',
   initialState,
   reducers: {
-    setFilter: (state: IInitialState, actions: any) => {
-       state.filters = actions.payload;
+    setFilter: (state, actions) => {
+      state.filters[actions.payload.name] = actions.payload.value;
     },
-    setAppliedFilters: (state: IInitialState, actions: any) => {
-       state.appliedFilters = actions.payload;
+    setArrayFilter: (state, actions) => {
+      state.filters[actions.payload.name] = [
+        ...state.filters[actions.payload.name],
+        actions.payload.value
+      ];
     },
-  },
+    setFilters: (state, actions) => {
+      Object.entries(actions.payload).map(([keys, values]: any) => {
+        state.filters[keys] = values;
+      });
+    },
+    removeArrayFilter: (state, actions) => {
+      state.filters[actions.payload.name] = state.filters[
+        actions.payload.name
+      ].filter((item: string) => item !== actions.payload.value);
+    },
+    removeFilter: (state, actions) => {
+      state.filters[actions.payload.name] = actions.payload.value;
+    },
+    resetFilters: (state) => {
+      state.filters = {
+        province: [],
+        city: [],
+        registrationCity: [],
+        make: [],
+        model: [],
+        transmission: [],
+        assembly: [],
+        engineType: [],
+        bodyColor: [],
+        bodyType: [],
+        sellerType: [],
+        adType: [],
+        sort: '',
+        condition: '',
+        keyword: '',
+        price: [0, 50000000],
+        modelYear: [1971, 2021],
+        milage: [0, 500000],
+        engineCapacity: [0, 10000]
+      };
+    }
+  }
 });
 
-export const { setFilter, setAppliedFilters } = carFiltersSlice.actions;
+export const {
+  setFilter,
+  setArrayFilter,
+  setFilters,
+  removeFilter,
+  removeArrayFilter,
+  resetFilters
+} = carFiltersSlice.actions;
 
 export default carFiltersSlice.reducer;

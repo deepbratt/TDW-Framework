@@ -1,6 +1,8 @@
 import Grid from '@material-ui/core/Grid';
+import { useSelector } from 'react-redux';
 import Dropdown from '../../components/Dropdown';
 import LayoutToggler from '../../components/LayoutToggler';
+import { RootState } from '../../redux/store';
 import { fieldNames } from '../../Utils/constants/formsConstants';
 import {
   sortingOptions,
@@ -8,16 +10,13 @@ import {
 } from '../../Utils/constants/language/en/filtersData';
 
 export interface HorizontalFiltersProps {
-  values: any;
-  errors: any;
   handleInputChange: Function;
 }
 
 const HorizontalFilters: React.FC<HorizontalFiltersProps> = ({
-  values,
-  errors,
   handleInputChange
 }) => {
+  const values = useSelector((state: RootState) => state.carFilters.filters);
   return (
     <Grid style={{ margin: '10px 0' }} container justifyContent="space-between">
       <Grid item container xs={10} spacing={2}>
@@ -26,7 +25,6 @@ const HorizontalFilters: React.FC<HorizontalFiltersProps> = ({
             label="SORT BY"
             name={fieldNames.sortingOptions}
             onChange={handleInputChange}
-            error={errors.sort}
             value={values.sort}
             options={sortingOptions}
           />
@@ -36,7 +34,6 @@ const HorizontalFilters: React.FC<HorizontalFiltersProps> = ({
             label="CONDITION"
             name={fieldNames.condition}
             onChange={handleInputChange}
-            error={errors.condition}
             value={values.condition}
             options={conditionOptions}
           />

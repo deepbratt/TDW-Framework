@@ -3,13 +3,19 @@ import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Colors } from '../../Utils/constants/colors/colors';
+import {
+  removeArrayFilter,
+  removeFilter
+} from '../../redux/reducers/carFiltersSlice';
+import { useDispatch } from 'react-redux';
+import { getKeyValue } from '../../Utils/helperFunctions';
 
 const AppliedFiltersStyles = makeStyles((theme) => ({
   root: {
     borderRadius: '5px',
     backgroundColor: Colors.lightGrey,
     border: `0.2px solid ${theme.palette.common.black}`,
-    marginTop: "10px"
+    marginTop: '10px'
   },
   icon: {
     color: theme.palette.common.black
@@ -18,48 +24,50 @@ const AppliedFiltersStyles = makeStyles((theme) => ({
 
 export interface AppliedFiltersProps {
   values: any;
-  removeFilter: Function;
-  removeFilterItem: Function;
   removeRangeFilter: Function;
   keys: any;
 }
 
 const AppliedFilters: React.FC<AppliedFiltersProps> = ({
   values,
-  removeFilter,
-  removeFilterItem,
   removeRangeFilter,
   keys
 }) => {
   const { root, icon } = AppliedFiltersStyles();
+  const dispatch = useDispatch();
 
   const rangeFilters = {
-    priceRange: 'Price',
-    mileageRange: 'Mileage',
-    yearRange: 'Model Year',
-    engineCapacityRange: 'Engine Capacity'
+    price: 'Price',
+    milage: 'Mileage',
+    modelYear: 'Model Year',
+    engineCapacity: 'Engine Capacity'
+  };
+  const rangeInitialValues = {
+    price: [0, 50000000],
+    modelYear: [1971, 2021],
+    milage: [0, 500000],
+    engineCapacity: [0, 10000]
   };
 
-  const getKeyValue =
-    <T extends object, U extends keyof T>(obj: T) =>
-    (key: U) =>
-      obj[key];
-
-  if (keys in rangeFilters) {
+  if (
+    keys in rangeInitialValues &&
+    values[0] !== getKeyValue(rangeInitialValues)(keys)[0] &&
+    values[1] !== getKeyValue(rangeInitialValues)(keys)[1]
+  ) {
     return (
       <Grid item>
         <Chip
           classes={{ root: root, deleteIcon: icon }}
           size="small"
           label={
-            getKeyValue(rangeFilters)(keys) + `[${values[0]}-${values[1]}]`
+            getKeyValue(rangeFilters)(keys) + ` [${values[0]}-${values[1]}]`
           }
           onDelete={() => removeRangeFilter(keys)}
         />
       </Grid>
     );
   }
-  if (keys === 'sort') {
+  if (keys === 'sort' && values !== '') {
     if (values === '-createdAt') {
       return (
         <Grid item>
@@ -67,7 +75,7 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
             classes={{ root: root, deleteIcon: icon }}
             size="small"
             label={`Recent`}
-            onDelete={() => removeFilter(keys)}
+            onDelete={() => dispatch(removeFilter({ name: keys, value: '' }))}
           />
         </Grid>
       );
@@ -78,7 +86,51 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
             classes={{ root: root, deleteIcon: icon }}
             size="small"
             label={`Oldest`}
-            onDelete={() => removeFilter(keys)}
+            onDelete={() => dispatch(removeFilter({ name: keys, value: '' }))}
+          />
+        </Grid>
+      );
+    } else if (values === 'modelYear') {
+      return (
+        <Grid item>
+          <Chip
+            classes={{ root: root, deleteIcon: icon }}
+            size="small"
+            label={`Oldest Models`}
+            onDelete={() => dispatch(removeFilter({ name: keys, value: '' }))}
+          />
+        </Grid>
+      );
+    } else if (values === '-modelYear') {
+      return (
+        <Grid item>
+          <Chip
+            classes={{ root: root, deleteIcon: icon }}
+            size="small"
+            label={`Newest Models`}
+            onDelete={() => dispatch(removeFilter({ name: keys, value: '' }))}
+          />
+        </Grid>
+      );
+    } else if (values === 'milage') {
+      return (
+        <Grid item>
+          <Chip
+            classes={{ root: root, deleteIcon: icon }}
+            size="small"
+            label={`Lowest Milage`}
+            onDelete={() => dispatch(removeFilter({ name: keys, value: '' }))}
+          />
+        </Grid>
+      );
+    } else if (values === '-milage') {
+      return (
+        <Grid item>
+          <Chip
+            classes={{ root: root, deleteIcon: icon }}
+            size="small"
+            label={`Highest Milage`}
+            onDelete={() => dispatch(removeFilter({ name: keys, value: '' }))}
           />
         </Grid>
       );
@@ -89,7 +141,9 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
             classes={{ root: root, deleteIcon: icon }}
             size="small"
             label={`Price High to Low`}
-            onDelete={() => removeFilter(keys)}
+            onDelete={() =>
+              dispatch(removeFilter({ name: keys, value: [0, 50000000] }))
+            }
           />
         </Grid>
       );
@@ -100,21 +154,23 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
             classes={{ root: root, deleteIcon: icon }}
             size="small"
             label={`Price Low to High`}
-            onDelete={() => removeFilter(keys)}
+            onDelete={() =>
+              dispatch(removeFilter({ name: keys, value: [0, 50000000] }))
+            }
           />
         </Grid>
       );
     }
   }
 
-  if (keys === 'condition') {
+  if (keys === 'condition' && values !== '') {
     return (
       <Grid item>
         <Chip
           classes={{ root: root, deleteIcon: icon }}
           size="small"
           label={`Condition ${values}`}
-          onDelete={() => removeFilter(keys)}
+          onDelete={() => dispatch(removeFilter({ name: keys, value: '' }))}
         />
       </Grid>
     );
@@ -122,25 +178,27 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
 
   return (
     <>
-      {typeof values !== typeof [] ? (
+      {values !== '' && values !== false && typeof values !== typeof [] ? (
         <Grid item>
           <Chip
             classes={{ root: root, deleteIcon: icon }}
             size="small"
             label={keys + ': ' + values}
-            onDelete={() => removeFilter(keys)}
+            onDelete={() => dispatch(removeFilter({ name: keys, value: '' }))}
           />
         </Grid>
       ) : (
-        values.length !== 0 &&
         typeof values === typeof [] &&
+        !(keys in rangeFilters) &&
         values.map((filter: any) => (
           <Grid key={uuidv4()} item>
             <Chip
               classes={{ root: root, deleteIcon: icon }}
               size="small"
               label={filter}
-              onDelete={() => removeFilterItem(filter, keys)}
+              onDelete={() =>
+                dispatch(removeArrayFilter({ name: keys, value: filter }))
+              }
             />
           </Grid>
         ))

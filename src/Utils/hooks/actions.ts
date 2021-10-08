@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
     Accept: 'application/json',
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    Authorization: 'Bearer ' + localStorage.getItem('tezdealzjwt')
+    Authorization: 'Bearer ' + localStorage.getItem('caroktajwt')
     // Authorization: 'Bearer ' + storeState.auth.token
   }
 });
@@ -19,9 +19,9 @@ const axiosInstance = axios.create({
 //     Accept: 'application/json',
 //     'Content-Type': 'application/json',
 //     'Access-Control-Allow-Origin': '*',
-//     Authorization: 'Bearer ' + localStorage.getItem('tezdealzjwt')
+//     Authorization: 'Bearer ' + localStorage.getItem('caroktajwt')
 //   }
-//   let tokenLocal = await localStorage.getItem('tezdealzjwt')
+//   let tokenLocal = await localStorage.getItem('caroktajwt')
 //   let JWT = await storeState.auth.token
 //   console.log('jwt=', JWT)
 //   console.log('local token=', tokenLocal)
@@ -32,7 +32,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(function (config) {
   const token = store.getState().auth.token;
-  const localToken = localStorage.getItem('tezdealzjwt');
+  const localToken = localStorage.getItem('caroktajwt');
   if (token) {
     config.headers.Authorization = 'Bearer ' + token;
   } else {

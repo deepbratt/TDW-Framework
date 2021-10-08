@@ -58,7 +58,7 @@ const Footer: React.FC<FooterProps> = ({
             <Grid item container xs={12} lg={9}>
               <Grid item xs={12} sm={4} lg={3}>
                 <Typography className={filterTitle} variant="h3" gutterBottom>
-                  Explore TezDeals
+                  Explore CarOkta
                 </Typography>
                 {data.explore &&
                   data.explore.map((item, index) => (
@@ -76,12 +76,12 @@ const Footer: React.FC<FooterProps> = ({
               </Grid>
               <Grid item xs={12} sm={4} lg={3}>
                 <Typography className={filterTitle} variant="h3" gutterBottom>
-                  TezDeals.com
+                  CarOkta.com
                 </Typography>
-                {data.tezDealz &&
-                  data.tezDealz.map((item, index) => (
+                {data.carOkta &&
+                  data.carOkta.map((item, index) => (
                     <Typography
-                      key={`tezDealz-link-${index}`}
+                      key={`carOkta-link-${index}`}
                       onClick={() => history.push(item.path)}
                       className={pageLinks}
                       variant="body2"
@@ -116,7 +116,7 @@ const Footer: React.FC<FooterProps> = ({
               <Grid item container xs={12} md={4} lg={12}>
                 <Grid item xs={12}>
                   <Typography className={filterTitle} variant="h3">
-                    Sell On TezDeals
+                    Sell On CarOkta
                   </Typography>
                   {data.sell &&
                     data.sell.map((item, index) => (

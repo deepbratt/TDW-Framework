@@ -8,7 +8,7 @@ export interface IInitialState {
 
 const initialState: IInitialState = {
   user: {},
-  isLoggedIn: localStorage.getItem('tezdealzjwt') ? true : false,
+  isLoggedIn: localStorage.getItem('caroktajwt') ? true : false,
   token: ''
 };
 
@@ -20,21 +20,21 @@ const authSlice = createSlice({
       state.isLoggedIn = true;
       state.user = action.payload.data.user;
       state.token = action.payload.token;
-      localStorage.setItem('tezdealzjwt', action.payload.token);
+      localStorage.setItem('caroktajwt', action.payload.token);
       
     },
     logout: (state) => {
       state.user = {};
       state.token = '';
       state.isLoggedIn = false;
-      localStorage.removeItem('tezdealzjwt');
+      localStorage.removeItem('caroktajwt');
     },
      updateUserData:(state,action)=>{
       state.user = action.payload.data.user;
     },
     updateToken:(state,action)=>{
       state.token = action.payload;
-      localStorage.setItem('tezdealzjwt', action.payload);
+      localStorage.setItem('caroktajwt', action.payload);
     }
   }
 });

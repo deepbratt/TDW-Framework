@@ -11,16 +11,16 @@ import { axiosFormInstance, axiosInstance } from './axiosInstances';
 //     Accept: 'application/json',
 //     'Content-Type': 'multipart/form-data',
 //     'Access-Control-Allow-Origin': '*',
-//     Authorization: 'Bearer ' + localStorage.getItem('tezdealzjwt')
+//     Authorization: 'Bearer ' + localStorage.getItem('caroktajwt')
 //   }
-//   let token = await localStorage.getItem('tezdealzjwt')
+//   let token = await localStorage.getItem('caroktajwt')
 //   headers['Authorization'] = "Bearer " + token
 //   return headers
 // }
 
 axiosInstance.interceptors.request.use(function (config) {
   const token = store.getState().auth.token;
-  const localToken = localStorage.getItem('tezdealzjwt');
+  const localToken = localStorage.getItem('caroktajwt');
   if (token) {
     config.headers.Authorization = 'Bearer ' + token;
   } else {
@@ -31,7 +31,7 @@ axiosInstance.interceptors.request.use(function (config) {
 });
 axiosFormInstance.interceptors.request.use(function (config) {
   const token = store.getState().auth.token;
-  const localToken = localStorage.getItem('tezdealzjwt');
+  const localToken = localStorage.getItem('caroktajwt');
   if (token) {
     config.headers.Authorization = 'Bearer ' + token;
   } else {

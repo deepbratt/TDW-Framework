@@ -5,7 +5,7 @@ const { grey, blue } = Colors;
 const LayoutStyle = makeStyles((theme) => ({
   root: {
     display:"flex",
-    padding: "50px 0",
+    padding:"0",
     position: "relative",
   },
   content: {

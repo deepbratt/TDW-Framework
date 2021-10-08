@@ -11,7 +11,7 @@ const Dashboard = () => {
   },[])
   return (
     <>
-      <Section backColor="#f2f2f2">
+      <Section backColor="transparent">
         <RoutesWrapper />
       </Section>
     </>

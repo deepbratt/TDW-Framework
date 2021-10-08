@@ -27,6 +27,7 @@ import moment from 'moment';
 import ConditionalLink from '../ConditionalLink';
 import { routes } from '../../routes/paths';
 import Sizes from '../../Utils/themeConstants';
+import LoginModal from '../../pages/login/LoginModal';
 export interface ListingCardProps {
   data: any;
   layoutType: string;
@@ -72,12 +73,17 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const [toastType, setToastType] = useState('success');
   const [toastOpen, setToastOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [signinModal, setSigninModal] = useState(false)
 
   const favs = (
     id: string,
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation();
+    if (!isLoggedIn) {
+      setSigninModal(true)
+      return
+    }
     if (handleFavs) {
       handleFavs(id);
     } else {
@@ -124,7 +130,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
           }}
         />
         <Loader open={isLoading} isBackdrop={true} />
-        {isLoggedIn && user._id !== createdBy ? (
+        {user._id !== createdBy ? (
           <IconButton
             onClick={(e) => {
               favs(_id ? _id : '', e);
@@ -324,6 +330,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
             </Grid>
           </Card>
         </ConditionalLink>
+        <LoginModal openModal={signinModal} closeModal={()=>setSigninModal(false)}/>
       </Paper>
     </>
   );

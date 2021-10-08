@@ -44,13 +44,17 @@ const CarDetailContainer = () => {
   const sliderColumn = useRef<HTMLDivElement | null>(null);
   const size = Sizes();
 
-  const handleImageLoaded = () =>{
+  const handleImageLoaded = () => {
     setSliderHeight(
       sliderColumn.current?.clientHeight
         ? sliderColumn.current?.clientHeight
         : 500
     );
-  }
+  };
+
+  const lgMdSmPx = (lgMd: string, sm: string) => {
+    return size.desktop || size.tablet ? lgMd : sm;
+  };
 
   useEffect(() => {
     if (!isLoading) {
@@ -59,12 +63,22 @@ const CarDetailContainer = () => {
           ? sliderColumn.current?.clientHeight
           : 500
       );
-      console.log(sliderColumn.current?.clientHeight);
     }
   }, [sliderColumn.current?.clientHeight, isLoading]);
 
   return (
-    <Section backColor={Colors.lightBlue}>
+    <Section backColor={"transparent"}>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      // padding={lgMdSmPx('0 50px', '0px')}
+      width="100%"
+      // marginTop={lgMdSmPx('50px', '0px')}
+      // minHeight={'90vh'}
+      style={{backgroundColor:"transparent"}}
+      height={"100%"}
+    >
       <MetaTags
         title={PageMeta.carDetails.title}
         description={PageMeta.carDetails.description}
@@ -74,7 +88,7 @@ const CarDetailContainer = () => {
       <Loader open={isLoading} isBackdrop={true} />
       <Paper
         elevation={4}
-        style={{ padding: '10px', width: '100%', margin: '-50px 0' }}
+        style={{ padding: '10px', width: '100%'}}
       >
         {!obj ? (
           <Grid container spacing={2}>
@@ -191,7 +205,8 @@ const CarDetailContainer = () => {
         type={responseMessage.status}
         onClose={() => setOpen(false)}
       />
-    </Section>
+    </Box>
+     </Section>
   );
 };
 

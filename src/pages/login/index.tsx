@@ -38,7 +38,7 @@ const Login = ({
   formColLg = 4,
   formColMd = 8,
   formColXs = 10,
-  loginCallback
+  loginCallback = undefined
 }: LoginProps) => {
   const history = useHistory();
   const {

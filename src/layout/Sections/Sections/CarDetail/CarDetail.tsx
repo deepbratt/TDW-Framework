@@ -26,14 +26,12 @@ import {
   SOLD_HERE_DIALOG_REJECT,
   SOLD_HERE_DIALOG_TITLE
 } from '../../../../Utils/constants/language/en/addEditCarTexts';
-import {
-  Box,
-  IconButton
-} from '@material-ui/core';
-import { Favorite, LocationOnOutlined } from '@material-ui/icons';
+import { Box, IconButton } from '@material-ui/core';
+import { Favorite, LocationOnOutlined, Phone } from '@material-ui/icons';
 import { addToFavs, removeFavs } from '../../../../Utils/hooks/endpoints';
 import Actions from '../../../../pages/carDetail/useFunctions';
 import LoginModal from '../../../../pages/login/LoginModal';
+import CarInformation from './CarInformation';
 
 const CarDetail: React.FC<any> = ({
   Title,
@@ -68,21 +66,10 @@ const CarDetail: React.FC<any> = ({
   const [toastType, setToastType] = useState('');
   const [signinModal, setSigninModal] = useState(false);
   const { addFavs, open, setOpen, responseMessage } = Actions();
-  const {
-    root,
-    sub,
-    type,
-    grid,
-    numBtn,
-    mailBtn,
-    icon,
-    container,
-    link,
-    greyBackground,
-    btn
-  } = useStyles();
+  const { root, sub, type, numBtn, icon, btn } =
+    useStyles();
   const { navyBlue } = Colors;
-  const defaultMarginTop = '30px';
+  const defaultMarginTop = '50px';
   const toggleSold = (soldHere: boolean = false) => {
     let soldUnsold = isSold
       ? API_ENDPOINTS.MARK_UNSOLD
@@ -144,11 +131,7 @@ const CarDetail: React.FC<any> = ({
   };
 
   return (
-    <Grid
-      container
-      style={{ display: 'inline-block' }}
-      className={greyBackground}
-    >
+    <Grid container style={{ display: 'inline-block' }}>
       <Grid className={root} container item xs={12}>
         <Grid container justifyContent="space-between">
           <Grid
@@ -230,6 +213,12 @@ const CarDetail: React.FC<any> = ({
               </Button>
             </Grid>
           ) : null}
+          {/* <Grid item xs={12} style={{ marginTop: defaultMarginTop }}>
+            <CarDescription description={data?.description} />
+          </Grid> */}
+          <Grid item xs={12} style={{ marginTop: defaultMarginTop }}>
+            <CarInformation data={data} />
+          </Grid>
           <Grid
             style={{ display: 'flex', marginTop: defaultMarginTop }}
             justifyContent="space-between"
@@ -274,39 +263,13 @@ const CarDetail: React.FC<any> = ({
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} style={{ marginTop: defaultMarginTop }}>
-            {createdBy?.phone && (
-              <Grid className={grid} item xs={12}>
-                <Button
-                  className={numBtn}
-                  startIcon={
-                    <div>
-                      <img width="30%" src={numbIcon} alt="" />
-                    </div>
-                  }
-                >
-                  <a className={link} href={`tel:${createdBy.phone}`}>
-                    {createdBy.phone}
-                  </a>
-                </Button>
-              </Grid>
-            )}
-            {createdBy?.email && (
-              <Grid className={container} item xs={12}>
-                <Button
-                  className={mailBtn}
-                  startIcon={
-                    <div>
-                      <img width="30%" src={mailIcon} alt="" />
-                    </div>
-                  }
-                >
-                  <a className={link} href={`mailTo:${createdBy.email}`}>
-                    {mainButton}
-                  </a>
-                </Button>
-              </Grid>
-            )}
+          <Grid item xs={12}>
+            <Button
+              fullWidth
+              className={numBtn}
+              startIcon={<Phone/>}>
+              Request Appointment
+            </Button>
           </Grid>
         </Grid>
       </Grid>

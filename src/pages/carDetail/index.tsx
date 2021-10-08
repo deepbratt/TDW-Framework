@@ -28,7 +28,7 @@ import Toast from '../../components/Toast';
 import { Colors } from '../../Utils/constants/colors/colors';
 import CarDescription from '../../layout/Sections/Sections/CarDetail/CarDescription';
 import CarFeatures from '../../layout/Sections/Sections/CarDetail/CarFeatures';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box, Divider, makeStyles } from '@material-ui/core';
 import { useEffect, useRef, useState } from 'react';
 import Sizes from '../../Utils/themeConstants';
 
@@ -52,9 +52,9 @@ const CarDetailContainer = () => {
     );
   };
 
-  const lgMdSmPx = (lgMd: string, sm: string) => {
-    return size.desktop || size.tablet ? lgMd : sm;
-  };
+  // const lgMdSmPx = (lgMd: string, sm: string) => {
+  //   return size.desktop || size.tablet ? lgMd : sm;
+  // };
 
   useEffect(() => {
     if (!isLoading) {
@@ -67,146 +67,125 @@ const CarDetailContainer = () => {
   }, [sliderColumn.current?.clientHeight, isLoading]);
 
   return (
-    <Section backColor={"transparent"}>
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      // padding={lgMdSmPx('0 50px', '0px')}
-      width="100%"
-      // marginTop={lgMdSmPx('50px', '0px')}
-      // minHeight={'90vh'}
-      style={{backgroundColor:"transparent"}}
-      height={"100%"}
-    >
-      <MetaTags
-        title={PageMeta.carDetails.title}
-        description={PageMeta.carDetails.description}
-        canonical={PageMeta.carDetails.canonical}
-        keywords={PageMeta.carDetails.keywords}
-      />
-      <Loader open={isLoading} isBackdrop={true} />
-      <Paper
-        elevation={4}
-        style={{ padding: '10px', width: '100%'}}
+    <Section backColor={'transparent'}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        width="100%"
+        style={{ backgroundColor: 'transparent' }}
+        height={'100%'}
       >
-        {!obj ? (
-          <Grid container spacing={2}>
-            <Grid
-              item
-              xs={12}
-              container
-              justifyContent="center"
-              alignItems="center"
-            >
-              <h1 className={loader}>No Data</h1>
+        <MetaTags
+          title={PageMeta.carDetails.title}
+          description={PageMeta.carDetails.description}
+          canonical={PageMeta.carDetails.canonical}
+          keywords={PageMeta.carDetails.keywords}
+        />
+        <Loader open={isLoading} isBackdrop={true} />
+        <Paper elevation={4} style={{ padding: '20px', width: '100%' }}>
+          {!obj ? (
+            <Grid container spacing={2}>
+              <Grid
+                item
+                xs={12}
+                container
+                justifyContent="center"
+                alignItems="center"
+              >
+                <h1 className={loader}>No Data</h1>
+              </Grid>
             </Grid>
-          </Grid>
-        ) : (
-          <Grid
-            container
-            spacing={2}
-            // className={scrollable}
-          >
-            <Grid
-              item
-              xs={12}
-              lg={6}
-              md={6}
-              ref={sliderColumn}
-              style={{ height: '100%' }}
-            >
-              <Slides
-                carTitle={carTitle}
-                info={CarInfo}
-                feature={carFeatures}
-                desc={desc}
-                paragraph={obj?.description}
-                arr={obj.image && obj.image.length > 0 ? obj.image : [NoImg]}
-                id={obj?._id}
-                city={obj?.registrationCity}
-                assembly={obj?.assembly}
-                color={obj?.bodyColor}
-                bodyType={obj?.bodyType}
-                engineCapacity={obj?.engineCapacity}
-                date={obj.createdAt}
-                isFavs={obj.isFav}
-                createdBy={obj.createdBy}
-                updatedAt={obj.updatedAt}
-                data={obj}
-                imageLoaded={handleImageLoaded}
-              />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              lg={6}
-              md={6}
-              // className={scrollable}
-              style={{
-                maxHeight:
-                  size.mobile || size.mobileLarge ? '100%' : sliderHeight,
-                overflowY: 'auto'
-              }}
-            >
-              <Box>
-                <CarDetail
-                  mainButton={mainButton}
-                  numButton={numButton}
-                  Title={`${obj.make} ${obj.model} ${obj.modelYear}`}
-                  location={obj?.city}
-                  rating={rating}
-                  array={array}
-                  locIcon={locIcon}
-                  mailIcon={mailIcon}
-                  ratIcon={ratIcon}
-                  numbIcon={numbIcon}
-                  paragraph={obj?.description}
-                  desc={desc}
-                  price={obj?.price}
-                  modelYear={obj?.modelYear}
-                  transmission={obj?.transmission}
-                  mileage={obj?.milage}
-                  engineType={obj?.engineType}
-                  createdBy={obj.createdBy}
-                  data={obj}
-                />
-              </Box>
-              <Box className={section}>
-                <CarDescription description={obj?.description} />
-              </Box>
-              <Box className={section}>
-                <CarInformation
+          ) : (
+            <Grid container spacing={2}>
+              <Grid
+                item
+                xs={12}
+                lg={6}
+                md={6}
+                ref={sliderColumn}
+                style={{ height: '100%' }}
+              >
+                <Slides
                   carTitle={carTitle}
                   info={CarInfo}
-                  paragraph={obj?.description}
-                  // #empty array of feature from api so temporary static feature
                   feature={carFeatures}
+                  desc={desc}
+                  paragraph={obj?.description}
+                  arr={obj.image && obj.image.length > 0 ? obj.image : [NoImg]}
+                  id={obj?._id}
                   city={obj?.registrationCity}
                   assembly={obj?.assembly}
                   color={obj?.bodyColor}
                   bodyType={obj?.bodyType}
                   engineCapacity={obj?.engineCapacity}
                   date={obj.createdAt}
-                  updatedAt={obj.updatedAt}
+                  isFavs={obj.isFav}
                   createdBy={obj.createdBy}
+                  updatedAt={obj.updatedAt}
+                  data={obj}
+                  imageLoaded={handleImageLoaded}
                 />
-              </Box>
-              <Box className={section}>
-                <CarFeatures features={carFeatures} />
-              </Box>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                lg={6}
+                md={6}
+                // className={scrollable}
+                style={{
+                  maxHeight:
+                    size.mobile || size.mobileLarge ? '100%' : sliderHeight,
+                  overflowY: 'auto'
+                }}
+              >
+                <Box>
+                  <CarDetail
+                    mainButton={mainButton}
+                    numButton={numButton}
+                    Title={`${obj.make} ${obj.model} ${obj.modelYear}`}
+                    location={obj?.city}
+                    rating={rating}
+                    array={array}
+                    locIcon={locIcon}
+                    mailIcon={mailIcon}
+                    ratIcon={ratIcon}
+                    numbIcon={numbIcon}
+                    paragraph={obj?.description}
+                    desc={desc}
+                    price={obj?.price}
+                    modelYear={obj?.modelYear}
+                    transmission={obj?.transmission}
+                    mileage={obj?.milage}
+                    engineType={obj?.engineType}
+                    createdBy={obj.createdBy}
+                    data={obj}
+                  />
+                </Box>
+                <Box width="100%" className={section}>
+                  <Divider style={{borderBottom:"1px solid "+Colors.navyBlue}}/>
+                </Box>
+                <Box className={section}>
+                  <CarDescription description={obj.description} />
+                </Box>
+                <Box width="100%" className={section}>
+                  <Divider style={{borderBottom:"1px solid "+Colors.navyBlue}}/>
+                </Box>
+                <Box className={section}>
+                  <CarFeatures features={carFeatures} />
+                </Box>
+              </Grid>
             </Grid>
-          </Grid>
-        )}
-      </Paper>
-      <Toast
-        open={open}
-        message={responseMessage.message}
-        type={responseMessage.status}
-        onClose={() => setOpen(false)}
-      />
-    </Box>
-     </Section>
+          )}
+        </Paper>
+        <Toast
+          open={open}
+          message={responseMessage.message}
+          type={responseMessage.status}
+          onClose={() => setOpen(false)}
+        />
+      </Box>
+    </Section>
   );
 };
 
@@ -217,6 +196,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '300px 0px'
   },
   section: {
-    marginTop: '20px'
+    marginTop: '20px',
+    // borderBottom: '1px solid ' + Colors.navyBlue
   }
 }));

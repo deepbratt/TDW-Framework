@@ -32,7 +32,7 @@ export interface IData {
   appLinks: string[];
   sell: IRoutes[];
   explore: IRoutes[];
-  tezDealz: IRoutes[];
+  carOkta: IRoutes[];
   mostSearched: IRoutes[];
   termsAndConditions: IRoutes[];
   copyrights: string;

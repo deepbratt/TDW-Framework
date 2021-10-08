@@ -8,7 +8,7 @@ export const axiosInstance = axios.create({
     Accept: 'application/json',
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    Authorization: 'Bearer ' + localStorage.getItem('tezdealzjwt')
+    Authorization: 'Bearer ' + localStorage.getItem('caroktajwt')
   }
 });
 
@@ -18,6 +18,6 @@ export const axiosFormInstance = axios.create({
     Accept: 'application/json',
     'Content-Type': 'multipart/form-data',
     'Access-Control-Allow-Origin': '*',
-    Authorization: 'Bearer ' + localStorage.getItem('tezdealzjwt')
+    Authorization: 'Bearer ' + localStorage.getItem('caroktajwt')
   }
 });

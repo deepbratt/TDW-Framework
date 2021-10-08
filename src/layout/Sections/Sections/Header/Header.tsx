@@ -42,7 +42,8 @@ const HeaderContext = () => {
     link,
     loginLink,
     inputRoot,
-    input
+    input,
+    logoWrapper
   } = useStyles();
   const { isLoggedIn} = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
@@ -108,7 +109,7 @@ const HeaderContext = () => {
       <AppBar className={root} color="inherit">
         <Toolbar className={appbarsolid}>
           <Grid container justifyContent="flex-start">
-            <section>
+            <section className={logoWrapper}>
               <img src={Logo} alt="logo" className={logo} />
             </section>
             <Hidden smDown>

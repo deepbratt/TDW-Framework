@@ -48,14 +48,11 @@ export const useStyles = makeStyles((theme) => ({
     width: 'max-content'
   },
   active: {},
-  logo: {
-    marginRight: '15px',
-    width: '5rem',
-    padding: '10px 0px 0px 10px',
-    [breakpoints.down('sm')]: {
-      paddingLeft: '0px',
-      width: '4rem'
-    }
+  logo: { maxWidth: '100px', margin: '0 15px' },
+  logoWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   rec: {
     position: 'absolute',

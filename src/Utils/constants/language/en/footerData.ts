@@ -44,8 +44,8 @@ export const FooterData = {
     { path: '/', name: 'Autoshow' },
     { path: '/', name: 'Sitemap' }
   ],
-  tezDealz: [
-    { path: '/', name: 'About TezDeals.com' },
+  carOkta: [
+    { path: '/', name: 'About CarOkta.com' },
     { path: '/', name: 'Our Products' },
     { path: '/', name: 'Advertise With Us' },
     { path: '/', name: 'How To Pay' },
@@ -147,7 +147,7 @@ export const FooterData = {
     { name: 'Privacy Policy', path: '/' },
     { name: 'Help', path: '/help' }
   ],
-  copyrights: 'Copyright © 2021 TezDeals. - All Rights Reserved.',
+  copyrights: 'Copyright © 2021 CarOkta. - All Rights Reserved.',
   notice:
-    'Reproduction of material from any TezDeals.com pages without permission is strictly prohibited.'
+    'Reproduction of material from any CarOkta.com pages without permission is strictly prohibited.'
 };

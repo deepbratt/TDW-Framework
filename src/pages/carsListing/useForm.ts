@@ -208,7 +208,7 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const getModels = async () => {
-    let param = '?';
+    let param = '?&sort=name';
     if (carFilters.make.length > 0) {
       carFilters.make.map((item: any) => {
         let selectedMake: any = makes.filter((make: any) => make.name === item);

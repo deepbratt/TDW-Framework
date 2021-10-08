@@ -9,8 +9,9 @@ import Actions from '../../../../pages/carDetail/useFunctions';
 import Toast from '../../../../components/Toast';
 import { Box, Tab, Tabs, Typography } from '@material-ui/core';
 import FullScreenImage from '../../../../components/FullScreenImage/index';
+import { Colors } from '../../../../Utils/constants/colors/colors';
 
-const Slider = ({ arr, data }: Detail) => {
+const Slider = ({ arr, data, imageLoaded }: Detail) => {
   const { open, setOpen, responseMessage } = Actions();
   const [fullScreen, setFullScreen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
@@ -53,16 +54,17 @@ const Slider = ({ arr, data }: Detail) => {
           {arr.map((data, index) => {
             return (
               <div
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'pointer',  background: Colors.lightBlue, height:"600px", }}
                 onClick={(e) => openFullScreen(index, e)}
               >
                 <img
-                  style={{ position: 'relative', borderRadius: '5px' }}
+                  style={{ position: 'relative', borderRadius: '5px', }}
                   key={`img ${index}`}
-                  // width="10%"
                   width="100%"
+                  // height="auto"
                   src={data}
                   alt=""
+                  onLoad={imageLoaded}
                 />
               </div>
             );

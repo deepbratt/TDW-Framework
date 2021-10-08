@@ -1,8 +1,8 @@
 {
-  "name": "app",
+  "name": "carokta",
   "version": "1.0.0",
   "private": true,
-  "buildDate": 1633107357433,
+  "buildDate": 1633690152276,
   "dependencies": {
     "@material-ui/core": "^4.12.1",
     "@material-ui/icons": "^4.11.2",

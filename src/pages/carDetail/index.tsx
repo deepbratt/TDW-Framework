@@ -17,7 +17,6 @@ import {
 import Section from '../../components/index';
 import Slides from '../../layout/Sections/Sections/CarDetail/Slider';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { useStyles } from '../../layout/Sections/Sections/CarDetail/useStyles';
 import CarInformation from '../../layout/Sections/Sections/CarDetail/CarInformation';
 import { useParams } from 'react-router';
 import Actions from './useFunctions';
@@ -29,6 +28,9 @@ import Toast from '../../components/Toast';
 import { Colors } from '../../Utils/constants/colors/colors';
 import CarDescription from '../../layout/Sections/Sections/CarDetail/CarDescription';
 import CarFeatures from '../../layout/Sections/Sections/CarDetail/CarFeatures';
+import { Box, makeStyles } from '@material-ui/core';
+import { useEffect, useRef, useState } from 'react';
+import Sizes from '../../Utils/themeConstants';
 
 interface RouteProps {
   id: string;
@@ -37,7 +39,29 @@ const CarDetailContainer = () => {
   const { id } = useParams<RouteProps>();
   const { obj, isLoading, open, setOpen, responseMessage, carFeatures } =
     Actions(id ?? '');
-  const { loader } = useStyles();
+  const { loader, section } = useStyles();
+  const [sliderHeight, setSliderHeight] = useState(0);
+  const sliderColumn = useRef<HTMLDivElement | null>(null);
+  const size = Sizes();
+
+  const handleImageLoaded = () =>{
+    setSliderHeight(
+      sliderColumn.current?.clientHeight
+        ? sliderColumn.current?.clientHeight
+        : 500
+    );
+  }
+
+  useEffect(() => {
+    if (!isLoading) {
+      setSliderHeight(
+        sliderColumn.current?.clientHeight
+          ? sliderColumn.current?.clientHeight
+          : 500
+      );
+      console.log(sliderColumn.current?.clientHeight);
+    }
+  }, [sliderColumn.current?.clientHeight, isLoading]);
 
   return (
     <Section backColor={Colors.lightBlue}>
@@ -48,9 +72,12 @@ const CarDetailContainer = () => {
         keywords={PageMeta.carDetails.keywords}
       />
       <Loader open={isLoading} isBackdrop={true} />
-      <Paper elevation={4} style={{ padding: '10px', width: '100%', margin:"-50px 0" }}>
-          {!obj ? (
-            <Grid container spacing={2}>
+      <Paper
+        elevation={4}
+        style={{ padding: '10px', width: '100%', margin: '-50px 0' }}
+      >
+        {!obj ? (
+          <Grid container spacing={2}>
             <Grid
               item
               xs={12}
@@ -60,36 +87,55 @@ const CarDetailContainer = () => {
             >
               <h1 className={loader}>No Data</h1>
             </Grid>
+          </Grid>
+        ) : (
+          <Grid
+            container
+            spacing={2}
+            // className={scrollable}
+          >
+            <Grid
+              item
+              xs={12}
+              lg={6}
+              md={6}
+              ref={sliderColumn}
+              style={{ height: '100%' }}
+            >
+              <Slides
+                carTitle={carTitle}
+                info={CarInfo}
+                feature={carFeatures}
+                desc={desc}
+                paragraph={obj?.description}
+                arr={obj.image && obj.image.length > 0 ? obj.image : [NoImg]}
+                id={obj?._id}
+                city={obj?.registrationCity}
+                assembly={obj?.assembly}
+                color={obj?.bodyColor}
+                bodyType={obj?.bodyType}
+                engineCapacity={obj?.engineCapacity}
+                date={obj.createdAt}
+                isFavs={obj.isFav}
+                createdBy={obj.createdBy}
+                updatedAt={obj.updatedAt}
+                data={obj}
+                imageLoaded={handleImageLoaded}
+              />
             </Grid>
-          ) : (
-            <Grid container spacing={2}>
-              <Grid
-                item
-                xs={12}
-                lg={6}
-                md={6}
-              >
-                <Slides
-                  carTitle={carTitle}
-                  info={CarInfo}
-                  feature={carFeatures}
-                  desc={desc}
-                  paragraph={obj?.description}
-                  arr={obj.image && obj.image.length > 0 ? obj.image : [NoImg]}
-                  id={obj?._id}
-                  city={obj?.registrationCity}
-                  assembly={obj?.assembly}
-                  color={obj?.bodyColor}
-                  bodyType={obj?.bodyType}
-                  engineCapacity={obj?.engineCapacity}
-                  date={obj.createdAt}
-                  isFavs={obj.isFav}
-                  createdBy={obj.createdBy}
-                  updatedAt={obj.updatedAt}
-                  data={obj}
-                />
-              </Grid>
-              <Grid item xs={12} lg={6} md={6}>
+            <Grid
+              item
+              xs={12}
+              lg={6}
+              md={6}
+              // className={scrollable}
+              style={{
+                maxHeight:
+                  size.mobile || size.mobileLarge ? '100%' : sliderHeight,
+                overflowY: 'auto'
+              }}
+            >
+              <Box>
                 <CarDetail
                   mainButton={mainButton}
                   numButton={numButton}
@@ -111,11 +157,11 @@ const CarDetailContainer = () => {
                   createdBy={obj.createdBy}
                   data={obj}
                 />
-              </Grid>
-              <Grid item xs={12}>
+              </Box>
+              <Box className={section}>
                 <CarDescription description={obj?.description} />
-              </Grid>
-              <Grid item xs={12} lg={6}>
+              </Box>
+              <Box className={section}>
                 <CarInformation
                   carTitle={carTitle}
                   info={CarInfo}
@@ -131,12 +177,13 @@ const CarDetailContainer = () => {
                   updatedAt={obj.updatedAt}
                   createdBy={obj.createdBy}
                 />
-              </Grid>
-              <Grid item xs={12} lg={6}>
+              </Box>
+              <Box className={section}>
                 <CarFeatures features={carFeatures} />
-              </Grid>
+              </Box>
             </Grid>
-          )}
+          </Grid>
+        )}
       </Paper>
       <Toast
         open={open}
@@ -149,3 +196,12 @@ const CarDetailContainer = () => {
 };
 
 export default CarDetailContainer;
+
+const useStyles = makeStyles((theme) => ({
+  loader: {
+    margin: '300px 0px'
+  },
+  section: {
+    marginTop: '20px'
+  }
+}));

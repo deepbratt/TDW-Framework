@@ -132,7 +132,7 @@ const CarDetail: React.FC<any> = ({
   return (
     <Grid
       container
-      style={{ display: 'inline-block', height: '100%' }}
+      style={{ display: 'inline-block' }}
       className={greyBackground}
     >
       <Grid className={root} container item xs={12}>

@@ -21,7 +21,6 @@ const CarInformation = ({
       className={greyBackground}
       style={{
         display: 'flex',
-        height: '100%'
       }}
     >
       <Grid item xs={6} style={{height:"100%"}}>

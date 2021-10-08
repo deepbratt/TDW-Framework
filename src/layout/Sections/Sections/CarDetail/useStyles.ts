@@ -109,10 +109,11 @@ export const useStyles = makeStyles(() => ({
     },
     '& .carousel .thumbs-wrapper': {
       marginTop: '10px',
-      marginBottom: '0px'
+      marginBottom: '0px',
     },
     '& .carousel .thumbs-wrapper ul li': {
-      borderRadius: '15px'
+      borderRadius: '15px',
+      height:"100px",
     },
     // '&  .carousel .control-prev.control-arrow:before': {
     //   color: 'black',
@@ -126,7 +127,7 @@ export const useStyles = makeStyles(() => ({
   detail: {
     // marginTop: '20px',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   main: {
     display: 'flex',

@@ -16,7 +16,6 @@ const CarFeatures = ({ features }: CarFeaturesProps) => {
       className={greyBackground}
       style={{
         display: 'flex',
-        height: '100%'
       }}
     >
       <Grid item xs={12} style={{ color: gray, display: 'flex' }}>

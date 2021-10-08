@@ -59,7 +59,6 @@ const CarDetailContainer = () => {
           ? sliderColumn.current?.clientHeight
           : 500
       );
-      console.log(sliderColumn.current?.clientHeight);
     }
   }, [sliderColumn.current?.clientHeight, isLoading]);
 

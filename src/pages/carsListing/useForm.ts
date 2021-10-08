@@ -52,6 +52,7 @@ export const useForm = (validateOnChange = true) => {
   const carFilters = useSelector(
     (state: RootState) => state.carFilters.filters
   );
+  const {user} = useSelector((state:RootState)=>state.auth)
   const {
     ADS,
     CARS,
@@ -330,7 +331,7 @@ export const useForm = (validateOnChange = true) => {
     setIsLoading(true);
     getAllCars();
     // eslint-disable-next-line
-  }, [page, carFilters]);
+  }, [page, carFilters, user]);
 
   function ItemExists(itemId: string) {
     let newshortListCars = shortListCars;

@@ -5,8 +5,11 @@ import { getSingleCar } from '../../Utils/hooks/endpoints';
 import { useEffect } from 'react';
 import { getAllData } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 const Actions = (Id?: string | '') => {
+  const {user} = useSelector((state:RootState)=>state.auth)
   const [isLoading, setIsLoading] = useState(false);
   const [obj, setObj] = useState<ICarCard>();
   const [open, setOpen] = useState(false);
@@ -20,9 +23,10 @@ const Actions = (Id?: string | '') => {
   useEffect(() => {
     if (Id) {
       getFeatures();
+      setObj(undefined)
       loadSingleData(getSingleCar, Id);
     }
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (featuresArray.length > 0 && obj) {

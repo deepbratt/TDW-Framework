@@ -26,10 +26,14 @@ import {
   SOLD_HERE_DIALOG_REJECT,
   SOLD_HERE_DIALOG_TITLE
 } from '../../../../Utils/constants/language/en/addEditCarTexts';
-import { Box, IconButton } from '@material-ui/core';
+import {
+  Box,
+  IconButton
+} from '@material-ui/core';
 import { Favorite, LocationOnOutlined } from '@material-ui/icons';
 import { addToFavs, removeFavs } from '../../../../Utils/hooks/endpoints';
 import Actions from '../../../../pages/carDetail/useFunctions';
+import LoginModal from '../../../../pages/login/LoginModal';
 
 const CarDetail: React.FC<any> = ({
   Title,
@@ -62,6 +66,7 @@ const CarDetail: React.FC<any> = ({
   const [openDialog, setOpenDialog] = useState(false);
   const [isFavorite, setIsFavorite] = useState<boolean | undefined>(data.isFav);
   const [toastType, setToastType] = useState('');
+  const [signinModal, setSigninModal] = useState(false);
   const { addFavs, open, setOpen, responseMessage } = Actions();
   const {
     root,
@@ -77,7 +82,7 @@ const CarDetail: React.FC<any> = ({
     btn
   } = useStyles();
   const { navyBlue } = Colors;
-  const defaultMarginTop = "30px"
+  const defaultMarginTop = '30px';
   const toggleSold = (soldHere: boolean = false) => {
     let soldUnsold = isSold
       ? API_ENDPOINTS.MARK_UNSOLD
@@ -129,6 +134,15 @@ const CarDetail: React.FC<any> = ({
     });
   };
 
+  const toggleFavourite = (itemId: string) => {
+    if (user._id) {
+      addFavs(isFavorite ? removeFavs : addToFavs, itemId);
+      setIsFavorite(!isFavorite);
+    } else {
+      setSigninModal(true);
+    }
+  };
+
   return (
     <Grid
       container
@@ -147,22 +161,16 @@ const CarDetail: React.FC<any> = ({
             <Box>
               <Typography variant="h2">{Title}</Typography>
               <Box display="flex" alignItems="center" className={sub}>
-                  <LocationOnOutlined fontSize="small" />
+                <LocationOnOutlined fontSize="small" />
                 <Typography variant="subtitle1">
                   {/* <img width="20px" src={locIcon} alt="" /> */}
                   {location}
                 </Typography>
               </Box>
             </Box>
-            {!user?._id || user?._id === createdBy?._id ? null : (
+            {user?._id === createdBy?._id ? null : (
               <IconButton
-                onClick={() => {
-                  if (data._id) {
-                    addFavs(isFavorite ? removeFavs : addToFavs, data._id);
-                    // setColorChange(isFavorite ? true : false);
-                    setIsFavorite(!isFavorite);
-                  }
-                }}
+                onClick={() => toggleFavourite(data._id)}
                 className={btn}
               >
                 {isFavorite ? (
@@ -173,7 +181,7 @@ const CarDetail: React.FC<any> = ({
               </IconButton>
             )}
           </Grid>
-          <Grid item xs={12} style={{marginTop:defaultMarginTop}}>
+          <Grid item xs={12} style={{ marginTop: defaultMarginTop }}>
             <Typography style={{ color: navyBlue }} variant="h2">
               PKR {price?.toLocaleString()}
             </Typography>
@@ -182,7 +190,11 @@ const CarDetail: React.FC<any> = ({
             <Grid
               item
               xs={12}
-              style={{ display: 'flex', flexWrap: 'wrap',marginTop:defaultMarginTop }}
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                marginTop: defaultMarginTop
+              }}
               justifyContent="space-between"
             >
               <Button
@@ -219,7 +231,7 @@ const CarDetail: React.FC<any> = ({
             </Grid>
           ) : null}
           <Grid
-            style={{ display: 'flex',marginTop:defaultMarginTop}}
+            style={{ display: 'flex', marginTop: defaultMarginTop }}
             justifyContent="space-between"
             item
             lg={12}
@@ -262,7 +274,7 @@ const CarDetail: React.FC<any> = ({
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} style={{marginTop:defaultMarginTop}}>
+          <Grid item xs={12} style={{ marginTop: defaultMarginTop }}>
             {createdBy?.phone && (
               <Grid className={grid} item xs={12}>
                 <Button
@@ -306,6 +318,10 @@ const CarDetail: React.FC<any> = ({
         title={SOLD_HERE_DIALOG_TITLE}
         confirmBtnLabel={SOLD_HERE_DIALOG_OK}
         rejectBtnLabel={SOLD_HERE_DIALOG_REJECT}
+      />
+      <LoginModal
+        openModal={signinModal}
+        closeModal={() => setSigninModal(false)}
       />
       <Toast
         message={toastMessage}

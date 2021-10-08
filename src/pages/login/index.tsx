@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import Toast from '../../components/Toast';
 import { routes, paths } from '../../routes/paths';
-import Grid from '@material-ui/core/Grid';
+import Grid, { GridSize } from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -27,8 +27,19 @@ import GlobalStyles from '../../globalStyles';
 import PasswordField from '../../components/InputField/PasswordField';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
+interface LoginProps {
+  formColLg?: boolean | GridSize | undefined;
+  formColMd?: boolean | GridSize | undefined;
+  formColXs?: boolean | GridSize | undefined;
+  loginCallback?: () => void;
+}
 
-const Login = () => {
+const Login = ({
+  formColLg = 4,
+  formColMd = 8,
+  formColXs = 10,
+  loginCallback
+}: LoginProps) => {
   const history = useHistory();
   const {
     loginFormGrid,
@@ -72,7 +83,7 @@ const Login = () => {
         canonical={PageMeta.login.canonical}
         keywords={PageMeta.login.keywords}
       />
-      <Grid item xs={10} md={8} lg={4}>
+      <Grid item xs={formColXs} md={formColMd} lg={formColLg}>
         {isLoading && <LinearProgress color="secondary" />}
         <Card className={formCard}>
           <Typography variant="h6" gutterBottom>
@@ -145,7 +156,9 @@ const Login = () => {
             >
               {SIGNIN}
             </Button>
-            {responseMessage.status === 'success' && history.push(routes.home)}
+            {responseMessage.status === 'success' && !loginCallback
+              ? history.push(routes.home)
+              : responseMessage.status === 'success' && loginCallback && loginCallback()}
           </form>
         </Card>
       </Grid>

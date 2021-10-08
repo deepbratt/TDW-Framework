@@ -32,6 +32,9 @@ const Dropdown: React.FC<DropdownProps | any> = (props) => {
       InputProps={{
         classes: { input: input }
       }}
+      InputLabelProps={{
+        shrink: !value ? false : true
+      }}
       {...props}
     >
       {options.map((option: any) => (

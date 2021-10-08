@@ -47,4 +47,4 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## To run the application in local machine
 
-Create .env file under parent folder and copy the values from .env.example 
+Create .env file under root folder and copy the values from .env.example 

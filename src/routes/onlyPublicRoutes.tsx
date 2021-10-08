@@ -1,10 +1,10 @@
 import { Route, Redirect, RouteProps, useHistory, useLocation } from "react-router-dom";
-import { connect, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Layout from "../layout";
 import { RootState } from "../redux/store";
 
 export type ProtectedRouteProps = {
-  component: React.ComponentType;
+  component: React.ComponentType<any>;
   // isLoggedIn: boolean;
 } & RouteProps;
 

@@ -15,8 +15,6 @@ export const useStyles = makeStyles(() => ({
     }
   },
   sub: {
-    display: 'flex',
-    margin: '10px 0px 30px 0px',
     color: grey
   },
   type: {
@@ -75,26 +73,29 @@ export const useStyles = makeStyles(() => ({
       width: '20%'
     },
     '& .carousel.carousel-slider .control-arrow': {
-      background: white,
-      height: '13%',
-      top: '180px',
+      background: 'black',
+      height: '50px',
+      width: '50px',
+      top: '50%',
+      transform: 'translateY(-50%)',
       borderRadius: '50px',
-      padding: '5px 15px 5px 15px',
-      opacity: '10',
+      // padding: '5px 15px 5px 15px',
+      opacity: 0.5,
       '&:hover': {
-        background: white
-      },
-      [breakpoints.only('md')]: {
-        top: '250px'
-      },
-      [breakpoints.only('sm')]: {
-        top: '260px',
-        height: '10%'
-      },
-      [breakpoints.down('xs')]: {
-        top: '120px',
-        height: '20%'
+        background: 'black',
+        opacity: 1
       }
+      // [breakpoints.only('md')]: {
+      //   top: '250px'
+      // },
+      // [breakpoints.only('sm')]: {
+      //   top: '260px',
+      //   height: '10%'
+      // },
+      // [breakpoints.down('xs')]: {
+      //   top: '120px',
+      //   height: '20%'
+      // }
     },
     '& .carousel .thumb,.carousel .thumb.selected, .carousel .thumb:hover': {
       border: 'none'
@@ -111,16 +112,17 @@ export const useStyles = makeStyles(() => ({
       marginBottom: '0px'
     },
     '& .carousel .thumbs-wrapper ul li': {
-      borderRadius: '15px'
-    },
-    '&  .carousel .control-prev.control-arrow:before': {
-      color: 'black',
-      borderRight: '8px solid black'
-    },
-    '&  .carousel .control-next.control-arrow:before': {
-      color: 'black',
-      borderLeft: '8px solid black'
+      borderRadius: '15px',
+      height: '100px'
     }
+    // '&  .carousel .control-prev.control-arrow:before': {
+    //   color: 'black',
+    //   borderRight: '8px solid black'
+    // },
+    // '&  .carousel .control-next.control-arrow:before': {
+    //   color: 'black',
+    //   borderLeft: '8px solid black'
+    // }
   },
   detail: {
     // marginTop: '20px',
@@ -154,15 +156,10 @@ export const useStyles = makeStyles(() => ({
     marginLeft: '5px'
   },
   btn: {
-    background: ColorConstant.lightBlue,
+    background: ColorConstant.greyFive,
     boxShadow: 'none',
-    // padding: '10px 0px',
-    position: 'absolute',
-    zIndex: 2,
-    top: '10px',
-    right: '10px',
     '&:hover': {
-      background: ColorConstant.greyFour,
+      background: ColorConstant.greyTwo,
       boxShadow: 'none'
     }
   },
@@ -182,7 +179,7 @@ export const useStyles = makeStyles(() => ({
     color: gray,
     backgroundColor: ColorConstant.lightBlue,
     border: '1px solid ' + ColorConstant.greyFive,
-    padding: '5px',
+    padding: '15px',
     borderRadius: '5px'
     // marginTop:"20px"
   },
@@ -191,15 +188,26 @@ export const useStyles = makeStyles(() => ({
     color: '#fff',
     display: 'flex',
     justifyContent: 'flex-start',
-    padding:"10px",
+    padding: '10px',
     alignItems: 'center',
     flexDirection: 'column',
-    background:"rgba(0,0,0,0.75)",
+    background: 'rgba(0,0,0,0.75)'
     // overflowY:"auto"
   },
-  fullScreenImageStyle:{
+  fullScreenImageStyle: {
     display: 'flex',
     alignItems: 'center',
-    marginBottom:"5px",
+    marginBottom: '5px'
   },
+  sliderImageWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    cursor: 'pointer',
+    backgroundColor: ColorConstant.lightBlue,
+    height: '600px',
+    [theme.breakpoints.down("md")]:{
+      height:"auto"
+    }
+  }
 }));

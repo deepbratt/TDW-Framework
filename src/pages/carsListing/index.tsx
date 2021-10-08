@@ -366,7 +366,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                   container
                   xs={12}
                   // justifyContent="center";
-                  spacing={2}
+                  spacing={3}
                 >
                   {result &&
                     result.map((car: any, index: any) => (
@@ -374,7 +374,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                         key={`cars-card-${index}`}
                         item
                         xs={12}
-                        sm={layoutType === 'list' ? 12 : 4}
+                        sm={layoutType === 'list' ? 12 : 6}
                       >
                         <ListingCard
                           data={car}

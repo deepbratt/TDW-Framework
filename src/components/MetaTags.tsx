@@ -14,10 +14,10 @@ const MetaTags = ({ canonical, title, description, keywords } : MetaTagsProps) =
   }, [title]);
   return (
     <Helmet defer={false}>
-      <meta property="og:url" content="https://tezdealz.com/" />
+      <meta property="og:url" content="https://carokta.com/" />
       <meta property="og:title" content={title} />
       <meta property="og:image" content="%PUBLIC_URL%/favicon.ico"/>
-      <meta property="og:site_name" content="Tezdealz" />
+      <meta property="og:site_name" content="Carokta" />
       <meta property="og:description" content={description} />
 
       <meta name="twitter:card" content="summary" />
@@ -27,7 +27,7 @@ const MetaTags = ({ canonical, title, description, keywords } : MetaTagsProps) =
 
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
-      <link rel="canonical" href={"https://Tezdealz.com/" + canonical} />
+      <link rel="canonical" href={"https://Carokta.com/" + canonical} />
       <title>{title}</title>
     </Helmet>
   );

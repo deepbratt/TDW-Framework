@@ -39,6 +39,7 @@ export const Data = [
 ]
 
 export const carTitle = "Car Comparisons";
+export const carFeatures = "Car Features";
 export const carLink = "All Car Comparisons";
 export const appTitle = "Download our App";
 export const ios = "For iOS";

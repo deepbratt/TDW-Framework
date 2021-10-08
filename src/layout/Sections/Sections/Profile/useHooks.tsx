@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 import {Colors} from "../../Utils/color.constants"
 import { useSelector } from "react-redux";
@@ -21,7 +21,11 @@ const useHooks = () => {
     newPassword: "",
     confirmPassword: ""
   });
-  const [number, setNumber] = useState(user.phone.slice(3));
+  const [number, setNumber] = useState<string|number|any>();
+
+  useEffect(()=>{
+    setNumber(user.phone ? user.phone.slice(3) : "")
+  },[user.phone])
   const handleChange = (e: any) => {
     const { value, name } = e.target;
     setVal({

@@ -1,105 +1,105 @@
 const PageMeta = {
     home:{
-        title:"Home | Tezdealz",
+        title:"Home | Carokta",
         canonical:"",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     carListing:{
-        title:"Search | Tezdealz",
+        title:"Search | Carokta",
         canonical:"cars",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     advanceFilters:{
-        title:"Advance Search | Tezdealz",
+        title:"Advance Search | Carokta",
         canonical:"search-used-cars",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     shortList:{
-        title:"Select Cars | Tezdealz",
+        title:"Select Cars | Carokta",
         canonical:"cars-shortlist",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     carComparision:{
-        title:"Car Comparision | Tezdealz",
+        title:"Car Comparision | Carokta",
         canonical:"car-comparision",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     profile:{
-        title:"Profile | Tezdealz",
+        title:"Profile | Carokta",
         canonical:"dashboard/profile",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     orders:{
-        title:"Orders | Tezdealz",
+        title:"Orders | Carokta",
         canonical:"dashboard/orders",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     favorites:{
-        title:"Favorites | Tezdealz",
+        title:"Favorites | Carokta",
         canonical:"dashboard/favorites",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     myAds:{
-        title:"My Ads | Tezdealz",
+        title:"My Ads | Carokta",
         canonical:"dashboard/ads",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     help:{
-        title:"Help | Tezdealz",
+        title:"Help | Carokta",
         canonical:"dashboard/help",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     carDetails:{
-        title:"Car Details | Tezdealz",
+        title:"Car Details | Carokta",
         canonical:"car-detail",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     addCar:{
-        title:"Create an Ad | Tezdealz",
+        title:"Create an Ad | Carokta",
         canonical:"add-edit/car",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     editCar:{
-        title:"Edit an Ad | Tezdealz",
+        title:"Edit an Ad | Carokta",
         canonical:"add-edit/car",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     login:{
-        title:"Login | Tezdealz",
+        title:"Login | Carokta",
         canonical:"login",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     signup:{
-        title:"Signup | Tezdealz",
+        title:"Signup | Carokta",
         canonical:"signup",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     forgotPassword:{
-        title:"Forgot Password | Tezdealz",
+        title:"Forgot Password | Carokta",
         canonical:"forgot-password",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
     resetToken:{
-        title:"Reset Password | Tezdealz",
+        title:"Reset Password | Carokta",
         canonical:"forgot-password/reset-password",
-        keywords:"Tezdealz, buy, sell, cars, electronics, property",
-        description:"Tezdealz is an online platform to buy and sell products"
+        keywords:"Carokta, buy, sell, cars, electronics, property",
+        description:"Carokta is an online platform to buy and sell products"
     },
 }
 

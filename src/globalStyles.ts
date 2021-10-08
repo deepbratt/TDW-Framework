@@ -2,6 +2,23 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Color } from './theme/color';
 
 const GlobalStyles = makeStyles((theme) => ({
+  '@global': {
+    '*::-webkit-scrollbar': {
+      width: '0.5rem',
+      borderRadius:"10px",
+    },
+    '*::-webkit-scrollbar-track': {
+      // '-webkit-box-shadow': '0px 0px red',
+      // backgroundColor:Color.secondary,
+      backgroundColor:"darkgrey",
+      borderRadius:"10px",
+    },
+    '*::-webkit-scrollbar-thumb': {
+      backgroundColor:"grey",
+      borderRadius:"10px",
+      // outline: '1px solid green'
+    }
+  },
   multipleInput: {
     minWidth: '100%'
   },

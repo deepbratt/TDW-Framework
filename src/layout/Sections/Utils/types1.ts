@@ -87,7 +87,8 @@ interface IArray {
     isFavs?: boolean;
     createdBy: any;
     updatedAt: string;
-    data:any
+    data:any,
+    imageLoaded: any,
   }
   
   

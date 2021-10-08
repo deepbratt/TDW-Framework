@@ -8,20 +8,17 @@ interface CarFeaturesProps {
   features: Array<any>;
 }
 const CarFeatures = ({ features }: CarFeaturesProps) => {
-  const { greyBackground, featureBox, title } = useStyles();
+  const {  featureBox, title } = useStyles();
   const { gray } = Colors;
   return (
     <Grid
       container
-      className={greyBackground}
-      style={{
-        display: 'flex',
-      }}
+      spacing={2}
     >
-      <Grid item xs={12} style={{ color: gray, display: 'flex' }}>
+      <Grid item xs={12} style={{ color: gray}}>
         <Typography variant="h2">{carFeatures}</Typography>
       </Grid>
-      <Grid container style={{ display: 'flex', flexFlow: 'wrap' }}>
+      {/* <Grid container style={{flexWrap: 'wrap' }}> */}
         {features ? (
           features.map((data, index) => {
             return (
@@ -51,7 +48,7 @@ const CarFeatures = ({ features }: CarFeaturesProps) => {
         ) : (
           <Typography>No Features Available</Typography>
         )}
-      </Grid>
+      {/* </Grid> */}
     </Grid>
   );
 };

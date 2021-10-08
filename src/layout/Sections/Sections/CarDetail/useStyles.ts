@@ -175,14 +175,14 @@ export const useStyles = makeStyles(() => ({
   link: {
     color: white
   },
-  greyBackground: {
-    color: gray,
-    backgroundColor: ColorConstant.lightBlue,
-    border: '1px solid ' + ColorConstant.greyFive,
-    padding: '15px',
-    borderRadius: '5px'
-    // marginTop:"20px"
-  },
+  // greyBackground: {
+  //   color: gray,
+  //   backgroundColor: ColorConstant.lightBlue,
+  //   border: '1px solid ' + ColorConstant.greyFive,
+  //   padding: '15px',
+  //   borderRadius: '5px'
+  //   // marginTop:"20px"
+  // },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff',

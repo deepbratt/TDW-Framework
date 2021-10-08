@@ -52,7 +52,8 @@ const FindCarsStyles = makeStyles((theme) => ({
   },
   tabRoot: {
     margin: '0',
-    color: Colors.textPrimary
+    color: Colors.textPrimary,
+    minWidth: '12.5rem'
   },
   tabContainer: {
     borderBottom: 'none'
@@ -68,7 +69,8 @@ const FindCarsStyles = makeStyles((theme) => ({
     padding: '0 10px',
     '&:hover': {
       boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.15)'
-    }
+    },
+    fontSize: '0.9rem'
   },
   tabWrapperSelected: {
     display: 'flex',

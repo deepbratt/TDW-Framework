@@ -30,9 +30,9 @@ import {
   SHORTLIST_ITEMS,
   COMPARE,
   CANT_FIND_RESULT,
-  CHOOSE_CARS_TO_COMPARE,
   RESET,
-  CLOSE
+  CLOSE,
+  CLEAR_SHORTLIST_ITEMS
 } from '../../Utils/constants/language/en/buttonLabels';
 import FullScreenDialog from '../../components/DialogBox/FullScreenDialog';
 import { useForm } from './useForm';
@@ -53,7 +53,7 @@ export interface CarsListingProps {
   isShortlist?: boolean;
 }
 
-const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
+const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
   const history = useHistory();
 
   const {
@@ -92,7 +92,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
     models,
     bodyTypes,
     resetForm,
-    bodyColors
+    bodyColors,
+    clearShortListedCars
   } = useForm();
 
   const [open, setOpen] = React.useState(false);
@@ -191,7 +192,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
         </Grid>
         <Grid item container xs={12} md={8} xl={9}>
           <Grid item xs={12} className={contentRoot}>
-            {isShortlist && (
+            {/* {isShortlist && (
               <Typography
                 style={{ marginBottom: '20px' }}
                 variant="h3"
@@ -200,7 +201,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
               >
                 {CHOOSE_CARS_TO_COMPARE}
               </Typography>
-            )}
+            )} */}
             <Hidden mdUp>
               <Grid item container justifyContent="space-between" xs={12}>
                 <Grid item>
@@ -308,10 +309,15 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
             </Hidden>
             {isShortlist === true && shortListCars.length >= 1 && (
               <Grid item container xs={12}>
-                <Grid item container xs={6} alignContent="center">
+                <Grid item container xs={12} justifyContent = "space-between" alignItems="center">
                   <Typography variant="button" gutterBottom>
                     {SHORTLIST_ITEMS}
                   </Typography>
+                  <Chip
+                    label={RESET}
+                    onClick={() => clearShortListedCars()}
+                    color="secondary"
+                  />
                 </Grid>
                 <Fab
                   variant="extended"
@@ -326,6 +332,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                 </Fab>
                 <Grid item container xs={12} spacing={1}>
                   {shortListCars &&
+                    shortListCars.length > 0 ?
                     shortListCars.map((item: ICarCard) => (
                       <Grid
                         key={`shotlist-item-${item._id}`}
@@ -342,7 +349,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                           handleClick={() => removeShortListItem(item._id)}
                         />
                       </Grid>
-                    ))}
+                    )): null}
                 </Grid>
               </Grid>
             )}
@@ -380,9 +387,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = false }) => {
                           data={car}
                           isFavs={!isShortlist}
                           layoutType={layoutType}
-                          handleClick={
-                            isShortlist ? () => shortListItem(car) : undefined
-                          }
+                          handleShortList={() => shortListItem(car)}
+                          removeShortListed={() => removeShortListItem(car._id)}
                         />
                       </Grid>
                     ))}

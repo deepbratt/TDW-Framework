@@ -1,7 +1,7 @@
-import Grid from "@material-ui/core/Grid"
-import Typography from "@material-ui/core/Typography"
-import Hidden from "@material-ui/core/Hidden"
-import Paper from "@material-ui/core/Paper"
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Hidden from '@material-ui/core/Hidden';
+import Paper from '@material-ui/core/Paper';
 import { useStyles } from '../useStyles';
 import { useEffect } from 'react';
 import CarListing from '../../../../../components/ListingCard/';
@@ -24,11 +24,29 @@ import Loader from '../../../../../components/Loader';
 import { API_ENDPOINTS } from '../../../../../Utils/API/endpoints';
 import { routes } from '../../../../../routes/paths';
 import { Link } from 'react-router-dom';
+import Toast from '../../../../../components/Toast';
+import useShortListCars from '../../../../../Utils/hooks/useShortListCars';
+import ListingCard from '../../../../../components/ListingCard/';
+import ShortListItems from '../../ShortListItems';
 
 const Container = () => {
   const { heading, box, favContainer, loading, pagination, layout } =
     useStyles();
-  const { isLoading, data, page, pageCount, dataLimit, fetchData } = Actions();
+  const {
+    isLoading,
+    data,
+    page,
+    pageCount,
+    dataLimit,
+    fetchData,
+    setResponseMessage,
+    responseMessage,
+    open,
+    setOpen
+  } = Actions();
+
+  const { clearShortListedCars, removeShortListItem, shortListItem } =
+    useShortListCars();
 
   const { layoutType } = useSelector((state: RootState) => state.layout);
 
@@ -41,6 +59,20 @@ const Container = () => {
   useEffect(() => {
     getMyCars(1);
   }, []);
+
+  const handleAddToShortListItem = (item: any) => {
+    setOpen(true);
+    setResponseMessage(shortListItem(item));
+  };
+  const handleRemoveShortListItem = (itemId: string) => {
+    setOpen(true);
+    setResponseMessage(removeShortListItem(itemId));
+  };
+
+  const handleResetShortList = () => {
+    setOpen(true);
+    setResponseMessage(clearShortListedCars());
+  };
 
   return (
     <Grid style={{ display: 'flex' }} container>
@@ -68,24 +100,27 @@ const Container = () => {
               <Grid item xs={12} justifyContent="flex-start" container>
                 <LayoutToggler />
               </Grid>
+              <ShortListItems
+                clearShortListedCars={handleResetShortList}
+                removeShortListItem={handleRemoveShortListItem}
+              />
               {data.map((item: any, index: number) => (
                 <Grid item lg={layoutType === 'list' ? 12 : 4} xs={12} sm={12}>
-                  <Link
-                    to={
-                      routes.carDetail.substr(
-                        0,
-                        routes.carDetail.lastIndexOf('/') + 1
-                      ) + item._id
-                    }
-                    target="_blank"
-                  >
-                    <CarListing
+                  {/* <CarListing
                       data={item}
                       layoutType={layoutType}
                       isFavs={false}
                       span={createdAt}
-                    />
-                  </Link>
+                    /> */}
+                  <ListingCard
+                    data={item}
+                    isFavs={false}
+                    layoutType={layoutType}
+                    handleShortList={() => handleAddToShortListItem(item)}
+                    removeShortListed={() =>
+                      handleRemoveShortListItem(item._id)
+                    }
+                  />
                 </Grid>
               ))}
             </Grid>
@@ -99,6 +134,12 @@ const Container = () => {
           />
         </Grid>
       </Paper>
+      <Toast
+        open={open}
+        type={responseMessage.status}
+        message={responseMessage.message}
+        onClose={() => setOpen(false)}
+      />
     </Grid>
   );
 };

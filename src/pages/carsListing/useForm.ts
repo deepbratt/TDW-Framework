@@ -376,6 +376,16 @@ export const useForm = (validateOnChange = true) => {
     });
   };
 
+  const clearShortListedCars = () =>{
+    let temp : any[] = []
+    dispatch(setShortlistCars(temp));
+    setAlertOpen(true);
+    setResponseMessage({
+      status: 'success',
+      message: 'Removed all short listed cars'
+    });
+  }
+
   return {
     errors,
     setErrors,
@@ -409,6 +419,7 @@ export const useForm = (validateOnChange = true) => {
     makes,
     models,
     bodyTypes,
-    bodyColors
+    bodyColors,
+    clearShortListedCars
   };
 };

@@ -20,6 +20,9 @@ import Loader from '../../../../components/Loader';
 import { API_ENDPOINTS } from '../../../../Utils/API/endpoints';
 import { Link } from 'react-router-dom';
 import { routes } from '../../../../routes/paths';
+import ListingCard from '../../../../components/ListingCard/';
+import useShortListCars from '../../../../Utils/hooks/useShortListCars';
+import ShortListItems from '../ShortListItems';
 const Container = () => {
   const { heading, box, favContainer, loading, pagination, layout } =
     useStyles();
@@ -33,8 +36,11 @@ const Container = () => {
     fetchData,
     pageCount,
     page,
-    dataLimit
+    dataLimit,
+    setResponseMessage
   } = Actions();
+  const { clearShortListedCars, removeShortListItem, shortListItem } =
+    useShortListCars();
 
   const handleClose = (): void => {
     setOpen(false);
@@ -52,6 +58,19 @@ const Container = () => {
   useEffect(() => {
     getFavs(1);
   }, []);
+  const handleAddToShortListItem = (item: any) => {
+    setOpen(true);
+    setResponseMessage(shortListItem(item));
+  };
+  const handleRemoveShortListItem = (itemId: string) => {
+    setOpen(true);
+    setResponseMessage(removeShortListItem(itemId));
+  };
+
+  const handleResetShortList = () => {
+    setOpen(true);
+    setResponseMessage(clearShortListedCars());
+  };
 
   const { layoutType } = useSelector((state: RootState) => state.layout);
 
@@ -85,25 +104,22 @@ const Container = () => {
               <Grid item xs={12} justifyContent="flex-start" container>
                 <LayoutToggler />
               </Grid>
+              <ShortListItems
+                clearShortListedCars={handleResetShortList}
+                removeShortListItem={handleRemoveShortListItem}
+              />
               {data.map((item: any, index: number) => (
                 <Grid item lg={layoutType === 'list' ? 12 : 4} xs={12} sm={12}>
-                  <Link
-                    to={
-                      routes.carDetail.substr(
-                        0,
-                        routes.carDetail.lastIndexOf('/') + 1
-                      ) + item._id
+                  <ListingCard
+                    data={item}
+                    isFavs={isFavs}
+                    handleFavs={handleFavs}
+                    layoutType={layoutType}
+                    handleShortList={() => handleAddToShortListItem(item)}
+                    removeShortListed={() =>
+                      handleRemoveShortListItem(item._id)
                     }
-                    target="_blank"
-                  >
-                    <CarListing
-                      data={item}
-                      layoutType={layoutType}
-                      isFavs={isFavs}
-                      handleFavs={handleFavs}
-                      // handleClick={()=>console.log(item)}
-                    />
-                  </Link>
+                  />
                 </Grid>
               ))}
 

@@ -6,6 +6,7 @@ import { Colors } from '../../Utils/color.constants';
 import {
   ACTIVE,
   INACTIVE,
+  REQUEST_APPOINTMENT,
   SOLD,
   UNSOLD
 } from '../../../../Utils/constants/language/en/buttonLabels';
@@ -32,6 +33,7 @@ import { addToFavs, removeFavs } from '../../../../Utils/hooks/endpoints';
 import Actions from '../../../../pages/carDetail/useFunctions';
 import LoginModal from '../../../../pages/login/LoginModal';
 import CarInformation from './CarInformation';
+import AppointmentForm from '../../../../components/AppointmentForm';
 
 const CarDetail: React.FC<any> = ({
   Title,
@@ -65,9 +67,9 @@ const CarDetail: React.FC<any> = ({
   const [isFavorite, setIsFavorite] = useState<boolean | undefined>(data.isFav);
   const [toastType, setToastType] = useState('');
   const [signinModal, setSigninModal] = useState(false);
+  const [appointmentForm, setAppointmentForm] = useState(false);
   const { addFavs, open, setOpen, responseMessage } = Actions();
-  const { root, sub, type, numBtn, icon, btn } =
-    useStyles();
+  const { root, sub, type, numBtn, icon, btn } = useStyles();
   const { navyBlue } = Colors;
   const defaultMarginTop = '50px';
   const toggleSold = (soldHere: boolean = false) => {
@@ -267,8 +269,10 @@ const CarDetail: React.FC<any> = ({
             <Button
               fullWidth
               className={numBtn}
-              startIcon={<Phone/>}>
-              Request Appointment
+              startIcon={<Phone />}
+              onClick={() => setAppointmentForm(true)}
+            >
+              {REQUEST_APPOINTMENT}
             </Button>
           </Grid>
         </Grid>
@@ -281,6 +285,13 @@ const CarDetail: React.FC<any> = ({
         title={SOLD_HERE_DIALOG_TITLE}
         confirmBtnLabel={SOLD_HERE_DIALOG_OK}
         rejectBtnLabel={SOLD_HERE_DIALOG_REJECT}
+      />
+      <AppointmentForm
+        open={appointmentForm}
+        handleClose={() => setAppointmentForm(false)}
+        fullName={user.firstName ? `${user.firstName} ${user.lastName}` : ''}
+        phone={user.phone}
+        handleSubmit={(name, number) => null}
       />
       <LoginModal
         openModal={signinModal}

@@ -15,6 +15,7 @@ import { logout } from './redux/reducers/authSlice';
 import { RootState } from './redux/store';
 import ErrorBoundary from './components/ErrorBoundary';
 import WithClearCache from './components/ClearCache';
+import { setShortlistCars } from './redux/reducers/shortlistCarsSlice';
 
 const generateClassName = createGenerateClassName({
   disableGlobal: true // or seed: 'something_unique' ?
@@ -52,7 +53,6 @@ function MainApp() {
     if(process.env.NODE_ENV === "development"){
       console.log("environment dev",process.env.REACT_APP_BASE_URL)
       console.log("environment", process.env.NODE_ENV)
-      // console.log("environment dev url", process.env.dev?.REACT_APP_BASE_URL)
     }
   }, []);
 

@@ -287,7 +287,8 @@ const Actions = () => {
     fetchData,
     pageCount,
     page,
-    dataLimit
+    dataLimit,
+    setResponseMessage
   };
 };
 

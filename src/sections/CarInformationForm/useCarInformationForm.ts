@@ -37,7 +37,7 @@ const useCarInformationForm = (formData: any, setFormData: React.Dispatch<any>) 
       API_ENDPOINTS.ADS +
         API_ENDPOINTS.CARS +
         API_ENDPOINTS.MAKE_MODELS +
-        makeId
+        makeId+"&sort=name"
     ).then((response) => {
       setIsLoading(false);
       if (response.status === 'success') {
@@ -57,7 +57,7 @@ const useCarInformationForm = (formData: any, setFormData: React.Dispatch<any>) 
       API_ENDPOINTS.ADS +
         API_ENDPOINTS.CARS +
         API_ENDPOINTS.MODEL_VERSIONS +
-        modelId
+        modelId+"&sort=name"
     ).then((response) => {
       setIsLoading(false);
       if (response.status === 'success') {

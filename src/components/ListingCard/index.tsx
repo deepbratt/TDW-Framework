@@ -129,7 +129,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
     } else {
       handleShortList && handleShortList();
     }
-    console.log(shortlistCars);
   };
 
   return (

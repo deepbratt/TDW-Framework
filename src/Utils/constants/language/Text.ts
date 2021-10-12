@@ -11,6 +11,8 @@ export const subTitle =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ";
 export const category = "category";
 export const filter = "Advanced Filters";
+export const AppointmentFormTitle = "Appointment Form"
+export const AppointmentFormDescription = "We will call you back within 24 hours after submission of this form"
 
 export const Data = [
   {

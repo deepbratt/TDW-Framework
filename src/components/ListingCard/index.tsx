@@ -28,6 +28,8 @@ import ConditionalLink from '../ConditionalLink';
 import { routes } from '../../routes/paths';
 import Sizes from '../../Utils/themeConstants';
 import LoginModal from '../../pages/login/LoginModal';
+import { Box } from '@material-ui/core';
+import Compare from '@material-ui/icons/Compare';
 export interface ListingCardProps {
   data: any;
   layoutType: string;
@@ -35,17 +37,24 @@ export interface ListingCardProps {
   isFavs?: boolean;
   handleFavs?: (id: string) => void;
   handleClick?: Function;
+  handleShortList?: Function;
+  removeShortListed?: Function;
 }
 
 const ListingCard: React.FC<ListingCardProps> = ({
   data,
   layoutType,
   handleFavs,
-  handleClick
+  handleClick,
+  handleShortList,
+  removeShortListed
 }) => {
   const { pathname } = useLocation();
   const { mobile } = Sizes();
   const { user, isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const { shortlistCars } = useSelector(
+    (state: RootState) => state.shortlistCars
+  );
   const { root, grid, featuredBadge, location, favsIconGrid, favsIconList } =
     ListingCardStyles();
   const {
@@ -73,7 +82,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const [toastType, setToastType] = useState('success');
   const [toastOpen, setToastOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [signinModal, setSigninModal] = useState(false)
+  const [signinModal, setSigninModal] = useState(false);
 
   const favs = (
     id: string,
@@ -81,8 +90,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
   ) => {
     e.stopPropagation();
     if (!isLoggedIn) {
-      setSigninModal(true)
-      return
+      setSigninModal(true);
+      return;
     }
     if (handleFavs) {
       handleFavs(id);
@@ -111,6 +120,18 @@ const ListingCard: React.FC<ListingCardProps> = ({
     }
   };
 
+  const toggleShortListCar = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    if (shortlistCars.filter((item) => item._id === _id).length > 0) {
+      removeShortListed && removeShortListed();
+    } else {
+      handleShortList && handleShortList();
+    }
+    console.log(shortlistCars);
+  };
+
   return (
     <>
       <Paper
@@ -130,36 +151,46 @@ const ListingCard: React.FC<ListingCardProps> = ({
           }}
         />
         <Loader open={isLoading} isBackdrop={true} />
-        {user._id !== createdBy ? (
-          <IconButton
-            onClick={(e) => {
-              favs(_id ? _id : '', e);
-            }}
-            className={
-              layoutType === 'grid' || mobile
-                ? favsIconGrid
-                : favsIconList
-            }
-          >
-            {isFavorite || pathname.indexOf('favorites') > -1 ? (
-              <Favorite color="primary" />
-            ) : (
-              <FavoriteBorder />
-            )}
+        <Box
+          className={
+            layoutType === 'grid' || mobile ? favsIconGrid : favsIconList
+          }
+        >
+          <IconButton onClick={(e) => toggleShortListCar(e)}>
+            <Compare
+              color={
+                shortlistCars.filter((e) => e._id === _id).length > 0
+                  ? 'primary'
+                  : 'inherit'
+              }
+            />
           </IconButton>
-        ) : null}
+          {user._id !== createdBy ? (
+            <IconButton
+              onClick={(e) => {
+                favs(_id ? _id : '', e);
+              }}
+            >
+              {isFavorite || pathname.indexOf('favorites') > -1 ? (
+                <Favorite color="primary" />
+              ) : (
+                <FavoriteBorder />
+              )}
+            </IconButton>
+          ) : null}
+        </Box>
         <ConditionalLink
           to={
             routes.carDetail.substr(0, routes.carDetail.lastIndexOf('/') + 1) +
             _id
           }
           target="_blank"
-          condition={!handleClick ? true : false}
+          condition={true}
         >
           <Card
             className={layoutType === 'list' ? root : grid}
             style={{ cursor: 'pointer' }}
-            onClick={(e) => handleCardClick(e)}
+            // onClick={(e) => handleCardClick(e)}
           >
             <Grid container>
               <Grid
@@ -330,7 +361,10 @@ const ListingCard: React.FC<ListingCardProps> = ({
             </Grid>
           </Card>
         </ConditionalLink>
-        <LoginModal openModal={signinModal} closeModal={()=>setSigninModal(false)}/>
+        <LoginModal
+          openModal={signinModal}
+          closeModal={() => setSigninModal(false)}
+        />
       </Paper>
     </>
   );

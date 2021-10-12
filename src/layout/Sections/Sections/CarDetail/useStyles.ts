@@ -156,10 +156,10 @@ export const useStyles = makeStyles(() => ({
     marginLeft: '5px'
   },
   btn: {
-    background: ColorConstant.greyFive,
+    background: ColorConstant.lightBlue,
     boxShadow: 'none',
     '&:hover': {
-      background: ColorConstant.greyTwo,
+      background: ColorConstant.lightGrey,
       boxShadow: 'none'
     }
   },

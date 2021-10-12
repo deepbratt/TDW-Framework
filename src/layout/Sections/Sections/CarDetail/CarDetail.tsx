@@ -28,12 +28,18 @@ import {
   SOLD_HERE_DIALOG_TITLE
 } from '../../../../Utils/constants/language/en/addEditCarTexts';
 import { Box, IconButton } from '@material-ui/core';
-import { Favorite, LocationOnOutlined, Phone } from '@material-ui/icons';
+import {
+  Compare,
+  Favorite,
+  LocationOnOutlined,
+  Phone
+} from '@material-ui/icons';
 import { addToFavs, removeFavs } from '../../../../Utils/hooks/endpoints';
 import Actions from '../../../../pages/carDetail/useFunctions';
 import LoginModal from '../../../../pages/login/LoginModal';
 import CarInformation from './CarInformation';
 import AppointmentForm from '../../../../components/AppointmentForm';
+import useShortListCars from '../../../../Utils/hooks/useShortListCars';
 
 const CarDetail: React.FC<any> = ({
   Title,
@@ -58,6 +64,9 @@ const CarDetail: React.FC<any> = ({
 }) => {
   const history = useHistory();
   const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
+  const { shortlistCars } = useSelector(
+    (state: RootState) => state.shortlistCars
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [isSold, setIsSold] = useState(data.isSold);
   const [isActive, setIsActive] = useState(data.active);
@@ -71,7 +80,10 @@ const CarDetail: React.FC<any> = ({
   const { addFavs, open, setOpen, responseMessage } = Actions();
   const { root, sub, type, numBtn, icon, btn } = useStyles();
   const { navyBlue } = Colors;
+  const { removeShortListItem, shortListItem } = useShortListCars();
+
   const defaultMarginTop = '50px';
+
   const toggleSold = (soldHere: boolean = false) => {
     let soldUnsold = isSold
       ? API_ENDPOINTS.MARK_UNSOLD
@@ -123,6 +135,30 @@ const CarDetail: React.FC<any> = ({
     });
   };
 
+  const handleAddToShortListItem = (item: any) => {
+    setOpenToast(true);
+    let shortListResponse = shortListItem(item);
+    setToastMessage(shortListResponse.message);
+    setToastType(shortListResponse.status);
+  };
+  const handleRemoveShortListItem = (itemId: string) => {
+    setOpenToast(true);
+    let shortListResponse = removeShortListItem(itemId);
+    setToastMessage(shortListResponse.message);
+    setToastType(shortListResponse.status);
+  };
+
+  const toggleShortListCar = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    if (shortlistCars.filter((item) => item._id === data._id).length > 0) {
+      handleRemoveShortListItem(data._id);
+    } else {
+      handleAddToShortListItem(data);
+    }
+  };
+
   const toggleFavourite = (itemId: string) => {
     if (user._id) {
       addFavs(isFavorite ? removeFavs : addToFavs, itemId);
@@ -153,18 +189,35 @@ const CarDetail: React.FC<any> = ({
                 </Typography>
               </Box>
             </Box>
-            {user?._id === createdBy?._id ? null : (
+            <Box display="flex" justifyContent="space-between">
               <IconButton
-                onClick={() => toggleFavourite(data._id)}
                 className={btn}
+                onClick={(e) => toggleShortListCar(e)}
               >
-                {isFavorite ? (
-                  <Favorite color="primary" />
-                ) : (
-                  <Favorite style={{ color: 'white' }} />
-                )}
+                <Compare
+                  color={
+                    shortlistCars.filter((e: any) => e._id === data._id)
+                      .length > 0
+                      ? 'primary'
+                      : 'inherit'
+                  }
+                />
               </IconButton>
-            )}
+                
+              {user?._id === createdBy?._id ? null : (
+                <IconButton
+                  onClick={() => toggleFavourite(data._id)}
+                  className={btn}
+                  style={{marginLeft:"5px"}}
+                >
+                  {isFavorite ? (
+                    <Favorite color="primary" />
+                  ) : (
+                    <Favorite style={{ color: 'white' }} />
+                  )}
+                </IconButton>
+              )}
+            </Box>
           </Grid>
           <Grid item xs={12} style={{ marginTop: defaultMarginTop }}>
             <Typography style={{ color: navyBlue }} variant="h2">

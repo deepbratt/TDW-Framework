@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Chip from '@material-ui/core/Chip';
@@ -12,7 +11,6 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
 
 import Toast from '../../components/Toast';
 import Pagination from '@material-ui/lab/Pagination';
@@ -21,40 +19,34 @@ import ListingCard from '../../components/ListingCard';
 import CarFilters from '../../sections/VerticalCarFilters';
 import SortRounded from '@material-ui/icons/SortRounded';
 import HorizontalFilters from '../../sections/HorizontalFilters';
-import ShortListCard from '../../components/ShortListCard';
 import {
   conditionOptions,
   sortingOptions
 } from '../../Utils/constants/language/en/filtersData';
 import {
-  SHORTLIST_ITEMS,
-  COMPARE,
   CANT_FIND_RESULT,
   RESET,
   CLOSE,
-  CLEAR_SHORTLIST_ITEMS
 } from '../../Utils/constants/language/en/buttonLabels';
 import FullScreenDialog from '../../components/DialogBox/FullScreenDialog';
 import { useForm } from './useForm';
 import { fieldNames } from '../../Utils/constants/formsConstants';
 import { RootState } from '../../redux/store';
-import { ICarCard } from '../../Utils/interfaces/products.interface';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import Skeletons from '../../components/Skeletons';
 import ListingCardSkeletons from '../../components/ListingCard/ListingCardSkeletons';
-import CompareRoundedIcon from '@material-ui/icons/CompareRounded';
 import CarListingStyles from './style';
 import CustomButton from '../../CustomButton';
-import { paths } from '../../routes/paths';
 import Radio from '@material-ui/core/Radio';
+import useShortListCars from '../../Utils/hooks/useShortListCars';
+import ShortListItems from '../../layout/Sections/Sections/ShortListItems';
 
 export interface CarsListingProps {
   isShortlist?: boolean;
 }
 
 const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
-  const history = useHistory();
 
   const {
     root,
@@ -62,8 +54,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
     contentRoot,
     filtersRoot,
     filtersContent,
-    comparebutton,
-    compareButtonIcon
   } = CarListingStyles();
 
   const {
@@ -81,8 +71,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
     pageCount,
     removeRangeFilter,
     keywords,
-    shortListItem,
-    removeShortListItem,
+    // shortListItem,
+    // removeShortListItem,
     rangeValues,
     setRangeValues,
     citiesWithCars,
@@ -93,19 +83,17 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
     bodyTypes,
     resetForm,
     bodyColors,
-    clearShortListedCars
+    // clearShortListedCars,
+    setResponseMessage
   } = useForm();
 
   const [open, setOpen] = React.useState(false);
   const [sortDrawerOpen, setSortDrawerOpen] = React.useState(false);
+  const {clearShortListedCars, removeShortListItem, shortListItem} = useShortListCars()
 
   const toggleDrawer = () => {
     setSortDrawerOpen(sortDrawerOpen ? false : true);
   };
-
-  const shortListCars = useSelector(
-    (state: RootState) => state.shortlistCars.shortlistCars
-  );
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -123,6 +111,16 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
       return;
     }
     setAlertOpen(false);
+  };
+
+  const handleRemoveShortListItem = (itemId: string) => {
+    setAlertOpen(true);
+    setResponseMessage(removeShortListItem(itemId));
+  };
+
+  const handleResetShortList = () => {
+    setAlertOpen(true);
+    setResponseMessage(clearShortListedCars());
   };
 
   const { layoutType } = useSelector((state: RootState) => state.layout);
@@ -307,52 +305,10 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
                 <HorizontalFilters handleInputChange={handleInputChange} />
               </Grid>
             </Hidden>
-            {isShortlist === true && shortListCars.length >= 1 && (
-              <Grid item container xs={12}>
-                <Grid item container xs={12} justifyContent = "space-between" alignItems="center">
-                  <Typography variant="button" gutterBottom>
-                    {SHORTLIST_ITEMS}
-                  </Typography>
-                  <Chip
-                    label={RESET}
-                    onClick={() => clearShortListedCars()}
-                    color="secondary"
-                  />
-                </Grid>
-                <Fab
-                  variant="extended"
-                  color="primary"
-                  aria-label="compare"
-                  size="large"
-                  className={comparebutton}
-                  onClick={() => history.push(`${paths.carComparision}`)}
-                >
-                  <CompareRoundedIcon className={compareButtonIcon} />
-                  {COMPARE}
-                </Fab>
-                <Grid item container xs={12} spacing={1}>
-                  {shortListCars &&
-                    shortListCars.length > 0 ?
-                    shortListCars.map((item: ICarCard) => (
-                      <Grid
-                        key={`shotlist-item-${item._id}`}
-                        container
-                        justifyContent="center"
-                        item
-                        xs={4}
-                        sm={2}
-                      >
-                        <ShortListCard
-                          productImg={item.image[0]}
-                          name={item.model}
-                          _id={item._id}
-                          handleClick={() => removeShortListItem(item._id)}
-                        />
-                      </Grid>
-                    )): null}
-                </Grid>
-              </Grid>
-            )}
+            <ShortListItems
+                clearShortListedCars={handleResetShortList}
+                removeShortListItem={handleRemoveShortListItem}
+              />
             <Grid item container xs={12} justifyContent="flex-start">
               {isLoading ? (
                 <Grid item container xs={12}>

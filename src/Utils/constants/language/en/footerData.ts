@@ -104,13 +104,13 @@ export const FooterData = {
       { filterName: 'make', text: 'Daihatsu Cars for Sale', value: 'Daihatsu' }
     ],
     Models: [
-      { filterName: 'models', text: 'Honda City', value: 'City' },
-      { filterName: 'models', text: 'Honda Civic', value: 'Civic' },
-      { filterName: 'models', text: 'Toyota Corolla', value: 'Corolla' },
-      { filterName: 'models', text: 'Suzuki Alto', value: 'Alto' },
-      { filterName: 'models', text: 'Suzuki Cultus', value: 'Cultus' },
-      { filterName: 'models', text: 'Suzuki Mehran', value: 'Mehran' },
-      { filterName: 'models', text: 'Suzuki Swift', value: 'Swift' },
+      { filterName: 'model', text: 'Honda City', value: 'City' },
+      { filterName: 'model', text: 'Honda Civic', value: 'Civic' },
+      { filterName: 'model', text: 'Toyota Corolla', value: 'Corolla' },
+      { filterName: 'model', text: 'Suzuki Alto', value: 'Alto' },
+      { filterName: 'model', text: 'Suzuki Cultus', value: 'Cultus' },
+      { filterName: 'model', text: 'Suzuki Mehran', value: 'Mehran' },
+      { filterName: 'model', text: 'Suzuki Swift', value: 'Swift' },
     ],
     Color: [
       { filterName: 'bodyColor', text: 'White Cars', value: 'White' },

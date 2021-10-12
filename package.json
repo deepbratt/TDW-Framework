@@ -54,8 +54,8 @@
     "workbox-streams": "^5.1.4"
   },
   "scripts": {
-    "start": "react-scripts start && ./.env.${REACT_APP_NODE_ENV}",
-    "build": "node ./update-build.ts && sh -ac '. ./.env.${REACT_APP_NODE_ENV}; react-scripts build",
+    "start": "react-scripts start",
+    "build": "node ./update-build.ts && sh -ac '. ./.env.${REACT_APP_NODE_ENV}; react-scripts build'",
     "build-dev": "REACT_APP_NODE_ENV=dev npm run build",
     "build-prod": "REACT_APP_NODE_ENV=prod && npm run build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",

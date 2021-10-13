@@ -329,6 +329,7 @@ export const useForm = (validateOnChange = true) => {
   useEffect(() => {
     console.log('filters', carFilters);
     setIsLoading(true);
+    setResult([])
     getAllCars();
     // eslint-disable-next-line
   }, [page, carFilters, user]);

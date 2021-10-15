@@ -50,6 +50,5 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignContent: 'center',
-    height:"50px"
   }
 }));

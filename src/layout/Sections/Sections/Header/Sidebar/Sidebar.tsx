@@ -19,7 +19,6 @@ import Logo from '../../../assets/logo.png';
 import { Paths as sideBarPath } from '../paths';
 import { paths } from '../../../../../routes/paths';
 import {
-  ADD_EDIT_CAR,
   LOGOUT,
   POST_AN_AD,
   PROFILE,

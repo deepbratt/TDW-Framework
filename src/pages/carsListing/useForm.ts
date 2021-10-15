@@ -104,6 +104,14 @@ export const useForm = (validateOnChange = true) => {
     setPage(value);
   };
 
+  const getFiltersValues = (keys: string, values: string[]) => {
+    if (keys === 'make') {
+      getModels();
+    } else if (keys === 'province') {
+      getCitiesWithCars();
+    }
+  };
+
   const getAllCars = async () => {
     let params = `?limit=9&page=${page.toString()}`;
     Object.entries(carFilters).map(([keys, values]: any) => {
@@ -112,6 +120,9 @@ export const useForm = (validateOnChange = true) => {
           values.map((value: string) => {
             params += `&${keys}=${value}`;
           });
+          if (values.length > 0) {
+            getFiltersValues(keys, values);
+          }
         } else if (keys in initialRangeValues) {
           if (values[0] !== initialRangeValues[keys][0]) {
             params += `&${keys}[gte]=${values[0]}`;
@@ -210,34 +221,41 @@ export const useForm = (validateOnChange = true) => {
 
   const getModels = async () => {
     let param = '?&sort=name';
+    console.log('function called', carFilters.make.length);
     if (carFilters.make.length > 0) {
       carFilters.make.map((item: any) => {
         let selectedMake: any = makes.filter((make: any) => make.name === item);
+        console.log(makes);
+        console.log(selectedMake);
         if (selectedMake.length > 0) {
           param += '&make_id=' + selectedMake[0].make_id;
         }
       });
+      await getAllData(ADS + CARS + MODEL + param).then((response) => {
+        if (response && response && response.status === 'success') {
+          setModels(response.data.result);
+        }
+      });
     }
-    await getAllData(ADS + CARS + MODEL + param).then((response) => {
-      if (response && response && response.status === 'success') {
-        setModels(response.data.result);
-      }
-    });
   };
 
   useEffect(() => {
+    console.log('models', models);
+    // eslint-disable-next-line
+  }, [models]);
+  useEffect(() => {
     getCitiesWithCars();
     getMakes();
-    getModels();
+    // getModels();
     getBodyTypes();
     getBodyColors();
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    getModels();
-    // eslint-disable-next-line
-  }, [carFilters.make]);
+  // useEffect(() => {
+  //   getModels();
+  //   // eslint-disable-next-line
+  // }, [carFilters.make]);
 
   useEffect(() => {
     return () => {
@@ -272,12 +290,6 @@ export const useForm = (validateOnChange = true) => {
       dispatch(setArrayFilter(filter));
     } else {
       dispatch(removeArrayFilter(filter));
-    }
-    if (e.target.name === 'province') {
-      getCitiesWithCars();
-    }
-    if (e.target.name === 'make') {
-      getModels();
     }
   };
 
@@ -329,6 +341,7 @@ export const useForm = (validateOnChange = true) => {
   useEffect(() => {
     console.log('filters', carFilters);
     setIsLoading(true);
+    setResult([])
     getAllCars();
     // eslint-disable-next-line
   }, [page, carFilters, user]);

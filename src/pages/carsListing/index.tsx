@@ -41,6 +41,7 @@ import CustomButton from '../../CustomButton';
 import Radio from '@material-ui/core/Radio';
 import useShortListCars from '../../Utils/hooks/useShortListCars';
 import ShortListItems from '../../layout/Sections/Sections/ShortListItems';
+import { ICarCard } from '../../Utils/interfaces/products.interface';
 
 export interface CarsListingProps {
   isShortlist?: boolean;
@@ -117,6 +118,11 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
     setAlertOpen(true);
     setResponseMessage(removeShortListItem(itemId));
   };
+
+  const handleAddToShortListItem = (item:ICarCard) =>{
+    setAlertOpen(true)
+    setResponseMessage(shortListItem(item))
+  }
 
   const handleResetShortList = () => {
     setAlertOpen(true);
@@ -341,10 +347,10 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
                       >
                         <ListingCard
                           data={car}
-                          isFavs={!isShortlist}
+                          // isFavs={!isShortlist}
                           layoutType={layoutType}
-                          handleShortList={() => shortListItem(car)}
-                          removeShortListed={() => removeShortListItem(car._id)}
+                          handleShortList={() => handleAddToShortListItem(car)}
+                          removeShortListed={() => handleRemoveShortListItem(car._id)}
                         />
                       </Grid>
                     ))}
@@ -363,14 +369,12 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
                   )}
                 </Grid>
               )}
-              {responseMessage && (
                 <Toast
                   open={alertOpen}
                   onClose={handleAlertClose}
                   type={responseMessage.status}
                   message={responseMessage.message}
                 />
-              )}
             </Grid>
           </Grid>
         </Grid>

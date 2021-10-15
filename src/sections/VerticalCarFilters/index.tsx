@@ -320,50 +320,78 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           )}
         </FormGroup>
       </FilterAccordion>
-      <FilterAccordion title={MODEL}>
-        <FormGroup>
-          {models
-            .filter((item: any, index: number) => index <= 4)
-            .map((type: any) => (
-              <FormControlLabel
-                classes={{ label: fontSize }}
-                key={uuidv4()}
-                control={
-                  <Checkbox
-                    name={fieldNames.model}
-                    checked={values.model.indexOf(type.name) > -1}
-                    onChange={(e) => handleCheckboxChange(e, type.name)}
-                    color="primary"
-                    size="small"
-                  />
-                }
-                label={type.name}
-              />
-            ))}
-          {models.length > 5 && (
-            <DialogBox title="Select Model">
-              <Grid style={{ display: 'flex' }} container>
-                <Grid xs={12}>
-                  <InputField
-                    variant="filled"
-                    label="Search"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      handleMakesModelSearch(e, models)
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  {searchResult && searchResult.length > 0 && (
+      {(values.make.length > 0 || values.model.length > 0) && (
+        <FilterAccordion title={MODEL}>
+          <FormGroup>
+            {models
+              .filter((item: any, index: number) => index <= 4)
+              .map((type: any) => (
+                <FormControlLabel
+                  classes={{ label: fontSize }}
+                  key={uuidv4()}
+                  control={
+                    <Checkbox
+                      name={fieldNames.model}
+                      checked={values.model.indexOf(type.name) > -1}
+                      onChange={(e) => handleCheckboxChange(e, type.name)}
+                      color="primary"
+                      size="small"
+                    />
+                  }
+                  label={type.name}
+                />
+              ))}
+            {models.length > 5 && (
+              <DialogBox title="Select Model">
+                <Grid style={{ display: 'flex' }} container>
+                  <Grid xs={12}>
+                    <InputField
+                      variant="filled"
+                      label="Search"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        handleMakesModelSearch(e, models)
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    {searchResult && searchResult.length > 0 && (
+                      <Typography variant="h4" gutterBottom>
+                        {'Search Result'}
+                      </Typography>
+                    )}
+                    {searchResult &&
+                      searchResult.map((item: any) => {
+                        return (
+                          <FormControlLabel
+                            classes={{ label: fontSize }}
+                            key={uuidv4()}
+                            control={
+                              <Checkbox
+                                name={fieldNames.model}
+                                checked={values.model.indexOf(item.name) > -1}
+                                onChange={(e) =>
+                                  handleCheckboxChange(e, item.name)
+                                }
+                                color="primary"
+                                size="small"
+                              />
+                            }
+                            label={item.name}
+                          />
+                        );
+                      })}
+                  </Grid>
+                  <Divider variant="middle" />
+                  <Grid item xs={12}>
                     <Typography variant="h4" gutterBottom>
-                      {'Search Result'}
+                      {'Models'}
                     </Typography>
-                  )}
-                  {searchResult &&
-                    searchResult.map((item: any) => {
-                      return (
+                  </Grid>
+                  {models.map((item: any) => {
+                    return (
+                      <Grid key={uuidv4()} item xs={6}>
                         <FormControlLabel
                           classes={{ label: fontSize }}
-                          key={uuidv4()}
                           control={
                             <Checkbox
                               name={fieldNames.model}
@@ -377,39 +405,15 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                           }
                           label={item.name}
                         />
-                      );
-                    })}
+                      </Grid>
+                    );
+                  })}
                 </Grid>
-                <Divider variant="middle" />
-                <Grid item xs={12}>
-                  <Typography variant="h4" gutterBottom>
-                    {'Models'}
-                  </Typography>
-                </Grid>
-                {models.map((item: any) => {
-                  return (
-                    <Grid key={uuidv4()} item xs={6}>
-                      <FormControlLabel
-                        classes={{ label: fontSize }}
-                        control={
-                          <Checkbox
-                            name={fieldNames.model}
-                            checked={values.model.indexOf(item.name) > -1}
-                            onChange={(e) => handleCheckboxChange(e, item.name)}
-                            color="primary"
-                            size="small"
-                          />
-                        }
-                        label={item.name}
-                      />
-                    </Grid>
-                  );
-                })}
-              </Grid>
-            </DialogBox>
-          )}
-        </FormGroup>
-      </FilterAccordion>
+              </DialogBox>
+            )}
+          </FormGroup>
+        </FilterAccordion>
+      )}
       <FilterAccordion title={MILEAGE}>
         <Grid container direction="column">
           <Grid item container spacing={1}>

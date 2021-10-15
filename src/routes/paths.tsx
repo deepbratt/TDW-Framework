@@ -21,21 +21,23 @@ import Retry from '../components/Retry';
 // ===========================================================================================
 //                                      lazy loading
 // =========================================================================================
-const Home = lazy(()  =>  import('../pages/home'));
+const Home = lazy(() => import('../pages/home'));
 const Login = lazy(() => import('../pages/login'));
-const CarsListing = lazy(() =>  import('../pages/carsListing'));
-const ForgetPassword = lazy(() =>  import('../pages/forgetPassword'));
-const ResetPassword = lazy(() =>  import('../pages/resetPassword'));
-const Signup = lazy(() =>  import('../pages/signup'));
-const AddEditCar = lazy(() =>  import('../pages/AddEditCar'));
-const usedCars = lazy(() =>  import('../pages/SearchUsedCars/index'));
+const CarsListing = lazy(() => import('../pages/carsListing'));
+const ForgetPassword = lazy(() => import('../pages/forgetPassword'));
+const ResetPassword = lazy(() => import('../pages/resetPassword'));
+const Signup = lazy(() => import('../pages/signup'));
+const AddEditCar = lazy(() => import('../pages/AddEditCar'));
+const usedCars = lazy(() => import('../pages/SearchUsedCars/index'));
 const Verification = lazy(() => import('../pages/verificationPage'));
-const CarDetail = lazy(() =>  import('../pages/carDetail/index'));
-const CarComparison = lazy(() =>  import('../pages/carComparision/index'));
-const ShortlistItem = lazy(() =>  import('../pages/shortlistItems'));
-const Dashboard = lazy(() =>  import('../pages/dashboard'));
-const PostAd = lazy(() =>  import('../pages/postAd'));
-const Help = lazy(() =>  import('../layout/Sections/Sections/Profile/Help/Help'));
+const CarDetail = lazy(() => import('../pages/carDetail/index'));
+const CarComparison = lazy(() => import('../pages/carComparision/index'));
+const ShortlistItem = lazy(() => import('../pages/shortlistItems'));
+const Dashboard = lazy(() => import('../pages/dashboard'));
+const PostAd = lazy(() => import('../pages/postAd'));
+const Help = lazy(
+  () => import('../layout/Sections/Sections/Profile/Help/Help')
+);
 // ===========================================================================================
 //            lazy loading with retry if chunk fails to load
 // =========================================================================================
@@ -58,6 +60,7 @@ const Help = lazy(() =>  import('../layout/Sections/Sections/Profile/Help/Help')
 export const paths = {
   home: 'home',
   dashboard: '/dashboard',
+  fav: '/favorites',
   postAd: '/post-an-ad',
   login: '/login',
   about: 'about',
@@ -74,7 +77,7 @@ export const paths = {
   forgotPassword: '/forgot-password',
   resetPassword: 'reset-password',
   addEditCar: 'add-edit/car/',
-  help:"help"
+  help: 'help'
 };
 
 export const routes = {
@@ -96,7 +99,7 @@ export const routes = {
   forgotPassword: '/forgot-password/:token?',
   resetPassword: '/reset-password/:token',
   addEditCar: '/add-edit/car/:id?',
-  help:"/help"
+  help: '/help'
 };
 
 export const privateRoutes = {
@@ -163,7 +166,7 @@ export const publicRoutes = {
   [paths.carShortlist]: {
     path: routes.carShortlist,
     component: ShortlistItem
-  },
+  }
 };
 
 export const onlyPublicRoutes = {
@@ -192,5 +195,5 @@ export const onlyPublicRoutes = {
     name: 'Help',
     path: routes.help,
     component: Help
-  },
-}
+  }
+};

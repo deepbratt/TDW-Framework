@@ -342,7 +342,7 @@ export const useForm = (validateOnChange = true) => {
 
   const shortListItem = (newItem: ICarCard) => {
     setAlertOpen(false);
-    if (shortListCars.length < 6) {
+    if (shortListCars.length < 4) {
       if (!ItemExists(newItem._id)) {
         dispatch(setShortlistCars([...shortListCars, newItem]));
         setAlertOpen(true);

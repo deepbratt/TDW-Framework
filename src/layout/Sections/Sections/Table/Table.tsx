@@ -1,16 +1,20 @@
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import Table from '@material-ui/core/Table';
-import Collapse from '@material-ui/core/Collapse';
-import TableBody from '@material-ui/core/TableBody';
 import TableContainer from '@material-ui/core/TableContainer';
-import Typography from '@material-ui/core/Typography';
+import TableHead from '@material-ui/core/TableHead';
+import TableBody from '@material-ui/core/TableBody';
+import TableRow from '@material-ui/core/TableRow';
+import Collapse from '@material-ui/core/Collapse';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CustomButton from '../../../../components/CustomButton';
 import { useStyles } from './useStyles';
-import { IProps } from '../../Utils/types';
+import { ICarData, IProps } from '../../Utils/types';
 import CollapsedRows from './CollapsedTable/CollapsedRows';
-
+import TableCell from '@material-ui/core/TableCell';
 import TableRows from './TableRows';
+import { FEATURES } from '../../../../Utils/constants/language/en/buttonLabels';
+
 const TableContext: React.FC<IProps> = ({
   Title,
   items,
@@ -20,7 +24,7 @@ const TableContext: React.FC<IProps> = ({
   array,
   collapsedArray
 }) => {
-  const { head, table, options, btn } = useStyles();
+  const { head, table, options, btn, cell, stickyCell } = useStyles();
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
   const handleToggle = () => {
@@ -33,11 +37,23 @@ const TableContext: React.FC<IProps> = ({
 
   return (
     <>
-      <Typography style={{ marginTop: '20px' }} className={head} variant="h3">
-        {Title}
-      </Typography>
-      <TableContainer>
-        <Table className={table} aria-label="table">
+      <TableContainer className={table}>
+        <Table aria-label="table">
+          <TableHead classes={{ root: head }}>
+            <TableRow>
+              <TableCell classes={{ root: stickyCell }} align="left">
+                {FEATURES}
+              </TableCell>
+              {items &&
+                items.map((item: ICarData) => (
+                  <TableCell
+                    className={cell}
+                    key={uuidv4()}
+                    align="center"
+                  >{`${item.make} ${item.model}`}</TableCell>
+                ))}
+            </TableRow>
+          </TableHead>
           <TableBody>
             <TableRows array={array} items={items} />
           </TableBody>
@@ -53,11 +69,23 @@ const TableContext: React.FC<IProps> = ({
         </CustomButton>
       </section>
       <Collapse in={isChecked}>
-        <Typography className={head} variant="h3">
-          {subTitle}
-        </Typography>
-        <TableContainer>
-          <Table aria-label="simple table">
+        <TableContainer className={table}>
+          <Table aria-label="car comparision table">
+            <TableHead classes={{ root: head }}>
+              <TableRow>
+                <TableCell classes={{ root: stickyCell }} align="left">
+                  {FEATURES}
+                </TableCell>
+                {items &&
+                  items.map((item: ICarData) => (
+                    <TableCell
+                      className={cell}
+                      key={uuidv4()}
+                      align="center"
+                    >{`${item.make} ${item.model}`}</TableCell>
+                  ))}
+              </TableRow>
+            </TableHead>
             <TableBody>
               <CollapsedRows array={collapsedArray} items={items} />
             </TableBody>

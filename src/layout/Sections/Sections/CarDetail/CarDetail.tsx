@@ -6,7 +6,6 @@ import { Colors } from '../../Utils/color.constants';
 import {
   ACTIVE,
   INACTIVE,
-  REQUEST_APPOINTMENT,
   SHOW_PHONE,
   SOLD,
   UNSOLD
@@ -41,6 +40,7 @@ import LoginModal from '../../../../pages/login/LoginModal';
 import CarInformation from './CarInformation';
 import AppointmentForm from '../../../../components/AppointmentForm';
 import useShortListCars from '../../../../Utils/hooks/useShortListCars';
+import { addData } from '../../../../Utils/API/API';
 
 const CarDetail: React.FC<any> = ({
   Title,
@@ -170,19 +170,37 @@ const CarDetail: React.FC<any> = ({
     }
   };
 
-  const handleShowPhone = () =>{
-    if(!user._id){
-      setSigninModal(true)
+  const handleShowPhone = () => {
+    if (!user._id) {
+      setSigninModal(true);
     }
-    if(showPhone){
-      window.location.href=`tel:${data.createdBy.phone}`
-      return
+    if (showPhone) {
+      window.location.href = `tel:${data.createdBy.phone}`;
+      return;
     }
-    if(user._id && user._id !== data.createdBy._id){
+    if (user._id && user._id !== data.createdBy._id) {
+      setIsLoading(true);
+      addData(
+        `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.SHOW_PHONE}/${data._id}`
+      ).then((response) => {
+        if (response && response.data && response.data.status === 'success') {
+          setShowPhone(true);
+        } else {
+          let msg =
+            response && response.response && response.response.data.message
+              ? response.response.data.message
+              : response.response
+              ? response.response
+              : 'Network Error';
+          setToastMessage(msg);
+          setToastType('error');
+          setOpenToast(true);
+        }
+        setIsLoading(false);
+      });
       //show phone api
-      setShowPhone(true)
     }
-  }
+  };
 
   return (
     <Grid container style={{ display: 'inline-block' }}>
@@ -219,12 +237,12 @@ const CarDetail: React.FC<any> = ({
                   }
                 />
               </IconButton>
-                
+
               {user?._id === createdBy?._id ? null : (
                 <IconButton
                   onClick={() => toggleFavourite(data._id)}
                   className={btn}
-                  style={{marginLeft:"5px"}}
+                  style={{ marginLeft: '5px' }}
                 >
                   {isFavorite ? (
                     <Favorite color="primary" />
@@ -341,7 +359,9 @@ const CarDetail: React.FC<any> = ({
               startIcon={<Phone />}
               onClick={handleShowPhone}
             >
-              {showPhone || user._id===data.createdBy._id ? data.createdBy.phone : SHOW_PHONE}
+              {showPhone || user._id === data.createdBy._id
+                ? data.createdBy.phone
+                : SHOW_PHONE}
             </Button>
           </Grid>
         </Grid>

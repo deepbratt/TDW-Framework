@@ -7,6 +7,7 @@ import {
   ACTIVE,
   INACTIVE,
   REQUEST_APPOINTMENT,
+  SHOW_PHONE,
   SOLD,
   UNSOLD
 } from '../../../../Utils/constants/language/en/buttonLabels';
@@ -77,6 +78,7 @@ const CarDetail: React.FC<any> = ({
   const [toastType, setToastType] = useState('');
   const [signinModal, setSigninModal] = useState(false);
   const [appointmentForm, setAppointmentForm] = useState(false);
+  const [showPhone, setShowPhone] = useState(false);
   const { addFavs, open, setOpen, responseMessage } = Actions();
   const { root, sub, type, numBtn, icon, btn } = useStyles();
   const { navyBlue } = Colors;
@@ -167,6 +169,20 @@ const CarDetail: React.FC<any> = ({
       setSigninModal(true);
     }
   };
+
+  const handleShowPhone = () =>{
+    if(!user._id){
+      setSigninModal(true)
+    }
+    if(showPhone){
+      window.location.href=`tel:${data.createdBy.phone}`
+      return
+    }
+    if(user._id && user._id !== data.createdBy._id){
+      //show phone api
+      setShowPhone(true)
+    }
+  }
 
   return (
     <Grid container style={{ display: 'inline-block' }}>
@@ -323,9 +339,9 @@ const CarDetail: React.FC<any> = ({
               fullWidth
               className={numBtn}
               startIcon={<Phone />}
-              onClick={() => setAppointmentForm(true)}
+              onClick={handleShowPhone}
             >
-              {REQUEST_APPOINTMENT}
+              {showPhone || user._id===data.createdBy._id ? data.createdBy.phone : SHOW_PHONE}
             </Button>
           </Grid>
         </Grid>

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Table from './Table';
 import Typography from '@material-ui/core/Typography';
 import  Grid from '@material-ui/core/Grid';
@@ -13,8 +14,6 @@ import { Colors } from '../../Utils/color.constants';
 import { ICarCard } from '../../../../Utils/interfaces/products.interface';
 import InputField from '../../../../components/InputField';
 import Banner from './Banner';
-import { useEffect } from 'react';
-import { useState } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 interface IData {

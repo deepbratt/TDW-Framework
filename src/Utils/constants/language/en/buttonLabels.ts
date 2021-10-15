@@ -50,3 +50,6 @@ export const CANT_FIND_RESULT: string =
 export const FIND_YOUR_CAR: string = 'Find Your Car';
 export const ALL_CARS_COMPARISIONS: string = 'All Car Comparisons';
 export const SHOP_ALL_CARS: string = 'Shop All Cars';
+export const SEARCH_NEW_CAR: string = 'Search Car';
+export const ADD_FROM_FAV: string = 'Add From Favs';
+export const FEATURES: string = 'Features';

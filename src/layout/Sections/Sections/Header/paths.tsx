@@ -8,7 +8,11 @@ export const Paths = [
     name: 'BROWSE CARS'
   },
   {
-    path: '/cars-shortlist',
+    path: '/car-comparision',
     name: 'CARS COMPARISION'
+  },
+  {
+    path: '/dashboard/help',
+    name: 'HELP'
   },
 ];

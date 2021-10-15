@@ -169,7 +169,7 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const getCitiesWithCars = async () => {
-    let param = '?';
+    let param = '?sort=city';
     if (carFilters.province.length > 0) {
       carFilters.province.map((item: string) => {
         param += '&province=' + item;
@@ -187,7 +187,8 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const getMakes = async () => {
-    await getAllData(ADS + CARS + MAKE)
+    let param = '?sort=name';
+    await getAllData(ADS + CARS + MAKE + param)
       .then((response) => {
         if (response && response && response.status === 'success') {
           setMakes(response.data.result);
@@ -199,7 +200,8 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const getBodyTypes = () => {
-    getAllData(ADS + CARS + BODY_TYPES).then((response) => {
+    let param = '?sort=bodyType';
+    getAllData(ADS + CARS + BODY_TYPES  + param).then((response) => {
       if (response && response && response.status === 'success') {
         setBodyTypes(response.data.result);
       } else {
@@ -209,7 +211,8 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const getBodyColors = () => {
-    getAllData(ADS + CARS + CAR_COLORS).then((response) => {
+    let param = '?sort=name';
+    getAllData(ADS + CARS + CAR_COLORS + param).then((response) => {
       console.log(response);
       if (response && response && response.status === 'success') {
         setBodyColors(response.data.result);
@@ -355,7 +358,7 @@ export const useForm = (validateOnChange = true) => {
 
   const shortListItem = (newItem: ICarCard) => {
     setAlertOpen(false);
-    if (shortListCars.length < 6) {
+    if (shortListCars.length < 4) {
       if (!ItemExists(newItem._id)) {
         dispatch(setShortlistCars([...shortListCars, newItem]));
         setAlertOpen(true);

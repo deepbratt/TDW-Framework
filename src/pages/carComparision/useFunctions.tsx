@@ -1,11 +1,8 @@
-import { useState,useEffect} from "react";
-import {
-  getData,
-} from "../../Utils/hooks/actions";
-import { compareCars } from "../../Utils/hooks/endpoints";
+import { useState, useEffect } from 'react';
+import { getData } from '../../Utils/hooks/actions';
+import { compareCars } from '../../Utils/hooks/endpoints';
 
-
-const useApi = (_fId: string,_sId: string) => {
+const useApi = (_fId: string, _sId: string) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
 
@@ -18,10 +15,10 @@ const useApi = (_fId: string,_sId: string) => {
     await getData(url, param)
       .then((response) => {
         setIsLoading(false);
-        if (response.status === "success") {
+        if (response.status === 'success') {
           setData(response.data.result);
         } else {
-          return "error";
+          return 'error';
         }
       })
       .catch((error: any) => {
@@ -30,11 +27,10 @@ const useApi = (_fId: string,_sId: string) => {
       });
   };
 
-
   return {
     loadAllData,
     data,
-    isLoading,
+    isLoading
   };
 };
 

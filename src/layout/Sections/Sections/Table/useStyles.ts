@@ -1,19 +1,25 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Colors } from '../../Utils/color.constants';
 import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
+
 const breakpoints = createBreakpoints({});
-const { white, blue, darkGray } = Colors;
-export const useStyles = makeStyles({
+
+const { white, blue, darkGray, greyOne } = Colors;
+export const useStyles = makeStyles((theme) => ({
   table: {
-    background: white
+    background: white,
+    border: `0.5px solid ${greyOne}`
   },
   head: {
     background: darkGray,
-    padding: '20px'
+    padding: '20px',
+    [breakpoints.down('xs')]: {
+      padding: '10px'
+    }
   },
   options: {
     background: white,
-    padding: '20px',
+    padding: '20px 0',
     color: blue,
     display: 'flex',
     justifyContent: 'flex-end'
@@ -30,15 +36,24 @@ export const useStyles = makeStyles({
   },
   cell: {
     padding: '20px',
-    width:"33%"
+    [breakpoints.down('xs')]: {
+      padding: '10px'
+    }
+  },
+  stickyCell: {
+    padding: '20px',
+    borderRight: `1px solid ${greyOne}`,
+    position: 'sticky',
+    left: 0,
+    background: darkGray,
+    [breakpoints.down('xs')]: {
+      padding: '10px'
+    }
   },
   icon: {
     width: '10%',
     [breakpoints.down('sm')]: {
       width: '20%'
-    },
-    [breakpoints.down('xs')]: {
-      width: '35%'
     }
   }
-});
+}));

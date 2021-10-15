@@ -17,7 +17,7 @@ const CarComparision: React.FC<CarComparisionProps> = ({ featureImg }) => {
     <Card className={root}>
       <img width="100%" src={featureImg} alt="cars-comparisons" />
       <CardActions>
-        <CustomButton onClick={() => history.push(paths.carShortlist)}>
+        <CustomButton onClick={() => history.push(paths.cars)}>
           {CAR_COMPARISIONS}
         </CustomButton>
       </CardActions>

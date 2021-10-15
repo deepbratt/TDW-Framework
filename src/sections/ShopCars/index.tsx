@@ -14,6 +14,8 @@ import {
   shopCarHeader,
   shopCarData
 } from '../../Utils/constants/language/en/homePageData';
+import { useHistory } from 'react-router';
+import { paths } from '../../routes/paths';
 
 const ShopCarsStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +44,7 @@ const ShopCarsStyles = makeStyles((theme) => ({
     color: theme.palette.common.white
   },
   listItem: {
-    padding: "2px"
+    padding: '2px'
   },
   btn: {
     backgroundColor: Colors.darkBlue,
@@ -59,6 +61,7 @@ interface IShopCarProps {
 }
 
 const ShopCars: React.FC<IShopCarProps> = ({ featureImg }) => {
+  const history = useHistory();
   const { root, cardContent, cardMedia, list, listItem, btn } =
     ShopCarsStyles();
   return (
@@ -94,7 +97,12 @@ const ShopCars: React.FC<IShopCarProps> = ({ featureImg }) => {
                   </ListItem>
                 ))}
             </List>
-            <CustomButton className={btn}>{SHOP_ALL_CARS}</CustomButton>
+            <CustomButton
+              className={btn}
+              onClick={() => history.push(paths.cars)}
+            >
+              {SHOP_ALL_CARS}
+            </CustomButton>
           </CardContent>
         </Grid>
       </Grid>

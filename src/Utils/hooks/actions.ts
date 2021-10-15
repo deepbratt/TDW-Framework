@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { store } from '../../redux/store';
 
-const BASE_URL = 'https://api.tezdealz.com/v1';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {

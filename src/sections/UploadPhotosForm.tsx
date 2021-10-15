@@ -168,6 +168,9 @@ const UploadPhotosForm = ({
                 className={classes.hiddenInputFile}
               />
             </Button>
+            <Typography variant="subtitle2" className={classes.infoText}>
+              {addEditCarData.imageDimensionPreference}
+            </Typography>
             <Typography variant="body1" className={classes.infoText}>
               {addEditCarData.infoText}
             </Typography>

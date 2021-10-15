@@ -73,7 +73,7 @@ const addEditCarData = {
     bodyCondition: {
       label: 'Body Condition',
       defaultValue: 'Body Condition',
-      menu: ['Good', 'Excellent', 'Bad']
+      menu: ['Excellent', 'Good', 'Fair']
     },
     registeredIn: {
       label: 'Registered In',

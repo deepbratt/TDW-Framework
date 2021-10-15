@@ -17,7 +17,9 @@ const LayoutToggler: React.FC<LayoutTogglerProps> = () => {
       event: React.MouseEvent<HTMLElement>,
       nextView: string
     ) => {
-      dispatch(setLayout(nextView));
+      if(nextView !== null){
+        dispatch(setLayout(nextView));
+      }
     };
   return (
     <ToggleButtonGroup

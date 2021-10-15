@@ -208,7 +208,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   }}
                 >
                   <img
-                    height="200px"
+                    height={layoutType === 'list' ? "160px" : "235px"} 
                     width="100%"
                     src={image && image.length > 0 ? image[0] : NoImg}
                     alt=""

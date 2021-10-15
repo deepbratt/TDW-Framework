@@ -32,5 +32,6 @@ export const API_ENDPOINTS = {
   FAVOURITES: '/favourites',
   TICKETS: '/tickets',
   AD_TICKETS: '/advAssistance',
-  TECH_TICKETS: '/techAssistance'
+  TECH_TICKETS: '/techAssistance',
+  SHOW_PHONE: '/show-number'
 };

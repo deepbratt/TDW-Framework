@@ -6,7 +6,7 @@ import { Colors } from '../../Utils/color.constants';
 import {
   ACTIVE,
   INACTIVE,
-  REQUEST_APPOINTMENT,
+  SHOW_PHONE,
   SOLD,
   UNSOLD
 } from '../../../../Utils/constants/language/en/buttonLabels';
@@ -40,6 +40,7 @@ import LoginModal from '../../../../pages/login/LoginModal';
 import CarInformation from './CarInformation';
 import AppointmentForm from '../../../../components/AppointmentForm';
 import useShortListCars from '../../../../Utils/hooks/useShortListCars';
+import { addData } from '../../../../Utils/API/API';
 
 const CarDetail: React.FC<any> = ({
   Title,
@@ -77,6 +78,7 @@ const CarDetail: React.FC<any> = ({
   const [toastType, setToastType] = useState('');
   const [signinModal, setSigninModal] = useState(false);
   const [appointmentForm, setAppointmentForm] = useState(false);
+  const [showPhone, setShowPhone] = useState(false);
   const { addFavs, open, setOpen, responseMessage } = Actions();
   const { root, sub, type, numBtn, icon, btn } = useStyles();
   const { navyBlue } = Colors;
@@ -168,6 +170,38 @@ const CarDetail: React.FC<any> = ({
     }
   };
 
+  const handleShowPhone = () => {
+    if (!user._id) {
+      setSigninModal(true);
+    }
+    if (showPhone) {
+      window.location.href = `tel:${data.createdBy.phone}`;
+      return;
+    }
+    if (user._id && user._id !== data.createdBy._id) {
+      setIsLoading(true);
+      addData(
+        `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.SHOW_PHONE}/${data._id}`
+      ).then((response) => {
+        if (response && response.data && response.data.status === 'success') {
+          setShowPhone(true);
+        } else {
+          let msg =
+            response && response.response && response.response.data.message
+              ? response.response.data.message
+              : response.response
+              ? response.response
+              : 'Network Error';
+          setToastMessage(msg);
+          setToastType('error');
+          setOpenToast(true);
+        }
+        setIsLoading(false);
+      });
+      //show phone api
+    }
+  };
+
   return (
     <Grid container style={{ display: 'inline-block' }}>
       <Grid className={root} container item xs={12}>
@@ -203,12 +237,12 @@ const CarDetail: React.FC<any> = ({
                   }
                 />
               </IconButton>
-                
+
               {user?._id === createdBy?._id ? null : (
                 <IconButton
                   onClick={() => toggleFavourite(data._id)}
                   className={btn}
-                  style={{marginLeft:"5px"}}
+                  style={{ marginLeft: '5px' }}
                 >
                   {isFavorite ? (
                     <Favorite color="primary" />
@@ -323,9 +357,11 @@ const CarDetail: React.FC<any> = ({
               fullWidth
               className={numBtn}
               startIcon={<Phone />}
-              onClick={() => setAppointmentForm(true)}
+              onClick={handleShowPhone}
             >
-              {REQUEST_APPOINTMENT}
+              {showPhone || user._id === data.createdBy._id
+                ? data.createdBy.phone
+                : SHOW_PHONE}
             </Button>
           </Grid>
         </Grid>

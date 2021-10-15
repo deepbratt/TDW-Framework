@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = "https://api.carokta.com/v1";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyZGF0YSI6eyJpZCI6IjYxMWQwOTRlZThjMWJiMDAxZWNmYTRlOSJ9LCJpYXQiOjE2MjkyOTI5MTYsImV4cCI6NjgxMzI5MjkxNn0.gQFD2lGDOWDvncP03J8rLlzsvnfeI2I1a52ltwVBBDQ"
 
 const axiosInstance = axios.create({

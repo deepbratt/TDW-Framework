@@ -31,6 +31,7 @@ export const RESET: string = 'Reset';
 export const CANCEL: string = 'CANCEL';
 export const SUBMIT: string = 'SUBMIT';
 export const REQUEST_APPOINTMENT: string = 'REQUEST APPOINTMENT';
+export const SHOW_PHONE: string = 'SHOW PHONE NUMBER';
 export const FOR_ANDROID: string = 'For Android';
 export const FOR_IOS: string = 'For iOS';
 export const CLOSE: string = 'Close';

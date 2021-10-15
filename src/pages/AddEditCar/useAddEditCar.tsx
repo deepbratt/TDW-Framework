@@ -182,10 +182,10 @@ const useAddEditCar = () => {
           let featureName = result.map((el: any) => el.name);
           setFeaturesArray(featureName);
         } else {
-          let msg = response.response
+          let msg = response.response.data.message
+            ? response.response.data.message
+            : response.response
             ? response.response
-            : response.message
-            ? response.message
             : "Network Error";
           setToastMessage(msg);
           setToastType("error");
@@ -203,11 +203,11 @@ const useAddEditCar = () => {
           let bodyTypesName = result.map((el: any) => el.bodyType);
           setBodyTypesArray(bodyTypesName);
         } else {
-          let msg = response.response
-            ? response.response
-            : response.message
-            ? response.message
-            : "Network Error";
+          let msg = response.response.data.message
+          ? response.response.data.message
+          : response.response
+          ? response.response
+          : "Network Error";
           setToastMessage(msg);
           setToastType("error");
           setToastOpen(true);
@@ -231,11 +231,11 @@ const useAddEditCar = () => {
           setToastOpen(true);
           setHelpComingDialog(true)
         }else{
-          let msg = response.message
-            ? response.message
-            : response.response
-            ? response.response
-            : "Network Error";
+          let msg = response.response.data.message
+          ? response.response.data.message
+          : response.response
+          ? response.response
+          : "Network Error";
           setToastMessage(msg);
           setToastType("error");
           setToastOpen(true);
@@ -479,16 +479,24 @@ const useAddEditCar = () => {
         }
         setActiveStep(0);
       } else {
+        let msg = response.response.data.message
+        ? response.response.data.message
+        : response.response
+        ? response.response
+        : "Network Error";
+        setToastMessage(msg);
+          setToastType('error');
+          setToastOpen(true);
         console.log('error', response);
-        if (!response.response) {
-          setToastMessage('Network Error');
-          setToastType('error');
-          setToastOpen(true);
-        } else {
-          setToastMessage(response.message);
-          setToastType('error');
-          setToastOpen(true);
-        }
+        // if (!response.response) {
+        //   setToastMessage('Network Error');
+        //   setToastType('error');
+        //   setToastOpen(true);
+        // } else {
+        //   setToastMessage(response.message);
+        //   setToastType('error');
+        //   setToastOpen(true);
+        // }
       }
     });
   }

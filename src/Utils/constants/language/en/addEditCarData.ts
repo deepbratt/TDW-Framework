@@ -73,7 +73,7 @@ const addEditCarData = {
     bodyCondition: {
       label: 'Body Condition',
       defaultValue: 'Body Condition',
-      menu: ['Good', 'Excellent', 'Fair']
+      menu: ['Excellent', 'Good', 'Fair']
     },
     registeredIn: {
       label: 'Registered In',
@@ -137,6 +137,7 @@ const addEditCarData = {
     needAssistanceOK: 'Yes',
     needAssistanceReject: 'No'
   },
+  imageDimensionPreference: 'Try to upload images in these dimensions for better appearance  930x620  700x465',
   infoText: '(Max limit 5 MB per image)',
   requiredFieldText: 'This field is required',
   requiredImageText: 'Minimum 1 car picture is required',

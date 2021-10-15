@@ -25,8 +25,8 @@ export const CarFiltersData = {
 
 export const Carfilters = {
   TRANSMISSION: ['Automatic', 'Manual'],
-  ENGINE_TYPE: ['Diesel', 'Petrol', 'Hybrid', 'Electric', 'CNG'],
-  MAKE: ['Honda', 'Toyota', 'Suzuki', 'Nissan', 'Daihatsu'],
+  ENGINE_TYPE: ['CNG', 'Diesel', 'Electric', 'Hybrid', 'Petrol'],
+  MAKE: ['Daihatsu', 'Honda', 'Nissan', 'Suzuki', 'Toyota'],
   MODEL: [
     'City',
     'Civic',
@@ -85,10 +85,10 @@ export const Carfilters = {
     { icon: SedanIcon, filterName: 'bodyType', text: 'Truck' },
     { icon: SedanIcon, filterName: 'bodyType', text: 'Van' }
   ],
-  ASSEMBLY: ['Local', 'Imported'],
+  ASSEMBLY: ['Imported', 'Local'],
   PICTURE_AVAILABILITY: ['With Picture'],
   VIDEO_AVAILABILITY: ['With Video'],
-  SELLER_TYPE: ['Individual', 'Dealer'],
+  SELLER_TYPE: ['Dealer', 'Individual'],
   AD_TYPE: ['Featured Ads']
 };
 
@@ -100,7 +100,7 @@ export const sortingOptions = [
   { value: '-milage', label: 'Mileage: Highest First' },
   { value: 'milage', label: 'Mileage: Lowest First' },
   { value: 'modelYear', label: 'Model Year: Oldest First' },
-  { value: '-modelYear', label: 'Model Year: Newest First' },
+  { value: '-modelYear', label: 'Model Year: Newest First' }
 ];
 
 export const conditionOptions = [

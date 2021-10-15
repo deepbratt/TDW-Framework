@@ -689,29 +689,30 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   <Typography variant="h4" gutterBottom>
                     {province.name}
                   </Typography>
-                  {City.getCitiesOfState(
-                    province.countryCode,
-                    province.isoCode
-                  ).map((city) => {
-                    return (
-                      <FormControlLabel
-                        classes={{ label: fontSize }}
-                        key={uuidv4()}
-                        control={
-                          <Checkbox
-                            name={fieldNames.registrationCity}
-                            checked={
-                              values.registrationCity.indexOf(city.name) > -1
-                            }
-                            onChange={(e) => handleCheckboxChange(e, city.name)}
-                            color="primary"
-                            size="small"
-                          />
-                        }
-                        label={city.name}
-                      />
-                    );
-                  })}
+                  {City.getCitiesOfState(province.countryCode, province.isoCode)
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((city) => {
+                      return (
+                        <FormControlLabel
+                          classes={{ label: fontSize }}
+                          key={uuidv4()}
+                          control={
+                            <Checkbox
+                              name={fieldNames.registrationCity}
+                              checked={
+                                values.registrationCity.indexOf(city.name) > -1
+                              }
+                              onChange={(e) =>
+                                handleCheckboxChange(e, city.name)
+                              }
+                              color="primary"
+                              size="small"
+                            />
+                          }
+                          label={city.name}
+                        />
+                      );
+                    })}
                 </Grid>
               ))}
             </Grid>

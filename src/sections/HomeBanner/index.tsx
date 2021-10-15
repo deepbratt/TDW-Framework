@@ -6,6 +6,8 @@ import BannerImg from '../../assets/Home/Banner.png';
 import CustomButton from '../../components/CustomButton';
 import { FIND_YOUR_CAR } from '../../Utils/constants/language/en/buttonLabels';
 import { BannerData } from '../../Utils/constants/language/en/homePageData';
+import { paths } from '../../routes/paths';
+import { useHistory } from 'react-router';
 
 const HomeBannerStyles = makeStyles((theme) => ({
   root: {
@@ -73,6 +75,7 @@ const HomeBannerStyles = makeStyles((theme) => ({
 }));
 
 const HomeBanner: React.FC = () => {
+  const history = useHistory();
   const { root, after, cardRoot, cardHeading } = HomeBannerStyles();
   return (
     <div className={root}>
@@ -83,7 +86,12 @@ const HomeBanner: React.FC = () => {
           {BannerData.CARD_HEADER}
         </Typography>
 
-        <CustomButton fullWidth>{FIND_YOUR_CAR}</CustomButton>
+        <CustomButton
+          fullWidth
+          onClick={() => history.push(paths.cars)}
+        >
+          {FIND_YOUR_CAR}
+        </CustomButton>
       </Card>
     </div>
   );

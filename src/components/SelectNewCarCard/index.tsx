@@ -23,8 +23,10 @@ const SelectNewCarCardStyles = makeStyles((theme) => ({
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
   },
   buttons: {
-    margin: '20px',
-    textTransform: 'capitalize'
+    margin: '20px 10px',
+    textTransform: 'capitalize',
+    fontSize: '12px',
+    lineHeight: '14px'
   },
   iconButton: {
     margin: '20px',
@@ -56,12 +58,17 @@ const SelectNewCarCard: React.FC = () => {
       )}
       {window.screen.width <= 600 && (
         <div className={root} style={{ boxShadow: 'none' }}>
-          <IconButton classes={{ root: iconButton }} aria-label="Search Cars">
+          <IconButton
+            onClick={() => history.push(paths.cars)}
+            classes={{ root: iconButton }}
+            aria-label="Search Cars"
+          >
             <SearchRoundedIcon />
           </IconButton>
           <IconButton
             classes={{ root: iconButton }}
             aria-label="Add Cars From Favourites"
+            onClick={() => history.push(paths.dashboard + paths.fav)}
           >
             <FavoriteBorderRoundedIcon />
           </IconButton>

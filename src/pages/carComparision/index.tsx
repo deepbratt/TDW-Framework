@@ -12,6 +12,7 @@ import ShortListCard from '../../components/ShortListCard';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
 import { removeShortlistItem } from '../../redux/reducers/shortlistCarsSlice';
+import CarComparisonImg from '../../assets/Cars/carsComparision.png';
 import {
   Title,
   moreBtn,
@@ -96,23 +97,27 @@ const CarComparision = () => {
               </Grid>
             ))}
           {[...Array(4 - shortListCars.length)].map(() => (
-            <Grid key={uuidv4()} item xs={3}>
+            <Grid key={uuidv4()} item xs={3} md={2}>
               <div className={card}>
                 <SelectNewCarCard />
               </div>
             </Grid>
           ))}
         </Grid>
-        <Grid item xs={12}>
-          <Table
-            items={shortListCars}
-            array={array}
-            Title={Title}
-            subTitle={subTitle}
-            moreBtn={moreBtn}
-            lessBtn={lessBtn}
-            collapsedArray={features}
-          />
+        <Grid item xs={12} container justifyContent="center">
+          {shortListCars.length > 0 ? (
+            <Table
+              items={shortListCars}
+              array={array}
+              Title={Title}
+              subTitle={subTitle}
+              moreBtn={moreBtn}
+              lessBtn={lessBtn}
+              collapsedArray={features}
+            />
+          ) : (
+            <img src={CarComparisonImg} alt="car-comparision" />
+          )}
         </Grid>
       </Grid>
     </Container>

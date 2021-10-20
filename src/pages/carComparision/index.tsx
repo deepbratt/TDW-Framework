@@ -116,7 +116,9 @@ const CarComparision = () => {
               collapsedArray={features}
             />
           ) : (
-            <img src={CarComparisonImg} alt="car-comparision" />
+            <div>
+              <img width="100%" src={CarComparisonImg} alt="car-comparision" />
+            </div>
           )}
         </Grid>
       </Grid>

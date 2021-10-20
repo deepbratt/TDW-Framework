@@ -12,7 +12,7 @@ export const Paths = [
     name: 'CARS COMPARISION'
   },
   {
-    path: '/dashboard/help',
+    path: '/help',
     name: 'HELP'
   },
 ];

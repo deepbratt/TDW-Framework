@@ -14,18 +14,21 @@ import { useHistory } from 'react-router';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 interface ShortListItemsProps {
-    clearShortListedCars: ()=>void;
-    removeShortListItem: (itemId: string)=>void   
+  clearShortListedCars: () => void;
+  removeShortListItem: (itemId: string) => void;
 }
 
-const ShortListItems = ({clearShortListedCars, removeShortListItem}: ShortListItemsProps) => {
+const ShortListItems = ({
+  clearShortListedCars,
+  removeShortListItem
+}: ShortListItemsProps) => {
   const history = useHistory();
   const { shortlistCars } = useSelector(
     (state: RootState) => state.shortlistCars
   );
-  const { compareButtonIcon, comparebutton } = CarListingStyles();
+  const { root, compareButtonIcon, comparebutton } = CarListingStyles();
   return (
-    <Grid container>
+    <Grid container >
       {shortlistCars.length >= 1 && (
         <Grid item container xs={12}>
           <Grid
@@ -34,6 +37,7 @@ const ShortListItems = ({clearShortListedCars, removeShortListItem}: ShortListIt
             xs={12}
             justifyContent="space-between"
             alignItems="center"
+            className={root}
           >
             <Typography variant="button" gutterBottom>
               {SHORTLIST_ITEMS}
@@ -63,7 +67,7 @@ const ShortListItems = ({clearShortListedCars, removeShortListItem}: ShortListIt
                     container
                     justifyContent="center"
                     item
-                    xs={4}
+                    xs={3}
                     sm={2}
                   >
                     <ShortListCard
@@ -84,17 +88,20 @@ const ShortListItems = ({clearShortListedCars, removeShortListItem}: ShortListIt
 export default ShortListItems;
 
 const CarListingStyles = makeStyles((theme) => ({
-    comparebutton: {
-      margin: theme.spacing(1),
-      position: 'fixed',
-      right: '10%',
-      bottom: '20px',
-      zIndex: 99999,
-      [theme.breakpoints.down('xs')]: {
-        bottom: '10px'
-      }
-    },
-    compareButtonIcon: {
-      margin: theme.spacing(1)
+  root: {
+    margin: '10px 0'
+  },
+  comparebutton: {
+    margin: theme.spacing(1),
+    position: 'fixed',
+    right: '10%',
+    bottom: '20px',
+    zIndex: 99999,
+    [theme.breakpoints.down('xs')]: {
+      bottom: '10px'
     }
-  }));
+  },
+  compareButtonIcon: {
+    margin: theme.spacing(1)
+  }
+}));

@@ -137,11 +137,11 @@ export const privateRoutes = {
     path: routes.postAd,
     component: PostAd
   },
-  [paths.help]: {
-    name: 'Help',
-    path: routes.help,
-    component: Help
-  }
+  // [paths.help]: {
+  //   name: 'Help',
+  //   path: routes.help,
+  //   component: Help
+  // }
 };
 
 export const publicRoutes = {

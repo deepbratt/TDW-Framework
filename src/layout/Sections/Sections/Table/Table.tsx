@@ -14,6 +14,7 @@ import CollapsedRows from './CollapsedTable/CollapsedRows';
 import TableCell from '@material-ui/core/TableCell';
 import TableRows from './TableRows';
 import { FEATURES } from '../../../../Utils/constants/language/en/buttonLabels';
+import { Grid } from '@material-ui/core';
 
 const TableContext: React.FC<IProps> = ({
   Title,
@@ -59,16 +60,18 @@ const TableContext: React.FC<IProps> = ({
           </TableBody>
         </Table>
       </TableContainer>
-      <section className={options}>
-        <CustomButton
-          handleClick={handleToggle}
-          styles={btn}
-          endIcon={<ArrowDropDownIcon />}
-        >
-          {!isChecked ? moreBtn : lessBtn}
-        </CustomButton>
-      </section>
-      <Collapse in={isChecked}>
+      <Grid container justifyContent="flex-end" className={options}>
+        <Grid item>
+          <CustomButton
+            handleClick={handleToggle}
+            styles={btn}
+            endIcon={<ArrowDropDownIcon />}
+          >
+            {!isChecked ? moreBtn : lessBtn}
+          </CustomButton>
+        </Grid>
+      </Grid>
+      <Collapse style={{ width: '100%' }} in={isChecked}>
         <TableContainer className={table}>
           <Table aria-label="car comparision table">
             <TableHead classes={{ root: head }}>

@@ -7,6 +7,7 @@ const breakpoints = createBreakpoints({});
 const { white, blue, darkGray, greyOne } = Colors;
 export const useStyles = makeStyles((theme) => ({
   table: {
+    minWidth: '100%',
     background: white,
     border: `0.5px solid ${greyOne}`
   },
@@ -20,9 +21,7 @@ export const useStyles = makeStyles((theme) => ({
   options: {
     background: white,
     padding: '20px 0',
-    color: blue,
-    display: 'flex',
-    justifyContent: 'flex-end'
+    color: blue
   },
   btn: {
     background: 'transparent',
@@ -51,9 +50,6 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   icon: {
-    width: '10%',
-    [breakpoints.down('sm')]: {
-      width: '20%'
-    }
+    // width: '50%'
   }
 }));

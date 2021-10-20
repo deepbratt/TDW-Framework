@@ -113,7 +113,7 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const getAllCars = async () => {
-    let params = `?limit=9&page=${page.toString()}`;
+    let params = `?limit=10&page=${page.toString()}`;
     Object.entries(carFilters).map(([keys, values]: any) => {
       if (values !== initialValues[keys]) {
         if (typeof values === typeof [] && !(keys in initialRangeValues)) {

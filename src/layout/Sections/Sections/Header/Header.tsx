@@ -72,6 +72,13 @@ const HeaderContext = () => {
     history.push(paths.cars);
   };
 
+  const dataPath = (link:string)=>{
+    if(isLoggedIn && link.indexOf('help') > -1 ){
+      return `/dashboard${link}`
+    }
+    return link
+  }
+
   const menuId = 'primary-account-menu';
   const renderMenu = (
     <Menu
@@ -117,7 +124,7 @@ const HeaderContext = () => {
               <List className={list}>
                 {Paths.map((data, index) => {
                   return (
-                    <NavLink key={index} className={link} to={data.path}>
+                    <NavLink key={index} className={link} to={dataPath(data.path)}>
                       <ListItem>
                         <Typography variant="h4">{data.name}</Typography>
                       </ListItem>

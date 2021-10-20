@@ -136,7 +136,12 @@ export const privateRoutes = {
     name: 'Post An Ad',
     path: routes.postAd,
     component: PostAd
-  }
+  },
+  // [paths.help]: {
+  //   name: 'Help',
+  //   path: routes.help,
+  //   component: Help
+  // }
 };
 
 export const publicRoutes = {
@@ -166,6 +171,11 @@ export const publicRoutes = {
   [paths.carShortlist]: {
     path: routes.carShortlist,
     component: ShortlistItem
+  },
+  [paths.help]: {
+    name: 'Help',
+    path: routes.help,
+    component: Help
   }
 };
 
@@ -191,9 +201,4 @@ export const onlyPublicRoutes = {
     path: routes.resetPassword,
     component: ResetPassword
   },
-  [paths.help]: {
-    name: 'Help',
-    path: routes.help,
-    component: Help
-  }
 };

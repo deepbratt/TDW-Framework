@@ -34,43 +34,74 @@ const ShortListCardStyles = makeStyles((theme: Theme) => ({
     right: '-5px'
   },
   cardMedia: {
-    maxHeight: '120px',
+    maxHeight: '100px',
+    minHeight: '100px',
+    display: 'flex',
+    backgroundColor: theme.palette.common.white,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    [theme.breakpoints.down('sm')]: {
+      maxHeight: '80px',
+      minHeight: '80px'
+    },
+    [theme.breakpoints.down('xs')]: {
+      maxHeight: '50px',
+      minHeight: '50px'
+    },
     '& > img': {
-      width: '100%'
+      minWidth: '100%',
+      maxHeight: '100px',
+      minHeight: '100px',
+      [theme.breakpoints.down('sm')]: {
+        maxHeight: '80px',
+        minHeight: '80px'
+      },
+      [theme.breakpoints.down('xs')]: {
+        maxHeight: '50px',
+        minHeight: '50px'
+      }
     }
   },
   cardTitle: {
     padding: '7px',
     fontSize: '18px',
     lineHeight: '18px',
+    paddingBottom: '10px',
     [theme.breakpoints.down('sm')]: {
       padding: '5px',
       fontSize: '16px',
-      lineHeight: '16px'
+      lineHeight: '16px',
+      paddingBottom: '5px'
     },
     [theme.breakpoints.down('xs')]: {
       fontSize: '14px',
       lineHeight: '14px'
     }
   },
-  cardPrice: {
-    color: Colors.textPrimary,
-    paddingBottom: '15px',
-    fontSize: '20px',
-    lineHeight: '20px',
-    [theme.breakpoints.down('sm')]: {
-      padding: '5px',
-      fontSize: '16px',
-      lineHeight: '16px'
-    },
-    [theme.breakpoints.down('xs')]: {
-      display: 'none'
-    }
-  },
+  // cardPrice: {
+  //   color: Colors.textPrimary,
+  //   paddingBottom: '15px',
+  //   fontSize: '20px',
+  //   lineHeight: '20px',
+  //   [theme.breakpoints.down('sm')]: {
+  //     padding: '5px',
+  //     fontSize: '16px',
+  //     lineHeight: '16px'
+  //   },
+  //   [theme.breakpoints.down('xs')]: {
+  //     display: 'none'
+  //   }
+  // },
   cardContent: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
     backgroundColor: Colors.lightBlue,
     height: 'auto',
-    padding: '5px'
+    padding: '5px',
+    minHeight: '30px'
   },
   deleteIcon: {
     color: theme.palette.grey[200],
@@ -91,8 +122,8 @@ const ShortListCard: React.FC<ShortListCardProps> = ({
     cardMedia,
     cardContent,
     cardTitle,
-    deleteIcon,
-    cardPrice
+    deleteIcon
+    // cardPrice
   } = ShortListCardStyles();
   return (
     <Card className={cardRoot}>
@@ -109,9 +140,9 @@ const ShortListCard: React.FC<ShortListCardProps> = ({
           </IconButton>
         }
       />
-      <CardMedia className={cardMedia}>
+      <div className={cardMedia}>
         <img src={productImg} alt={name} />
-      </CardMedia>
+      </div>
       <div className={cardContent}>
         <Typography
           align="center"
@@ -121,7 +152,7 @@ const ShortListCard: React.FC<ShortListCardProps> = ({
         >
           {name.substr(0, 20)}
         </Typography>
-        {price && (
+        {/* {price && (
           <Typography
             align="center"
             className={cardPrice}
@@ -130,7 +161,7 @@ const ShortListCard: React.FC<ShortListCardProps> = ({
           >
             {price && `PKR ${price?.toLocaleString()}`}
           </Typography>
-        )}
+        )} */}
       </div>
     </Card>
   );

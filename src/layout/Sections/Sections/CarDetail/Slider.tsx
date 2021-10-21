@@ -103,7 +103,8 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
               display="flex"
               padding="10px"
               color="white"
-              justifyContent="space-between"
+              // justifyContent="space-between"
+              justifyContent="center"
               alignItems="center"
               flexWrap="wrap"
               style={{ background: 'black' }}
@@ -125,11 +126,11 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
               <Box>
                 <Typography variant="h3">PKR&nbsp;{data.price}</Typography>
               </Box>
-              <Box>
+              {/* <Box>
                 <Button variant="contained" color="primary">
                   Send Appointment Request
                 </Button>
-              </Box>
+              </Box> */}
             </Box>
           </FullScreenImage>
         )}

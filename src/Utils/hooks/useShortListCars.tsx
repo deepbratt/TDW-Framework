@@ -20,7 +20,7 @@ const useShortListCars=()=>{
 
     const shortListItem = (newItem: ICarCard) => {
         let response = {status:"", message:""}
-        if (shortlistCars.length < 6) {
+        if (shortlistCars.length < 4) {
           if (!ItemExists(newItem._id)) {
             dispatch(setShortlistCars([...shortlistCars, newItem]));
             response = { status: 'success', message: 'Car added' }
@@ -33,7 +33,7 @@ const useShortListCars=()=>{
         } else {
           response = {
             status: 'error',
-            message: "Can't select more than 6 cars"
+            message: "Can't select more than 4 cars"
           }
         }
         return response

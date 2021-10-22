@@ -52,7 +52,7 @@ export const useForm = (validateOnChange = true) => {
   const carFilters = useSelector(
     (state: RootState) => state.carFilters.filters
   );
-  const {user} = useSelector((state:RootState)=>state.auth)
+  const { user } = useSelector((state: RootState) => state.auth);
   const {
     ADS,
     CARS,
@@ -64,6 +64,7 @@ export const useForm = (validateOnChange = true) => {
     CAR_COLORS
   } = API_ENDPOINTS;
   const [page, setPage] = useState(1);
+  const [modalPage, setModalPage] = useState(100);
   const [citiesWithCars, setCitiesWithCars] = useState([]);
   const [makes, setMakes] = useState([]);
   const [models, setModels] = useState([]);
@@ -72,7 +73,9 @@ export const useForm = (validateOnChange = true) => {
   const [keywords, setKeywords] = useState('');
   const [alertOpen, setAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [modelsLoading, setModelsLoading] = useState(false);
   const [pageCount, setPageCount] = useState<number>(1);
+  const [modalPageCount, setModalPageCount] = useState<number>(0);
   const [responseData, setResponseData] = useState<IData | null>();
   const [result, setResult] = useState<ICarCard[] | []>([]);
   const [queryParams, setQueryParams] = useState<string>('');
@@ -113,7 +116,7 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const getAllCars = async () => {
-    let params = `?limit=10&page=${page.toString()}`;
+    let params = `?limit=20&page=${page.toString()}`;
     Object.entries(carFilters).map(([keys, values]: any) => {
       if (values !== initialValues[keys]) {
         if (typeof values === typeof [] && !(keys in initialRangeValues)) {
@@ -201,7 +204,7 @@ export const useForm = (validateOnChange = true) => {
 
   const getBodyTypes = () => {
     let param = '?sort=bodyType';
-    getAllData(ADS + CARS + BODY_TYPES  + param).then((response) => {
+    getAllData(ADS + CARS + BODY_TYPES + param).then((response) => {
       if (response && response && response.status === 'success') {
         setBodyTypes(response.data.result);
       } else {
@@ -223,8 +226,8 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const getModels = async () => {
-    let param = '?&sort=name';
-    console.log('function called', carFilters.make.length);
+    setModelsLoading(true);
+    let param = `?limit=${modalPage}&sort=name`;
     if (carFilters.make.length > 0) {
       carFilters.make.map((item: any) => {
         let selectedMake: any = makes.filter((make: any) => make.name === item);
@@ -234,31 +237,29 @@ export const useForm = (validateOnChange = true) => {
           param += '&make_id=' + selectedMake[0].make_id;
         }
       });
-      await getAllData(ADS + CARS + MODEL + param).then((response) => {
-        if (response && response && response.status === 'success') {
-          setModels(response.data.result);
-        }
-      });
     }
+    await getAllData(ADS + CARS + MODEL + param).then((response) => {
+      if (response && response && response.status === 'success') {
+        setModels(response.data.result);
+        setModalPageCount(response.total);
+        setModelsLoading(false);
+      }
+    });
   };
 
   useEffect(() => {
-    console.log('models', models);
-    // eslint-disable-next-line
-  }, [models]);
-  useEffect(() => {
     getCitiesWithCars();
     getMakes();
-    // getModels();
+    getModels();
     getBodyTypes();
     getBodyColors();
     // eslint-disable-next-line
   }, []);
 
-  // useEffect(() => {
-  //   getModels();
-  //   // eslint-disable-next-line
-  // }, [carFilters.make]);
+  useEffect(() => {
+    getModels();
+    // eslint-disable-next-line
+  }, [modalPage]);
 
   useEffect(() => {
     return () => {
@@ -266,13 +267,25 @@ export const useForm = (validateOnChange = true) => {
     };
   }, []);
 
+  const handleModalPage = () => {
+    setModalPage(modalPage + 100);
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    let filter = {
-      name: name,
-      value: value
-    };
-    dispatch(setFilter(filter));
+    if (name === 'condition' && value === 'any') {
+      let filter = {
+        name: name,
+        value: ''
+      };
+      dispatch(setFilter(filter));
+    } else {
+      let filter = {
+        name: name,
+        value: value
+      };
+      dispatch(setFilter(filter));
+    }
     if (validateOnChange) validate({ [name]: value });
   };
 
@@ -344,69 +357,19 @@ export const useForm = (validateOnChange = true) => {
   useEffect(() => {
     console.log('filters', carFilters);
     setIsLoading(true);
-    setResult([])
+    setResult([]);
     getAllCars();
     // eslint-disable-next-line
   }, [page, carFilters, user]);
-
-  function ItemExists(itemId: string) {
-    let newshortListCars = shortListCars;
-    return newshortListCars.some(function (item: ICarCard) {
-      return item._id === itemId;
-    });
-  }
-
-  const shortListItem = (newItem: ICarCard) => {
-    setAlertOpen(false);
-    if (shortListCars.length < 4) {
-      if (!ItemExists(newItem._id)) {
-        dispatch(setShortlistCars([...shortListCars, newItem]));
-        setAlertOpen(true);
-        setResponseMessage({ status: 'success', message: 'Car added' });
-      } else {
-        setAlertOpen(true);
-        setResponseMessage({
-          status: 'error',
-          message: 'Car already selected'
-        });
-      }
-    } else {
-      setAlertOpen(true);
-      setResponseMessage({
-        status: 'error',
-        message: "Can't select more than 6 cars"
-      });
-    }
-  };
-
-  const removeShortListItem = (itemId: string) => {
-    setAlertOpen(false);
-    let newState = shortListCars.filter((item: ICarCard) => {
-      return item._id !== itemId;
-    });
-    dispatch(setShortlistCars(newState));
-    setAlertOpen(true);
-    setResponseMessage({
-      status: 'success',
-      message: 'Car removed'
-    });
-  };
-
-  const clearShortListedCars = () =>{
-    let temp : any[] = []
-    dispatch(setShortlistCars(temp));
-    setAlertOpen(true);
-    setResponseMessage({
-      status: 'success',
-      message: 'Removed all short listed cars'
-    });
-  }
 
   return {
     errors,
     setErrors,
     page,
     pageCount,
+    modalPage,
+    modalPageCount,
+    handleModalPage,
     result,
     keywords,
     setResult,
@@ -424,12 +387,9 @@ export const useForm = (validateOnChange = true) => {
     responseData,
     responseMessage,
     getAllCars,
-    shortListItem,
-    removeShortListItem,
     rangeValues,
     setRangeValues,
     citiesWithCars,
-    shortListCars,
     alertOpen,
     setAlertOpen,
     makes,
@@ -437,6 +397,6 @@ export const useForm = (validateOnChange = true) => {
     bodyTypes,
     bodyColors,
     setResponseMessage,
-    clearShortListedCars
+    modelsLoading
   };
 };

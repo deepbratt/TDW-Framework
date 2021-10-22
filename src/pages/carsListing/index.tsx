@@ -26,7 +26,7 @@ import {
 import {
   CANT_FIND_RESULT,
   RESET,
-  CLOSE,
+  CLOSE
 } from '../../Utils/constants/language/en/buttonLabels';
 import FullScreenDialog from '../../components/DialogBox/FullScreenDialog';
 import { useForm } from './useForm';
@@ -48,20 +48,17 @@ export interface CarsListingProps {
 }
 
 const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
-
-  const {
-    root,
-    listingContainer,
-    contentRoot,
-    filtersRoot,
-    filtersContent,
-  } = CarListingStyles();
+  const { root, listingContainer, contentRoot, filtersRoot, filtersContent } =
+    CarListingStyles();
 
   const {
     isLoading,
     responseData,
     handleInputChange,
     page,
+    modalPage,
+    modalPageCount,
+    handleModalPage,
     handlePageChange,
     responseMessage,
     result,
@@ -72,8 +69,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
     pageCount,
     removeRangeFilter,
     keywords,
-    // shortListItem,
-    // removeShortListItem,
     rangeValues,
     setRangeValues,
     citiesWithCars,
@@ -84,13 +79,15 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
     bodyTypes,
     resetForm,
     bodyColors,
+    modelsLoading,
     // clearShortListedCars,
     setResponseMessage
   } = useForm();
 
   const [open, setOpen] = React.useState(false);
   const [sortDrawerOpen, setSortDrawerOpen] = React.useState(false);
-  const {clearShortListedCars, removeShortListItem, shortListItem} = useShortListCars()
+  const { clearShortListedCars, removeShortListItem, shortListItem } =
+    useShortListCars();
 
   const toggleDrawer = () => {
     setSortDrawerOpen(sortDrawerOpen ? false : true);
@@ -119,10 +116,10 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
     setResponseMessage(removeShortListItem(itemId));
   };
 
-  const handleAddToShortListItem = (item:ICarCard) =>{
-    setAlertOpen(true)
-    setResponseMessage(shortListItem(item))
-  }
+  const handleAddToShortListItem = (item: ICarCard) => {
+    setAlertOpen(true);
+    setResponseMessage(shortListItem(item));
+  };
 
   const handleResetShortList = () => {
     setAlertOpen(true);
@@ -145,7 +142,11 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
     makes,
     models,
     bodyTypes,
-    bodyColors
+    bodyColors,
+    modalPage,
+    modalPageCount,
+    handleModalPage,
+    modelsLoading
   };
 
   return (
@@ -312,9 +313,9 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
               </Grid>
             </Hidden>
             <ShortListItems
-                clearShortListedCars={handleResetShortList}
-                removeShortListItem={handleRemoveShortListItem}
-              />
+              clearShortListedCars={handleResetShortList}
+              removeShortListItem={handleRemoveShortListItem}
+            />
             <Grid item container xs={12} justifyContent="flex-start">
               {isLoading ? (
                 <Grid item container xs={12}>
@@ -350,7 +351,9 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
                           // isFavs={!isShortlist}
                           layoutType={layoutType}
                           handleShortList={() => handleAddToShortListItem(car)}
-                          removeShortListed={() => handleRemoveShortListItem(car._id)}
+                          removeShortListed={() =>
+                            handleRemoveShortListItem(car._id)
+                          }
                         />
                       </Grid>
                     ))}
@@ -369,12 +372,12 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
                   )}
                 </Grid>
               )}
-                <Toast
-                  open={alertOpen}
-                  onClose={handleAlertClose}
-                  type={responseMessage.status}
-                  message={responseMessage.message}
-                />
+              <Toast
+                open={alertOpen}
+                onClose={handleAlertClose}
+                type={responseMessage.status}
+                message={responseMessage.message}
+              />
             </Grid>
           </Grid>
         </Grid>

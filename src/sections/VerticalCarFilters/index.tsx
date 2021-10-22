@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/core/Slider';
+import { Button, CircularProgress } from '@material-ui/core';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -25,10 +26,7 @@ import { ICity } from 'country-state-city/dist/lib/interface';
 import AppliedFilters from './appliedFilters';
 import defaultBodyType from '../../assets/Cars/sedan.png';
 import { RootState } from '../../redux/store';
-import {
-  IFilterData,
-  IFilterValue
-} from '../../redux/reducers/filterDataSlice';
+import { SEE_MORE } from '../../Utils/constants/language/en/buttonLabels';
 // import MapSearch from '../../components/MapSearch/MapSearch';
 
 export interface CarFiltersProps {
@@ -86,7 +84,11 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     makes,
     models,
     bodyTypes,
-    bodyColors
+    bodyColors,
+    modalPage,
+    modalPageCount,
+    handleModalPage,
+    modelsLoading
   } = filterProps;
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -320,78 +322,51 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           )}
         </FormGroup>
       </FilterAccordion>
-      {(values.make.length > 0 || values.model.length > 0) && (
-        <FilterAccordion title={MODEL}>
-          <FormGroup>
-            {models
-              .filter((item: any, index: number) => index <= 4)
-              .map((type: any) => (
-                <FormControlLabel
-                  classes={{ label: fontSize }}
-                  key={uuidv4()}
-                  control={
-                    <Checkbox
-                      name={fieldNames.model}
-                      checked={values.model.indexOf(type.name) > -1}
-                      onChange={(e) => handleCheckboxChange(e, type.name)}
-                      color="primary"
-                      size="small"
-                    />
-                  }
-                  label={type.name}
-                />
-              ))}
-            {models.length > 5 && (
-              <DialogBox title="Select Model">
-                <Grid style={{ display: 'flex' }} container>
-                  <Grid xs={12}>
-                    <InputField
-                      variant="filled"
-                      label="Search"
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        handleMakesModelSearch(e, models)
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    {searchResult && searchResult.length > 0 && (
-                      <Typography variant="h4" gutterBottom>
-                        {'Search Result'}
-                      </Typography>
-                    )}
-                    {searchResult &&
-                      searchResult.map((item: any) => {
-                        return (
-                          <FormControlLabel
-                            classes={{ label: fontSize }}
-                            key={uuidv4()}
-                            control={
-                              <Checkbox
-                                name={fieldNames.model}
-                                checked={values.model.indexOf(item.name) > -1}
-                                onChange={(e) =>
-                                  handleCheckboxChange(e, item.name)
-                                }
-                                color="primary"
-                                size="small"
-                              />
-                            }
-                            label={item.name}
-                          />
-                        );
-                      })}
-                  </Grid>
-                  <Divider variant="middle" />
-                  <Grid item xs={12}>
+
+      <FilterAccordion title={MODEL}>
+        <FormGroup>
+          {models
+            .filter((item: any, index: number) => index <= 4)
+            .map((type: any) => (
+              <FormControlLabel
+                classes={{ label: fontSize }}
+                key={uuidv4()}
+                control={
+                  <Checkbox
+                    name={fieldNames.model}
+                    checked={values.model.indexOf(type.name) > -1}
+                    onChange={(e) => handleCheckboxChange(e, type.name)}
+                    color="primary"
+                    size="small"
+                  />
+                }
+                label={type.name}
+              />
+            ))}
+          {models.length > 5 && (
+            <DialogBox title="Select Model">
+              <Grid style={{ display: 'flex' }} container>
+                <Grid xs={12}>
+                  <InputField
+                    variant="filled"
+                    label="Search"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      handleMakesModelSearch(e, models)
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  {searchResult && searchResult.length > 0 && (
                     <Typography variant="h4" gutterBottom>
-                      {'Models'}
+                      {'Search Result'}
                     </Typography>
-                  </Grid>
-                  {models.map((item: any) => {
-                    return (
-                      <Grid key={uuidv4()} item xs={6}>
+                  )}
+                  {searchResult &&
+                    searchResult.map((item: any) => {
+                      return (
                         <FormControlLabel
                           classes={{ label: fontSize }}
+                          key={uuidv4()}
                           control={
                             <Checkbox
                               name={fieldNames.model}
@@ -405,15 +380,61 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                           }
                           label={item.name}
                         />
-                      </Grid>
-                    );
-                  })}
+                      );
+                    })}
                 </Grid>
-              </DialogBox>
-            )}
-          </FormGroup>
-        </FilterAccordion>
-      )}
+                <Divider variant="middle" />
+                <Grid item xs={12}>
+                  <Typography variant="h4" gutterBottom>
+                    {'Models'}
+                  </Typography>
+                </Grid>
+                {models.map((item: any) => {
+                  return (
+                    <Grid key={uuidv4()} item xs={6}>
+                      <FormControlLabel
+                        classes={{ label: fontSize }}
+                        control={
+                          <Checkbox
+                            name={fieldNames.model}
+                            checked={values.model.indexOf(item.name) > -1}
+                            onChange={(e) => handleCheckboxChange(e, item.name)}
+                            color="primary"
+                            size="small"
+                          />
+                        }
+                        label={item.name}
+                      />
+                    </Grid>
+                  );
+                })}
+                <Grid
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    margin: '10px 0'
+                  }}
+                  item
+                  xs={12}
+                >
+                  {modalPage < modalPageCount && (
+                    <Button
+                      size="small"
+                      variant="text"
+                      color="secondary"
+                      disabled={modelsLoading}
+                      onClick={handleModalPage}
+                    >
+                      {SEE_MORE}
+                    </Button>
+                  )}
+                  {modelsLoading && <CircularProgress />}
+                </Grid>
+              </Grid>
+            </DialogBox>
+          )}
+        </FormGroup>
+      </FilterAccordion>
       <FilterAccordion title={MILEAGE}>
         <Grid container direction="column">
           <Grid item container spacing={1}>

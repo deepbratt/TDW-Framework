@@ -116,7 +116,7 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const getAllCars = async () => {
-    let params = `?limit=10&page=${page.toString()}`;
+    let params = `?limit=20&page=${page.toString()}`;
     Object.entries(carFilters).map(([keys, values]: any) => {
       if (values !== initialValues[keys]) {
         if (typeof values === typeof [] && !(keys in initialRangeValues)) {
@@ -228,7 +228,6 @@ export const useForm = (validateOnChange = true) => {
   const getModels = async () => {
     setModelsLoading(true);
     let param = `?limit=${modalPage}&sort=name`;
-    console.log('function called', carFilters.make.length);
     if (carFilters.make.length > 0) {
       carFilters.make.map((item: any) => {
         let selectedMake: any = makes.filter((make: any) => make.name === item);
@@ -359,59 +358,6 @@ export const useForm = (validateOnChange = true) => {
     // eslint-disable-next-line
   }, [page, carFilters, user]);
 
-  function ItemExists(itemId: string) {
-    let newshortListCars = shortListCars;
-    return newshortListCars.some(function (item: ICarCard) {
-      return item._id === itemId;
-    });
-  }
-
-  const shortListItem = (newItem: ICarCard) => {
-    setAlertOpen(false);
-    if (shortListCars.length < 4) {
-      if (!ItemExists(newItem._id)) {
-        dispatch(setShortlistCars([...shortListCars, newItem]));
-        setAlertOpen(true);
-        setResponseMessage({ status: 'success', message: 'Car added' });
-      } else {
-        setAlertOpen(true);
-        setResponseMessage({
-          status: 'error',
-          message: 'Car already selected'
-        });
-      }
-    } else {
-      setAlertOpen(true);
-      setResponseMessage({
-        status: 'error',
-        message: "Can't select more than 6 cars"
-      });
-    }
-  };
-
-  const removeShortListItem = (itemId: string) => {
-    setAlertOpen(false);
-    let newState = shortListCars.filter((item: ICarCard) => {
-      return item._id !== itemId;
-    });
-    dispatch(setShortlistCars(newState));
-    setAlertOpen(true);
-    setResponseMessage({
-      status: 'success',
-      message: 'Car removed'
-    });
-  };
-
-  const clearShortListedCars = () => {
-    let temp: any[] = [];
-    dispatch(setShortlistCars(temp));
-    setAlertOpen(true);
-    setResponseMessage({
-      status: 'success',
-      message: 'Removed all short listed cars'
-    });
-  };
-
   return {
     errors,
     setErrors,
@@ -437,12 +383,9 @@ export const useForm = (validateOnChange = true) => {
     responseData,
     responseMessage,
     getAllCars,
-    shortListItem,
-    removeShortListItem,
     rangeValues,
     setRangeValues,
     citiesWithCars,
-    shortListCars,
     alertOpen,
     setAlertOpen,
     makes,
@@ -450,7 +393,6 @@ export const useForm = (validateOnChange = true) => {
     bodyTypes,
     bodyColors,
     setResponseMessage,
-    clearShortListedCars,
     modelsLoading
   };
 };

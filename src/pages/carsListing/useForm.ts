@@ -248,10 +248,6 @@ export const useForm = (validateOnChange = true) => {
   };
 
   useEffect(() => {
-    console.log('models', models);
-    // eslint-disable-next-line
-  }, [models]);
-  useEffect(() => {
     getCitiesWithCars();
     getMakes();
     getModels();
@@ -277,11 +273,19 @@ export const useForm = (validateOnChange = true) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    let filter = {
-      name: name,
-      value: value
-    };
-    dispatch(setFilter(filter));
+    if (name === 'condition' && value === 'any') {
+      let filter = {
+        name: name,
+        value: ''
+      };
+      dispatch(setFilter(filter));
+    } else {
+      let filter = {
+        name: name,
+        value: value
+      };
+      dispatch(setFilter(filter));
+    }
     if (validateOnChange) validate({ [name]: value });
   };
 

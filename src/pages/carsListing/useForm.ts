@@ -52,7 +52,7 @@ export const useForm = (validateOnChange = true) => {
   const carFilters = useSelector(
     (state: RootState) => state.carFilters.filters
   );
-  const {user} = useSelector((state:RootState)=>state.auth)
+  const { user } = useSelector((state: RootState) => state.auth);
   const {
     ADS,
     CARS,
@@ -64,6 +64,7 @@ export const useForm = (validateOnChange = true) => {
     CAR_COLORS
   } = API_ENDPOINTS;
   const [page, setPage] = useState(1);
+  const [modalPage, setModalPage] = useState(100);
   const [citiesWithCars, setCitiesWithCars] = useState([]);
   const [makes, setMakes] = useState([]);
   const [models, setModels] = useState([]);
@@ -72,7 +73,9 @@ export const useForm = (validateOnChange = true) => {
   const [keywords, setKeywords] = useState('');
   const [alertOpen, setAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [modelsLoading, setModelsLoading] = useState(false);
   const [pageCount, setPageCount] = useState<number>(1);
+  const [modalPageCount, setModalPageCount] = useState<number>(0);
   const [responseData, setResponseData] = useState<IData | null>();
   const [result, setResult] = useState<ICarCard[] | []>([]);
   const [queryParams, setQueryParams] = useState<string>('');
@@ -201,7 +204,7 @@ export const useForm = (validateOnChange = true) => {
 
   const getBodyTypes = () => {
     let param = '?sort=bodyType';
-    getAllData(ADS + CARS + BODY_TYPES  + param).then((response) => {
+    getAllData(ADS + CARS + BODY_TYPES + param).then((response) => {
       if (response && response && response.status === 'success') {
         setBodyTypes(response.data.result);
       } else {
@@ -223,7 +226,8 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const getModels = async () => {
-    let param = '?&sort=name';
+    setModelsLoading(true);
+    let param = `?limit=${modalPage}&sort=name`;
     console.log('function called', carFilters.make.length);
     if (carFilters.make.length > 0) {
       carFilters.make.map((item: any) => {
@@ -234,12 +238,14 @@ export const useForm = (validateOnChange = true) => {
           param += '&make_id=' + selectedMake[0].make_id;
         }
       });
-      await getAllData(ADS + CARS + MODEL + param).then((response) => {
-        if (response && response && response.status === 'success') {
-          setModels(response.data.result);
-        }
-      });
     }
+    await getAllData(ADS + CARS + MODEL + param).then((response) => {
+      if (response && response && response.status === 'success') {
+        setModels(response.data.result);
+        setModalPageCount(response.total);
+        setModelsLoading(false);
+      }
+    });
   };
 
   useEffect(() => {
@@ -249,22 +255,26 @@ export const useForm = (validateOnChange = true) => {
   useEffect(() => {
     getCitiesWithCars();
     getMakes();
-    // getModels();
+    getModels();
     getBodyTypes();
     getBodyColors();
     // eslint-disable-next-line
   }, []);
 
-  // useEffect(() => {
-  //   getModels();
-  //   // eslint-disable-next-line
-  // }, [carFilters.make]);
+  useEffect(() => {
+    getModels();
+    // eslint-disable-next-line
+  }, [modalPage]);
 
   useEffect(() => {
     return () => {
       dispatch(resetFilters());
     };
   }, []);
+
+  const handleModalPage = () => {
+    setModalPage(modalPage + 100);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -344,7 +354,7 @@ export const useForm = (validateOnChange = true) => {
   useEffect(() => {
     console.log('filters', carFilters);
     setIsLoading(true);
-    setResult([])
+    setResult([]);
     getAllCars();
     // eslint-disable-next-line
   }, [page, carFilters, user]);
@@ -392,21 +402,24 @@ export const useForm = (validateOnChange = true) => {
     });
   };
 
-  const clearShortListedCars = () =>{
-    let temp : any[] = []
+  const clearShortListedCars = () => {
+    let temp: any[] = [];
     dispatch(setShortlistCars(temp));
     setAlertOpen(true);
     setResponseMessage({
       status: 'success',
       message: 'Removed all short listed cars'
     });
-  }
+  };
 
   return {
     errors,
     setErrors,
     page,
     pageCount,
+    modalPage,
+    modalPageCount,
+    handleModalPage,
     result,
     keywords,
     setResult,
@@ -437,6 +450,7 @@ export const useForm = (validateOnChange = true) => {
     bodyTypes,
     bodyColors,
     setResponseMessage,
-    clearShortListedCars
+    clearShortListedCars,
+    modelsLoading
   };
 };

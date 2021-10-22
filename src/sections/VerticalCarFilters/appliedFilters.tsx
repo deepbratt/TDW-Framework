@@ -51,8 +51,8 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
 
   if (
     keys in rangeInitialValues &&
-    values[0] !== getKeyValue(rangeInitialValues)(keys)[0] &&
-    values[1] !== getKeyValue(rangeInitialValues)(keys)[1]
+    (values[0] !== getKeyValue(rangeInitialValues)(keys)[0] ||
+      values[1] !== getKeyValue(rangeInitialValues)(keys)[1])
   ) {
     return (
       <Grid item>

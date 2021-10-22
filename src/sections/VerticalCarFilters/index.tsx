@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
@@ -26,7 +26,10 @@ import { ICity } from 'country-state-city/dist/lib/interface';
 import AppliedFilters from './appliedFilters';
 import defaultBodyType from '../../assets/Cars/sedan.png';
 import { RootState } from '../../redux/store';
-import { SEE_MORE } from '../../Utils/constants/language/en/buttonLabels';
+import {
+  ENTER_YOUR_EMAIL_PASS_MESSAGE,
+  SEE_MORE
+} from '../../Utils/constants/language/en/buttonLabels';
 // import MapSearch from '../../components/MapSearch/MapSearch';
 
 export interface CarFiltersProps {
@@ -34,7 +37,10 @@ export interface CarFiltersProps {
 }
 
 const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
-  const [searchResult, setSearchResult] = useState<ICity[]>();
+  const [citySearchResult, setCitySearchResult] = useState<ICity[]>();
+  const [regSearchResult, setRegSearchResult] = useState<ICity[]>();
+  const [makeSearchResult, setMakeSearchResult] = useState<any>();
+  const [modelSearchResult, setModelSearchResult] = useState<any>();
   // const filtersData = useSelector(
   //   (state: RootState) => state.filtersData.filtersData
   // );
@@ -100,7 +106,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     if (e.target.value === '') {
       result = [];
     }
-    setSearchResult(result);
+    setRegSearchResult(result);
   };
 
   const handleSearchCities = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,7 +118,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     if (e.target.value === '') {
       result = [];
     }
-    setSearchResult(result);
+    setCitySearchResult(result);
   };
 
   const handleMakesModelSearch = (
@@ -127,7 +133,11 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     if (e.target.value === '') {
       result = [];
     }
-    setSearchResult(result);
+    if (e.target.name === 'make') {
+      setMakeSearchResult(result);
+    } else {
+      setModelSearchResult(result);
+    }
   };
 
   return (
@@ -257,6 +267,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               <Grid style={{ display: 'flex' }} container>
                 <Grid xs={12}>
                   <InputField
+                    name="make"
                     variant="filled"
                     label="Search"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -265,13 +276,13 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  {searchResult && searchResult.length > 0 && (
+                  {makeSearchResult && makeSearchResult.length > 0 && (
                     <Typography variant="h4" gutterBottom>
                       {'Search Result'}
                     </Typography>
                   )}
-                  {searchResult &&
-                    searchResult.map((item: any) => {
+                  {makeSearchResult &&
+                    makeSearchResult.map((item: any) => {
                       return (
                         <FormControlLabel
                           classes={{ label: fontSize }}
@@ -348,6 +359,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               <Grid style={{ display: 'flex' }} container>
                 <Grid xs={12}>
                   <InputField
+                    name="model"
                     variant="filled"
                     label="Search"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -356,13 +368,13 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  {searchResult && searchResult.length > 0 && (
+                  {modelSearchResult && modelSearchResult.length > 0 && (
                     <Typography variant="h4" gutterBottom>
                       {'Search Result'}
                     </Typography>
                   )}
-                  {searchResult &&
-                    searchResult.map((item: any) => {
+                  {modelSearchResult &&
+                    modelSearchResult.map((item: any) => {
                       return (
                         <FormControlLabel
                           classes={{ label: fontSize }}
@@ -597,13 +609,13 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  {searchResult && searchResult.length > 0 && (
+                  {citySearchResult && citySearchResult.length > 0 && (
                     <Typography variant="h4" gutterBottom>
                       {'Search Result'}
                     </Typography>
                   )}
-                  {searchResult &&
-                    searchResult.map((city: any) => {
+                  {citySearchResult &&
+                    citySearchResult.map((city: any) => {
                       return (
                         <FormControlLabel
                           classes={{ label: fontSize }}
@@ -678,13 +690,13 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 />
               </Grid>
               <Grid item xs={12}>
-                {searchResult && (
+                {regSearchResult && regSearchResult.length > 0 && (
                   <Typography variant="h4" gutterBottom>
                     {'Search Result'}
                   </Typography>
                 )}
-                {searchResult &&
-                  searchResult.map((city: ICity) => {
+                {regSearchResult &&
+                  regSearchResult.map((city: ICity) => {
                     return (
                       <FormControlLabel
                         classes={{ label: fontSize }}

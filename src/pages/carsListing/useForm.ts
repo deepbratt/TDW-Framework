@@ -5,7 +5,6 @@ import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { getAllData } from '../../Utils/API/API';
 import useValidation from '../../Utils/hooks/useValidation';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
-import { setShortlistCars } from '../../redux/reducers/shortlistCarsSlice';
 import { extractError, getKeyValue } from '../../Utils/helperFunctions';
 import {
   removeArrayFilter,
@@ -330,7 +329,6 @@ export const useForm = (validateOnChange = true) => {
   };
 
   const resetForm = () => {
-    console.log('reset filters');
     setKeywords('');
     setRangeValues({
       price: [0, 50000000],
@@ -355,7 +353,6 @@ export const useForm = (validateOnChange = true) => {
   };
 
   useEffect(() => {
-    console.log('filters', carFilters);
     setIsLoading(true);
     setResult([]);
     getAllCars();

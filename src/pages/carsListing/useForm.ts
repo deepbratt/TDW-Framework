@@ -259,6 +259,11 @@ export const useForm = (validateOnChange = true) => {
   useEffect(() => {
     getModels();
     // eslint-disable-next-line
+  }, [carFilters.make]);
+
+  useEffect(() => {
+    getModels();
+    // eslint-disable-next-line
   }, [modalPage]);
 
   useEffect(() => {

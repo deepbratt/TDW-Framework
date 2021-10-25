@@ -80,11 +80,12 @@ const TechHelpInputDialog = ({
                 fullWidth
                 error={requireError.email}
                 helperText={requireError.email ? helperText : ''}
+                placeholder={"email"}
               />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
               <TextField
-                type="number"
+                type="tel"
                 onChange={handleChange}
                 label="Phone"
                 name="phone"
@@ -92,6 +93,7 @@ const TechHelpInputDialog = ({
                 fullWidth
                 error={requireError.phone}
                 helperText={requireError.phone ? helperText : ''}
+                placeholder={"+923XXXXXXXXXX"}
               />
             </Grid>
           </>
@@ -107,6 +109,7 @@ const TechHelpInputDialog = ({
               maxRows={5}
               error={requireError.description}
               helperText={requireError.description ? helperText : ''}
+              placeholder={"Describe the issue/bug"}
             />
           </Grid>
         </Grid>

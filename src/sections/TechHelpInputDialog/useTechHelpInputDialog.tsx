@@ -83,26 +83,31 @@ const useTechHelpInputDialog = (
       phone: formData.phone,
       description: formData.description
     };
-    setIsLoading(true)
-    handleRejection()
-    addData(`${API_ENDPOINTS.TICKETS}${API_ENDPOINTS.TECH_TICKETS}`, body).then(response=>{
-        if(response && response.data && response.data.status==="success"){
-            setToastMessage(response.data.message);
-            setToastType("success");
-            setToastOpen(true);
-            setHelpComingDialog(true)
-        }else{
-            let msg = response.response
-            ? response.response
-            : response.message
-            ? response.message
-            : "Network Error";
+    setIsLoading(true);
+    handleRejection();
+    addData(`${API_ENDPOINTS.TICKETS}${API_ENDPOINTS.TECH_TICKETS}`, body).then(
+      (response) => {
+        if (response && response.data && response.data.status === 'success') {
+          setToastMessage(response.data.message);
+          setToastType('success');
+          setToastOpen(true);
+          setHelpComingDialog(true);
+        } else {
+          let msg =
+            response.response &&
+            response.response.data &&
+            response.response.data.message
+              ? response.response.data.message
+              : response.message
+              ? response.message
+              : 'Network Error';
           setToastMessage(msg);
-          setToastType("error");
+          setToastType('error');
           setToastOpen(true);
         }
-        setIsLoading(false)
-    })
+        setIsLoading(false);
+      }
+    );
   };
 
   // useEffects

@@ -31,7 +31,7 @@ import { RootState } from '../../../../../redux/store';
 import helpBanner from '../../../../../assets/helpImage.png'
 
 const Help = () => {
-  const { heading, box, helpContainer, subContainer } = useStyles();
+  const { heading, box, helpContainer, subContainer, onlyHelpbox } = useStyles();
   const [isLoading, setIsLoading] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
@@ -47,7 +47,7 @@ const Help = () => {
         canonical={PageMeta.help.canonical}
         keywords={PageMeta.help.keywords}
       />
-      <Paper elevation={4} className={box}>
+      <Paper elevation={4} className={isLoggedIn ? box : onlyHelpbox}>
       <Grid
         item
         lg={12}

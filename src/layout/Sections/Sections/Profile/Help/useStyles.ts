@@ -23,13 +23,25 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom:"15px",
   },
   box: {
-    marginLeft: "20px",
     background: white,
     width: "100%",
     position: "relative",
     padding:"20px",
+    marginLeft: "20px",
     [breakpoints.down("sm")]: {
       marginLeft: "0px",
+      padding:"10px"
+    },
+  },
+
+  onlyHelpbox:{
+    background: white,
+    width: "100%",
+    position: "relative",
+    padding:"20px",
+    margin:"40px 20px 20px 20px",
+    [breakpoints.down("sm")]: {
+      margin: "0px",
       padding:"10px"
     },
   },

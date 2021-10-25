@@ -84,7 +84,7 @@ const TechHelpInputDialog = ({
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
               <TextField
-                type="number"
+                type="tel"
                 onChange={handleChange}
                 label="Phone"
                 name="phone"

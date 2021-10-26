@@ -45,7 +45,8 @@ const TechHelpInputDialog = ({
     isLoggedIn,
     requireError,
     handleSubmit,
-    helperText
+    helperText,
+    resetFormData
   } = useTechHelpInputDialog(
     setHelpComingDialog,
     setIsLoading,
@@ -117,7 +118,7 @@ const TechHelpInputDialog = ({
       <DialogActions>
         <Button
           autoFocus
-          onClick={handleRejection}
+          onClick={resetFormData}
           color="secondary"
           variant="outlined"
         >

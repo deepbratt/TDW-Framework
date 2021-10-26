@@ -37,6 +37,15 @@ const useTechHelpInputDialog = (
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const [requireError, setRequireError] = useState(initialRequireError);
 
+  const resetFormData = () => {
+    setFormData({ name: 'description', value: '' });
+    if (!isLoggedIn) {
+      setFormData({ name: 'phone', value: '' });
+      setFormData({ name: 'email', value: '' });
+    }
+    handleRejection();
+  };
+
   // functions
   const handleChange = (event: any) => {
     setFormData({
@@ -84,7 +93,7 @@ const useTechHelpInputDialog = (
       description: formData.description
     };
     setIsLoading(true);
-    handleRejection();
+    resetFormData()
     addData(`${API_ENDPOINTS.TICKETS}${API_ENDPOINTS.TECH_TICKETS}`, body).then(
       (response) => {
         if (response && response.data && response.data.status === 'success') {
@@ -126,7 +135,8 @@ const useTechHelpInputDialog = (
     isLoggedIn,
     requireError,
     handleSubmit,
-    helperText
+    helperText,
+    resetFormData
   };
 };
 

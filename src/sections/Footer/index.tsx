@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import {useSelector} from 'react-redux'
 import FooterStyles from './styles';
 import {
   FooterProps,
@@ -13,6 +14,7 @@ import {
 } from '../../Utils/interfaces/footer.interface';
 import { paths } from '../../routes/paths';
 import { setArrayFilter} from '../../redux/reducers/carFiltersSlice';
+import { RootState } from '../../redux/store';
 
 /** 
  @param data 
@@ -44,10 +46,20 @@ const Footer: React.FC<FooterProps> = ({
 
   const history = useHistory();
   const dispatch = useDispatch();
-
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const handleFilters = (filter: IFooterFilter) => {
+    window.scrollTo(0,0)
     dispatch(setArrayFilter({ name: filter.filterName, value: filter.value }));
     history.push(paths.cars);
+  };
+
+  const dataPath = (link: string) => {
+    let route = link
+    if (isLoggedIn && link.indexOf('help') > -1) {
+      route =  `/dashboard${link}`;
+    }
+    window.scrollTo(0,0)
+    history.push(route)
   };
 
   return (
@@ -210,7 +222,7 @@ const Footer: React.FC<FooterProps> = ({
                   <Grid item key={`terms-and-conditions-${index}`}>
                     <Typography
                       className={pageLinks}
-                      onClick={() => history.push(item.path)}
+                      onClick={() => dataPath(item.path)}
                       style={{ marginLeft: '5px' }}
                       variant="body2"
                       component="span"

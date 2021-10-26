@@ -146,7 +146,7 @@ export const useForm = (validateOnChange = true) => {
         if (response && response && response.status === 'success') {
           setResponseData(response);
           setPageCount(
-            response.totalCount < 10 ? 1 : Math.ceil(response.totalCount / 10)
+            response.totalCount < 10 ? 1 : Math.ceil(response.totalCount / 20)
           );
           setResult(response.data.result);
           setResponseMessage({

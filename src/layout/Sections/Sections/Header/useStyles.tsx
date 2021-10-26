@@ -52,7 +52,8 @@ export const useStyles = makeStyles((theme) => ({
   logoWrapper: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    cursor: 'pointer'
   },
   rec: {
     position: 'absolute',
@@ -73,7 +74,7 @@ export const useStyles = makeStyles((theme) => ({
       maxWidth: '150px'
     },
     [theme.breakpoints.up('lg')]: {
-      minWidth: '500px'
+      minWidth: '400px'
     },
     '& > .MuiOutlinedInput-root-293': {
       borderRadius: '10px'

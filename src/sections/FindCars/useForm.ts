@@ -39,6 +39,10 @@ export const useForm = (validateOnChange = false) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    console.log('value', values);
+  }, [values]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -50,7 +54,14 @@ export const useForm = (validateOnChange = false) => {
   };
 
   const resetForm = () => {
-    setValues(initialValues);
+    setValues({
+      make: '',
+      model: '',
+      bodyType: [],
+      priceFrom: '',
+      priceTo: ''
+    });
+    console.log("reset form")
     setErrors({});
   };
 
@@ -66,7 +77,8 @@ export const useForm = (validateOnChange = false) => {
 
   const getMakes = async () => {
     setIsLoading(true);
-    await getAllData(ADS + CARS + MAKE).then((response) => {
+    let param = '?sort=name';
+    await getAllData(ADS + CARS + MAKE + param).then((response) => {
       setIsLoading(false);
       if (response && response && response.status === 'success') {
         setMakes(response.data.result);
@@ -76,7 +88,7 @@ export const useForm = (validateOnChange = false) => {
 
   const getModels = async () => {
     setIsLoading(true);
-    let param = '?';
+    let param = '?sort=name';
     if (values.make !== '') {
       let selectedMake: any = makes.filter(
         (make: any) => make.name === values.make
@@ -127,9 +139,20 @@ export const useForm = (validateOnChange = false) => {
         values.priceTo === '' ? 50000000 : parseInt(values.priceTo)
       ]
     };
+    resetForm();
+    handlePageChange(queryParams);
+  };
+
+  const handlePageChange = (queryParams: object) => {
     dispatch(setFilters(queryParams));
     history.push(paths.cars);
   };
+
+  useEffect(() => {
+    return () => {
+      resetForm();
+    };
+  }, []);
 
   return {
     values,

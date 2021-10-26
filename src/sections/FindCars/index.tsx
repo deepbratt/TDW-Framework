@@ -87,7 +87,7 @@ const FindCarsStyles = makeStyles((theme) => ({
   loaderContainer: {
     display: 'flex',
     justifyContent: 'center',
-    width: '100%',
+    width: '100%'
   }
 }));
 
@@ -145,11 +145,10 @@ const FindCars: React.FC = () => {
               classes={{
                 root: tabRoot,
                 wrapper:
-                  values.bodyType.includes(item.bodyType)
+                  values.bodyType.indexOf(item.bodyType) > -1
                     ? tabWrapperSelected
                     : tabWrapper
               }}
-
               icon={
                 <img
                   height="64px"

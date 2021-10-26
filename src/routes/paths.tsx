@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import Retry from '../components/Retry';
+// import Retry from '../components/Retry';
 // ===========================================================================================
 //                                      component imports without lazy loading
 // =========================================================================================
@@ -28,7 +28,6 @@ const ForgetPassword = lazy(() => import('../pages/forgetPassword'));
 const ResetPassword = lazy(() => import('../pages/resetPassword'));
 const Signup = lazy(() => import('../pages/signup'));
 const AddEditCar = lazy(() => import('../pages/AddEditCar'));
-const usedCars = lazy(() => import('../pages/SearchUsedCars/index'));
 const Verification = lazy(() => import('../pages/verificationPage'));
 const CarDetail = lazy(() => import('../pages/carDetail/index'));
 const CarComparison = lazy(() => import('../pages/carComparision/index'));
@@ -58,7 +57,7 @@ const Help = lazy(
 // const Help = lazy(() => Retry(()=> import('../layout/Sections/Sections/Profile/Help/Help')));
 
 export const paths = {
-  home: 'home',
+  home: '/',
   dashboard: '/dashboard',
   fav: '/favorites',
   postAd: '/post-an-ad',
@@ -73,7 +72,7 @@ export const paths = {
   carComparision: '/car-comparision',
   carShortlist: 'cars-shortlist',
   signup: '/signup',
-  cars: 'cars',
+  cars: '/cars',
   forgotPassword: '/forgot-password',
   resetPassword: 'reset-password',
   addEditCar: 'add-edit/car/',

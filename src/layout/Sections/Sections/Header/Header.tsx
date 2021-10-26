@@ -72,12 +72,12 @@ const HeaderContext = () => {
     history.push(paths.cars);
   };
 
-  const dataPath = (link:string)=>{
-    if(isLoggedIn && link.indexOf('help') > -1 ){
-      return `/dashboard${link}`
+  const dataPath = (link: string) => {
+    if (isLoggedIn && link.indexOf('help') > -1) {
+      return `/dashboard${link}`;
     }
-    return link
-  }
+    return link;
+  };
 
   const menuId = 'primary-account-menu';
   const renderMenu = (
@@ -117,14 +117,21 @@ const HeaderContext = () => {
       <AppBar className={root} color="inherit">
         <Toolbar className={appbarsolid}>
           <Grid container justifyContent="flex-start">
-            <section className={logoWrapper}>
+            <section
+              className={logoWrapper}
+              onClick={() => history.push(paths.home)}
+            >
               <img src={Logo} alt="logo" className={logo} />
             </section>
             <Hidden smDown>
               <List className={list}>
                 {Paths.map((data, index) => {
                   return (
-                    <NavLink key={index} className={link} to={dataPath(data.path)}>
+                    <NavLink
+                      key={index}
+                      className={link}
+                      to={dataPath(data.path)}
+                    >
                       <ListItem>
                         <Typography variant="h4">{data.name}</Typography>
                       </ListItem>

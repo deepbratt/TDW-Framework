@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
@@ -41,9 +42,8 @@ const SideBar = () => {
   };
 
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(
-    (state: any) => state.auth.isLoggedIn
-  );
+  const history = useHistory();
+  const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
 
   return (
     <>
@@ -63,7 +63,7 @@ const SideBar = () => {
             <ChevronRightIcon />
           </IconButton>
           <Divider orientation="vertical" />
-          <section className={logo}>
+          <section className={logo} onClick={() => history.push(paths.home)}>
             <img src={Logo} alt="logo" width="100px" />
           </section>
         </div>
@@ -95,12 +95,16 @@ const SideBar = () => {
                     </NavLink>
                   </ListItem>
                   <ListItem button className={nested}>
-                    <NavLink className={link} to={paths.dashboard+"/profile"}>
+                    <NavLink className={link} to={paths.dashboard + '/profile'}>
                       <ListItemText primary={PROFILE} />
                     </NavLink>
                   </ListItem>
-                  <ListItem button className={nested} onClick={() => dispatch(logout())}>              
-                    <ListItemText primary={LOGOUT} />       
+                  <ListItem
+                    button
+                    className={nested}
+                    onClick={() => dispatch(logout())}
+                  >
+                    <ListItemText primary={LOGOUT} />
                   </ListItem>
                 </List>
               </Collapse>

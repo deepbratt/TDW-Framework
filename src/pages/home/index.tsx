@@ -59,9 +59,9 @@ const HomePage = () => {
             <Grid item container xs={12}>
               <Grid className={carComparisionsRoot} item xs={12} md={6}>
                 <Typography variant="h3">{CAR_COMPARISIONS}</Typography>
-                <Typography className={carComparisionsLink} variant="h3">
+                {/* <Typography className={carComparisionsLink} variant="h3">
                   {ALL_CARS_COMPARISIONS}
-                </Typography>
+                </Typography> */}
               </Grid>
             </Grid>
             <Grid item xs={12} sm={6}>

@@ -136,6 +136,7 @@ const useAddEditCar = () => {
     <CarAdditionalInformation
       formData={formData}
       handleChange={handleChange}
+      handleChangeSelect={handleChangeSelect}
       requireError={requireError}
       setFormData={setFormData}
       bodyTypesArray={bodyTypesArray}

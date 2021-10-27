@@ -1,36 +1,35 @@
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import {Theme} from '@material-ui/core/styles/createTheme';
+import { Theme } from '@material-ui/core/styles/createTheme';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import createStyles from '@material-ui/core/styles/createStyles';
-import SelectComponent from "../../components/SelectComponent";
-import { City } from "country-state-city";
-import addEditCarData from "../../Utils/constants/language/en/addEditCarData";
-import { Colors } from "../../Utils/constants/colors/colors";
-import SelectInputComponent from "../../components/SelectInputComponent";
-import {NO_REGISTRATION_DISPLAY} from "../../Utils/constants/language/en/addEditCarTexts"
-import useCarInformationForm from "./useCarInformationForm";
+import { City } from 'country-state-city';
+import addEditCarData from '../../Utils/constants/language/en/addEditCarData';
+import { Colors } from '../../Utils/constants/colors/colors';
+import SelectInputComponent from '../../components/SelectInputComponent';
+import { NO_REGISTRATION_DISPLAY } from '../../Utils/constants/language/en/addEditCarTexts';
+import useCarInformationForm from './useCarInformationForm';
 
 interface CarInformationFormProps {
   formData: {
-    city: "",
-    carModel: "",
-    carMake: "Honda" | "Daihatsu" | "Toyota" | "Nissan" | "Suzuki",
-    modelYear: "",
-    bodyColor: "",
-    registeredIn: "",
-    mileage: "",
-    price: "",
-    registrationNo: "",
-    description: "",
-    modelVersion:""
+    city: '';
+    carModel: '';
+    carMake: 'Honda' | 'Daihatsu' | 'Toyota' | 'Nissan' | 'Suzuki';
+    modelYear: '';
+    bodyColor: '';
+    registeredIn: '';
+    mileage: '';
+    price: '';
+    registrationNo: '';
+    description: '';
+    modelVersion: '';
   };
   handleChange: (event: any) => void;
   requireError: any;
   handleChangeSelect: any;
   setFormData: React.Dispatch<any>;
-  bodyColorArray: any[]
+  bodyColorArray: any[];
 }
 
 const CarInformationForm = ({
@@ -42,8 +41,9 @@ const CarInformationForm = ({
   bodyColorArray
 }: CarInformationFormProps) => {
   const classes = useStyles();
-  const {carMakesList, carModelsList, carVersionsList} = useCarInformationForm(formData, setFormData)
-  const cities = City.getCitiesOfCountry("PK");
+  const { carMakesList, carModelsList, carVersionsList } =
+    useCarInformationForm(formData, setFormData);
+  const cities = City.getCitiesOfCountry('PK');
   const extractedCityNames = cities?.map((item) => item.name);
   let cityNames = [];
   if (extractedCityNames) {
@@ -54,80 +54,88 @@ const CarInformationForm = ({
       <Grid item xs={12} sm={12} md={6}>
         <SelectInputComponent
           dataArray={cityNames}
-          name={"city"}
+          name={'city'}
           className={classes.selectFields}
           value={formData.city}
           label={addEditCarData.fields.selectCity.label}
           required
           error={requireError.city}
-          helperText={requireError.city ? addEditCarData.requiredFieldText : ""}
+          helperText={requireError.city ? addEditCarData.requiredFieldText : ''}
           handleChangeSelect={handleChangeSelect}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
-        <SelectComponent
-          menuItem={carMakesList.length < 1 ? [formData.carMake] : carMakesList}
-          name={"carMake"}
+        <SelectInputComponent
+          dataArray={
+            carMakesList.length < 1 ? [formData.carMake] : carMakesList
+          }
+          name={'carMake'}
           className={classes.selectFields}
           value={formData.carMake}
           label={addEditCarData.fields.carMake.label}
           required
           error={requireError.carMake}
           helperText={
-            requireError.carMake ? addEditCarData.requiredFieldText : ""
+            requireError.carMake ? addEditCarData.requiredFieldText : ''
           }
-          onChange={handleChange}
+          handleChangeSelect={handleChangeSelect}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
         <SelectInputComponent
           dataArray={cityNames}
-          name={"registeredIn"}
+          name={'registeredIn'}
           className={classes.selectFields}
           value={formData.registeredIn}
           label={addEditCarData.fields.registeredIn.label}
           required
           error={requireError.registeredIn}
           helperText={
-            requireError.registeredIn ? addEditCarData.requiredFieldText : ""
+            requireError.registeredIn ? addEditCarData.requiredFieldText : ''
           }
           handleChangeSelect={handleChangeSelect}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
-        <SelectComponent
-          menuItem={carModelsList.length < 1 ? [formData.carModel] : carModelsList}
-          name={"carModel"}
+        <SelectInputComponent
+          dataArray={
+            carModelsList.length < 1 ? [formData.carModel] : carModelsList
+          }
+          name={'carModel'}
           className={classes.selectFields}
           value={formData.carModel}
           label={addEditCarData.fields.carModel.label}
           required
           error={requireError.carModel}
           helperText={
-            requireError.carModel ? addEditCarData.requiredFieldText : ""
+            requireError.carModel ? addEditCarData.requiredFieldText : ''
           }
-          onChange={handleChange}
+          handleChangeSelect={handleChangeSelect}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
-        <SelectComponent
-          menuItem={addEditCarData.fields.modelYear.menu}
-          name={"modelYear"}
+        <SelectInputComponent
+          dataArray={addEditCarData.fields.modelYear.menu}
+          name={'modelYear'}
           className={classes.selectFields}
           value={formData.modelYear}
           label={addEditCarData.fields.modelYear.label}
           required
           error={requireError.modelYear}
           helperText={
-            requireError.modelYear ? addEditCarData.requiredFieldText : ""
+            requireError.modelYear ? addEditCarData.requiredFieldText : ''
           }
-          onChange={handleChange}
+          handleChangeSelect={handleChangeSelect}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
-        <SelectComponent
-          menuItem={carVersionsList.length < 1 ? [formData.modelVersion] : carVersionsList}
-          name={"modelVersion"}
+        <SelectInputComponent
+          dataArray={
+            carVersionsList.length < 1
+              ? [formData.modelVersion]
+              : carVersionsList
+          }
+          name={'modelVersion'}
           className={classes.selectFields}
           value={formData.modelVersion}
           label={addEditCarData.fields.carVersion.label}
@@ -136,11 +144,24 @@ const CarInformationForm = ({
           // helperText={
           //   requireError.carModel ? addEditCarData.requiredFieldText : ""
           // }
-          onChange={handleChange}
+          handleChangeSelect={handleChangeSelect}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
-        <SelectComponent
+        <SelectInputComponent
+          dataArray={bodyColorArray}
+          name={'bodyColor'}
+          className={classes.selectFields}
+          value={formData.bodyColor}
+          label={addEditCarData.fields.bodyColor.label}
+          required
+          error={requireError.bodyColor}
+          helperText={
+            requireError.bodyColor ? addEditCarData.requiredFieldText : ''
+          }
+          handleChangeSelect={handleChangeSelect}
+        />
+        {/* <SelectComponent
           menuItem={bodyColorArray}
           name={"bodyColor"}
           className={classes.selectFields}
@@ -152,26 +173,26 @@ const CarInformationForm = ({
             requireError.bodyColor ? addEditCarData.requiredFieldText : ""
           }
           onChange={handleChange}
-        />
+        /> */}
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
         <TextField
           type="number"
-          name={"mileage"}
+          name={'mileage'}
           className={classes.selectFields}
           value={formData.mileage}
           label={addEditCarData.fields.mileage.label}
           required
           error={requireError.mileage}
           helperText={
-            requireError.mileage ? addEditCarData.requiredFieldText : ""
+            requireError.mileage ? addEditCarData.requiredFieldText : ''
           }
           onChange={handleChange}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
         <TextField
-          name={"registrationNo"}
+          name={'registrationNo'}
           type="text"
           className={classes.selectFields}
           value={formData.registrationNo}
@@ -179,14 +200,14 @@ const CarInformationForm = ({
           required
           error={requireError.registrationNo}
           helperText={
-            requireError.registrationNo ? addEditCarData.requiredFieldText : ""
+            requireError.registrationNo ? addEditCarData.requiredFieldText : ''
           }
           onChange={handleChange}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
         <TextField
-          name={"price"}
+          name={'price'}
           type="number"
           className={classes.selectFields}
           value={formData.price}
@@ -194,12 +215,22 @@ const CarInformationForm = ({
           required
           error={requireError.price}
           helperText={
-            requireError.price ? addEditCarData.requiredFieldText : ""
+            requireError.price ? addEditCarData.requiredFieldText : ''
           }
           onChange={handleChange}
         />
       </Grid>
-      <Grid item xs={12} sm={12} md={6} style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        md={6}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
         <Typography variant="h3" color="primary">
           {NO_REGISTRATION_DISPLAY}
         </Typography>
@@ -213,12 +244,12 @@ const CarInformationForm = ({
           required
           rows={4}
           placeholder={addEditCarData.fields.description.defaultValue}
-          style={{ width: "100%" }}
+          style={{ width: '100%' }}
           value={formData.description}
           onChange={handleChange}
           error={requireError.registrationNo}
           helperText={
-            requireError.registrationNo ? addEditCarData.requiredFieldText : ""
+            requireError.registrationNo ? addEditCarData.requiredFieldText : ''
           }
         />
       </Grid>
@@ -230,14 +261,18 @@ export default CarInformationForm;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     sterik: {
-      color: "red",
+      color: 'red'
     },
     selectFields: {
-      width: "100%",
+      width: '100%',
+      '& input::-webkit-clear-button, & input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button':
+        {
+          display: 'none'
+        }
     },
     inputLabel: {
-      fontSize: "16px",
-      color: Colors.textPrimary,
-    },
+      fontSize: '16px',
+      color: Colors.textPrimary
+    }
   })
 );

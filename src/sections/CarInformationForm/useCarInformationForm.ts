@@ -17,7 +17,7 @@ const useCarInformationForm = (formData: any, setFormData: React.Dispatch<any>) 
   const fetchMakes = () => {
     setIsLoading(true);
     getAllData(
-      API_ENDPOINTS.ADS + API_ENDPOINTS.CARS + API_ENDPOINTS.CAR_MAKES
+      API_ENDPOINTS.ADS + API_ENDPOINTS.CARS + API_ENDPOINTS.CAR_MAKES+"?sort=name"
     ).then((response) => {
       setIsLoading(false);
       if (response.status === 'success') {

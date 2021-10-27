@@ -373,8 +373,9 @@ const useAddEditCar = () => {
     return result
   }
 
-  const formValidated=()=>{
-    if (activeStep === 0) {
+  const formValidated=(stepToValidate : number)=>{
+    let stepValidatation = stepToValidate
+    if (stepValidatation === 0) {
       if (!checkValidation(initialRequireError)) {
         return false;
       } else {
@@ -401,7 +402,7 @@ const useAddEditCar = () => {
           setFormData({ name: 'province', value: provinceInformation?.name });
         }
       }
-    } else if (activeStep === 1) {
+    } else if (stepValidatation === 1) {
       let secondStepValidated = images.length > 0;
       console.log(images.length > 0 && images.length < 21)
       setRequireError((requiredError) => {
@@ -504,7 +505,15 @@ const useAddEditCar = () => {
 
   const handleStepChange = (step:number)=>{
     formRef.current.scrollIntoView({ behavior: 'smooth' });
-    if(step > activeStep && !formValidated()){
+    if(step > activeStep){
+      let error = false
+      for(let i = activeStep; i<step; i++){
+        if(!formValidated(i)){
+          setActiveStep(i)
+          error=true
+        }
+      }
+      if(error)
       return
     }
     setActiveStep(step)
@@ -512,7 +521,7 @@ const useAddEditCar = () => {
 
   const handleNext = () => {
     formRef.current.scrollIntoView({ behavior: 'smooth' });
-    if(!formValidated()){
+    if(!formValidated(activeStep)){
       return
     }
     if (activeStep === 2) {

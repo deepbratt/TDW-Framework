@@ -11,7 +11,8 @@ import InformationDialog from '../components/InformationDialog';
 import addEditCarData from '../Utils/constants/language/en/addEditCarData';
 import 'react-image-crop/dist/ReactCrop.css';
 import ReactCrop, { Crop } from 'react-image-crop';
-import { Box } from '@material-ui/core';
+import { Box, IconButton } from '@material-ui/core';
+import CancelRounded from '@material-ui/icons/CancelRounded';
 
 interface IUploadPhotosFormProps {
   images: any;
@@ -136,21 +137,37 @@ const UploadPhotosForm = ({
           <div>
             {images.map((image: any, index: number) =>
               typeof image === 'string' ? (
-                <img
-                  src={image}
-                  alt="car"
-                  className={classes.imgStyle}
-                  onClick={() => removePhoto(index)}
-                  key={'img1' + index}
-                />
+                <div className={classes.imageRoot}>
+                  <IconButton
+                    size="small"
+                    className={classes.closeIcon}
+                    onClick={() => removePhoto(index)}
+                  >
+                    <CancelRounded fontSize="small" />
+                  </IconButton>
+                  <img
+                    src={image}
+                    alt="car"
+                    className={classes.imgStyle}
+                    key={'img1' + index}
+                  />
+                </div>
               ) : image && typeof image !== 'string' ? (
-                <img
-                  src={URL.createObjectURL(image)}
-                  className={classes.imgStyle}
-                  alt="car"
-                  onClick={() => removePhoto(index)}
-                  key={'img1' + index}
-                />
+                <div className={classes.imageRoot}>
+                  <IconButton
+                    size="small"
+                    className={classes.closeIcon}
+                    onClick={() => removePhoto(index)}
+                  >
+                    <CancelRounded fontSize="small" />
+                  </IconButton>
+                  <img
+                    src={URL.createObjectURL(image)}
+                    className={classes.imgStyle}
+                    alt="car"
+                    key={'img1' + index}
+                  />
+                </div>
               ) : (
                 ''
               )
@@ -247,10 +264,22 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: 'pointer',
       opacity: 0
     },
+    imageRoot: {
+      position: 'relative',
+      maxWidth: '220px',
+      maxHeight: '200px'
+    },
+    closeIcon: {
+      position: 'absolute',
+      right: '5%',
+      top: '5%'
+    },
     imgStyle: {
       cursor: 'pointer',
-      width: '200px',
-      marginLeft: '5px'
+      width: '220px',
+      marginLeft: '5px',
+      maxHeight: '220px',
+      maxWidth: '200px'
     },
     backdrop: {
       zIndex: theme.zIndex.drawer + 1,

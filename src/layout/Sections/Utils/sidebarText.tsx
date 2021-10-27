@@ -34,7 +34,7 @@ export const paths = [
   // },
   {
     title: 'Comparison',
-    path: '/cars-shortlist',
+    path: '/cars',
     icon: <Compare />
   },
   {

@@ -3,6 +3,9 @@ body {
   font-family: "Roboto, sans-serif";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* zoom: 0.8;
+  -moz-transform: scale(0.8);
+  -moz-transform-origin: 0 0; */
 }
 
 a {

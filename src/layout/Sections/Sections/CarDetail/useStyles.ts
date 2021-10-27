@@ -209,5 +209,11 @@ export const useStyles = makeStyles(() => ({
     [theme.breakpoints.down("md")]:{
       height:"auto"
     }
+  },
+  fullImageTabScrollBtn:{
+    color:ColorConstant.lightBlue
+    // "& > svg":{
+    //   backgroundColor:ColorConstant.lightBlue
+    // }
   }
 }));

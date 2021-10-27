@@ -15,7 +15,7 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
   const { open, setOpen, responseMessage } = Actions();
   const [fullScreen, setFullScreen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
-  const { carousel, detail, sliderImageWrapper } = useStyles();
+  const { carousel, detail, sliderImageWrapper, fullImageTabScrollBtn } = useStyles();
   const { mobile } = Sizes();
 
   const handleAlertClose = () => {
@@ -87,6 +87,9 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
                 selectionFollowsFocus
                 indicatorColor="secondary"
                 value={imageIndex}
+                classes={{
+                  scrollButtons:fullImageTabScrollBtn,
+                }}
               >
                 {arr.map((thumb: string, index: number) => (
                   <Tab

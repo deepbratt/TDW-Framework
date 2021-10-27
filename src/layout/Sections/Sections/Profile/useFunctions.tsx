@@ -184,7 +184,7 @@ const Actions = () => {
             message: response.message
           });
         } else {
-          setOpen(false);
+          setOpen(true);
           setChangeToVerification(true);
           setResponseMessage({
             status: 'error',

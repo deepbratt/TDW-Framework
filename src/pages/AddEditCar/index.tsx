@@ -18,6 +18,7 @@ import Delete from '@material-ui/icons/Delete';
 const AddEditCar = () => {
   const {
     activeStep,
+    handleStepChange,
     handleBack,
     handleNext,
     ComponentContent,
@@ -72,6 +73,7 @@ const AddEditCar = () => {
           <CustomStepper
             dataArray={addEditCarData.steps}
             activeStep={activeStep}
+            handleStepChange={handleStepChange}
           />
         </Grid>
         <Grid

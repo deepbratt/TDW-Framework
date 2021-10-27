@@ -15,7 +15,8 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
   const { open, setOpen, responseMessage } = Actions();
   const [fullScreen, setFullScreen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
-  const { carousel, detail, sliderImageWrapper, fullImageTabScrollBtn } = useStyles();
+  const { carousel, detail, sliderImageWrapper, fullImageTabScrollBtn } =
+    useStyles();
   const { mobile } = Sizes();
 
   const handleAlertClose = () => {
@@ -58,10 +59,13 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
                 className={sliderImageWrapper}
               >
                 <img
-                  style={{ position: 'relative', borderRadius: '5px', }}
+                  style={{
+                    position: 'relative',
+                    borderRadius: '5px',
+                    minHeight: '100%',                 
+                  }}
                   key={`img ${index}`}
-                  width="100%"
-                  // height="auto"
+                  height="100%"
                   src={data}
                   alt=""
                   onLoad={imageLoaded}
@@ -88,7 +92,7 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
                 indicatorColor="secondary"
                 value={imageIndex}
                 classes={{
-                  scrollButtons:fullImageTabScrollBtn,
+                  scrollButtons: fullImageTabScrollBtn
                 }}
               >
                 {arr.map((thumb: string, index: number) => (

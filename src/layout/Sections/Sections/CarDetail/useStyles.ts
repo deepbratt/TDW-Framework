@@ -112,8 +112,12 @@ export const useStyles = makeStyles(() => ({
       marginBottom: '0px'
     },
     '& .carousel .thumbs-wrapper ul li': {
-      borderRadius: '15px',
-      height: '100px'
+      borderRadius: '10px',
+      height: '100%',
+      minHeight: '50px',
+      maxHeight: '50px',
+      minWidth: '80px',
+      maxWidth: '80px'
     }
     // '&  .carousel .control-prev.control-arrow:before': {
     //   color: 'black',
@@ -206,12 +210,12 @@ export const useStyles = makeStyles(() => ({
     cursor: 'pointer',
     backgroundColor: ColorConstant.lightBlue,
     height: '600px',
-    [theme.breakpoints.down("md")]:{
-      height:"auto"
+    [theme.breakpoints.down('md')]: {
+      height: 'auto'
     }
   },
-  fullImageTabScrollBtn:{
-    color:ColorConstant.lightBlue
+  fullImageTabScrollBtn: {
+    color: ColorConstant.lightBlue
     // "& > svg":{
     //   backgroundColor:ColorConstant.lightBlue
     // }

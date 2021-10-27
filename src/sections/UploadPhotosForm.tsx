@@ -134,7 +134,7 @@ const UploadPhotosForm = ({
             ) : null}
           </>
         ) : (
-          <div>
+          <div className={classes.imagesRoot}>
             {images.map((image: any, index: number) =>
               typeof image === 'string' ? (
                 <div className={classes.imageRoot}>
@@ -236,7 +236,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       minHeight: '50vh',
       display: 'flex',
-      justifyContent: 'space-evenly',
+      justifyContent: 'center',
       alignItems: 'center',
       border: '2px dashed #2F80ED',
       flexDirection: 'column'
@@ -264,22 +264,30 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: 'pointer',
       opacity: 0
     },
+    imagesRoot: {
+      display: 'flex',
+      maxWidth: '800px',
+      flexWrap: 'wrap',
+      margin: '15px 0'
+    },
     imageRoot: {
       position: 'relative',
       maxWidth: '220px',
-      maxHeight: '200px'
+      maxHeight: '180px'
     },
     closeIcon: {
       position: 'absolute',
       right: '5%',
-      top: '5%'
+      top: '5%',
+      color: 'white'
     },
     imgStyle: {
       cursor: 'pointer',
       width: '220px',
       marginLeft: '5px',
-      maxHeight: '220px',
-      maxWidth: '200px'
+      maxHeight: '200px',
+      minHeight: '180px',
+      maxWidth: '180px'
     },
     backdrop: {
       zIndex: theme.zIndex.drawer + 1,

@@ -502,6 +502,14 @@ const useAddEditCar = () => {
     });
   }
 
+  const handleStepChange = (step:number)=>{
+    formRef.current.scrollIntoView({ behavior: 'smooth' });
+    if(step > activeStep && !formValidated()){
+      return
+    }
+    setActiveStep(step)
+  }
+
   const handleNext = () => {
     formRef.current.scrollIntoView({ behavior: 'smooth' });
     if(!formValidated()){
@@ -523,6 +531,7 @@ const useAddEditCar = () => {
   }
 
   return {
+    handleStepChange,
     setActiveStep,
     activeStep,
     handleBack,

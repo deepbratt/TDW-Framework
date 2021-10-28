@@ -164,6 +164,7 @@ export interface ICarData {
     array?: string[];
     items: ICarData[]
     collapsedArray?: string[];
+    tileHead?: object;
   }
   
 
@@ -240,4 +241,6 @@ export interface IContainer {
   payload: ICarCard[];
 }
 
-
+export interface INewCarCard {
+  isDisabled: boolean;
+}

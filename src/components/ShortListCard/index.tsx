@@ -18,7 +18,8 @@ export interface ShortListCardProps {
 
 const ShortListCardStyles = makeStyles((theme: Theme) => ({
   cardRoot: {
-    minWidth: '100%',
+    margin: 'auto',
+    width: '80%',
     maxWidth: '180px',
     position: 'relative',
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
@@ -143,7 +144,7 @@ const ShortListCard: React.FC<ShortListCardProps> = ({
       <div className={cardMedia}>
         <img src={productImg} alt={name} />
       </div>
-      <div className={cardContent}>
+      {/* <div className={cardContent}>
         <Typography
           align="center"
           className={cardTitle}
@@ -152,17 +153,8 @@ const ShortListCard: React.FC<ShortListCardProps> = ({
         >
           {name.substr(0, 20)}
         </Typography>
-        {/* {price && (
-          <Typography
-            align="center"
-            className={cardPrice}
-            variant="h2"
-            gutterBottom
-          >
-            {price && `PKR ${price?.toLocaleString()}`}
-          </Typography>
-        )} */}
-      </div>
+        
+      </div> */}
     </Card>
   );
 };

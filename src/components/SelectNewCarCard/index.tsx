@@ -10,6 +10,7 @@ import {
 } from '../../Utils/constants/language/en/buttonLabels';
 import { paths } from '../../routes/paths';
 import { IconButton } from '@material-ui/core';
+import { INewCarCard } from '../../layout/Sections/Utils/types';
 
 const SelectNewCarCardStyles = makeStyles((theme) => ({
   root: {
@@ -18,9 +19,10 @@ const SelectNewCarCardStyles = makeStyles((theme) => ({
     alignContent: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
+    height: '80%',
     width: '100%',
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    margin: 'auto'
   },
   buttons: {
     margin: '20px 10px',
@@ -41,9 +43,8 @@ const SelectNewCarCardStyles = makeStyles((theme) => ({
     }
   }
 }));
-const SelectNewCarCard: React.FC = () => {
-  const { root, buttons, iconButton } = SelectNewCarCardStyles();
-
+const SelectNewCarCard: React.FC<INewCarCard> = (value: INewCarCard) => {
+  const { root, buttons, iconButton } = SelectNewCarCardStyles(); 
   const history = useHistory();
   return (
     <Paper className={root}>
@@ -52,9 +53,10 @@ const SelectNewCarCard: React.FC = () => {
           className={buttons}
           onClick={() => history.push(paths.cars)}
           startIcon={<SearchRoundedIcon />}
+          disabled={value.isDisabled ? true : false}
         >
           {SEARCH_NEW_CAR}
-        </CustomButton>
+        </CustomButton> 
       )}
       {window.screen.width <= 600 && (
         <div className={root} style={{ boxShadow: 'none' }}>
@@ -71,6 +73,7 @@ const SelectNewCarCard: React.FC = () => {
             onClick={() => history.push(paths.dashboard + paths.fav)}
           >
             <FavoriteBorderRoundedIcon />
+           
           </IconButton>
         </div>
       )}
@@ -78,6 +81,7 @@ const SelectNewCarCard: React.FC = () => {
         <CustomButton
           className={buttons}
           onClick={() => history.push(paths.dashboard + paths.fav)}
+          disabled={value.isDisabled ? true : false}
           startIcon={<FavoriteBorderRoundedIcon />}
         >
           {ADD_FROM_FAV}

@@ -23,7 +23,8 @@ const TableContext: React.FC<IProps> = ({
   lessBtn,
   subTitle,
   array,
-  collapsedArray
+  collapsedArray,
+  tileHead
 }) => {
   const { head, table, options, btn, cell, stickyCell } = useStyles();
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -41,6 +42,7 @@ const TableContext: React.FC<IProps> = ({
       <TableContainer className={table}>
         <Table aria-label="table">
           <TableHead classes={{ root: head }}>
+            {tileHead}
             <TableRow>
               <TableCell classes={{ root: stickyCell }} align="left">
                 {FEATURES}

@@ -22,6 +22,12 @@ import {
 } from '../../layout/Sections/Utils/carComparision';
 import SelectNewCarCard from '../../components/SelectNewCarCard';
 import Table from '../../layout/Sections/Sections/Table/Table';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
+
+const breakpoints = createBreakpoints({});
+
 
 const CarComparisionsStyles = makeStyles((theme) => ({
   root: {
@@ -42,16 +48,22 @@ const CarComparisionsStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       padding: '5px'
     }
+  },
+  stickyCell: {
+    position: 'sticky',
+    left: 0,
+    [breakpoints.down('xs')]: {
+      padding: '10px'
+    }
   }
 }));
 
 const CarComparision = () => {
-  const { root, card } = CarComparisionsStyles();
+  const { root, card, stickyCell} = CarComparisionsStyles();
   const dispatch = useDispatch();
   const shortListCars = useSelector(
     (state: RootState) => state.shortlistCars.shortlistCars
   );
-
   const [features, setFeatures] = useState<any>([]);
 
   useEffect(() => {
@@ -71,6 +83,34 @@ const CarComparision = () => {
     setFeatures(uniqueArray);
   };
 
+ 
+
+  const getHeaderRow = () => {
+    return (
+      <TableRow>
+        <TableCell className={stickyCell} align="left">
+          <SelectNewCarCard isDisabled={shortListCars.length === 4 ? true : false}/> 
+        </TableCell> 
+        {shortListCars &&
+          shortListCars.map((item: ICarCard) => (
+            <TableCell
+              key={uuidv4()}
+              className={stickyCell}
+              align="center"
+            >
+              <ShortListCard
+                productImg={item.image[0]}
+                name={item.model}
+                _id={item._id}
+                price={item.price}
+                handleClick={() => dispatch(removeShortlistItem(item._id))}
+              />
+          </TableCell>
+        ))}
+      </TableRow>
+    )
+  }
+
   return (
     <Container>
       <MetaTags
@@ -81,29 +121,6 @@ const CarComparision = () => {
       />
 
       <Grid className={root} container>
-        <Grid item xs={12} container justifyContent="space-between">
-          {shortListCars &&
-            shortListCars.map((item: ICarCard) => (
-              <Grid key={uuidv4()} item xs={3} md={2}>
-                <div className={card}>
-                  <ShortListCard
-                    productImg={item.image[0]}
-                    name={item.model}
-                    _id={item._id}
-                    price={item.price}
-                    handleClick={() => dispatch(removeShortlistItem(item._id))}
-                  />
-                </div>
-              </Grid>
-            ))}
-          {[...Array(4 - shortListCars.length)].map(() => (
-            <Grid key={uuidv4()} item xs={3} md={2}>
-              <div className={card}>
-                <SelectNewCarCard />
-              </div>
-            </Grid>
-          ))}
-        </Grid>
         <Grid item xs={12} container justifyContent="center">
           {shortListCars.length > 0 ? (
             <Table
@@ -114,6 +131,7 @@ const CarComparision = () => {
               moreBtn={moreBtn}
               lessBtn={lessBtn}
               collapsedArray={features}
+              tileHead={ getHeaderRow()}
             />
           ) : (
             <div>

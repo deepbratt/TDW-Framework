@@ -53,6 +53,7 @@ const CarComparisionsStyles = makeStyles((theme) => ({
   stickyCell: {
     position: 'sticky',
     left: 0,
+    zIndex: 999,
     [breakpoints.down('xs')]: {
       padding: '10px'
     }
@@ -66,7 +67,7 @@ const CarComparisionsStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     maxWidth: '300px',
-    minHeight: "220px"
+    minHeight: '220px'
   }
 }));
 
@@ -99,14 +100,18 @@ const CarComparision = () => {
   const getHeaderRow = () => {
     return (
       <TableRow>
-        <TableCell className={stickyCell} align="left">
+        <TableCell classes={{ root: stickyCell }} align="left">
           <SelectNewCarCard
             isDisabled={shortListCars.length === 4 ? true : false}
           />
         </TableCell>
         {shortListCars &&
           shortListCars.map((item: ICarCard) => (
-            <TableCell key={uuidv4()} className={stickyCell} align="center">
+            <TableCell
+              key={uuidv4()}
+              // style={{ position: 'relative', zIndex: 0 }}
+              align="center"
+            >
               <ShortListCard
                 productImg={item.image[0]}
                 name={item.model}

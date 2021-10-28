@@ -139,6 +139,7 @@ const addEditCarData = {
   },
   imageDimensionPreference: 'Try to upload images in these dimensions for better appearance  930x620  700x465',
   infoText: '(Max limit 5 MB per image)',
+  imageArrayLength: "Cannot add more than 20 images",
   requiredFieldText: 'This field is required',
   requiredImageText: 'Minimum 1 car picture is required',
   deleteDialogTitle: 'Delete!',

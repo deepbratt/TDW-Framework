@@ -9,7 +9,7 @@ import useTheme from "@material-ui/core/styles/useTheme"
 
 interface DialogComponentProps {
     title: string
-    message:string
+    message:string | any
     open: boolean
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
     actionBtnLabel?: string,

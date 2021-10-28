@@ -94,6 +94,7 @@ export const useForm = (validateOnChange = true) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    if(validate({ ...values, confirmPassword: values.confirmPassword}, continueWith)){
     let requestBody = {
       firstName: values.firstName,
       lastName: values.lastName,
@@ -126,6 +127,7 @@ export const useForm = (validateOnChange = true) => {
           message: error.message
         });
       });
+    }
   };
 
   return {

@@ -58,7 +58,6 @@ const useValidation = (values: any) => {
 
     Object.values(temp).map((x) => {
       if (x !== '') {
-        console.log('x', x);
         setError(true);
       }
     });
@@ -69,8 +68,6 @@ const useValidation = (values: any) => {
       return false;
     }
 
-    // if (fieldValues === values)
-    //   return Object.values(temp).every((x) => x === '');
   };
   return {
     error,

@@ -32,23 +32,47 @@ const UploadPhotosForm = ({
   const [crop, setCrop] = useState<any>({ aspect: 1 / 1, width: 300 });
   const [srcImg, setSrcImg] = useState('');
   const [tempImg, setTempImg] = useState<HTMLImageElement>();
-  const [infoMessage, setInfoMessage] = useState('');
+  const [infoMessage, setInfoMessage] = useState<string | any>('');
   const [infoTitle, setInfoTitle] = useState('');
 
   const uploadImage = (e: any) => {
     let oneMb = 1024 * 1024;
-    let fileSize = e.target.files[0].size;
-    if (fileSize > 5 * oneMb) {
-      setInfoTitle('Error!');
-      setInfoMessage(addEditCarData.infoText);
-      setOpenInfoModel(true);
-      e.target.value = null;
-      return;
-    } else {
-      // setSrcImg(e.target.files[0]);
-      // setOpenCropModal(true);
-      let temp = [...images];
-      temp.push(e.target.files[0]);
+    let temp = [...images];
+    let imageFiles = e.target.files;
+    let sizeError = false;
+    let arrayLengthError = false;
+    for (let i = 0; i < imageFiles.length; i++) {
+      let imageSize = imageFiles[i].size;
+      if (imageSize > 5 * oneMb) {
+        sizeError = true;
+      } else {
+        if (temp.length > 19) {
+          arrayLengthError = true;
+          break;
+        }
+        temp.push(imageFiles[i]);
+      }
+    }
+    // setSrcImg(e.target.files[0]);
+    // setOpenCropModal(true);
+    setInfoTitle('Error!');
+    let errorText =
+      sizeError && arrayLengthError ? (
+        <div>
+          <span>{addEditCarData.imageArrayLength}</span>
+          <br />
+          <span>{addEditCarData.infoText}</span>
+        </div>
+      ) : sizeError ? (
+        addEditCarData.infoText
+      ) : arrayLengthError ? (
+        addEditCarData.imageArrayLength
+      ) : (
+        ''
+      );
+    setInfoMessage(errorText);
+    setOpenInfoModel(sizeError || arrayLengthError);
+    if (!arrayLengthError) {
       updateImagesState(temp);
     }
     e.target.value = null;
@@ -181,6 +205,7 @@ const UploadPhotosForm = ({
               <input
                 name="image"
                 type="file"
+                multiple
                 onChange={uploadImage}
                 className={classes.hiddenInputFile}
               />
@@ -255,7 +280,8 @@ const useStyles = makeStyles((theme: Theme) =>
       // float:"right"
     },
     imgUploadBtn: {
-      position: 'relative'
+      position: 'relative',
+      marginTop: '5px'
     },
     hiddenInputFile: {
       position: 'absolute',

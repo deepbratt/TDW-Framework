@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import { useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
 import MetaTags from '../../components/MetaTags';
@@ -25,9 +26,9 @@ import Table from '../../layout/Sections/Sections/Table/Table';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
+import { CHOOSE_CARS_TO_COMPARE } from '../../Utils/constants/language/en/buttonLabels';
 
 const breakpoints = createBreakpoints({});
-
 
 const CarComparisionsStyles = makeStyles((theme) => ({
   root: {
@@ -55,11 +56,23 @@ const CarComparisionsStyles = makeStyles((theme) => ({
     [breakpoints.down('xs')]: {
       padding: '10px'
     }
+  },
+  contentRoot: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column'
+  },
+  cardWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    maxWidth: '300px',
+    minHeight: "220px"
   }
 }));
 
 const CarComparision = () => {
-  const { root, card, stickyCell} = CarComparisionsStyles();
+  const { root, stickyCell, contentRoot, cardWrapper } =
+    CarComparisionsStyles();
   const dispatch = useDispatch();
   const shortListCars = useSelector(
     (state: RootState) => state.shortlistCars.shortlistCars
@@ -83,21 +96,17 @@ const CarComparision = () => {
     setFeatures(uniqueArray);
   };
 
- 
-
   const getHeaderRow = () => {
     return (
       <TableRow>
         <TableCell className={stickyCell} align="left">
-          <SelectNewCarCard isDisabled={shortListCars.length === 4 ? true : false}/> 
-        </TableCell> 
+          <SelectNewCarCard
+            isDisabled={shortListCars.length === 4 ? true : false}
+          />
+        </TableCell>
         {shortListCars &&
           shortListCars.map((item: ICarCard) => (
-            <TableCell
-              key={uuidv4()}
-              className={stickyCell}
-              align="center"
-            >
+            <TableCell key={uuidv4()} className={stickyCell} align="center">
               <ShortListCard
                 productImg={item.image[0]}
                 name={item.model}
@@ -105,11 +114,11 @@ const CarComparision = () => {
                 price={item.price}
                 handleClick={() => dispatch(removeShortlistItem(item._id))}
               />
-          </TableCell>
-        ))}
+            </TableCell>
+          ))}
       </TableRow>
-    )
-  }
+    );
+  };
 
   return (
     <Container>
@@ -131,10 +140,18 @@ const CarComparision = () => {
               moreBtn={moreBtn}
               lessBtn={lessBtn}
               collapsedArray={features}
-              tileHead={ getHeaderRow()}
+              tileHead={getHeaderRow()}
             />
           ) : (
-            <div>
+            <div className={contentRoot}>
+              <Typography align="center" variant="h2" gutterBottom>
+                {CHOOSE_CARS_TO_COMPARE}
+              </Typography>
+              <div className={cardWrapper}>
+                <SelectNewCarCard
+                  isDisabled={shortListCars.length === 4 ? true : false}
+                />
+              </div>
               <img width="100%" src={CarComparisonImg} alt="car-comparision" />
             </div>
           )}

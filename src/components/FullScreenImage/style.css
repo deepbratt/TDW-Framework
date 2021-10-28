@@ -85,9 +85,9 @@
 }
 .lb-canvas .lb-img{
     max-width: 80vw;
-    max-height: 80vh;
-    min-width: 100px;
-    min-height: 100px;
+    max-height: 70vh;
+    /* min-width: 100px; */
+    min-height: 100%;
     /* transition: all 0.1s; */
     cursor: grab;
     background-size: 50px;

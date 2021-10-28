@@ -7,12 +7,16 @@ interface SelectInputProps {
   required?: boolean;
   style?: any;
   className?: any;
+  styleTextField?: any;
   name: string;
   value: any;
   label?: string;
   error?: boolean;
   helperText?: string;
+  disabled?:boolean;
+  placeholder?:string
   handleChangeSelect: any
+  size?:"small"|"medium"
   // textInputProps : TextFieldProps
 }
 
@@ -21,12 +25,16 @@ const SelectInputComponent = ({
   required,
   style,
   className,
+  styleTextField,
+  disabled,
+  placeholder,
   name,
   value,
   label,
   error,
   helperText,
-  handleChangeSelect
+  handleChangeSelect,
+  size
 }: SelectInputProps) => {
   return (
     <Autocomplete
@@ -52,12 +60,16 @@ const SelectInputComponent = ({
       renderInput={(params) => (
         <TextField
           {...params}
+          style={styleTextField}
           label={label}
           required={required}
           name={name}
           value={value}
           error={error}
           helperText={helperText}
+          placeholder={placeholder}
+          disabled={disabled}
+          size={size}
           variant="outlined"
           inputProps={{
             ...params.inputProps,

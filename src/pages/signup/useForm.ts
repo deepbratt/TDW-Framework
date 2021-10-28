@@ -22,7 +22,7 @@ export const useForm = (validateOnChange = true) => {
   const [alertOpen, setAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [continueWith, setContinueWith] = useState('');
-  const { validate, errors, setErrors } = useValidation(values);
+  const { validate, error, errors, setErrors } = useValidation(values);
   const [responseMessage, setResponseMessage] = useState({
     status: '',
     message: ''
@@ -94,39 +94,44 @@ export const useForm = (validateOnChange = true) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if(validate({ ...values, confirmPassword: values.confirmPassword}, continueWith)){
-    let requestBody = {
-      firstName: values.firstName,
-      lastName: values.lastName,
-      username: values.username,
-      data: continueWith === 'mobile' ? '+92' + values.method : values.method,
-      password: values.password,
-      passwordConfirm: values.confirmPassword
-    };
-    setIsLoading(true);
-    console.log('requestBody', requestBody);
-    await addData(USERS + SIGNUP, requestBody)
-      .then((response) => {
-        setIsLoading(false);
-        if (response && response.data && response.data.status === 'success') {
+    if (
+      validate(
+        { ...values, confirmPassword: values.confirmPassword },
+        continueWith
+      )
+    ) {
+      let requestBody = {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        username: values.username,
+        data: continueWith === 'mobile' ? '+92' + values.method : values.method,
+        password: values.password,
+        passwordConfirm: values.confirmPassword
+      };
+      setIsLoading(true);
+      console.log('requestBody', requestBody);
+      await addData(USERS + SIGNUP, requestBody)
+        .then((response) => {
+          setIsLoading(false);
+          if (response && response.data && response.data.status === 'success') {
+            setAlertOpen(true);
+            setResponseMessage({
+              status: response.data.status,
+              message: response.data.message
+            });
+          } else {
+            setAlertOpen(true);
+            setResponseMessage(extractError(response));
+          }
+        })
+        .catch((error) => {
+          setIsLoading(false);
           setAlertOpen(true);
           setResponseMessage({
-            status: response.data.status,
-            message: response.data.message
+            status: error.status,
+            message: error.message
           });
-        } else {
-          setAlertOpen(true);
-          setResponseMessage(extractError(response));
-        }
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        setAlertOpen(true);
-        setResponseMessage({
-          status: error.status,
-          message: error.message
         });
-      });
     }
   };
 

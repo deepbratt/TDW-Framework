@@ -11,6 +11,7 @@ import {
 
 const useValidation = (values: any) => {
   const [errors, setErrors] = useState(values);
+  const [error, setError] = useState(false);
   const validate = (fieldValues = values, method?: string) => {
     let temp = { ...errors };
 
@@ -55,10 +56,24 @@ const useValidation = (values: any) => {
       ...temp
     });
 
-    if (fieldValues === values)
-      return Object.values(temp).every((x) => x === '');
+    Object.values(temp).map((x) => {
+      if (x !== '') {
+        console.log('x', x);
+        setError(true);
+      }
+    });
+
+    if (error) {
+      return true;
+    } else {
+      return false;
+    }
+
+    // if (fieldValues === values)
+    //   return Object.values(temp).every((x) => x === '');
   };
   return {
+    error,
     validate,
     errors,
     setErrors

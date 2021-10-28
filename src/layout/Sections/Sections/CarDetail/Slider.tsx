@@ -62,10 +62,10 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
                   style={{
                     position: 'relative',
                     borderRadius: '5px',
-                    minHeight: '100%',                 
+                    // minHeight: '100%',              
                   }}
                   key={`img ${index}`}
-                  height="100%"
+                  // height="100%"
                   src={data}
                   alt=""
                   onLoad={imageLoaded}

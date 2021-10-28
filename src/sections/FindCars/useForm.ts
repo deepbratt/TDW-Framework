@@ -53,6 +53,14 @@ export const useForm = (validateOnChange = false) => {
     if (validateOnChange) validate({ [name]: value });
   };
 
+  const handleChangeSelect = (name: string, value: any) => {
+    setValues({
+      ...values,
+      [name]: value
+    });
+    if (validateOnChange) validate({ [name]: value });
+  };
+
   const resetForm = () => {
     setValues({
       make: '',
@@ -67,7 +75,7 @@ export const useForm = (validateOnChange = false) => {
 
   const getBodyTypes = async () => {
     setIsLoading(true);
-    await getAllData(ADS + CARS + BODY_TYPES).then((response) => {
+    await getAllData(ADS + CARS + BODY_TYPES+"?sort=bodyType").then((response) => {
       setIsLoading(false);
       if (response && response && response.status === 'success') {
         setResponseData(response.data.result);
@@ -89,7 +97,7 @@ export const useForm = (validateOnChange = false) => {
   const getModels = async () => {
     setIsLoading(true);
     let param = '?sort=name';
-    if (values.make !== '') {
+    if (values.make) {
       let selectedMake: any = makes.filter(
         (make: any) => make.name === values.make
       );
@@ -110,7 +118,9 @@ export const useForm = (validateOnChange = false) => {
   }, []);
 
   useEffect(() => {
-    getModels();
+    if(values.make){
+      getModels();
+    }
   }, [values.make]);
 
   const setBodyType = (value: string) => {
@@ -162,6 +172,7 @@ export const useForm = (validateOnChange = false) => {
     errors,
     setErrors,
     handleInputChange,
+    handleChangeSelect,
     resetForm,
     validate,
     handleSubmit,

@@ -15,6 +15,7 @@ import { findCarsData } from '../../Utils/constants/language/en/homePageData';
 import { useForm } from './useForm';
 import { fieldNames } from '../../Utils/constants/formsConstants';
 import Loader from '../../components/Loader';
+import SelectInputComponent from '../../components/SelectInputComponent';
 
 const FindCarsStyles = makeStyles((theme) => ({
   root: {
@@ -82,7 +83,8 @@ const FindCarsStyles = makeStyles((theme) => ({
     padding: '0 10px'
   },
   inputFieldRoot: {
-    backgroundColor: Colors.lightBlue
+    backgroundColor: Colors.lightBlue,
+    width:"100%"
   },
   loaderContainer: {
     display: 'flex',
@@ -113,6 +115,7 @@ const FindCars: React.FC = () => {
     makes,
     models,
     handleInputChange,
+    handleChangeSelect,
     handleSubmit
   } = useForm();
   return (
@@ -165,44 +168,30 @@ const FindCars: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <Grid container spacing={1}>
             <Grid item xs={12} sm={6}>
-              <InputField
-                select
-                classes={{ root: inputFieldRoot }}
+              <SelectInputComponent
+                dataArray={makes.map((option: any) => option.name)}
+                size="small"
+                className={inputFieldRoot}
                 name={fieldNames.make}
                 value={values.make}
-                options={makes}
                 label="Make"
                 disabled={isLoading}
                 placeholder="e.g. Honda, Toyota"
-                onChange={handleInputChange}
-              >
-                {makes &&
-                  makes.map((option: any) => (
-                    <MenuItem key={option._id} value={option.name}>
-                      {`${option.name}`}
-                    </MenuItem>
-                  ))}
-              </InputField>
+                handleChangeSelect={handleChangeSelect}
+              />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <InputField
-                select
-                classes={{ root: inputFieldRoot }}
+              <SelectInputComponent
+                size="small"
+                dataArray={models.map((option: any) => option.name)}
+                className={inputFieldRoot}
                 name={fieldNames.model}
                 value={values.model}
-                options={models}
                 disabled={isLoading}
                 label="Model"
                 placeholder="e.g Civic, Corolla"
-                onChange={handleInputChange}
-              >
-                {models &&
-                  models.map((option: any) => (
-                    <MenuItem key={option._id} value={option.name}>
-                      {`${option.name}`}
-                    </MenuItem>
-                  ))}
-              </InputField>
+                handleChangeSelect={handleChangeSelect}
+              />
             </Grid>
             <Grid item xs={12} sm={6}>
               <InputField

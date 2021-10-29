@@ -45,7 +45,6 @@ const useValidation = (values: any) => {
       temp.password = validatePassword(fieldValues.password);
     }
     if (fieldNames.confirmPassword in fieldValues) {
-      console.log('passwords', fieldValues);
       temp.confirmPassword = validateConfirmPassword(
         fieldValues.confirmPassword,
         fieldValues.password
@@ -56,18 +55,7 @@ const useValidation = (values: any) => {
       ...temp
     });
 
-    Object.values(temp).map((x) => {
-      if (x !== '') {
-        setError(true);
-      }
-    });
-
-    if (error) {
-      return true;
-    } else {
-      return false;
-    }
-
+    return Object.values(temp).every((x) => x === '');
   };
   return {
     error,

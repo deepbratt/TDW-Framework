@@ -28,32 +28,33 @@ export const FooterData = {
     }
   ],
   appLinks: [PLAY_STORE, APPLE_STORE],
-
   sell: [
-    { path: '/', name: 'Sell Car' },
-    { path: '/', name: 'Sell Bike' },
-    { path: '/', name: 'Sell Accessory' }
+    { path: '/', name: 'Home' },
+    { path: '/cars', name: 'Buy Car' },
+    { path: '/add-edit/car', name: 'Sell Car' },
+    { path: '/car-comparision', name: 'Car Comparision' },
+    { path: '/help', name: 'Help' },
   ],
-  explore: [
-    { path: '/', name: 'Used Cars' },
-    { path: '/', name: 'Used Bikes' },
-    { path: '/', name: 'New Cars' },
-    { path: '/', name: 'Auto Parts & Accessories' },
-    { path: '/', name: 'Cool Rides' },
-    { path: '/', name: 'Forums' },
-    { path: '/', name: 'Autoshow' },
-    { path: '/', name: 'Sitemap' }
-  ],
-  carOkta: [
-    { path: '/', name: 'About CarOkta.com' },
-    { path: '/', name: 'Our Products' },
-    { path: '/', name: 'Advertise With Us' },
-    { path: '/', name: 'How To Pay' },
-    { path: '/', name: 'FAQs' },
-    { path: '/', name: 'Refunds & Returns' },
-    { path: '/', name: 'Careers' },
-    { path: '/', name: 'Contact Us' }
-  ],
+  // explore: [
+  //   { path: '/', name: 'Used Cars' },
+  //   { path: '/', name: 'Used Bikes' },
+  //   { path: '/', name: 'New Cars' },
+  //   { path: '/', name: 'Auto Parts & Accessories' },
+  //   { path: '/', name: 'Cool Rides' },
+  //   { path: '/', name: 'Forums' },
+  //   { path: '/', name: 'Autoshow' },
+  //   { path: '/', name: 'Sitemap' }
+  // ],
+  // carOkta: [
+  //   { path: '/', name: 'About CarOkta.com' },
+  //   { path: '/', name: 'Our Products' },
+  //   { path: '/', name: 'Advertise With Us' },
+  //   { path: '/', name: 'How To Pay' },
+  //   { path: '/', name: 'FAQs' },
+  //   { path: '/', name: 'Refunds & Returns' },
+  //   { path: '/', name: 'Careers' },
+  //   { path: '/', name: 'Contact Us' }
+  // ],
 
   mostSearched: [
     { name: 'Used Cars', path: '/' },
@@ -75,26 +76,26 @@ export const FooterData = {
       { filterName: 'city', text: 'Cars in Peshawar', value: 'Peshawar' },
       { filterName: 'city', text: 'Cars in Sialkot', value: 'Sialkot' }
     ],
-    Province: [
-      { filterName: 'province', text: 'Cars in Punjab', value: 'Punjab' },
-      { filterName: 'province', text: 'Cars in Sindh', value: 'Sindh' },
-      { filterName: 'province', text: 'Cars in KPK', value: 'KPK' },
-      {
-        filterName: 'province',
-        text: 'Cars in Baloachistan',
-        value: 'Baloachistan'
-      },
-      {
-        filterName: 'province',
-        text: 'Cars in Azad Kashmir',
-        value: 'Azad Kashmir'
-      },
-      {
-        filterName: 'province',
-        text: 'Cars in Gilgit Baltistan',
-        value: 'Gilgit Baltistan'
-      }
-    ],
+    // Province: [
+    //   { filterName: 'province', text: 'Cars in Punjab', value: 'Punjab' },
+    //   { filterName: 'province', text: 'Cars in Sindh', value: 'Sindh' },
+    //   { filterName: 'province', text: 'Cars in KPK', value: 'KPK' },
+    //   {
+    //     filterName: 'province',
+    //     text: 'Cars in Baloachistan',
+    //     value: 'Baloachistan'
+    //   },
+    //   {
+    //     filterName: 'province',
+    //     text: 'Cars in Azad Kashmir',
+    //     value: 'Azad Kashmir'
+    //   },
+    //   {
+    //     filterName: 'province',
+    //     text: 'Cars in Gilgit Baltistan',
+    //     value: 'Gilgit Baltistan'
+    //   }
+    // ],
     Make: [
       { filterName: 'make', text: 'Toyota Cars for Sale', value: 'Toyota' },
       { filterName: 'make', text: 'Honda Cars for Sale', value: 'Honda' },
@@ -110,16 +111,16 @@ export const FooterData = {
       { filterName: 'model', text: 'Suzuki Alto', value: 'Alto' },
       { filterName: 'model', text: 'Suzuki Cultus', value: 'Cultus' },
       { filterName: 'model', text: 'Suzuki Mehran', value: 'Mehran' },
-      { filterName: 'model', text: 'Suzuki Swift', value: 'Swift' },
+      { filterName: 'model', text: 'Suzuki Swift', value: 'Swift' }
     ],
-    Color: [
-      { filterName: 'bodyColor', text: 'White Cars', value: 'White' },
-      { filterName: 'bodyColor', text: 'Black Cars', value: 'Black' },
-      { filterName: 'bodyColor', text: 'Red Cars', value: 'Red' },
-      { filterName: 'bodyColor', text: 'Blue Cars', value: 'Blue' },
-      { filterName: 'bodyColor', text: 'Silver Cars', value: 'Silver' },
-      { filterName: 'bodyColor', text: 'Gold Cars', value: 'Gold' }
-    ],
+    // Color: [
+    //   { filterName: 'bodyColor', text: 'White Cars', value: 'White' },
+    //   { filterName: 'bodyColor', text: 'Black Cars', value: 'Black' },
+    //   { filterName: 'bodyColor', text: 'Red Cars', value: 'Red' },
+    //   { filterName: 'bodyColor', text: 'Blue Cars', value: 'Blue' },
+    //   { filterName: 'bodyColor', text: 'Silver Cars', value: 'Silver' },
+    //   { filterName: 'bodyColor', text: 'Gold Cars', value: 'Gold' }
+    // ],
     BodyType: [
       { filterName: 'bodyType', text: 'Sedans for Sale', value: 'Sedan' },
       {

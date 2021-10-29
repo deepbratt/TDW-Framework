@@ -31,17 +31,17 @@ export interface IData {
   socialMedia: IRoutes[];
   appLinks: string[];
   sell: IRoutes[];
-  explore: IRoutes[];
-  carOkta: IRoutes[];
+  // explore: IRoutes[];
+  // carOkta: IRoutes[];
   mostSearched: IRoutes[];
   termsAndConditions: IRoutes[];
   copyrights: string;
   notice: string;
   filters: {
     City: IFooterFilter[];
-    Province: IFooterFilter[];
+    // Province: IFooterFilter[];
     Make: IFooterFilter[];
-    Color: IFooterFilter[];
+    // Color: IFooterFilter[];
     BodyType: IFooterFilter[];
     Models: IFooterFilter[];
   };

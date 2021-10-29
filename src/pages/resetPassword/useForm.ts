@@ -38,13 +38,12 @@ export const useForm = (token: any, validateOnChange = false) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (validate()) {
+    if (validate(values)) {
       let requestBody = {
         password: values.password,
         passwordConfirm: values.confirmPassword
       };
       setIsLoading(true);
-      console.log('requestBody', requestBody);
       await updateData(USERS + RESET_PASSWORD + '/' + token, requestBody)
         .then((response) => {
           console.log('data', response);

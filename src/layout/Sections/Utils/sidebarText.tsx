@@ -138,11 +138,11 @@ export const sellingTitle = 'Selling History';
 // help
 
 export const help = 'Help';
-export const helpTitle = 'We are here to help.';
+export const helpTitle = 'CUSTOMER SUPPORT';
 export const icon = helpIcon;
-export const gmail = 'wwww.example@gmail.com';
-export const number = '+92 335 1222515';
-export const mailTo = 'mailTo:wwww.example@gmail.com';
+export const gmail = 'support@carokta.com';
+export const number = '+92-335-1222515';
+export const mailTo = 'mailTo:support@carokta.com';
 export const dialTo = 'tel:+92-335-1222515';
 export const emailUs = 'Email us at:';
 export const callUs = 'Call us at:';

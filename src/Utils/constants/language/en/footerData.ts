@@ -11,21 +11,21 @@ export const FooterData = {
 
   socialMedia: [
     {
-      path: 'https://www.facebook.com/Tez-Dealz-101549355474751/',
+      path: 'https://facebook.com/CarOkta-101549355474751/',
       icon: FB,
       name: 'Facebook'
     },
-    { path: 'www.twitter.com/tezDealz', icon: TWITTER, name: 'Twitter' },
+    { path: 'https://twitter.com/CarOkta', icon: TWITTER, name: 'Twitter' },
     {
-      path: 'www.instagram.com/tezDealz',
+      path: 'https://www.instagram.com/carokta01/',
       icon: INSTAGRAM,
       name: 'Instagram'
-    },
-    {
-      path: 'www.pinterest.com/tezDealz',
-      icon: PINTEREST,
-      name: 'Pinterest'
     }
+    // {
+    //   path: 'www.pinterest.com/tezDealz',
+    //   icon: PINTEREST,
+    //   name: 'Pinterest'
+    // }
   ],
   appLinks: [PLAY_STORE, APPLE_STORE],
   sell: [
@@ -33,7 +33,7 @@ export const FooterData = {
     { path: '/cars', name: 'Buy Car' },
     { path: '/add-edit/car', name: 'Sell Car' },
     { path: '/car-comparision', name: 'Car Comparision' },
-    { path: '/help', name: 'Help' },
+    { path: '/help', name: 'Help' }
   ],
   // explore: [
   //   { path: '/', name: 'Used Cars' },

@@ -179,7 +179,9 @@ const Footer: React.FC<FooterProps> = ({
                       item
                       key={`social-media-link-${index}`}
                     >
-                      <img height="30px" src={item.icon} alt={item.name} />
+                      <a href={item.path} target="_blank" rel="noreferrer">
+                        <img height="30px" src={item.icon} alt={item.name} />
+                      </a>
                     </Grid>
                   ))}
               </Grid>

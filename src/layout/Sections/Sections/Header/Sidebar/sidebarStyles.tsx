@@ -49,6 +49,16 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    alignContent: 'center',
+    alignContent: 'center'
+  },
+  btn: {
+    margin: '0 15px',
+    borderRadius: '7px',
+    padding: '10px 15px',
+    color: theme.palette.common.white,
+    background: 'linear-gradient(180deg, #ec4040 0%, #C20000 100%)',
+    '& > span, *': {
+      color: theme.palette.common.white
+    }
   }
 }));

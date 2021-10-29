@@ -1,8 +1,9 @@
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import LoaderGIF from '../assets/loader.gif';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import createStyles from '@material-ui/core/styles/createStyles';
-import {Theme} from '@material-ui/core/styles/createTheme';
+import { Theme } from '@material-ui/core/styles/createTheme';
 import { Colors } from '../Utils/constants/colors/colors';
 interface LoaderProps {
   open: boolean;
@@ -20,13 +21,13 @@ const Loader = ({ open, isBackdrop = true }: LoaderProps) => {
         // classes={{ root: classes.root }}
         open={open}
       >
-        <CircularProgress color="primary" />
+        <img src={LoaderGIF} alt="Car okta laoder" />
       </Backdrop>
     );
   }
   return (
     <div className={classes.root}>
-      <CircularProgress color="primary" />
+      <img src={LoaderGIF} alt="Car okta laoder" />
     </div>
   );
 };

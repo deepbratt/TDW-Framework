@@ -18,7 +18,7 @@ import { NavLink } from 'react-router-dom';
 import { useStyles } from './sidebarStyles';
 import Logo from '../../../assets/logo.png';
 import { Paths as sideBarPath } from '../paths';
-import { paths } from '../../../../../routes/paths';
+import { paths, routes } from '../../../../../routes/paths';
 import {
   LOGOUT,
   POST_AN_AD,
@@ -27,10 +27,11 @@ import {
   SIGNUP
 } from '../../../../../Utils/constants/language/en/buttonLabels';
 import { logout } from '../../../../../redux/reducers/authSlice';
+import { Button } from '@material-ui/core';
 
 const SideBar = () => {
   const classes = useStyles();
-  const { root, drawer, drawerHeader, nested, logo, link } = classes;
+  const { root, drawer, drawerHeader, nested, logo, btn, link } = classes;
   const [expand, setExpand] = React.useState(false);
   const [open, setOpen] = useState<boolean>(false);
 
@@ -125,6 +126,23 @@ const SideBar = () => {
               </NavLink>
             </>
           )}
+          <ListItem style={{ display: 'flex', justifyContent: 'center' }}>
+            <Button
+              className={btn}
+              variant="contained"
+              color="primary"
+              onClick={() =>
+                history.push(
+                  routes.addEditCar.substr(
+                    0,
+                    routes.addEditCar.lastIndexOf('/')
+                  )
+                )
+              }
+            >
+              {POST_AN_AD}
+            </Button>
+          </ListItem>
         </List>
       </SwipeableDrawer>
       <MenuIcon style={{ fontSize: '30px' }} onClick={toggleDrawer} />

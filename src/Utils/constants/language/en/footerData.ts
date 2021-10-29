@@ -28,7 +28,6 @@ export const FooterData = {
     }
   ],
   appLinks: [PLAY_STORE, APPLE_STORE],
-
   sell: [
     { path: '/', name: 'Home' },
     { path: '/cars', name: 'Buy Car' },
@@ -36,26 +35,26 @@ export const FooterData = {
     { path: '/car-comparision', name: 'Car Comparision' },
     { path: '/help', name: 'Help' },
   ],
-  explore: [
-    { path: '/', name: 'Used Cars' },
-    { path: '/', name: 'Used Bikes' },
-    { path: '/', name: 'New Cars' },
-    { path: '/', name: 'Auto Parts & Accessories' },
-    { path: '/', name: 'Cool Rides' },
-    { path: '/', name: 'Forums' },
-    { path: '/', name: 'Autoshow' },
-    { path: '/', name: 'Sitemap' }
-  ],
-  carOkta: [
-    { path: '/', name: 'About CarOkta.com' },
-    { path: '/', name: 'Our Products' },
-    { path: '/', name: 'Advertise With Us' },
-    { path: '/', name: 'How To Pay' },
-    { path: '/', name: 'FAQs' },
-    { path: '/', name: 'Refunds & Returns' },
-    { path: '/', name: 'Careers' },
-    { path: '/', name: 'Contact Us' }
-  ],
+  // explore: [
+  //   { path: '/', name: 'Used Cars' },
+  //   { path: '/', name: 'Used Bikes' },
+  //   { path: '/', name: 'New Cars' },
+  //   { path: '/', name: 'Auto Parts & Accessories' },
+  //   { path: '/', name: 'Cool Rides' },
+  //   { path: '/', name: 'Forums' },
+  //   { path: '/', name: 'Autoshow' },
+  //   { path: '/', name: 'Sitemap' }
+  // ],
+  // carOkta: [
+  //   { path: '/', name: 'About CarOkta.com' },
+  //   { path: '/', name: 'Our Products' },
+  //   { path: '/', name: 'Advertise With Us' },
+  //   { path: '/', name: 'How To Pay' },
+  //   { path: '/', name: 'FAQs' },
+  //   { path: '/', name: 'Refunds & Returns' },
+  //   { path: '/', name: 'Careers' },
+  //   { path: '/', name: 'Contact Us' }
+  // ],
 
   mostSearched: [
     { name: 'Used Cars', path: '/' },

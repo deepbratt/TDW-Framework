@@ -31,8 +31,8 @@ export interface IData {
   socialMedia: IRoutes[];
   appLinks: string[];
   sell: IRoutes[];
-  explore: IRoutes[];
-  carOkta: IRoutes[];
+  // explore: IRoutes[];
+  // carOkta: IRoutes[];
   mostSearched: IRoutes[];
   termsAndConditions: IRoutes[];
   copyrights: string;

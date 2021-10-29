@@ -6,14 +6,14 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux';
 import FooterStyles from './styles';
 import {
   FooterProps,
   IFooterFilter
 } from '../../Utils/interfaces/footer.interface';
 import { paths } from '../../routes/paths';
-import { setArrayFilter} from '../../redux/reducers/carFiltersSlice';
+import { setArrayFilter } from '../../redux/reducers/carFiltersSlice';
 import { RootState } from '../../redux/store';
 
 /** 
@@ -48,18 +48,18 @@ const Footer: React.FC<FooterProps> = ({
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const handleFilters = (filter: IFooterFilter) => {
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
     dispatch(setArrayFilter({ name: filter.filterName, value: filter.value }));
     history.push(paths.cars);
   };
 
   const dataPath = (link: string) => {
-    let route = link
+    let route = link;
     if (isLoggedIn && link.indexOf('help') > -1) {
-      route =  `/dashboard${link}`;
+      route = `/dashboard${link}`;
     }
-    window.scrollTo(0,0)
-    history.push(route)
+    window.scrollTo(0, 0);
+    history.push(route);
   };
 
   return (
@@ -68,7 +68,7 @@ const Footer: React.FC<FooterProps> = ({
         <Grid className={root} item container xs={12}>
           <Grid className={container} item xs={12} container>
             <Grid item container xs={12} lg={9}>
-              <Grid item xs={12} sm={4} lg={3}>
+              {/* <Grid item xs={12} sm={4} lg={3}>
                 <Typography className={filterTitle} variant="h3" gutterBottom>
                   Explore CarOkta
                 </Typography>
@@ -103,7 +103,7 @@ const Footer: React.FC<FooterProps> = ({
                       {item.name}
                     </Typography>
                   ))}
-              </Grid>
+              </Grid> */}
               {Object.entries(data.filters).map(([keys, values], index) => (
                 <Grid key={`filters-${index}`} item xs={12} sm={4} lg={3}>
                   <Typography className={filterTitle} variant="h3" gutterBottom>
@@ -128,7 +128,7 @@ const Footer: React.FC<FooterProps> = ({
               <Grid item container xs={12} md={4} lg={12}>
                 <Grid item xs={12}>
                   <Typography className={filterTitle} variant="h3">
-                    Sell On CarOkta
+                    Explore CarOkta
                   </Typography>
                   {data.sell &&
                     data.sell.map((item, index) => (
@@ -145,7 +145,7 @@ const Footer: React.FC<FooterProps> = ({
                     ))}
                 </Grid>
               </Grid>
-              <Grid item container xs={12} md={4} lg={12}>
+              {/* <Grid item container xs={12} md={4} lg={12}>
                 <Grid item xs={12}>
                   <Typography className={filterTitle} variant="h3">
                     Subscribe to our Newsletter
@@ -165,7 +165,7 @@ const Footer: React.FC<FooterProps> = ({
                     }}
                   />
                 </Grid>
-              </Grid>
+              </Grid> */}
               <Grid item container xs={12} md={4} lg={12}>
                 <Grid item xs={12}>
                   <Typography className={filterTitle} variant="h3">
@@ -183,7 +183,7 @@ const Footer: React.FC<FooterProps> = ({
                     </Grid>
                   ))}
               </Grid>
-              <Grid item container xs={12} md={4} lg={12}>
+              {/* <Grid item container xs={12} md={4} lg={12}>
                 <Grid item xs={12}>
                   <Typography className={filterTitle} variant="h3">
                     Download Mobile App
@@ -200,7 +200,7 @@ const Footer: React.FC<FooterProps> = ({
                       <img width="100%" src={item} alt={'App Links Button'} />
                     </Grid>
                   ))}
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
 

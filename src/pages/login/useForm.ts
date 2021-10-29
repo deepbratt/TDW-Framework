@@ -49,13 +49,12 @@ export const useForm = (validateOnChange = false) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (validate()) {
+    if (validate(values)) {
       let requestBody = {
         data: values.data,
         password: values.password
       };
       setIsLoading(true);
-      console.log('requestBody', requestBody);
       await addData(USERS + LOGIN, requestBody).then((response) => {
         console.log('data', response);
         console.log('response.data', response.data);

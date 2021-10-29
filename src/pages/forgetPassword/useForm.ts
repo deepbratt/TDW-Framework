@@ -38,11 +38,10 @@ export const useForm = (validateOnChange = false) => {
   
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (validate()) {
+    if (validate(values)) {
       let requestBody = {
         data: values.data,
       };
-      console.log("requestBody", requestBody);
       setIsLoading(true);
       await addData(USERS + FORGOT_PASSWORD, requestBody)
         .then((response) => {

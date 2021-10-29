@@ -94,12 +94,17 @@ export const useForm = (validateOnChange = true) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (
-      validate(
-        { ...values, confirmPassword: values.confirmPassword },
-        continueWith
-      )
-    ) {
+
+    let newValues = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      method: '+92' + values.method,
+      username: values.username,
+      password: values.password,
+      confirmPassword: values.confirmPassword
+    };
+
+    if (validate(newValues, continueWith)) {
       let requestBody = {
         firstName: values.firstName,
         lastName: values.lastName,
@@ -109,7 +114,6 @@ export const useForm = (validateOnChange = true) => {
         passwordConfirm: values.confirmPassword
       };
       setIsLoading(true);
-      console.log('requestBody', requestBody);
       await addData(USERS + SIGNUP, requestBody)
         .then((response) => {
           setIsLoading(false);

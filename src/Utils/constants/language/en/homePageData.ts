@@ -14,26 +14,24 @@ export const BannerData = {
   }
 };
 
-export const shopCarHeader = 'The Way It Should Be';
+export const shopCarHeader = 'What to expect from us?';
 export const shopCarData = [
   {
-    heading: 'Do more from home',
-    subTitle: 'The Way It Should Be',
+    heading: 'Attractive Fair Price Range',
+    subTitle:
+      'Aware customers of the current market’s trends and attractive fair price ranges, in case, you want to buy, sell or exchange your car.',
     icon: WheelWhite
   },
   {
-    heading: 'Do more from home',
-    subTitle: 'The Way It Should Be',
+    heading: 'Easy And Clear Steps',
+    subTitle:
+      'We serve easy and clear steps for our offered services to all of our clients. We are available here with 24/7 services to assist you.',
     icon: WheelWhite
   },
   {
-    heading: 'Do more from home',
-    subTitle: 'The Way It Should Be',
-    icon: WheelWhite
-  },
-  {
-    heading: 'Do more from home',
-    subTitle: 'The Way It Should Be',
+    heading: 'Prioritize Safe Transaction',
+    subTitle:
+      'Your payment methods and your bank credentials are safe with us. So, no need to panic about unsafe payments. We got your back.',
     icon: WheelWhite
   }
 ];
@@ -45,21 +43,21 @@ export const findCarsData = {
 
 export const PointsSectionData = [
   {
-    heading: 'Choose From Closed To Million Used Cars',
+    heading: 'Elegant And Enhanced Toyota Cars In Pakistan',
     subTitle:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, ",
+      'Toyota Company was established as a public restricted organization in 1989. The process of manufacturing new Toyota vehicles was in charge from May 1993. Firsthand Toyota car creation offices are situated in Karachi, Pakistan. Indus Motor Company is the main producer all throughout the planet, where Toyota and Daihatsu vehicles are made together. New launches by Toyota-Automotive Manufacturers is the most favorite choice for the people of Pakistan.',
     image: Car1
   },
   {
-    heading: 'Know a Great Price When you See It',
+    heading: 'Production and Performance of Suzuki vehicles',
     subTitle:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, ",
+      'Suzuki Swift can be on top of the list for winning performance awards. The chances of winning the competition on the basis of production and performance are quite tough. The production and manufacturing of Suzuki cars is not rocket science. The features of Suzuki cars are quite easy and simple. Suzuki cars contribute to having Euro 2. Euro 2 is not a technology category but a standard.',
     image: Car2
   },
   {
-    heading: 'Know a Great Price When you See It',
+    heading: 'Attractive Honda Car Prices in Pakistan',
     subTitle:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, ",
+      'In 2019, the prices of Honda cars in Pakistan as compared to the current market rate were quite low.  It has a varying price range heading up from PKR 25lacs and having final end at PKR 31Lacs. The price range has increased with much more enhanced features. Honda Accord is a costly vehicle with the price of PKR 137lacs which makes it the biggest reason it is not seen on roads.',
     image: Car3
   }
 ];

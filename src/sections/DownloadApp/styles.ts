@@ -18,7 +18,8 @@ const DownloadAppStyles = makeStyles((theme) => ({
       padding: '15px'
     },
     [theme.breakpoints.down('xs')]: {
-      marginTop: '50px'
+      marginTop: '50px',
+      minHeight: '130px'
     }
   },
   cardMedia: {
@@ -31,7 +32,7 @@ const DownloadAppStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down('sm')]: {
       right: '10px',
-      height: '280px'
+      height: '300px'
     }
   },
   btn: {

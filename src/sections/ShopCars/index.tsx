@@ -79,9 +79,9 @@ const ShopCars: React.FC<IShopCarProps> = ({ featureImg }) => {
               {shopCarData &&
                 shopCarData.map((item, index) => (
                   <ListItem className={listItem} key={`${index}`}>
-                    <ListItemIcon>
+                    {/* <ListItemIcon>
                       <img height="26px" src={item.icon} alt="" />
-                    </ListItemIcon>
+                    </ListItemIcon> */}
                     <ListItemText
                       primary={item.heading}
                       secondary={item.subTitle}

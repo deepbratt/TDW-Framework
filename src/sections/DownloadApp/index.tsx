@@ -14,7 +14,7 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ featureImg }) => {
   const { root, btn, cardMedia } = DownloadAppStyles();
   return (
     <div className={root}>
-      <CustomButton
+      {/* <CustomButton
         fullWidth
         className={btn}
         startIcon={<AppleIcon />}
@@ -31,7 +31,7 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ featureImg }) => {
         }
       >
         {FOR_ANDROID}
-      </CustomButton>
+      </CustomButton> */}
       <img className={cardMedia} src={featureImg} alt="" />
     </div>
   );

@@ -67,7 +67,7 @@ const Footer: React.FC<FooterProps> = ({
       <Container>
         <Grid className={root} item container xs={12}>
           <Grid className={container} item xs={12} container>
-            <Grid item container xs={12} lg={9}>
+            <Grid item container xs={12}>
               {/* <Grid item xs={12} sm={4} lg={3}>
                 <Typography className={filterTitle} variant="h3" gutterBottom>
                   Explore CarOkta
@@ -105,7 +105,7 @@ const Footer: React.FC<FooterProps> = ({
                   ))}
               </Grid> */}
               {Object.entries(data.filters).map(([keys, values], index) => (
-                <Grid key={`filters-${index}`} item xs={12} sm={4} lg={3}>
+                <Grid key={`filters-${index}`} item xs={12} sm={4} md={3}>
                   <Typography className={filterTitle} variant="h3" gutterBottom>
                     Cars By {keys}
                   </Typography>
@@ -123,9 +123,7 @@ const Footer: React.FC<FooterProps> = ({
                   ))}
                 </Grid>
               ))}
-            </Grid>
-            <Grid item container xs={12} lg={3}>
-              <Grid item container xs={12} md={4} lg={12}>
+              <Grid item container xs={12} sm={4} md={3}>
                 <Grid item xs={12}>
                   <Typography className={filterTitle} variant="h3">
                     Explore CarOkta
@@ -145,7 +143,48 @@ const Footer: React.FC<FooterProps> = ({
                     ))}
                 </Grid>
               </Grid>
-              {/* <Grid item container xs={12} md={4} lg={12}>
+              <Grid item container xs={12} sm={4} md={3}>
+                <Grid
+                  item
+                  xs={12}
+                  container
+                  alignContent="flex-start"
+                  justifyContent="flex-start"
+                >
+                  <Grid item xs={12}>
+                    <Typography className={filterTitle} variant="h3">
+                      Follow Us
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    container
+                    justifyContent="flex-start"
+                    direction="row"
+                  >
+                    {data.socialMedia &&
+                      data.socialMedia.map((item, index) => (
+                        <Grid
+                          className={socialMediaLinks}
+                          item
+                          key={`social-media-link-${index}`}
+                        >
+                          <a href={item.path} target="_blank" rel="noreferrer">
+                            <img
+                              height="30px"
+                              src={item.icon}
+                              alt={item.name}
+                            />
+                          </a>
+                        </Grid>
+                      ))}
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            {/* <Grid item container xs={12} lg={3}>
+              <Grid item container xs={12} md={4} lg={12}>
                 <Grid item xs={12}>
                   <Typography className={filterTitle} variant="h3">
                     Subscribe to our Newsletter
@@ -165,27 +204,9 @@ const Footer: React.FC<FooterProps> = ({
                     }}
                   />
                 </Grid>
-              </Grid> */}
-              <Grid item container xs={12} md={4} lg={12}>
-                <Grid item xs={12}>
-                  <Typography className={filterTitle} variant="h3">
-                    Follow Us
-                  </Typography>
-                </Grid>
-                {data.socialMedia &&
-                  data.socialMedia.map((item, index) => (
-                    <Grid
-                      className={socialMediaLinks}
-                      item
-                      key={`social-media-link-${index}`}
-                    >
-                      <a href={item.path} target="_blank" rel="noreferrer">
-                        <img height="30px" src={item.icon} alt={item.name} />
-                      </a>
-                    </Grid>
-                  ))}
               </Grid>
-              {/* <Grid item container xs={12} md={4} lg={12}>
+
+               <Grid item container xs={12} md={4} lg={12}>
                 <Grid item xs={12}>
                   <Typography className={filterTitle} variant="h3">
                     Download Mobile App
@@ -202,8 +223,8 @@ const Footer: React.FC<FooterProps> = ({
                       <img width="100%" src={item} alt={'App Links Button'} />
                     </Grid>
                   ))}
-              </Grid> */}
-            </Grid>
+              </Grid>
+            </Grid> */}
           </Grid>
 
           <Divider className={divider} />

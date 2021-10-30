@@ -19,7 +19,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Build React App - Dev
-        if: github.ref == 'refs/heads/develop'
+        if: github.ref == 'refs/heads/prelaunch'
         run: npm install && npm run build-dev
         env:
          CI: false

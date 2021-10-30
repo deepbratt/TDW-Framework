@@ -57,7 +57,7 @@
     "start": "react-scripts start",
     "build": "node ./update-build.ts && sh -ac '. ./.env.${REACT_APP_NODE_ENV}; react-scripts build'",
     "build-dev": "REACT_APP_NODE_ENV=dev GENERATE_SOURCEMAP=false npm run build",
-    "build-prod": "REACT_APP_NODE_ENV=prod && npm run build",
+    "build-prod": "REACT_APP_NODE_ENV=prod GENERATE_SOURCEMAP=false npm run build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "compress": "gzipper compress --verbose --level 9 --include js,css --output-file-format [filename].[ext] ./build",
     "test": "react-scripts test",

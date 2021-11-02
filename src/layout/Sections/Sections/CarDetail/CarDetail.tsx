@@ -13,7 +13,7 @@ import {
 import EditOutlined from '@material-ui/icons/EditOutlined';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { routes } from '../../../../routes/paths';
 import { updateData } from '../../../../Utils/API/API';
@@ -175,7 +175,7 @@ const CarDetail: React.FC<any> = ({
       setSigninModal(true);
     }
     if (showPhone) {
-      window.location.href = `tel:${data.createdBy.phone}`;
+      window.location.href = `tel:${data.associatedPhone || data.createdBy.phone}`;
       return;
     }
     if (user._id && user._id !== data.createdBy._id) {
@@ -201,6 +201,10 @@ const CarDetail: React.FC<any> = ({
       //show phone api
     }
   };
+
+  useEffect(()=>{
+    setShowPhone(showPhone || user._id === data.createdBy._id)
+  },[])
 
   return (
     <Grid container style={{ display: 'inline-block' }}>
@@ -359,8 +363,8 @@ const CarDetail: React.FC<any> = ({
               startIcon={<Phone />}
               onClick={handleShowPhone}
             >
-              {showPhone || user._id === data.createdBy._id
-                ? data.associatedPhone ? data.associatedPhone : data.createdBy.phone
+              {showPhone
+                ? data.associatedPhone || data.createdBy.phone 
                 : SHOW_PHONE}
             </Button>
           </Grid>

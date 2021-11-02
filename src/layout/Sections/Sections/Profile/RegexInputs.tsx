@@ -1,6 +1,6 @@
-import Button from "@material-ui/core/Button"
-import Grid from "@material-ui/core/Grid"
-import TextField from "@material-ui/core/TextField"
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
 import {
   emailText,
   email,
@@ -16,9 +16,10 @@ import Toast from '../../../../components/Toast';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
-import Loader from "../../../../components/Loader";
+import Loader from '../../../../components/Loader';
 const RegexInputs = () => {
-  const {isLoading, changeNumberOrEmail, setOpen, responseMessage, open } = Actions();
+  const { isLoading, changeNumberOrEmail, setOpen, responseMessage, open } =
+    Actions();
 
   const {
     register,
@@ -28,11 +29,11 @@ const RegexInputs = () => {
   const { handleChange, val, number, NumericOnly, errorMessage, setNumber } =
     useHooks();
   const [changeToVerification, setChangeToVerification] = useState(false);
-  const {cancelButton, button } = useStyles();
+  const { cancelButton, button } = useStyles();
   const { user } = useSelector((state: RootState) => state.auth);
 
   const onSubmit = (): void => {
-    let phone = "+92"+number
+    let phone = '+92' + number;
     let data = user.phone !== phone ? { phone: phone } : { email: val.email };
     changeNumberOrEmail(updateMe, data, setChangeToVerification);
   };
@@ -49,7 +50,7 @@ const RegexInputs = () => {
 
   return (
     <Grid container spacing={4}>
-      <Loader isBackdrop={true} open={isLoading}/>
+      <Loader isBackdrop={true} open={isLoading} />
       {/* {changeToVerification ? (
           <Verification slicedNumber={number && number} />
         ) : ( */}
@@ -69,6 +70,7 @@ const RegexInputs = () => {
       </Grid>
       <Grid item lg={6} xs={12}>
         <TextField
+          autoComplete="off"
           name="number"
           value={number}
           onChange={(e) => NumericOnly(e)}
@@ -76,12 +78,12 @@ const RegexInputs = () => {
           disabled={user.signedUpWithPhone}
           fullWidth
           type="tel"
-          placeholder={"3XXXXXXXXX"}
-          InputProps={{startAdornment:<span>+92&nbsp;</span>}}
+          placeholder={'3XXXXXXXXX'}
+          InputProps={{ startAdornment: <span>+92&nbsp;</span> }}
         />
       </Grid>
       {val.email || number ? (
-        <Grid item lg={12} xs={12} style={{display:"flex"}}>
+        <Grid item lg={12} xs={12} style={{ display: 'flex' }}>
           <Button
             className={button}
             variant="contained"

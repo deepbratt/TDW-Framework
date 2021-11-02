@@ -15,14 +15,13 @@ import { logout } from './redux/reducers/authSlice';
 import { RootState } from './redux/store';
 import ErrorBoundary from './components/ErrorBoundary';
 import WithClearCache from './components/ClearCache';
-import { setShortlistCars } from './redux/reducers/shortlistCarsSlice';
 
 const generateClassName = createGenerateClassName({
   disableGlobal: true // or seed: 'something_unique' ?
 });
-const App = () =>{
-  return <WithClearCache ChildComponent={MainApp}/>
-}
+const App = () => {
+  return <WithClearCache ChildComponent={MainApp} />;
+};
 
 function MainApp() {
   const { USERS, CURENT_USER } = API_ENDPOINTS;
@@ -30,6 +29,7 @@ function MainApp() {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.auth);
   const history = useHistory();
+  // const location = useLocation();
 
   useEffect(() => {
     (async () => {
@@ -50,11 +50,15 @@ function MainApp() {
           console.log(error);
         });
     })();
-    if(process.env.NODE_ENV === "development"){
-      console.log("environment dev",process.env.REACT_APP_BASE_URL)
-      console.log("environment", process.env.NODE_ENV)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('environment dev', process.env.REACT_APP_BASE_URL);
+      console.log('environment', process.env.NODE_ENV);
     }
   }, []);
+
+  // useEffect(() => {
+  //   window.scrollTo({ top: 0, behavior: 'smooth' });
+  // }, [location]);
 
   return (
     <ErrorBoundary>

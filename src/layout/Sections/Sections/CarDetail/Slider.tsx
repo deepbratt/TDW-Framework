@@ -42,6 +42,7 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
     <Grid container>
       <Grid className={detail} item xs={12}>
         <Carousel
+          autoFocus={true}
           className={carousel}
           autoPlay={!fullScreen}
           showStatus={false}
@@ -51,6 +52,7 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
           transitionTime={500}
           showIndicators={false}
           showThumbs={true}
+          useKeyboardArrows={true}
         >
           {arr.map((data, index) => {
             return (
@@ -61,8 +63,8 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
                 <img
                   style={{
                     position: 'relative',
-                    borderRadius: '5px',
-                    // minHeight: '100%',              
+                    borderRadius: '5px'
+                    // minHeight: '100%',
                   }}
                   key={`img ${index}`}
                   // height="100%"

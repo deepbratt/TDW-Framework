@@ -163,13 +163,17 @@ const CarDetailContainer = () => {
                   />
                 </Box>
                 <Box width="100%" className={section}>
-                  <Divider style={{borderBottom:"1px solid "+Colors.navyBlue}}/>
+                  <Divider
+                    style={{ borderBottom: '1px solid ' + Colors.navyBlue }}
+                  />
                 </Box>
                 <Box className={section}>
                   <CarDescription description={obj.description} />
                 </Box>
                 <Box width="100%" className={section}>
-                  <Divider style={{borderBottom:"1px solid "+Colors.navyBlue}}/>
+                  <Divider
+                    style={{ borderBottom: '1px solid ' + Colors.navyBlue }}
+                  />
                 </Box>
                 <Box className={section}>
                   <CarFeatures features={carFeatures} />
@@ -196,7 +200,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '300px 0px'
   },
   section: {
-    marginTop: '20px',
+    marginTop: '20px'
     // borderBottom: '1px solid ' + Colors.navyBlue
   }
 }));

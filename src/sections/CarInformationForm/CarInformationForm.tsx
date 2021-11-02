@@ -41,7 +41,7 @@ const CarInformationForm = ({
   bodyColorArray
 }: CarInformationFormProps) => {
   const classes = useStyles();
-  const { carMakesList, carModelsList, carVersionsList } =
+  const { carMakesList, carModelsList, carVersionsList, handleTextChange } =
     useCarInformationForm(formData, setFormData);
   const cities = City.getCitiesOfCountry('PK');
   const extractedCityNames = cities?.map((item) => item.name);
@@ -181,13 +181,15 @@ const CarInformationForm = ({
           name={'mileage'}
           className={classes.selectFields}
           value={formData.mileage}
+          // value={textValue.mileage}
           label={addEditCarData.fields.mileage.label}
           required
           error={requireError.mileage}
           helperText={
             requireError.mileage ? addEditCarData.requiredFieldText : ''
           }
-          onChange={handleChange}
+          // onChange={handleChange}
+          onChange={handleTextChange}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
@@ -202,7 +204,8 @@ const CarInformationForm = ({
           helperText={
             requireError.registrationNo ? addEditCarData.requiredFieldText : ''
           }
-          onChange={handleChange}
+          // onChange={handleChange}
+          onChange={handleTextChange}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
@@ -217,7 +220,8 @@ const CarInformationForm = ({
           helperText={
             requireError.price ? addEditCarData.requiredFieldText : ''
           }
-          onChange={handleChange}
+          // onChange={handleChange}
+          onChange={handleTextChange}
         />
       </Grid>
       <Grid
@@ -246,7 +250,8 @@ const CarInformationForm = ({
           placeholder={addEditCarData.fields.description.defaultValue}
           style={{ width: '100%' }}
           value={formData.description}
-          onChange={handleChange}
+          // onChange={handleChange}
+          onChange={handleTextChange}
           error={requireError.registrationNo}
           helperText={
             requireError.registrationNo ? addEditCarData.requiredFieldText : ''

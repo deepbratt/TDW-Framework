@@ -360,7 +360,7 @@ const CarDetail: React.FC<any> = ({
               onClick={handleShowPhone}
             >
               {showPhone || user._id === data.createdBy._id
-                ? data.createdBy.phone
+                ? data.associatedPhone ? data.associatedPhone : data.createdBy.phone
                 : SHOW_PHONE}
             </Button>
           </Grid>

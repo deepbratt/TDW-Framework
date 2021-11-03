@@ -130,6 +130,7 @@ const addEditCarData = {
     post: 'Post',
     back: 'Back',
     delete: 'Delete',
+    discard: 'Discard',
     confirmDelete: 'Yes',
     cancelDelete: 'Cancel',
     addPhoto: 'Add Photos +',

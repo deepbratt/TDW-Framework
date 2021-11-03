@@ -503,6 +503,15 @@ const useAddEditCar = () => {
     });
   }
 
+  const resetForm=()=>{
+    let fieldValues: any = initialFieldValues;
+        Object.keys(fieldValues).forEach((key) => {
+          setFormData({ name: key, value: fieldValues[key] });
+        });
+        setImages([]);
+        history.push("/dashboard/ads")
+  }
+
   const handleStepChange = (step:number)=>{
     formRef.current.scrollIntoView({ behavior: 'smooth' });
     if(step > activeStep){
@@ -541,6 +550,7 @@ const useAddEditCar = () => {
 
   return {
     handleStepChange,
+    resetForm,
     setActiveStep,
     activeStep,
     handleBack,

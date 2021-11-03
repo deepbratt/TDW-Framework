@@ -18,6 +18,7 @@ import Delete from '@material-ui/icons/Delete';
 const AddEditCar = () => {
   const {
     activeStep,
+    resetForm,
     handleStepChange,
     handleBack,
     handleNext,
@@ -100,6 +101,14 @@ const AddEditCar = () => {
               {addEditCarData.steps[activeStep]}
             </Typography>
             <div>
+            <Button
+                  color="primary"
+                  variant="contained"
+                  style={{ marginRight: '16px' }}
+                  onClick={() => resetForm()}
+                >
+                  {addEditCarData.buttons.discard}
+                </Button>
             <Button
                 color="secondary"
                 variant="contained"

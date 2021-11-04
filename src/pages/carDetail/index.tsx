@@ -174,7 +174,6 @@ const CarDetailContainer = () => {
                 }}
               >
                 <Box>
-<<<<<<< HEAD
                   <Tabs
                     value={tabValue}
                     onChange={handleChange}
@@ -239,45 +238,6 @@ const CarDetailContainer = () => {
                   <TabPanel value={tabValue} index={2}>
                     <CarFeatures features={carFeatures} />
                   </TabPanel>
-=======
-                  <CarDetail
-                    mainButton={mainButton}
-                    numButton={numButton}
-                    Title={`${obj.make} ${obj.model} ${obj.modelYear}`}
-                    location={obj?.city}
-                    rating={rating}
-                    array={array}
-                    locIcon={locIcon}
-                    mailIcon={mailIcon}
-                    ratIcon={ratIcon}
-                    numbIcon={numbIcon}
-                    paragraph={obj?.description}
-                    desc={desc}
-                    price={obj?.price}
-                    modelYear={obj?.modelYear}
-                    transmission={obj?.transmission}
-                    mileage={obj?.milage}
-                    engineType={obj?.engineType}
-                    createdBy={obj.createdBy}
-                    data={obj}
-                  />
-                </Box>
-                <Box width="100%" className={section}>
-                  <Divider
-                    style={{ borderBottom: '1px solid ' + Colors.navyBlue }}
-                  />
-                </Box>
-                <Box className={section}>
-                  <CarDescription description={obj.description} />
-                </Box>
-                <Box width="100%" className={section}>
-                  <Divider
-                    style={{ borderBottom: '1px solid ' + Colors.navyBlue }}
-                  />
-                </Box>
-                <Box className={section}>
-                  <CarFeatures features={carFeatures} />
->>>>>>> develop
                 </Box>
               </Grid>
             </Grid>

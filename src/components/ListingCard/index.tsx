@@ -30,6 +30,7 @@ import Sizes from '../../Utils/themeConstants';
 import LoginModal from '../../pages/login/LoginModal';
 import { Box } from '@material-ui/core';
 import Compare from '@material-ui/icons/Compare';
+import { Colors } from '../../Utils/constants/colors/colors';
 export interface ListingCardProps {
   data: any;
   layoutType: string;
@@ -55,7 +56,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const { shortlistCars } = useSelector(
     (state: RootState) => state.shortlistCars
   );
-  const { root, grid, featuredBadge, location, favsIconGrid, favsIconList } =
+  const { root, grid, featuredBadge, location, favsIconGrid, favsIconList, cardMedia, blurBgImg } =
     ListingCardStyles();
   const {
     _id,
@@ -200,17 +201,23 @@ const ListingCard: React.FC<ListingCardProps> = ({
               >
                 <CardMedia
                   style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    overflow: 'hidden',
-                    width: '100%'
+                    height: layoutType === 'list' ? '170px' : '235px'
                   }}
+                  className={cardMedia}
                 >
+                  <div
+                    style={{
+                      backgroundImage: `url(${
+                        image && image.length > 0 ? image[0] : NoImg
+                      })`
+                    }}
+                    className={blurBgImg}
+                  ></div>
                   <img
-                    height={layoutType === 'list' ? "160px" : "235px"} 
                     width="100%"
+                    height={'auto'}
                     src={image && image.length > 0 ? image[0] : NoImg}
+                    style={{ zIndex: 999 }}
                     alt=""
                   />
                   {isSold && (

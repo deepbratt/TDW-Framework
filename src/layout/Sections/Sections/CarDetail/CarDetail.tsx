@@ -84,7 +84,7 @@ const CarDetail: React.FC<any> = ({
   const { navyBlue } = Colors;
   const { removeShortListItem, shortListItem } = useShortListCars();
 
-  const defaultMarginTop = '50px';
+  const defaultMarginTop = '20px';
 
   const toggleSold = (soldHere: boolean = false) => {
     let soldUnsold = isSold
@@ -356,7 +356,7 @@ const CarDetail: React.FC<any> = ({
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{marginTop:defaultMarginTop}}>
             <Button
               fullWidth
               className={numBtn}

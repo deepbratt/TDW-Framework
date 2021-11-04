@@ -15,7 +15,7 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
   const { open, setOpen, responseMessage } = Actions();
   const [fullScreen, setFullScreen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
-  const { carousel, detail, sliderImageWrapper, fullImageTabScrollBtn } =
+  const { carousel, detail, sliderImageWrapper, fullImageTabScrollBtn, blurBgImg } =
     useStyles();
   const { mobile } = Sizes();
 
@@ -60,6 +60,7 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
                 onClick={(e) => openFullScreen(index, e)}
                 className={sliderImageWrapper}
               >
+                <div style={{backgroundImage:`url(${data})`}} className={blurBgImg}></div>
                 <img
                   style={{
                     position: 'relative',

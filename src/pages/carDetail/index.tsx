@@ -28,9 +28,21 @@ import Toast from '../../components/Toast';
 import { Colors } from '../../Utils/constants/colors/colors';
 import CarDescription from '../../layout/Sections/Sections/CarDetail/CarDescription';
 import CarFeatures from '../../layout/Sections/Sections/CarDetail/CarFeatures';
-import { Box, Divider, makeStyles, Tab, Tabs } from '@material-ui/core';
+import {
+  Box,
+  Divider,
+  IconButton,
+  makeStyles,
+  Tab,
+  Tabs,
+  Typography
+} from '@material-ui/core';
 import { useEffect, useRef, useState } from 'react';
 import Sizes from '../../Utils/themeConstants';
+import { Compare, Favorite, LocationOnOutlined } from '@material-ui/icons';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import LoginModal from '../login/LoginModal';
 
 interface RouteProps {
   id: string;
@@ -66,10 +78,26 @@ function a11yProps(index: any) {
 }
 
 const CarDetailContainer = () => {
+  const defaultMarginTop = '20px';
   const { id } = useParams<RouteProps>();
-  const { obj, isLoading, open, setOpen, responseMessage, carFeatures } =
-    Actions(id ?? '');
-  const { loader, section, tabs, tab } = useStyles();
+  const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
+  const { shortlistCars } = useSelector(
+    (state: RootState) => state.shortlistCars
+  );
+  const {
+    obj,
+    isLoading,
+    open,
+    setOpen,
+    responseMessage,
+    carFeatures,
+    toggleFavourite,
+    isFavorite,
+    toggleShortListCar,
+    signinModal,
+    setSigninModal
+  } = Actions(id ?? '');
+  const { loader, section, tabs, tab, btn } = useStyles();
   const [sliderHeight, setSliderHeight] = useState(0);
   const sliderColumn = useRef<HTMLDivElement | null>(null);
   const [tabValue, setTabValue] = useState(0);
@@ -83,9 +111,6 @@ const CarDetailContainer = () => {
     );
   };
 
-  // const lgMdSmPx = (lgMd: string, sm: string) => {
-  //   return size.desktop || size.tablet ? lgMd : sm;
-  // };
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTabValue(newValue);
   };
@@ -173,6 +198,67 @@ const CarDetailContainer = () => {
                   overflowY: 'auto'
                 }}
               >
+                <Grid container>
+                  <Grid
+                    item
+                    xs={12}
+                    container
+                    justifyContent="space-between"
+                    alignItems="flex-start"
+                  >
+                    <Box>
+                      <Typography variant="h2">{`${obj.make} ${obj.model} ${obj.modelYear}`}</Typography>
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        style={{ color: Colors.grey }}
+                      >
+                        <LocationOnOutlined fontSize="small" />
+                        <Typography variant="subtitle1">
+                          {/* <img width="20px" src={locIcon} alt="" /> */}
+                          {obj?.city}
+                        </Typography>
+                      </Box>
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <IconButton
+                        className={btn}
+                        onClick={(e) => toggleShortListCar(e)}
+                      >
+                        <Compare
+                          color={
+                            shortlistCars.filter((e: any) => e._id === obj._id)
+                              .length > 0
+                              ? 'primary'
+                              : 'inherit'
+                          }
+                        />
+                      </IconButton>
+
+                      {user?._id === obj.createdBy?._id ? null : (
+                        <IconButton
+                          onClick={() => toggleFavourite(obj._id)}
+                          className={btn}
+                          style={{ marginLeft: '5px' }}
+                        >
+                          {isFavorite ? (
+                            <Favorite color="primary" />
+                          ) : (
+                            <Favorite style={{ color: 'white' }} />
+                          )}
+                        </IconButton>
+                      )}
+                    </Box>
+                  </Grid>
+                  <Box style={{ marginTop: defaultMarginTop }}>
+                    <Typography style={{ color: Colors.navyBlue }} variant="h2">
+                      PKR {obj.price?.toLocaleString()}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Box marginTop={defaultMarginTop}>
+                  <Divider/>
+                </Box>
                 <Box>
                   <Tabs
                     value={tabValue}
@@ -207,6 +293,7 @@ const CarDetailContainer = () => {
                       {...a11yProps(2)}
                     />
                   </Tabs>
+                  <Divider/>
                 </Box>
                 <Box p={3}>
                   <TabPanel value={tabValue} index={0}>
@@ -243,6 +330,10 @@ const CarDetailContainer = () => {
             </Grid>
           )}
         </Paper>
+        <LoginModal
+        openModal={signinModal}
+        closeModal={() => setSigninModal(false)}
+      />
         <Toast
           open={open}
           message={responseMessage.message}
@@ -265,10 +356,18 @@ const useStyles = makeStyles((theme) => ({
     // borderBottom: '1px solid ' + Colors.navyBlue
   },
   tabs: {
-    borderBottom: 0
+    borderBottom: 0,
   },
   tab: {
     fontSize: '1rem',
     flexDirection: 'row'
+  },
+  btn: {
+    background: Colors.lightBlue,
+    boxShadow: 'none',
+    '&:hover': {
+      background: Colors.lightGrey,
+      boxShadow: 'none'
+    }
   }
 }));

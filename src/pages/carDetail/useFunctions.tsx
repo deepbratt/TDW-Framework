@@ -1,15 +1,22 @@
 import { useState } from 'react';
 import {  addToFav } from '../../Utils/hooks/actions';
 import { ICarCard } from '../../layout/Sections/Utils/types1';
-import { getSingleCar } from '../../Utils/hooks/endpoints';
+import { addToFavs, getSingleCar, removeFavs } from '../../Utils/hooks/endpoints';
 import { useEffect } from 'react';
 import { getAllData } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import useShortListCars from '../../Utils/hooks/useShortListCars';
 
 const Actions = (Id?: string | '') => {
   const {user} = useSelector((state:RootState)=>state.auth)
+  const { shortlistCars } = useSelector(
+    (state: RootState) => state.shortlistCars
+  );
+  const { removeShortListItem, shortListItem } = useShortListCars();
+  const [isFavorite, setIsFavorite] = useState<boolean | undefined>(false);
+  const [signinModal, setSigninModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [obj, setObj] = useState<ICarCard>();
   const [open, setOpen] = useState(false);
@@ -76,6 +83,7 @@ const Actions = (Id?: string | '') => {
       .then((response) => {
         if (response && response.data && response.status === 'success') {
           setObj(response.data.result);
+          setIsFavorite(response.data.result.isFav)
         } else {
           console.log('error', response);
           setOpen(true);
@@ -122,6 +130,37 @@ const Actions = (Id?: string | '') => {
       });
   };
 
+  const handleAddToShortListItem = (item: any) => {
+    setOpen(true);
+    let shortListResponse = shortListItem(item);
+    setResponseMessage(shortListResponse)
+  };
+  const handleRemoveShortListItem = (itemId: string) => {
+    setOpen(true);
+    let shortListResponse = removeShortListItem(itemId);
+    setResponseMessage(shortListResponse)
+  };
+
+  const toggleFavourite = (itemId: string = "") => {
+    if (user._id) {
+      addFavs(isFavorite ? removeFavs : addToFavs, itemId);
+      setIsFavorite(!isFavorite);
+    } else {
+      setSigninModal(true);
+    }
+  };
+
+  const toggleShortListCar = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    if (shortlistCars.filter((item) => item._id === obj?._id).length > 0) {
+      handleRemoveShortListItem(obj?._id ? obj._id : "");
+    } else {
+      handleAddToShortListItem(obj);
+    }
+  };
+
   return {
     responseMessage,
     setResponseMessage,
@@ -132,7 +171,13 @@ const Actions = (Id?: string | '') => {
     setOpen,
     obj,
     featuresArray,
-    carFeatures
+    carFeatures,
+    signinModal,
+    setSigninModal,
+    isFavorite,
+    setIsFavorite,
+    toggleFavourite,
+    toggleShortListCar
   };
 };
 

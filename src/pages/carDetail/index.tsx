@@ -28,20 +28,51 @@ import Toast from '../../components/Toast';
 import { Colors } from '../../Utils/constants/colors/colors';
 import CarDescription from '../../layout/Sections/Sections/CarDetail/CarDescription';
 import CarFeatures from '../../layout/Sections/Sections/CarDetail/CarFeatures';
-import { Box, Divider, makeStyles } from '@material-ui/core';
+import { Box, Divider, makeStyles, Tab, Tabs } from '@material-ui/core';
 import { useEffect, useRef, useState } from 'react';
 import Sizes from '../../Utils/themeConstants';
 
 interface RouteProps {
   id: string;
 }
+interface TabPanelProps {
+  children?: React.ReactNode;
+  dir?: string;
+  index: any;
+  value: any;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`${index}`}
+      aria-labelledby={`${index}`}
+      {...other}
+    >
+      {value === index && <Box>{children}</Box>}
+    </div>
+  );
+}
+
+function a11yProps(index: any) {
+  return {
+    id: `full-width-tab-${index}`,
+    'aria-controls': `full-width-tabpanel-${index}`
+  };
+}
+
 const CarDetailContainer = () => {
   const { id } = useParams<RouteProps>();
   const { obj, isLoading, open, setOpen, responseMessage, carFeatures } =
     Actions(id ?? '');
-  const { loader, section } = useStyles();
+  const { loader, section, tabs, tab } = useStyles();
   const [sliderHeight, setSliderHeight] = useState(0);
   const sliderColumn = useRef<HTMLDivElement | null>(null);
+  const [tabValue, setTabValue] = useState(0);
   const size = Sizes();
 
   const handleImageLoaded = () => {
@@ -55,6 +86,9 @@ const CarDetailContainer = () => {
   // const lgMdSmPx = (lgMd: string, sm: string) => {
   //   return size.desktop || size.tablet ? lgMd : sm;
   // };
+  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setTabValue(newValue);
+  };
 
   useEffect(() => {
     if (!isLoading) {
@@ -140,39 +174,70 @@ const CarDetailContainer = () => {
                 }}
               >
                 <Box>
-                  <CarDetail
-                    mainButton={mainButton}
-                    numButton={numButton}
-                    Title={`${obj.make} ${obj.model} ${obj.modelYear}`}
-                    location={obj?.city}
-                    rating={rating}
-                    array={array}
-                    locIcon={locIcon}
-                    mailIcon={mailIcon}
-                    ratIcon={ratIcon}
-                    numbIcon={numbIcon}
-                    paragraph={obj?.description}
-                    desc={desc}
-                    price={obj?.price}
-                    modelYear={obj?.modelYear}
-                    transmission={obj?.transmission}
-                    mileage={obj?.milage}
-                    engineType={obj?.engineType}
-                    createdBy={obj.createdBy}
-                    data={obj}
-                  />
+                  <Tabs
+                    value={tabValue}
+                    onChange={handleChange}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    variant="fullWidth"
+                    aria-label="full width tabs example"
+                    classes={{
+                      flexContainer: tabs
+                    }}
+                  >
+                    <Tab
+                      classes={{
+                        wrapper: tab
+                      }}
+                      label="Information"
+                      {...a11yProps(0)}
+                    />
+                    <Tab
+                      classes={{
+                        wrapper: tab
+                      }}
+                      label="Description"
+                      {...a11yProps(1)}
+                    />
+                    <Tab
+                      classes={{
+                        wrapper: tab
+                      }}
+                      label="Car features"
+                      {...a11yProps(2)}
+                    />
+                  </Tabs>
                 </Box>
-                <Box width="100%" className={section}>
-                  <Divider style={{borderBottom:"1px solid "+Colors.navyBlue}}/>
-                </Box>
-                <Box className={section}>
-                  <CarDescription description={obj.description} />
-                </Box>
-                <Box width="100%" className={section}>
-                  <Divider style={{borderBottom:"1px solid "+Colors.navyBlue}}/>
-                </Box>
-                <Box className={section}>
-                  <CarFeatures features={carFeatures} />
+                <Box p={3}>
+                  <TabPanel value={tabValue} index={0}>
+                    <CarDetail
+                      mainButton={mainButton}
+                      numButton={numButton}
+                      Title={`${obj.make} ${obj.model} ${obj.modelYear}`}
+                      location={obj?.city}
+                      rating={rating}
+                      array={array}
+                      locIcon={locIcon}
+                      mailIcon={mailIcon}
+                      ratIcon={ratIcon}
+                      numbIcon={numbIcon}
+                      paragraph={obj?.description}
+                      desc={desc}
+                      price={obj?.price}
+                      modelYear={obj?.modelYear}
+                      transmission={obj?.transmission}
+                      mileage={obj?.milage}
+                      engineType={obj?.engineType}
+                      createdBy={obj.createdBy}
+                      data={obj}
+                    />
+                  </TabPanel>
+                  <TabPanel value={tabValue} index={1}>
+                    <CarDescription description={obj.description} />
+                  </TabPanel>
+                  <TabPanel value={tabValue} index={2}>
+                    <CarFeatures features={carFeatures} />
+                  </TabPanel>
                 </Box>
               </Grid>
             </Grid>
@@ -196,7 +261,14 @@ const useStyles = makeStyles((theme) => ({
     margin: '300px 0px'
   },
   section: {
-    marginTop: '20px',
+    marginTop: '20px'
     // borderBottom: '1px solid ' + Colors.navyBlue
+  },
+  tabs: {
+    borderBottom: 0
+  },
+  tab: {
+    fontSize: '1rem',
+    flexDirection: 'row'
   }
 }));

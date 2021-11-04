@@ -16,7 +16,7 @@ const CarFeatures = ({ features }: CarFeaturesProps) => {
       spacing={2}
     >
       <Grid item xs={12} style={{ color: gray}}>
-        <Typography variant="h2">{carFeatures}</Typography>
+        {/* <Typography variant="h2">{carFeatures}</Typography> */}
       </Grid>
       {/* <Grid container style={{flexWrap: 'wrap' }}> */}
         {features ? (

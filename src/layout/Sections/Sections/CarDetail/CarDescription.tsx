@@ -7,7 +7,6 @@ interface CarDescriptionProps {
 const CarDescription = ({ description }: CarDescriptionProps) => {
   return (
     <Box>
-      <Typography variant="h6">{desc}</Typography>
       <Typography
         style={{ marginTop: '10px', whiteSpace: 'pre-line' }}
         variant="subtitle1"

@@ -47,10 +47,10 @@ const CarInformation = ({ data }: CarInformationProps) => {
         <Table>
           {tableData.map((item: any, index: number) => (
             <TableRow key={item.name + index}>
-              <TableCell align="left" style={{ padding: '10px 0' }}>
+              <TableCell align="left" style={{ padding: '7px 0' }}>
                 <Typography variant="subtitle1">{item.name}</Typography>
               </TableCell>
-              <TableCell align="right" style={{ padding: '10px 0' }}>
+              <TableCell align="right" style={{ padding: '7px 0' }}>
                 <Typography variant="subtitle1">{item.value}</Typography>
               </TableCell>
             </TableRow>

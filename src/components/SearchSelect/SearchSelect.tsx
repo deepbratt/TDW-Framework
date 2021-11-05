@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import selectStyles from "./selectStyles";
 import Breakpoints from "../../Utils/Breakpoints";
-import { City } from "country-state-city";
+import { City } from "../../Utils/country-state-city/index";
 interface IProps {
   setVal: (val: any) => void;
   val: any;

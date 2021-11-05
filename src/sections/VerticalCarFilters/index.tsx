@@ -18,11 +18,11 @@ import {
   Carfilters,
   CarFiltersData
 } from '../../Utils/constants/language/en/filtersData';
-import { City, State } from 'country-state-city';
+import { City, State } from '../../Utils/country-state-city/index';
 import { fieldNames } from '../../Utils/constants/formsConstants';
 import VerticalFilterStyles from './styles';
 import DialogBox from '../../components/DialogBox';
-import { ICity } from 'country-state-city/dist/lib/interface';
+import { ICity } from '../../Utils/country-state-city/interface';
 import AppliedFilters from './appliedFilters';
 import defaultBodyType from '../../assets/Cars/sedan.png';
 import { RootState } from '../../redux/store';
@@ -73,7 +73,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const mainColors = ['Black', 'White', 'Red'];
   const cities = City.getCitiesOfCountry('PK');
   const provinces = State.getStatesOfCountry('PK');
-  const extractedCityNames = cities?.map((item) => item.name);
+  const extractedCityNames = cities?.map((item: any) => item.name);
   let cityNames = [];
   if (extractedCityNames) {
     cityNames.push(...extractedCityNames);
@@ -560,7 +560,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       </div>
       <FilterAccordion title={PROVINCE}>
         <FormGroup>
-          {provinces.map((province) => (
+          {provinces.map((province: any) => (
             <FormControlLabel
               classes={{ label: fontSize }}
               key={uuidv4()}
@@ -717,14 +717,14 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                     );
                   })}
               </Grid>
-              {provinces.map((province) => (
+              {provinces.map((province: any) => (
                 <Grid key={uuidv4()} item xs={12}>
                   <Typography variant="h4" gutterBottom>
                     {province.name}
                   </Typography>
                   {City.getCitiesOfState(province.countryCode, province.isoCode)
-                    .sort((a, b) => a.name.localeCompare(b.name))
-                    .map((city) => {
+                    .sort((a: any, b: any) => a.name.localeCompare(b.name))
+                    .map((city: any) => {
                       return (
                         <FormControlLabel
                           classes={{ label: fontSize }}

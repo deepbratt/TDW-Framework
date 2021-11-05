@@ -3,8 +3,8 @@ import { useHistory, useLocation, useParams } from 'react-router';
 import CarAdditionalInformation from '../../sections/CarAdditionalInformation';
 import CarInformationForm from '../../sections/CarInformationForm/CarInformationForm';
 import UploadPhotosForm from '../../sections/UploadPhotosForm';
-import { City, State } from 'country-state-city';
-import { IState } from 'country-state-city/dist/lib/interface';
+import { City, State } from '../../Utils/country-state-city/index';
+import { IState } from '../../Utils/country-state-city/interface';
 import { useCallback } from 'react';
 import { useRef } from 'react';
 import {  useSelector } from 'react-redux';
@@ -381,7 +381,7 @@ const useAddEditCar = () => {
       } else {
         let cityData = City.getCitiesOfCountry('PK');
         let cityInformation = cityData?.filter(
-          (city) => city.name === formData.city
+          (city: any) => city.name === formData.city
         );
         let provinceInformation: IState | undefined;
         if (cityInformation) {

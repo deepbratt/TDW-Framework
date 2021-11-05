@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "buildDate": 1633706841253,
+  "proxy": "http://localhost:80/v1",
   "dependencies": {
     "@material-ui/core": "^4.12.1",
     "@material-ui/icons": "^4.11.2",
@@ -16,7 +17,6 @@
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.2",
     "axios": "^0.21.1",
-    "country-state-city": "^3.0.1",
     "firebase": "^8.9.1",
     "moment": "^2.29.1",
     "react": "^17.0.2",

@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { Theme } from '@material-ui/core/styles/createTheme';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import createStyles from '@material-ui/core/styles/createStyles';
-import { City } from 'country-state-city';
+import { City } from '../../Utils/country-state-city/index';
 import addEditCarData from '../../Utils/constants/language/en/addEditCarData';
 import { Colors } from '../../Utils/constants/colors/colors';
 import SelectInputComponent from '../../components/SelectInputComponent';
@@ -44,7 +44,7 @@ const CarInformationForm = ({
   const { carMakesList, carModelsList, carVersionsList, handleTextChange } =
     useCarInformationForm(formData, setFormData);
   const cities = City.getCitiesOfCountry('PK');
-  const extractedCityNames = cities?.map((item) => item.name);
+  const extractedCityNames = cities?.map((item: any) => item.name);
   let cityNames = [];
   if (extractedCityNames) {
     cityNames.push(...extractedCityNames);

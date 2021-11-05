@@ -1,6 +1,6 @@
-import React from "react";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import React from 'react';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 interface SelectInputProps {
   dataArray: Array<string>;
@@ -13,10 +13,10 @@ interface SelectInputProps {
   label?: string;
   error?: boolean;
   helperText?: string;
-  disabled?:boolean;
-  placeholder?:string
-  handleChangeSelect: any
-  size?:"small"|"medium"
+  disabled?: boolean;
+  placeholder?: string;
+  handleChangeSelect: any;
+  size?: 'small' | 'medium';
   // textInputProps : TextFieldProps
 }
 
@@ -39,11 +39,11 @@ const SelectInputComponent = ({
   return (
     <Autocomplete
       value={value}
-    //   onInputChange={(e: any, valueChanged: any) =>
-    //     handleChangeSelect({name: name, value: valueChanged})
-    // {"city": "islamabad"}
-    //   }
-    //   inputValue={value ? value : ""}
+      //   onInputChange={(e: any, valueChanged: any) =>
+      //     handleChangeSelect({name: name, value: valueChanged})
+      // {"city": "islamabad"}
+      //   }
+      //   inputValue={value ? value : ""}
       onChange={(event: any, valueChanged: any) =>
         handleChangeSelect(name, valueChanged)
       }
@@ -51,7 +51,8 @@ const SelectInputComponent = ({
       className={className}
       options={dataArray}
       autoHighlight
-      getOptionLabel={(option: any) => option.toString()}
+      getOptionLabel={(option: any) => option?.toString()}
+      disabled={disabled}
       renderOption={(option) => (
         <React.Fragment>
           <span>{option}</span>
@@ -73,10 +74,10 @@ const SelectInputComponent = ({
           variant="outlined"
           inputProps={{
             ...params.inputProps,
-            autoComplete: "off", // disable autocomplete and autofill
+            autoComplete: 'off' // disable autocomplete and autofill
           }}
           InputLabelProps={{
-            shrink: true,
+            shrink: true
           }}
         />
       )}

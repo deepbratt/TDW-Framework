@@ -22,7 +22,7 @@ const ListingCardStyles = makeStyles(() => ({
     cursor: 'pointer',
     minWidth: '100%',
     marginTop: '10px',
-    height:"100%"
+    height: '100%'
   },
   featuredBadge: {
     position: 'absolute',
@@ -83,19 +83,38 @@ const ListingCardStyles = makeStyles(() => ({
     position: 'absolute',
     right: '5px',
     top: '5px',
-    padding:0,
-    zIndex:1
+    padding: 0,
+    zIndex: 1
   },
   favsIconGrid: {
     position: 'absolute',
     right: '5px',
     top: '240px',
-    zIndex:1,
-    padding:0,
+    zIndex: 1,
+    padding: 0
   },
   label: {
     fontWeight: 'bold',
     color: black
+  },
+  cardMedia: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+    width: '100%',
+    position: 'relative'
+  },
+  blurBgImg: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    left: 0,
+    top: 0,
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    filter: 'blur(8px)'
   }
 }));
 

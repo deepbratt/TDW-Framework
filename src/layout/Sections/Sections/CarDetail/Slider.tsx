@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { Carousel } from 'react-responsive-carousel';
 import { useStyles } from './useStyles';
@@ -9,13 +8,14 @@ import Actions from '../../../../pages/carDetail/useFunctions';
 import Toast from '../../../../components/Toast';
 import { Box, Tab, Tabs, Typography } from '@material-ui/core';
 import FullScreenImage from '../../../../components/FullScreenImage/index';
-import { Colors } from '../../../../Utils/constants/colors/colors';
+import useImageOrientation from '../../../../Utils/hooks/useImageOrientation';
 
 const Slider = ({ arr, data, imageLoaded }: Detail) => {
   const { open, setOpen, responseMessage } = Actions();
+  const {setImageOrientationAndSize, imgHeight, imgWidth} = useImageOrientation()
   const [fullScreen, setFullScreen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
-  const { carousel, detail, sliderImageWrapper, fullImageTabScrollBtn, blurBgImg } =
+  const { carousel, detail, sliderImageWrapper, fullImageTabScrollBtn, blurBgImg, tabsWrapper } =
     useStyles();
   const { mobile } = Sizes();
 
@@ -37,6 +37,11 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
     setImageIndex(0);
     document.body.style.overflow = 'auto';
   };
+
+  const onImageLoad = (imgUrl:string) =>{
+    imageLoaded()
+    setImageOrientationAndSize(imgUrl)
+  }
 
   return (
     <Grid container>
@@ -62,16 +67,20 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
               >
                 <div style={{backgroundImage:`url(${data})`}} className={blurBgImg}></div>
                 <img
+                    // width={imgWidth}
+                    // height={imgHeight}
                   style={{
                     position: 'relative',
-                    borderRadius: '5px'
+                    borderRadius: '5px',
                     // minHeight: '100%',
+                    height:imgHeight,
+                    width:imgWidth
                   }}
                   key={`img ${index}`}
                   // height="100%"
                   src={data}
                   alt=""
-                  onLoad={imageLoaded}
+                  onLoad={()=>onImageLoad(data)}
                 />
               </div>
             );
@@ -102,6 +111,9 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
                   <Tab
                     onClick={(e) => setImageIndex(index)}
                     key={thumb + index}
+                    classes={{
+                      wrapper:tabsWrapper
+                    }}
                     icon={
                       <img src={thumb} alt="" height="100px" width="auto" />
                     }

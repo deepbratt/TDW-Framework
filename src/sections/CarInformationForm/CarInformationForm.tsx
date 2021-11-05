@@ -139,6 +139,7 @@ const CarInformationForm = ({
           className={classes.selectFields}
           value={formData.modelVersion}
           label={addEditCarData.fields.carVersion.label}
+          disabled={carVersionsList.length < 1 ? true : false}
           // required
           // error={requireError.carModel}
           // helperText={

@@ -7,9 +7,15 @@ import { City, State } from 'country-state-city';
 import { IState } from 'country-state-city/dist/lib/interface';
 import { useCallback } from 'react';
 import { useRef } from 'react';
-import {  useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import {  addData, addFormData, deleteData, getAllData, updateFormData } from '../../Utils/API/API';
+import {
+  addData,
+  addFormData,
+  deleteData,
+  getAllData,
+  updateFormData
+} from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import Sizes from '../../Utils/themeConstants';
 import { NEED_ASSISTANCE } from '../../Utils/constants/language/en/addEditCarTexts';
@@ -27,7 +33,7 @@ const initialFieldValues = {
   carModel: '',
   carMake: '',
   modelYear: '',
-  modelVersion:'',
+  modelVersion: '',
   bodyColor: '',
   bodyType: '',
   bodyCondition: '',
@@ -81,13 +87,13 @@ const useAddEditCar = () => {
   const { pathname } = useLocation();
   const { id } = useParams<{ id: string }>();
   const formRef = useRef<any>(null);
-  const {user} = useSelector((state: RootState)=>state.auth)
-  const [assistanceDialog, setAssistanceDialog] = useState(false)
-  const [helpComingDialog, setHelpComingDialog] = useState(false)
+  const { user } = useSelector((state: RootState) => state.auth);
+  const [assistanceDialog, setAssistanceDialog] = useState(false);
+  const [helpComingDialog, setHelpComingDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
-  const [phoneRequiredDialog, setPhoneRequiredDialog] = useState(false)
+  const [phoneRequiredDialog, setPhoneRequiredDialog] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('success');
   const [formData, setFormData] = useReducer(formReducer, initialFieldValues);
@@ -112,11 +118,33 @@ const useAddEditCar = () => {
           ? event.target.files[0]
           : event.target.value
     });
+    if (event.target.value === '') {
+      setRequireError({
+        ...requireError,
+        [event.target.name]: true
+      });
+    } else {
+      setRequireError({
+        ...requireError,
+        [event.target.name]: false
+      });
+    }
     event.target.value = event.target.name === 'image' && null;
   };
-  
+
   const handleChangeSelect = (name: string, value: any) => {
     setFormData({ name: name, value: value });
+    if (value === '') {
+      setRequireError({
+        ...requireError,
+        [name]: true
+      });
+    } else {
+      setRequireError({
+        ...requireError,
+        [name]: false
+      });
+    }
   };
   const ComponentContent = [
     <CarInformationForm
@@ -124,7 +152,7 @@ const useAddEditCar = () => {
       handleChange={handleChange}
       requireError={requireError}
       handleChangeSelect={handleChangeSelect}
-      setFormData = {setFormData}
+      setFormData={setFormData}
       bodyColorArray={bodyColorArray}
     />,
     <UploadPhotosForm
@@ -150,11 +178,11 @@ const useAddEditCar = () => {
       `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.CAR_COLORS}`
     )
       .then((response: any) => {
-        if (response && response.data && response.status === "success") {
-          let result = response.data.result
-          let temp:any[] = []
-          result.forEach((element:any) => {
-            temp.push(element.name)
+        if (response && response.data && response.status === 'success') {
+          let result = response.data.result;
+          let temp: any[] = [];
+          result.forEach((element: any) => {
+            temp.push(element.name);
           });
           setBodyColorArray(temp);
         } else {
@@ -164,7 +192,7 @@ const useAddEditCar = () => {
             setToastMessage(response.response);
           }
           setToastOpen(true);
-          setToastType("error");
+          setToastType('error');
         }
       })
       .then(() => setIsLoading(false));
@@ -172,13 +200,13 @@ const useAddEditCar = () => {
 
   const getFeaturesAndBodyTypes = () => {
     // get colors
-    getColors()
+    getColors();
     // get features
     getAllData(
       `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.CAR_FEATURES}`
     )
       .then((response) => {
-        if (response && response.status === "success") {
+        if (response && response.status === 'success') {
           let result = response.data.result;
           let featureName = result.map((el: any) => el.name);
           setFeaturesArray(featureName);
@@ -187,130 +215,134 @@ const useAddEditCar = () => {
             ? response.response.data.message
             : response.response
             ? response.response
-            : "Network Error";
+            : 'Network Error';
           setToastMessage(msg);
-          setToastType("error");
+          setToastType('error');
           setToastOpen(true);
         }
       })
       .then(() => setIsLoading(false));
-      // get bodyTypes
+    // get bodyTypes
     getAllData(
       `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.BODY_TYPES}`
     )
       .then((response) => {
-        if (response && response.status === "success") {
+        if (response && response.status === 'success') {
           let result = response.data.result;
           let bodyTypesName = result.map((el: any) => el.bodyType);
           setBodyTypesArray(bodyTypesName);
         } else {
           let msg = response.response.data.message
-          ? response.response.data.message
-          : response.response
-          ? response.response
-          : "Network Error";
+            ? response.response.data.message
+            : response.response
+            ? response.response
+            : 'Network Error';
           setToastMessage(msg);
-          setToastType("error");
+          setToastType('error');
           setToastOpen(true);
         }
       })
       .then(() => setIsLoading(false));
   };
 
-  const profileRedirect = () =>{
-    history.push('/dashboard/profile')
-  }
+  const profileRedirect = () => {
+    history.push('/dashboard/profile');
+  };
 
-  const needAssistance = (needed : boolean = false)=>{
-    if(needed){
-      setIsLoading(true)
-      let body = {description: NEED_ASSISTANCE}
-      addData(`${API_ENDPOINTS.TICKETS}${API_ENDPOINTS.AD_TICKETS}`, body).then(response=>{
-        if(response && response.data && response.data.status==="success"){
-          setToastMessage(response.data.message);
-          setToastType("success");
-          setToastOpen(true);
-          setHelpComingDialog(true)
-        }else{
-          let msg = response.response.data.message
-          ? response.response.data.message
-          : response.response
-          ? response.response
-          : "Network Error";
-          setToastMessage(msg);
-          setToastType("error");
-          setToastOpen(true);
+  const needAssistance = (needed: boolean = false) => {
+    if (needed) {
+      setIsLoading(true);
+      let body = { description: NEED_ASSISTANCE };
+      addData(`${API_ENDPOINTS.TICKETS}${API_ENDPOINTS.AD_TICKETS}`, body).then(
+        (response) => {
+          if (response && response.data && response.data.status === 'success') {
+            setToastMessage(response.data.message);
+            setToastType('success');
+            setToastOpen(true);
+            setHelpComingDialog(true);
+          } else {
+            let msg = response.response.data.message
+              ? response.response.data.message
+              : response.response
+              ? response.response
+              : 'Network Error';
+            setToastMessage(msg);
+            setToastType('error');
+            setToastOpen(true);
+          }
+          setIsLoading(false);
         }
-        setIsLoading(false)
-      })
+      );
     }
-    setAssistanceDialog(false)
-  }
+    setAssistanceDialog(false);
+  };
 
   const getData = useCallback(() => {
     setIsLoading(true);
-    getAllData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/${id}`).then((response) => {
-      if (response && response.data && response.status === 'success') {
-        let result = response.data.result;
-        if(result.createdBy._id !== user._id){
-          history.push(pathname.substr(0, pathname.lastIndexOf('/')));  
-           return
+    getAllData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/${id}`)
+      .then((response) => {
+        if (response && response.data && response.status === 'success') {
+          let result = response.data.result;
+          if (result.createdBy._id !== user._id) {
+            history.push(pathname.substr(0, pathname.lastIndexOf('/')));
+            return;
+          }
+          let FieldValues = formData;
+          FieldValues = {
+            city: result.city,
+            carModel: result.model,
+            carMake: result.make,
+            modelVersion: result.version,
+            modelYear: result.modelYear,
+            bodyColor: result.bodyColor,
+            bodyType: result.bodyType,
+            bodyCondition: result.condition,
+            registeredIn: result.registrationCity,
+            mileage: result.milage,
+            price: result.price,
+            registrationNo: result.regNumber,
+            description: result.description,
+            engineType: result.engineType,
+            engineCapacity: result.engineCapacity,
+            transmission: result.transmission,
+            assembly: result.assembly,
+            images: result.image,
+            features: result.features,
+            province: result.province,
+            sellerType: result.sellerType,
+            location: { coordinates: { lat: '', long: '' }, address: '' }
+          };
+          Object.keys(FieldValues).forEach((key) => {
+            setFormData({ name: key, value: FieldValues[key] });
+          });
+          setImages(FieldValues.images);
+        } else {
+          console.log(response);
+          if (response.data) {
+            setToastMessage(response.data.message);
+            setToastType('error');
+            setToastOpen(true);
+            history.push(pathname.substr(0, pathname.lastIndexOf('/')));
+          } else {
+            setToastMessage('Network Error');
+            setToastType('error');
+            setToastOpen(true);
+            history.push(pathname.substr(0, pathname.lastIndexOf('/')));
+          }
         }
-        let FieldValues = formData;
-        FieldValues = {
-          city: result.city,
-          carModel: result.model,
-          carMake: result.make,
-          modelVersion: result.version,
-          modelYear: result.modelYear,
-          bodyColor: result.bodyColor,
-          bodyType: result.bodyType,
-          bodyCondition: result.condition,
-          registeredIn: result.registrationCity,
-          mileage: result.milage,
-          price: result.price,
-          registrationNo: result.regNumber,
-          description: result.description,
-          engineType: result.engineType,
-          engineCapacity: result.engineCapacity,
-          transmission: result.transmission,
-          assembly: result.assembly,
-          images: result.image,
-          features: result.features,
-          province: result.province,
-          sellerType: result.sellerType,
-          location: { coordinates: { lat: '', long: '' }, address: '' }
-        };
-        Object.keys(FieldValues).forEach((key) => {
-          setFormData({ name: key, value: FieldValues[key] });
-        });
-        setImages(FieldValues.images);
-      } else {
-        console.log(response);
-        if(response.data){
-          setToastMessage(response.data.message);
-          setToastType('error');
-          setToastOpen(true);
-          history.push(pathname.substr(0, pathname.lastIndexOf('/')));
-        }else{
-          setToastMessage("Network Error");
-          setToastType('error');
-          setToastOpen(true);
-          history.push(pathname.substr(0, pathname.lastIndexOf('/')));
-        }
-      }
-    }).then(()=>setIsLoading(false));
+      })
+      .then(() => setIsLoading(false));
   }, [id]);
 
   useEffect(() => {
-    if(!user.phone){
-      setPhoneRequiredDialog(true)
+    if (!user.phone) {
+      setPhoneRequiredDialog(true);
     }
     if (id) {
-      getFeaturesAndBodyTypes()
+      getFeaturesAndBodyTypes();
       getData();
-    }else{
-      getFeaturesAndBodyTypes()
+    } else {
+      getFeaturesAndBodyTypes();
     }
   }, [getData, id]);
 
@@ -323,26 +355,28 @@ const useAddEditCar = () => {
   const handleDeleteAd = () => {
     setIsLoading(true);
     setDeleteDialog(false);
-    deleteData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/${id}`).then((response) => {
-      setIsLoading(false)
-      if (response && response.data && response.data.status === 'success') {
+    deleteData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/${id}`).then(
+      (response) => {
+        setIsLoading(false);
+        if (response && response.data && response.data.status === 'success') {
           setToastMessage(response.data.message);
           setToastType('success');
           setToastOpen(true);
-          history.push(paths.dashboard+"/ads");
-      } else {
-        console.log('error', response);
-        if (!response.response) {
-          setToastMessage('Network Error');
-          setToastType('error');
-          setToastOpen(true);
+          history.push(paths.dashboard + '/ads');
         } else {
-          setToastMessage(response.data.message);
-          setToastType('error');
-          setToastOpen(true);
+          console.log('error', response);
+          if (!response.response) {
+            setToastMessage('Network Error');
+            setToastType('error');
+            setToastOpen(true);
+          } else {
+            setToastMessage(response.data.message);
+            setToastType('error');
+            setToastOpen(true);
+          }
         }
       }
-    });
+    );
   };
 
   const checkValidation = (validationObject: object) => {
@@ -362,19 +396,25 @@ const useAddEditCar = () => {
     return allFalse(flagRequireError);
   };
 
-  const addEditData = async(formBody:any)=>{
-    let result : any
-    if(id){
-      let carId = id ? "/"+id : ""
-     result = await updateFormData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${carId}`, formBody)
-    }else{
-      result = await addFormData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}`, formBody)
+  const addEditData = async (formBody: any) => {
+    let result: any;
+    if (id) {
+      let carId = id ? '/' + id : '';
+      result = await updateFormData(
+        `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${carId}`,
+        formBody
+      );
+    } else {
+      result = await addFormData(
+        `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}`,
+        formBody
+      );
     }
-    return result
-  }
+    return result;
+  };
 
-  const formValidated=(stepToValidate : number)=>{
-    let stepValidatation = stepToValidate
+  const formValidated = (stepToValidate: number) => {
+    let stepValidatation = stepToValidate;
     if (stepValidatation === 0) {
       if (!checkValidation(initialRequireError)) {
         return false;
@@ -404,7 +444,7 @@ const useAddEditCar = () => {
       }
     } else if (stepValidatation === 1) {
       let secondStepValidated = images.length > 0;
-      console.log(images.length > 0 && images.length < 21)
+      console.log(images.length > 0 && images.length < 21);
       setRequireError((requiredError) => {
         return { ...requiredError, images: !secondStepValidated };
       });
@@ -416,10 +456,10 @@ const useAddEditCar = () => {
         return false;
       }
     }
-    return true
-  }
+    return true;
+  };
 
-  const submitForm = () =>{
+  const submitForm = () => {
     console.log('submit following data: ');
     console.log(formData);
     let fd = new FormData();
@@ -476,19 +516,19 @@ const useAddEditCar = () => {
           setFormData({ name: key, value: fieldValues[key] });
         });
         setImages([]);
-        if(id){
-          history.push(pathname.substr(0, pathname.lastIndexOf('/'))); 
+        if (id) {
+          history.push(pathname.substr(0, pathname.lastIndexOf('/')));
         }
         setActiveStep(0);
       } else {
         let msg = response.response.data.message
-        ? response.response.data.message
-        : response.response
-        ? response.response
-        : "Network Error";
+          ? response.response.data.message
+          : response.response
+          ? response.response
+          : 'Network Error';
         setToastMessage(msg);
-          setToastType('error');
-          setToastOpen(true);
+        setToastType('error');
+        setToastOpen(true);
         console.log('error', response);
         // if (!response.response) {
         //   setToastMessage('Network Error');
@@ -501,40 +541,39 @@ const useAddEditCar = () => {
         // }
       }
     });
-  }
+  };
 
-  const resetForm=()=>{
+  const resetForm = () => {
     let fieldValues: any = initialFieldValues;
-        Object.keys(fieldValues).forEach((key) => {
-          setFormData({ name: key, value: fieldValues[key] });
-        });
-        setImages([]);
-        history.push("/dashboard/ads")
-  }
+    Object.keys(fieldValues).forEach((key) => {
+      setFormData({ name: key, value: fieldValues[key] });
+    });
+    setImages([]);
+    history.push('/dashboard/ads');
+  };
 
-  const handleStepChange = (step:number)=>{
+  const handleStepChange = (step: number) => {
     formRef.current.scrollIntoView({ behavior: 'smooth' });
-    if(step > activeStep){
-      let error = false
-      for(let i = activeStep; i<step; i++){
-        if(!formValidated(i)){
-          setActiveStep(i)
-          error=true
+    if (step > activeStep) {
+      let error = false;
+      for (let i = activeStep; i < step; i++) {
+        if (!formValidated(i)) {
+          setActiveStep(i);
+          error = true;
         }
       }
-      if(error)
-      return
+      if (error) return;
     }
-    setActiveStep(step)
-  }
+    setActiveStep(step);
+  };
 
   const handleNext = () => {
     formRef.current.scrollIntoView({ behavior: 'smooth' });
-    if(!formValidated(activeStep)){
-      return
+    if (!formValidated(activeStep)) {
+      return;
     }
     if (activeStep === 2) {
-      submitForm()
+      submitForm();
       return;
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -544,9 +583,9 @@ const useAddEditCar = () => {
     formRef.current.scrollIntoView({ behavior: 'smooth' });
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-  const lgMdSmPx = (lgMd: string, sm: string) =>{
-    return size.desktop || size.tablet ? lgMd : sm
-  }
+  const lgMdSmPx = (lgMd: string, sm: string) => {
+    return size.desktop || size.tablet ? lgMd : sm;
+  };
 
   return {
     handleStepChange,

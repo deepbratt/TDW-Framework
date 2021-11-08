@@ -21,7 +21,7 @@ import {
   buttonText,
   cancelButtonText
 } from '../../Utils/sidebarText';
-import { City } from 'country-state-city';
+import { City } from '../../../../Utils/country-state-city/index';
 import Actions from './useFunctions';
 import { updateMe } from '../../../../Utils/hooks/endpoints';
 import Toast from '../../../../components/Toast';
@@ -39,7 +39,7 @@ const Profile = () => {
   const { user } = useSelector((state: RootState) => state.auth);
 
   const cities = City.getCitiesOfCountry('PK');
-  const extractedCityNames = cities?.map((item) => item.name);
+  const extractedCityNames = cities?.map((item: any) => item.name);
   let cityNames = [];
   if (extractedCityNames) {
     cityNames.push(...extractedCityNames);

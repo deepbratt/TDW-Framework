@@ -9,7 +9,7 @@ import InputField from '../../../../../components/InputField';
 import NumberInput from '../../../../../components/InputField/NumberInput';
 import PriceInput from '../../../../../components/InputField/PriceInput';
 import useStyles from './useStyles';
-import { City } from 'country-state-city';
+import { City } from '../../../../../Utils/country-state-city/index';
 import {
   carModels,
   versions,

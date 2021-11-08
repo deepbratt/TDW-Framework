@@ -1,4 +1,4 @@
-import {Theme} from '@material-ui/core/styles/createTheme';
+import { Theme } from '@material-ui/core/styles/createTheme';
 import makeStyles from '@material-ui/styles/makeStyles';
 export interface FooterStylesProps {
   rootBackgroundColor: string;
@@ -76,6 +76,12 @@ const FooterStyles = makeStyles<Theme, FooterStylesProps>((theme) => ({
       backgroundColor: theme.palette.success.dark,
       boxShadow: 'none'
     }
+  },
+  btnText: {
+    textAlign: 'left',
+    backgroundColor: 'inherit',
+    display: 'block',
+    border: 'none'
   }
 }));
 

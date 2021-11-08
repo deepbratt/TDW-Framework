@@ -41,11 +41,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const [regSearchResult, setRegSearchResult] = useState<ICity[]>();
   const [makeSearchResult, setMakeSearchResult] = useState<any>();
   const [modelSearchResult, setModelSearchResult] = useState<any>();
-  // const filtersData = useSelector(
-  //   (state: RootState) => state.filtersData.filtersData
-  // );
+  const carFilters = useSelector(
+    (state: RootState) => state.carFilters.filters
+  );
   const values = useSelector((state: RootState) => state.carFilters.filters);
-  // console.log('filter Data', filtersData);
   const { filtersCollection, lastAccordion, fontSize } = VerticalFilterStyles();
   const {
     PRICE_RANGE,
@@ -201,8 +200,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   inputComponent: PriceInput as any
                 }}
                 onChange={(e: any) => {
+                  let newValue = [...carFilters.price];
+                  newValue[0] = e.target.value as number;
                   setRangeValues((previousValue: any) => {
-                    previousValue.price[0] = e.target.value as number;
+                    previousValue.price = newValue;
                     return { ...previousValue };
                   });
                 }}
@@ -218,8 +219,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   inputComponent: PriceInput as any
                 }}
                 onChange={(e: any) => {
+                  let newValue = [...carFilters.price];
+                  newValue[1] = e.target.value as number;
                   setRangeValues((previousValue: any) => {
-                    previousValue.price[1] = e.target.value as number;
+                    previousValue.price = newValue;
                     return { ...previousValue };
                   });
                 }}
@@ -460,8 +463,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   inputComponent: NumberInput as any
                 }}
                 onChange={(e: any) => {
+                  let newValue = [...carFilters.milage];
+                  newValue[0] = e.target.value as number;
                   setRangeValues((previousValue: any) => {
-                    previousValue.milage[0] = e.target.value as number;
+                    previousValue.milage = newValue;
                     return { ...previousValue };
                   });
                 }}
@@ -477,8 +482,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   inputComponent: NumberInput as any
                 }}
                 onChange={(e: any) => {
+                  let newValue = [...carFilters.milage];
+                  newValue[1] = e.target.value as number;
                   setRangeValues((previousValue: any) => {
-                    previousValue.milage[1] = e.target.value as number;
+                    previousValue.milage = newValue;
                     return { ...previousValue };
                   });
                 }}
@@ -514,8 +521,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   inputComponent: NumberInput as any
                 }}
                 onChange={(e: any) => {
+                  let newValue = [...carFilters.modelYear];
+                  newValue[0] = e.target.value as number;
                   setRangeValues((previousValue: any) => {
-                    previousValue.modelYear[0] = e.target.value as number;
+                    previousValue.modelYear = newValue;
                     return { ...previousValue };
                   });
                 }}
@@ -531,8 +540,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   inputComponent: NumberInput as any
                 }}
                 onChange={(e: any) => {
+                  let newValue = [...carFilters.modelYear];
+                  newValue[1] = e.target.value as number;
                   setRangeValues((previousValue: any) => {
-                    previousValue.modelYear[1] = e.target.value as number;
+                    previousValue.modelYear = newValue;
                     return { ...previousValue };
                   });
                 }}
@@ -808,8 +819,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   inputComponent: NumberInput as any
                 }}
                 onChange={(e: any) => {
+                  let newValue = [...carFilters.engineCapacity];
+                  newValue[0] = e.target.value as number;
                   setRangeValues((previousValue: any) => {
-                    previousValue.engineCapacity[0] = e.target.value as number;
+                    previousValue.engineCapacity = newValue;
                     return { ...previousValue };
                   });
                 }}
@@ -825,8 +838,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   inputComponent: NumberInput as any
                 }}
                 onChange={(e: any) => {
+                  let newValue = [...carFilters.engineCapacity];
+                  newValue[1] = e.target.value as number;
                   setRangeValues((previousValue: any) => {
-                    previousValue.engineCapacity[1] = e.target.value as number;
+                    previousValue.engineCapacity = newValue;
                     return { ...previousValue };
                   });
                 }}

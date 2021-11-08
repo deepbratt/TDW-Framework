@@ -30,7 +30,7 @@ import Sizes from '../../Utils/themeConstants';
 import LoginModal from '../../pages/login/LoginModal';
 import { Box } from '@material-ui/core';
 import Compare from '@material-ui/icons/Compare';
-import { Colors } from '../../Utils/constants/colors/colors';
+import useImageOrientation from '../../Utils/hooks/useImageOrientation';
 export interface ListingCardProps {
   data: any;
   layoutType: string;
@@ -53,10 +53,11 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const { pathname } = useLocation();
   const { mobile } = Sizes();
   const { user, isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const {setImageOrientationAndSize, imgHeight, imgWidth} = useImageOrientation()
   const { shortlistCars } = useSelector(
     (state: RootState) => state.shortlistCars
   );
-  const { root, grid, featuredBadge, location, favsIconGrid, favsIconList, cardMedia, blurBgImg } =
+  const { root, grid, featuredBadge, location, favsIconGrid, favsIconList, cardMedia, blurBgImg} =
     ListingCardStyles();
   const {
     _id,
@@ -114,12 +115,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
     }
   };
 
-  const handleCardClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.stopPropagation();
-    if (handleClick) {
-      handleClick();
-    }
-  };
+  // const handleCardClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  //   e.stopPropagation();
+  //   if (handleClick) {
+  //     handleClick();
+  //   }
+  // };
 
   const toggleShortListCar = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -214,11 +215,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
                     className={blurBgImg}
                   ></div>
                   <img
-                    width="100%"
-                    height={'auto'}
                     src={image && image.length > 0 ? image[0] : NoImg}
                     style={{ zIndex: 999 }}
                     alt=""
+                    width={imgWidth}
+                    height={imgHeight}
+                    onLoad={()=>setImageOrientationAndSize(image && image.length > 0 ? image[0] : NoImg)}
                   />
                   {isSold && (
                     <span className={featuredBadge}>

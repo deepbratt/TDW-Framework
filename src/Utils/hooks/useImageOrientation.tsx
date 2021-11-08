@@ -3,7 +3,7 @@ import { useState } from 'react';
 const useImageOrientation = () => {
   const [imgHeight, setImgHeight] = useState('auto');
   const [imgWidth, setImgWidth] = useState('auto');
-  const [imageOrientation, setImageOrientation] = useState("")
+  const [imageOrientation, setImageOrientation] = useState('');
 
   const getImageOrientation = (imgUrl: string) => {
     let img = new Image();
@@ -23,8 +23,7 @@ const useImageOrientation = () => {
 
   const setImageOrientationAndSize = (imgUrl: string) => {
     let imgOrientation = getImageOrientation(imgUrl);
-    setImageOrientation(imgOrientation)
-    console.log(imgOrientation)
+    setImageOrientation(imgOrientation);
     if (imgOrientation === 'portrait') {
       setImgHeight('100%');
       setImgWidth('auto');
@@ -33,15 +32,15 @@ const useImageOrientation = () => {
       setImgHeight('auto');
     }
   };
-  return{
+  return {
     setImageOrientationAndSize,
-      imgHeight,
-      imgWidth,
-      setImgHeight,
-      setImgWidth,
-      setImageOrientation,
-        imageOrientation
-  }
+    imgHeight,
+    imgWidth,
+    setImgHeight,
+    setImgWidth,
+    setImageOrientation,
+    imageOrientation
+  };
 };
 
 export default useImageOrientation;

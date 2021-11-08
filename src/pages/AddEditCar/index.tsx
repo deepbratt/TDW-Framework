@@ -1,4 +1,4 @@
-import  Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import useAddEditCar from './useAddEditCar';
@@ -101,34 +101,34 @@ const AddEditCar = () => {
               {addEditCarData.steps[activeStep]}
             </Typography>
             <div>
-            <Button
-                  color="primary"
-                  variant="contained"
-                  style={{ marginRight: '16px' }}
-                  onClick={() => resetForm()}
-                >
-                  {addEditCarData.buttons.discard}
-                </Button>
-            <Button
+              <Button
+                color="primary"
+                variant="contained"
+                style={{ marginRight: '16px' }}
+                onClick={() => resetForm()}
+              >
+                {addEditCarData.buttons.discard}
+              </Button>
+              <Button
                 color="secondary"
                 variant="contained"
                 style={{ marginRight: '16px' }}
                 onClick={() => setAssistanceDialog(true)}
-                startIcon={<Help/>}
+                startIcon={<Help />}
               >
                 {addEditCarData.buttons.needAssistance}
               </Button>
-            {id ? (
-              <Button
-                color="primary"
-                variant="outlined"
-                style={{ marginRight: '16px' }}
-                onClick={() => setDeleteDialog(true)}
-                startIcon={<Delete/>}
-              >
-                {addEditCarData.buttons.delete}
-              </Button>
-            ) : null}
+              {id ? (
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  style={{ marginRight: '16px' }}
+                  onClick={() => setDeleteDialog(true)}
+                  startIcon={<Delete />}
+                >
+                  {addEditCarData.buttons.delete}
+                </Button>
+              ) : null}
             </div>
           </Grid>
           <Grid item xs={12}>
@@ -188,8 +188,8 @@ const AddEditCar = () => {
           message={addEditCarData.needAssistanceMessage}
           rejectBtnLabel={addEditCarData.buttons.needAssistanceReject}
           confirmBtnLabel={addEditCarData.buttons.needAssistanceOK}
-          handleConfirmation={()=>needAssistance(true)}
-          handleRejection={()=>needAssistance(false)}
+          handleConfirmation={() => needAssistance(true)}
+          handleRejection={() => needAssistance(false)}
         />
         <InformationDialog
           open={helpComingDialog}

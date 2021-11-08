@@ -62,10 +62,10 @@ export const useStyles = makeStyles(() => ({
     '& .carousel .slider-wrapper.axis-horizontal .slider': {
       alignItems: 'center'
     },
-    '& .carousel .slide img': {
-      width: '100%',
-      height: 'auto'
-    },
+    // '& .carousel .slide img': {
+    //   width: '100%',
+    //   height: 'auto'
+    // },
     '& .carousel carousel-slider': {
       width: '20%'
     },
@@ -229,5 +229,8 @@ export const useStyles = makeStyles(() => ({
     // "& > svg":{
     //   backgroundColor:ColorConstant.lightBlue
     // }
+  },
+  tabsWrapper:{
+    flexDirection:"row"
   }
 }));

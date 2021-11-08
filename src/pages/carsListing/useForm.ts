@@ -359,6 +359,11 @@ export const useForm = (validateOnChange = true) => {
     // eslint-disable-next-line
   }, [page, carFilters, user]);
 
+  useEffect(() => {
+    console.log('carFilters', carFilters);
+    // eslint-disable-next-line
+  }, [carFilters]);
+
   return {
     errors,
     setErrors,

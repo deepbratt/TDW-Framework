@@ -21,6 +21,7 @@ import CarInformation from '../../layout/Sections/Sections/CarDetail/CarInformat
 import { useParams } from 'react-router';
 import Actions from './useFunctions';
 import MetaTags from '../../components/MetaTags';
+import BreadCrumbs from '../../components/BreadCrumbs';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import NoImg from '../../assets/no-img.png';
 import Loader from '../../components/Loader';
@@ -80,6 +81,7 @@ function a11yProps(index: any) {
 const CarDetailContainer = () => {
   const defaultMarginTop = '20px';
   const { id } = useParams<RouteProps>();
+  
   const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
   const { shortlistCars } = useSelector(
     (state: RootState) => state.shortlistCars
@@ -95,8 +97,10 @@ const CarDetailContainer = () => {
     isFavorite,
     toggleShortListCar,
     signinModal,
-    setSigninModal
+    setSigninModal,
+    breadCrumbData
   } = Actions(id ?? '');
+
   const { loader, section, tabs, tab, btn } = useStyles();
   const [sliderHeight, setSliderHeight] = useState(0);
   const sliderColumn = useRef<HTMLDivElement | null>(null);
@@ -125,8 +129,13 @@ const CarDetailContainer = () => {
     }
   }, [sliderColumn.current?.clientHeight, isLoading]);
 
+
+
   return (
     <Section backColor={'transparent'}>
+      <Grid item xs={12}>
+        <BreadCrumbs links={breadCrumbData} />
+      </Grid>
       <Box
         display="flex"
         justifyContent="center"
@@ -257,7 +266,7 @@ const CarDetailContainer = () => {
                   </Box>
                 </Grid>
                 <Box marginTop={defaultMarginTop}>
-                  <Divider/>
+                  <Divider />
                 </Box>
                 <Box>
                   <Tabs
@@ -293,7 +302,7 @@ const CarDetailContainer = () => {
                       {...a11yProps(2)}
                     />
                   </Tabs>
-                  <Divider/>
+                  <Divider />
                 </Box>
                 <Box p={3}>
                   <TabPanel value={tabValue} index={0}>
@@ -331,9 +340,9 @@ const CarDetailContainer = () => {
           )}
         </Paper>
         <LoginModal
-        openModal={signinModal}
-        closeModal={() => setSigninModal(false)}
-      />
+          openModal={signinModal}
+          closeModal={() => setSigninModal(false)}
+        />
         <Toast
           open={open}
           message={responseMessage.message}
@@ -356,7 +365,7 @@ const useStyles = makeStyles((theme) => ({
     // borderBottom: '1px solid ' + Colors.navyBlue
   },
   tabs: {
-    borderBottom: 0,
+    borderBottom: 0
   },
   tab: {
     fontSize: '1rem',

@@ -10,7 +10,7 @@ import { lazy } from 'react';
 // import ShortlistItem from '../pages/shortlistItems'
 // import Dashboard from '../pages/dashboard'
 // import PostAd from '../pages/postAd'
-// import Help from '../layout/Sections/Sections/Profile/Help/Help'
+// import HelpPage from '../pages/Help'
 // import Home from'../pages/home';
 // import Login from '../pages/login';
 // import ForgetPassword from '../pages/forgetPassword';
@@ -34,9 +34,7 @@ const CarComparison = lazy(() => import('../pages/carComparision/index'));
 const ShortlistItem = lazy(() => import('../pages/shortlistItems'));
 const Dashboard = lazy(() => import('../pages/dashboard'));
 const PostAd = lazy(() => import('../pages/postAd'));
-const Help = lazy(
-  () => import('../layout/Sections/Sections/Profile/Help/Help')
-);
+const HelpPage = lazy(() => import('../pages/help'));
 // ===========================================================================================
 //            lazy loading with retry if chunk fails to load
 // =========================================================================================
@@ -54,7 +52,7 @@ const Help = lazy(
 // const ShortlistItem = lazy(() => Retry(()=> import('../pages/shortlistItems')));
 // const Dashboard = lazy(() => Retry(()=> import('../pages/dashboard')));
 // const PostAd = lazy(() => Retry(()=> import('../pages/postAd')));
-// const Help = lazy(() => Retry(()=> import('../layout/Sections/Sections/Profile/Help/Help')));
+// const HelpPage = lazy(() => Retry(()=> import('../pages/Help')));
 
 export const paths = {
   home: '/',
@@ -81,7 +79,7 @@ export const paths = {
 
 export const routes = {
   home: '/',
-  dashboard: '/dashboard/:id',
+  dashboard: '/dashboard/:id?',
   login: '/login',
   signup: '/signup',
   loginWithMobile: '/login-with-mobile',
@@ -135,12 +133,7 @@ export const privateRoutes = {
     name: 'Post An Ad',
     path: routes.postAd,
     component: PostAd
-  },
-  // [paths.help]: {
-  //   name: 'Help',
-  //   path: routes.help,
-  //   component: Help
-  // }
+  }
 };
 
 export const publicRoutes = {
@@ -174,7 +167,7 @@ export const publicRoutes = {
   [paths.help]: {
     name: 'Help',
     path: routes.help,
-    component: Help
+    component: HelpPage
   }
 };
 
@@ -199,5 +192,5 @@ export const onlyPublicRoutes = {
     name: 'Reset Password',
     path: routes.resetPassword,
     component: ResetPassword
-  },
+  }
 };

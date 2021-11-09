@@ -1,16 +1,21 @@
 import { useState } from 'react';
-import {  addToFav } from '../../Utils/hooks/actions';
+import { addToFav } from '../../Utils/hooks/actions';
 import { ICarCard } from '../../layout/Sections/Utils/types1';
-import { addToFavs, getSingleCar, removeFavs } from '../../Utils/hooks/endpoints';
+import {
+  addToFavs,
+  getSingleCar,
+  removeFavs
+} from '../../Utils/hooks/endpoints';
 import { useEffect } from 'react';
 import { getAllData } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import useShortListCars from '../../Utils/hooks/useShortListCars';
+import { paths } from '../../routes/paths';
 
 const Actions = (Id?: string | '') => {
-  const {user} = useSelector((state:RootState)=>state.auth)
+  const { user } = useSelector((state: RootState) => state.auth);
   const { shortlistCars } = useSelector(
     (state: RootState) => state.shortlistCars
   );
@@ -22,6 +27,16 @@ const Actions = (Id?: string | '') => {
   const [open, setOpen] = useState(false);
   const [featuresArray, setFeaturesArray] = useState<Array<any>>([]);
   const [carFeatures, setCarFeatures] = useState<Array<any>>([]);
+  const [breadCrumbData, setBreadCrumData] = useState([
+    {
+      path: paths.cars,
+      label: 'Cars'
+    },
+    {
+      path: paths.carDetail + '/' + Id,
+      label: `Car Details - ${Id}`
+    }
+  ]);
   const [responseMessage, setResponseMessage] = useState({
     status: '',
     message: ''
@@ -30,7 +45,7 @@ const Actions = (Id?: string | '') => {
   useEffect(() => {
     if (Id) {
       getFeatures();
-      setObj(undefined)
+      setObj(undefined);
       loadSingleData(getSingleCar, Id);
     }
   }, [user]);
@@ -61,12 +76,14 @@ const Actions = (Id?: string | '') => {
           // let featureName = result.map((el: any) => el.name);
           setFeaturesArray(result);
         } else {
-          let msg = !response ? "Network Error" : response.response
-          ? response.response
-          : response.message
-          ? response.message
-          : 'Network Error';
-          console.log("Error", msg)
+          let msg = !response
+            ? 'Network Error'
+            : response.response
+            ? response.response
+            : response.message
+            ? response.message
+            : 'Network Error';
+          console.log('Error', msg);
           setOpen(true);
           setResponseMessage({
             status: 'error',
@@ -83,7 +100,7 @@ const Actions = (Id?: string | '') => {
       .then((response) => {
         if (response && response.data && response.status === 'success') {
           setObj(response.data.result);
-          setIsFavorite(response.data.result.isFav)
+          setIsFavorite(response.data.result.isFav);
         } else {
           console.log('error', response);
           setOpen(true);
@@ -133,15 +150,15 @@ const Actions = (Id?: string | '') => {
   const handleAddToShortListItem = (item: any) => {
     setOpen(true);
     let shortListResponse = shortListItem(item);
-    setResponseMessage(shortListResponse)
+    setResponseMessage(shortListResponse);
   };
   const handleRemoveShortListItem = (itemId: string) => {
     setOpen(true);
     let shortListResponse = removeShortListItem(itemId);
-    setResponseMessage(shortListResponse)
+    setResponseMessage(shortListResponse);
   };
 
-  const toggleFavourite = (itemId: string = "") => {
+  const toggleFavourite = (itemId: string = '') => {
     if (user._id) {
       addFavs(isFavorite ? removeFavs : addToFavs, itemId);
       setIsFavorite(!isFavorite);
@@ -155,11 +172,21 @@ const Actions = (Id?: string | '') => {
   ) => {
     e.stopPropagation();
     if (shortlistCars.filter((item) => item._id === obj?._id).length > 0) {
-      handleRemoveShortListItem(obj?._id ? obj._id : "");
+      handleRemoveShortListItem(obj?._id ? obj._id : '');
     } else {
       handleAddToShortListItem(obj);
     }
   };
+
+  useEffect(() => {
+    if (obj) {
+      let newBreadCrumData = [...breadCrumbData];
+      newBreadCrumData[
+        breadCrumbData.length - 1
+      ].label = `${obj.make} ${obj.model} ${obj.modelYear}`;
+      setBreadCrumData(newBreadCrumData);
+    }
+  }, [obj]);
 
   return {
     responseMessage,
@@ -177,7 +204,8 @@ const Actions = (Id?: string | '') => {
     isFavorite,
     setIsFavorite,
     toggleFavourite,
-    toggleShortListCar
+    toggleShortListCar,
+    breadCrumbData
   };
 };
 

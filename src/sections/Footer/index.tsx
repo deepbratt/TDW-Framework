@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { BrowserRouter, useHistory } from 'react-router-dom';
+import { BrowserRouter, NavLink, useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -41,6 +41,7 @@ const Footer: React.FC<FooterProps> = ({
     divider,
     textFiedld,
     btn,
+    btnText,
     text
   } = FooterStyles(footerStylesProps);
 
@@ -110,16 +111,20 @@ const Footer: React.FC<FooterProps> = ({
                     Cars By {keys}
                   </Typography>
                   {values.map((value: IFooterFilter, index) => (
-                    <Typography
-                      onClick={() => handleFilters(value)}
+                    <button
+                      className={btnText}
                       key={`filter-${index}`}
-                      className={pageLinks}
-                      variant="body2"
-                      component="h5"
-                      gutterBottom
+                      onClick={() => handleFilters(value)}
                     >
-                      {value.text}
-                    </Typography>
+                      <Typography
+                        className={pageLinks}
+                        variant="body2"
+                        component="h5"
+                        gutterBottom
+                      >
+                        {value.text}
+                      </Typography>
+                    </button>
                   ))}
                 </Grid>
               ))}
@@ -130,16 +135,20 @@ const Footer: React.FC<FooterProps> = ({
                   </Typography>
                   {data.sell &&
                     data.sell.map((item, index) => (
-                      <Typography
-                        key={`sell-links-${index}`}
+                      <button
+                        className={btnText}
+                        key={`filter-${index}`}
                         onClick={() => history.push(item.path)}
-                        className={pageLinks}
-                        variant="body2"
-                        component="h5"
-                        gutterBottom
                       >
-                        {item.name}
-                      </Typography>
+                        <Typography
+                          className={pageLinks}
+                          variant="body2"
+                          component="h5"
+                          gutterBottom
+                        >
+                          {item.name}
+                        </Typography>
+                      </button>
                     ))}
                 </Grid>
               </Grid>
@@ -243,15 +252,22 @@ const Footer: React.FC<FooterProps> = ({
               {data.termsAndConditions &&
                 data.termsAndConditions.map((item, index) => (
                   <Grid item key={`terms-and-conditions-${index}`}>
-                    <Typography
-                      className={pageLinks}
-                      onClick={() => dataPath(item.path)}
-                      style={{ marginLeft: '5px' }}
-                      variant="body2"
-                      component="span"
+                    <button
+                      className={btnText}
+                      style={{ display: 'inline-block' }}
+                      key={`filter-${index}`}
+                      onClick={() => history.push(item.path)}
                     >
-                      {` ${item.name}`}{' '}
-                    </Typography>
+                      <Typography
+                        className={pageLinks}
+                        onClick={() => dataPath(item.path)}
+                        style={{ marginLeft: '5px' }}
+                        variant="body2"
+                        component="span"
+                      >
+                        {` ${item.name}`}{' '}
+                      </Typography>
+                    </button>
                     <Typography style={{ color: textPrimary }} component="span">
                       {index < data.termsAndConditions.length - 1 ? '| ' : ''}
                     </Typography>

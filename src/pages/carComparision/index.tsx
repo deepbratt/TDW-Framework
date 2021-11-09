@@ -22,6 +22,7 @@ import {
   array
 } from '../../layout/Sections/Utils/carComparision';
 import SelectNewCarCard from '../../components/SelectNewCarCard';
+import BreadCrumbs from '../../components/BreadCrumbs';
 import Table from '../../layout/Sections/Sections/Table/Table';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
@@ -134,6 +135,9 @@ const CarComparision = () => {
         keywords={PageMeta.carComparision.keywords}
       />
 
+      <Grid item>
+        <BreadCrumbs />
+      </Grid>
       <Grid className={root} container>
         <Grid item xs={12} container justifyContent="center">
           {shortListCars.length > 0 ? (

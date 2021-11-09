@@ -15,7 +15,6 @@ export const useStyles = makeStyles((theme) => ({
       paddingLeft: "0px",
     },
   },
- 
   heading:{
     color: navyBlue,
     display: "flex",
@@ -33,13 +32,11 @@ export const useStyles = makeStyles((theme) => ({
       padding:"10px"
     },
   },
-
   onlyHelpbox:{
     background: white,
     width: "100%",
     position: "relative",
-    padding:"20px",
-    margin:"40px 20px 20px 20px",
+    padding:"0 20px",
     [breakpoints.down("sm")]: {
       margin: "0px",
       padding:"10px"

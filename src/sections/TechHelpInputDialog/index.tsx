@@ -77,7 +77,7 @@ const TechHelpInputDialog = ({
                 onChange={handleChange}
                 label="Email"
                 name="email"
-                value={formData.email}
+                defaultValue={formData.email}
                 fullWidth
                 error={requireError.email}
                 helperText={requireError.email ? helperText : ''}
@@ -90,7 +90,7 @@ const TechHelpInputDialog = ({
                 onChange={handleChange}
                 label="Phone"
                 name="phone"
-                value={formData.phone}
+                defaultValue={formData.phone}
                 fullWidth
                 error={requireError.phone}
                 helperText={requireError.phone ? helperText : ''}
@@ -104,7 +104,7 @@ const TechHelpInputDialog = ({
               onChange={handleChange}
               label="Description"
               name="description"
-              value={formData.description}
+              defaultValue={formData.description}
               fullWidth
               multiline
               maxRows={5}

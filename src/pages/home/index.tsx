@@ -10,6 +10,7 @@ import DownloadAppImg from '../../assets/Cars/downloadApp.png';
 import ShopCarImg from '../../assets/Cars/ShopCar.png';
 // import DownloadAppImg from '../../assets/Cars/';
 import HomeBanner from '../../sections/HomeBanner';
+import BreadCrumbs from '../../components/BreadCrumbs';
 import DownloadApp from '../../sections/DownloadApp';
 import {
   CAR_COMPARISIONS,
@@ -46,6 +47,9 @@ const HomePage = () => {
       <HomeBanner />
       <Container style={{ marginBottom: '130px' }}>
         <Grid container justifyContent="center">
+        {/* <Grid item xs={12}>
+          <BreadCrumbs />
+        </Grid> */}
           <Grid item container xs={12} spacing={2} justifyContent="center">
             <Grid item xs={12} md={10} lg={7}>
               <FindCars />

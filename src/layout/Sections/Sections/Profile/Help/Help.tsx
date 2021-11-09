@@ -1,8 +1,8 @@
-import Grid from "@material-ui/core/Grid"
-import Typography from "@material-ui/core/Typography"
-import Hidden from "@material-ui/core/Hidden"
-import Button from "@material-ui/core/Button"
-import Paper from "@material-ui/core/Paper"
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Hidden from '@material-ui/core/Hidden';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import { useStyles } from './useStyles';
 import {
   paths,
@@ -15,7 +15,7 @@ import {
   dialTo,
   emailUs,
   callUs,
-  sendTicketMsg,
+  sendTicketMsg
 } from '../../../Utils/sidebarText';
 import SideBar from '../ProfileSidebar/Sidebar';
 import MetaTags from '../../../../../components/MetaTags';
@@ -28,10 +28,11 @@ import Loader from '../../../../../components/Loader';
 import TechHelpInputDialog from '../../../../../sections/TechHelpInputDialog';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../redux/store';
-import helpBanner from '../../../../../assets/helpImage.png'
+import helpBanner from '../../../../../assets/helpImage.png';
 
 const Help = () => {
-  const { heading, box, helpContainer, subContainer, onlyHelpbox } = useStyles();
+  const { heading, box, helpContainer, subContainer, onlyHelpbox } =
+    useStyles();
   const [isLoading, setIsLoading] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
@@ -48,54 +49,46 @@ const Help = () => {
         keywords={PageMeta.help.keywords}
       />
       <Paper elevation={4} className={isLoggedIn ? box : onlyHelpbox}>
-      <Grid
-        item
-        lg={12}
-        md={12}
-        xs={12}
-        style={{ marginTop: isLoggedIn ? 0 : '50px' }}
-      >
-        {isLoggedIn && (
-          <section className={heading}>
-            <Hidden mdUp>
-              <SideBar Title={Title} sidebar={paths} />
-            </Hidden>
-            <Typography variant="h3">
-              {help}
-            </Typography>
-          </section>
-        )}
-        <Grid className={helpContainer} item lg={12}>
-          <section className={subContainer}>
-            <Grid item xs={12}>
-              <img width="100%" src={helpBanner} alt="" />
-            </Grid>
+        <Grid item lg={12} md={12} xs={12} style={{ marginTop: '0' }}>
+          {isLoggedIn && (
+            <section className={heading}>
+              <Hidden mdUp>
+                <SideBar Title={Title} sidebar={paths} />
+              </Hidden>
+              <Typography variant="h3">{help}</Typography>
+            </section>
+          )}
+          <Grid className={helpContainer} item lg={12}>
+            <section className={subContainer}>
+              <Grid item xs={12}>
+                <img width="100%" src={helpBanner} alt="" />
+              </Grid>
 
-            <Grid style={{ marginTop: '25px' }} item xs={12}>
-              <Typography variant="h2"> {helpTitle} </Typography>
-            </Grid>
-            <Grid style={{ marginTop: '25px' }} item xs={12}>
-              <Typography variant="h6">
-                {emailUs} <a href={mailTo}> {gmail} </a>
-              </Typography>
-            </Grid>
-            <Grid style={{ marginTop: '25px' }} item xs={12}>
-              <Typography variant="h6">
-                {callUs} <a href={dialTo}> {number} </a>
-              </Typography>
-            </Grid>
-            <Grid style={{ marginTop: '25px' }} item xs={12}>
-              <Button
-                color={'primary'}
-                variant="contained"
-                onClick={() => setTeachAssistanceDialog(true)}
-              >
-                {sendTicketMsg}
-              </Button>
-            </Grid>
-          </section>
+              <Grid style={{ marginTop: '25px' }} item xs={12}>
+                <Typography variant="h2"> {helpTitle} </Typography>
+              </Grid>
+              <Grid style={{ marginTop: '25px' }} item xs={12}>
+                <Typography variant="h6">
+                  {emailUs} <a href={mailTo}> {gmail} </a>
+                </Typography>
+              </Grid>
+              <Grid style={{ marginTop: '25px' }} item xs={12}>
+                <Typography variant="h6">
+                  {callUs} <a href={dialTo}> {number} </a>
+                </Typography>
+              </Grid>
+              <Grid style={{ marginTop: '25px' }} item xs={12}>
+                <Button
+                  color={'primary'}
+                  variant="contained"
+                  onClick={() => setTeachAssistanceDialog(true)}
+                >
+                  {sendTicketMsg}
+                </Button>
+              </Grid>
+            </section>
+          </Grid>
         </Grid>
-      </Grid>
       </Paper>
       <Loader open={isLoading} isBackdrop={true} />
       <Toast

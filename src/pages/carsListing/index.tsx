@@ -11,7 +11,6 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Typography from '@material-ui/core/Typography';
-
 import Toast from '../../components/Toast';
 import Pagination from '@material-ui/lab/Pagination';
 import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
@@ -38,6 +37,7 @@ import Skeletons from '../../components/Skeletons';
 import ListingCardSkeletons from '../../components/ListingCard/ListingCardSkeletons';
 import CarListingStyles from './style';
 import CustomButton from '../../CustomButton';
+import BreadCrumbs from '../../components/BreadCrumbs';
 import Radio from '@material-ui/core/Radio';
 import useShortListCars from '../../Utils/hooks/useShortListCars';
 import ShortListItems from '../../layout/Sections/Sections/ShortListItems';
@@ -163,6 +163,9 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
         justifyContent="space-between"
         spacing={2}
       >
+        <Grid item xs={12}>
+          <BreadCrumbs />
+        </Grid>
         <Grid style={{ height: '100%' }} xs={12} md={4} xl={3} item container>
           <Hidden smDown>
             <Grid item xs={12} className={filtersRoot}>

@@ -1,12 +1,12 @@
-import Grid from "@material-ui/core/Grid"
-import Typography from "@material-ui/core/Typography"
-import Hidden from "@material-ui/core/Hidden"
-import ListItem from "@material-ui/core/ListItem"
-import List from "@material-ui/core/List"
-import Paper from "@material-ui/core/Paper"
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Hidden from '@material-ui/core/Hidden';
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+import Paper from '@material-ui/core/Paper';
 import { useStyles } from './sidebarStyles';
 import { NavLink, useHistory, useLocation } from 'react-router-dom';
-import { paths,  profile } from '../../../Utils/sidebarText';
+import { paths, profile } from '../../../Utils/sidebarText';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../redux/store';
 
@@ -14,6 +14,7 @@ interface IProp {
   children: React.ReactNode;
 }
 const ProfileSideBarContext = ({ children }: IProp) => {
+  
   const {
     container,
     content,
@@ -25,9 +26,12 @@ const ProfileSideBarContext = ({ children }: IProp) => {
     userInfo,
     userName
   } = useStyles();
+
   const { pathname } = useLocation();
-  const history = useHistory()
+  const history = useHistory();
+
   const { user } = useSelector((state: RootState) => state.auth);
+
   return (
     <Grid style={{ display: 'block' }} container>
       <Grid style={{ display: 'flex' }} item xs={12}>
@@ -37,7 +41,11 @@ const ProfileSideBarContext = ({ children }: IProp) => {
               <img src={user.image || profile} alt="profile" width="70px" />
               <div className={userInfo}>
                 <Typography variant="h4">Hello</Typography>
-                <Typography variant="h2" className={userName} onClick={()=>history.push('/dashboard/profile')}>
+                <Typography
+                  variant="h2"
+                  className={userName}
+                  onClick={() => history.push('/dashboard/profile')}
+                >
                   {user.firstName}&nbsp;{user.lastName}
                 </Typography>
               </div>

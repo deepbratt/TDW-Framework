@@ -9,14 +9,23 @@ import Toast from '../../../../components/Toast';
 import { Box, Tab, Tabs, Typography } from '@material-ui/core';
 import FullScreenImage from '../../../../components/FullScreenImage/index';
 import useImageOrientation from '../../../../Utils/hooks/useImageOrientation';
+import WaterMark from '../../../../components/ImageWaterMark';
+import NoImg from '../../../../assets/no-img.png';
 
 const Slider = ({ arr, data, imageLoaded }: Detail) => {
   const { open, setOpen, responseMessage } = Actions();
-  const {setImageOrientationAndSize, imgHeight, imgWidth} = useImageOrientation()
+  const { setImageOrientationAndSize, imgHeight, imgWidth } =
+    useImageOrientation();
   const [fullScreen, setFullScreen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
-  const { carousel, detail, sliderImageWrapper, fullImageTabScrollBtn, blurBgImg, tabsWrapper } =
-    useStyles();
+  const {
+    carousel,
+    detail,
+    sliderImageWrapper,
+    fullImageTabScrollBtn,
+    blurBgImg,
+    tabsWrapper
+  } = useStyles();
   const { mobile } = Sizes();
 
   const handleAlertClose = () => {
@@ -38,10 +47,10 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
     document.body.style.overflow = 'auto';
   };
 
-  const onImageLoad = (imgUrl:string) =>{
-    imageLoaded()
-    setImageOrientationAndSize(imgUrl)
-  }
+  const onImageLoad = (imgUrl: string) => {
+    imageLoaded();
+    setImageOrientationAndSize(imgUrl);
+  };
 
   return (
     <Grid container>
@@ -65,23 +74,40 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
                 onClick={(e) => openFullScreen(index, e)}
                 className={sliderImageWrapper}
               >
-                <div style={{backgroundImage:`url(${data})`}} className={blurBgImg}></div>
-                <img
-                    // width={imgWidth}
-                    // height={imgHeight}
+                <div
+                  style={{ backgroundImage: `url(${data})` }}
+                  className={blurBgImg}
+                ></div>
+                <WaterMark
+                  src={data}
                   style={{
                     position: 'relative',
                     borderRadius: '5px',
                     // minHeight: '100%',
-                    height:imgHeight,
-                    width:imgWidth
+                    height: imgHeight,
+                    width: imgWidth
                   }}
                   key={`img ${index}`}
-                  // height="100%"
-                  src={data}
-                  alt=""
-                  onLoad={()=>onImageLoad(data)}
-                />
+                  onLoad={() => onImageLoad(data)}
+                >
+                  <img
+                    // width={imgWidth}
+                    // height={imgHeight}
+                    style={{
+                      position: 'relative',
+                      borderRadius: '5px',
+                      // minHeight: '100%',
+                      height: imgHeight,
+                      width: imgWidth
+                    }}
+                    key={`img ${index}`}
+                    // height="100%"
+                    // src={NoImg}
+                    src={data}
+                    alt=""
+                    onLoad={() => onImageLoad(data)}
+                  />
+                </WaterMark>
               </div>
             );
           })}
@@ -112,7 +138,7 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
                     onClick={(e) => setImageIndex(index)}
                     key={thumb + index}
                     classes={{
-                      wrapper:tabsWrapper
+                      wrapper: tabsWrapper
                     }}
                     icon={
                       <img src={thumb} alt="" height="100px" width="auto" />

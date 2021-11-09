@@ -34,7 +34,7 @@ const Actions = (Id?: string | '') => {
     },
     {
       path: paths.carDetail + '/' + Id,
-      label: `Car Details - ${Id}`
+      label: `Car Details`
     }
   ]);
   const [responseMessage, setResponseMessage] = useState({

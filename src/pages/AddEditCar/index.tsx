@@ -48,8 +48,12 @@ const AddEditCar = () => {
 
   const breadCrumData = [
     {
+      path: paths.cars,
+      label: 'Cars'
+    },
+    {
       path: paths.addEditCar,
-      label: `Add Edit Car`
+      label: `${id ? 'Edit' : 'Add'} Car`
     }
   ];
 

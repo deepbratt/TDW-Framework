@@ -106,6 +106,7 @@ const useAddEditCar = () => {
     ...initialRequireError,
     ...initialRequireError_2
   });
+
   const updateImagesState = (img: any) => {
     setImages(img);
     setFormData({ name: 'images', value: img });

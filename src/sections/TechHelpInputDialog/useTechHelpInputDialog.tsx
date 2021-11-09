@@ -55,7 +55,9 @@ const useTechHelpInputDialog = (
           ? event.target.files[0]
           : event.target.value
     });
-    event.target.value = event.target.name === 'image' && null;
+    if (event.target.name === 'image') {
+      event.target.value = null;
+    }
   };
 
   const allFalse = (obj: any) => {

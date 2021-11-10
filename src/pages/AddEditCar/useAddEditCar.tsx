@@ -20,6 +20,7 @@ import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import Sizes from '../../Utils/themeConstants';
 import { NEED_ASSISTANCE } from '../../Utils/constants/language/en/addEditCarTexts';
 import { paths } from '../../routes/paths';
+import watermark from 'watermarkjs';
 
 const formReducer = (state: any, event: any) => {
   return {
@@ -317,7 +318,7 @@ const useAddEditCar = () => {
           });
           setImages(FieldValues.images);
         } else {
-          console.log(response);
+          // console.log(response);
           if (response.data) {
             setToastMessage(response.data.message);
             setToastType('error');
@@ -364,7 +365,7 @@ const useAddEditCar = () => {
           setToastOpen(true);
           history.push(paths.dashboard + '/ads');
         } else {
-          console.log('error', response);
+          // console.log('error', response);
           if (!response.response) {
             setToastMessage('Network Error');
             setToastType('error');
@@ -444,7 +445,7 @@ const useAddEditCar = () => {
       }
     } else if (stepValidatation === 1) {
       let secondStepValidated = images.length > 0;
-      console.log(images.length > 0 && images.length < 21);
+      // console.log(images.length > 0 && images.length < 21);
       setRequireError((requiredError) => {
         return { ...requiredError, images: !secondStepValidated };
       });
@@ -459,9 +460,34 @@ const useAddEditCar = () => {
     return true;
   };
 
-  const submitForm = () => {
-    console.log('submit following data: ');
-    console.log(formData);
+  const appendImages = async(fd:any)=>{
+    let StringUrls = 0;
+    for (let i = 0; i < formData.images.length; i++) {
+      if (typeof formData.images[i] === typeof 'string') {
+        fd.append('image[' + StringUrls + ']', images[i]);
+        StringUrls++;
+      } else {
+        let watermarkText = "carokta.com"
+        await watermark([images[i]])
+          .blob(
+            watermark.text.center(
+              watermarkText,
+              '35px roboto',
+              '#fff',
+              0.5
+            )
+          )
+          .then((img: any) => {
+            // console.log(img);
+            fd.append('image', img);
+          });
+      }
+    }
+  }
+
+  const submitForm = async () => {
+    // console.log('submit following data: ');
+    // console.log(formData);
     let fd = new FormData();
     fd.append('country', 'Pakistan');
     fd.append('city', formData.city);
@@ -469,15 +495,6 @@ const useAddEditCar = () => {
     fd.append('location.address', formData.location.address);
     fd.append('location.coordinates[0]', formData.location.coordinate.long);
     fd.append('location.coordinates[1]', formData.location.coordinate.lat);
-    let StringUrls = 0;
-    for (let i = 0; i < formData.images.length; i++) {
-      if (typeof formData.images[i] === typeof 'string') {
-        fd.append('image[' + StringUrls + ']', images[i]);
-        StringUrls++;
-      } else {
-        fd.append('image', images[i]);
-      }
-    }
     fd.append('model', formData.carModel);
     fd.append('make', formData.carMake);
     fd.append('version', formData.modelVersion);
@@ -493,21 +510,18 @@ const useAddEditCar = () => {
     fd.append('engineCapacity', formData.engineCapacity);
     fd.append('regNumber', formData.registrationNo);
     fd.append('sellerType', formData.sellerType);
-    // fd.append("date", new Date(formData.modelYear).toISOString());
     fd.append('modelYear', formData.modelYear);
-    // fd.append("features", formData.features);
     for (let i = 0; i < formData.features.length; i++) {
       fd.append('features', formData.features[i]);
     }
     fd.append('price', formData.price);
-    console.table(Object.fromEntries(fd));
     setIsLoading(true);
-    // let addEditCarApi = id ? updateFormData : addFormData
-    // let carId = id ? "/"+id : ""
+    await appendImages(fd)
+    // console.table(Object.fromEntries(fd));
     addEditData(fd).then((response) => {
       setIsLoading(false);
       if (response && response.data && response.data.status === 'success') {
-        console.log('response', response);
+        // console.log('response', response);
         setToastMessage(response.data.message);
         setToastType('success');
         setToastOpen(true);
@@ -521,7 +535,7 @@ const useAddEditCar = () => {
         }
         setActiveStep(0);
       } else {
-        let msg = response.response.data.message
+        let msg = response && response.response && response.response.data && response.response.data.message
           ? response.response.data.message
           : response.response
           ? response.response
@@ -530,15 +544,6 @@ const useAddEditCar = () => {
         setToastType('error');
         setToastOpen(true);
         console.log('error', response);
-        // if (!response.response) {
-        //   setToastMessage('Network Error');
-        //   setToastType('error');
-        //   setToastOpen(true);
-        // } else {
-        //   setToastMessage(response.message);
-        //   setToastType('error');
-        //   setToastOpen(true);
-        // }
       }
     });
   };

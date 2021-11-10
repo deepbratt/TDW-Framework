@@ -320,13 +320,12 @@ export default class FullScreenImage extends React.Component<any> {
             onTouchEnd={(e) => this.endMove(e)}
             onClick={(e) => this.stopSideEffect(e)}
             onDoubleClick={(e) => this.shockZoom(e)}
-            onLoad={(e) => this.setState({ loading: false })}
+            onLoad={(e) => {this.setState({ loading: false })}}
             className={`lb-img${loading ? ' lb-loading' : ''}`}
             title={title}
             src={image}
             alt={title}
           />
-
           {multi ? (
             <IconButton
               className="lb-hide-mobile"

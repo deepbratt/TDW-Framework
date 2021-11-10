@@ -209,6 +209,8 @@ export const useStyles = makeStyles(() => ({
     alignItems: 'center',
     cursor: 'pointer',
     height: '600px',
+    position:"relative",
+    width:"100%",
     [theme.breakpoints.down('md')]: {
       height: 'auto'
     }

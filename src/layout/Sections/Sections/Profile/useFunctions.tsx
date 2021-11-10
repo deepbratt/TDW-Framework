@@ -53,11 +53,17 @@ const Actions = () => {
         setPageCount(totalPages);
         setData(response.data.result);
       } else {
-        let msg = response.message
+        let msg = ""
+        if(response){
+          msg = response && response.message
           ? response.message
           : response.response
           ? response.response
           : 'Network Error';
+        }else{
+          msg = "Network Error"
+        }
+        
         setOpen(true);
         setResponseMessage({ message: msg, status: 'error' });
       }

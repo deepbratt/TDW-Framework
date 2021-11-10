@@ -24,13 +24,20 @@ const useImageOrientation = () => {
   const setImageOrientationAndSize = (imgUrl: string) => {
     let imgOrientation = getImageOrientation(imgUrl);
     setImageOrientation(imgOrientation);
+    let height=""
+    let width=""
     if (imgOrientation === 'portrait') {
       setImgHeight('100%');
       setImgWidth('auto');
+      height="100%"
+      width="auto"
     } else {
       setImgWidth('100%');
       setImgHeight('auto');
+      width="100%"
+      height="auto"
     }
+    return {width, height}
   };
   return {
     setImageOrientationAndSize,

@@ -12,7 +12,7 @@ import useImageOrientation from '../../../../Utils/hooks/useImageOrientation';
 
 const Slider = ({ arr, data, imageLoaded }: Detail) => {
   const { open, setOpen, responseMessage } = Actions();
-  const {setImageOrientationAndSize, imgHeight, imgWidth} = useImageOrientation()
+  const {setImageOrientationAndSize} = useImageOrientation()
   const [fullScreen, setFullScreen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
   const { carousel, detail, sliderImageWrapper, fullImageTabScrollBtn, blurBgImg, tabsWrapper } =
@@ -38,9 +38,11 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
     document.body.style.overflow = 'auto';
   };
 
-  const onImageLoad = (imgUrl:string) =>{
+  const onImageLoad = (imgUrl:string, imageObject:HTMLImageElement) =>{
     imageLoaded()
-    setImageOrientationAndSize(imgUrl)
+    const {height, width} = setImageOrientationAndSize(imgUrl)
+    imageObject.style.height = height
+    imageObject.style.width = width
   }
 
   return (
@@ -67,20 +69,14 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
               >
                 <div style={{backgroundImage:`url(${data})`}} className={blurBgImg}></div>
                 <img
-                    // width={imgWidth}
-                    // height={imgHeight}
                   style={{
                     position: 'relative',
                     borderRadius: '5px',
-                    // minHeight: '100%',
-                    height:imgHeight,
-                    width:imgWidth
                   }}
                   key={`img ${index}`}
-                  // height="100%"
                   src={data}
                   alt=""
-                  onLoad={()=>onImageLoad(data)}
+                  onLoad={(e:any)=>onImageLoad(data, e.target)}
                 />
               </div>
             );

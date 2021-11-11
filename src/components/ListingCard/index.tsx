@@ -147,7 +147,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
           message={toastMessage}
           type={toastType}
           onClose={(e: any) => {
-            e.stopPropagation();
+            // e.stopPropagation();
             setToastOpen(false);
           }}
         />

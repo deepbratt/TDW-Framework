@@ -18,7 +18,8 @@ const Toast = ({ open, message, type, onClose }: IProp) => {
         horizontal: "left",
       }}
       open={open}
-      autoHideDuration={20}
+      autoHideDuration={5000}
+      onClose={() => onClose()}
     >
       <Alert onClose={onClose} severity={type}>
         {message}

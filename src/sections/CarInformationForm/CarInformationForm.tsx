@@ -8,6 +8,7 @@ import { City } from '../../Utils/country-state-city/index';
 import addEditCarData from '../../Utils/constants/language/en/addEditCarData';
 import { Colors } from '../../Utils/constants/colors/colors';
 import SelectInputComponent from '../../components/SelectInputComponent';
+import SelectInputKeyValueComponent from '../../components/SelectInputKeyValueComponent';
 import { NO_REGISTRATION_DISPLAY } from '../../Utils/constants/language/en/addEditCarTexts';
 import useCarInformationForm from './useCarInformationForm';
 
@@ -30,6 +31,7 @@ interface CarInformationFormProps {
   handleChangeSelect: any;
   setFormData: React.Dispatch<any>;
   bodyColorArray: any[];
+  handleChangeSelectKeyValue: any;
 }
 
 const CarInformationForm = ({
@@ -38,7 +40,8 @@ const CarInformationForm = ({
   requireError,
   handleChangeSelect,
   setFormData,
-  bodyColorArray
+  bodyColorArray,
+  handleChangeSelectKeyValue
 }: CarInformationFormProps) => {
   const classes = useStyles();
   const { carMakesList, carModelsList, carVersionsList, handleTextChange } =
@@ -129,13 +132,14 @@ const CarInformationForm = ({
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
-        <SelectInputComponent
+        <SelectInputKeyValueComponent
           dataArray={
             carVersionsList.length < 1
               ? [formData.modelVersion]
               : carVersionsList
           }
           name={'modelVersion'}
+          displayName={'modelVersionDisplayName'}
           className={classes.selectFields}
           value={formData.modelVersion}
           label={addEditCarData.fields.carVersion.label}
@@ -145,7 +149,7 @@ const CarInformationForm = ({
           // helperText={
           //   requireError.carModel ? addEditCarData.requiredFieldText : ""
           // }
-          handleChangeSelect={handleChangeSelect}
+          handleChangeSelectKeyValue={handleChangeSelectKeyValue}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>

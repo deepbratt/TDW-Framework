@@ -2,8 +2,8 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-interface SelectInputProps {
-  dataArray: Array<string>;
+interface SelectInputKeyValueProps {
+  dataArray: Array<any>;
   required?: boolean;
   style?: any;
   className?: any;
@@ -15,12 +15,13 @@ interface SelectInputProps {
   helperText?: string;
   disabled?: boolean;
   placeholder?: string;
-  handleChangeSelect: any;
+  handleChangeSelectKeyValue: any;
   size?: 'small' | 'medium';
+  displayName: string;
   // textInputProps : TextFieldProps
 }
 
-const SelectInputComponent = ({
+const SelectInputKeyValueComponent = ({
   dataArray,
   required,
   style,
@@ -33,9 +34,10 @@ const SelectInputComponent = ({
   label,
   error,
   helperText,
-  handleChangeSelect,
-  size
-}: SelectInputProps) => {
+  handleChangeSelectKeyValue,
+  size,
+  displayName
+}: SelectInputKeyValueProps) => {
   return (
     <Autocomplete
       value={value}
@@ -46,17 +48,17 @@ const SelectInputComponent = ({
       //   }
       //   inputValue={value ? value : ""}
       onChange={(event: any, valueChanged: any) =>
-        handleChangeSelect(name, valueChanged)
+        handleChangeSelectKeyValue(name, valueChanged?.name, displayName, valueChanged?.displayName)
       }
       style={style}
       className={className}
       options={dataArray}
       autoHighlight
-      getOptionLabel={(option: any) => option?.toString()}
+      getOptionLabel={(option: any) => option?.name?.toString()}
       disabled={disabled}
       renderOption={(option) => (
         <React.Fragment>
-          <span>{option}</span>
+          <span>{option.displayName}</span>
         </React.Fragment>
       )}
       renderInput={(params) => (
@@ -86,4 +88,4 @@ const SelectInputComponent = ({
   );
 };
 
-export default SelectInputComponent;
+export default SelectInputKeyValueComponent;

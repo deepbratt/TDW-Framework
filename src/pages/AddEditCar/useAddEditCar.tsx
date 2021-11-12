@@ -35,6 +35,7 @@ const initialFieldValues = {
   carMake: '',
   modelYear: '',
   modelVersion: '',
+  modelVersionDisplayName: '',
   bodyColor: '',
   bodyType: '',
   bodyCondition: '',
@@ -148,6 +149,21 @@ const useAddEditCar = () => {
       });
     }
   };
+  const handleChangeSelectKeyValue = (name: string, value: any, displayName: string, displayValue: any) => {
+    setFormData({ name: name, value: value });
+    setFormData({ name: displayName, value: displayValue });
+    if (value === '') {
+      setRequireError({
+        ...requireError,
+        [name]: true
+      });
+    } else {
+      setRequireError({
+        ...requireError,
+        [name]: false
+      });
+    }
+  };
   const ComponentContent = [
     <CarInformationForm
       formData={formData}
@@ -156,6 +172,7 @@ const useAddEditCar = () => {
       handleChangeSelect={handleChangeSelect}
       setFormData={setFormData}
       bodyColorArray={bodyColorArray}
+      handleChangeSelectKeyValue={handleChangeSelectKeyValue}
     />,
     <UploadPhotosForm
       images={images}

@@ -39,7 +39,6 @@ const SelectInputComponent = ({
   return (
     <Autocomplete
       value={value}
-      inputValue={value}
       //   onInputChange={(e: any, valueChanged: any) =>
       //     handleChangeSelect({name: name, value: valueChanged})
       // {"city": "islamabad"}

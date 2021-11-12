@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getDisplayName } from 'recompose';
 import { getAllData } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 
@@ -66,7 +67,7 @@ const useCarInformationForm = (formData: any, setFormData: React.Dispatch<any>) 
       setIsLoading(false);
       if (response.status === 'success') {
         setCarVersions(response.data.result);
-        let versionList = response.data.result.map((versions:any)=>versions.name)
+        let versionList = response.data.result.map((versions:any)=> {return {name: versions.name, displayName: [versions.name, versions.fuel_type, versions.capacity ? versions.capacity + ' cc' : '', versions.transmission_type].join(' | ')  }})
         setCarVersionsList(versionList)
       } else {
         setToastMessage(response.message);

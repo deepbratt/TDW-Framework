@@ -212,7 +212,7 @@ export const useStyles = makeStyles(() => ({
     position:"relative",
     width:"100%",
     [theme.breakpoints.down('md')]: {
-      height: 'auto'
+      height: '300px',
     }
   },
   blurBgImg:{

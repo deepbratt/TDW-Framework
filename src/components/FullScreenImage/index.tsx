@@ -309,7 +309,8 @@ export default class FullScreenImage extends React.Component<any> {
             style={{
               transform: this.createTransform(x, y, zoom, rotate),
               cursor: zoom > 1 ? 'grab' : 'unset',
-              transition: moving ? 'none' : 'all 0.1s'
+              transition: moving ? 'none' : 'all 0.1s',
+              margin:"auto"
             }}
             onMouseDown={(e) => this.startMove(e)}
             onTouchStart={(e) => this.startMove(e)}

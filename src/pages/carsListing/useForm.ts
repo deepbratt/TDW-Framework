@@ -47,7 +47,6 @@ interface IData {
 
 export const useForm = (validateOnChange = true) => {
   const dispatch = useDispatch();
-  // const {city} = useParams<any>();
   const carFilters = useSelector(
     (state: RootState) => state.carFilters.filters
   );
@@ -77,11 +76,8 @@ export const useForm = (validateOnChange = true) => {
   const [modalPageCount, setModalPageCount] = useState<number>(0);
   const [responseData, setResponseData] = useState<IData | null>();
   const [result, setResult] = useState<ICarCard[] | []>([]);
-  const [queryParams, setQueryParams] = useState<string>('');
   const { validate, errors, setErrors } = useValidation(carFilters);
-  const shortListCars = useSelector(
-    (state: RootState) => state.shortlistCars.shortlistCars
-  );
+
   const [rangeValues, setRangeValues] = useState<any>({
     price: [0, 50000000],
     modelYear: [1971, 2021],
@@ -104,6 +100,7 @@ export const useForm = (validateOnChange = true) => {
 
   const handlePageChange = (e: any, value: any) => {
     setPage(value);
+    getAllCars(value);
   };
 
   const getFiltersValues = (keys: string, values: string[]) => {
@@ -114,11 +111,18 @@ export const useForm = (validateOnChange = true) => {
     }
   };
 
-  const getAllCars = async () => {
-    let params = `?limit=20&page=${page.toString()}`;
+  const getAllCars = async (getPage?: number) => {
+    let params = '';
+    if (getPage) {
+      params = `?limit=20&page=${getPage.toString()}`;
+    } else {
+      params = `?limit=20&page=${page.toString()}`;
+    }
+    // eslint-disable-next-line
     Object.entries(carFilters).map(([keys, values]: any) => {
       if (values !== initialValues[keys]) {
         if (typeof values === typeof [] && !(keys in initialRangeValues)) {
+          // eslint-disable-next-line
           values.map((value: string) => {
             params += `&${keys}=${value}`;
           });
@@ -138,8 +142,6 @@ export const useForm = (validateOnChange = true) => {
       }
     });
 
-    console.log('queryparams', params);
-    setQueryParams(params);
     await getAllData(ADS + CARS + params)
       .then((response) => {
         setIsLoading(false);
@@ -162,7 +164,7 @@ export const useForm = (validateOnChange = true) => {
       })
       .catch((error) => {
         setIsLoading(false);
-        console.log('Error log', error);
+        console.error(error);
         setResponseMessage({
           status: error.status,
           message: error.message
@@ -173,6 +175,7 @@ export const useForm = (validateOnChange = true) => {
   const getCitiesWithCars = async () => {
     let param = '?sort=city';
     if (carFilters.province.length > 0) {
+      // eslint-disable-next-line
       carFilters.province.map((item: string) => {
         param += '&province=' + item;
       });
@@ -184,7 +187,7 @@ export const useForm = (validateOnChange = true) => {
         }
       })
       .catch((error) => {
-        console.log('Error', error);
+        console.error(error);
       });
   };
 
@@ -197,7 +200,7 @@ export const useForm = (validateOnChange = true) => {
         }
       })
       .catch((error) => {
-        console.log('Error', error);
+        console.error(error);
       });
   };
 
@@ -207,7 +210,7 @@ export const useForm = (validateOnChange = true) => {
       if (response && response && response.status === 'success') {
         setBodyTypes(response.data.result);
       } else {
-        console.log('error', response);
+        console.error(response);
       }
     });
   };
@@ -215,11 +218,10 @@ export const useForm = (validateOnChange = true) => {
   const getBodyColors = () => {
     let param = '?sort=name';
     getAllData(ADS + CARS + CAR_COLORS + param).then((response) => {
-      console.log(response);
       if (response && response && response.status === 'success') {
         setBodyColors(response.data.result);
       } else {
-        console.log('error', response);
+        console.error(response);
       }
     });
   };
@@ -228,10 +230,9 @@ export const useForm = (validateOnChange = true) => {
     setModelsLoading(true);
     let param = `?limit=${modalPage}&sort=name`;
     if (carFilters.make.length > 0) {
+      // eslint-disable-next-line
       carFilters.make.map((item: any) => {
         let selectedMake: any = makes.filter((make: any) => make.name === item);
-        console.log(makes);
-        console.log(selectedMake);
         if (selectedMake.length > 0) {
           param += '&make_id=' + selectedMake[0].make_id;
         }
@@ -264,6 +265,7 @@ export const useForm = (validateOnChange = true) => {
     return () => {
       dispatch(resetFilters());
     };
+    // eslint-disable-next-line
   }, []);
 
   const handleModalPage = () => {
@@ -355,14 +357,9 @@ export const useForm = (validateOnChange = true) => {
   useEffect(() => {
     setIsLoading(true);
     setResult([]);
-    getAllCars();
+    getAllCars(1);
     // eslint-disable-next-line
-  }, [page, carFilters, user]);
-
-  useEffect(() => {
-    console.log('carFilters', carFilters);
-    // eslint-disable-next-line
-  }, [carFilters]);
+  }, [carFilters, user]);
 
   return {
     errors,

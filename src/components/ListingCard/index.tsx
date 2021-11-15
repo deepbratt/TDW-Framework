@@ -9,7 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 import {
   ACTIVE,
   INACTIVE,
-  SOLD
+  SOLD,
+  UPDATED
 } from '../../Utils/constants/language/en/buttonLabels';
 import ConvertDate from '../convertDate';
 import ListingCardStyles from './styles';
@@ -53,12 +54,21 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const { pathname } = useLocation();
   const { mobile } = Sizes();
   const { user, isLoggedIn } = useSelector((state: RootState) => state.auth);
-  const {setImageOrientationAndSize, imgHeight, imgWidth} = useImageOrientation()
+  const { setImageOrientationAndSize, imgHeight, imgWidth } =
+    useImageOrientation();
   const { shortlistCars } = useSelector(
     (state: RootState) => state.shortlistCars
   );
-  const { root, grid, featuredBadge, location, favsIconGrid, favsIconList, cardMedia, blurBgImg} =
-    ListingCardStyles();
+  const {
+    root,
+    grid,
+    featuredBadge,
+    location,
+    favsIconGrid,
+    favsIconList,
+    cardMedia,
+    blurBgImg
+  } = ListingCardStyles();
   const {
     _id,
     model,
@@ -220,7 +230,11 @@ const ListingCard: React.FC<ListingCardProps> = ({
                     alt=""
                     width={imgWidth}
                     height={imgHeight}
-                    onLoad={()=>setImageOrientationAndSize(image && image.length > 0 ? image[0] : NoImg)}
+                    onLoad={() =>
+                      setImageOrientationAndSize(
+                        image && image.length > 0 ? image[0] : NoImg
+                      )
+                    }
                   />
                   {isSold && (
                     <span className={featuredBadge}>
@@ -358,7 +372,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                         </span>
                         <span>
                           <Typography variant="subtitle2">
-                            {moment(updatedAt).fromNow()}
+                            {`${UPDATED} ${moment(updatedAt).fromNow()}`}
                           </Typography>
                         </span>
                       </div>

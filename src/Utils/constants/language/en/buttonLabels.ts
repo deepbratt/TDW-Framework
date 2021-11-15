@@ -54,3 +54,4 @@ export const SEARCH_NEW_CAR: string = 'Search Car';
 export const ADD_FROM_FAV: string = 'Add From Favs';
 export const FEATURES: string = 'Features';
 export const SEE_MORE: string = 'See More';
+export const UPDATED: string = 'Updated';

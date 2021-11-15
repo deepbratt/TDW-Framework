@@ -1,13 +1,8 @@
 import { Theme } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import IconButton from '@material-ui/core/IconButton';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardHeader from '@material-ui/core/CardHeader';
-import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
-import { Colors } from '../../Utils/constants/colors/colors';
-
 export interface ShortListCardProps {
   _id: string;
   name: string;
@@ -17,96 +12,27 @@ export interface ShortListCardProps {
 }
 
 const ShortListCardStyles = makeStyles((theme: Theme) => ({
-  cardRoot: {
-    margin: 'auto',
-    width: '80%',
-    maxWidth: '180px',
+  imageRoot: {
+    margin: '5px',
     position: 'relative',
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    backgroundColor: Colors.lightBlue,
-    [theme.breakpoints.down('sm')]: {
-      maxHeight: '200px',
-      maxWidth: '120px'
-    }
+    width: '100%',
+    height: '130px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.common.black
   },
-  cardHeader: {
+  closeIcon: {
     position: 'absolute',
-    top: '-5px',
-    right: '-5px'
+    right: '5%',
+    top: '5%',
+    color: 'white'
   },
-  cardMedia: {
-    maxHeight: '100px',
-    minHeight: '100px',
-    display: 'flex',
-    backgroundColor: theme.palette.common.white,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-    [theme.breakpoints.down('sm')]: {
-      maxHeight: '80px',
-      minHeight: '80px'
-    },
-    [theme.breakpoints.down('xs')]: {
-      maxHeight: '50px',
-      minHeight: '50px'
-    },
-    '& > img': {
-      minWidth: '100%',
-      maxHeight: '100px',
-      minHeight: '100px',
-      [theme.breakpoints.down('sm')]: {
-        maxHeight: '80px',
-        minHeight: '80px'
-      },
-      [theme.breakpoints.down('xs')]: {
-        maxHeight: '50px',
-        minHeight: '50px'
-      }
-    }
-  },
-  cardTitle: {
-    padding: '7px',
-    fontSize: '18px',
-    lineHeight: '18px',
-    paddingBottom: '10px',
-    [theme.breakpoints.down('sm')]: {
-      padding: '5px',
-      fontSize: '16px',
-      lineHeight: '16px',
-      paddingBottom: '5px'
-    },
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '14px',
-      lineHeight: '14px'
-    }
-  },
-  // cardPrice: {
-  //   color: Colors.textPrimary,
-  //   paddingBottom: '15px',
-  //   fontSize: '20px',
-  //   lineHeight: '20px',
-  //   [theme.breakpoints.down('sm')]: {
-  //     padding: '5px',
-  //     fontSize: '16px',
-  //     lineHeight: '16px'
-  //   },
-  //   [theme.breakpoints.down('xs')]: {
-  //     display: 'none'
-  //   }
-  // },
-  cardContent: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-    backgroundColor: Colors.lightBlue,
-    height: 'auto',
-    padding: '5px',
-    minHeight: '30px'
-  },
-  deleteIcon: {
-    color: theme.palette.grey[200],
-    opacity: 0.8
+  imgStyle: {
+    flexShrink: 0,
+    maxWidth: '100%',
+    height: 'auto'
   }
 }));
 
@@ -117,44 +43,17 @@ const ShortListCard: React.FC<ShortListCardProps> = ({
   price,
   handleClick
 }) => {
-  const {
-    cardRoot,
-    cardHeader,
-    cardMedia,
-    cardContent,
-    cardTitle,
-    deleteIcon
-    // cardPrice
-  } = ShortListCardStyles();
+  const { imageRoot, closeIcon, imgStyle } = ShortListCardStyles();
   return (
-    <Card className={cardRoot}>
-      <CardHeader
-        className={cardHeader}
-        action={
-          <IconButton
-            aria-label="delete-item"
-            size="small"
-            className={deleteIcon}
-            onClick={() => handleClick(_id)}
-          >
-            <CancelRoundedIcon fontSize="small" />
-          </IconButton>
-        }
-      />
-      <div className={cardMedia}>
-        <img src={productImg} alt={name} />
-      </div>
-      {/* <div className={cardContent}>
-        <Typography
-          align="center"
-          className={cardTitle}
-          variant="h3"
-          gutterBottom
-        >
-          {name.substr(0, 20)}
-        </Typography>
-        
-      </div> */}
+    <Card className={imageRoot}>
+      <IconButton
+        size="small"
+        className={closeIcon}
+        onClick={() => handleClick(_id)}
+      >
+        <CancelRoundedIcon fontSize="small" />
+      </IconButton>
+      <img className={imgStyle} src={productImg} alt={name} />
     </Card>
   );
 };

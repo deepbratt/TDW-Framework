@@ -14,6 +14,7 @@ import { INewCarCard } from '../../layout/Sections/Utils/types';
 
 const SelectNewCarCardStyles = makeStyles((theme) => ({
   root: {
+    minWidth: '200px',
     display: 'flex',
     flexDirection: 'column',
     alignContent: 'center',

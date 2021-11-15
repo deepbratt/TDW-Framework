@@ -83,11 +83,14 @@ const CarComparision = () => {
 
   useEffect(() => {
     handleFeatures();
+    // eslint-disable-next-line
   }, []);
 
   const handleFeatures = () => {
     let oneArray: string[] = [];
+    // eslint-disable-next-line
     shortListCars.map((item: ICarCard) => {
+      // eslint-disable-next-line
       item.features.map((value: string) => {
         oneArray.push(value);
       });
@@ -108,11 +111,7 @@ const CarComparision = () => {
         </TableCell>
         {shortListCars &&
           shortListCars.map((item: ICarCard) => (
-            <TableCell
-              key={uuidv4()}
-              // style={{ position: 'relative', zIndex: 0 }}
-              align="center"
-            >
+            <TableCell key={uuidv4()} align="center">
               <ShortListCard
                 productImg={item.image[0]}
                 name={item.model}

@@ -80,7 +80,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
     resetForm,
     bodyColors,
     modelsLoading,
-    // clearShortListedCars,
     setResponseMessage
   } = useForm();
 
@@ -338,7 +337,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
                   item
                   container
                   xs={12}
-                  // justifyContent="center";
                   spacing={1}
                 >
                   {result &&
@@ -365,7 +363,6 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
                       <Pagination
                         style={{ margin: '15px 0' }}
                         count={pageCount}
-                        page={page}
                         onChange={handlePageChange}
                         variant="outlined"
                         shape="round"

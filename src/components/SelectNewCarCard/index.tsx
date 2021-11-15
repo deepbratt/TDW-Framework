@@ -15,12 +15,12 @@ import { INewCarCard } from '../../layout/Sections/Utils/types';
 const SelectNewCarCardStyles = makeStyles((theme) => ({
   root: {
     minWidth: '200px',
+    height: '200px',
     display: 'flex',
     flexDirection: 'column',
     alignContent: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '80%',
     width: '100%',
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     margin: 'auto'

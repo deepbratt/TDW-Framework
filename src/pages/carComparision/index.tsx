@@ -67,13 +67,18 @@ const CarComparisionsStyles = makeStyles((theme) => ({
   cardWrapper: {
     display: 'flex',
     justifyContent: 'center',
-    maxWidth: '300px',
+    maxWidth: '90%',
     minHeight: '220px'
+  },
+  flexCenter: {
+    display: 'flex',
+    justifyContent: 'center',
+    maxWidth: '100%'
   }
 }));
 
 const CarComparision = () => {
-  const { root, stickyCell, contentRoot, cardWrapper } =
+  const { root, stickyCell, contentRoot, cardWrapper, flexCenter } =
     CarComparisionsStyles();
   const dispatch = useDispatch();
   const shortListCars = useSelector(

@@ -16,22 +16,24 @@ const ShortListCardStyles = makeStyles((theme: Theme) => ({
     margin: '5px',
     position: 'relative',
     width: '100%',
-    height: '130px',
+    height: '200px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
+    maxWidth: '100%',
     backgroundColor: theme.palette.common.black
   },
   closeIcon: {
     position: 'absolute',
     right: '5%',
     top: '5%',
-    color: 'white'
+    color: theme.palette.common.black,
+    backgroundColor: theme.palette.common.white
   },
   imgStyle: {
     flexShrink: 0,
-    maxWidth: '100%',
+    maxWidth: '200px',
     height: 'auto'
   }
 }));

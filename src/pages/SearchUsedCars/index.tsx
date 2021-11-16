@@ -17,9 +17,7 @@ const index = () => {
         <>
         <MetaTags
         title={PageMeta.advanceFilters.title}
-        description={PageMeta.advanceFilters.description}
         canonical={PageMeta.advanceFilters.canonical}
-        keywords={PageMeta.advanceFilters.keywords}
       />
             <UsedCars/>
         </>

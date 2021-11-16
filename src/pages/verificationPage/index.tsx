@@ -10,9 +10,7 @@ const Index = () => {
     <Section>
       <MetaTags
         title={PageMeta.forgotPassword.title}
-        description={PageMeta.forgotPassword.description}
         canonical={PageMeta.forgotPassword.canonical}
-        keywords={PageMeta.forgotPassword.keywords}
       />
       <VerificationContext verificationMethod={method} />
     </Section>

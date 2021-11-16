@@ -75,9 +75,7 @@ const Signup = () => {
     >
       <MetaTags
         title={PageMeta.signup.title}
-        description={PageMeta.signup.description}
         canonical={PageMeta.signup.canonical}
-        keywords={PageMeta.signup.keywords}
       />
       <Grid item xs={10} md={6} lg={4}>
         {isLoading && <LinearProgress color="secondary" />}

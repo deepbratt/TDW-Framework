@@ -152,9 +152,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
     <Container className={root}>
       <MetaTags
         title={PageMeta.carListing.title}
-        description={PageMeta.carListing.description}
         canonical={PageMeta.carListing.canonical}
-        keywords={PageMeta.carListing.keywords}
       />
       <Grid
         container

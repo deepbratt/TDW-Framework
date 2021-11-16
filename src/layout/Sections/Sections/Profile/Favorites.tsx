@@ -80,9 +80,7 @@ const Container = () => {
     <Grid container>
       <MetaTags
         title={PageMeta.favorites.title}
-        description={PageMeta.favorites.description}
         canonical={PageMeta.favorites.canonical}
-        keywords={PageMeta.favorites.keywords}
       />
       <Loader isBackdrop={true} open={isLoading} />
       <Paper elevation={4} className={layoutType === 'list' ? box : layout}>

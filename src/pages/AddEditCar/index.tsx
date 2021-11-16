@@ -66,9 +66,7 @@ const AddEditCar = () => {
     >
       <MetaTags
         title={id ? PageMeta.editCar.title : PageMeta.addCar.title}
-        description={PageMeta.addCar.description}
         canonical={PageMeta.addCar.canonical}
-        keywords={PageMeta.addCar.keywords}
       />
       <Loader open={isLoading} />
       <Grid container>

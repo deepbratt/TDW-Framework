@@ -46,9 +46,7 @@ const ResetPassword = ({ token }: any) => {
     <>
     <MetaTags
         title={PageMeta.resetToken.title}
-        description={PageMeta.resetToken.description}
         canonical={PageMeta.resetToken.canonical}
-        keywords={PageMeta.resetToken.keywords}
       />
       {isLoading && <LinearProgress color="secondary" />}
       <Card className={formCard}>

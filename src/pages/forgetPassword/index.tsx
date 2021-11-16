@@ -56,9 +56,7 @@ const ForgetPassword = () => {
     >
       <MetaTags
         title={PageMeta.forgotPassword.title}
-        description={PageMeta.forgotPassword.description}
         canonical={PageMeta.forgotPassword.canonical}
-        keywords={PageMeta.forgotPassword.keywords}
       />
       <Grid item xs={10} md={8} lg={4}>
         {token ? (

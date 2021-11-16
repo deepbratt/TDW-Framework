@@ -44,9 +44,7 @@ const Help = () => {
     <Grid container>
       <MetaTags
         title={PageMeta.help.title}
-        description={PageMeta.help.description}
         canonical={PageMeta.help.canonical}
-        keywords={PageMeta.help.keywords}
       />
       <Paper elevation={4} className={isLoggedIn ? box : onlyHelpbox}>
         <Grid item lg={12} md={12} xs={12} style={{ marginTop: '0' }}>

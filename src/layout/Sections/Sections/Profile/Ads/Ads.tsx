@@ -78,9 +78,7 @@ const Container = () => {
     <Grid style={{ display: 'flex' }} container>
       <MetaTags
         title={PageMeta.myAds.title}
-        description={PageMeta.myAds.description}
         canonical={PageMeta.myAds.canonical}
-        keywords={PageMeta.myAds.keywords}
       />
       <Loader open={isLoading} isBackdrop={true} />
       <Paper elevation={4} className={layoutType === 'list' ? box : layout}>

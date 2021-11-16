@@ -33,9 +33,7 @@ const UserHistory = () => {
     <Grid container>
       <MetaTags
         title={PageMeta.orders.title}
-        description={PageMeta.orders.description}
         canonical={PageMeta.orders.canonical}
-        keywords={PageMeta.orders.keywords}
       />
       <Grid className={box} item lg={12} md={10} xs={12}>
         <section className={heading}>

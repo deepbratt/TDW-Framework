@@ -146,9 +146,7 @@ const CarDetailContainer = () => {
       >
         <MetaTags
           title={PageMeta.carDetails.title}
-          description={PageMeta.carDetails.description}
           canonical={PageMeta.carDetails.canonical}
-          keywords={PageMeta.carDetails.keywords}
         />
         <Loader open={isLoading} isBackdrop={true} />
         <Paper elevation={4} style={{ padding: '20px', width: '100%' }}>

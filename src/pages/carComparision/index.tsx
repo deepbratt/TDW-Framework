@@ -134,9 +134,7 @@ const CarComparision = () => {
     <Container>
       <MetaTags
         title={PageMeta.carComparision.title}
-        description={PageMeta.carComparision.description}
         canonical={PageMeta.carComparision.canonical}
-        keywords={PageMeta.carComparision.keywords}
       />
 
       <Grid item>

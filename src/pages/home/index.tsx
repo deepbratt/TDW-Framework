@@ -40,9 +40,7 @@ const HomePage = () => {
     <>
       <MetaTags
         title={PageMeta.home.title}
-        description={PageMeta.home.description}
         canonical={PageMeta.home.canonical}
-        keywords={PageMeta.home.keywords}
       />
       <HomeBanner />
       <Container style={{ marginBottom: '130px' }}>

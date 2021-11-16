@@ -79,9 +79,7 @@ const Login = ({
     >
       <MetaTags
         title={PageMeta.login.title}
-        description={PageMeta.login.description}
         canonical={PageMeta.login.canonical}
-        keywords={PageMeta.login.keywords}
       />
       <Grid item xs={formColXs} md={formColMd} lg={formColLg}>
         {isLoading && <LinearProgress color="secondary" />}

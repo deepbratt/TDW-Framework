@@ -97,9 +97,7 @@ const Profile = () => {
     <Grid container>
       <MetaTags
         title={PageMeta.profile.title}
-        description={PageMeta.profile.description}
         canonical={PageMeta.profile.canonical}
-        keywords={PageMeta.profile.keywords}
       />
       <Loader open={isLoading} isBackdrop={true} />
       <Paper elevation={4} className={box}>

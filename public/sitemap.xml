@@ -1,0 +1,32 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    <url>
+        <loc>http://www.carokta.com/</loc>
+    </url>
+    <url>
+        <loc>http://www.carokta.com/cars</loc>
+    </url>
+    <url>
+        <loc>http://www.carokta.com/cars/car-comparision</loc>
+    </url>
+    <url>
+        <loc>http://www.carokta.com/add-edit/car</loc>
+    </url>
+    <url>
+        <loc>http://www.carokta.com/dashboard</loc>
+    </url>
+    <url>
+        <loc>http://www.carokta.com/dashboard/profile</loc>
+    </url>
+    <url>
+        <loc>http://www.carokta.com/dashboard/favorites</loc>
+    </url>
+    <url>
+        <loc>http://www.carokta.com/dashboard/favorites/ads</loc>
+    </url>
+    <url>
+        <loc>http://www.carokta.com/dashboard/help</loc>
+    </url>
+    <url>
+        <loc>http://www.carokta.com/help</loc>
+    </url>
+</urlset>

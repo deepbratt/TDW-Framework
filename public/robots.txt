@@ -1,3 +1,4 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: https://www.carokta.com/car-detail/*
+Sitemap: https://www.carokta.com/sitemap.xml

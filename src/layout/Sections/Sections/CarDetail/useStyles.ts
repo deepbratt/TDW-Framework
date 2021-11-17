@@ -112,12 +112,20 @@ export const useStyles = makeStyles(() => ({
       marginBottom: '0px'
     },
     '& .carousel .thumbs-wrapper ul li': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      alignContent: 'center',
       borderRadius: '10px',
-      height: '100%',
-      minHeight: '50px',
-      maxHeight: '50px',
-      minWidth: '80px',
-      maxWidth: '80px'
+      minHeight: '60px',
+      maxHeight: '60px',
+      minWidth: '60px',
+      maxWidth: '60px',
+      background: 'black'
+    },
+    '& .carousel .thumbs-wrapper ul li img': {
+      maxWidth: '100%',
+      maxHeight: '100%',
     }
     // '&  .carousel .control-prev.control-arrow:before': {
     //   color: 'black',
@@ -209,13 +217,13 @@ export const useStyles = makeStyles(() => ({
     alignItems: 'center',
     cursor: 'pointer',
     height: '600px',
-    position:"relative",
-    width:"100%",
+    position: 'relative',
+    width: '100%',
     [theme.breakpoints.down('md')]: {
-      height: '300px',
+      height: '300px'
     }
   },
-  blurBgImg:{
+  blurBgImg: {
     position: 'absolute',
     width: '100%',
     height: '100%',
@@ -232,7 +240,7 @@ export const useStyles = makeStyles(() => ({
     //   backgroundColor:ColorConstant.lightBlue
     // }
   },
-  tabsWrapper:{
-    flexDirection:"row"
+  tabsWrapper: {
+    flexDirection: 'row'
   }
 }));

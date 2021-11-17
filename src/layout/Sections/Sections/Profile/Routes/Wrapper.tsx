@@ -1,6 +1,6 @@
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ProfileSideBarContext from '../ProfileSidebar/ProfileSideBarContext';
-import Orders from '../Orders/History';
+// import Orders from '../Orders/History';
 import Profile from '../Profile';
 import Help from '../Help/Help';
 import Favs from '../Favorites';

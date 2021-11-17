@@ -149,7 +149,12 @@ const useAddEditCar = () => {
       });
     }
   };
-  const handleChangeSelectKeyValue = (name: string, value: any, displayName: string, displayValue: any) => {
+  const handleChangeSelectKeyValue = (
+    name: string,
+    value: any,
+    displayName: string,
+    displayValue: any
+  ) => {
     setFormData({ name: name, value: value });
     setFormData({ name: displayName, value: displayValue });
     if (value === '') {
@@ -205,13 +210,11 @@ const useAddEditCar = () => {
           });
           setBodyColorArray(temp);
         } else {
-          if (response.message) {
-            setToastMessage(response.message);
-          } else {
-            setToastMessage(response.response);
-          }
-          setToastOpen(true);
+          setToastMessage(
+            response && response.message ? response.message : 'Network Error'
+          );
           setToastType('error');
+          setToastOpen(true);
         }
       })
       .then(() => setIsLoading(false));
@@ -230,12 +233,9 @@ const useAddEditCar = () => {
           let featureName = result.map((el: any) => el.name);
           setFeaturesArray(featureName);
         } else {
-          let msg = response.response.data.message
-            ? response.response.data.message
-            : response.response
-            ? response.response
-            : 'Network Error';
-          setToastMessage(msg);
+          setToastMessage(
+            response && response.message ? response.message : 'Network Error'
+          );
           setToastType('error');
           setToastOpen(true);
         }
@@ -251,12 +251,9 @@ const useAddEditCar = () => {
           let bodyTypesName = result.map((el: any) => el.bodyType);
           setBodyTypesArray(bodyTypesName);
         } else {
-          let msg = response.response.data.message
-            ? response.response.data.message
-            : response.response
-            ? response.response
-            : 'Network Error';
-          setToastMessage(msg);
+          setToastMessage(
+            response && response.message ? response.message : 'Network Error'
+          );
           setToastType('error');
           setToastOpen(true);
         }
@@ -280,12 +277,9 @@ const useAddEditCar = () => {
             setToastOpen(true);
             setHelpComingDialog(true);
           } else {
-            let msg = response.response.data.message
-              ? response.response.data.message
-              : response.response
-              ? response.response
-              : 'Network Error';
-            setToastMessage(msg);
+            setToastMessage(
+              response && response.message ? response.message : 'Network Error'
+            );
             setToastType('error');
             setToastOpen(true);
           }
@@ -336,7 +330,6 @@ const useAddEditCar = () => {
           });
           setImages(FieldValues.images);
         } else {
-          // console.log(response);
           if (response.data) {
             setToastMessage(response.data.message);
             setToastType('error');
@@ -383,7 +376,6 @@ const useAddEditCar = () => {
           setToastOpen(true);
           history.push(paths.dashboard + '/ads');
         } else {
-          // console.log('error', response);
           if (!response.response) {
             setToastMessage('Network Error');
             setToastType('error');
@@ -478,22 +470,17 @@ const useAddEditCar = () => {
     return true;
   };
 
-  const appendImages = async(fd:any)=>{
+  const appendImages = async (fd: any) => {
     let StringUrls = 0;
     for (let i = 0; i < formData.images.length; i++) {
       if (typeof formData.images[i] === typeof 'string') {
         fd.append('image[' + StringUrls + ']', images[i]);
         StringUrls++;
       } else {
-        let watermarkText = "carokta.com"
+        let watermarkText = 'carokta.com';
         await watermark([images[i]])
           .blob(
-            watermark.text.center(
-              watermarkText,
-              '35px roboto',
-              '#fff',
-              0.5
-            )
+            watermark.text.center(watermarkText, '35px roboto', '#fff', 0.5)
           )
           .then((img: any) => {
             // console.log(img);
@@ -501,7 +488,7 @@ const useAddEditCar = () => {
           });
       }
     }
-  }
+  };
 
   const submitForm = async () => {
     // console.log('submit following data: ');
@@ -534,7 +521,7 @@ const useAddEditCar = () => {
     }
     fd.append('price', formData.price);
     setIsLoading(true);
-    await appendImages(fd)
+    await appendImages(fd);
     // console.table(Object.fromEntries(fd));
     addEditData(fd).then((response) => {
       setIsLoading(false);
@@ -553,11 +540,15 @@ const useAddEditCar = () => {
         }
         setActiveStep(0);
       } else {
-        let msg = response && response.response && response.response.data && response.response.data.message
-          ? response.response.data.message
-          : response.response
-          ? response.response
-          : 'Network Error';
+        let msg =
+          response &&
+          response.response &&
+          response.response.data &&
+          response.response.data.message
+            ? response.response.data.message
+            : response.response
+            ? response.response
+            : 'Network Error';
         setToastMessage(msg);
         setToastType('error');
         setToastOpen(true);

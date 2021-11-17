@@ -1,0 +1,31 @@
+.error-page {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem;
+}
+
+.error-page img {
+  width: 60%;
+}
+
+.error-page button {
+  font-size: 1rem;
+  padding: 0.25rem 1rem;
+  color: #FFF;
+  background: linear-gradient(180deg, #ec4040 0%, #C20000 100%);
+  border-radius: 7px;
+  border: none;
+  outline: none;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.75;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.error-page button:hover {
+  cursor: pointer;
+  font-weight: 700;
+  outline: 1px solid #C20000;
+}

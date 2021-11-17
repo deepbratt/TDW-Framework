@@ -15,14 +15,27 @@ const ShortListCardStyles = makeStyles((theme: Theme) => ({
   imageRoot: {
     margin: '5px',
     position: 'relative',
-    width: '100%',
-    height: '200px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
-    maxWidth: '100%',
-    backgroundColor: theme.palette.common.black
+    minWidth: '180px',
+    minHeight: '180px',
+    maxWidth: '180px',
+    maxHeight: '180px',
+    backgroundColor: theme.palette.common.black,
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '150px',
+      minHeight: '150px',
+      maxWidth: '150px',
+      maxHeight: '150px'
+    },
+    [theme.breakpoints.down('xs')]: {
+      minWidth: '120px',
+      minHeight: '120px',
+      maxWidth: '120px',
+      maxHeight: '120px'
+    }
   },
   closeIcon: {
     position: 'absolute',
@@ -32,9 +45,10 @@ const ShortListCardStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.common.white
   },
   imgStyle: {
-    flexShrink: 0,
-    maxWidth: '200px',
-    height: 'auto'
+    // flexShrink: 0,
+    maxWidth: '100%',
+    maxHeight: '100%'
+    // height: 'auto'
   }
 }));
 

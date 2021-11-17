@@ -28,7 +28,7 @@ const ShortListItems = ({
   );
   const { root, compareButtonIcon, comparebutton } = CarListingStyles();
   return (
-    <Grid container >
+    <Grid container>
       {shortlistCars.length >= 1 && (
         <Grid item container xs={12}>
           <Grid
@@ -59,7 +59,18 @@ const ShortListItems = ({
             <CompareRoundedIcon className={compareButtonIcon} />
             {COMPARE}
           </Fab>
-          <Grid item container xs={12} spacing={1}>
+          <Grid
+            item
+            container
+            xs={12}
+            spacing={1}
+            style={{
+              display: 'flex',
+              flexWrap: 'nowrap',
+              overflowY: 'auto',
+              flexDirection: 'row'
+            }}
+          >
             {shortlistCars && shortlistCars.length > 0
               ? shortlistCars.map((item: ICarCard) => (
                   <Grid
@@ -67,8 +78,10 @@ const ShortListItems = ({
                     container
                     justifyContent="center"
                     item
-                    xs={3}
-                    sm={2}
+                    xs={6}
+                    sm={3}
+                    md={4}
+                    lg={3}
                   >
                     <ShortListCard
                       productImg={item.image[0]}

@@ -54,10 +54,7 @@ const CarComparisionsStyles = makeStyles((theme) => ({
   stickyCell: {
     position: 'sticky',
     left: 0,
-    zIndex: 999,
-    [breakpoints.down('xs')]: {
-      padding: '10px'
-    }
+    zIndex: 999
   },
   contentRoot: {
     display: 'flex',

@@ -45,6 +45,7 @@ export const useForm = (validateOnChange = false) => {
     if (responseMessage.status === 'success') {
       dispatch(login(responseData));
     }
+    //eslint-disable-next-line
   }, [responseMessage]);
 
   const handleSubmit = async (e: any) => {

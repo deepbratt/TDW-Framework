@@ -67,6 +67,10 @@ const PageMeta = {
         title:"Reset Password | Carokta",
         canonical:"forgot-password/reset-password"
     },
+    error:{
+        title:"Oops ! Something Wrong !",
+        canonical:"*"
+    }
 }
 
 export default PageMeta

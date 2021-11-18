@@ -57,7 +57,7 @@ export const useStyles = makeStyles(() => ({
     marginTop: '20px'
   },
   carousel: {
-    // paddingTop: "70px",
+    paddingBottom: "10px",
     width: '100%',
     '& .carousel .slider-wrapper.axis-horizontal .slider': {
       alignItems: 'center'

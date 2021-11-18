@@ -1,6 +1,7 @@
 import CarDetail from '../../layout/Sections/Sections/CarDetail/CarDetail';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
 import {
   rating,
   mainButton,
@@ -31,6 +32,7 @@ import CarDescription from '../../layout/Sections/Sections/CarDetail/CarDescript
 import CarFeatures from '../../layout/Sections/Sections/CarDetail/CarFeatures';
 import {
   Box,
+  Container,
   Divider,
   IconButton,
   makeStyles,
@@ -130,222 +132,230 @@ const CarDetailContainer = () => {
   }, [sliderColumn.current?.clientHeight, isLoading]);
 
   return (
-    <Section backColor={'transparent'}>
+    <Container>
+      <MetaTags
+        title={PageMeta.carDetails.title}
+        canonical={PageMeta.carDetails.canonical}
+      />
+      <Loader open={isLoading} isBackdrop={true} />
       <Grid item xs={12}>
         <BreadCrumbs links={breadCrumbData} />
       </Grid>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        width="100%"
-        style={{ backgroundColor: 'transparent' }}
-        height={'100%'}
-      >
-        <MetaTags
-          title={PageMeta.carDetails.title}
-          canonical={PageMeta.carDetails.canonical}
-        />
-        <Loader open={isLoading} isBackdrop={true} />
-        <Paper elevation={4} style={{ padding: '20px', width: '100%' }}>
-          {!obj ? (
-            <Grid container spacing={2}>
-              <Grid
-                item
-                xs={12}
-                container
-                justifyContent="center"
-                alignItems="center"
-              >
-                <h1 className={loader}>No Data</h1>
+      <Card>
+        <Box
+        // display="flex"
+        // justifyContent="center"
+        // alignItems="center"
+        // width="100%"
+        // style={{ backgroundColor: 'transparent' }}
+        // height={'100%'}
+        >
+          <Paper elevation={4}>
+            {!obj ? (
+              <Grid container spacing={2}>
+                <Grid
+                  item
+                  xs={12}
+                  container
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <h1 className={loader}>No Data</h1>
+                </Grid>
               </Grid>
-            </Grid>
-          ) : (
-            <Grid container spacing={2}>
-              <Grid
-                item
-                xs={12}
-                lg={6}
-                md={6}
-                ref={sliderColumn}
-                style={{ height: '100%' }}
-              >
-                <Slides
-                  carTitle={carTitle}
-                  info={CarInfo}
-                  feature={carFeatures}
-                  desc={desc}
-                  paragraph={obj?.description}
-                  arr={obj.image && obj.image.length > 0 ? obj.image : [NoImg]}
-                  id={obj?._id}
-                  city={obj?.registrationCity}
-                  assembly={obj?.assembly}
-                  color={obj?.bodyColor}
-                  bodyType={obj?.bodyType}
-                  engineCapacity={obj?.engineCapacity}
-                  date={obj.createdAt}
-                  isFavs={obj.isFav}
-                  createdBy={obj.createdBy}
-                  updatedAt={obj.updatedAt}
-                  data={obj}
-                  imageLoaded={handleImageLoaded}
-                />
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                lg={6}
-                md={6}
-                style={{
-                  maxHeight:
-                    size.mobile || size.mobileLarge ? '100%' : sliderHeight,
-                  overflowY: 'auto'
-                }}
-              >
-                <Grid container>
-                  <Grid
-                    item
-                    xs={12}
-                    container
-                    justifyContent="space-between"
-                    alignItems="flex-start"
-                  >
-                    <Box>
-                      <Typography variant="h2">{`${obj.make} ${obj.model} ${obj.modelYear}`}</Typography>
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        style={{ color: Colors.grey }}
-                      >
-                        <LocationOnOutlined fontSize="small" />
-                        <Typography variant="subtitle1">
-                          {/* <img width="20px" src={locIcon} alt="" /> */}
-                          {obj?.city}
-                        </Typography>
-                      </Box>
-                    </Box>
-                    <Box display="flex" justifyContent="space-between">
-                      <IconButton
-                        className={btn}
-                        onClick={(e) => toggleShortListCar(e)}
-                      >
-                        <Compare
-                          color={
-                            shortlistCars.filter((e: any) => e._id === obj._id)
-                              .length > 0
-                              ? 'primary'
-                              : 'inherit'
-                          }
-                        />
-                      </IconButton>
-
-                      {user?._id === obj.createdBy?._id ? null : (
-                        <IconButton
-                          onClick={() => toggleFavourite(obj._id)}
-                          className={btn}
-                          style={{ marginLeft: '5px' }}
+            ) : (
+              <Grid container spacing={2}>
+                <Grid
+                  item
+                  xs={12}
+                  lg={6}
+                  md={6}
+                  ref={sliderColumn}
+                  style={{ height: '100%' }}
+                >
+                  <Slides
+                    carTitle={carTitle}
+                    info={CarInfo}
+                    feature={carFeatures}
+                    desc={desc}
+                    paragraph={obj?.description}
+                    arr={
+                      obj.image && obj.image.length > 0 ? obj.image : [NoImg]
+                    }
+                    id={obj?._id}
+                    city={obj?.registrationCity}
+                    assembly={obj?.assembly}
+                    color={obj?.bodyColor}
+                    bodyType={obj?.bodyType}
+                    engineCapacity={obj?.engineCapacity}
+                    date={obj.createdAt}
+                    isFavs={obj.isFav}
+                    createdBy={obj.createdBy}
+                    updatedAt={obj.updatedAt}
+                    data={obj}
+                    imageLoaded={handleImageLoaded}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  lg={6}
+                  md={6}
+                  style={{
+                    maxHeight:
+                      size.mobile || size.mobileLarge ? '100%' : sliderHeight,
+                    overflowY: 'auto'
+                  }}
+                >
+                  <Grid container style={{padding:"20px"}}>
+                    <Grid
+                      item
+                      xs={12}
+                      container
+                      justifyContent="space-between"
+                      alignItems="flex-start"
+                    >
+                      <Box>
+                        <Typography variant="h2">{`${obj.make} ${obj.model} ${obj.modelYear}`}</Typography>
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          style={{ color: Colors.grey }}
                         >
-                          {isFavorite ? (
-                            <Favorite color="primary" />
-                          ) : (
-                            <Favorite style={{ color: 'white' }} />
-                          )}
+                          <LocationOnOutlined fontSize="small" />
+                          <Typography variant="subtitle1">
+                            {/* <img width="20px" src={locIcon} alt="" /> */}
+                            {obj?.city}
+                          </Typography>
+                        </Box>
+                      </Box>
+                      <Box display="flex" justifyContent="space-between">
+                        <IconButton
+                          className={btn}
+                          onClick={(e) => toggleShortListCar(e)}
+                        >
+                          <Compare
+                            color={
+                              shortlistCars.filter(
+                                (e: any) => e._id === obj._id
+                              ).length > 0
+                                ? 'primary'
+                                : 'inherit'
+                            }
+                          />
                         </IconButton>
-                      )}
+
+                        {user?._id === obj.createdBy?._id ? null : (
+                          <IconButton
+                            onClick={() => toggleFavourite(obj._id)}
+                            className={btn}
+                            style={{ marginLeft: '5px' }}
+                          >
+                            {isFavorite ? (
+                              <Favorite color="primary" />
+                            ) : (
+                              <Favorite style={{ color: 'white' }} />
+                            )}
+                          </IconButton>
+                        )}
+                      </Box>
+                    </Grid>
+                    <Box style={{ marginTop: defaultMarginTop }}>
+                      <Typography
+                        style={{ color: Colors.navyBlue }}
+                        variant="h2"
+                      >
+                        PKR {obj.price?.toLocaleString()}
+                      </Typography>
                     </Box>
                   </Grid>
-                  <Box style={{ marginTop: defaultMarginTop }}>
-                    <Typography style={{ color: Colors.navyBlue }} variant="h2">
-                      PKR {obj.price?.toLocaleString()}
-                    </Typography>
+                  <Box marginTop={defaultMarginTop}>
+                    <Divider />
+                  </Box>
+                  <Box>
+                    <Tabs
+                      value={tabValue}
+                      onChange={handleChange}
+                      indicatorColor="primary"
+                      textColor="primary"
+                      variant="fullWidth"
+                      aria-label="full width tabs example"
+                      classes={{
+                        flexContainer: tabs
+                      }}
+                    >
+                      <Tab
+                        classes={{
+                          wrapper: tab
+                        }}
+                        label="Information"
+                        {...a11yProps(0)}
+                      />
+                      <Tab
+                        classes={{
+                          wrapper: tab
+                        }}
+                        label="Description"
+                        {...a11yProps(1)}
+                      />
+                      <Tab
+                        classes={{
+                          wrapper: tab
+                        }}
+                        label="Car features"
+                        {...a11yProps(2)}
+                      />
+                    </Tabs>
+                    <Divider />
+                  </Box>
+                  <Box p={3}>
+                    <TabPanel value={tabValue} index={0}>
+                      <CarDetail
+                        mainButton={mainButton}
+                        numButton={numButton}
+                        Title={`${obj.make} ${obj.model} ${obj.modelYear}`}
+                        location={obj?.city}
+                        rating={rating}
+                        array={array}
+                        locIcon={locIcon}
+                        mailIcon={mailIcon}
+                        ratIcon={ratIcon}
+                        numbIcon={numbIcon}
+                        paragraph={obj?.description}
+                        desc={desc}
+                        price={obj?.price}
+                        modelYear={obj?.modelYear}
+                        transmission={obj?.transmission}
+                        mileage={obj?.milage}
+                        engineType={obj?.engineType}
+                        createdBy={obj.createdBy}
+                        data={obj}
+                      />
+                    </TabPanel>
+                    <TabPanel value={tabValue} index={1}>
+                      <CarDescription description={obj.description} />
+                    </TabPanel>
+                    <TabPanel value={tabValue} index={2}>
+                      <CarFeatures features={carFeatures} />
+                    </TabPanel>
                   </Box>
                 </Grid>
-                <Box marginTop={defaultMarginTop}>
-                  <Divider />
-                </Box>
-                <Box>
-                  <Tabs
-                    value={tabValue}
-                    onChange={handleChange}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    variant="fullWidth"
-                    aria-label="full width tabs example"
-                    classes={{
-                      flexContainer: tabs
-                    }}
-                  >
-                    <Tab
-                      classes={{
-                        wrapper: tab
-                      }}
-                      label="Information"
-                      {...a11yProps(0)}
-                    />
-                    <Tab
-                      classes={{
-                        wrapper: tab
-                      }}
-                      label="Description"
-                      {...a11yProps(1)}
-                    />
-                    <Tab
-                      classes={{
-                        wrapper: tab
-                      }}
-                      label="Car features"
-                      {...a11yProps(2)}
-                    />
-                  </Tabs>
-                  <Divider />
-                </Box>
-                <Box p={3}>
-                  <TabPanel value={tabValue} index={0}>
-                    <CarDetail
-                      mainButton={mainButton}
-                      numButton={numButton}
-                      Title={`${obj.make} ${obj.model} ${obj.modelYear}`}
-                      location={obj?.city}
-                      rating={rating}
-                      array={array}
-                      locIcon={locIcon}
-                      mailIcon={mailIcon}
-                      ratIcon={ratIcon}
-                      numbIcon={numbIcon}
-                      paragraph={obj?.description}
-                      desc={desc}
-                      price={obj?.price}
-                      modelYear={obj?.modelYear}
-                      transmission={obj?.transmission}
-                      mileage={obj?.milage}
-                      engineType={obj?.engineType}
-                      createdBy={obj.createdBy}
-                      data={obj}
-                    />
-                  </TabPanel>
-                  <TabPanel value={tabValue} index={1}>
-                    <CarDescription description={obj.description} />
-                  </TabPanel>
-                  <TabPanel value={tabValue} index={2}>
-                    <CarFeatures features={carFeatures} />
-                  </TabPanel>
-                </Box>
               </Grid>
-            </Grid>
-          )}
-        </Paper>
-        <LoginModal
-          openModal={signinModal}
-          closeModal={() => setSigninModal(false)}
-        />
-        <Toast
-          open={open}
-          message={responseMessage.message}
-          type={responseMessage.status}
-          onClose={() => setOpen(false)}
-        />
-      </Box>
-    </Section>
+            )}
+          </Paper>
+          <LoginModal
+            openModal={signinModal}
+            closeModal={() => setSigninModal(false)}
+          />
+          <Toast
+            open={open}
+            message={responseMessage.message}
+            type={responseMessage.status}
+            onClose={() => setOpen(false)}
+          />
+        </Box>
+      </Card>
+    </Container>
   );
 };
 

@@ -4,17 +4,17 @@ import { Colors } from '../../Utils/constants/colors/colors';
 const CarListingStyles = makeStyles((theme) => ({
   root: {
     [theme.breakpoints.down('sm')]: {
+      marginTop: '10px',
       padding: '10px'
     },
     [theme.breakpoints.down('xs')]: {
+      marginTop: '20px',
       paddingTop: '0px',
     }
   },
   listingContainer: {
-    marginTop: '50px',
     marginBottom: '50px',
     [theme.breakpoints.down('sm')]: {
-      marginTop: '0px',
       marginBottom: '0px'
     }
   },

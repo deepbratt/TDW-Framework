@@ -14,16 +14,29 @@ import { INewCarCard } from '../../layout/Sections/Utils/types';
 
 const SelectNewCarCardStyles = makeStyles((theme) => ({
   root: {
-    minWidth: '200px',
-    height: '200px',
     display: 'flex',
     flexDirection: 'column',
     alignContent: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    margin: 'auto'
+    margin: 'auto',
+    minWidth: '180px',
+    minHeight: '180px',
+    maxWidth: '180px',
+    maxHeight: '180px',
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '150px',
+      minHeight: '150px',
+      maxWidth: '150px',
+      maxHeight: '150px'
+    },
+    [theme.breakpoints.down('xs')]: {
+      minWidth: '120px',
+      minHeight: '120px',
+      maxWidth: '120px',
+      maxHeight: '120px'
+    }
   },
   buttons: {
     margin: '20px 10px',
@@ -45,7 +58,7 @@ const SelectNewCarCardStyles = makeStyles((theme) => ({
   }
 }));
 const SelectNewCarCard: React.FC<INewCarCard> = (value: INewCarCard) => {
-  const { root, buttons, iconButton } = SelectNewCarCardStyles(); 
+  const { root, buttons, iconButton } = SelectNewCarCardStyles();
   const history = useHistory();
   return (
     <Paper className={root}>
@@ -57,7 +70,7 @@ const SelectNewCarCard: React.FC<INewCarCard> = (value: INewCarCard) => {
           disabled={value.isDisabled ? true : false}
         >
           {SEARCH_NEW_CAR}
-        </CustomButton> 
+        </CustomButton>
       )}
       {window.screen.width <= 600 && (
         <div className={root} style={{ boxShadow: 'none' }}>
@@ -74,7 +87,6 @@ const SelectNewCarCard: React.FC<INewCarCard> = (value: INewCarCard) => {
             onClick={() => history.push(paths.dashboard + paths.fav)}
           >
             <FavoriteBorderRoundedIcon />
-           
           </IconButton>
         </div>
       )}

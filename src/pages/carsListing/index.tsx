@@ -154,15 +154,13 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
         title={PageMeta.carListing.title}
         canonical={PageMeta.carListing.canonical}
       />
+      <BreadCrumbs />
       <Grid
         container
         className={listingContainer}
         justifyContent="space-between"
-        spacing={2}
+        spacing={1}
       >
-        <Grid item xs={12}>
-          <BreadCrumbs />
-        </Grid>
         <Grid style={{ height: '100%' }} xs={12} md={4} xl={3} item container>
           <Hidden smDown>
             <Grid item xs={12} className={filtersRoot}>
@@ -331,12 +329,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
                   </Typography>
                 </Grid>
               ) : (
-                <Grid
-                  item
-                  container
-                  xs={12}
-                  spacing={1}
-                >
+                <Grid item container xs={12} spacing={1}>
                   {result &&
                     result.map((car: any, index: any) => (
                       <Grid

@@ -7,7 +7,7 @@ const CarListingStyles = makeStyles((theme) => ({
       padding: '10px'
     },
     [theme.breakpoints.down('xs')]: {
-      padding: '5px'
+      paddingTop: '0px',
     }
   },
   listingContainer: {

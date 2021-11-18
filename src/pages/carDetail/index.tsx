@@ -81,7 +81,7 @@ function a11yProps(index: any) {
 const CarDetailContainer = () => {
   const defaultMarginTop = '20px';
   const { id } = useParams<RouteProps>();
-  
+
   const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
   const { shortlistCars } = useSelector(
     (state: RootState) => state.shortlistCars
@@ -128,8 +128,6 @@ const CarDetailContainer = () => {
       );
     }
   }, [sliderColumn.current?.clientHeight, isLoading]);
-
-
 
   return (
     <Section backColor={'transparent'}>
@@ -198,7 +196,6 @@ const CarDetailContainer = () => {
                 xs={12}
                 lg={6}
                 md={6}
-                // className={scrollable}
                 style={{
                   maxHeight:
                     size.mobile || size.mobileLarge ? '100%' : sliderHeight,

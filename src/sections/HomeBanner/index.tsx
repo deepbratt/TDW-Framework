@@ -82,7 +82,7 @@ const HomeBanner: React.FC = () => {
       <img src={BannerImg} alt="Guy in car showing keys." />
       <div className={after} />
       <Card className={cardRoot}>
-        <Typography align="center" className={cardHeading} variant="h2">
+        <Typography align="center" className={cardHeading} variant="h1">
           {BannerData.CARD_HEADER}
         </Typography>
 

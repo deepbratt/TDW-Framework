@@ -42,7 +42,7 @@ const PointsSection: React.FC = () => {
               <Typography
                 className={title}
                 color="textPrimary"
-                variant="h2"
+                variant="h1"
                 gutterBottom
               >
                 {item.heading}

@@ -2,7 +2,6 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Backdrop from '@material-ui/core/Backdrop';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { Theme } from '@material-ui/core/styles/createTheme';
 import { useState } from 'react';
@@ -10,8 +9,7 @@ import UploadPicIcon from '../assets/icons/uploadPicIcon.png';
 import InformationDialog from '../components/InformationDialog';
 import addEditCarData from '../Utils/constants/language/en/addEditCarData';
 import 'react-image-crop/dist/ReactCrop.css';
-import ReactCrop, { Crop } from 'react-image-crop';
-import { Box, IconButton } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import CancelRounded from '@material-ui/icons/CancelRounded';
 
 interface IUploadPhotosFormProps {
@@ -28,10 +26,6 @@ const UploadPhotosForm = ({
 }: IUploadPhotosFormProps) => {
   const classes = useStyles();
   const [openInfoModel, setOpenInfoModel] = useState(false);
-  const [openCropModal, setOpenCropModal] = useState(false);
-  const [crop, setCrop] = useState<any>({ aspect: 1 / 1, width: 300 });
-  const [srcImg, setSrcImg] = useState('');
-  const [tempImg, setTempImg] = useState<HTMLImageElement>();
   const [infoMessage, setInfoMessage] = useState<string | any>('');
   const [infoTitle, setInfoTitle] = useState('');
 
@@ -76,66 +70,6 @@ const UploadPhotosForm = ({
       updateImagesState(temp);
     }
     e.target.value = null;
-  };
-
-  const getCroppedImg = async () => {
-    if (!tempImg) {
-      return;
-    }
-    try {
-      tempImg.onload = async function () {
-        const canvas = document.createElement('canvas');
-        const scaleX = tempImg.naturalWidth / tempImg.width;
-        const scaleY = tempImg.naturalHeight / tempImg.height;
-        canvas.width = crop.width;
-        canvas.height = crop.height;
-        const ctx = canvas.getContext('2d');
-        const pixelRatio = window.devicePixelRatio;
-        canvas.width = crop.width * pixelRatio;
-        canvas.height = crop.height * pixelRatio;
-        ctx?.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-        if (ctx) ctx.imageSmoothingQuality = 'high';
-        ctx?.drawImage(
-          tempImg,
-          crop.x * scaleX,
-          crop.y * scaleY,
-          crop.width * scaleX,
-          crop.height * scaleY,
-          0,
-          0,
-          crop.width,
-          crop.height
-        );
-        toBlobFunc(canvas)
-          .then((blob) => {
-            let temp = [...images];
-            temp.push(blob);
-            updateImagesState(temp);
-          })
-          .then(() => cancelUploadImg());
-      };
-    } catch (e) {
-      console.log('crop the image', e);
-    }
-  };
-
-  const toBlobFunc = async (canvas: HTMLCanvasElement) => {
-    return new Promise((resolve, reject) => {
-      canvas.toBlob(
-        (blob: any) => {
-          blob.name = 'filename' + images.length;
-          resolve(blob);
-        },
-        'image/jpeg',
-        1
-      );
-    });
-  };
-
-  const cancelUploadImg = () => {
-    setSrcImg('');
-    setTempImg(undefined);
-    setOpenCropModal(false);
   };
 
   const removePhoto = (index: number) => {
@@ -225,30 +159,6 @@ const UploadPhotosForm = ({
         open={openInfoModel}
         setOpen={() => setOpenInfoModel(false)}
       />
-      <Backdrop className={classes.backdrop} open={openCropModal}>
-        {srcImg && (
-          <>
-            <ReactCrop
-              src={URL.createObjectURL(srcImg)}
-              onImageLoaded={(img) => {
-                setTempImg(img);
-                // return false;
-              }}
-              crop={crop}
-              // locked
-              onChange={(croped) => setCrop(croped)}
-            />
-            <Box display="flex">
-              <Button variant="contained" onClick={getCroppedImg}>
-                OK
-              </Button>
-              <Button variant="contained" onClick={cancelUploadImg}>
-                Cancel
-              </Button>
-            </Box>
-          </>
-        )}
-      </Backdrop>
     </Grid>
   );
 };

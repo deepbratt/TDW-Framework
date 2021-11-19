@@ -20,7 +20,6 @@ import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import Sizes from '../../Utils/themeConstants';
 import { NEED_ASSISTANCE } from '../../Utils/constants/language/en/addEditCarTexts';
 import { paths } from '../../routes/paths';
-import watermark from 'watermarkjs';
 
 const formReducer = (state: any, event: any) => {
   return {
@@ -477,15 +476,7 @@ const useAddEditCar = () => {
         fd.append('image[' + StringUrls + ']', images[i]);
         StringUrls++;
       } else {
-        let watermarkText = 'carokta.com';
-        await watermark([images[i]])
-          .blob(
-            watermark.text.center(watermarkText, '35px roboto', '#fff', 0.5)
-          )
-          .then((img: any) => {
-            // console.log(img);
-            fd.append('image', img);
-          });
+        fd.append('image',images[i])
       }
     }
   };

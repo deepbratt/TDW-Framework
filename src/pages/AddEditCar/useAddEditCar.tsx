@@ -49,6 +49,7 @@ const initialFieldValues = {
   assembly: '',
   sellerType: '',
   images: [],
+  selectedImage: "",
   features: [],
   province: '',
   location: { coordinates: { lat: '', long: '' }, address: '' }
@@ -181,6 +182,8 @@ const useAddEditCar = () => {
     <UploadPhotosForm
       images={images}
       updateImagesState={updateImagesState}
+      formData={formData}
+      setFormData={setFormData}
       // key={images.length}
       requireError={requireError.images}
     />,
@@ -322,6 +325,11 @@ const useAddEditCar = () => {
             features: result.features,
             province: result.province,
             sellerType: result.sellerType,
+            selectedImage: result.selectedImage
+              ? result.selectedImage
+              : result.image[0]
+              ? result.image[0]
+              : '',
             location: { coordinates: { lat: '', long: '' }, address: '' }
           };
           Object.keys(FieldValues).forEach((key) => {
@@ -471,19 +479,26 @@ const useAddEditCar = () => {
 
   const appendImages = async (fd: any) => {
     let StringUrls = 0;
-    for (let i = 0; i < formData.images.length; i++) {
-      if (typeof formData.images[i] === typeof 'string') {
-        fd.append('image[' + StringUrls + ']', images[i]);
+    const arrayOfImages = formData.images.filter(
+      (item: any) => item !== formData.selectedImage
+    );
+    fd.append('selectedImage', formData.selectedImage);
+    for (let i = 0; i < arrayOfImages.length; i++) {
+      if (typeof arrayOfImages[i] === typeof 'string') {
+        fd.append('image[' + StringUrls + ']', arrayOfImages[i]);
         StringUrls++;
+<<<<<<< Updated upstream
       } else {
         fd.append('image',images[i])
+=======
+      } else if (arrayOfImages[i]) {
+        fd.append('image', arrayOfImages[i]);
+>>>>>>> Stashed changes
       }
     }
   };
 
   const submitForm = async () => {
-    // console.log('submit following data: ');
-    // console.log(formData);
     let fd = new FormData();
     fd.append('country', 'Pakistan');
     fd.append('city', formData.city);

@@ -11,28 +11,45 @@ import addEditCarData from '../Utils/constants/language/en/addEditCarData';
 import 'react-image-crop/dist/ReactCrop.css';
 import { IconButton } from '@material-ui/core';
 import CancelRounded from '@material-ui/icons/CancelRounded';
+<<<<<<< Updated upstream
 import watermark from 'watermarkjs'
 
+=======
+import { useTheme } from '@material-ui/core/styles';
+import watermark from "watermarkjs";
+>>>>>>> Stashed changes
 interface IUploadPhotosFormProps {
   images: any;
   updateImagesState: (img: any) => void;
   requireError: any;
+  formData: any;
+  setFormData: any;
 }
 
 const UploadPhotosForm = ({
   images,
   updateImagesState,
-  requireError
+  requireError,
+  formData,
+  setFormData
 }: IUploadPhotosFormProps) => {
   const classes = useStyles();
+  const themes = useTheme();
   const [openInfoModel, setOpenInfoModel] = useState(false);
   const [infoMessage, setInfoMessage] = useState<string | any>('');
   const [infoTitle, setInfoTitle] = useState('');
 
+<<<<<<< Updated upstream
   const uploadImage = async(e: any) => {
+=======
+  const uploadImage = async (e: any) => {
+>>>>>>> Stashed changes
     let oneMb = 1024 * 1024;
     let temp = [...images];
     let imageFiles = e.target.files;
+    if (temp.length < 1) {
+      setFormData({ name: "selectedImage", value: imageFiles[0] });
+    }
     let sizeError = false;
     let arrayLengthError = false;
     for (let i = 0; i < imageFiles.length; i++) {
@@ -44,10 +61,17 @@ const UploadPhotosForm = ({
           arrayLengthError = true;
           break;
         }
+<<<<<<< Updated upstream
         let watermarkText = 'carokta.com';
         await watermark([imageFiles[i]])
           .blob(
             watermark.text.center(watermarkText, '35px roboto', '#fff', 0.5)
+=======
+        let watermarkText = "carokta.com";
+        await watermark([imageFiles[i]])
+          .blob(
+            watermark.text.center(watermarkText, "35px roboto", "#fff", 0.5)
+>>>>>>> Stashed changes
           )
           .then((img: any) => {
             temp.push(img);
@@ -77,8 +101,19 @@ const UploadPhotosForm = ({
     e.target.value = null;
   };
 
-  const removePhoto = (index: number) => {
+  const selectImage = (img: any) => {
+    setFormData({ name: 'selectedImage', value: img });
+  };
+
+  const removePhoto = (
+    index: number,
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
     let temp = [...images];
+    if (temp[index] === formData.selectedImage) {
+      setFormData({ name: 'selectedImage', value: false });
+    }
     temp.splice(index, 1);
     updateImagesState(temp);
   };
@@ -87,6 +122,9 @@ const UploadPhotosForm = ({
     <Grid container>
       {requireError}
       <Grid item xs={12} className={classes.itemContainer}>
+        <Typography variant="body1">
+          {addEditCarData.selectedImageText}
+        </Typography>
         {images.length < 1 ? (
           <>
             <img src={UploadPicIcon} alt="car" />
@@ -100,11 +138,21 @@ const UploadPhotosForm = ({
           <div className={classes.imagesRoot}>
             {images.map((image: any, index: number) =>
               typeof image === 'string' ? (
-                <div className={classes.imageRoot}>
+                <div
+                  className={classes.imageRoot}
+                  onClick={() => selectImage(image)}
+                  style={{
+                    border:
+                      formData.selectedImage === image
+                        ? `5px solid ${themes.palette.primary.main}`
+                        : '0px',
+                    cursor: 'pointer'
+                  }}
+                >
                   <IconButton
                     size="small"
                     className={classes.closeIcon}
-                    onClick={() => removePhoto(index)}
+                    onClick={(e) => removePhoto(index, e)}
                   >
                     <CancelRounded fontSize="small" />
                   </IconButton>
@@ -116,11 +164,21 @@ const UploadPhotosForm = ({
                   />
                 </div>
               ) : image && typeof image !== 'string' ? (
-                <div className={classes.imageRoot}>
+                <div
+                  className={classes.imageRoot}
+                  onClick={() => selectImage(image)}
+                  style={{
+                    border:
+                      formData.selectedImage === image
+                        ? `5px solid ${themes.palette.primary.main}`
+                        : '0px',
+                    cursor: 'pointer'
+                  }}
+                >
                   <IconButton
                     size="small"
                     className={classes.closeIcon}
-                    onClick={() => removePhoto(index)}
+                    onClick={(e) => removePhoto(index, e)}
                   >
                     <CancelRounded fontSize="small" />
                   </IconButton>
@@ -206,29 +264,33 @@ const useStyles = makeStyles((theme: Theme) =>
       opacity: 0
     },
     imagesRoot: {
-      display: 'flex',
-      maxWidth: '800px',
-      flexWrap: 'wrap',
-      margin: '15px 0'
+      display: "flex",
+      maxWidth: "800px",
+      flexWrap: "wrap",
+      margin: "15px 0",
     },
     imageRoot: {
-      position: 'relative',
-      maxWidth: '220px',
-      maxHeight: '180px'
+      margin: "5px",
+      position: "relative",
+      width: "100%",
+      height: "250px",
+      maxWidth: "250px",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      overflow: "hidden",
+      backgroundColor: theme.palette.common.black,
     },
     closeIcon: {
-      position: 'absolute',
-      right: '5%',
-      top: '5%',
-      color: 'white'
+      position: "absolute",
+      right: "5%",
+      top: "5%",
+      color: "white",
     },
     imgStyle: {
-      cursor: 'pointer',
-      width: '220px',
-      marginLeft: '5px',
-      maxHeight: '200px',
-      minHeight: '180px',
-      maxWidth: '180px'
+      flexShrink: 0,
+      maxWidth: "100%",
+      maxHidth: "100%",
     },
     backdrop: {
       zIndex: theme.zIndex.drawer + 1,

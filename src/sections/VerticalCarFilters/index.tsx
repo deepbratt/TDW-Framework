@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/core/Slider';
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button, CircularProgress, IconButton } from '@material-ui/core';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -30,6 +30,9 @@ import {
   ENTER_YOUR_EMAIL_PASS_MESSAGE,
   SEE_MORE
 } from '../../Utils/constants/language/en/buttonLabels';
+import { API_ENDPOINTS } from '../../Utils/API/endpoints';
+import { getAllData } from '../../Utils/API/API';
+import SearchRounded from '@material-ui/icons/SearchRounded';
 // import MapSearch from '../../components/MapSearch/MapSearch';
 
 export interface CarFiltersProps {
@@ -37,6 +40,9 @@ export interface CarFiltersProps {
 }
 
 const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
+  const { ADS, CARS } = API_ENDPOINTS;
+  const [keyword, setKeyword] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
   const [citySearchResult, setCitySearchResult] = useState<ICity[]>();
   const [regSearchResult, setRegSearchResult] = useState<ICity[]>();
   const [makeSearchResult, setMakeSearchResult] = useState<any>();
@@ -132,11 +138,25 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     if (e.target.value === '') {
       result = [];
     }
-    if (e.target.name === 'make') {
-      setMakeSearchResult(result);
-    } else {
-      setModelSearchResult(result);
-    }
+    setMakeSearchResult(result);
+  };
+
+  const handleMakesSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
+  };
+
+  const getModels = async () => {
+    setIsLoading(true);
+    let param = `?limit=50`;
+    param = param + `&keyword=${keyword}`;
+    await getAllData(ADS + CARS + API_ENDPOINTS.MODEL + param).then(
+      (response) => {
+        setIsLoading(false);
+        if (response && response && response.status === 'success') {
+          setModelSearchResult(response.data.result);
+        }
+      }
+    );
   };
 
   return (
@@ -366,17 +386,42 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                     variant="filled"
                     label="Search"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      handleMakesModelSearch(e, models)
+                      handleMakesSearch(e)
                     }
+                    InputProps={{
+                      endAdornment: (
+                        <IconButton onClick={() => getModels()}>
+                          <SearchRounded />
+                        </IconButton>
+                      )
+                    }}
+                    onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                      if (e.key === 'Enter') {
+                        getModels();
+                      }
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   {modelSearchResult && modelSearchResult.length > 0 && (
-                    <Typography variant="h4" gutterBottom>
-                      {'Search Result'}
-                    </Typography>
+                    <>
+                      <Typography variant="h4" gutterBottom>
+                        {'Search Result'}
+                      </Typography>
+                    </>
                   )}
-                  {modelSearchResult &&
+                  {isLoading ? (
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        margin: '10px 0'
+                      }}
+                    >
+                      <CircularProgress />
+                    </div>
+                  ) : (
+                    modelSearchResult &&
                     modelSearchResult.map((item: any) => {
                       return (
                         <FormControlLabel
@@ -396,7 +441,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                           label={item.name}
                         />
                       );
-                    })}
+                    })
+                  )}
                 </Grid>
                 <Divider variant="middle" />
                 <Grid item xs={12}>

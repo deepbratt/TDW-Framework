@@ -39,9 +39,6 @@ const UploadPhotosForm = ({
     let oneMb = 1024 * 1024;
     let temp = [...images];
     let imageFiles = e.target.files;
-    if (temp.length < 1) {
-      setFormData({ name: "selectedImage", value: imageFiles[0] });
-    }
     let sizeError = false;
     let arrayLengthError = false;
     for (let i = 0; i < imageFiles.length; i++) {
@@ -86,8 +83,19 @@ const UploadPhotosForm = ({
     e.target.value = null;
   };
 
-  const selectImage = (img: any) => {
-    setFormData({ name: 'selectedImage', value: img });
+  const selectImage = async(img: any) => {
+    if(img !== typeof "string"){
+      let watermarkText = 'carokta.com';
+          await watermark([img])
+            .blob(
+              watermark.text.center(watermarkText, '35px roboto', '#fff', 0.5)
+            )
+            .then((image: any) => {
+              setFormData({ name: 'selectedImage', value: image });
+            });
+    }else{
+      setFormData({ name: 'selectedImage', value: img });
+    }
   };
 
   const removePhoto = (
@@ -97,7 +105,7 @@ const UploadPhotosForm = ({
     e.stopPropagation();
     let temp = [...images];
     if (temp[index] === formData.selectedImage) {
-      setFormData({ name: 'selectedImage', value: false });
+      setFormData({ name: 'selectedImage', value: "" });
     }
     temp.splice(index, 1);
     updateImagesState(temp);

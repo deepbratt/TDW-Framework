@@ -487,13 +487,8 @@ const useAddEditCar = () => {
       if (typeof arrayOfImages[i] === typeof 'string') {
         fd.append('image[' + StringUrls + ']', arrayOfImages[i]);
         StringUrls++;
-<<<<<<< Updated upstream
       } else {
         fd.append('image',images[i])
-=======
-      } else if (arrayOfImages[i]) {
-        fd.append('image', arrayOfImages[i]);
->>>>>>> Stashed changes
       }
     }
   };

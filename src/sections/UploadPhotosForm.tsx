@@ -11,13 +11,9 @@ import addEditCarData from '../Utils/constants/language/en/addEditCarData';
 import 'react-image-crop/dist/ReactCrop.css';
 import { IconButton } from '@material-ui/core';
 import CancelRounded from '@material-ui/icons/CancelRounded';
-<<<<<<< Updated upstream
 import watermark from 'watermarkjs'
+import{useTheme } from '@material-ui/core/styles';
 
-=======
-import { useTheme } from '@material-ui/core/styles';
-import watermark from "watermarkjs";
->>>>>>> Stashed changes
 interface IUploadPhotosFormProps {
   images: any;
   updateImagesState: (img: any) => void;
@@ -39,11 +35,7 @@ const UploadPhotosForm = ({
   const [infoMessage, setInfoMessage] = useState<string | any>('');
   const [infoTitle, setInfoTitle] = useState('');
 
-<<<<<<< Updated upstream
   const uploadImage = async(e: any) => {
-=======
-  const uploadImage = async (e: any) => {
->>>>>>> Stashed changes
     let oneMb = 1024 * 1024;
     let temp = [...images];
     let imageFiles = e.target.files;
@@ -61,17 +53,10 @@ const UploadPhotosForm = ({
           arrayLengthError = true;
           break;
         }
-<<<<<<< Updated upstream
         let watermarkText = 'carokta.com';
         await watermark([imageFiles[i]])
           .blob(
             watermark.text.center(watermarkText, '35px roboto', '#fff', 0.5)
-=======
-        let watermarkText = "carokta.com";
-        await watermark([imageFiles[i]])
-          .blob(
-            watermark.text.center(watermarkText, "35px roboto", "#fff", 0.5)
->>>>>>> Stashed changes
           )
           .then((img: any) => {
             temp.push(img);

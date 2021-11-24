@@ -493,7 +493,7 @@ const useAddEditCar = () => {
         fd.append('image[' + StringUrls + ']', arrayOfImages[i]);
         StringUrls++;
       } else {
-        fd.append('image',images[i])
+        fd.append('image',arrayOfImages[i])
       }
     }
   };
@@ -528,7 +528,7 @@ const useAddEditCar = () => {
     fd.append('price', formData.price);
     setIsLoading(true);
     await appendImages(fd);
-    // console.table(Object.fromEntries(fd));
+    console.table(Object.fromEntries(fd));
     addEditData(fd).then((response) => {
       setIsLoading(false);
       if (response && response.data && response.data.status === 'success') {

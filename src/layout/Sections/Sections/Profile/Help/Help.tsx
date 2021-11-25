@@ -51,7 +51,7 @@ const Help = () => {
           {isLoggedIn && (
             <section className={heading}>
               <Hidden mdUp>
-                <SideBar Title={Title} sidebar={paths} />
+                <SideBar key={help} Title={Title} sidebar={paths} />
               </Hidden>
               <Typography variant="h3">{help}</Typography>
             </section>

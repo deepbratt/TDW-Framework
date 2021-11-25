@@ -128,10 +128,13 @@ export const fav = 'Your Favourites';
 export const favTitle = 'Your Favorites';
 export const createdAt = 'Created at:';
 
-// favs
+// ads
 
 export const ads = 'Your Ads';
 export const adsTitle = 'Your Ads';
+
+// stats
+export const statsTitle = "Your Statistics"
 
 // history
 

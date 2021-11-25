@@ -87,7 +87,7 @@ const Container = () => {
         <Grid item xs={12}>
           <section className={heading}>
             <Hidden mdUp>
-              <SideBar Title={Title} sidebar={paths} />
+              <SideBar key={fav} Title={Title} sidebar={paths} />
             </Hidden>
             <Typography variant="h3">{fav}</Typography>
           </section>

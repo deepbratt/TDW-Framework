@@ -38,7 +38,7 @@ const UserHistory = () => {
       <Grid className={box} item lg={12} md={10} xs={12}>
         <section className={heading}>
           <Hidden mdUp>
-            <SideBar Title={Title} sidebar={paths} />
+            <SideBar key={"history"} Title={Title} sidebar={paths} />
           </Hidden>
             <Typography variant="h3">{history}</Typography>
         </section>

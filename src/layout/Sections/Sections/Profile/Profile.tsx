@@ -104,7 +104,7 @@ const Profile = () => {
         <Grid item xs={12}>
           <section className={heading}>
             <Hidden mdUp>
-              <SideBar Title={Title} sidebar={paths} />
+              <SideBar key={"Profile"} Title={Title} sidebar={paths} />
             </Hidden>
             <Typography variant="h3">
               {profileTitle}

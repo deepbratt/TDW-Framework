@@ -35,6 +35,10 @@ const PageMeta = {
         title:"My Ads | Carokta",
         canonical:"dashboard/ads"
     },
+    stats:{
+        title:"Statistics | Carokta",
+        canonical:"dashboard/stats"
+    },
     help:{
         title:"Help | Carokta",
         canonical:"dashboard/help"

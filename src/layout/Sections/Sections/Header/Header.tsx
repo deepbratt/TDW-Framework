@@ -208,7 +208,7 @@ const HeaderContext = () => {
             )}
           </Hidden>
           <Hidden mdUp>
-            <SideBar />
+            <SideBar key="Header" />
           </Hidden>
         </Toolbar>
       </AppBar>

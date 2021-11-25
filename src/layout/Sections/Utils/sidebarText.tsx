@@ -5,6 +5,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Commute from '@material-ui/icons/Commute';
 import Compare from '@material-ui/icons/Compare';
 import Favorite from '@material-ui/icons/Favorite';
+import AssessmentIcon from '@material-ui/icons/Assessment';
 import Help from '@material-ui/icons/Help';
 export const Title = 'DashBoard';
 export const profileTitle = 'Personal Information';
@@ -57,6 +58,11 @@ export const paths = [
   //     path: "dashboard/buyRequests",
   //     icon: icon7
   // },
+  {
+    title: 'Stats',
+    path: '/dashboard/stats',
+    icon: <AssessmentIcon />
+  },
   {
     title: 'Help',
     path: '/dashboard/help',

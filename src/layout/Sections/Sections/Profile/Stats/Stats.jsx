@@ -45,11 +45,11 @@ function Stats() {
   }, []);
 
   // Process with the fetched data:
-  const soldUnsold = data.map((car: any) => car.isSold);
-  const carMakes = data.map((car: any) => car.make);
+  const soldUnsoldArray = data.map((car: any) => car.isSold);
+  const carMakesArray = data.map((car: any) => car.make);
   const totalCars = data.length;
-  const soldCars = soldUnsold.filter((sold: any) => sold === true).length;
-  const unsoldCars = soldUnsold.filter((sold: any) => sold === false).length;
+  const soldCars = soldUnsoldArray.filter((sold: any) => sold === true).length;
+  const unsoldCars = soldUnsoldArray.filter((sold: any) => sold === false).length;
 
   // Dataset for Pie Chart showing sold & unsold cars ratio:
   const soldUnsoldData = [
@@ -75,8 +75,6 @@ function Stats() {
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
-    // Dataset for Pie Chart showing different car makes:
-
     return (
       <text
         x={x}
@@ -91,6 +89,15 @@ function Stats() {
   };
 
 
+  // Dataset for Pie Chart showing different car makes:
+  let carMakesCount = {};
+  for (var i = 0; i < carMakesArray.length; i++) {
+    carMakesCount[carMakesArray[i]] = 1 + (carMakesCount[carMakesArray[i]] || 0);
+  }
+
+  let carMakesData = Object.entries(carMakesCount).map(entry => {
+    return { name: entry[0], value: entry[1] }
+  })
 
 
   return (
@@ -115,22 +122,22 @@ function Stats() {
           </Typography>
         ) : (
           <>
-            <Grid container spacing={2}>
-              <p>{JSON.stringify(carMakes)}</p>
-              <p>{JSON.stringify(soldUnsold)}</p><br />
-            </Grid>
+            {/* <Grid container spacing={2}>
+              <p>{JSON.stringify(carMakesData)}</p>
+              <p>{JSON.stringify(soldUnsoldData)}</p><br />
+            </Grid> */}
             <Grid container spacing={2}>
               <p><strong>Total Cars: </strong>{totalCars} <br />
-                <strong>Cars Sold: </strong>{soldCars} <br />
-                <strong>Cars Unsold: </strong>{unsoldCars}</p>
-              <PieChart width={800} height={800}>
+                <strong>Sold: </strong>{soldCars} <br />
+                <strong>Unsold: </strong>{unsoldCars}</p>
+              <PieChart width={240} height={280}>
                 <Pie
                   data={soldUnsoldData}
-                  cx={100}
-                  cy={200}
+                  cx={125}
+                  cy={125}
                   labelLine={false}
                   label={renderCustomizedLabel}
-                  outerRadius={80}
+                  outerRadius={100}
                   fill="#8884d8"
                   dataKey="value"
                   nameKey="name"
@@ -142,7 +149,32 @@ function Stats() {
                 <Tooltip />
               </PieChart>
             </Grid>
-            <Grid container spacing={2}></Grid>
+            <Grid container spacing={2}>
+              <p>
+                <strong>Total Cars: </strong>{totalCars}<br />
+                {carMakesData.map(entry => (
+                  <><strong>{entry.name}: </strong>{entry.value}<br /> </>
+                ))}
+              </p>
+              <PieChart width={240} height={280}>
+                <Pie
+                  data={carMakesData}
+                  cx={125}
+                  cy={125}
+                  labelLine={false}
+                  label={renderCustomizedLabel}
+                  outerRadius={100}
+                  fill="#8884d8"
+                  dataKey="value"
+                  nameKey="name"
+                >
+                  {carMakesData.map((entry: any, index: any) => (
+                    <Cell key={`cell-${index}`} fill="#8884d8" />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </Grid>
           </>
         )}
         {/* <Grid className={pagination} item xs={12}>

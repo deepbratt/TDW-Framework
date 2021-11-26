@@ -11,8 +11,8 @@ import addEditCarData from '../Utils/constants/language/en/addEditCarData';
 import 'react-image-crop/dist/ReactCrop.css';
 import { IconButton } from '@material-ui/core';
 import CancelRounded from '@material-ui/icons/CancelRounded';
-import watermark from 'watermarkjs'
-import{useTheme } from '@material-ui/core/styles';
+import watermark from 'watermarkjs';
+import { useTheme } from '@material-ui/core/styles';
 
 interface IUploadPhotosFormProps {
   images: any;
@@ -35,10 +35,13 @@ const UploadPhotosForm = ({
   const [infoMessage, setInfoMessage] = useState<string | any>('');
   const [infoTitle, setInfoTitle] = useState('');
 
-  const uploadImage = async(e: any) => {
+  const uploadImage = async (e: any) => {
     let oneMb = 1024 * 1024;
     let temp = [...images];
     let imageFiles = e.target.files;
+    if (temp.length < 1) {
+      setFormData({ name: 'selectedImage', value: imageFiles[0] });
+    }
     let sizeError = false;
     let arrayLengthError = false;
     for (let i = 0; i < imageFiles.length; i++) {
@@ -83,19 +86,8 @@ const UploadPhotosForm = ({
     e.target.value = null;
   };
 
-  const selectImage = async(img: any) => {
-    if(img !== typeof "string"){
-      let watermarkText = 'carokta.com';
-          await watermark([img])
-            .blob(
-              watermark.text.center(watermarkText, '35px roboto', '#fff', 0.5)
-            )
-            .then((image: any) => {
-              setFormData({ name: 'selectedImage', value: image });
-            });
-    }else{
-      setFormData({ name: 'selectedImage', value: img });
-    }
+  const selectImage = (img: any) => {
+    setFormData({ name: 'selectedImage', value: img });
   };
 
   const removePhoto = (
@@ -105,7 +97,7 @@ const UploadPhotosForm = ({
     e.stopPropagation();
     let temp = [...images];
     if (temp[index] === formData.selectedImage) {
-      setFormData({ name: 'selectedImage', value: "" });
+      setFormData({ name: 'selectedImage', value: false });
     }
     temp.splice(index, 1);
     updateImagesState(temp);
@@ -257,33 +249,33 @@ const useStyles = makeStyles((theme: Theme) =>
       opacity: 0
     },
     imagesRoot: {
-      display: "flex",
-      maxWidth: "800px",
-      flexWrap: "wrap",
-      margin: "15px 0",
+      display: 'flex',
+      maxWidth: '800px',
+      flexWrap: 'wrap',
+      margin: '15px 0'
     },
     imageRoot: {
-      margin: "5px",
-      position: "relative",
-      width: "100%",
-      height: "250px",
-      maxWidth: "250px",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      overflow: "hidden",
-      backgroundColor: theme.palette.common.black,
+      margin: '5px',
+      position: 'relative',
+      width: '100%',
+      height: '250px',
+      maxWidth: '250px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      overflow: 'hidden',
+      backgroundColor: theme.palette.common.black
     },
     closeIcon: {
-      position: "absolute",
-      right: "5%",
-      top: "5%",
-      color: "white",
+      position: 'absolute',
+      right: '5%',
+      top: '5%',
+      color: 'white'
     },
     imgStyle: {
       flexShrink: 0,
-      maxWidth: "100%",
-      maxHidth: "100%",
+      maxWidth: '100%',
+      maxHidth: '100%'
     },
     backdrop: {
       zIndex: theme.zIndex.drawer + 1,

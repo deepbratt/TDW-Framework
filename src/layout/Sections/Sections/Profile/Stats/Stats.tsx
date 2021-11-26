@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../redux/store';
 import { useStyles } from '../useStyles';
 import Actions from '../useFunctions';
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
 
 function Stats() {
   const { heading, box, loading, layout } = useStyles();
@@ -38,9 +39,59 @@ function Stats() {
     );
   };
 
+  // Fetch All cars' data associated to an individual's / dealer's account:
   useEffect(() => {
     getAllCarsData();
   }, []);
+
+  // Process with the fetched data:
+  const soldUnsold = data.map((car: any) => car.isSold);
+  const carMakes = data.map((car: any) => car.make);
+  const totalCars = data.length;
+  const soldCars = soldUnsold.filter((sold: any) => sold === true).length;
+  const unsoldCars = soldUnsold.filter((sold: any) => sold === false).length;
+
+  // Dataset for Pie Chart showing sold & unsold cars ratio:
+  const soldUnsoldData = [
+    { name: "Sold", value: soldCars },
+    { name: "Unsold", value: unsoldCars }
+  ]
+
+  const COLORS = ['#00C49F', '#FF8042'];
+
+  const RADIAN = Math.PI / 180;
+
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    name,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+    index
+  }: any) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    // Dataset for Pie Chart showing different car makes:
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor="middle"
+        dominantBaseline="central"
+      >
+        {`${(percent * 100).toFixed(0)}% ${name}`}
+      </text>
+    );
+  };
+
+
+
 
   return (
     <Grid container>
@@ -63,9 +114,36 @@ function Stats() {
             No Result Found
           </Typography>
         ) : (
-          <Grid container spacing={2}>
-            <p>{JSON.stringify(data)}</p>
-          </Grid>
+          <>
+            <Grid container spacing={2}>
+              <p>{JSON.stringify(carMakes)}</p>
+              <p>{JSON.stringify(soldUnsold)}</p><br />
+            </Grid>
+            <Grid container spacing={2}>
+              <p><strong>Total Cars: </strong>{totalCars} <br />
+                <strong>Cars Sold: </strong>{soldCars} <br />
+                <strong>Cars Unsold: </strong>{unsoldCars}</p>
+              <PieChart width={800} height={800}>
+                <Pie
+                  data={soldUnsoldData}
+                  cx={100}
+                  cy={200}
+                  labelLine={false}
+                  label={renderCustomizedLabel}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                  nameKey="name"
+                >
+                  {soldUnsoldData.map((entry: any, index: any) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </Grid>
+            <Grid container spacing={2}></Grid>
+          </>
         )}
         {/* <Grid className={pagination} item xs={12}>
         <Pagination

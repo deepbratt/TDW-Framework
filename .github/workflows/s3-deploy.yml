@@ -25,7 +25,7 @@ jobs:
         env:
          CI: false
       - name: Build React App - Prod
-        if: github.ref == 'refs/heads/r/2142.1-1
+        if: github.ref == 'refs/heads/r/2142.1-1'
         run: npm install && npm run build-prod
         env:
          CI: false
@@ -51,8 +51,8 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: aws cloudfront create-invalidation --distribution-id "E14GK8241BCUI1" --paths "/*"
       - name: Production (carokta.com) CDN Cache invalidation
-        if: github.ref == 'refs/heads/r/2142.1-0'
+        if: github.ref == 'refs/heads/r/2142.1-1'
         run: aws cloudfront create-invalidation --distribution-id "E2S9QBBMNEVSWB" --paths "/*"
       - name: Production (www.carokta.com) CDN Cache invalidation
-        if: github.ref == 'refs/heads/r/2142.1-0'
+        if: github.ref == 'refs/heads/r/2142.1-1'
         run: aws cloudfront create-invalidation --distribution-id "E1E39QAY1DZ05L" --paths "/*"

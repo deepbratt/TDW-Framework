@@ -4,13 +4,15 @@ on:
   push:
     branches:
       - develop
-      - r/2142.1-0
+      - r/2142.1-1
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+         ref: r/2142.1-1
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -23,7 +25,7 @@ jobs:
         env:
          CI: false
       - name: Build React App - Prod
-        if: github.ref == 'refs/heads/r/2142.1-0'
+        if: github.ref == 'refs/heads/r/2142.1-1
         run: npm install && npm run build-prod
         env:
          CI: false
@@ -40,10 +42,10 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: aws s3 sync ./build/ s3://dev.carokta.com --delete
       - name: Deploy app build to Production S3 bucket
-        if: github.ref == 'refs/heads/r/2142.1-0'
+        if: github.ref == 'refs/heads/r/2142.1-1'
         run: aws s3 sync ./build/ s3://carokta.com --delete
       - name: Deploy app build to Production www S3 bucket
-        if: github.ref == 'refs/heads/r/2142.1-0'
+        if: github.ref == 'refs/heads/r/2142.1-1'
         run: aws s3 sync ./build/ s3://www.carokta.com --delete
       - name: Development CDN Cache invalidation
         if: github.ref == 'refs/heads/develop'

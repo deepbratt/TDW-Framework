@@ -26,17 +26,17 @@ const useImageOrientation = () => {
     setImageOrientation(imgOrientation);
     let height=""
     let width=""
-    if (imgOrientation === 'portrait') {
+    // if (imgOrientation === 'portrait') {
       setImgHeight('100%');
       setImgWidth('auto');
       height="100%"
       width="auto"
-    } else {
-      setImgWidth('100%');
-      setImgHeight('auto');
-      width="100%"
-      height="auto"
-    }
+    // } else {
+    //   setImgWidth('100%');
+    //   setImgHeight('auto');
+    //   width="100%"
+    //   height="auto"
+    // }
     return {width, height}
   };
   return {

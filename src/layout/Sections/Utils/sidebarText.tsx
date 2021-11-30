@@ -147,7 +147,3 @@ export const dialTo = 'tel:+92-335-1222515';
 export const emailUs = 'Email us at:';
 export const callUs = 'Call us at:';
 export const sendTicketMsg = 'Send direct message';
-export const email2 = 'info@themagnit.com';
-export const number2 = '+1(469)626-8836';
-export const mailTo2 = 'mailTo:info@themagnit.com';
-export const dialTo2 = 'tel:+1(469)626-8836';

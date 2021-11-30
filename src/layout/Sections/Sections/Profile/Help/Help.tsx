@@ -15,7 +15,11 @@ import {
   dialTo,
   emailUs,
   callUs,
-  sendTicketMsg
+  sendTicketMsg,
+  number2,
+  dialTo2,
+  mailTo2,
+  email2
 } from '../../../Utils/sidebarText';
 import SideBar from '../ProfileSidebar/Sidebar';
 import MetaTags from '../../../../../components/MetaTags';
@@ -31,7 +35,7 @@ import { RootState } from '../../../../../redux/store';
 import helpBanner from '../../../../../assets/helpImage.png';
 
 const Help = () => {
-  const { heading, box, helpContainer, subContainer, onlyHelpbox } =
+  const { heading, box, helpContainer, subContainer, onlyHelpbox, rightAlign } =
     useStyles();
   const [isLoading, setIsLoading] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
@@ -69,10 +73,16 @@ const Help = () => {
                 <Typography variant="h6">
                   {emailUs} <a href={mailTo}> {gmail} </a>
                 </Typography>
+                <Typography variant="h6" className={rightAlign}>
+                  <a href={mailTo2}> {email2} </a>
+                </Typography>
               </Grid>
               <Grid style={{ marginTop: '25px' }} item xs={12}>
                 <Typography variant="h6">
                   {callUs} <a href={dialTo}> {number} </a>
+                </Typography>
+                <Typography variant="h6" className={rightAlign}>
+                  <a href={dialTo2}> {number2} </a>
                 </Typography>
               </Grid>
               <Grid style={{ marginTop: '25px' }} item xs={12}>

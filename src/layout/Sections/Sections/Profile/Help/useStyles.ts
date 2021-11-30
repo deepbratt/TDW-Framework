@@ -53,6 +53,9 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     flexDirection: "column",
     alignItems: "start",
+  },
+  rightAlign: {
+    textAlign: "right"
   }
 
 }));

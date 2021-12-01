@@ -26,10 +26,8 @@ import BreadCrumbs from '../../components/BreadCrumbs';
 import Table from '../../layout/Sections/Sections/Table/Table';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
 import { CHOOSE_CARS_TO_COMPARE } from '../../Utils/constants/language/en/buttonLabels';
 
-const breakpoints = createBreakpoints({});
 
 const CarComparisionsStyles = makeStyles((theme) => ({
   root: {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { addToFav } from '../../Utils/hooks/actions';
-import { ICarCard } from '../../layout/Sections/Utils/types1';
+import { ICarCard } from "../../Utils/interfaces/products.interface";
 import {
   addToFavs,
   getSingleCar,
@@ -186,6 +186,7 @@ const Actions = (Id?: string | '') => {
       ].label = `${obj.make} ${obj.model} ${obj.modelYear}`;
       setBreadCrumData(newBreadCrumData);
     }
+    // eslint-disable-next-line
   }, [obj]);
 
   return {
@@ -194,6 +195,7 @@ const Actions = (Id?: string | '') => {
     loadSingleData,
     addFavs,
     isLoading,
+    setIsLoading,
     open,
     setOpen,
     obj,

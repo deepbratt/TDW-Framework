@@ -2,6 +2,8 @@ import CarDetail from '../../layout/Sections/Sections/CarDetail/CarDetail';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import {
   rating,
   mainButton,
@@ -15,11 +17,9 @@ import {
   CarInfo,
   carTitle
 } from '../../layout/Sections/Utils/carDetail';
-import Section from '../../components/index';
 import Slides from '../../layout/Sections/Sections/CarDetail/Slider';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import CarInformation from '../../layout/Sections/Sections/CarDetail/CarInformation';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import Actions from './useFunctions';
 import MetaTags from '../../components/MetaTags';
 import BreadCrumbs from '../../components/BreadCrumbs';
@@ -46,6 +46,17 @@ import { Compare, Favorite, LocationOnOutlined } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import LoginModal from '../login/LoginModal';
+import MoreVertRoundedIcon from '@material-ui/icons/MoreVertRounded';
+import {
+  MARK_AS_SOLD,
+  MARK_AS_UNSOLD,
+  EDIT,
+  DEACTIVATE,
+  ACTIVATE
+} from '../../Utils/constants/language/en/buttonLabels';
+import { paths } from '../../routes/paths';
+import { API_ENDPOINTS } from '../../Utils/API/endpoints';
+import { updateData } from '../../Utils/API/API';
 
 interface RouteProps {
   id: string;
@@ -83,6 +94,8 @@ function a11yProps(index: any) {
 const CarDetailContainer = () => {
   const defaultMarginTop = '20px';
   const { id } = useParams<RouteProps>();
+  const history = useHistory();
+  const size = Sizes();
 
   const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
   const { shortlistCars } = useSelector(
@@ -91,6 +104,7 @@ const CarDetailContainer = () => {
   const {
     obj,
     isLoading,
+    setIsLoading,
     open,
     setOpen,
     responseMessage,
@@ -103,11 +117,94 @@ const CarDetailContainer = () => {
     breadCrumbData
   } = Actions(id ?? '');
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { loader, section, tabs, tab, btn } = useStyles();
   const [sliderHeight, setSliderHeight] = useState(0);
   const sliderColumn = useRef<HTMLDivElement | null>(null);
   const [tabValue, setTabValue] = useState(0);
-  const size = Sizes();
+  const [isSold, setIsSold] = useState(obj?.isSold);
+  const [isActive, setIsActive] = useState(obj?.active);
+  const [openToast, setOpenToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
+  const [toastType, setToastType] = useState('');
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const actionsMenu = (
+    <Menu
+      id="action-menu"
+      anchorEl={anchorEl}
+      keepMounted
+      open={Boolean(anchorEl)}
+      onClose={handleClose}
+    >
+      <MenuItem onClick={() => history.push(paths.addEditCar + `${obj?._id}`)}>
+        {EDIT}
+      </MenuItem>
+      <MenuItem onClick={() => toggleSold()}>
+        {obj?.isSold ? MARK_AS_SOLD : MARK_AS_UNSOLD}
+      </MenuItem>
+      <MenuItem onClick={() => toggleActive()}>
+        {obj?.active ? ACTIVATE : DEACTIVATE}
+      </MenuItem>
+    </Menu>
+  );
+
+  const toggleSold = (soldHere: boolean = false) => {
+    let soldUnsold = isSold
+      ? API_ENDPOINTS.MARK_UNSOLD
+      : API_ENDPOINTS.MARK_SOLD;
+    if (!isSold && soldHere) {
+      // api to add the car amount in sold on tezdealz collection
+    }
+    if (openDialog) {
+      setOpenDialog(false);
+    }
+    let requestBody = { soldByUs: soldHere };
+    setIsLoading(true);
+    updateData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${soldUnsold}/${obj?._id}`,
+      !isSold ? requestBody : undefined
+    ).then((response: any) => {
+      if (response && response.data && response.data.status === 'success') {
+        setIsSold(!isSold);
+        setToastMessage(response.data.message);
+        setToastType('success');
+      } else {
+        setToastMessage(response.message);
+        setToastType('error');
+      }
+      setOpenToast(true);
+      setIsLoading(false);
+    });
+  };
+
+  const toggleActive = () => {
+    let activeInactive = isActive
+      ? API_ENDPOINTS.MARK_INACTIVE
+      : API_ENDPOINTS.MARK_ACTIVE;
+    setIsLoading(true);
+    updateData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${activeInactive}/${obj?._id}`
+    ).then((response: any) => {
+      if (response && response.data && response.data.status === 'success') {
+        setIsActive(!isActive);
+        setToastMessage(response.data.message);
+        setToastType('success');
+      } else {
+        setToastMessage(response.message);
+        setToastType('error');
+      }
+      setOpenToast(true);
+      setIsLoading(false);
+    });
+  };
 
   const handleImageLoaded = () => {
     setSliderHeight(
@@ -142,28 +239,9 @@ const CarDetailContainer = () => {
         <BreadCrumbs links={breadCrumbData} />
       </Grid>
       <Card>
-        <Box
-        // display="flex"
-        // justifyContent="center"
-        // alignItems="center"
-        // width="100%"
-        // style={{ backgroundColor: 'transparent' }}
-        // height={'100%'}
-        >
+        <Box>
           <Paper elevation={4}>
-            {!obj ? (
-              <Grid container spacing={2}>
-                <Grid
-                  item
-                  xs={12}
-                  container
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <h1 className={loader}>No Data</h1>
-                </Grid>
-              </Grid>
-            ) : (
+            {obj && !isLoading && (
               <Grid container spacing={2}>
                 <Grid
                   item
@@ -204,10 +282,10 @@ const CarDetailContainer = () => {
                   style={{
                     maxHeight:
                       size.mobile || size.mobileLarge ? '100%' : sliderHeight,
-                    overflowY: 'auto'
+                    overflowY: 'scroll'
                   }}
                 >
-                  <Grid container style={{padding:"20px"}}>
+                  <Grid container style={{ padding: '20px' }}>
                     <Grid
                       item
                       xs={12}
@@ -244,20 +322,30 @@ const CarDetailContainer = () => {
                             }
                           />
                         </IconButton>
-
-                        {user?._id === obj.createdBy?._id ? null : (
+                        {user?._id === obj?.createdBy._id ? null : (
                           <IconButton
-                            onClick={() => toggleFavourite(obj._id)}
+                            onClick={() => toggleFavourite(obj?._id)}
                             className={btn}
                             style={{ marginLeft: '5px' }}
                           >
                             {isFavorite ? (
                               <Favorite color="primary" />
                             ) : (
-                              <Favorite style={{ color: 'white' }} />
+                              <Favorite color="inherit" />
                             )}
                           </IconButton>
                         )}
+
+                        {user._id === obj.createdBy._id && (
+                          <IconButton
+                            className={btn}
+                            style={{ marginLeft: '5px' }}
+                            onClick={handleClick}
+                          >
+                            <MoreVertRoundedIcon color="inherit" />
+                          </IconButton>
+                        )}
+                        {actionsMenu}
                       </Box>
                     </Grid>
                     <Box style={{ marginTop: defaultMarginTop }}>
@@ -346,6 +434,12 @@ const CarDetailContainer = () => {
           <LoginModal
             openModal={signinModal}
             closeModal={() => setSigninModal(false)}
+          />
+          <Toast
+            message={toastMessage}
+            type={toastType}
+            open={openToast}
+            onClose={() => setOpenToast(false)}
           />
           <Toast
             open={open}

@@ -74,7 +74,7 @@ export const paths = {
   cars: '/cars',
   forgotPassword: '/forgot-password',
   resetPassword: 'reset-password',
-  addEditCar: 'add-edit/car/',
+  addEditCar: '/add-edit/car/',
   help: 'help',
   error: '*'
 };

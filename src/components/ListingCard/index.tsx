@@ -86,7 +86,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
     isSold,
     active,
     isFav,
-    createdBy
+    createdBy,
+    slug
   } = data;
 
   const [isFavorite, setIsfavorite] = useState(isFav);
@@ -193,7 +194,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
         <ConditionalLink
           to={
             routes.carDetail.substr(0, routes.carDetail.lastIndexOf('/') + 1) +
-            _id
+            slug
           }
           target="_blank"
           condition={true}

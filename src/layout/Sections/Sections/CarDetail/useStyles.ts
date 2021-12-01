@@ -216,7 +216,8 @@ export const useStyles = makeStyles(() => ({
     justifyContent: 'center',
     alignItems: 'center',
     cursor: 'pointer',
-    height: '600px',
+    height: '600px',    
+    overflow: 'hidden',
     position: 'relative',
     width: '100%',
     [theme.breakpoints.down('md')]: {

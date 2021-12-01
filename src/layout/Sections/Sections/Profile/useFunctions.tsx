@@ -88,6 +88,12 @@ const Actions = () => {
     if (data.lastName) {
       formData.append('lastName', data.lastName);
     }
+    if (data.email) {
+      formData.append('email', data.email);
+    }
+    if (data.phone) {
+      formData.append('phone', data.phone);
+    }
     if (data.gender) {
       formData.append('gender', data.gender);
     }
@@ -114,7 +120,7 @@ const Actions = () => {
           setOpen(true);
           setResponseMessage({
             status: 'error',
-            message: response.message
+            message: response.message ? response.message : "Network Error"
           });
         }
       })
@@ -124,7 +130,7 @@ const Actions = () => {
         setOpen(true);
         setResponseMessage({
           status: 'error',
-          message: error.message
+          message: error.message ? error.message : "Network Error"
         });
       });
   };

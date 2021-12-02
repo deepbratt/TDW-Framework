@@ -1,6 +1,9 @@
 import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
@@ -10,7 +13,12 @@ import {
   ACTIVE,
   INACTIVE,
   SOLD,
-  UPDATED
+  UPDATED,
+  MARK_AS_SOLD,
+  MARK_AS_UNSOLD,
+  EDIT,
+  DEACTIVATE,
+  ACTIVATE
 } from '../../Utils/constants/language/en/buttonLabels';
 import ConvertDate from '../convertDate';
 import ListingCardStyles from './styles';
@@ -26,13 +34,16 @@ import { RootState } from '../../redux/store';
 import { Favorite, FavoriteBorder } from '@material-ui/icons';
 import moment from 'moment';
 import ConditionalLink from '../ConditionalLink';
-import { routes } from '../../routes/paths';
+import { paths, routes } from '../../routes/paths';
 import Sizes from '../../Utils/themeConstants';
 import LoginModal from '../../pages/login/LoginModal';
 import { Box } from '@material-ui/core';
 import Compare from '@material-ui/icons/Compare';
 import useImageOrientation from '../../Utils/hooks/useImageOrientation';
+import MoreVertRoundedIcon from '@material-ui/icons/MoreVertRounded';
 import LOGO from '../../layout/Sections/assets/logo.png';
+import { API_ENDPOINTS } from '../../Utils/API/endpoints';
+import { updateData } from '../../Utils/API/API';
 export interface ListingCardProps {
   data: any;
   layoutType: string;
@@ -52,9 +63,11 @@ const ListingCard: React.FC<ListingCardProps> = ({
   handleShortList,
   removeShortListed
 }) => {
+  const history = useHistory();
   const { pathname } = useLocation();
   const { mobile } = Sizes();
   const { user, isLoggedIn } = useSelector((state: RootState) => state.auth);
+
   const { setImageOrientationAndSize, imgHeight, imgWidth } =
     useImageOrientation();
   const { shortlistCars } = useSelector(
@@ -87,19 +100,101 @@ const ListingCard: React.FC<ListingCardProps> = ({
     updatedAt,
     price,
     image,
-    isSold,
     active,
     isFav,
     createdBy,
     slug
   } = data;
 
-  const [isFavorite, setIsfavorite] = useState(isFav);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSold, setIsSold] = useState(data.isSold);
+  const [isActive, setIsActive] = useState(data.active);
+  const [openToast, setOpenToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [isFavorite, setIsfavorite] = useState(isFav);
   const [toastType, setToastType] = useState('success');
   const [toastOpen, setToastOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [signinModal, setSigninModal] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleClickOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const actionsMenu = (
+    <Menu
+      id="action-menu"
+      anchorEl={anchorEl}
+      keepMounted
+      open={Boolean(anchorEl)}
+      onClose={handleClose}
+    >
+      <MenuItem onClick={() => history.push(paths.addEditCar + `${data._id}`)}>
+        {EDIT}
+      </MenuItem>
+      <MenuItem onClick={() => toggleSold()}>
+        {isSold ? MARK_AS_UNSOLD : MARK_AS_SOLD}
+      </MenuItem>
+      <MenuItem onClick={() => toggleActive()}>
+        {isActive ? DEACTIVATE : ACTIVATE}
+      </MenuItem>
+    </Menu>
+  );
+
+  const toggleSold = (soldHere: boolean = false) => {
+    let soldUnsold = data.isSold
+      ? API_ENDPOINTS.MARK_UNSOLD
+      : API_ENDPOINTS.MARK_SOLD;
+    if (!isSold && soldHere) {
+      // api to add the car amount in sold on tezdealz collection
+    }
+    if (openDialog) {
+      setOpenDialog(false);
+    }
+    let requestBody = { soldByUs: soldHere };
+    setIsLoading(true);
+    updateData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${soldUnsold}/${data._id}`,
+      !isSold ? requestBody : undefined
+    ).then((response: any) => {
+      if (response && response.data && response.data.status === 'success') {
+        setIsSold(!isSold);
+        setToastMessage(response.data.message);
+        setToastType('success');
+      } else {
+        setToastMessage(response.message);
+        setToastType('error');
+      }
+      setOpenToast(true);
+      setIsLoading(false);
+    });
+  };
+
+  const toggleActive = () => {
+    let activeInactive = data.active
+      ? API_ENDPOINTS.MARK_INACTIVE
+      : API_ENDPOINTS.MARK_ACTIVE;
+    setIsLoading(true);
+    updateData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${activeInactive}/${data._id}`
+    ).then((response: any) => {
+      if (response && response.data && response.data.status === 'success') {
+        setIsActive(!isActive);
+        setToastMessage(response.data.message);
+        setToastType('success');
+      } else {
+        setToastMessage(response.message);
+        setToastType('error');
+      }
+      setOpenToast(true);
+      setIsLoading(false);
+    });
+  };
 
   const favs = (
     id: string,
@@ -194,6 +289,13 @@ const ListingCard: React.FC<ListingCardProps> = ({
               )}
             </IconButton>
           ) : null}
+
+          {user._id === createdBy && (
+            <IconButton style={{ marginLeft: '5px' }} onClick={handleClickOpen}>
+              <MoreVertRoundedIcon color="inherit" />
+            </IconButton>
+          )}
+          {actionsMenu}
         </Box>
         <ConditionalLink
           to={
@@ -246,8 +348,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
                     className={imgWaterMark}
                     alt="carokta watermark"
                   />
-                  <div className={overlay}/>
-                  {isSold && (
+                  <div className={overlay} />
+                  {data.isSold && (
                     <span className={featuredBadge}>
                       <Typography variant="body2">{SOLD}</Typography>
                     </span>
@@ -394,6 +496,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
             </Grid>
           </Card>
         </ConditionalLink>
+        <Toast
+          message={toastMessage}
+          type={toastType}
+          open={openToast}
+          onClose={() => setOpenToast(false)}
+        />
         <LoginModal
           openModal={signinModal}
           closeModal={() => setSigninModal(false)}

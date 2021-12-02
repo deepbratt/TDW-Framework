@@ -1,3 +1,4 @@
+import { useHistory, useParams } from 'react-router';
 import CarDetail from '../../layout/Sections/Sections/CarDetail/CarDetail';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -19,7 +20,6 @@ import {
 } from '../../layout/Sections/Utils/carDetail';
 import Slides from '../../layout/Sections/Sections/CarDetail/Slider';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { useHistory, useParams } from 'react-router';
 import Actions from './useFunctions';
 import MetaTags from '../../components/MetaTags';
 import BreadCrumbs from '../../components/BreadCrumbs';
@@ -136,6 +136,7 @@ const CarDetailContainer = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const actionsMenu = (
     <Menu
       id="action-menu"
@@ -148,10 +149,10 @@ const CarDetailContainer = () => {
         {EDIT}
       </MenuItem>
       <MenuItem onClick={() => toggleSold()}>
-        {obj?.isSold ? MARK_AS_SOLD : MARK_AS_UNSOLD}
+        {isSold ? MARK_AS_SOLD : MARK_AS_UNSOLD}
       </MenuItem>
       <MenuItem onClick={() => toggleActive()}>
-        {obj?.active ? ACTIVATE : DEACTIVATE}
+        {isActive ? ACTIVATE : DEACTIVATE}
       </MenuItem>
     </Menu>
   );
@@ -227,6 +228,12 @@ const CarDetailContainer = () => {
       );
     }
   }, [sliderColumn.current?.clientHeight, isLoading]);
+
+  useEffect(() => {
+    toggleActive();
+    toggleSold();
+    // eslint-disable-next-line
+  }, [obj]);
 
   return (
     <Container>

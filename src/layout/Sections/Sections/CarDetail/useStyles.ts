@@ -57,7 +57,7 @@ export const useStyles = makeStyles(() => ({
     marginTop: '20px'
   },
   carousel: {
-    paddingBottom: "10px",
+    paddingBottom: '10px',
     width: '100%',
     '& .carousel .slider-wrapper.axis-horizontal .slider': {
       alignItems: 'center'
@@ -125,7 +125,7 @@ export const useStyles = makeStyles(() => ({
     },
     '& .carousel .thumbs-wrapper ul li img': {
       maxWidth: '100%',
-      maxHeight: '100%',
+      maxHeight: '100%'
     }
     // '&  .carousel .control-prev.control-arrow:before': {
     //   color: 'black',
@@ -243,5 +243,29 @@ export const useStyles = makeStyles(() => ({
   },
   tabsWrapper: {
     flexDirection: 'row'
+  },
+  featuredImgStyle: {
+    zIndex: 97,
+    position: 'relative',
+    borderRadius: '5px'
+  },
+  imgWaterMark: {
+    position: 'absolute',
+    width: '100%',
+    maxWidth: '150px',
+    bottom: '10px',
+    right: '10px',
+    zIndex: 99,
+    [theme.breakpoints.up('lg')]: {
+      maxWidth: '200px'
+    }
+  },
+  overlay: {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    minWidth: '100%',
+    minHeight: '100%',
+    zIndex: 98
   }
 }));

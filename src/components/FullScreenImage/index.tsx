@@ -2,6 +2,8 @@ import './style.css';
 import React from 'react';
 import { NavigateBefore, NavigateNext } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
+import LOGO from '../../layout/Sections/assets/logo.png';
+
 const DEFAULT_ZOOM_STEP = 0.3;
 const DEFAULT_LARGE_ZOOM = 4;
 function getXY(e: any) {
@@ -291,46 +293,52 @@ export default class FullScreenImage extends React.Component<any> {
         </div>
         <div
           className={`lb-canvas${loading ? ' lb-loading' : ''}`}
-          style={{justifyContent: multi ? "space-between" : "center"}}
+          style={{ justifyContent: multi ? 'space-between' : 'center' }}
           ref={this._cont}
           onClick={(e) => this.canvasClick(e)}
         >
           {multi ? (
             <IconButton
               className="lb-hide-mobile"
-              style={{ background: 'white', marginLeft:"10px" }}
+              style={{ background: 'white', marginLeft: '10px' }}
               onClick={(e) => this.navigateImage('next', e)}
             >
               <NavigateBefore />
             </IconButton>
           ) : null}
-          <img
-            draggable="false"
-            style={{
-              transform: this.createTransform(x, y, zoom, rotate),
-              cursor: zoom > 1 ? 'grab' : 'unset',
-              transition: moving ? 'none' : 'all 0.1s',
-              margin:"auto"
-            }}
-            onMouseDown={(e) => this.startMove(e)}
-            onTouchStart={(e) => this.startMove(e)}
-            onMouseMove={(e) => this.duringMove(e)}
-            onTouchMove={(e) => this.duringMove(e)}
-            onMouseUp={(e) => this.endMove(e)}
-            onMouseLeave={(e) => this.endMove(e)}
-            onTouchEnd={(e) => this.endMove(e)}
-            onClick={(e) => this.stopSideEffect(e)}
-            onDoubleClick={(e) => this.shockZoom(e)}
-            onLoad={(e) => {this.setState({ loading: false })}}
-            className={`lb-img${loading ? ' lb-loading' : ''}`}
-            title={title}
-            src={image}
-            alt={title}
-          />
+          <div id="lb-canvas">
+            <img
+              draggable="false"
+              style={{
+                transform: this.createTransform(x, y, zoom, rotate),
+                cursor: zoom > 1 ? 'grab' : 'unset',
+                transition: moving ? 'none' : 'all 0.1s',
+                margin: 'auto'
+              }}
+              onMouseDown={(e) => this.startMove(e)}
+              onTouchStart={(e) => this.startMove(e)}
+              onMouseMove={(e) => this.duringMove(e)}
+              onTouchMove={(e) => this.duringMove(e)}
+              onMouseUp={(e) => this.endMove(e)}
+              onMouseLeave={(e) => this.endMove(e)}
+              onTouchEnd={(e) => this.endMove(e)}
+              onClick={(e) => this.stopSideEffect(e)}
+              onDoubleClick={(e) => this.shockZoom(e)}
+              onLoad={(e) => {
+                this.setState({ loading: false });
+              }}
+              className={`lb-img${loading ? ' lb-loading' : ''} featuredImg`}
+              title={title}
+              src={image}
+              alt={title}
+            />
+            <img src={LOGO} className="imgWaterMark" alt="carokta watermark" />
+            <div className="overlay" />
+          </div>
           {multi ? (
             <IconButton
               className="lb-hide-mobile"
-              style={{ background: 'white', marginRight:"10px" }}
+              style={{ background: 'white', marginRight: '10px' }}
               onClick={(e) => this.navigateImage('next', e)}
             >
               <NavigateNext />

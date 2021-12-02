@@ -152,3 +152,31 @@
         max-height: 60vh;
     }
 }
+
+#lb-canvas {
+    position: relative;
+    justify-content: center;
+}
+
+#lb-canvas .featuredImg {
+    z-index: 97
+}
+
+#lb-canvas .imgWaterMark {
+    position: absolute;
+    width: 100%;
+    max-width: 150px;
+    bottom: 10px;
+    right: 10px;
+    z-index: 99
+}
+
+#lb-canvas .overlay {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    bottom: 10px;
+    top: 0;
+    left: 0;
+    z-index: 98
+}

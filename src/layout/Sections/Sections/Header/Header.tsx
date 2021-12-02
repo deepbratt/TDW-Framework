@@ -102,6 +102,17 @@ const HeaderContext = () => {
         {paths.profile}
       </MenuItem>
       <MenuItem
+        style={{ textTransform: 'capitalize' }}
+        onClick={() =>
+          history.push(
+            routes.dashboard.substr(0, routes.dashboard.lastIndexOf('/') + 1) +
+              'change-password'
+          )
+        }
+      >
+        Change Password
+      </MenuItem>
+      <MenuItem
         onClick={() => {
           dispatch(logout());
           handleMenuClose();

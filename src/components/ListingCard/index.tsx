@@ -32,7 +32,6 @@ import LoginModal from '../../pages/login/LoginModal';
 import { Box } from '@material-ui/core';
 import Compare from '@material-ui/icons/Compare';
 import useImageOrientation from '../../Utils/hooks/useImageOrientation';
-import LOGO from '../../layout/Sections/assets/logo.png';
 export interface ListingCardProps {
   data: any;
   layoutType: string;
@@ -68,10 +67,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     favsIconGrid,
     favsIconList,
     cardMedia,
-    blurBgImg,
-    imgWaterMark,
-    featuredImgStyle,
-    overlay
+    blurBgImg
   } = ListingCardStyles();
   const {
     _id,
@@ -231,7 +227,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   ></div>
                   <img
                     src={image && image.length > 0 ? image[0] : NoImg}
-                    className={featuredImgStyle}
+                    style={{ zIndex: 999 }}
                     alt=""
                     width={imgWidth}
                     height={imgHeight}
@@ -241,12 +237,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       )
                     }
                   />
-                  <img
-                    src={LOGO}
-                    className={imgWaterMark}
-                    alt="carokta watermark"
-                  />
-                  <div className={overlay}/>
                   {isSold && (
                     <span className={featuredBadge}>
                       <Typography variant="body2">{SOLD}</Typography>

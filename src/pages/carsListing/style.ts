@@ -9,7 +9,7 @@ const CarListingStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down('xs')]: {
       marginTop: '20px',
-      paddingTop: '0px'
+      paddingTop: '0px',
     }
   },
   listingContainer: {
@@ -50,8 +50,7 @@ const CarListingStyles = makeStyles((theme) => ({
   },
   compareButtonIcon: {
     margin: theme.spacing(1)
-  },
-  
+  }
 }));
 
 export default CarListingStyles;

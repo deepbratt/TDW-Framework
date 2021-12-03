@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Carousel } from 'react-responsive-carousel';
 import { useStyles } from './useStyles';
-import { Detail } from '../../Utils/types1';
+import { Detail } from '../../Utils/types';
 import Sizes from '../../../../Utils/themeConstants';
 import Actions from '../../../../pages/carDetail/useFunctions';
 import Toast from '../../../../components/Toast';

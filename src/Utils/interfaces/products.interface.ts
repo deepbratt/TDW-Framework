@@ -21,13 +21,30 @@ export interface ICarCard {
   province: string;
   make: string;
   condition: string;
-  bodyTye: string;
+  bodyType: string;
   bodyColor: string;
   registrationCity: string;
   assembly: string;
   description: string;
   regNumber: string;
-  createdBy: string;
+  createdBy: any | IUser;
   updatedAt: string;
-  slug:string
-} 
+  slug: string;
+  isFav: boolean;
+}
+
+export interface IUser {
+  active: boolean;
+  banned: boolean;
+  email: string;
+  createdBy: string;
+  firstName: string;
+  lastName: string;
+  phobne: string;
+  role: string;
+  signedUpWithPhone: boolean;
+  signedUpWithEmail: boolean;
+  updatedAt: string;
+  username: string;
+  _id: string;
+}

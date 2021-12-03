@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 import Container from '@material-ui/core/Container';
 import Chip from '@material-ui/core/Chip';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -331,9 +332,9 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
               ) : (
                 <Grid item container xs={12} spacing={1}>
                   {result &&
-                    result.map((car: any, index: any) => (
+                    result.map((car: ICarCard) => (
                       <Grid
-                        key={`cars-card-${index}`}
+                        key={`cars-card-${uuidv4}`}
                         item
                         xs={12}
                         sm={layoutType === 'list' ? 12 : 6}

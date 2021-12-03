@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { addToFav } from '../../Utils/hooks/actions';
-import { ICarCard } from '../../layout/Sections/Utils/types1';
+import { ICarCard } from '../../Utils/interfaces/products.interface';
 import {
   addToFavs,
   getSingleCar,
   removeFavs
 } from '../../Utils/hooks/endpoints';
 import { useEffect } from 'react';
-import { getAllData } from '../../Utils/API/API';
+import { getAllData, updateData } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
@@ -27,6 +27,12 @@ const Actions = (Id?: string | '') => {
   const [open, setOpen] = useState(false);
   const [featuresArray, setFeaturesArray] = useState<Array<any>>([]);
   const [carFeatures, setCarFeatures] = useState<Array<any>>([]);
+  const [isSold, setIsSold] = useState(obj?.isSold);
+  const [isActive, setIsActive] = useState(obj?.active);
+  const [openToast, setOpenToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
+  const [toastType, setToastType] = useState('');
   const [breadCrumbData, setBreadCrumData] = useState([
     {
       path: paths.cars,
@@ -101,8 +107,9 @@ const Actions = (Id?: string | '') => {
         if (response && response.data && response.status === 'success') {
           setObj(response.data.result);
           setIsFavorite(response.data.result.isFav);
+          setIsActive(response.data.result.active);
+          setIsSold(response.data.result.isSold);
         } else {
-          console.log('error', response);
           setOpen(true);
           let msg =
             response && response.message
@@ -115,6 +122,56 @@ const Actions = (Id?: string | '') => {
         }
       })
       .then(() => setIsLoading(false));
+  };
+
+  const toggleSold = (soldHere: boolean = false) => {
+    let soldUnsold = isSold
+      ? API_ENDPOINTS.MARK_UNSOLD
+      : API_ENDPOINTS.MARK_SOLD;
+    if (!isSold && soldHere) {
+      // api to add the car amount in sold on tezdealz collection
+    }
+    if (openDialog) {
+      setOpenDialog(false);
+    }
+    let requestBody = { soldByUs: soldHere };
+    setIsLoading(true);
+    updateData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${soldUnsold}/${obj?._id}`,
+      !isSold ? requestBody : undefined
+    ).then((response: any) => {
+      if (response && response.data && response.data.status === 'success') {
+        setIsSold(!isSold);
+        setToastMessage(response.data.message);
+        setToastType('success');
+      } else {
+        setToastMessage(response.message);
+        setToastType('error');
+      }
+      setOpenToast(true);
+      setIsLoading(false);
+    });
+  };
+
+  const toggleActive = () => {
+    let activeInactive = isActive
+      ? API_ENDPOINTS.MARK_INACTIVE
+      : API_ENDPOINTS.MARK_ACTIVE;
+    setIsLoading(true);
+    updateData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${activeInactive}/${obj?._id}`
+    ).then((response: any) => {
+      if (response && response.data && response.data.status === 'success') {
+        setIsActive(!isActive);
+        setToastMessage(response.data.message);
+        setToastType('success');
+      } else {
+        setToastMessage(response.message);
+        setToastType('error');
+      }
+      setOpenToast(true);
+      setIsLoading(false);
+    });
   };
 
   const addFavs = async (url: string, Id: string) => {
@@ -186,6 +243,7 @@ const Actions = (Id?: string | '') => {
       ].label = `${obj.make} ${obj.model} ${obj.modelYear}`;
       setBreadCrumData(newBreadCrumData);
     }
+    // eslint-disable-next-line
   }, [obj]);
 
   return {
@@ -205,7 +263,15 @@ const Actions = (Id?: string | '') => {
     setIsFavorite,
     toggleFavourite,
     toggleShortListCar,
-    breadCrumbData
+    breadCrumbData,
+    toggleActive,
+    toggleSold,
+    toastType,
+    isSold,
+    isActive,
+    setOpenToast,
+    toastMessage,
+    openToast
   };
 };
 

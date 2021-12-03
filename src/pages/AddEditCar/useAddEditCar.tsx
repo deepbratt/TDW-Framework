@@ -527,7 +527,7 @@ const useAddEditCar = () => {
     }
     fd.append('price', formData.price);
     setIsLoading(true);
-    await appendImages(fd);
+    // await appendImages(fd);
     console.table(Object.fromEntries(fd));
     addEditData(fd).then((response) => {
       setIsLoading(false);
@@ -587,16 +587,27 @@ const useAddEditCar = () => {
     setActiveStep(step);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     formRef.current.scrollIntoView({ behavior: 'smooth' });
     if (!formValidated(activeStep)) {
       return;
+    }
+    if (activeStep === 0) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
+    if (activeStep === 1) {
+      let imageData = new FormData();
+      await appendImages(imageData);
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      await addFormData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/car-images`, imageData)
+        .then((response) => {
+          updateImagesState(response.data.data.array);
+        })
     }
     if (activeStep === 2) {
       submitForm();
       return;
     }
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {

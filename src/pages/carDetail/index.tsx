@@ -55,8 +55,7 @@ import {
   ACTIVATE
 } from '../../Utils/constants/language/en/buttonLabels';
 import { paths } from '../../routes/paths';
-import { API_ENDPOINTS } from '../../Utils/API/endpoints';
-import { updateData } from '../../Utils/API/API';
+import CarDetailsSkeletons from '../../layout/Sections/Sections/CarDetail/CarDetailsSkeletons';
 
 interface RouteProps {
   id: string;
@@ -97,14 +96,13 @@ const CarDetailContainer = () => {
   const history = useHistory();
   const size = Sizes();
 
-  const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
   const { shortlistCars } = useSelector(
     (state: RootState) => state.shortlistCars
   );
   const {
     obj,
     isLoading,
-    setIsLoading,
     open,
     setOpen,
     responseMessage,
@@ -114,20 +112,22 @@ const CarDetailContainer = () => {
     toggleShortListCar,
     signinModal,
     setSigninModal,
-    breadCrumbData
+    breadCrumbData,
+    toggleActive,
+    toggleSold,
+    toastType,
+    isSold,
+    isActive,
+    setOpenToast,
+    toastMessage,
+    openToast
   } = Actions(id ?? '');
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { loader, section, tabs, tab, btn } = useStyles();
+  const { tabs, tab, btn } = useStyles();
   const [sliderHeight, setSliderHeight] = useState(0);
   const sliderColumn = useRef<HTMLDivElement | null>(null);
   const [tabValue, setTabValue] = useState(0);
-  const [isSold, setIsSold] = useState(obj?.isSold);
-  const [isActive, setIsActive] = useState(obj?.active);
-  const [openToast, setOpenToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [openDialog, setOpenDialog] = useState(false);
-  const [toastType, setToastType] = useState('');
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -157,56 +157,6 @@ const CarDetailContainer = () => {
     </Menu>
   );
 
-  const toggleSold = (soldHere: boolean = false) => {
-    let soldUnsold = isSold
-      ? API_ENDPOINTS.MARK_UNSOLD
-      : API_ENDPOINTS.MARK_SOLD;
-    if (!isSold && soldHere) {
-      // api to add the car amount in sold on tezdealz collection
-    }
-    if (openDialog) {
-      setOpenDialog(false);
-    }
-    let requestBody = { soldByUs: soldHere };
-    setIsLoading(true);
-    updateData(
-      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${soldUnsold}/${obj?._id}`,
-      !isSold ? requestBody : undefined
-    ).then((response: any) => {
-      if (response && response.data && response.data.status === 'success') {
-        setIsSold(!isSold);
-        setToastMessage(response.data.message);
-        setToastType('success');
-      } else {
-        setToastMessage(response.message);
-        setToastType('error');
-      }
-      setOpenToast(true);
-      setIsLoading(false);
-    });
-  };
-
-  const toggleActive = () => {
-    let activeInactive = isActive
-      ? API_ENDPOINTS.MARK_INACTIVE
-      : API_ENDPOINTS.MARK_ACTIVE;
-    setIsLoading(true);
-    updateData(
-      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${activeInactive}/${obj?._id}`
-    ).then((response: any) => {
-      if (response && response.data && response.data.status === 'success') {
-        setIsActive(!isActive);
-        setToastMessage(response.data.message);
-        setToastType('success');
-      } else {
-        setToastMessage(response.message);
-        setToastType('error');
-      }
-      setOpenToast(true);
-      setIsLoading(false);
-    });
-  };
-
   const handleImageLoaded = () => {
     setSliderHeight(
       sliderColumn.current?.clientHeight
@@ -229,22 +179,16 @@ const CarDetailContainer = () => {
     }
   }, [sliderColumn.current?.clientHeight, isLoading]);
 
-  useEffect(() => {
-    toggleActive();
-    toggleSold();
-    // eslint-disable-next-line
-  }, [obj]);
-
   return (
     <Container>
       <MetaTags
         title={PageMeta.carDetails.title}
         canonical={PageMeta.carDetails.canonical}
       />
-      <Loader open={isLoading} isBackdrop={true} />
       <Grid item xs={12}>
         <BreadCrumbs links={breadCrumbData} />
       </Grid>
+      {isLoading && <CarDetailsSkeletons />}
       <Card>
         <Box>
           <Paper elevation={4}>

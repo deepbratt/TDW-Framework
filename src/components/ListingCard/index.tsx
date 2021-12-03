@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from 'react-router';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -26,7 +28,6 @@ import LocationIcon from '../../assets/icons/location.png';
 import NoImg from '../../assets/no-img.png';
 import { addToFav } from '../../Utils/hooks/actions';
 import { addToFavs, removeFavs } from '../../Utils/hooks/endpoints';
-import { useState } from 'react';
 import Toast from '../Toast';
 import Loader from '../Loader';
 import { useSelector } from 'react-redux';
@@ -86,6 +87,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     featuredImgStyle,
     overlay
   } = ListingCardStyles();
+
   const {
     _id,
     model,
@@ -128,9 +130,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
   const actionsMenu = (
     <Menu
-      id="action-menu"
+      id={`${uuidv4()}-actions-menu`}
       anchorEl={anchorEl}
-      keepMounted
       open={Boolean(anchorEl)}
       onClose={handleClose}
     >
@@ -147,7 +148,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   );
 
   const toggleSold = (soldHere: boolean = false) => {
-    let soldUnsold = data.isSold
+    let soldUnsold = isSold
       ? API_ENDPOINTS.MARK_UNSOLD
       : API_ENDPOINTS.MARK_SOLD;
     if (!isSold && soldHere) {
@@ -176,7 +177,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   };
 
   const toggleActive = () => {
-    let activeInactive = data.active
+    let activeInactive = isActive
       ? API_ENDPOINTS.MARK_INACTIVE
       : API_ENDPOINTS.MARK_ACTIVE;
     setIsLoading(true);
@@ -300,7 +301,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
         <ConditionalLink
           to={
             routes.carDetail.substr(0, routes.carDetail.lastIndexOf('/') + 1) +
-            slug
+            `${slug !== undefined ? slug : _id}`
           }
           target="_blank"
           condition={true}

@@ -3,7 +3,6 @@ import Typography from "@material-ui/core/Typography"
 import MenuItem from "@material-ui/core/MenuItem"
 import TextField from "@material-ui/core/TextField"
 import Hidden from "@material-ui/core/Hidden"
-import Divider from "@material-ui/core/Divider"
 import Paper from "@material-ui/core/Paper"
 import Button from "@material-ui/core/Button"
 import DatePicker from './DatePicker';
@@ -11,13 +10,15 @@ import { useStyles } from './useStyles';
 import useHooks from './useHooks';
 import SideBar from './ProfileSidebar/Sidebar';
 import ProfileUpload from './UploadProfile/ProfileUpload';
-import RegexInputs from './RegexInputs';
+import { useForm } from 'react-hook-form';
 import {
   paths,
   Title,
   profile,
   profileTitle,
   gender,
+  emailText,
+  email,
   buttonText,
   cancelButtonText
 } from '../../Utils/sidebarText';
@@ -25,7 +26,7 @@ import { City } from '../../../../Utils/country-state-city/index';
 import Actions from './useFunctions';
 import { updateMe } from '../../../../Utils/hooks/endpoints';
 import Toast from '../../../../components/Toast';
-import ChangePassword from './ChangePassword';
+// import ChangePassword from './ChangePassword';
 import MetaTags from '../../../../components/MetaTags';
 import PageMeta from '../../../../Utils/constants/language/en/pageData';
 import Loader from '../../../../components/Loader';
@@ -38,15 +39,21 @@ const Profile = () => {
     Actions();
   const { user } = useSelector((state: RootState) => state.auth);
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
+
   const cities = City.getCitiesOfCountry('PK');
   const extractedCityNames = cities?.map((item: any) => item.name);
   let cityNames = [];
   if (extractedCityNames) {
     cityNames.push(...extractedCityNames);
-  }
+  }  
   const { heading, box, button, cancelButton } =
     useStyles();
-  const { handleChange, val, date, handleChangeDate, setVal, Img, setImg } =
+  const { handleChange, val, date, handleChangeDate, setVal, Img, setImg, number, NumericOnly, errorMessage, setNumber } =
     useHooks();
 
   const handleAlertClose = () => {
@@ -61,7 +68,6 @@ const Profile = () => {
   };
 
   const onSubmit = (): void => {
-    updateProfile(updateMe, val, date, Img);
     setVal({
       firstName: val.firstName,
       lastName: val.lastName,
@@ -74,22 +80,29 @@ const Profile = () => {
       newPassword: '',
       confirmPassword: ''
     });
+    let phone = '+92' + number;
+    let numberOrEmaildata = user.phone !== phone ? { phone: phone } : { email: val.email };
+    let data = {...val, ...numberOrEmaildata}
+    updateProfile(updateMe, data, date, Img);
   };
 
   const handleCancel = (): void => {
-    if (!val.currentPassword && !val.confirmPassword && !val.newPassword) {
-      setVal({
-        firstName: user.firstName || '',
-        lastName: user.lastName || '',
-        gender: user.gender || '',
-        country: '',
-        city: user.city || '',
-        userName: user.username || '',
-        email: user.email || '',
-        currentPassword: '',
-        newPassword: '',
-        confirmPassword: ''
-      });
+    setVal({
+      firstName: user.firstName || '',
+      lastName: user.lastName || '',
+      gender: user.gender || '',
+      country: '',
+      city: user.city || '',
+      userName: user.username || '',
+      email: user.email || '',
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: ''
+    });
+    if (user.phone) {
+      setNumber(user.phone.slice(3));
+    } else {
+      setNumber('');
     }
   };
 
@@ -174,11 +187,41 @@ const Profile = () => {
                 handleChangeSelect={handleChangeSelect}
               />
             </Grid>
+
+            <Grid item lg={6} xs={12}>
+              <TextField
+                {...register('email', { pattern: email })}
+                label="Email"
+                name="email"
+                value={val.email}
+                onChange={(e) => handleChange(e)}
+                disabled={user.signedUpWithEmail}
+                fullWidth
+              />
+              {errors.email &&
+                errors.email.type === 'pattern' &&
+                errorMessage(emailText)}
+            </Grid>
+            <Grid item lg={6} xs={12}>
+              <TextField
+                autoComplete="off"
+                name="number"
+                value={number}
+                onChange={(e) => NumericOnly(e)}
+                label="Mobile Number"
+                disabled={user.signedUpWithPhone}
+                fullWidth
+                type="tel"
+                placeholder={'3XXXXXXXXX'}
+                InputProps={{ startAdornment: <span>+92&nbsp;</span> }}
+              />
+            </Grid>
+
             <Grid item xs={12} style={{display:"flex"}}>
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={() => onSubmit()}
+                onClick={handleSubmit(onSubmit)}
                 className={button}
               >
                 {buttonText}
@@ -192,18 +235,10 @@ const Profile = () => {
                 {cancelButtonText}
               </Button>
             </Grid>
-            <Grid item xs={12}>
-              <Divider style={{ width: '100%' }} />
-            </Grid>
-            <Grid item xs={12}>
-              <RegexInputs />
-            </Grid>
-            <Grid item xs={12}>
-              <Divider style={{ width: '100%' }} />
-            </Grid>
-            <Grid item xs={12}>
+
+            {/* <Grid item xs={12}>
               <ChangePassword />
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
       </Paper>

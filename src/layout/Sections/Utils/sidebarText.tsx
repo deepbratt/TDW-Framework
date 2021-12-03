@@ -6,6 +6,7 @@ import Commute from '@material-ui/icons/Commute';
 import Compare from '@material-ui/icons/Compare';
 import Favorite from '@material-ui/icons/Favorite';
 import Help from '@material-ui/icons/Help';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
 export const Title = 'DashBoard';
 export const profileTitle = 'Personal Information';
 export const buttonText = 'Save';
@@ -26,6 +27,11 @@ export const paths = [
     title: 'Profile',
     path: '/dashboard/profile',
     icon: <AccountCircle />
+  },
+  {
+    title: 'Change Password',
+    path: '/dashboard/change-password',
+    icon: <VpnKeyIcon />
   },
   // {
   //     title: "Orders",

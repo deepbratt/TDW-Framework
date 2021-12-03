@@ -44,6 +44,7 @@ export const CLEAR_SHORTLIST_ITEMS: string = 'Reset';
 export const POST_AN_AD: string = 'Post An Ad';
 export const PROFILE: string = 'Profile';
 export const ADD_EDIT_CAR: string = 'Add/Edit Car';
+export const CHANGE_PASSWORD: string = 'Change Password';
 export const LOGOUT: string = 'Logout';
 export const CANT_FIND_RESULT: string =
   'Sorry! No results found against your search criteria.';

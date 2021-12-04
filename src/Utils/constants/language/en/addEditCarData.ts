@@ -127,7 +127,8 @@ const addEditCarData = {
   ],
   buttons: {
     next: 'Next',
-    post: 'Post',
+    post: 'Save',
+    publish: 'Publish',
     back: 'Back',
     delete: 'Delete',
     discard: 'Discard',

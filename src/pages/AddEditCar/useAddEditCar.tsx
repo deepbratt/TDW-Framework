@@ -478,6 +478,7 @@ const useAddEditCar = () => {
   };
 
   const appendImages = async (fd: any) => {
+    debugger;
     let StringUrls = 0;
     const arrayOfImages = formData.images.filter(
       (item: any) => item !== formData.selectedImage
@@ -489,6 +490,7 @@ const useAddEditCar = () => {
       arrayOfImages.splice(0, 1);
     }
     for (let i = 0; i < arrayOfImages.length; i++) {
+      debugger;
       if (typeof arrayOfImages[i] === typeof 'string') {
         fd.append('image[' + StringUrls + ']', arrayOfImages[i]);
         StringUrls++;
@@ -499,6 +501,7 @@ const useAddEditCar = () => {
   };
 
   const submitForm = async () => {
+    debugger;
     let fd = new FormData();
     fd.append('country', 'Pakistan');
     fd.append('city', formData.city);
@@ -599,6 +602,17 @@ const useAddEditCar = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
+  const handlePublish = () => {
+    formRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (!formValidated(activeStep)) {
+      return;
+    }
+    if (activeStep === 2) {
+      submitForm();
+      return;
+    }
+  };
+
   const handleBack = () => {
     formRef.current.scrollIntoView({ behavior: 'smooth' });
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -614,6 +628,7 @@ const useAddEditCar = () => {
     activeStep,
     handleBack,
     handleNext,
+    handlePublish,
     formData,
     handleChange,
     images,

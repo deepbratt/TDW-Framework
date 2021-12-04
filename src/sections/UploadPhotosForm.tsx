@@ -13,6 +13,8 @@ import { IconButton } from '@material-ui/core';
 import CancelRounded from '@material-ui/icons/CancelRounded';
 import watermark from 'watermarkjs';
 import { useTheme } from '@material-ui/core/styles';
+import {  addFormData } from '../Utils/API/API';
+import { API_ENDPOINTS } from '../Utils/API/endpoints';
 
 interface IUploadPhotosFormProps {
   images: any;
@@ -39,9 +41,7 @@ const UploadPhotosForm = ({
     let oneMb = 1024 * 1024;
     let temp = [...images];
     let imageFiles = e.target.files;
-    if (temp.length < 1) {
-      setFormData({ name: 'selectedImage', value: imageFiles[0] });
-    }
+    
     let sizeError = false;
     let arrayLengthError = false;
     for (let i = 0; i < imageFiles.length; i++) {
@@ -58,8 +58,21 @@ const UploadPhotosForm = ({
           .blob(
             watermark.text.center(watermarkText, '35px roboto', '#fff', 0.5)
           )
-          .then((img: any) => {
-            temp.push(img);
+          .then(async (img: any) => {
+            debugger;
+            console.log(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS_IMAGES}`);
+            let fd = new FormData();
+            fd.append('image', img)
+            await addFormData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS_IMAGES}`, fd)
+              .then((response) => {
+                debugger;
+                // updateImagesState(response.data.data.array);
+                if (temp.length < 1) {
+                  setFormData({ name: 'selectedImage', value: imageFiles[0] });
+                }
+                response.data.data.array.map((i:any) => {temp.push(i)});
+              })
+            
           });
       }
     }

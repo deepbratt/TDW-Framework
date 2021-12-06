@@ -3,7 +3,6 @@ name: s3-depl
 on:
   push:
     branches:
-      - develop
       - r/2142.1-1
 
 jobs:

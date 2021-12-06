@@ -152,7 +152,7 @@ const HeaderContext = () => {
                     </NavLink>
                   );
                 })}
-                <Button
+                {/* <Button
                   className={btn}
                   variant="contained"
                   color="primary"
@@ -166,11 +166,11 @@ const HeaderContext = () => {
                   }
                 >
                   {POST_AN_AD}
-                </Button>
+                </Button> */}
               </List>
             </Hidden>
           </Grid>
-          <Hidden smDown>
+          <Hidden mdDown>
             <InputField
               fullWidth
               className={inputRoot}
@@ -221,7 +221,7 @@ const HeaderContext = () => {
               </IconButton>
             )}
           </Hidden>
-          <Hidden mdUp>
+          <Hidden lgUp>
             <SideBar />
           </Hidden>
         </Toolbar>

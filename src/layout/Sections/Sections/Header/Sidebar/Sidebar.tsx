@@ -132,7 +132,7 @@ const SideBar = () => {
               </NavLink>
             </>
           )}
-          <ListItem style={{ display: 'flex', justifyContent: 'center' }}>
+          {/* <ListItem style={{ display: 'flex', justifyContent: 'center' }}>
             <Button
               className={btn}
               variant="contained"
@@ -148,7 +148,7 @@ const SideBar = () => {
             >
               {POST_AN_AD}
             </Button>
-          </ListItem>
+          </ListItem> */}
         </List>
       </SwipeableDrawer>
       <MenuIcon style={{ fontSize: '30px' }} onClick={toggleDrawer} />

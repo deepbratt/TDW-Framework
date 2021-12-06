@@ -21,12 +21,12 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Build React App - Dev
         if: github.ref == 'refs/heads/develop'
-        run: npm install && npm run build-dev
+        run: npm install --legacy-peer-deps && npm run build-dev
         env:
          CI: false
       - name: Build React App - Prod
         if: github.ref == 'refs/heads/r/2142.1-1'
-        run: npm install && npm run build-prod
+        run: npm install --legacy-peer-deps && npm run build-prod
         env:
          CI: false
 #       - name: Deploy Gzipped CSS files to Development S3 bucket - Prelaunch

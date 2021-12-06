@@ -59,13 +59,11 @@ const UploadPhotosForm = ({
             watermark.text.center(watermarkText, '35px roboto', '#fff', 0.5)
           )
           .then(async (img: any) => {
-            debugger;
             console.log(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS_IMAGES}`);
             let fd = new FormData();
             fd.append('image', img)
             await addFormData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS_IMAGES}`, fd)
               .then((response) => {
-                debugger;
                 // updateImagesState(response.data.data.array);
                 if (temp.length < 1) {
                   setFormData({ name: 'selectedImage', value: imageFiles[0] });

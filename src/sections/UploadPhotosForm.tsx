@@ -11,7 +11,6 @@ import addEditCarData from '../Utils/constants/language/en/addEditCarData';
 import 'react-image-crop/dist/ReactCrop.css';
 import { IconButton } from '@material-ui/core';
 import CancelRounded from '@material-ui/icons/CancelRounded';
-import watermark from 'watermarkjs';
 import { useTheme } from '@material-ui/core/styles';
 
 interface IUploadPhotosFormProps {
@@ -39,9 +38,6 @@ const UploadPhotosForm = ({
     let oneMb = 1024 * 1024;
     let temp = [...images];
     let imageFiles = e.target.files;
-    if (temp.length < 1) {
-      setFormData({ name: 'selectedImage', value: imageFiles[0] });
-    }
     let sizeError = false;
     let arrayLengthError = false;
     for (let i = 0; i < imageFiles.length; i++) {
@@ -53,14 +49,7 @@ const UploadPhotosForm = ({
           arrayLengthError = true;
           break;
         }
-        let watermarkText = 'carokta.com';
-        await watermark([imageFiles[i]])
-          .blob(
-            watermark.text.center(watermarkText, '35px roboto', '#fff', 0.5)
-          )
-          .then((img: any) => {
-            temp.push(img);
-          });
+        temp.push(imageFiles[i]);
       }
     }
     setInfoTitle('Error!');

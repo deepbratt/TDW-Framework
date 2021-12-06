@@ -3,7 +3,7 @@ name: s3-depl
 on:
   push:
     branches:
-      - r/2142.1-1
+      - r/2142.1-2
 
 jobs:
   build:
@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-         ref: r/2142.1-1
+         ref: r/2142.1-2
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -24,7 +24,7 @@ jobs:
         env:
          CI: false
       - name: Build React App - Prod
-        if: github.ref == 'refs/heads/r/2142.1-1'
+        if: github.ref == 'refs/heads/r/2142.1-2'
         run: npm install --legacy-peer-deps && npm run build-prod
         env:
          CI: false
@@ -41,11 +41,11 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: aws s3 sync ./build/ s3://dev.carokta.com --delete
       - name: Deploy app build to Production S3 bucket
-        if: github.ref == 'refs/heads/r/2142.1-1'
+        if: github.ref == 'refs/heads/r/2142.1-2'
         run: aws s3 sync ./build/ s3://carokta.com --delete
       - name: Development CDN Cache invalidation
         if: github.ref == 'refs/heads/develop'
         run: aws cloudfront create-invalidation --distribution-id "E14GK8241BCUI1" --paths "/*"
       - name: Production (carokta.com) CDN Cache invalidation
-        if: github.ref == 'refs/heads/r/2142.1-1'
+        if: github.ref == 'refs/heads/r/2142.1-2'
         run: aws cloudfront create-invalidation --distribution-id "E2S9QBBMNEVSWB" --paths "/*"

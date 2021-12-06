@@ -115,6 +115,25 @@ const ListingCardStyles = makeStyles(() => ({
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     filter: 'blur(8px)'
+  },
+  featuredImgStyle: {
+    zIndex: 97
+  },
+  imgWaterMark: {
+    position: 'absolute',
+    width: '100%',
+    maxWidth: '80px',
+    bottom: '10px',
+    right: '10px',
+    zIndex: 99
+  },
+  overlay: {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    minWidth: '100%',
+    minHeight: '100%',
+    zIndex: 98
   }
 }));
 

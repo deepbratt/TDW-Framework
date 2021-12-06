@@ -499,6 +499,8 @@ const useAddEditCar = () => {
   };
 
   const submitForm = async () => {
+    console.log(formData.images);
+    console.log(formData.selectedImage)
     let fd = new FormData();
     fd.append('country', 'Pakistan');
     fd.append('city', formData.city);
@@ -516,6 +518,8 @@ const useAddEditCar = () => {
     fd.append('milage', formData.mileage);
     fd.append('condition', formData.bodyCondition);
     fd.append('description', formData.description);
+    fd.append('images', formData.images);
+    fd.append('selectedImage', formData.selectedImage);
     fd.append('bodyType', formData.bodyType);
     fd.append('engineType', formData.engineType);
     fd.append('engineCapacity', formData.engineCapacity);
@@ -601,7 +605,10 @@ const useAddEditCar = () => {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       await addFormData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/car-images`, imageData)
         .then((response) => {
-          updateImagesState(response.data.data.array);
+          console.log(response.data.data.array);
+          console.log(response.data.data.selectedImage);
+          setFormData({ name: 'images', value: response.data.data.array });
+          setFormData({ name: 'selectedImage', value: response.data.data.selectedImage });
         })
     }
     if (activeStep === 2) {

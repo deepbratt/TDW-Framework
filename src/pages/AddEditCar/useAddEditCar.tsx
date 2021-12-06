@@ -478,7 +478,6 @@ const useAddEditCar = () => {
   };
 
   const appendImages = async (fd: any) => {
-    debugger;
     let StringUrls = 0;
     const arrayOfImages = formData.images.filter(
       (item: any) => item !== formData.selectedImage
@@ -490,7 +489,6 @@ const useAddEditCar = () => {
       arrayOfImages.splice(0, 1);
     }
     for (let i = 0; i < arrayOfImages.length; i++) {
-      debugger;
       if (typeof arrayOfImages[i] === typeof 'string') {
         fd.append('image[' + StringUrls + ']', arrayOfImages[i]);
         StringUrls++;
@@ -501,7 +499,6 @@ const useAddEditCar = () => {
   };
 
   const submitForm = async (isPublished: any) => {
-    debugger;
     let fd = new FormData();
     fd.append('country', 'Pakistan');
     fd.append('city', formData.city);

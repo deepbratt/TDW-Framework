@@ -5,6 +5,7 @@ import Profile from '../Profile';
 import Help from '../Help/Help';
 import Favs from '../Favorites';
 import Ads from '../Ads/Ads';
+import ChangePassword from '../ChangePassword';
 
 const Wrapper = () => {
   const { id } = useParams<{ id: string }>();
@@ -34,6 +35,12 @@ const Wrapper = () => {
       return (
         <>
           <Ads />
+        </>
+      );
+    } if (id === 'change-password') {
+      return (
+        <>
+          <ChangePassword />
         </>
       );
     } else {

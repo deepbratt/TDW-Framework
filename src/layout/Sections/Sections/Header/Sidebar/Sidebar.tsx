@@ -21,6 +21,7 @@ import { Paths as sideBarPath } from '../paths';
 import { paths, routes } from '../../../../../routes/paths';
 import {
   LOGOUT,
+  CHANGE_PASSWORD,
   POST_AN_AD,
   PROFILE,
   SIGNIN,
@@ -95,9 +96,14 @@ const SideBar = () => {
                       <ListItemText primary={POST_AN_AD} />
                     </NavLink>
                   </ListItem>
-                  <ListItem button className={nested}>
+                  <ListItem button className={nested} onClick={toggleDrawer}>
                     <NavLink className={link} to={paths.dashboard + '/profile'}>
                       <ListItemText primary={PROFILE} />
+                    </NavLink>
+                  </ListItem>
+                  <ListItem button className={nested} onClick={toggleDrawer}>
+                    <NavLink className={link} to={paths.dashboard + '/change-password'}>
+                      <ListItemText primary={CHANGE_PASSWORD} />
                     </NavLink>
                   </ListItem>
                   <ListItem
@@ -126,7 +132,7 @@ const SideBar = () => {
               </NavLink>
             </>
           )}
-          <ListItem style={{ display: 'flex', justifyContent: 'center' }}>
+          {/* <ListItem style={{ display: 'flex', justifyContent: 'center' }}>
             <Button
               className={btn}
               variant="contained"
@@ -142,7 +148,7 @@ const SideBar = () => {
             >
               {POST_AN_AD}
             </Button>
-          </ListItem>
+          </ListItem> */}
         </List>
       </SwipeableDrawer>
       <MenuIcon style={{ fontSize: '30px' }} onClick={toggleDrawer} />

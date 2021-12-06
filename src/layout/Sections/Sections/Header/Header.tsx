@@ -24,6 +24,7 @@ import {
   LOGOUT,
   SIGNIN,
   SIGNUP,
+  CHANGE_PASSWORD,
   POST_AN_AD
 } from '../../../../Utils/constants/language/en/buttonLabels';
 import history from '../../../../routes/history';
@@ -92,14 +93,27 @@ const HeaderContext = () => {
     >
       <MenuItem
         style={{ textTransform: 'capitalize' }}
-        onClick={() =>
-          history.push(
+        onClick={() => {
+          handleMenuClose();
+          return history.push(
             routes.dashboard.substr(0, routes.dashboard.lastIndexOf('/') + 1) +
               'profile'
           )
-        }
+        }}
       >
         {paths.profile}
+      </MenuItem>
+      <MenuItem
+        style={{ textTransform: 'capitalize' }}
+        onClick={() => {
+          handleMenuClose();
+          return history.push(
+            routes.dashboard.substr(0, routes.dashboard.lastIndexOf('/') + 1) +
+              'change-password'
+          )
+        }}
+      >
+        {CHANGE_PASSWORD}
       </MenuItem>
       <MenuItem
         onClick={() => {
@@ -123,7 +137,7 @@ const HeaderContext = () => {
             >
               <img src={Logo} alt="logo" className={logo} />
             </section>
-            <Hidden smDown>
+            <Hidden mdDown>
               <List className={list}>
                 {Paths.map((data, index) => {
                   return (
@@ -138,7 +152,7 @@ const HeaderContext = () => {
                     </NavLink>
                   );
                 })}
-                <Button
+                {/* <Button
                   className={btn}
                   variant="contained"
                   color="primary"
@@ -152,11 +166,11 @@ const HeaderContext = () => {
                   }
                 >
                   {POST_AN_AD}
-                </Button>
+                </Button> */}
               </List>
             </Hidden>
           </Grid>
-          <Hidden smDown>
+          <Hidden mdDown>
             <InputField
               fullWidth
               className={inputRoot}
@@ -207,7 +221,7 @@ const HeaderContext = () => {
               </IconButton>
             )}
           </Hidden>
-          <Hidden mdUp>
+          <Hidden lgUp>
             <SideBar />
           </Hidden>
         </Toolbar>

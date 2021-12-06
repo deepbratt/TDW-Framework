@@ -11,7 +11,6 @@ import addEditCarData from '../Utils/constants/language/en/addEditCarData';
 import 'react-image-crop/dist/ReactCrop.css';
 import { IconButton } from '@material-ui/core';
 import CancelRounded from '@material-ui/icons/CancelRounded';
-import watermark from 'watermarkjs';
 import { useTheme } from '@material-ui/core/styles';
 import {  addFormData } from '../Utils/API/API';
 import { API_ENDPOINTS } from '../Utils/API/endpoints';
@@ -41,7 +40,6 @@ const UploadPhotosForm = ({
     let oneMb = 1024 * 1024;
     let temp = [...images];
     let imageFiles = e.target.files;
-    
     let sizeError = false;
     let arrayLengthError = false;
     for (let i = 0; i < imageFiles.length; i++) {
@@ -53,26 +51,17 @@ const UploadPhotosForm = ({
           arrayLengthError = true;
           break;
         }
-        let watermarkText = 'carokta.com';
-        await watermark([imageFiles[i]])
-          .blob(
-            watermark.text.center(watermarkText, '35px roboto', '#fff', 0.5)
-          )
-          .then(async (img: any) => {
-            console.log(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS_IMAGES}`);
-            let fd = new FormData();
-            fd.append('image', img)
-            await addFormData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS_IMAGES}`, fd)
-              .then((response) => {
-                // updateImagesState(response.data.data.array);
-                if (temp.length < 1) {
-                  setFormData({ name: 'selectedImage', value: imageFiles[0] });
-                }
-                response.data.data.array.map((i:any) => {temp.push(i)});
-              })
-            
-          });
-      }
+        let fd = new FormData();
+        fd.append('image', imageFiles[i])
+        await addFormData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS_IMAGES}`, fd)
+          .then((response) => {
+            // updateImagesState(response.data.data.array);
+            if (temp.length < 1) {
+              setFormData({ name: 'selectedImage', value: imageFiles[0] });
+            }
+            response.data.data.array.map((i:any) => {temp.push(i)});
+          })
+      } 
     }
     setInfoTitle('Error!');
     let errorText =

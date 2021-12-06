@@ -500,7 +500,7 @@ const useAddEditCar = () => {
     }
   };
 
-  const submitForm = async () => {
+  const submitForm = async (isPublished: any) => {
     debugger;
     let fd = new FormData();
     fd.append('country', 'Pakistan');
@@ -529,13 +529,13 @@ const useAddEditCar = () => {
       fd.append('features', formData.features[i]);
     }
     fd.append('price', formData.price);
+    fd.append('isPublished', isPublished);
     setIsLoading(true);
     await appendImages(fd);
     console.table(Object.fromEntries(fd));
     addEditData(fd).then((response) => {
       setIsLoading(false);
       if (response && response.data && response.data.status === 'success') {
-        // console.log('response', response);
         setToastMessage(response.data.message);
         setToastType('success');
         setToastOpen(true);
@@ -561,7 +561,6 @@ const useAddEditCar = () => {
         setToastMessage(msg);
         setToastType('error');
         setToastOpen(true);
-        console.log('error', response);
       }
     });
   };
@@ -596,7 +595,7 @@ const useAddEditCar = () => {
       return;
     }
     if (activeStep === 2) {
-      submitForm();
+      submitForm(false);
       return;
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -608,7 +607,7 @@ const useAddEditCar = () => {
       return;
     }
     if (activeStep === 2) {
-      submitForm();
+      submitForm(true);
       return;
     }
   };

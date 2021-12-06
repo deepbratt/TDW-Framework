@@ -1,6 +1,7 @@
 export const API_ENDPOINTS = {
   ADS: '/ads',
   CARS: '/cars',
+  CARS_IMAGES: '/cars/car-images',
   MY_CARS: '/myCars',
   USERS: '/Users',
   CURENT_USER: '/currentUser',

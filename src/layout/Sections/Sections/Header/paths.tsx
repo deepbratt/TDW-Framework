@@ -5,7 +5,11 @@ export const Paths = [
   },
   {
     path: '/cars',
-    name: 'BROWSE CARS'
+    name: 'BUY CARS'
+  },
+  {
+    path: '/add-edit/car/',
+    name: 'SELL CARS'
   },
   {
     path: '/car-comparision',

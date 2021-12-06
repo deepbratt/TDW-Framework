@@ -137,7 +137,7 @@ const HeaderContext = () => {
             >
               <img src={Logo} alt="logo" className={logo} />
             </section>
-            <Hidden smDown>
+            <Hidden mdDown>
               <List className={list}>
                 {Paths.map((data, index) => {
                   return (

@@ -20,6 +20,7 @@ interface IUploadPhotosFormProps {
   updateImagesState: (img: any) => void;
   requireError: any;
   formData: any;
+  setIsLoading: any;
   setFormData: any;
 }
 
@@ -28,6 +29,7 @@ const UploadPhotosForm = ({
   updateImagesState,
   requireError,
   formData,
+  setIsLoading,
   setFormData
 }: IUploadPhotosFormProps) => {
   const classes = useStyles();
@@ -36,7 +38,7 @@ const UploadPhotosForm = ({
   const [infoMessage, setInfoMessage] = useState<string | any>('');
   const [infoTitle, setInfoTitle] = useState('');
 
-  const uploadImage = async (e: any) => {
+  const uploadImage = (e: any) => {
     let oneMb = 1024 * 1024;
     let temp = [...images];
     let imageFiles = e.target.files;
@@ -46,22 +48,14 @@ const UploadPhotosForm = ({
       let imageSize = imageFiles[i].size;
       if (imageSize > 5 * oneMb) {
         sizeError = true;
+        break;
       } else {
         if (temp.length > 19) {
           arrayLengthError = true;
           break;
         }
-        let fd = new FormData();
-        fd.append('image', imageFiles[i])
-        await addFormData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS_IMAGES}`, fd)
-          .then((response) => {
-            // updateImagesState(response.data.data.array);
-            if (temp.length < 1) {
-              setFormData({ name: 'selectedImage', value: imageFiles[0] });
-            }
-            response.data.data.array.map((i:any) => {temp.push(i)});
-          })
-      } 
+        temp.push(imageFiles[i]);        
+      }
     }
     setInfoTitle('Error!');
     let errorText =
@@ -80,8 +74,24 @@ const UploadPhotosForm = ({
       );
     setInfoMessage(errorText);
     setOpenInfoModel(sizeError || arrayLengthError);
-    if (!arrayLengthError) {
-      updateImagesState(temp);
+    if (!sizeError && !arrayLengthError) {
+      setIsLoading(true);
+      let imageUploadPromises: any[] = [];
+      for (let i = 0; i < imageFiles.length; i++) {
+        let fd: FormData = new FormData();
+        fd.append('image', imageFiles[i]);
+        imageUploadPromises.push(addFormData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS_IMAGES}`, fd));
+      }
+      Promise.all(imageUploadPromises).then(responses => {
+        let imagesArray: any[] = [...images];
+        responses.forEach(response => {
+          if (temp.length < 1) {
+            setFormData({ name: 'selectedImage', value: imageFiles[0] });
+          }
+          response.data.data.array.map((image: any) => imagesArray.push(image));
+        })
+        updateImagesState(imagesArray);
+      }).then(() => setIsLoading(false));
     }
     e.target.value = null;
   };

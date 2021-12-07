@@ -183,6 +183,7 @@ const useAddEditCar = () => {
       images={images}
       updateImagesState={updateImagesState}
       formData={formData}
+      setIsLoading={setIsLoading}
       setFormData={setFormData}
       // key={images.length}
       requireError={requireError.images}

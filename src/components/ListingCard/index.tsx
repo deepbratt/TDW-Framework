@@ -20,7 +20,9 @@ import {
   MARK_AS_UNSOLD,
   EDIT,
   DEACTIVATE,
-  ACTIVATE
+  ACTIVATE,
+  PUBLISH,
+  DELETE
 } from '../../Utils/constants/language/en/buttonLabels';
 import ConvertDate from '../convertDate';
 import ListingCardStyles from './styles';
@@ -44,9 +46,10 @@ import useImageOrientation from '../../Utils/hooks/useImageOrientation';
 import MoreVertRoundedIcon from '@material-ui/icons/MoreVertRounded';
 import LOGO from '../../layout/Sections/assets/logo.png';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
-import { updateData } from '../../Utils/API/API';
+import { deleteData, updateData } from '../../Utils/API/API';
+import { ICarCard } from '../../Utils/interfaces/products.interface';
 export interface ListingCardProps {
-  data: any;
+  data: ICarCard;
   layoutType: string;
   span?: string;
   isFavs?: boolean;
@@ -138,6 +141,10 @@ const ListingCard: React.FC<ListingCardProps> = ({
       <MenuItem onClick={() => history.push(paths.addEditCar + `${data._id}`)}>
         {EDIT}
       </MenuItem>
+      <MenuItem onClick={() => deleteAd()}>{DELETE}</MenuItem>
+      {data.isPublished === false ? (
+        <MenuItem onClick={() => publishAd()}>{PUBLISH}</MenuItem>
+      ) : null}
       <MenuItem onClick={() => toggleSold()}>
         {isSold ? MARK_AS_UNSOLD : MARK_AS_SOLD}
       </MenuItem>
@@ -165,6 +172,40 @@ const ListingCard: React.FC<ListingCardProps> = ({
     ).then((response: any) => {
       if (response && response.data && response.data.status === 'success') {
         setIsSold(!isSold);
+        setToastMessage(response.data.message);
+        setToastType('success');
+      } else {
+        setToastMessage(response.message);
+        setToastType('error');
+      }
+      setOpenToast(true);
+      setIsLoading(false);
+    });
+  };
+
+  const deleteAd = () => {
+    setIsLoading(true);
+    deleteData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/${data._id}`).then(
+      (response: any) => {
+        if (response && response.data && response.data.status === 'success') {
+          setToastMessage(response.data.message);
+          setToastType('success');
+        } else {
+          setToastMessage(response.message);
+          setToastType('error');
+        }
+        setOpenToast(true);
+        setIsLoading(false);
+      }
+    );
+  };
+
+  const publishAd = () => {
+    setIsLoading(true);
+    updateData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.PUBLISH_AD}${data._id}`
+    ).then((response: any) => {
+      if (response && response.data && response.data.status === 'success') {
         setToastMessage(response.data.message);
         setToastType('success');
       } else {

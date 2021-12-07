@@ -7,12 +7,13 @@ import {
   removeFavs
 } from '../../Utils/hooks/endpoints';
 import { useEffect } from 'react';
-import { getAllData, updateData } from '../../Utils/API/API';
+import { getAllData, updateData, deleteData } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import useShortListCars from '../../Utils/hooks/useShortListCars';
 import { paths } from '../../routes/paths';
+import history from '../../routes/history';
 
 const Actions = (Id?: string | '') => {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -174,6 +175,41 @@ const Actions = (Id?: string | '') => {
     });
   };
 
+  const publishAd = () => {
+    setIsLoading(true);
+    updateData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.PUBLISH_AD}${obj?._id}`
+    ).then((response: any) => {
+      if (response && response.data && response.data.status === 'success') {
+        setToastMessage(response.data.message);
+        setToastType('success');
+      } else {
+        setToastMessage(response.message);
+        setToastType('error');
+      }
+      setOpenToast(true);
+      setIsLoading(false);
+    });
+  };
+
+  const deleteAd = () => {
+    setIsLoading(true);
+    deleteData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/${obj?._id}`).then(
+      (response: any) => {
+        if (response && response.data && response.data.status === 'success') {
+          setToastMessage(response.data.message);
+          setToastType('success');
+          history.push(paths.cars);
+        } else {
+          setToastMessage(response.message);
+          setToastType('error');
+        }
+        setOpenToast(true);
+        setIsLoading(false);
+      }
+    );
+  };
+
   const addFavs = async (url: string, Id: string) => {
     setIsLoading(true);
     setOpen(false);
@@ -271,7 +307,9 @@ const Actions = (Id?: string | '') => {
     isActive,
     setOpenToast,
     toastMessage,
-    openToast
+    openToast,
+    publishAd,
+    deleteAd
   };
 };
 

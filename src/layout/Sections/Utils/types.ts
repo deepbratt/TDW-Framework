@@ -62,6 +62,7 @@ export interface ICarCard {
   updatedAt: string;
   slug: string;
   isFav: boolean;
+  isPublished: boolean;
 }
 
 export interface IUser {
@@ -100,6 +101,7 @@ export interface Detail {
   imageLoaded: any;
   createdBy: any | IUser;
   updatedAt: string;
+  isPublished?: boolean;
 }
 
 export interface IProp {

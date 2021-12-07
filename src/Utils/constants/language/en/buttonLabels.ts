@@ -61,3 +61,5 @@ export const MARK_AS_UNSOLD: string = 'Mark as Unsold';
 export const EDIT: string = 'Edit';
 export const DEACTIVATE: string = 'Deactivate';
 export const ACTIVATE: string = 'Activate';
+export const PUBLISH: string = 'Publish';
+export const DELETE: string = 'Delete';

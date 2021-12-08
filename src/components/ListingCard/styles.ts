@@ -25,10 +25,16 @@ const ListingCardStyles = makeStyles(() => ({
     marginTop: '10px',
     height: '100%'
   },
-  featuredBadge: {
+  featuredBadgeContainer: {
+    display: "flex",
+    justifyContent:"flex-start",
     position: 'absolute',
     left: '7px',
     top: '7px',
+    zIndex: 109
+  },
+  featuredBadge: {
+    margin: '0 2px',
     padding: '3px 5px',
     backgroundColor: carminePink,
     borderRadius: '2px',
@@ -126,14 +132,14 @@ const ListingCardStyles = makeStyles(() => ({
     maxWidth: '80px',
     bottom: '10px',
     right: '10px',
-    zIndex: 99,
+    zIndex: 99
   },
-  overlay:{
-    position: "absolute",
-    top: "0",
-    left: "0",
-    minWidth: "100%",
-    minHeight: "100%",
+  overlay: {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    minWidth: '100%',
+    minHeight: '100%',
     zIndex: 98
   }
 }));

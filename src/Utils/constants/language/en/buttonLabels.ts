@@ -62,4 +62,6 @@ export const EDIT: string = 'Edit';
 export const DEACTIVATE: string = 'Deactivate';
 export const ACTIVATE: string = 'Activate';
 export const PUBLISH: string = 'Publish';
+export const NOT_PUBLISHED: string = 'Not Published';
+export const NOT_ACTIVE: string = 'Not Active';
 export const DELETE: string = 'Delete';

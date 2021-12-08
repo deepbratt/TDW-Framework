@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -22,7 +24,9 @@ import {
   DEACTIVATE,
   ACTIVATE,
   PUBLISH,
-  DELETE
+  DELETE,
+  NOT_PUBLISHED,
+  NOT_ACTIVE
 } from '../../Utils/constants/language/en/buttonLabels';
 import ConvertDate from '../convertDate';
 import ListingCardStyles from './styles';
@@ -32,8 +36,6 @@ import { addToFav } from '../../Utils/hooks/actions';
 import { addToFavs, removeFavs } from '../../Utils/hooks/endpoints';
 import Toast from '../Toast';
 import Loader from '../Loader';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
 import { Favorite, FavoriteBorder } from '@material-ui/icons';
 import moment from 'moment';
 import ConditionalLink from '../ConditionalLink';
@@ -48,6 +50,7 @@ import LOGO from '../../layout/Sections/assets/logo.png';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { deleteData, updateData } from '../../Utils/API/API';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
+
 export interface ListingCardProps {
   data: ICarCard;
   layoutType: string;
@@ -80,6 +83,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const {
     root,
     grid,
+    featuredBadgeContainer,
     featuredBadge,
     location,
     favsIconGrid,
@@ -391,11 +395,29 @@ const ListingCard: React.FC<ListingCardProps> = ({
                     alt="carokta watermark"
                   />
                   <div className={overlay} />
-                  {data.isSold && (
-                    <span className={featuredBadge}>
-                      <Typography variant="body2">{SOLD}</Typography>
-                    </span>
-                  )}
+                  <div className={featuredBadgeContainer}>
+                    <>
+                      {data.isSold && (
+                        <span className={featuredBadge}>
+                          <Typography variant="body2">{SOLD}</Typography>
+                        </span>
+                      )}
+                      {!data.isPublished && (
+                        <span className={featuredBadge}>
+                          <Typography variant="body2">
+                            {NOT_PUBLISHED}
+                          </Typography>
+                        </span>
+                      )}
+                      {!data.active && (
+                        <span className={featuredBadge}>
+                          <Typography variant="body2">
+                            {NOT_ACTIVE}
+                          </Typography>
+                        </span>
+                      )}
+                    </>
+                  </div>
                 </CardMedia>
               </Grid>
               <Grid item container xs={12} sm={layoutType !== 'list' ? 12 : 8}>

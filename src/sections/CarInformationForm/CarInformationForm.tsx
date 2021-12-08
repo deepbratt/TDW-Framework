@@ -16,7 +16,7 @@ interface CarInformationFormProps {
   formData: {
     city: '';
     carModel: '';
-    carMake: 'Honda' | 'Daihatsu' | 'Toyota' | 'Nissan' | 'Suzuki';
+    carMake: '';
     modelYear: '';
     bodyColor: '';
     registeredIn: '';
@@ -108,6 +108,7 @@ const CarInformationForm = ({
           className={classes.selectFields}
           value={formData.carModel}
           label={addEditCarData.fields.carModel.label}
+          disabled={formData.carMake === ''}
           required
           error={requireError.carModel}
           helperText={

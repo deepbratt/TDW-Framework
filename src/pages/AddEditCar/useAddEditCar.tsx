@@ -577,7 +577,7 @@ const useAddEditCar = () => {
       let error = false;
       for (let i = activeStep; i < step; i++) {
         if (!formValidated(i)) {
-          setActiveStep(i);
+          setActiveStep(activeStep);
           error = true;
         }
       }

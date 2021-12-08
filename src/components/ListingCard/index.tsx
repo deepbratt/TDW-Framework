@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -20,7 +22,11 @@ import {
   MARK_AS_UNSOLD,
   EDIT,
   DEACTIVATE,
-  ACTIVATE
+  ACTIVATE,
+  PUBLISH,
+  DELETE,
+  NOT_PUBLISHED,
+  NOT_ACTIVE
 } from '../../Utils/constants/language/en/buttonLabels';
 import ConvertDate from '../convertDate';
 import ListingCardStyles from './styles';
@@ -30,8 +36,6 @@ import { addToFav } from '../../Utils/hooks/actions';
 import { addToFavs, removeFavs } from '../../Utils/hooks/endpoints';
 import Toast from '../Toast';
 import Loader from '../Loader';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
 import { Favorite, FavoriteBorder } from '@material-ui/icons';
 import moment from 'moment';
 import ConditionalLink from '../ConditionalLink';
@@ -44,9 +48,11 @@ import useImageOrientation from '../../Utils/hooks/useImageOrientation';
 import MoreVertRoundedIcon from '@material-ui/icons/MoreVertRounded';
 import LOGO from '../../layout/Sections/assets/logo.png';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
-import { updateData } from '../../Utils/API/API';
+import { deleteData, updateData } from '../../Utils/API/API';
+import { ICarCard } from '../../Utils/interfaces/products.interface';
+
 export interface ListingCardProps {
-  data: any;
+  data: ICarCard;
   layoutType: string;
   span?: string;
   isFavs?: boolean;
@@ -77,6 +83,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const {
     root,
     grid,
+    featuredBadgeContainer,
     featuredBadge,
     location,
     favsIconGrid,
@@ -138,6 +145,10 @@ const ListingCard: React.FC<ListingCardProps> = ({
       <MenuItem onClick={() => history.push(paths.addEditCar + `${data._id}`)}>
         {EDIT}
       </MenuItem>
+      <MenuItem onClick={() => deleteAd()}>{DELETE}</MenuItem>
+      {data.isPublished === false ? (
+        <MenuItem onClick={() => publishAd()}>{PUBLISH}</MenuItem>
+      ) : null}
       <MenuItem onClick={() => toggleSold()}>
         {isSold ? MARK_AS_UNSOLD : MARK_AS_SOLD}
       </MenuItem>
@@ -165,6 +176,40 @@ const ListingCard: React.FC<ListingCardProps> = ({
     ).then((response: any) => {
       if (response && response.data && response.data.status === 'success') {
         setIsSold(!isSold);
+        setToastMessage(response.data.message);
+        setToastType('success');
+      } else {
+        setToastMessage(response.message);
+        setToastType('error');
+      }
+      setOpenToast(true);
+      setIsLoading(false);
+    });
+  };
+
+  const deleteAd = () => {
+    setIsLoading(true);
+    deleteData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/${data._id}`).then(
+      (response: any) => {
+        if (response && response.data && response.data.status === 'success') {
+          setToastMessage(response.data.message);
+          setToastType('success');
+        } else {
+          setToastMessage(response.message);
+          setToastType('error');
+        }
+        setOpenToast(true);
+        setIsLoading(false);
+      }
+    );
+  };
+
+  const publishAd = () => {
+    setIsLoading(true);
+    updateData(
+      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.PUBLISH_AD}${data._id}`
+    ).then((response: any) => {
+      if (response && response.data && response.data.status === 'success') {
         setToastMessage(response.data.message);
         setToastType('success');
       } else {
@@ -350,11 +395,29 @@ const ListingCard: React.FC<ListingCardProps> = ({
                     alt="carokta watermark"
                   />
                   <div className={overlay} />
-                  {data.isSold && (
-                    <span className={featuredBadge}>
-                      <Typography variant="body2">{SOLD}</Typography>
-                    </span>
-                  )}
+                  <div className={featuredBadgeContainer}>
+                    <>
+                      {data.isSold && (
+                        <span className={featuredBadge}>
+                          <Typography variant="body2">{SOLD}</Typography>
+                        </span>
+                      )}
+                      {!data.isPublished && (
+                        <span className={featuredBadge}>
+                          <Typography variant="body2">
+                            {NOT_PUBLISHED}
+                          </Typography>
+                        </span>
+                      )}
+                      {!data.active && (
+                        <span className={featuredBadge}>
+                          <Typography variant="body2">
+                            {NOT_ACTIVE}
+                          </Typography>
+                        </span>
+                      )}
+                    </>
+                  </div>
                 </CardMedia>
               </Grid>
               <Grid item container xs={12} sm={layoutType !== 'list' ? 12 : 8}>

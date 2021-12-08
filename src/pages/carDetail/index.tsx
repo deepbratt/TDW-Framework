@@ -25,7 +25,6 @@ import MetaTags from '../../components/MetaTags';
 import BreadCrumbs from '../../components/BreadCrumbs';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import NoImg from '../../assets/no-img.png';
-import Loader from '../../components/Loader';
 import Toast from '../../components/Toast';
 import { Colors } from '../../Utils/constants/colors/colors';
 import CarDescription from '../../layout/Sections/Sections/CarDetail/CarDescription';
@@ -52,7 +51,9 @@ import {
   MARK_AS_UNSOLD,
   EDIT,
   DEACTIVATE,
-  ACTIVATE
+  ACTIVATE,
+  PUBLISH,
+  DELETE
 } from '../../Utils/constants/language/en/buttonLabels';
 import { paths } from '../../routes/paths';
 import CarDetailsSkeletons from '../../layout/Sections/Sections/CarDetail/CarDetailsSkeletons';
@@ -120,7 +121,9 @@ const CarDetailContainer = () => {
     isActive,
     setOpenToast,
     toastMessage,
-    openToast
+    openToast,
+    publishAd,
+    deleteAd
   } = Actions(id ?? '');
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -148,6 +151,10 @@ const CarDetailContainer = () => {
       <MenuItem onClick={() => history.push(paths.addEditCar + `${obj?._id}`)}>
         {EDIT}
       </MenuItem>
+      <MenuItem onClick={() => deleteAd()}>{DELETE}</MenuItem>
+      {obj?.isPublished === false ? (
+        <MenuItem onClick={() => publishAd()}>{PUBLISH}</MenuItem>
+      ) : null}
       <MenuItem onClick={() => toggleSold()}>
         {isSold ? MARK_AS_SOLD : MARK_AS_UNSOLD}
       </MenuItem>

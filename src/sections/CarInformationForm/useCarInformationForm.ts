@@ -22,6 +22,12 @@ const useCarInformationForm = (
     setFormData({ name: event.target.name, value: event.target.value });
   };
 
+  const toTitleCase = (str: string) => {
+    return str.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  };
+
   const fetchMakes = () => {
     setIsLoading(true);
     getAllData(
@@ -147,6 +153,7 @@ const useCarInformationForm = (
         });
       }
     }
+    // eslint-disable-next-line
   }, [formData.modelVersion]);
 
   return {
@@ -157,7 +164,8 @@ const useCarInformationForm = (
     carMakesList,
     carModelsList,
     carVersionsList,
-    handleTextChange
+    handleTextChange,
+    toTitleCase
   };
 };
 

@@ -49,7 +49,7 @@ const initialFieldValues = {
   assembly: '',
   sellerType: '',
   images: [],
-  selectedImage: "",
+  selectedImage: '',
   features: [],
   province: '',
   location: { coordinates: { lat: '', long: '' }, address: '' }
@@ -149,6 +149,12 @@ const useAddEditCar = () => {
       });
     }
   };
+  const toTitleCase = (str: string) => {
+    return str.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  };
+  
   const handleChangeSelectKeyValue = (
     name: string,
     value: any,
@@ -440,7 +446,7 @@ const useAddEditCar = () => {
       } else {
         let cityData = City.getCitiesOfCountry('PK');
         let cityInformation = cityData?.filter(
-          (city: any) => city.name === formData.city
+          (city: any) => city.name === toTitleCase(formData.city)
         );
         let provinceInformation: IState | undefined;
         if (cityInformation) {
@@ -483,9 +489,9 @@ const useAddEditCar = () => {
     const arrayOfImages = formData.images.filter(
       (item: any) => item !== formData.selectedImage
     );
-    if(formData.selectedImage){
+    if (formData.selectedImage) {
       fd.append('selectedImage', formData.selectedImage);
-    }else{
+    } else {
       fd.append('selectedImage', arrayOfImages[0]);
       arrayOfImages.splice(0, 1);
     }
@@ -494,7 +500,7 @@ const useAddEditCar = () => {
         fd.append('image[' + StringUrls + ']', arrayOfImages[i]);
         StringUrls++;
       } else {
-        fd.append('image',arrayOfImages[i])
+        fd.append('image', arrayOfImages[i]);
       }
     }
   };

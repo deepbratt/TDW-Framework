@@ -88,7 +88,7 @@ const UploadPhotosForm = ({
           if (temp.length < 1) {
             setFormData({ name: 'selectedImage', value: imageFiles[0] });
           }
-          response.data.data.array.map((image: any) => imagesArray.push(image));
+          response.data.data.result.images.map((image: any) => imagesArray.push(image.location));
         })
         updateImagesState(imagesArray);
       }).then(() => setIsLoading(false));

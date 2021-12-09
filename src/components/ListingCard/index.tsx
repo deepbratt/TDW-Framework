@@ -109,6 +109,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     updatedAt,
     price,
     image,
+    selectedImage,
     active,
     isFav,
     createdBy,
@@ -372,20 +373,31 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   <div
                     style={{
                       backgroundImage: `url(${
-                        image && image.length > 0 ? image[0] : NoImg
+                        selectedImage && typeof selectedImage === 'string' ? selectedImage
+                        : selectedImage && typeof selectedImage === 'object' && Object.keys(selectedImage).length > 2 ? Object.values(selectedImage).join('')
+                        : selectedImage && typeof selectedImage === 'object' && Object.keys(selectedImage).length <= 2 ? selectedImage.location
+                        : NoImg
                       })`
                     }}
                     className={blurBgImg}
                   ></div>
                   <img
-                    src={image && image.length > 0 ? image[0] : NoImg}
+                    src={
+                      selectedImage && typeof selectedImage === 'string' ? selectedImage 
+                        : selectedImage && typeof selectedImage === 'object' && Object.keys(selectedImage).length > 2 ? Object.values(selectedImage).join('')
+                        : selectedImage && typeof selectedImage === 'object' && Object.keys(selectedImage).length <= 2 ? selectedImage.location
+                        : NoImg
+                      }
                     className={featuredImgStyle}
                     alt=""
                     width={imgWidth}
                     height={imgHeight}
                     onLoad={() =>
                       setImageOrientationAndSize(
-                        image && image.length > 0 ? image[0] : NoImg
+                        selectedImage && typeof selectedImage === 'string' ? selectedImage 
+                        : selectedImage && typeof selectedImage === 'object' && Object.keys(selectedImage).length > 2 ? Object.values(selectedImage).join('')
+                        : selectedImage && typeof selectedImage === 'object' && Object.keys(selectedImage).length <= 2 ? selectedImage.location
+                        : NoImg
                       )
                     }
                   />

@@ -11,10 +11,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import {
   addData,
-  addFormData,
   deleteData,
   getAllData,
-  updateFormData
+  updateData
 } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import Sizes from '../../Utils/themeConstants';
@@ -415,18 +414,18 @@ const useAddEditCar = () => {
     return allFalse(flagRequireError);
   };
 
-  const addEditData = async (formBody: any) => {
+  const addEditData = async (data: any) => {
     let result: any;
     if (id) {
       let carId = id ? '/' + id : '';
-      result = await updateFormData(
+      result = await updateData(
         `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${carId}`,
-        formBody
+        data
       );
     } else {
-      result = await addFormData(
+      result = await addData(
         `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}`,
-        formBody
+        data
       );
     }
     return result;
@@ -500,40 +499,39 @@ const useAddEditCar = () => {
   };
 
   const submitForm = async (isPublished: any) => {
-    let fd = new FormData();
-    fd.append('country', 'Pakistan');
-    fd.append('city', formData.city);
-    fd.append('province', formData.province);
-    fd.append('location.address', formData.location.address);
-    fd.append('location.coordinates[0]', formData.location.coordinate.long);
-    fd.append('location.coordinates[1]', formData.location.coordinate.lat);
-    fd.append('model', formData.carModel);
-    fd.append('make', formData.carMake);
-    fd.append('version', formData.modelVersion);
-    fd.append('transmission', formData.transmission);
-    fd.append('assembly', formData.assembly);
-    fd.append('registrationCity', formData.registeredIn);
-    fd.append('bodyColor', formData.bodyColor);
-    fd.append('milage', formData.mileage);
-    fd.append('condition', formData.bodyCondition);
-    fd.append('description', formData.description);
-    fd.append('bodyType', formData.bodyType);
-    fd.append('engineType', formData.engineType);
-    fd.append('engineCapacity', formData.engineCapacity);
-    fd.append('regNumber', formData.registrationNo);
-    fd.append('sellerType', formData.sellerType);
-    fd.append('modelYear', formData.modelYear);
-    for (let i = 0; i < formData.features.length; i++) {
-      fd.append('features', formData.features[i]);
+    let data = {
+      'country': 'Pakistan',
+      'city': formData.city,
+      'province': formData.province,
+      'location.address': formData.location.address,
+      'location.coordinates[0]': formData.location.coordinate.long,
+      'location.coordinates[1]': formData.location.coordinate.lat,
+      'model': formData.carModel,
+      'make': formData.carMake,
+      'version': formData.modelVersion,
+      'transmission': formData.transmission,
+      'assembly': formData.assembly,
+      'registrationCity': formData.registeredIn,
+      'bodyColor': formData.bodyColor,
+      'milage': formData.mileage,
+      'condition': formData.bodyCondition,
+      'description': formData.description,
+      'bodyType': formData.bodyType,
+      'engineType': formData.engineType,
+      'engineCapacity': formData.engineCapacity,
+      'regNumber': formData.registrationNo,
+      'modelYear': formData.modelYear,
+      'features': formData.features,
+      'price': formData.price,
+      'isPublished': isPublished,
+      'selectedImage': formData.selectedImage ? formData.selectedImage: formData.images[0],
+      'image': formData.images
     }
-    fd.append('price', formData.price);
-    fd.append('isPublished', isPublished);
-    setIsLoading(true);
-    await appendImages(fd);
-    console.table(Object.fromEntries(fd));
-    addEditData(fd).then((response) => {
+    console.log(data);
+    addEditData(data).then((response) => {
       setIsLoading(false);
       if (response && response.data && response.data.status === 'success') {
+        console.log(response.data);
         setToastMessage(response.data.message);
         setToastType('success');
         setToastOpen(true);
@@ -556,6 +554,7 @@ const useAddEditCar = () => {
             : response.response
             ? response.response
             : 'Network Error';
+        console.log(msg);
         setToastMessage(msg);
         setToastType('error');
         setToastOpen(true);

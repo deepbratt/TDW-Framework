@@ -216,7 +216,7 @@ const CarDetailContainer = () => {
                     desc={desc}
                     paragraph={obj?.description}
                     arr={
-                      obj.image && obj.image.length > 0 ? obj.image : [NoImg]
+                      obj.image && obj.image.length > 0 ? obj.image : NoImg
                     }
                     id={obj?._id}
                     city={obj?.registrationCity}

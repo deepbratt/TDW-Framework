@@ -84,7 +84,7 @@ export interface IUser {
 export interface Detail {
   desc: string;
   paragraph: string | undefined;
-  arr: Array<string>;
+  arr: any;
   info: IInfo;
   feature: IFeature[];
   carTitle: string;

@@ -10,7 +10,8 @@ export interface ICarCard {
   transmission: string;
   city: string;
   price: number;
-  image: string[];
+  image: any;
+  selectedImage: any;
   features: string[];
   location: any;
   favOf: string[];

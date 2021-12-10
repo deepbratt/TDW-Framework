@@ -71,7 +71,7 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
           showThumbs={true}
           useKeyboardArrows={true}
         >
-          {arr.map((data, index) => {
+          {arr.map((data: any, index: any) => {
             return (
               <div
                 onClick={(e) => openFullScreen(index, e)}
@@ -84,9 +84,9 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
                 <img
                   className={featuredImgStyle}
                   key={`img ${index}`}
-                  src={data}
+                  src={data.location}
                   alt=""
-                  onLoad={(e: any) => onImageLoad(data, e.target)}
+                  onLoad={(e: any) => onImageLoad(data.location, e.target)}
                 />
                 <img
                   src={LOGO}
@@ -101,7 +101,7 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
         {fullScreen && (
           <FullScreenImage
             images={arr.length > 1 ? arr : false}
-            image={arr.length < 2 ? arr : false}
+            image={arr.length < 2 ? arr[0] : false}
             onClose={() => closeFullScreen()}
             startIndex={imageIndex}
             thumbnail={arr}
@@ -119,15 +119,15 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
                   scrollButtons: fullImageTabScrollBtn
                 }}
               >
-                {arr.map((thumb: string, index: number) => (
+                {arr.map((thumb: any, index: any) => (
                   <Tab
                     onClick={(e) => setImageIndex(index)}
-                    key={thumb + index}
+                    key={thumb.reference + index}
                     classes={{
                       wrapper: tabsWrapper
                     }}
                     icon={
-                      <img src={thumb} alt="" height="100px" width="auto" />
+                      <img src={thumb.location} alt="" height="100px" width="auto" />
                     }
                   />
                 ))}

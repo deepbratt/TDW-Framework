@@ -42,8 +42,8 @@ export default class FullScreenImage extends React.Component<any> {
     `translate3d(${x}px,${y}px,0px) scale(${zoom}) rotate(${rotate}deg)`;
   stopSideEffect = (e: any) => e.stopPropagation();
   getCurrentImage = (s: any, p: any) => {
-    if (!s.multi) return p.image ?? '';
-    return p.images[s.current]?.url ?? p.images?.[s.current] ?? '';
+    if (!s.multi) return p.image.location ?? '';
+    return p.images[s.current]?.location ?? p.images?.[s.current] ?? '';
   };
   getCurrentTitle = (s: any, p: any) => {
     if (!s.multi) return p.title ?? '';
@@ -301,7 +301,7 @@ export default class FullScreenImage extends React.Component<any> {
             <IconButton
               className="lb-hide-mobile"
               style={{ background: 'white', marginLeft: '10px' }}
-              onClick={(e) => this.navigateImage('next', e)}
+              onClick={(e) => this.navigateImage('prev', e)}
             >
               <NavigateBefore />
             </IconButton>

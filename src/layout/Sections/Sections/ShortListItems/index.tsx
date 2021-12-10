@@ -84,7 +84,7 @@ const ShortListItems = ({
                     lg={3}
                   >
                     <ShortListCard
-                      productImg={item.image[0]}
+                      productImg={item.selectedImage ? item.selectedImage.location : item.image[0].location}
                       name={item.model}
                       _id={item._id}
                       handleClick={() => removeShortListItem(item._id)}

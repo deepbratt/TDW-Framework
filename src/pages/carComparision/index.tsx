@@ -113,7 +113,7 @@ const CarComparision = () => {
           shortListCars.map((item: ICarCard) => (
             <TableCell key={uuidv4()} align="center">
               <ShortListCard
-                productImg={item.image[0]}
+                productImg={item.selectedImage ? item.selectedImage.location : item.image[0].location}
                 name={item.model}
                 _id={item._id}
                 price={item.price}

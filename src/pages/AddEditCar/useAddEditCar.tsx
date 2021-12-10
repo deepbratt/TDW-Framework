@@ -520,6 +520,7 @@ const useAddEditCar = () => {
       'engineType': formData.engineType,
       'engineCapacity': formData.engineCapacity,
       'regNumber': formData.registrationNo,
+      'sellerType': formData.sellerType,
       'modelYear': formData.modelYear,
       'features': formData.features,
       'price': formData.price,

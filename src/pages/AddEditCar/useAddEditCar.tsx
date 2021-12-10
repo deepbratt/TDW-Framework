@@ -528,11 +528,12 @@ const useAddEditCar = () => {
       'selectedImage': formData.selectedImage ? formData.selectedImage: formData.images[0],
       'image': formData.images
     }
-    console.log(data);
+    // console.log(data);
+    setIsLoading(true);
     addEditData(data).then((response) => {
       setIsLoading(false);
       if (response && response.data && response.data.status === 'success') {
-        console.log(response.data);
+        // console.log(response.data);
         setToastMessage(response.data.message);
         setToastType('success');
         setToastOpen(true);
@@ -555,7 +556,7 @@ const useAddEditCar = () => {
             : response.response
             ? response.response
             : 'Network Error';
-        console.log(msg);
+        // console.log(msg);
         setToastMessage(msg);
         setToastType('error');
         setToastOpen(true);

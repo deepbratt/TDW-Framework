@@ -12,6 +12,7 @@ import { ICarCard } from '../../../../Utils/interfaces/products.interface';
 import { paths } from '../../../../routes/paths';
 import { useHistory } from 'react-router';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import NoImg from '../../../../assets/no-img.png';
 
 interface ShortListItemsProps {
   clearShortListedCars: () => void;
@@ -84,7 +85,11 @@ const ShortListItems = ({
                     lg={3}
                   >
                     <ShortListCard
-                      productImg={item.selectedImage ? item.selectedImage.location : item.image[0].location}
+                      productImg={
+                        item.selectedImage && item.selectedImage.location ? item.selectedImage.location 
+                        : item.image && item.image.length > 0 && item.image[0].location ? item.image[0].location 
+                        : NoImg
+                      }
                       name={item.model}
                       _id={item._id}
                       handleClick={() => removeShortListItem(item._id)}

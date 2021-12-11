@@ -27,6 +27,7 @@ import Table from '../../layout/Sections/Sections/Table/Table';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { CHOOSE_CARS_TO_COMPARE } from '../../Utils/constants/language/en/buttonLabels';
+import NoImg from '../../assets/no-img.png';
 
 
 const CarComparisionsStyles = makeStyles((theme) => ({
@@ -113,7 +114,11 @@ const CarComparision = () => {
           shortListCars.map((item: ICarCard) => (
             <TableCell key={uuidv4()} align="center">
               <ShortListCard
-                productImg={item.selectedImage ? item.selectedImage.location : item.image[0].location}
+                productImg={
+                  item.selectedImage && item.selectedImage.location ? item.selectedImage.location 
+                  : item.image && item.image.length > 0 && item.image[0].location ? item.image[0].location 
+                  : NoImg
+                }
                 name={item.model}
                 _id={item._id}
                 price={item.price}

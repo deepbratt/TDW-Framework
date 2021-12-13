@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import {v4 as uuidv4} from 'uuid';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
@@ -82,17 +83,6 @@ const Container = () => {
           </section>
           {isLoading && (
             <Grid item container xs={12}>
-              <Skeletons length={6} layoutType={layoutType}>
-                <ListingCardSkeletons layoutType={layoutType} />
-              </Skeletons>
-            </Grid>
-          )}
-          {data.length === 0 && !isLoading ? (
-            <Typography variant="h2" className={loading}>
-              No Result Found
-            </Typography>
-          ) : (
-            <Grid container spacing={2}>
               <Grid item xs={12} justifyContent="flex-start" container>
                 <LayoutToggler />
               </Grid>
@@ -100,14 +90,27 @@ const Container = () => {
                 clearShortListedCars={handleResetShortList}
                 removeShortListItem={handleRemoveShortListItem}
               />
-              {data.map((item: any, index: number) => (
-                <Grid item lg={layoutType === 'list' ? 12 : 4} xs={12} sm={12}>
-                  {/* <CarListing
-                      data={item}
-                      layoutType={layoutType}
-                      isFavs={false}
-                      span={createdAt}
-                    /> */}
+              <Skeletons length={6} layoutType={layoutType}>
+                <ListingCardSkeletons layoutType={layoutType} />
+              </Skeletons>
+            </Grid>
+          )}
+          <Grid container spacing={2}>
+            {data.length === 0 && !isLoading && (
+              <Typography variant="h2" className={loading}>
+                No Result Found
+              </Typography>
+            )}
+            {!isLoading &&
+              data.length !== 0 &&
+              data.map((item: any, index: number) => (
+                <Grid
+                  key={uuidv4()}
+                  item
+                  lg={layoutType === 'list' ? 12 : 4}
+                  xs={12}
+                  sm={12}
+                >
                   <ListingCard
                     data={item}
                     isFavs={false}
@@ -120,8 +123,7 @@ const Container = () => {
                   />
                 </Grid>
               ))}
-            </Grid>
-          )}
+          </Grid>
         </Grid>
         <Grid className={pagination} item xs={12}>
           <Pagination

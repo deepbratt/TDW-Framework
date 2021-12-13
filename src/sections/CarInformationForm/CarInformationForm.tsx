@@ -43,7 +43,6 @@ const CarInformationForm = ({
   bodyColorArray,
   handleChangeSelectKeyValue
 }: CarInformationFormProps) => {
-  
   const classes = useStyles();
   const {
     carMakesList,
@@ -65,7 +64,9 @@ const CarInformationForm = ({
           dataArray={cityNames}
           name={'city'}
           className={classes.selectFields}
-          value={toTitleCase(formData.city)}
+          value={
+            formData.city !== null ? toTitleCase(formData.city) : formData.city
+          }
           label={addEditCarData.fields.selectCity.label}
           required
           error={requireError.city}

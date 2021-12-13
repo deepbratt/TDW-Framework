@@ -81,7 +81,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
     resetForm,
     bodyColors,
     modelsLoading,
-    setResponseMessage
+    setResponseMessage,
+    getAllCars
   } = useForm();
 
   const [open, setOpen] = React.useState(false);
@@ -341,7 +342,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
                       >
                         <ListingCard
                           data={car}
-                          // isFavs={!isShortlist}
+                          getMyCars={getAllCars}
                           layoutType={layoutType}
                           handleShortList={() => handleAddToShortListItem(car)}
                           removeShortListed={() =>

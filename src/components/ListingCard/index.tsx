@@ -60,6 +60,7 @@ export interface ListingCardProps {
   handleClick?: Function;
   handleShortList?: Function;
   removeShortListed?: Function;
+  getMyCars?: Function;
 }
 
 const ListingCard: React.FC<ListingCardProps> = ({
@@ -68,7 +69,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
   handleFavs,
   handleClick,
   handleShortList,
-  removeShortListed
+  removeShortListed,
+  getMyCars
 }) => {
   const history = useHistory();
   const { pathname } = useLocation();
@@ -135,6 +137,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
     setAnchorEl(null);
   };
 
+  const handleToggleUpdate = () => {
+    if (getMyCars) {
+      getMyCars();
+    }
+  };
+
   const actionsMenu = (
     <Menu
       id={`${uuidv4()}-actions-menu`}
@@ -178,6 +186,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
         setIsSold(!isSold);
         setToastMessage(response.data.message);
         setToastType('success');
+        handleToggleUpdate();
       } else {
         setToastMessage(response.message);
         setToastType('error');
@@ -194,6 +203,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
         if (response && response.data && response.data.status === 'success') {
           setToastMessage(response.data.message);
           setToastType('success');
+          handleToggleUpdate();
         } else {
           setToastMessage(response.message);
           setToastType('error');
@@ -212,6 +222,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
       if (response && response.data && response.data.status === 'success') {
         setToastMessage(response.data.message);
         setToastType('success');
+        handleToggleUpdate();
       } else {
         setToastMessage(response.message);
         setToastType('error');
@@ -233,6 +244,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
         setIsActive(!isActive);
         setToastMessage(response.data.message);
         setToastType('success');
+        handleToggleUpdate();
       } else {
         setToastMessage(response.message);
         setToastType('error');
@@ -411,9 +423,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       )}
                       {!data.active && (
                         <span className={featuredBadge}>
-                          <Typography variant="body2">
-                            {NOT_ACTIVE}
-                          </Typography>
+                          <Typography variant="body2">{NOT_ACTIVE}</Typography>
                         </span>
                       )}
                     </>

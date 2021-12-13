@@ -396,6 +396,6 @@ export const useForm = (validateOnChange = true) => {
     bodyTypes,
     bodyColors,
     setResponseMessage,
-    modelsLoading
+    modelsLoading,
   };
 };

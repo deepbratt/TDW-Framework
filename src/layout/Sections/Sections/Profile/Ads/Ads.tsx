@@ -1,17 +1,10 @@
+import { useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
 import Paper from '@material-ui/core/Paper';
 import { useStyles } from '../useStyles';
-import { useEffect } from 'react';
-import CarListing from '../../../../../components/ListingCard/';
-import {
-  adsTitle,
-  paths,
-  Title,
-  ads,
-  createdAt
-} from '../../../Utils/sidebarText';
+import { paths, Title, ads } from '../../../Utils/sidebarText';
 import SideBar from '../ProfileSidebar/Sidebar';
 import Actions from '../useFunctions';
 import { useSelector } from 'react-redux';
@@ -20,14 +13,13 @@ import Pagination from '@material-ui/lab/Pagination';
 import { RootState } from '../../../../../redux/store';
 import MetaTags from '../../../../../components/MetaTags';
 import PageMeta from '../../../../../Utils/constants/language/en/pageData';
-import Loader from '../../../../../components/Loader';
 import { API_ENDPOINTS } from '../../../../../Utils/API/endpoints';
-import { routes } from '../../../../../routes/paths';
-import { Link } from 'react-router-dom';
 import Toast from '../../../../../components/Toast';
 import useShortListCars from '../../../../../Utils/hooks/useShortListCars';
 import ListingCard from '../../../../../components/ListingCard/';
 import ShortListItems from '../../ShortListItems';
+import Skeletons from '../../../../../components/Skeletons';
+import ListingCardSkeletons from '../../../../../components/ListingCard/ListingCardSkeletons';
 
 const Container = () => {
   const { heading, box, favContainer, loading, pagination, layout } =
@@ -80,7 +72,6 @@ const Container = () => {
         title={PageMeta.myAds.title}
         canonical={PageMeta.myAds.canonical}
       />
-      <Loader open={isLoading} isBackdrop={true} />
       <Paper elevation={4} className={layoutType === 'list' ? box : layout}>
         <Grid item xs={12}>
           <section className={heading}>
@@ -89,7 +80,14 @@ const Container = () => {
             </Hidden>
             <Typography variant="h3">{ads}</Typography>
           </section>
-          {data.length === 0 ? (
+          {isLoading && (
+            <Grid item container xs={12}>
+              <Skeletons length={6} layoutType={layoutType}>
+                <ListingCardSkeletons layoutType={layoutType} />
+              </Skeletons>
+            </Grid>
+          )}
+          {data.length === 0 && !isLoading ? (
             <Typography variant="h2" className={loading}>
               No Result Found
             </Typography>
@@ -113,6 +111,7 @@ const Container = () => {
                   <ListingCard
                     data={item}
                     isFavs={false}
+                    getMyCars={getMyCars}
                     layoutType={layoutType}
                     handleShortList={() => handleAddToShortListItem(item)}
                     removeShortListed={() =>

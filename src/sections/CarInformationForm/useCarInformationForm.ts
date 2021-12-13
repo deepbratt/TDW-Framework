@@ -86,14 +86,21 @@ const useCarInformationForm = (
       if (response && response.status === 'success') {
         setCarVersions(response.data.result);
         let versionList = response.data.result.map((versions: any) => {
+          let displayName = versions.name;
+          displayName =
+            displayName +
+            (versions.fuel_type ? `${' '} | ${versions.fuel_type}` : '');
+          displayName =
+            displayName +
+            (versions.capacity ? `${' '} | ${versions.capacity} cc` : '');
+          displayName =
+            displayName +
+            (versions.transmission_type
+              ? `${' '} | ${versions.transmission_type}`
+              : '');
           return {
             name: versions.name,
-            displayName: [
-              versions.name,
-              versions.fuel_type,
-              versions.capacity ? versions.capacity + ' cc' : '',
-              versions.transmission_type
-            ].join(' | ')
+            displayName
           };
         });
         setCarVersionsList(versionList);

@@ -98,7 +98,7 @@ const HeaderContext = () => {
           return history.push(
             routes.dashboard.substr(0, routes.dashboard.lastIndexOf('/') + 1) +
               'profile'
-          )
+          );
         }}
       >
         {paths.profile}
@@ -110,7 +110,7 @@ const HeaderContext = () => {
           return history.push(
             routes.dashboard.substr(0, routes.dashboard.lastIndexOf('/') + 1) +
               'change-password'
-          )
+          );
         }}
       >
         {CHANGE_PASSWORD}
@@ -172,7 +172,10 @@ const HeaderContext = () => {
           </Grid>
           <Hidden mdDown>
             <InputField
+              autoComplete="off"
               fullWidth
+              name="search"
+              aria-label="search"
               className={inputRoot}
               placeholder="Search ..."
               onKeyPress={handleKeyPress}

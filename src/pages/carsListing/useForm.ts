@@ -141,7 +141,7 @@ export const useForm = (validateOnChange = true) => {
         }
       }
     });
-
+    setIsLoading(true);
     await getAllData(ADS + CARS + params)
       .then((response) => {
         setIsLoading(false);

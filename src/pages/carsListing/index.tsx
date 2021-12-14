@@ -324,14 +324,14 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
                   </Skeletons>
                 </Grid>
               )}
-              {!isLoading && responseMessage.status !== 'success' && responseData === null && (
+              {!isLoading && responseData === null && (
                 <Grid style={{ margin: '50px 0' }} item xs={12}>
                   <Typography align="center" variant="h2">
                     {CANT_FIND_RESULT}
                   </Typography>
                 </Grid>
               )}
-              {!isLoading && responseMessage.status === 'success' && responseData !== null && (
+              {!isLoading && responseData !== null && (
                 <Grid item container xs={12} spacing={1}>
                   {result &&
                     result.map((car: ICarCard) => (
@@ -354,7 +354,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
                     ))}                  
                 </Grid>
               )}
-              {result && (
+              {result && responseData !== null && (
                 <Grid item xs={12} container justifyContent="center">
                   <Pagination
                     style={{ margin: '15px 0' }}

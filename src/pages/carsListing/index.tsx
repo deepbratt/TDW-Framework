@@ -316,21 +316,22 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
               clearShortListedCars={handleResetShortList}
               removeShortListItem={handleRemoveShortListItem}
             />
-            <Grid item container xs={12} justifyContent="flex-start">
-              {isLoading ? (
+            <Grid item container xs={12} spacing={1} justifyContent="flex-start">
+              {isLoading && (
                 <Grid item container xs={12}>
                   <Skeletons length={6} layoutType={layoutType}>
                     <ListingCardSkeletons layoutType={layoutType} />
                   </Skeletons>
                 </Grid>
-              ) : responseMessage.status !== 'success' &&
-                responseData === null ? (
+              )}
+              {!isLoading && responseMessage.status !== 'success' && responseData === null && (
                 <Grid style={{ margin: '50px 0' }} item xs={12}>
                   <Typography align="center" variant="h2">
                     {CANT_FIND_RESULT}
                   </Typography>
                 </Grid>
-              ) : (
+              )}
+              {!isLoading && responseMessage.status === 'success' && responseData !== null && (
                 <Grid item container xs={12} spacing={1}>
                   {result &&
                     result.map((car: ICarCard) => (
@@ -350,19 +351,19 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
                           }
                         />
                       </Grid>
-                    ))}
-                  {result && (
-                    <Grid item xs={12} container justifyContent="center">
-                      <Pagination
-                        style={{ margin: '15px 0' }}
-                        count={pageCount}
-                        onChange={handlePageChange}
-                        variant="outlined"
-                        shape="round"
-                        color="primary"
-                      />
-                    </Grid>
-                  )}
+                    ))}                  
+                </Grid>
+              )}
+              {result && (
+                <Grid item xs={12} container justifyContent="center">
+                  <Pagination
+                    style={{ margin: '15px 0' }}
+                    count={pageCount}
+                    onChange={handlePageChange}
+                    variant="outlined"
+                    shape="round"
+                    color="primary"
+                  />
                 </Grid>
               )}
               <Toast

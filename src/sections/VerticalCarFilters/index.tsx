@@ -43,6 +43,9 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const { ADS, CARS } = API_ENDPOINTS;
   const [keyword, setKeyword] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [cities, setCities] = useState<any[]>([]);
+  const [provinces, setProvinces] = useState<any[]>([]);
+  const [citiesOfState, setCitiesOfState] = useState<any[]>([]);
   const [citySearchResult, setCitySearchResult] = useState<ICity[]>();
   const [regSearchResult, setRegSearchResult] = useState<ICity[]>();
   const [makeSearchResult, setMakeSearchResult] = useState<any>();
@@ -76,8 +79,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const majorCities = ['Karachi', 'Islamabad', 'Lahore', 'Peshawar', 'Quetta'];
   const mainCarTypes = ['Sedan', 'Hatchback', 'Pick Up'];
   const mainColors = ['Black', 'White', 'Red'];
-  const cities = City.getCitiesOfCountry('PK');
-  const provinces = State.getStatesOfCountry('PK');
+  // const cities = City.getCitiesOfCountry('PK');
+  // const provinces = State.getStatesOfCountry('PK');
   const extractedCityNames = cities?.map((item: any) => item.name);
   let cityNames = [];
   if (extractedCityNames) {
@@ -102,8 +105,30 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     modelsLoading
   } = filterProps;
 
+  // API Calls to Load countries, cities and states:
+
+  const updateCities = async (countryCode: any) => {
+    await City.getCitiesOfCountry(countryCode)
+      .then((response: any) => setCities(response));
+  }
+
+  const updateStates = async (stateCode: any) => {
+    await State.getStatesOfCountry(stateCode)
+      .then((response: any) => setProvinces(response));
+  }
+
+  useEffect(() => {
+    updateCities('PK');
+    updateStates('PK');
+  }, []);
+
+  const updateCitiesOfState = async (countryCode: any, stateCode: any) => {
+    await City.getCitiesOfState(countryCode, stateCode)
+      .then((response: any) => setCitiesOfState(response));
+  }
+
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let result = City.getCitiesOfCountry('PK')?.filter(
+    let result = cities?.filter(
       (city: ICity) =>
         city.name.substr(0, e.target.value.length).toLowerCase() ===
         e.target.value.toLowerCase()
@@ -617,7 +642,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       </div>
       <FilterAccordion title={PROVINCE}>
         <FormGroup>
-          {provinces.map((province: any) => (
+          {provinces?.map((province: any) => (
             <FormControlLabel
               classes={{ label: fontSize }}
               key={uuidv4()}
@@ -774,12 +799,13 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                     );
                   })}
               </Grid>
-              {provinces.map((province: any) => (
+              {provinces?.map((province: any) => (
                 <Grid key={uuidv4()} item xs={12}>
                   <Typography variant="h4" gutterBottom>
                     {province.name}
                   </Typography>
-                  {City.getCitiesOfState(province.countryCode, province.isoCode)
+                  {updateCitiesOfState(province.countryCode, province.isoCode)}
+                  {citiesOfState
                     .sort((a: any, b: any) => a.name.localeCompare(b.name))
                     .map((city: any) => {
                       return (

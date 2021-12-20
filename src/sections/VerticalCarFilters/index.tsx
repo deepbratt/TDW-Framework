@@ -460,7 +460,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           {makes.length > 5 && (
             <DialogBox title="Select Makes">
               <Grid style={{ display: 'flex' }} container>
-                <Grid xs={12}>
+                <Grid item xs={12}>
                   <InputField
                     name="make"
                     variant="filled"
@@ -552,7 +552,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           {models.length > 5 && (
             <DialogBox title="Select Model">
               <Grid style={{ display: 'flex' }} container>
-                <Grid xs={12}>
+                <Grid item xs={12}>
                   <InputField
                     name="model"
                     variant="filled"
@@ -821,7 +821,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           {citiesWithCars.length > 5 && (
             <DialogBox title="Select Cities">
               <Grid style={{ display: 'flex' }} container>
-                <Grid xs={12}>
+                <Grid item xs={12}>
                   <InputField
                     variant="filled"
                     label="Search"
@@ -902,7 +902,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
 
           <DialogBox title="Select Cities">
             <Grid style={{ display: 'flex' }} container>
-              <Grid xs={12}>
+              <Grid item xs={12}>
                 <InputField
                   variant="filled"
                   label="Search"

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
@@ -10,9 +10,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import InputField from '../../components/InputField';
-import PriceInput from '../../components/InputField/PriceInput';
-import NumberInput from '../../components/InputField/NumberInput';
-import InputFieldWithButton from '../../components/InputField/InputFieldWithButton';
 import FilterAccordion from '../../components/Accordion';
 import {
   Carfilters,
@@ -27,15 +24,12 @@ import AppliedFilters from './appliedFilters';
 import defaultBodyType from '../../assets/Cars/sedan.png';
 import { RootState } from '../../redux/store';
 import {
-  ENTER_YOUR_EMAIL_PASS_MESSAGE,
   SEE_MORE
 } from '../../Utils/constants/language/en/buttonLabels';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { getAllData } from '../../Utils/API/API';
 import SearchRounded from '@material-ui/icons/SearchRounded';
 import Dropdown from '../../components/Dropdown';
-import { getKeyValue } from '../../Utils/helperFunctions';
-// import MapSearch from '../../components/MapSearch/MapSearch';
 
 export interface CarFiltersProps {
   filterProps: any;

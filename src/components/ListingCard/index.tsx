@@ -423,7 +423,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                           <Typography variant="body2">{SOLD}</Typography>
                         </span>
                       )}
-                      {!data.isPublished && (
+                      {data.isPublished === false && (
                         <span className={featuredBadge}>
                           <Typography variant="body2">
                             {NOT_PUBLISHED}

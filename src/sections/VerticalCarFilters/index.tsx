@@ -244,12 +244,13 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   /*
       Sets minimum and maximum values of price filter
   */
-  const handlePriceSliderChange = (event: any, newValue: number | number[]) => {
-    setRangeValues((previousValue: any) => {
-      previousValue.price = newValue;
-      return { ...previousValue };
-    });
-  };
+  // NOT BEING USED
+  // const handlePriceSliderChange = (event: any, newValue: number | number[]) => {
+  //   setRangeValues((previousValue: any) => {
+  //     previousValue.price = newValue;
+  //     return { ...previousValue };
+  //   });
+  // };
   
 
   /*
@@ -424,7 +425,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               />
             </Grid>
           </Grid>
-          <Grid item>
+          {/* 
+            NOT BEING USED
+          */}
+          {/* <Grid item>
             <Slider
               classes={{ markLabel: markLabel }}
               marks={priceValues}
@@ -434,7 +438,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               max={minMaxValues.price[1]}
               onChange={handlePriceSliderChange}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </FilterAccordion>
       <FilterAccordion title={MAKE}>

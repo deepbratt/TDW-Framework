@@ -270,7 +270,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
       setIsLoading(true);
       addToFav(isFavorite ? removeFavs : addToFavs, id).then((response) => {
         setIsLoading(false);
-        console.log(response);
         if (response && response.status === 'success') {
           setToastMessage(response?.message);
           setToastType('success');

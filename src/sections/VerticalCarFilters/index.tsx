@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
-import Slider from '@material-ui/core/Slider';
+// import Slider from '@material-ui/core/Slider';
 import { Button, CircularProgress, IconButton, InputAdornment } from '@material-ui/core';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -29,7 +29,8 @@ import {
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { getAllData } from '../../Utils/API/API';
 import SearchRounded from '@material-ui/icons/SearchRounded';
-import Dropdown from '../../components/Dropdown';
+// import Dropdown from '../../components/Dropdown';
+import InputFieldWithButton from '../../components/InputField/InputFieldWithButton';
 
 export interface CarFiltersProps {
   filterProps: any;
@@ -244,7 +245,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   /*
       Sets minimum and maximum values of price filter
   */
-  // NOT BEING USED
+  // DON'T REMOVE, NOT BEING USED 
   // const handlePriceSliderChange = (event: any, newValue: number | number[]) => {
   //   setRangeValues((previousValue: any) => {
   //     previousValue.price = newValue;
@@ -256,41 +257,44 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   /*
       Sets minimum and maximum values of engine capacity filter
   */
-  const handleEngineCapacitySliderChange = (
-    event: any,
-    newValue: number | number[]
-  ) => {
-    setRangeValues((previousValue: any) => {
-      previousValue.engineCapacity = newValue;
-      return { ...previousValue };
-    });
-  };
+  // DON'T REMOVE, NOT BEING USED 
+  // const handleEngineCapacitySliderChange = (
+  //   event: any,
+  //   newValue: number | number[]
+  // ) => {
+  //   setRangeValues((previousValue: any) => {
+  //     previousValue.engineCapacity = newValue;
+  //     return { ...previousValue };
+  //   });
+  // };
 
   /*
     Sets minimum and maximum values of model year filter
   */
-  const handleModelYearSliderChange = (
-    event: any,
-    newValue: number | number[]
-  ) => {
-    setRangeValues((previousValue: any) => {
-      previousValue.modelYear = newValue;
-      return { ...previousValue };
-    });
-  };
+  // DON'T REMOVE, NOT BEING USED 
+  // const handleModelYearSliderChange = (
+  //   event: any,
+  //   newValue: number | number[]
+  // ) => {
+  //   setRangeValues((previousValue: any) => {
+  //     previousValue.modelYear = newValue;
+  //     return { ...previousValue };
+  //   });
+  // };
 
   /*
     Sets minimum and maximum values of milage filter
   */
-    const handleMilageSliderChange = (
-      event: any,
-      newValue: number | number[]
-    ) => {
-      setRangeValues((previousValue: any) => {
-        previousValue.milage = newValue;
-        return { ...previousValue };
-      });
-    };
+  // DON'T REMOVE, NOT BEING USED 
+  // const handleMilageSliderChange = (
+  //   event: any,
+  //   newValue: number | number[]
+  // ) => {
+  //   setRangeValues((previousValue: any) => {
+  //     previousValue.milage = newValue;
+  //     return { ...previousValue };
+  //   });
+  // };
 
   /*  
       Sets minimum value of range filters if value
@@ -391,42 +395,45 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
         <Grid container direction="column">
           <Grid item container spacing={1}>
             <Grid item xs={5}>
-              <Dropdown
+              <InputField
                 label="From"
                 type="number"
                 name={fieldNames.price}
                 value={rangeValues.price[0]}
-                options={priceValues}
+                // DON'T REMOVE, NOT BEING USED 
+                // options={priceValues}
                 onChange={handleRangeFromInputChange}
               />
             </Grid>
             <Grid item xs={7}>
-              <Dropdown
+              <InputFieldWithButton
                 name={fieldNames.price}
                 label="To"
                 type="number"
                 value={rangeValues.price[1]}
-                options={priceValues}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Button
-                        className={btn}
-                        color="primary"
-                        variant="contained"
-                        onClick={() => handleTextBoxSubmit('price')}
-                      >
-                        GO
-                      </Button>
-                    </InputAdornment>
-                  )
-                }}
+                // DON'T REMOVE, NOT BEING USED 
+                // options={priceValues}
+                // InputProps={{
+                //   endAdornment: (
+                //     <InputAdornment position="end">
+                //       <Button
+                //         className={btn}
+                //         color="primary"
+                //         variant="contained"
+                //         onClick={() => handleTextBoxSubmit(fieldNames.price)}
+                //       >
+                //         GO
+                //       </Button>
+                //     </InputAdornment>
+                //   )
+                // }}
+                handleClick={() => handleTextBoxSubmit(fieldNames.price)}
                 onChange={handleRangeToInputChange}
               />
             </Grid>
           </Grid>
           {/* 
-            NOT BEING USED
+            DON'T REMOVE, NOT BEING USED 
           */}
           {/* <Grid item>
             <Slider
@@ -676,27 +683,29 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
         <Grid container direction="column">
           <Grid item container spacing={1}>
             <Grid item xs={5}>
-              <Dropdown
+              <InputField
                 label="From"
                 type="number"
                 name={fieldNames.milage}
-                options={generateMilageArray()}
+                // DON'T REMOVE, NOT BEING USED 
+                // options={generateMilageArray()}
                 value={rangeValues.milage[0]}
                 InputLabelProps={{
-                  shrink: true,
+                  shrink: true
                 }}
                 onChange={handleRangeFromInputChange}
               />
             </Grid>
             <Grid item xs={7}>
-              <Dropdown
+              <InputFieldWithButton
                 label="To"
                 type="number"
                 name={fieldNames.milage}
                 value={rangeValues.milage[1]}
-                options={generateMilageArray()}
+                // DON'T REMOVE, NOT BEING USED 
+                // options={generateMilageArray()}
                 InputLabelProps={{
-                  shrink: true,
+                  shrink: true
                 }}
                 InputProps={{
                   endAdornment: (
@@ -705,9 +714,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                         className={btn}
                         color="primary"
                         variant="contained"
-                        onClick={() =>
-                          handleTextBoxSubmit(fieldNames.milage)
-                        }
+                        onClick={() => handleTextBoxSubmit(fieldNames.milage)}
                       >
                         GO
                       </Button>
@@ -718,7 +725,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               />
             </Grid>
           </Grid>
-          <Grid item>
+          {/* 
+            DON'T REMOVE, NOT BEING USED 
+          */}
+          {/* <Grid item>
             <Slider
               value={[rangeValues.milage[0], rangeValues.milage[1]]}
               min={minMaxValues.milage[0]}
@@ -726,29 +736,31 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               step={10000}
               onChange={handleMilageSliderChange}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </FilterAccordion>
       <FilterAccordion title={YEAR}>
         <Grid container direction="column">
           <Grid item container spacing={1}>
             <Grid item xs={5}>
-              <Dropdown
+              <InputField
                 label="From"
                 type="number"
                 name={fieldNames.modelYear}
                 value={rangeValues.modelYear[0]}
-                options={generateArrayOfYears()}
+                // DON'T REMOVE, NOT BEING USED 
+                // options={generateArrayOfYears()}
                 onChange={handleRangeFromInputChange}
               />
             </Grid>
             <Grid item xs={7}>
-              <Dropdown
+              <InputFieldWithButton
                 label="To"
                 type="number"
                 name={fieldNames.modelYear}
                 value={rangeValues.modelYear[1]}
-                options={generateArrayOfYears()}
+                // DON'T REMOVE, NOT BEING USED 
+                // options={generateArrayOfYears()}
                 onChange={handleRangeToInputChange}
                 InputProps={{
                   endAdornment: (
@@ -769,14 +781,17 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               />
             </Grid>
           </Grid>
-          <Grid item>
+          {/* 
+            DON'T REMOVE, NOT BEING USED 
+          */}
+          {/* <Grid item>
             <Slider
               value={[rangeValues.modelYear[0], rangeValues.modelYear[1]]}
               min={minMaxValues.modelYear[0]}
               max={minMaxValues.modelYear[1]}
               onChange={handleModelYearSliderChange}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </FilterAccordion>
       <div className={filtersCollection}>
@@ -1023,22 +1038,24 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
         <Grid container direction="column">
           <Grid item container spacing={1}>
             <Grid item xs={5}>
-              <Dropdown
+              <InputField
                 label="From"
                 type="number"
                 name={fieldNames.engineCapacity}
                 value={rangeValues.engineCapacity[0]}
-                options={generateEngineCapacityArray()}
+                // DON'T REMOVE, NOT BEING USED 
+                // options={generateEngineCapacityArray()}
                 onChange={handleRangeFromInputChange}
               />
             </Grid>
             <Grid item xs={7}>
-              <Dropdown
+              <InputFieldWithButton
                 type="number"
                 label="To"
                 name={fieldNames.engineCapacity}
                 value={rangeValues.engineCapacity[1]}
-                options={generateEngineCapacityArray()}
+                // DON'T REMOVE, NOT BEING USED 
+                // options={generateEngineCapacityArray()}
                 onChange={handleRangeToInputChange}
                 InputProps={{
                   endAdornment: (
@@ -1059,7 +1076,10 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               />
             </Grid>
           </Grid>
-          <Grid item>
+          {/* 
+            DON'T REMOVE, NOT BEING USED 
+          */}
+          {/* <Grid item>
             <Slider
               classes={{ markLabel: markLabel }}
               value={[
@@ -1071,7 +1091,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               max={minMaxValues.engineCapacity[1]}
               onChange={handleEngineCapacitySliderChange}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </FilterAccordion>
       <div className={filtersCollection}>

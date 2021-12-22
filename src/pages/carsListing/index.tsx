@@ -336,7 +336,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
                   {result &&
                     result.map((car: ICarCard) => (
                       <Grid
-                        key={`cars-card-${uuidv4}`}
+                        key={`${uuidv4}`}
                         item
                         xs={12}
                         sm={layoutType === 'list' ? 12 : 6}

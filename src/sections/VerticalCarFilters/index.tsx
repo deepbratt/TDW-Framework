@@ -300,20 +300,18 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       const handleRangeFromInputChange = (
         event: React.ChangeEvent<HTMLInputElement>
       ) => {
-        if (event.target.value !== '') {
-          let newValue: number[] = [...rangeValues[event.target.name]];
-          // check if new values is greater than maximum values
-          if (newValue[1] < Number(event.target.value)) {
-            if (event.target.name in minMaxValues) {
-              newValue[1] = minMaxValues[event.target.name][1];
-            }
+        let newValue: number[] = [...rangeValues[event.target.name]];
+        // check if new values is greater than maximum values
+        if (newValue[1] < Number(event.target.value)) {
+          if (event.target.name in minMaxValues) {
+            newValue[1] = minMaxValues[event.target.name][1];
           }
+        }
           newValue[0] = Number(event.target.value);
           setRangeValues((previousValue: any) => {
             previousValue[event.target.name] = newValue;
             return { ...previousValue };
           });
-        }
       };
     
       /*  
@@ -323,20 +321,18 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       const handleRangeToInputChange = (
         event: React.ChangeEvent<HTMLInputElement>
       ) => {
-        if (event.target.value !== '') {
-          let newValue: number[] = [...rangeValues[event.target.name]];
-          // check if new values is less than minimum values
-          if (newValue[0] > Number(event.target.value)) {
-            if (event.target.name in minMaxValues) {
-              newValue[0] = minMaxValues[event.target.name][0];
-            }
+        let newValue: number[] = [...rangeValues[event.target.name]];
+        // check if new values is less than minimum values
+        if (newValue[0] > Number(event.target.value)) {
+          if (event.target.name in minMaxValues) {
+            newValue[0] = minMaxValues[event.target.name][0];
           }
-          newValue[1] = Number(event.target.value);
-          setRangeValues((previousValue: any) => {
-            previousValue[event.target.name] = newValue;
-            return { ...previousValue };
-          });
         }
+        newValue[1] = Number(event.target.value);
+        setRangeValues((previousValue: any) => {
+          previousValue[event.target.name] = newValue;
+          return { ...previousValue };
+        });
       };
 
   return (

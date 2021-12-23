@@ -163,7 +163,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
         justifyContent="space-between"
         spacing={1}
       >
-        <Grid style={{ height: '100%' }} xs={12} md={4} xl={3} item container>
+        <Grid style={{ height: '100%' }} xs={12} md={3} xl={3} item container>
           <Hidden smDown>
             <Grid item xs={12} className={filtersRoot}>
               <Grid
@@ -195,7 +195,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
             </Grid>
           </Hidden>
         </Grid>
-        <Grid item container xs={12} md={8} xl={9}>
+        <Grid item container xs={12} md={9} xl={9}>
           <Grid item xs={12} className={contentRoot}>
             {/* {isShortlist && (
               <Typography

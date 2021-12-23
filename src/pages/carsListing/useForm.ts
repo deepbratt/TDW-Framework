@@ -80,7 +80,7 @@ export const useForm = (validateOnChange = true) => {
   const { validate, errors, setErrors } = useValidation(carFilters);
 
   const [rangeValues, setRangeValues] = useState<IMinMaxValues>({
-    price: [50000, 50000000],
+    price: [0, 50000000],
     modelYear: [1971, 2021],
     milage: [0, 240000],
     engineCapacity: [600, 10000]

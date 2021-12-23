@@ -399,7 +399,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="From"
                 type="number"
                 name={fieldNames.price}
-                value={rangeValues.price[0]}
+                defaultValue={rangeValues.price[0]}
                 // DON'T REMOVE, NOT BEING USED 
                 // options={priceValues}
                 onChange={handleRangeFromInputChange}
@@ -410,7 +410,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 name={fieldNames.price}
                 label="To"
                 type="number"
-                value={rangeValues.price[1]}
+                defaultValue={rangeValues.price[1]}
                 // DON'T REMOVE, NOT BEING USED 
                 // options={priceValues}
                 // InputProps={{
@@ -689,7 +689,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 name={fieldNames.milage}
                 // DON'T REMOVE, NOT BEING USED 
                 // options={generateMilageArray()}
-                value={rangeValues.milage[0]}
+                defaultValue={rangeValues.milage[0]}
                 InputLabelProps={{
                   shrink: true
                 }}
@@ -701,7 +701,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="To"
                 type="number"
                 name={fieldNames.milage}
-                value={rangeValues.milage[1]}
+                defaultValue={rangeValues.milage[1]}
                 // DON'T REMOVE, NOT BEING USED 
                 // options={generateMilageArray()}
                 InputLabelProps={{
@@ -747,7 +747,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="From"
                 type="number"
                 name={fieldNames.modelYear}
-                value={rangeValues.modelYear[0]}
+                defaultValue={rangeValues.modelYear[0]}
                 // DON'T REMOVE, NOT BEING USED 
                 // options={generateArrayOfYears()}
                 onChange={handleRangeFromInputChange}
@@ -758,7 +758,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="To"
                 type="number"
                 name={fieldNames.modelYear}
-                value={rangeValues.modelYear[1]}
+                defaultValue={rangeValues.modelYear[1]}
                 // DON'T REMOVE, NOT BEING USED 
                 // options={generateArrayOfYears()}
                 onChange={handleRangeToInputChange}
@@ -1042,7 +1042,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="From"
                 type="number"
                 name={fieldNames.engineCapacity}
-                value={rangeValues.engineCapacity[0]}
+                defaultValue={rangeValues.engineCapacity[0]}
                 // DON'T REMOVE, NOT BEING USED 
                 // options={generateEngineCapacityArray()}
                 onChange={handleRangeFromInputChange}
@@ -1053,7 +1053,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 type="number"
                 label="To"
                 name={fieldNames.engineCapacity}
-                value={rangeValues.engineCapacity[1]}
+                defaultValue={rangeValues.engineCapacity[1]}
                 // DON'T REMOVE, NOT BEING USED 
                 // options={generateEngineCapacityArray()}
                 onChange={handleRangeToInputChange}

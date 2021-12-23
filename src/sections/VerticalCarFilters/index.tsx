@@ -29,9 +29,6 @@ import {
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { getAllData } from '../../Utils/API/API';
 import SearchRounded from '@material-ui/icons/SearchRounded';
-// import Dropdown from '../../components/Dropdown';
-import InputFieldWithButton from '../../components/InputField/InputFieldWithButton';
-
 export interface CarFiltersProps {
   filterProps: any;
 }
@@ -45,7 +42,7 @@ export interface IMinMaxValues {
 }
 
 let minMaxValues: IMinMaxValues = {
-  price: [50000, 50000000],
+  price: [0, 50000000],
   modelYear: [1971, 2021],
   milage: [0, 240000],
   engineCapacity: [600, 10000]
@@ -61,7 +58,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const [modelSearchResult, setModelSearchResult] = useState<any>();
   const values = useSelector((state: RootState) => state.carFilters.filters);
 
-  const { filtersCollection, lastAccordion, fontSize, btn, markLabel } =
+  const { filtersCollection, lastAccordion, fontSize } =
     VerticalFilterStyles();
   const {
     PRICE_RANGE,
@@ -84,18 +81,18 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     // AD_TYPE
   } = CarFiltersData;
 
-  let priceValues = [
-    { value: 50000, label: '50K' },
-    { value: 500000, label: '5 Lakh' },
-    { value: 1000000, label: '10 Lakh' },
-    { value: 1500000, label: '15 Lakh' },
-    { value: 3000000, label: '30 Lakh' },
-    { value: 5000000, label: '50 Lakh' },
-    { value: 8000000, label: '80 Lakh' },
-    { value: 10000000, label: '1 Crore' },
-    { value: 50000000, label: '5 Crore' },
-    { value: 100000000, label: '10 Crore' }
-  ];
+  // let priceValues = [
+  //   { value: 50000, label: '50K' },
+  //   { value: 500000, label: '5 Lakh' },
+  //   { value: 1000000, label: '10 Lakh' },
+  //   { value: 1500000, label: '15 Lakh' },
+  //   { value: 3000000, label: '30 Lakh' },
+  //   { value: 5000000, label: '50 Lakh' },
+  //   { value: 8000000, label: '80 Lakh' },
+  //   { value: 10000000, label: '1 Crore' },
+  //   { value: 50000000, label: '5 Crore' },
+  //   { value: 100000000, label: '10 Crore' }
+  // ];
 
   const majorCities = ['Karachi', 'Islamabad', 'Lahore', 'Peshawar', 'Quetta'];
   const mainCarTypes = ['Sedan', 'Hatchback', 'Pick Up'];
@@ -188,59 +185,59 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     between minMaxValues.modelYear[1]:i-e(max) and minMaxValues.modelYear[0]:i-e(min)
     decrementing 1 in each iteration
   */
-  const generateArrayOfYears = (): { value: number; label: string }[] => {
-    var years = [];
-    for (
-      var i = minMaxValues.modelYear[1];
-      i >= minMaxValues.modelYear[0];
-      i--
-    ) {
-      years.push({ value: i, label: i.toString() });
-    }
-    return years;
-  };
+  // const generateArrayOfYears = (): { value: number; label: string }[] => {
+  //   var years = [];
+  //   for (
+  //     var i = minMaxValues.modelYear[1];
+  //     i >= minMaxValues.modelYear[0];
+  //     i--
+  //   ) {
+  //     years.push({ value: i, label: i.toString() });
+  //   }
+  //   return years;
+  // };
 
   /*
     generate array containing objects with label and values for engineCapacity
     between minMaxValues.engineCapacity[0]:i-e(min) and minMaxValues.engineCapacity[1]:i-e(max)
     incrementing 100 in each iteration
   */
-  const generateEngineCapacityArray = (): {
-    value: number;
-    label: string;
-  }[] => {
-    var engineCapacity = [];
-    for (
-      var i = minMaxValues.engineCapacity[0];
-      i <= minMaxValues.engineCapacity[1];
+  // const generateEngineCapacityArray = (): {
+  //   value: number;
+  //   label: string;
+  // }[] => {
+  //   var engineCapacity = [];
+  //   for (
+  //     var i = minMaxValues.engineCapacity[0];
+  //     i <= minMaxValues.engineCapacity[1];
 
-    ) {
-      engineCapacity.push({ value: i, label: `${i.toString()} cc` });
-      i = i + 100;
-    }
-    return engineCapacity;
-  };
+  //   ) {
+  //     engineCapacity.push({ value: i, label: `${i.toString()} cc` });
+  //     i = i + 100;
+  //   }
+  //   return engineCapacity;
+  // };
 
   /*
     generate array containing objects with label and values for milage
     between minMaxValues.milage[0]:i-e(min) and minMaxValues.milage[1]:i-e(max)
     incrementing 10000 in each iteration
   */
-  const generateMilageArray = (): {
-    value: number;
-    label: string;
-  }[] => {
-    var milage = [];
-    for (
-      var i = minMaxValues.milage[0];
-      i <= minMaxValues.milage[1];
+  // const generateMilageArray = (): {
+  //   value: number;
+  //   label: string;
+  // }[] => {
+  //   var milage = [];
+  //   for (
+  //     var i = minMaxValues.milage[0];
+  //     i <= minMaxValues.milage[1];
 
-    ) {
-      milage.push({ value: i, label: `${i.toString()} kms` });
-      i = i + 10000;
-    }
-    return milage;
-  };
+  //   ) {
+  //     milage.push({ value: i, label: `${i.toString()} kms` });
+  //     i = i + 10000;
+  //   }
+  //   return milage;
+  // };
 
   /*
       Sets minimum and maximum values of price filter
@@ -297,44 +294,50 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   // };
 
   /*  
-      Sets minimum value of range filters if value
-      is less than maximum value clears maximum value if otherwise
+    Sets minimum value of range filters if value 
+    is not empty,
+    is less or equal than maximum value,
+    reset maximum value if otherwise
   */
-  const handleRangeFromInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (event.target.value !== '') {
-      let newValue: number[] = [...rangeValues[event.target.name]];
-      // check if new values is greater than maximum values
-      if (newValue[1] < Number(event.target.value)) {
-        if (event.target.name in minMaxValues) {
+    const handleRangeFromInputChange = (
+      event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      if (
+        event.target.value !== '' 
+      ) {
+        let newValue: number[] = [...rangeValues[event.target.name]];
+        // check if new values is less or equal than maximum values and set set minimum value to new value
+        if (newValue[1] >= Number(event.target.value)) {
+          newValue[0] = Number(event.target.value);
+        } else {
+          // reset the max value if min value is greater than max value
           newValue[1] = minMaxValues[event.target.name][1];
         }
+        setRangeValues((previousValue: any) => {
+          previousValue[event.target.name] = newValue;
+          return { ...previousValue };
+        });
       }
-      newValue[0] = Number(event.target.value);
-      setRangeValues((previousValue: any) => {
-        previousValue[event.target.name] = newValue;
-        return { ...previousValue };
-      });
-    }
-  };
+    };
 
   /*  
-    Sets maximum value of range filters if value
-    is greater than minimum value clears minimum value if otherwise
+    Sets maximum value of range filters if value 
+    is not empty,
+    is greater or equal than minimum value,
+    reset minimum value if otherwise
   */
   const handleRangeToInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (event.target.value !== '') {
       let newValue: number[] = [...rangeValues[event.target.name]];
-      // check if new values is less than minimum values
-      if (newValue[0] > Number(event.target.value)) {
-        if (event.target.name in minMaxValues) {
-          newValue[0] = minMaxValues[event.target.name][0];
-        }
+      // check if new values is greater or equal minimum values and set set maximum value to new value
+      if (newValue[0] <= Number(event.target.value)) {
+        newValue[1] = Number(event.target.value);
+      } else {
+        // reset the min value if max value is less than min value
+        newValue[0] = minMaxValues[event.target.name][0];
       }
-      newValue[1] = Number(event.target.value);
       setRangeValues((previousValue: any) => {
         previousValue[event.target.name] = newValue;
         return { ...previousValue };
@@ -378,7 +381,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           </FilterAccordion>
         ))} */}
       {/* <FilterAccordion title={KEYWORDS} expanded hideExpandIcon={true}>
-        <InputFieldWithButton  classes={{root: textFieldRoot}}
+        <InputField  classes={{root: textFieldRoot}}
           name={fieldNames.keywords}
           label="Search by Keywords"
           placeholder="Eg. Honda In Lahore"
@@ -400,18 +403,21 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 type="number"
                 name={fieldNames.price}
                 value={rangeValues.price[0]}
-                // DON'T REMOVE, NOT BEING USED 
-                // options={priceValues}
                 onChange={handleRangeFromInputChange}
+                onBlur={() => handleTextBoxSubmit(fieldNames.price)}
+                // DON'T REMOVE, NOT BEING USED
+                // options={priceValues}
               />
             </Grid>
             <Grid item xs={7}>
-              <InputFieldWithButton
+              <InputField
                 name={fieldNames.price}
                 label="To"
                 type="number"
                 value={rangeValues.price[1]}
-                // DON'T REMOVE, NOT BEING USED 
+                onChange={handleRangeToInputChange}
+                onBlur={() => handleTextBoxSubmit(fieldNames.price)}
+                // DON'T REMOVE, NOT BEING USED
                 // options={priceValues}
                 // InputProps={{
                 //   endAdornment: (
@@ -427,8 +433,6 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 //     </InputAdornment>
                 //   )
                 // }}
-                handleClick={() => handleTextBoxSubmit(fieldNames.price)}
-                onChange={handleRangeToInputChange}
               />
             </Grid>
           </Grid>
@@ -687,41 +691,42 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="From"
                 type="number"
                 name={fieldNames.milage}
-                // DON'T REMOVE, NOT BEING USED 
-                // options={generateMilageArray()}
-                value={rangeValues.milage[0]}
                 InputLabelProps={{
                   shrink: true
                 }}
+                value={rangeValues.milage[0]}
                 onChange={handleRangeFromInputChange}
+                // DON'T REMOVE, NOT BEING USED
+                // options={generateMilageArray()}
               />
             </Grid>
             <Grid item xs={7}>
-              <InputFieldWithButton
+              <InputField
                 label="To"
                 type="number"
                 name={fieldNames.milage}
                 value={rangeValues.milage[1]}
-                // DON'T REMOVE, NOT BEING USED 
-                // options={generateMilageArray()}
+                onChange={handleRangeToInputChange}
+                onBlur={() => handleTextBoxSubmit(fieldNames.milage)}
                 InputLabelProps={{
                   shrink: true
                 }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Button
-                        className={btn}
-                        color="primary"
-                        variant="contained"
-                        onClick={() => handleTextBoxSubmit(fieldNames.milage)}
-                      >
-                        GO
-                      </Button>
-                    </InputAdornment>
-                  )
-                }}
-                onChange={handleRangeToInputChange}
+                // DON'T REMOVE, NOT BEING USED
+                // options={generateMilageArray()}
+                // InputProps={{
+                //   endAdornment: (
+                //     <InputAdornment position="end">
+                //       <Button
+                //         className={btn}
+                //         color="primary"
+                //         variant="contained"
+                //         onClick={() => handleTextBoxSubmit(fieldNames.milage)}
+                //       >
+                //         GO
+                //       </Button>
+                //     </InputAdornment>
+                //   )
+                // }}
               />
             </Grid>
           </Grid>
@@ -748,36 +753,38 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 type="number"
                 name={fieldNames.modelYear}
                 value={rangeValues.modelYear[0]}
-                // DON'T REMOVE, NOT BEING USED 
-                // options={generateArrayOfYears()}
                 onChange={handleRangeFromInputChange}
+                onBlur={() => handleTextBoxSubmit(fieldNames.modelYear)}
+                // DON'T REMOVE, NOT BEING USED
+                // options={generateArrayOfYears()}
               />
             </Grid>
             <Grid item xs={7}>
-              <InputFieldWithButton
+              <InputField
                 label="To"
                 type="number"
                 name={fieldNames.modelYear}
                 value={rangeValues.modelYear[1]}
-                // DON'T REMOVE, NOT BEING USED 
-                // options={generateArrayOfYears()}
                 onChange={handleRangeToInputChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Button
-                        className={btn}
-                        color="primary"
-                        variant="contained"
-                        onClick={() =>
-                          handleTextBoxSubmit(fieldNames.modelYear)
-                        }
-                      >
-                        GO
-                      </Button>
-                    </InputAdornment>
-                  )
-                }}
+                onBlur={() => handleTextBoxSubmit(fieldNames.modelYear)}
+                // DON'T REMOVE, NOT BEING USED
+                // options={generateArrayOfYears()}
+                // InputProps={{
+                //   endAdornment: (
+                //     <InputAdornment position="end">
+                //       <Button
+                //         className={btn}
+                //         color="primary"
+                //         variant="contained"
+                //         onClick={() =>
+                //           handleTextBoxSubmit(fieldNames.modelYear)
+                //         }
+                //       >
+                //         GO
+                //       </Button>
+                //     </InputAdornment>
+                //   )
+                // }}
               />
             </Grid>
           </Grid>
@@ -1043,36 +1050,38 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 type="number"
                 name={fieldNames.engineCapacity}
                 value={rangeValues.engineCapacity[0]}
-                // DON'T REMOVE, NOT BEING USED 
-                // options={generateEngineCapacityArray()}
                 onChange={handleRangeFromInputChange}
+                onBlur={() => handleTextBoxSubmit(fieldNames.engineCapacity)}
+                // DON'T REMOVE, NOT BEING USED
+                // options={generateEngineCapacityArray()}
               />
             </Grid>
             <Grid item xs={7}>
-              <InputFieldWithButton
+              <InputField
                 type="number"
                 label="To"
                 name={fieldNames.engineCapacity}
                 value={rangeValues.engineCapacity[1]}
-                // DON'T REMOVE, NOT BEING USED 
-                // options={generateEngineCapacityArray()}
                 onChange={handleRangeToInputChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Button
-                        className={btn}
-                        color="primary"
-                        variant="contained"
-                        onClick={() =>
-                          handleTextBoxSubmit(fieldNames.engineCapacity)
-                        }
-                      >
-                        GO
-                      </Button>
-                    </InputAdornment>
-                  )
-                }}
+                onBlur={() => handleTextBoxSubmit(fieldNames.engineCapacity)}
+                // DON'T REMOVE, NOT BEING USED
+                // options={generateEngineCapacityArray()}
+                // InputProps={{
+                //   endAdornment: (
+                //     <InputAdornment position="end">
+                //       <Button
+                //         className={btn}
+                //         color="primary"
+                //         variant="contained"
+                //         onClick={() =>
+                //           handleTextBoxSubmit(fieldNames.engineCapacity)
+                //         }
+                //       >
+                //         GO
+                //       </Button>
+                //     </InputAdornment>
+                //   )
+                // }}
               />
             </Grid>
           </Grid>

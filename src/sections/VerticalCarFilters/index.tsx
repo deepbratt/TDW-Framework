@@ -294,56 +294,50 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   // };
 
   /*  
-    Sets minimum value of range filters if value 
-    is not empty,
-    is less or equal than maximum value,
-    reset maximum value if otherwise
+      Sets minimum value of range filters if value
+      is less than maximum value clears maximum value if otherwise
   */
-    const handleRangeFromInputChange = (
-      event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-      if (
-        event.target.value !== '' 
-      ) {
-        let newValue: number[] = [...rangeValues[event.target.name]];
-        // check if new values is less or equal than maximum values and set set minimum value to new value
-        if (newValue[1] >= Number(event.target.value)) {
+      const handleRangeFromInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+      ) => {
+        if (event.target.value !== '') {
+          let newValue: number[] = [...rangeValues[event.target.name]];
+          // check if new values is greater than maximum values
+          if (newValue[1] < Number(event.target.value)) {
+            if (event.target.name in minMaxValues) {
+              newValue[1] = minMaxValues[event.target.name][1];
+            }
+          }
           newValue[0] = Number(event.target.value);
-        } else {
-          // reset the max value if min value is greater than max value
-          newValue[1] = minMaxValues[event.target.name][1];
+          setRangeValues((previousValue: any) => {
+            previousValue[event.target.name] = newValue;
+            return { ...previousValue };
+          });
         }
-        setRangeValues((previousValue: any) => {
-          previousValue[event.target.name] = newValue;
-          return { ...previousValue };
-        });
-      }
-    };
-
-  /*  
-    Sets maximum value of range filters if value 
-    is not empty,
-    is greater or equal than minimum value,
-    reset minimum value if otherwise
-  */
-  const handleRangeToInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (event.target.value !== '') {
-      let newValue: number[] = [...rangeValues[event.target.name]];
-      // check if new values is greater or equal minimum values and set set maximum value to new value
-      if (newValue[0] <= Number(event.target.value)) {
-        newValue[1] = Number(event.target.value);
-      } else {
-        // reset the min value if max value is less than min value
-        newValue[0] = minMaxValues[event.target.name][0];
-      }
-      setRangeValues((previousValue: any) => {
-        previousValue[event.target.name] = newValue;
-        return { ...previousValue };
-      });
-    }
-  };
+      };
+    
+      /*  
+        Sets maximum value of range filters if value
+        is greater than minimum value clears minimum value if otherwise
+      */
+      const handleRangeToInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+      ) => {
+        if (event.target.value !== '') {
+          let newValue: number[] = [...rangeValues[event.target.name]];
+          // check if new values is less than minimum values
+          if (newValue[0] > Number(event.target.value)) {
+            if (event.target.name in minMaxValues) {
+              newValue[0] = minMaxValues[event.target.name][0];
+            }
+          }
+          newValue[1] = Number(event.target.value);
+          setRangeValues((previousValue: any) => {
+            previousValue[event.target.name] = newValue;
+            return { ...previousValue };
+          });
+        }
+      };
 
   return (
     <div>

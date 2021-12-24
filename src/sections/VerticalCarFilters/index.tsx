@@ -335,6 +335,12 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
         });
       };
 
+      const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>, fieldName: string) => {
+        if (e.key === 'Enter') {
+          handleTextBoxSubmit(fieldName);
+        }
+      }
+
   return (
     <div>
       {appliedFilters !== {} && (
@@ -392,9 +398,12 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="From"
                 type="number"
                 name={fieldNames.price}
-                defaultValue={rangeValues.price[0]}
+                value={rangeValues.price[0]}
                 onChange={handleRangeFromInputChange}
                 onBlur={() => handleTextBoxSubmit(fieldNames.price)}
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.price)
+                }
                 // DON'T REMOVE, NOT BEING USED
                 // options={priceValues}
               />
@@ -404,9 +413,12 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 name={fieldNames.price}
                 label="To"
                 type="number"
-                defaultValue={rangeValues.price[1]}
+                value={rangeValues.price[1]}
                 onChange={handleRangeToInputChange}
                 onBlur={() => handleTextBoxSubmit(fieldNames.price)}
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.price)
+                }
                 // InputProps={{
                 //   endAdornment: (
                 //       <Button
@@ -678,11 +690,15 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="From"
                 type="number"
                 name={fieldNames.milage}
-                defaultValue={rangeValues.milage[0]}
+                value={rangeValues.milage[0]}
                 InputLabelProps={{
                   shrink: true
                 }}
                 onChange={handleRangeFromInputChange}
+                onBlur={() => handleTextBoxSubmit(fieldNames.milage)}
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.milage)
+                }
                 // DON'T REMOVE, NOT BEING USED
                 // options={generateMilageArray()}
               />
@@ -692,10 +708,15 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="To"
                 type="number"
                 name={fieldNames.milage}
-                defaultValue={rangeValues.milage[1]}
+                value={rangeValues.milage[1]}
                 InputLabelProps={{
                   shrink: true
                 }}
+                onChange={handleRangeToInputChange}
+                onBlur={() => handleTextBoxSubmit(fieldNames.milage)}
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.milage)
+                }
                 // DON'T REMOVE, NOT BEING USED
                 // options={generateMilageArray()}
                 // InputProps={{
@@ -737,11 +758,14 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="From"
                 type="number"
                 name={fieldNames.modelYear}
-                defaultValue={rangeValues.modelYear[0]}
-                // DON'T REMOVE, NOT BEING USED 
+                value={rangeValues.modelYear[0]}
+                // DON'T REMOVE, NOT BEING USED
                 // options={generateArrayOfYears()}
                 onChange={handleRangeFromInputChange}
                 onBlur={() => handleTextBoxSubmit(fieldNames.modelYear)}
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.modelYear)
+                }
                 // DON'T REMOVE, NOT BEING USED
                 // options={generateArrayOfYears()}
               />
@@ -751,11 +775,14 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="To"
                 type="number"
                 name={fieldNames.modelYear}
-                defaultValue={rangeValues.modelYear[1]}
-                // DON'T REMOVE, NOT BEING USED 
+                value={rangeValues.modelYear[1]}
+                // DON'T REMOVE, NOT BEING USED
                 // options={generateArrayOfYears()}
                 onChange={handleRangeToInputChange}
                 onBlur={() => handleTextBoxSubmit(fieldNames.modelYear)}
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.modelYear)
+                }
                 // DON'T REMOVE, NOT BEING USED
                 // options={generateArrayOfYears()}
                 // InputProps={{
@@ -1038,11 +1065,12 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="From"
                 type="number"
                 name={fieldNames.engineCapacity}
-                defaultValue={rangeValues.engineCapacity[0]}
-                // DON'T REMOVE, NOT BEING USED 
-                // options={generateEngineCapacityArray()}
+                value={rangeValues.engineCapacity[0]}
                 onChange={handleRangeFromInputChange}
                 onBlur={() => handleTextBoxSubmit(fieldNames.engineCapacity)}
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.engineCapacity)
+                }
                 // DON'T REMOVE, NOT BEING USED
                 // options={generateEngineCapacityArray()}
               />
@@ -1052,11 +1080,12 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 type="number"
                 label="To"
                 name={fieldNames.engineCapacity}
-                defaultValue={rangeValues.engineCapacity[1]}
-                // DON'T REMOVE, NOT BEING USED 
-                // options={generateEngineCapacityArray()}
+                value={rangeValues.engineCapacity[1]}
                 onChange={handleRangeToInputChange}
                 onBlur={() => handleTextBoxSubmit(fieldNames.engineCapacity)}
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.engineCapacity)
+                }
                 // DON'T REMOVE, NOT BEING USED
                 // options={generateEngineCapacityArray()}
                 // InputProps={{

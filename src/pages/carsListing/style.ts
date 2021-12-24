@@ -4,11 +4,11 @@ import { Colors } from '../../Utils/constants/colors/colors';
 const CarListingStyles = makeStyles((theme) => ({
   root: {
     [theme.breakpoints.down('sm')]: {
-      marginTop: '10px',
+      marginTop: '30px',
       padding: '10px'
     },
     [theme.breakpoints.down('xs')]: {
-      marginTop: '20px',
+      marginTop: '40px',
       paddingTop: '0px'
     }
   },

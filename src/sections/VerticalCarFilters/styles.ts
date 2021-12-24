@@ -14,6 +14,15 @@ const VerticalFilterStyles = makeStyles(() => ({
   },
   fontSize: {
     fontSize: '0.9rem'
+  },
+  btn: {
+    padding: '5px 7px',
+    boxShadow: 'none',
+    minWidth: '20px',
+    lineHeight: '18px'
+  },
+  markLabel:{
+    display: "none"
   }
 }));
 export default VerticalFilterStyles;

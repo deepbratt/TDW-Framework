@@ -13,6 +13,7 @@ import {
   resetFilters,
   removeFilter
 } from '../../redux/reducers/carFiltersSlice';
+import { IMinMaxValues } from '../../sections/VerticalCarFilters';
 
 const initialValues: any = {
   province: [],
@@ -78,11 +79,11 @@ export const useForm = (validateOnChange = true) => {
   const [result, setResult] = useState<ICarCard[] | []>([]);
   const { validate, errors, setErrors } = useValidation(carFilters);
 
-  const [rangeValues, setRangeValues] = useState<any>({
+  const [rangeValues, setRangeValues] = useState<IMinMaxValues>({
     price: [0, 50000000],
     modelYear: [1971, 2021],
-    milage: [0, 500000],
-    engineCapacity: [0, 10000]
+    milage: [0, 240000],
+    engineCapacity: [600, 10000]
   });
 
   const [responseMessage, setResponseMessage] = useState({
@@ -141,7 +142,7 @@ export const useForm = (validateOnChange = true) => {
         }
       }
     });
-
+    setIsLoading(true);
     await getAllData(ADS + CARS + params)
       .then((response) => {
         setIsLoading(false);
@@ -396,6 +397,6 @@ export const useForm = (validateOnChange = true) => {
     bodyTypes,
     bodyColors,
     setResponseMessage,
-    modelsLoading
+    modelsLoading,
   };
 };

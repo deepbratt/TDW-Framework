@@ -42,5 +42,9 @@ export const fieldNames = {
   color: 'bodyColor',
   bodyType: 'bodyType',
   sellerType: 'sellerType',
-  cars: 'cars'
+  cars: 'cars',
+  price: 'price',
+  modelYear: 'modelYear',
+  engineCapacity: 'engineCapacity',
+  milage: 'milage',
 };

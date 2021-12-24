@@ -22,6 +22,12 @@ const useCarInformationForm = (
     setFormData({ name: event.target.name, value: event.target.value });
   };
 
+  const toTitleCase = (str: string) => {
+    return str.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  };
+
   const fetchMakes = () => {
     setIsLoading(true);
     getAllData(
@@ -80,14 +86,21 @@ const useCarInformationForm = (
       if (response && response.status === 'success') {
         setCarVersions(response.data.result);
         let versionList = response.data.result.map((versions: any) => {
+          let displayName = versions.name;
+          displayName =
+            displayName +
+            (versions.fuel_type ? `${' '} | ${versions.fuel_type}` : '');
+          displayName =
+            displayName +
+            (versions.capacity ? `${' '} | ${versions.capacity} cc` : '');
+          displayName =
+            displayName +
+            (versions.transmission_type
+              ? `${' '} | ${versions.transmission_type}`
+              : '');
           return {
             name: versions.name,
-            displayName: [
-              versions.name,
-              versions.fuel_type,
-              versions.capacity ? versions.capacity + ' cc' : '',
-              versions.transmission_type
-            ].join(' | ')
+            displayName
           };
         });
         setCarVersionsList(versionList);
@@ -147,6 +160,7 @@ const useCarInformationForm = (
         });
       }
     }
+    // eslint-disable-next-line
   }, [formData.modelVersion]);
 
   return {
@@ -157,7 +171,8 @@ const useCarInformationForm = (
     carMakesList,
     carModelsList,
     carVersionsList,
-    handleTextChange
+    handleTextChange,
+    toTitleCase
   };
 };
 

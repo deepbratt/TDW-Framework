@@ -81,7 +81,8 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
     resetForm,
     bodyColors,
     modelsLoading,
-    setResponseMessage
+    setResponseMessage,
+    getAllCars
   } = useForm();
 
   const [open, setOpen] = React.useState(false);
@@ -162,7 +163,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
         justifyContent="space-between"
         spacing={1}
       >
-        <Grid style={{ height: '100%' }} xs={12} md={4} xl={3} item container>
+        <Grid style={{ height: '100%' }} xs={12} md={3} xl={3} item container>
           <Hidden smDown>
             <Grid item xs={12} className={filtersRoot}>
               <Grid
@@ -194,7 +195,7 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
             </Grid>
           </Hidden>
         </Grid>
-        <Grid item container xs={12} md={8} xl={9}>
+        <Grid item container xs={12} md={9} xl={9}>
           <Grid item xs={12} className={contentRoot}>
             {/* {isShortlist && (
               <Typography
@@ -315,33 +316,34 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
               clearShortListedCars={handleResetShortList}
               removeShortListItem={handleRemoveShortListItem}
             />
-            <Grid item container xs={12} justifyContent="flex-start">
-              {isLoading ? (
+            <Grid item container xs={12} spacing={1} justifyContent="flex-start">
+              {isLoading && (
                 <Grid item container xs={12}>
                   <Skeletons length={6} layoutType={layoutType}>
                     <ListingCardSkeletons layoutType={layoutType} />
                   </Skeletons>
                 </Grid>
-              ) : responseMessage.status !== 'success' &&
-                responseData === null ? (
+              )}
+              {!isLoading && responseData === null && (
                 <Grid style={{ margin: '50px 0' }} item xs={12}>
                   <Typography align="center" variant="h2">
                     {CANT_FIND_RESULT}
                   </Typography>
                 </Grid>
-              ) : (
+              )}
+              {!isLoading && responseData !== null && (
                 <Grid item container xs={12} spacing={1}>
                   {result &&
                     result.map((car: ICarCard) => (
                       <Grid
-                        key={`cars-card-${uuidv4}`}
+                        key={`${uuidv4}`}
                         item
                         xs={12}
                         sm={layoutType === 'list' ? 12 : 6}
                       >
                         <ListingCard
                           data={car}
-                          // isFavs={!isShortlist}
+                          getMyCars={getAllCars}
                           layoutType={layoutType}
                           handleShortList={() => handleAddToShortListItem(car)}
                           removeShortListed={() =>
@@ -349,19 +351,19 @@ const CarsListing: React.FC<CarsListingProps> = ({ isShortlist = true }) => {
                           }
                         />
                       </Grid>
-                    ))}
-                  {result && (
-                    <Grid item xs={12} container justifyContent="center">
-                      <Pagination
-                        style={{ margin: '15px 0' }}
-                        count={pageCount}
-                        onChange={handlePageChange}
-                        variant="outlined"
-                        shape="round"
-                        color="primary"
-                      />
-                    </Grid>
-                  )}
+                    ))}                  
+                </Grid>
+              )}
+              {result && responseData !== null && (
+                <Grid item xs={12} container justifyContent="center">
+                  <Pagination
+                    style={{ margin: '15px 0' }}
+                    count={pageCount}
+                    onChange={handlePageChange}
+                    variant="outlined"
+                    shape="round"
+                    color="primary"
+                  />
                 </Grid>
               )}
               <Toast

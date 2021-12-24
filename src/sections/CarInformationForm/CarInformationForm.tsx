@@ -44,8 +44,13 @@ const CarInformationForm = ({
   handleChangeSelectKeyValue
 }: CarInformationFormProps) => {
   const classes = useStyles();
-  const { carMakesList, carModelsList, carVersionsList, handleTextChange } =
-    useCarInformationForm(formData, setFormData);
+  const {
+    carMakesList,
+    carModelsList,
+    carVersionsList,
+    handleTextChange,
+    toTitleCase
+  } = useCarInformationForm(formData, setFormData);
   const cities = City.getCitiesOfCountry('PK');
   const extractedCityNames = cities?.map((item: any) => item.name);
   let cityNames = [];
@@ -59,7 +64,9 @@ const CarInformationForm = ({
           dataArray={cityNames}
           name={'city'}
           className={classes.selectFields}
-          value={formData.city}
+          value={
+            formData.city !== null ? toTitleCase(formData.city) : formData.city
+          }
           label={addEditCarData.fields.selectCity.label}
           required
           error={requireError.city}

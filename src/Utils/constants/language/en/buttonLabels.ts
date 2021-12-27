@@ -65,3 +65,4 @@ export const PUBLISH: string = 'Publish';
 export const NOT_PUBLISHED: string = 'Not Published';
 export const NOT_ACTIVE: string = 'Not Active';
 export const DELETE: string = 'Delete';
+export const ABOUT: string = 'About';

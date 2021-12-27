@@ -5,17 +5,17 @@ const GlobalStyles = makeStyles((theme) => ({
   '@global': {
     '*::-webkit-scrollbar': {
       width: '0.5rem',
-      borderRadius:"10px",
+      borderRadius: '10px'
     },
     '*::-webkit-scrollbar-track': {
       // '-webkit-box-shadow': '0px 0px red',
       // backgroundColor:Color.secondary,
-      backgroundColor:"darkgrey",
-      borderRadius:"10px",
+      backgroundColor: 'darkgrey',
+      borderRadius: '10px'
     },
     '*::-webkit-scrollbar-thumb': {
-      backgroundColor:"grey",
-      borderRadius:"10px",
+      backgroundColor: 'grey',
+      borderRadius: '10px'
       // outline: '1px solid green'
     }
   },
@@ -79,7 +79,7 @@ const GlobalStyles = makeStyles((theme) => ({
     }
   },
   formStyle: {
-    margin: '20px 0px',
+    margin: '20px 0px'
   },
   header: {
     marginTop: '40px',
@@ -89,6 +89,17 @@ const GlobalStyles = makeStyles((theme) => ({
     }
   },
 
+  // MUI CONTAINER STYLES
+  container: {
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '30px',
+      padding: '10px'
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginTop: '40px',
+      paddingTop: '0px'
+    }
+  }
 }));
 
 export default GlobalStyles;

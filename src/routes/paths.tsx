@@ -24,6 +24,7 @@ import { lazy } from 'react';
 const Home = lazy(() => import('../pages/home'));
 const Login = lazy(() => import('../pages/login'));
 const CarsListing = lazy(() => import('../pages/carsListing'));
+const SellerPage = lazy(() => import('../pages/sellerPage'));
 const ForgetPassword = lazy(() => import('../pages/forgetPassword'));
 const ResetPassword = lazy(() => import('../pages/resetPassword'));
 const Signup = lazy(() => import('../pages/signup'));
@@ -72,6 +73,7 @@ export const paths = {
   carShortlist: 'cars-shortlist',
   signup: '/signup',
   cars: '/cars',
+  sellerPage: "/seller",
   forgotPassword: '/forgot-password',
   resetPassword: 'reset-password',
   addEditCar: '/add-edit/car/',
@@ -95,6 +97,7 @@ export const routes = {
   postAd: '/post-an-ad',
   verification: '/verification/:method?',
   cars: '/cars/:city?',
+  sellerPage: "/seller/:sellerId",
   forgotPassword: '/forgot-password/:token?',
   resetPassword: '/reset-password/:token',
   addEditCar: '/add-edit/car/:id?',
@@ -136,6 +139,11 @@ export const privateRoutes = {
     name: 'Post An Ad',
     path: routes.postAd,
     component: PostAd
+  },
+  [paths.sellerPage]:{
+    name: 'Seller Page',
+    path: routes.sellerPage,
+    component: SellerPage
   }
 };
 

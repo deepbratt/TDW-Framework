@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import SearchIcon from "@material-ui/icons/Search";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -30,17 +29,7 @@ const SearchSelect: React.FC<IProps> = ({ val, carModel, range, handleChange, ha
   //   });
   // };
 
-  const [cities, setCities] = useState<any[]>([]);
-  // API Call to Load cities:
-  const updateCities = (countryCode: any) => {
-  City.getCitiesOfCountry(countryCode)
-    .then((response: any) => setCities(response));
-  }
-
-  // Fetching `cities` on loading:
-  useEffect(() => {
-    updateCities('PK');
-  }, []);
+  const cities = City.getCitiesOfCountry("PK");
 
   return (
     <Grid container>

@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 // import Slider from '@material-ui/core/Slider';
-import { Button, CircularProgress, IconButton, InputAdornment } from '@material-ui/core';
+import { Button, CircularProgress, IconButton } from '@material-ui/core';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -54,6 +54,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const { ADS, CARS } = API_ENDPOINTS;
   const [keyword, setKeyword] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [cities, setCities] = useState<any[]>([]);
+  const [provinces, setProvinces] = useState<any[]>([]);
   const [citySearchResult, setCitySearchResult] = useState<ICity[]>();
   const [regSearchResult, setRegSearchResult] = useState<ICity[]>();
   const [makeSearchResult, setMakeSearchResult] = useState<any>();
@@ -99,8 +101,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const majorCities = ['Karachi', 'Islamabad', 'Lahore', 'Peshawar', 'Quetta'];
   const mainCarTypes = ['Sedan', 'Hatchback', 'Pick Up'];
   const mainColors = ['Black', 'White', 'Red'];
-  const cities = City.getCitiesOfCountry('PK');
-  const provinces = State.getStatesOfCountry('PK');
+  // const cities = City.getCitiesOfCountry('PK');
+  // const provinces = State.getStatesOfCountry('PK');
   const extractedCityNames = cities?.map((item: any) => item.name);
   let cityNames = [];
   if (extractedCityNames) {
@@ -125,8 +127,32 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     modelsLoading
   } = filterProps;
 
+
+  // API Calls to Load countries, cities and states:
+
+  const updateCities = (countryCode: any) => {
+    City.getCitiesOfCountry(countryCode)
+      .then((response: any) => setCities(response));
+  }
+
+  const updateStates = (stateCode: any) => {
+    State.getStatesOfCountry(stateCode)
+      .then((response: any) => setProvinces(response));
+  }
+
+  // Fetching `cities` and `provinces` on loading:
+  useEffect(() => {
+    updateCities('PK');
+    updateStates('PK');
+  }, []);
+
+  // Defining custom function to sort cities based on states & countries:
+  const getCitiesOfState = (countryCode: any, stateCode: any) => {
+    return cities?.filter(city => city.countryCode === countryCode && city.stateCode === stateCode);
+  }
+
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let result = City.getCitiesOfCountry('PK')?.filter(
+    let result = cities?.filter(
       (city: ICity) =>
         city.name.substr(0, e.target.value.length).toLowerCase() ===
         e.target.value.toLowerCase()
@@ -834,7 +860,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       </div>
       <FilterAccordion title={PROVINCE}>
         <FormGroup>
-          {provinces.map((province: any) => (
+          {provinces?.map((province: any) => (
             <FormControlLabel
               classes={{ label: fontSize }}
               key={uuidv4()}
@@ -991,12 +1017,12 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                     );
                   })}
               </Grid>
-              {provinces.map((province: any) => (
+              {provinces?.map((province: any) => (
                 <Grid key={uuidv4()} item xs={12}>
                   <Typography variant="h4" gutterBottom>
                     {province.name}
                   </Typography>
-                  {City.getCitiesOfState(province.countryCode, province.isoCode)
+                  {getCitiesOfState(province.countryCode, province.isoCode)
                     .sort((a: any, b: any) => a.name.localeCompare(b.name))
                     .map((city: any) => {
                       return (

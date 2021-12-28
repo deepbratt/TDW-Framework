@@ -3,7 +3,8 @@ import { useHistory, useLocation, useParams } from 'react-router';
 import CarAdditionalInformation from '../../sections/CarAdditionalInformation';
 import CarInformationForm from '../../sections/CarInformationForm/CarInformationForm';
 import UploadPhotosForm from '../../sections/UploadPhotosForm';
-import { City } from '../../Utils/country-state-city/index';
+import { City, State } from '../../Utils/country-state-city/index';
+import { IState } from '../../Utils/country-state-city/interface';
 import { useCallback } from 'react';
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
@@ -98,7 +99,6 @@ const useAddEditCar = () => {
   const [toastType, setToastType] = useState('success');
   const [formData, setFormData] = useReducer(formReducer, initialFieldValues);
   const [activeStep, setActiveStep] = useState(0);
-  const [cities, setCities] = useState<any[]>([]);
   const [images, setImages] = useState<Array<any>>([]);
   const [featuresArray, setFeaturesArray] = useState<Array<any>>([]);
   const [bodyTypesArray, setBodyTypesArray] = useState<Array<any>>([]);
@@ -360,17 +360,6 @@ const useAddEditCar = () => {
       .then(() => setIsLoading(false));
   }, [id]);
 
-  // API Call to Load cities:
-  const updateCities = (countryCode: any) => {
-    City.getCitiesOfCountry(countryCode)
-      .then((response: any) => setCities(response));
-  }
-
-  // Fetching `cities` on loading:
-  useEffect(() => {
-    updateCities('PK');
-  }, []);
-
   useEffect(() => {
     if (!user.phone) {
       setPhoneRequiredDialog(true);
@@ -382,11 +371,6 @@ const useAddEditCar = () => {
       getFeaturesAndBodyTypes();
     }
   }, [getData, id]);
-
-  // Defining custom function to sort cities based on states & countries:
-  const getStateByCodeAndCountry = (stateCode: any, countryCode: any) => {
-    return cities?.filter(city => city.countryCode === countryCode && city.stateCode === stateCode);
-  }
 
   const allFalse = (obj: any) => {
     for (var o in obj) {
@@ -460,12 +444,13 @@ const useAddEditCar = () => {
       if (!checkValidation(initialRequireError)) {
         return false;
       } else {
-        let cityInformation = cities?.filter(
+        let cityData = City.getCitiesOfCountry('PK');
+        let cityInformation = cityData?.filter(
           (city: any) => city.name === toTitleCase(formData.city)
         );
-        let provinceInformation: any;
+        let provinceInformation: IState | undefined;
         if (cityInformation) {
-          provinceInformation = getStateByCodeAndCountry(
+          provinceInformation = State.getStateByCodeAndCountry(
             cityInformation[0].stateCode,
             'PK'
           );
@@ -499,6 +484,27 @@ const useAddEditCar = () => {
     return true;
   };
 
+  const appendImages = async (fd: any) => {
+    let StringUrls = 0;
+    const arrayOfImages = formData.images.filter(
+      (item: any) => item !== formData.selectedImage
+    );
+    if (formData.selectedImage) {
+      fd.append('selectedImage', formData.selectedImage);
+    } else {
+      fd.append('selectedImage', arrayOfImages[0]);
+      arrayOfImages.splice(0, 1);
+    }
+    for (let i = 0; i < arrayOfImages.length; i++) {
+      if (typeof arrayOfImages[i] === typeof 'string') {
+        fd.append('image[' + StringUrls + ']', arrayOfImages[i]);
+        StringUrls++;
+      } else {
+        fd.append('image', arrayOfImages[i]);
+      }
+    }
+  };
+
   const submitForm = async (isPublished: any) => {
     let data = {
       'country': 'Pakistan',
@@ -529,10 +535,12 @@ const useAddEditCar = () => {
       'selectedImage': formData.selectedImage,
       'image': formData.images
     }
+    // console.log(data);
     setIsLoading(true);
     addEditData(data).then((response) => {
       setIsLoading(false);
       if (response && response.data && response.data.status === 'success') {
+        // console.log(response.data);
         setToastMessage(response.data.message);
         setToastType('success');
         setToastOpen(true);

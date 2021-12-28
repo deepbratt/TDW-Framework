@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var utils_1 = require("./utils");
 // Get a list of all cities.
 async function getAllCities() {
-    var response = await getAllData(`ads/cars/all-cities`);
+    var response = await getAllData(`ads/cars/cities`);
     var cities = response.data.result;
     return cities;
 }

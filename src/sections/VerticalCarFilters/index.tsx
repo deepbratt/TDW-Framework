@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
@@ -126,26 +126,28 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     modelsLoading
   } = filterProps;
 
+
   // API Calls to Load countries, cities and states:
 
-  const updateCities = async (countryCode: any) => {
-    await City.getCitiesOfCountry(countryCode)
+  const updateCities = (countryCode: any) => {
+    City.getCitiesOfCountry(countryCode)
       .then((response: any) => setCities(response));
   }
 
-  const updateStates = async (stateCode: any) => {
-    await State.getStatesOfCountry(stateCode)
+  const updateStates = (stateCode: any) => {
+    State.getStatesOfCountry(stateCode)
       .then((response: any) => setProvinces(response));
   }
 
+  // Fetching `cities` and `provinces` on loading:
   useEffect(() => {
     updateCities('PK');
     updateStates('PK');
   }, []);
 
-  const updateCitiesOfState = async (countryCode: any, stateCode: any) => {
-    await City.getCitiesOfState(countryCode, stateCode)
-      .then((response: any) => setCitiesOfState(response));
+  // Defining custom function to sort cities based on states & countries:
+  const updateCitiesOfState = (countryCode: any, stateCode: any) => {
+    return cities?.filter(city => city.countryCode === countryCode && city.stateCode === stateCode);
   }
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -9,7 +9,7 @@ exports.getStateByCode = exports.getStateByCodeAndCountry = exports.getStatesOfC
 var utils_1 = require("./utils");
 // Get a list of all states.
 async function getAllStates() {
-    var response = await getAllData(`ads/cars/all-states`);    
+    var response = await getAllData(`ads/cars/states`);    
     var states = response.data.result;
     return states;
 }

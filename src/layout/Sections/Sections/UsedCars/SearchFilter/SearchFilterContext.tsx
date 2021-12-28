@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Grid from "@material-ui/core/Grid"
 import InputLabel from "@material-ui/core/InputLabel"
 import MenuItem from "@material-ui/core/MenuItem"
@@ -28,8 +29,19 @@ const SearchFilterContext = ({
   handleFilters
 }: any) => {
   const { optionsBtn, grid, btnGrid, select, inputStyle } = useStyles();
-  const city = City.getCitiesOfCountry('PK');
+  const [city, setCity] = useState<any[]>([]);
   const { white, blue } = Colors;
+
+  // API Call to Load cities:
+  const updateCities = (countryCode: any) => {
+    City.getCitiesOfCountry(countryCode)
+      .then((response: any) => setCity(response));
+  }
+
+  // Fetching `cities` on loading:
+  useEffect(() => {
+    updateCities('PK');
+  }, []);
 
   return (
     <Grid container spacing={1}>

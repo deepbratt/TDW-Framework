@@ -29,6 +29,8 @@ import {
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { getAllData } from '../../Utils/API/API';
 import SearchRounded from '@material-ui/icons/SearchRounded';
+import PriceInput from '../../components/InputField/PriceInput';
+
 export interface CarFiltersProps {
   filterProps: any;
 }
@@ -424,12 +426,16 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="From"
                 type="number"
                 name={fieldNames.price}
-                value={rangeValues.price[0]}
+                placeholder="0"
+                value={rangeValues.price[0] === 0 ? '' : rangeValues.price[0]}
                 onChange={handleRangeFromInputChange}
                 onBlur={() => handleTextBoxSubmit(fieldNames.price)}
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.price)
                 }
+                InputProps={{
+                  inputComponent: PriceInput as any
+                }}
                 // DON'T REMOVE, NOT BEING USED
                 // options={priceValues}
               />
@@ -439,12 +445,16 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 name={fieldNames.price}
                 label="To"
                 type="number"
-                value={rangeValues.price[1]}
+                placeholder="0"
+                value={rangeValues.price[1] === 0 ? '' : rangeValues.price[1]}
                 onChange={handleRangeToInputChange}
                 onBlur={() => handleTextBoxSubmit(fieldNames.price)}
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.price)
                 }
+                InputProps={{
+                  inputComponent: PriceInput as any
+                }}
                 // InputProps={{
                 //   endAdornment: (
                 //       <Button
@@ -716,7 +726,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="From"
                 type="number"
                 name={fieldNames.milage}
-                value={rangeValues.milage[0]}
+                placeholder="0"
+                value={rangeValues.milage[0] === 0 ? '' : rangeValues.milage[0]}
                 InputLabelProps={{
                   shrink: true
                 }}
@@ -734,7 +745,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="To"
                 type="number"
                 name={fieldNames.milage}
-                value={rangeValues.milage[1]}
+                placeholder="0"
+                value={rangeValues.milage[1] === 0 ? '' : rangeValues.milage[1]}
                 InputLabelProps={{
                   shrink: true
                 }}
@@ -784,7 +796,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="From"
                 type="number"
                 name={fieldNames.modelYear}
-                value={rangeValues.modelYear[0]}
+                placeholder="0"
+                value={rangeValues.modelYear[0] === 0 ? '' : rangeValues.modelYear[0]}
                 // DON'T REMOVE, NOT BEING USED
                 // options={generateArrayOfYears()}
                 onChange={handleRangeFromInputChange}
@@ -801,9 +814,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="To"
                 type="number"
                 name={fieldNames.modelYear}
-                value={rangeValues.modelYear[1]}
-                // DON'T REMOVE, NOT BEING USED
-                // options={generateArrayOfYears()}
+                placeholder="0"
+                value={rangeValues.modelYear[1] === 0 ? '' : rangeValues.modelYear[1]}
                 onChange={handleRangeToInputChange}
                 onBlur={() => handleTextBoxSubmit(fieldNames.modelYear)}
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
@@ -1091,7 +1103,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="From"
                 type="number"
                 name={fieldNames.engineCapacity}
-                value={rangeValues.engineCapacity[0]}
+                placeholder="0"
+                value={rangeValues.engineCapacity[0] === 0 ? '' : rangeValues.engineCapacity[0]}
                 onChange={handleRangeFromInputChange}
                 onBlur={() => handleTextBoxSubmit(fieldNames.engineCapacity)}
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
@@ -1106,7 +1119,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 type="number"
                 label="To"
                 name={fieldNames.engineCapacity}
-                value={rangeValues.engineCapacity[1]}
+                placeholder="0"
+                value={rangeValues.engineCapacity[1] === 0 ? '' : rangeValues.engineCapacity[1]}
                 onChange={handleRangeToInputChange}
                 onBlur={() => handleTextBoxSubmit(fieldNames.engineCapacity)}
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>

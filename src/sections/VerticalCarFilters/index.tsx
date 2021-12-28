@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 // import Slider from '@material-ui/core/Slider';
-import { Button, CircularProgress, IconButton, InputAdornment } from '@material-ui/core';
+import { Button, CircularProgress, IconButton } from '@material-ui/core';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -54,7 +54,6 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [cities, setCities] = useState<any[]>([]);
   const [provinces, setProvinces] = useState<any[]>([]);
-  const [citiesOfState, setCitiesOfState] = useState<any[]>([]);
   const [citySearchResult, setCitySearchResult] = useState<ICity[]>();
   const [regSearchResult, setRegSearchResult] = useState<ICity[]>();
   const [makeSearchResult, setMakeSearchResult] = useState<any>();
@@ -146,7 +145,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   }, []);
 
   // Defining custom function to sort cities based on states & countries:
-  const updateCitiesOfState = (countryCode: any, stateCode: any) => {
+  const getCitiesOfState = (countryCode: any, stateCode: any) => {
     return cities?.filter(city => city.countryCode === countryCode && city.stateCode === stateCode);
   }
 
@@ -1011,8 +1010,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                   <Typography variant="h4" gutterBottom>
                     {province.name}
                   </Typography>
-                  {updateCitiesOfState(province.countryCode, province.isoCode)}
-                  {citiesOfState
+                  {getCitiesOfState(province.countryCode, province.isoCode)
                     .sort((a: any, b: any) => a.name.localeCompare(b.name))
                     .map((city: any) => {
                       return (

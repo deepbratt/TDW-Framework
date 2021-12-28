@@ -1,11 +1,8 @@
-"use strict";
 const getAllData = require("../API/API").getAllData;
 // var __importDefault = (this && this.__importDefault) || function (mod) {
 //     return (mod && mod.__esModule) ? mod : { "default": mod };
 // };
 Object.defineProperty(exports, "__esModule", { value: true });
-// var city_json_1 = __importDefault(require("./city.json"));
-var utils_1 = require("./utils");
 // Get a list of all cities.
 async function getAllCities() {
     var response = await getAllData(`ads/cars/cities`);

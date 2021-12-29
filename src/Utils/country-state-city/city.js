@@ -23,10 +23,8 @@ async function getCitiesOfState(countryCode, stateCode) {
 async function getCitiesOfCountry(countryCode) {
     if (!countryCode)
         return [];
-    console.log("getCitiesOfCountry()");
     var response = await getAllData(`ads/cars/cities/country-code/${countryCode}`);
     var cities = response.data.result;
-    console.log(cities);
     return cities;
 }
 exports.default = {

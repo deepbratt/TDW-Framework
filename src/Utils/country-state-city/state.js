@@ -33,8 +33,6 @@ async function getStateByCodeAndCountry(stateCode, countryCode) {
 exports.getStateByCodeAndCountry = getStateByCodeAndCountry;
 // to be deprecate
 async function getStateByCode(isoCode) {
-    // eslint-disable-next-line no-console
-    console.warn("WARNING! 'getStateByCode' has been deprecated, please use the new 'getStateByCodeAndCountry' function instead!");
     if (!isoCode)
         return undefined;
     var response = await getAllData(`ads/cars//states/state-code/${isoCode}`);

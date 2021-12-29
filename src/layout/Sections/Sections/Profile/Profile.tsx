@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
 import MenuItem from "@material-ui/core/MenuItem"
@@ -46,7 +45,7 @@ const Profile = () => {
     formState: { errors }
   } = useForm();
 
-  const [cities, setCities] = useState<any[]>([]);
+  const cities = City.getCitiesOfCountry('PK');
   const extractedCityNames = cities?.map((item: any) => item.name);
   let cityNames = [];
   if (extractedCityNames) {
@@ -56,17 +55,6 @@ const Profile = () => {
     useStyles();
   const { handleChange, val, date, handleChangeDate, setVal, Img, setImg, number, NumericOnly, errorMessage, setNumber } =
     useHooks();
-  
-  // API Call to Load cities:
-  const updateCities = (countryCode: any) => {
-    City.getCitiesOfCountry(countryCode)
-      .then((response: any) => setCities(response));
-  }
-
-  // Fetching `cities` on loading:
-  useEffect(() => {
-    updateCities('PK');
-  }, []);
 
   const handleAlertClose = () => {
     setOpen(false);

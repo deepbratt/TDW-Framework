@@ -1,31 +1,33 @@
-const getAllData = require("../API/API").getAllData;
-// var __importDefault = (this && this.__importDefault) || function (mod) {
-//     return (mod && mod.__esModule) ? mod : { "default": mod };
-// };
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var city_json_1 = __importDefault(require("./city.json"));
+var utils_1 = require("./utils");
 // Get a list of all cities.
-async function getAllCities() {
-    var response = await getAllData(`ads/cars/cities`);
-    var cities = response.data.result;
-    return cities;
+function getAllCities() {
+    return city_json_1.default;
 }
 // Get a list of cities belonging to a specific state and country.
-async function getCitiesOfState(countryCode, stateCode) {
+function getCitiesOfState(countryCode, stateCode) {
     if (!stateCode)
         return [];
     if (!countryCode)
         return [];
-    var response = await getAllData(`ads/cars/cities/state-code/${stateCode}/${countryCode}`);
-    var cities = response.data.result;
-    return cities;
+    var cities = city_json_1.default.filter(function (value) {
+        return value.countryCode === countryCode && value.stateCode === stateCode;
+    });
+    return cities.sort(utils_1.compare);
 }
 // Get a list of cities belonging to a specific country.
-async function getCitiesOfCountry(countryCode) {
+function getCitiesOfCountry(countryCode) {
     if (!countryCode)
         return [];
-    var response = await getAllData(`ads/cars/cities/country-code/${countryCode}`);
-    var cities = response.data.result;
-    return cities;
+    var cities = city_json_1.default.filter(function (value) {
+        return value.countryCode === countryCode;
+    });
+    return cities.sort(utils_1.compare);
 }
 exports.default = {
     getAllCities: getAllCities,

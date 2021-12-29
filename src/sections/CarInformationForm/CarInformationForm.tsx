@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -45,7 +44,6 @@ const CarInformationForm = ({
   handleChangeSelectKeyValue
 }: CarInformationFormProps) => {
   const classes = useStyles();
-  const [cities, setCities] = useState<any[]>([]);
   const {
     carMakesList,
     carModelsList,
@@ -53,22 +51,12 @@ const CarInformationForm = ({
     handleTextChange,
     toTitleCase
   } = useCarInformationForm(formData, setFormData);
+  const cities = City.getCitiesOfCountry('PK');
   const extractedCityNames = cities?.map((item: any) => item.name);
   let cityNames = [];
   if (extractedCityNames) {
     cityNames.push(...extractedCityNames);
   }
-
-  // API Call to Load cities:
-  const updateCities = (countryCode: any) => {
-    City.getCitiesOfCountry(countryCode)
-      .then((response: any) => setCities(response));
-  }
-  // Fetching `cities` and `provinces` on loading:
-  useEffect(() => {
-    updateCities('PK');
-  }, []);
-  
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={12} md={6}>

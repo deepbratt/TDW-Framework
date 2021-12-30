@@ -800,7 +800,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       <FilterAccordion title={MILEAGE}>
         <Grid container direction="column">
           <Grid item container spacing={1}>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <InputField
                 label="From"
                 name={fieldNames.milage}
@@ -818,7 +818,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 // options={generateMilageArray()}
               />
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={6}>
               <InputField
                 label="To"
                 name={fieldNames.milage}
@@ -873,7 +873,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       <FilterAccordion title={YEAR}>
         <Grid container direction="column">
           <Grid item container spacing={1}>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <InputField
                 label="From"
                 name={fieldNames.modelYear}
@@ -891,7 +891,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 // options={generateArrayOfYears()}
               />
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={6}>
               <InputField
                 label="To"
                 name={fieldNames.modelYear}
@@ -1187,7 +1187,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       <FilterAccordion title={ENGINE_CAPACITY}>
         <Grid container direction="column">
           <Grid item container spacing={1}>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <InputField
                 label="From"
                 name={fieldNames.engineCapacity}
@@ -1205,7 +1205,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 // options={generateEngineCapacityArray()}
               />
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={6}>
               <InputField
                 label="To"
                 name={fieldNames.engineCapacity}

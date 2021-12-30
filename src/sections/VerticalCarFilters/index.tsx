@@ -803,15 +803,14 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             <Grid item xs={5}>
               <InputField
                 label="From"
-                type="number"
                 name={fieldNames.milage}
                 placeholder="0"
-                value={rangeValues.milage[0] === 0 ? '' : rangeValues.milage[0]}
-                InputLabelProps={{
-                  shrink: true
-                }}
+                value={rangeValues.milage[0]}
+                error={rangeErrorsStatus.milage.min}
                 onChange={handleRangeFromInputChange}
-                onBlur={() => handleTextBoxSubmit(fieldNames.milage)}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.milage)
+                }
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.milage)
                 }
@@ -822,15 +821,14 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             <Grid item xs={7}>
               <InputField
                 label="To"
-                type="number"
                 name={fieldNames.milage}
-                placeholder="0"
-                value={rangeValues.milage[1] === 0 ? '' : rangeValues.milage[1]}
-                InputLabelProps={{
-                  shrink: true
-                }}
+                placeholder="50000"
+                value={rangeValues.milage[1]}
+                error={rangeErrorsStatus.milage.max}
                 onChange={handleRangeToInputChange}
-                onBlur={() => handleTextBoxSubmit(fieldNames.milage)}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.milage)
+                }
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.milage)
                 }
@@ -852,6 +850,11 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 // }}
               />
             </Grid>
+            {rangeErrors.milage !== '' && (
+              <Grid item xs={12}>
+                <Typography variant="caption">{rangeErrors.milage}</Typography>
+              </Grid>
+            )}
           </Grid>
           {/* 
             DON'T REMOVE, NOT BEING USED 
@@ -873,16 +876,14 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             <Grid item xs={5}>
               <InputField
                 label="From"
-                type="number"
                 name={fieldNames.modelYear}
-                placeholder="0"
-                value={
-                  rangeValues.modelYear[0] === 0 ? '' : rangeValues.modelYear[0]
-                }
-                // DON'T REMOVE, NOT BEING USED
-                // options={generateArrayOfYears()}
+                placeholder="2000"
+                value={rangeValues.modelYear[0]}
+                error={rangeErrorsStatus.modelYear.min}
                 onChange={handleRangeFromInputChange}
-                onBlur={() => handleTextBoxSubmit(fieldNames.modelYear)}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.modelYear)
+                }
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.modelYear)
                 }
@@ -893,14 +894,14 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             <Grid item xs={7}>
               <InputField
                 label="To"
-                type="number"
                 name={fieldNames.modelYear}
-                placeholder="0"
-                value={
-                  rangeValues.modelYear[1] === 0 ? '' : rangeValues.modelYear[1]
-                }
+                placeholder="2021"
+                value={rangeValues.modelYear[1]}
+                error={rangeErrorsStatus.modelYear.max}
                 onChange={handleRangeToInputChange}
-                onBlur={() => handleTextBoxSubmit(fieldNames.modelYear)}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.modelYear)
+                }
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.modelYear)
                 }
@@ -924,6 +925,11 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 // }}
               />
             </Grid>
+            {rangeErrors.modelYear !== '' && (
+              <Grid item xs={12}>
+                <Typography variant="caption">{rangeErrors.modelYear}</Typography>
+              </Grid>
+            )}
           </Grid>
           {/* 
             DON'T REMOVE, NOT BEING USED 
@@ -1184,16 +1190,14 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             <Grid item xs={5}>
               <InputField
                 label="From"
-                type="number"
                 name={fieldNames.engineCapacity}
-                placeholder="0"
-                value={
-                  rangeValues.engineCapacity[0] === 0
-                    ? ''
-                    : rangeValues.engineCapacity[0]
-                }
+                placeholder="600"
+                value={rangeValues.engineCapacity[0]}
+                error={rangeErrorsStatus.engineCapacity.min}
                 onChange={handleRangeFromInputChange}
-                onBlur={() => handleTextBoxSubmit(fieldNames.engineCapacity)}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.engineCapacity)
+                }
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.engineCapacity)
                 }
@@ -1203,17 +1207,15 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             </Grid>
             <Grid item xs={7}>
               <InputField
-                type="number"
                 label="To"
                 name={fieldNames.engineCapacity}
-                placeholder="0"
-                value={
-                  rangeValues.engineCapacity[1] === 0
-                    ? ''
-                    : rangeValues.engineCapacity[1]
-                }
+                placeholder="1300"
+                value={rangeValues.engineCapacity[1]}
+                error={rangeErrorsStatus.engineCapacity.max}
                 onChange={handleRangeToInputChange}
-                onBlur={() => handleTextBoxSubmit(fieldNames.engineCapacity)}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.engineCapacity)
+                }
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.engineCapacity)
                 }
@@ -1237,6 +1239,11 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 // }}
               />
             </Grid>
+            {rangeErrors.engineCapacity !== '' && (
+              <Grid item xs={12}>
+                <Typography variant="caption">{rangeErrors.engineCapacity}</Typography>
+              </Grid>
+            )}
           </Grid>
           {/* 
             DON'T REMOVE, NOT BEING USED 

@@ -29,6 +29,7 @@ import Toast from '../../components/Toast';
 import { Colors } from '../../Utils/constants/colors/colors';
 import CarDescription from '../../layout/Sections/Sections/CarDetail/CarDescription';
 import CarFeatures from '../../layout/Sections/Sections/CarDetail/CarFeatures';
+import FixAppointment from '../../layout/Sections/Sections/CarDetail/FixAppointment';
 import {
   Box,
   Container,
@@ -386,6 +387,11 @@ const CarDetailContainer = () => {
                     </TabPanel>
                   </Box>
                 </Grid>
+                {user._id === obj.createdBy._id && (
+                  <Grid item xs={12}>
+                    <FixAppointment />
+                  </Grid>
+                )}
               </Grid>
             )}
           </Paper>

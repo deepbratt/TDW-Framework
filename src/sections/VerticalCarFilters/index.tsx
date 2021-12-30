@@ -30,6 +30,7 @@ import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { getAllData } from '../../Utils/API/API';
 import SearchRounded from '@material-ui/icons/SearchRounded';
 import PriceInput from '../../components/InputField/PriceInput';
+import { isNumeric } from '../../Utils/regex';
 
 export interface CarFiltersProps {
   filterProps: any;
@@ -352,6 +353,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const handleRangeFromInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    if (isNumeric(event.target.value)) {
       let newValue: number[] | string[] = [...rangeValues[event.target.name]];
       // check if new values is greater than maximum values don't check if max value is empty
       if (newValue[1] < Number(event.target.value) && newValue[1] !== '') {
@@ -381,6 +383,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
         previousValue[event.target.name] = newValue;
         return { ...previousValue };
       });
+    }
   };
 
   /*  
@@ -390,38 +393,43 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const handleRangeToInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    let newValue: number[] | string[] = [...rangeValues[event.target.name]];
-    // check if new values is less than minimum values don't check if new target value is empty
-    if (newValue[0] > Number(event.target.value) && event.target.value !== '') {
-      // set range errors if max value is less than min value
-      setRangeErrors((previousValue: IRangeFiltersError) => {
-        previousValue[event.target.name] =
-          'Maximum value should be greater than minimum value';
-        return { ...previousValue };
-      });
-      setRangeErrorsStatus((previousValue: IRangeFiltersErrorStatus) => {
-        previousValue[event.target.name].max = true;
-        return { ...previousValue };
-      });
-    } else {
-      // clear min, max value error if max value is greater than min value
-      setRangeErrorsStatus((previousValue: IRangeFiltersErrorStatus) => {
-        previousValue[event.target.name] = {
-          min: false,
-          max: false
-        };
-        return { ...previousValue };
-      });
-      setRangeErrors((previousValue: IRangeFiltersError) => {
-        previousValue[event.target.name] = '';
+    if (isNumeric(event.target.value)) {
+      let newValue: number[] | string[] = [...rangeValues[event.target.name]];
+      // check if new values is less than minimum values don't check if new target value is empty
+      if (
+        newValue[0] > Number(event.target.value) &&
+        event.target.value !== ''
+      ) {
+        // set range errors if max value is less than min value
+        setRangeErrors((previousValue: IRangeFiltersError) => {
+          previousValue[event.target.name] =
+            'Maximum value should be greater than minimum value';
+          return { ...previousValue };
+        });
+        setRangeErrorsStatus((previousValue: IRangeFiltersErrorStatus) => {
+          previousValue[event.target.name].max = true;
+          return { ...previousValue };
+        });
+      } else {
+        // clear min, max value error if max value is greater than min value
+        setRangeErrorsStatus((previousValue: IRangeFiltersErrorStatus) => {
+          previousValue[event.target.name] = {
+            min: false,
+            max: false
+          };
+          return { ...previousValue };
+        });
+        setRangeErrors((previousValue: IRangeFiltersError) => {
+          previousValue[event.target.name] = '';
+          return { ...previousValue };
+        });
+      }
+      newValue[1] = event.target.value;
+      setRangeValues((previousValue: any) => {
+        previousValue[event.target.name] = newValue;
         return { ...previousValue };
       });
     }
-    newValue[1] = event.target.value;
-    setRangeValues((previousValue: any) => {
-      previousValue[event.target.name] = newValue;
-      return { ...previousValue };
-    });
   };
 
   const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>, fieldName: string) => {

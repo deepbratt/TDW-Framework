@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 // import Slider from '@material-ui/core/Slider';
-import { Button, CircularProgress, IconButton, InputAdornment } from '@material-ui/core';
+import { Button, CircularProgress, IconButton } from '@material-ui/core';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -35,25 +35,63 @@ export interface CarFiltersProps {
   filterProps: any;
 }
 
-export interface IMinMaxValues {
-  [k: string]: number[];
-  price: number[];
-  modelYear: number[];
-  milage: number[];
-  engineCapacity: number[];
+interface IMinMax {
+  min: boolean;
+  max: boolean;
 }
 
-let minMaxValues: IMinMaxValues = {
-  price: [0, 50000000],
-  modelYear: [1971, 2021],
-  milage: [0, 240000],
-  engineCapacity: [600, 10000]
-};
+export interface IRangeFiltersErrorStatus {
+  [k: string]: IMinMax;
+  price: IMinMax;
+  modelYear: IMinMax;
+  milage: IMinMax;
+  engineCapacity: IMinMax;
+}
+
+export interface IRangeFiltersError {
+  [k: string]: string;
+  price: string;
+  modelYear: string;
+  milage: string;
+  engineCapacity: string;
+}
+
+export interface IMinMaxValues {
+  [k: string]: number[] | string[];
+  price: number[] | string[];
+  modelYear: number[] | string[];
+  milage: number[] | string[];
+  engineCapacity: number[] | string[];
+}
 
 const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const { ADS, CARS } = API_ENDPOINTS;
   const [keyword, setKeyword] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [rangeErrors, setRangeErrors] = useState<IRangeFiltersError>({
+    price: '',
+    modelYear: '',
+    milage: '',
+    engineCapacity: ''
+  });
+  const [rangeErrorsStatus, setRangeErrorsStatus] = useState<IRangeFiltersErrorStatus>({
+    price: {
+      min: false,
+      max: false
+    },
+    modelYear: {
+      min: false,
+      max: false
+    },
+    milage: {
+      min: false,
+      max: false
+    },
+    engineCapacity: {
+      min: false,
+      max: false
+    }
+  });
   const [citySearchResult, setCitySearchResult] = useState<ICity[]>();
   const [regSearchResult, setRegSearchResult] = useState<ICity[]>();
   const [makeSearchResult, setMakeSearchResult] = useState<any>();
@@ -92,7 +130,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   //   { value: 5000000, label: '50 Lakh' },
   //   { value: 8000000, label: '80 Lakh' },
   //   { value: 10000000, label: '1 Crore' },
-  //   { value: 50000000, label: '5 Crore' },
+  //   { value: 100000000, label: '5 Crore' },
   //   { value: 100000000, label: '10 Crore' }
   // ];
 
@@ -181,6 +219,18 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       }
     );
   };
+
+  useEffect(() => {
+    // set value of rangeFilters to rangeValues
+    setRangeValues({
+      price: values.price,
+      modelYear: values.modelYear,
+      milage: values.milage,
+      engineCapacity: values.engineCapacity
+    });
+    // eslint-disable-next-line
+  }, []);
+
 
    /*
     generate array containing objects with label and values for modelYears
@@ -299,49 +349,95 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       Sets minimum value of range filters if value
       is less than maximum value clears maximum value if otherwise
   */
-      const handleRangeFromInputChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-      ) => {
-        let newValue: number[] = [...rangeValues[event.target.name]];
-        // check if new values is greater than maximum values
-        if (newValue[1] < Number(event.target.value)) {
-          if (event.target.name in minMaxValues) {
-            newValue[1] = minMaxValues[event.target.name][1];
-          }
-        }
-          newValue[0] = Number(event.target.value);
-          setRangeValues((previousValue: any) => {
-            previousValue[event.target.name] = newValue;
-            return { ...previousValue };
-          });
-      };
-    
-      /*  
-        Sets maximum value of range filters if value
-        is greater than minimum value clears minimum value if otherwise
-      */
-      const handleRangeToInputChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-      ) => {
-        let newValue: number[] = [...rangeValues[event.target.name]];
-        // check if new values is less than minimum values
-        if (newValue[0] > Number(event.target.value)) {
-          if (event.target.name in minMaxValues) {
-            newValue[0] = minMaxValues[event.target.name][0];
-          }
-        }
-        newValue[1] = Number(event.target.value);
-        setRangeValues((previousValue: any) => {
-          previousValue[event.target.name] = newValue;
+  const handleRangeFromInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+      let newValue: number[] | string[] = [...rangeValues[event.target.name]];
+      // check if new values is greater than maximum values don't check if max value is empty
+      if (newValue[1] < Number(event.target.value) && newValue[1] !== '') {
+        // set range errors if min value is greater than max value
+        setRangeErrors((previousValue: IRangeFiltersError) => {
+          previousValue[event.target.name] =
+            'Minimum value should be less than maximum value';
           return { ...previousValue };
         });
-      };
-
-      const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>, fieldName: string) => {
-        if (e.key === 'Enter') {
-          handleTextBoxSubmit(fieldName);
-        }
+        setRangeErrorsStatus((previousValue: IRangeFiltersErrorStatus) => {
+          previousValue[event.target.name].min = true;
+          return { ...previousValue };
+        });
+      } else {
+        // clear min, max value error if min value is less than max value
+        setRangeErrorsStatus((previousValue: IRangeFiltersErrorStatus) => {
+          previousValue[event.target.name] = { min: false, max: false };
+          return { ...previousValue };
+        });
+        setRangeErrors((previousValue: IRangeFiltersError) => {
+          previousValue[event.target.name] = '';
+          return { ...previousValue };
+        });
       }
+      newValue[0] = event.target.value;
+      setRangeValues((previousValue: any) => {
+        previousValue[event.target.name] = newValue;
+        return { ...previousValue };
+      });
+  };
+
+  /*  
+    Sets maximum value of range filters if value
+    is greater than minimum value clears minimum value if otherwise
+  */
+  const handleRangeToInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    let newValue: number[] | string[] = [...rangeValues[event.target.name]];
+    // check if new values is less than minimum values don't check if new target value is empty
+    if (newValue[0] > Number(event.target.value) && event.target.value !== '') {
+      // set range errors if max value is less than min value
+      setRangeErrors((previousValue: IRangeFiltersError) => {
+        previousValue[event.target.name] =
+          'Maximum value should be greater than minimum value';
+        return { ...previousValue };
+      });
+      setRangeErrorsStatus((previousValue: IRangeFiltersErrorStatus) => {
+        previousValue[event.target.name].max = true;
+        return { ...previousValue };
+      });
+    } else {
+      // clear min, max value error if max value is greater than min value
+      setRangeErrorsStatus((previousValue: IRangeFiltersErrorStatus) => {
+        previousValue[event.target.name] = {
+          min: false,
+          max: false
+        };
+        return { ...previousValue };
+      });
+      setRangeErrors((previousValue: IRangeFiltersError) => {
+        previousValue[event.target.name] = '';
+        return { ...previousValue };
+      });
+    }
+    newValue[1] = event.target.value;
+    setRangeValues((previousValue: any) => {
+      previousValue[event.target.name] = newValue;
+      return { ...previousValue };
+    });
+  };
+
+  const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>, fieldName: string) => {
+    if (
+      e.key === 'Enter' &&
+      Object.values(rangeErrors).every((x) => x === '')
+    ) {
+      handleTextBoxSubmit(fieldName);
+    }
+  }
+
+  const handleRangeFiltersOnBlur = (e: React.FocusEvent<HTMLInputElement>, fieldName: string) => {
+    if (Object.values(rangeErrors).every((x) => x === '')) {
+      handleTextBoxSubmit(fieldName);
+    }
+  }
 
   return (
     <div>
@@ -395,15 +491,17 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       <FilterAccordion title={PRICE_RANGE}>
         <Grid container direction="column">
           <Grid item container spacing={1}>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <InputField
                 label="From"
-                type="number"
                 name={fieldNames.price}
                 placeholder="0"
-                value={rangeValues.price[0] === 0 ? '' : rangeValues.price[0]}
+                value={rangeValues.price[0]}
+                error={rangeErrorsStatus.price.min}
                 onChange={handleRangeFromInputChange}
-                onBlur={() => handleTextBoxSubmit(fieldNames.price)}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.price)
+                }
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.price)
                 }
@@ -414,15 +512,17 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 // options={priceValues}
               />
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={6}>
               <InputField
                 name={fieldNames.price}
                 label="To"
-                type="number"
-                placeholder="0"
-                value={rangeValues.price[1] === 0 ? '' : rangeValues.price[1]}
+                placeholder="500,000"
+                value={rangeValues.price[1]}
+                error={rangeErrorsStatus.price.max}
                 onChange={handleRangeToInputChange}
-                onBlur={() => handleTextBoxSubmit(fieldNames.price)}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.price)
+                }
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.price)
                 }
@@ -444,6 +544,11 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 // }}
               />
             </Grid>
+            {rangeErrors.price !== '' && (
+              <Grid item xs={12}>
+                <Typography variant="caption">{rangeErrors.price}</Typography>
+              </Grid>
+            )}
           </Grid>
           {/* 
             DON'T REMOVE, NOT BEING USED 
@@ -771,7 +876,9 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 type="number"
                 name={fieldNames.modelYear}
                 placeholder="0"
-                value={rangeValues.modelYear[0] === 0 ? '' : rangeValues.modelYear[0]}
+                value={
+                  rangeValues.modelYear[0] === 0 ? '' : rangeValues.modelYear[0]
+                }
                 // DON'T REMOVE, NOT BEING USED
                 // options={generateArrayOfYears()}
                 onChange={handleRangeFromInputChange}
@@ -789,7 +896,9 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 type="number"
                 name={fieldNames.modelYear}
                 placeholder="0"
-                value={rangeValues.modelYear[1] === 0 ? '' : rangeValues.modelYear[1]}
+                value={
+                  rangeValues.modelYear[1] === 0 ? '' : rangeValues.modelYear[1]
+                }
                 onChange={handleRangeToInputChange}
                 onBlur={() => handleTextBoxSubmit(fieldNames.modelYear)}
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
@@ -1078,7 +1187,11 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 type="number"
                 name={fieldNames.engineCapacity}
                 placeholder="0"
-                value={rangeValues.engineCapacity[0] === 0 ? '' : rangeValues.engineCapacity[0]}
+                value={
+                  rangeValues.engineCapacity[0] === 0
+                    ? ''
+                    : rangeValues.engineCapacity[0]
+                }
                 onChange={handleRangeFromInputChange}
                 onBlur={() => handleTextBoxSubmit(fieldNames.engineCapacity)}
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
@@ -1094,7 +1207,11 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 label="To"
                 name={fieldNames.engineCapacity}
                 placeholder="0"
-                value={rangeValues.engineCapacity[1] === 0 ? '' : rangeValues.engineCapacity[1]}
+                value={
+                  rangeValues.engineCapacity[1] === 0
+                    ? ''
+                    : rangeValues.engineCapacity[1]
+                }
                 onChange={handleRangeToInputChange}
                 onBlur={() => handleTextBoxSubmit(fieldNames.engineCapacity)}
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>

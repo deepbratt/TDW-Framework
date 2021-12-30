@@ -146,7 +146,7 @@ export const useForm = (validateOnChange = false) => {
       bodyType: values.bodyType,
       price: [
         values.priceFrom === '' ? 0 : parseInt(values.priceFrom),
-        values.priceTo === '' ? 50000000 : parseInt(values.priceTo)
+        values.priceTo === '' ? 100000000 : parseInt(values.priceTo)
       ]
     };
     resetForm();

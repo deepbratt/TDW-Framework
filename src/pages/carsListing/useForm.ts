@@ -33,11 +33,11 @@ const initialValues: any = {
   keyword: ''
 };
 
-const initialRangeValues: any = {
-  price: [0, 50000000],
-  modelYear: [1971, 2021],
-  milage: [0, 500000],
-  engineCapacity: [0, 10000]
+const initialRangeValues: IMinMaxValues = {
+  price: ['', ''],
+  modelYear: ['', ''],
+  milage: ['', ''],
+  engineCapacity: ['', '']
 };
 interface IData {
   data: {
@@ -80,10 +80,10 @@ export const useForm = (validateOnChange = true) => {
   const { validate, errors, setErrors } = useValidation(carFilters);
 
   const [rangeValues, setRangeValues] = useState<IMinMaxValues>({
-    price: [0, 50000000],
-    modelYear: [1971, 2021],
-    milage: [0, 240000],
-    engineCapacity: [600, 10000]
+    price: ['', ''],
+    modelYear: ['', ''],
+    milage: ['', ''],
+    engineCapacity: ['', '']
   });
 
   const [responseMessage, setResponseMessage] = useState({
@@ -334,10 +334,10 @@ export const useForm = (validateOnChange = true) => {
   const resetForm = () => {
     setKeywords('');
     setRangeValues({
-      price: [0, 50000000],
-      modelYear: [1971, 2021],
-      milage: [0, 500000],
-      engineCapacity: [0, 10000]
+      price: ['', ''],
+      modelYear: ['', ''],
+      milage: ['', ''],
+      engineCapacity: ['', '']
     });
     setErrors({});
     dispatch(resetFilters());
@@ -347,7 +347,7 @@ export const useForm = (validateOnChange = true) => {
     getAllCars();
   };
 
-  const handleTextBoxSubmit = (name: any) => {
+  const handleTextBoxSubmit = (name: string) => {
     let filter = {
       name: name,
       value: getKeyValue(rangeValues)(name)

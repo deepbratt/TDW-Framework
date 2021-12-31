@@ -8,7 +8,7 @@ import { useStyles } from './useStyles';
 import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
 import AppointmentForm from '../../../../components/AppointmentForm';
 
-const FixAppointment: React.FC<any> = ({ }) => {
+const FixAppointment: React.FC<any> = ({ userId, objId }) => {
   const { user } = useSelector((state: RootState) => state.auth);
   const [appointmentForm, setAppointmentForm] = useState(false);
   const { mailBtn } = useStyles();
@@ -16,7 +16,6 @@ const FixAppointment: React.FC<any> = ({ }) => {
     <Grid container style={{
       display: 'flex',
       flexDirection: "column",
-      margin: "20px auto",
       padding: "20px",
       alignItems: "center",
       justifyContent: "center"

@@ -89,13 +89,26 @@ const AppointmentForm = ({
               value={number}
               onChange={(e) => setNumber(e.target.value)}
               label="Mobile Number"
-              disabled={phone ? true : false}
               fullWidth
               type="tel"
               placeholder={'3XXXXXXXXX'}
               InputProps={{ startAdornment: <span>+92&nbsp;</span> }}
               required
               error={error.number}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              name="address"
+              // value={name}
+              // onChange={(e) => setName(e.target.value)}
+              type="text"
+              title="Enter full address where you want to get your car inspected..."
+              label="Full Address"
+              placeholder={"Enter full address where you want to get your car inspected..."}
+              // disabled={fullName ? true : false}
+              fullWidth
+              // error={error.name}
             />
           </Grid>
         </Grid>

@@ -397,7 +397,7 @@ const CarDetailContainer = () => {
               <Paper elevation={4}>
                 {user._id === obj.createdBy._id && (
                   <Grid item xs={12}>
-                    <FixAppointment />
+                    <FixAppointment userId={user._id} carId={obj._id} />
                   </Grid>
                 )}
               </Paper>

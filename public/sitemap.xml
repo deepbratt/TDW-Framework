@@ -21,7 +21,10 @@
         <loc>http://www.carokta.com/dashboard/favorites</loc>
     </url>
     <url>
-        <loc>http://www.carokta.com/dashboard/favorites/ads</loc>
+        <loc>http://www.carokta.com/dashboard/ads</loc>
+    </url>
+    <url>
+        <loc>http://www.carokta.com/dashboard/appointments</loc>
     </url>
     <url>
         <loc>http://www.carokta.com/dashboard/help</loc>

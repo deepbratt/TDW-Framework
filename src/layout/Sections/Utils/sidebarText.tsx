@@ -5,6 +5,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Commute from '@material-ui/icons/Commute';
 import Compare from '@material-ui/icons/Compare';
 import Favorite from '@material-ui/icons/Favorite';
+import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
 import Help from '@material-ui/icons/Help';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 export const Title = 'DashBoard';
@@ -52,6 +53,11 @@ export const paths = [
     title: 'My Ads',
     path: '/dashboard/ads',
     icon: <Commute />
+  },
+  {
+    title: 'My Appointments',
+    path: '/dashboard/appointments',
+    icon: <PhoneCallbackIcon />
   },
   // {
   //     title: "Booked Items",
@@ -132,6 +138,9 @@ export const createdAt = 'Created at:';
 
 export const ads = 'Your Ads';
 export const adsTitle = 'Your Ads';
+
+// stats
+export const appointmentsTitle = "Your Appointments"
 
 // history
 

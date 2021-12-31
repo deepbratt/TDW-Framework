@@ -6,6 +6,7 @@ import Help from '../Help/Help';
 import Favs from '../Favorites';
 import Ads from '../Ads/Ads';
 import ChangePassword from '../ChangePassword';
+import Appointments from '../Appointments/Appointments';
 
 const Wrapper = () => {
   const { id } = useParams<{ id: string }>();
@@ -37,7 +38,15 @@ const Wrapper = () => {
           <Ads />
         </>
       );
-    } if (id === 'change-password') {
+    } 
+    if (id === 'appointments') {
+      return (
+        <>
+          <Appointments />
+        </>
+      );
+    }    
+    if (id === 'change-password') {
       return (
         <>
           <ChangePassword />

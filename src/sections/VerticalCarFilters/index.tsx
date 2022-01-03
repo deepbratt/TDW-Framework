@@ -22,6 +22,7 @@ import DialogBox from '../../components/DialogBox';
 import { ICity } from '../../Utils/country-state-city/interface';
 import AppliedFilters from './appliedFilters';
 import defaultBodyType from '../../assets/Cars/sedan.png';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { RootState } from '../../redux/store';
 import {
   SEE_MORE
@@ -99,7 +100,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const [modelSearchResult, setModelSearchResult] = useState<any>();
   const values = useSelector((state: RootState) => state.carFilters.filters);
 
-  const { filtersCollection, lastAccordion, fontSize } =
+  const { filtersCollection, lastAccordion, fontSize, errorMsg } =
     VerticalFilterStyles();
   const {
     PRICE_RANGE,
@@ -553,8 +554,15 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               />
             </Grid>
             {rangeErrors.price !== '' && (
-              <Grid item xs={12}>
-                <Typography variant="caption">{rangeErrors.price}</Typography>
+              <Grid className={errorMsg} item xs={12}>
+                <InfoOutlinedIcon color="inherit" fontSize="small" />
+                <Typography
+                  style={{ marginLeft: '5px' }}
+                  variant="caption"
+                  color="inherit"
+                >
+                  {rangeErrors.price}
+                </Typography>
               </Grid>
             )}
           </Grid>
@@ -859,8 +867,15 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               />
             </Grid>
             {rangeErrors.milage !== '' && (
-              <Grid item xs={12}>
-                <Typography variant="caption">{rangeErrors.milage}</Typography>
+              <Grid className={errorMsg} item xs={12}>
+                <InfoOutlinedIcon color="inherit" fontSize="small" />
+                <Typography
+                  style={{ marginLeft: '5px' }}
+                  variant="caption"
+                  color="inherit"
+                >
+                  {rangeErrors.milage}
+                </Typography>
               </Grid>
             )}
           </Grid>
@@ -934,8 +949,15 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               />
             </Grid>
             {rangeErrors.modelYear !== '' && (
-              <Grid item xs={12}>
-                <Typography variant="caption">{rangeErrors.modelYear}</Typography>
+              <Grid className={errorMsg} item xs={12}>
+                <InfoOutlinedIcon color="inherit" fontSize="small" />
+                <Typography
+                  style={{ marginLeft: '5px' }}
+                  variant="caption"
+                  color="inherit"
+                >
+                  {rangeErrors.modelYear}
+                </Typography>
               </Grid>
             )}
           </Grid>
@@ -1248,8 +1270,15 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
               />
             </Grid>
             {rangeErrors.engineCapacity !== '' && (
-              <Grid item xs={12}>
-                <Typography variant="caption">{rangeErrors.engineCapacity}</Typography>
+              <Grid className={errorMsg} item xs={12}>
+                <InfoOutlinedIcon color="inherit" fontSize="small" />
+                <Typography
+                  style={{ marginLeft: '5px' }}
+                  variant="caption"
+                  color="inherit"
+                >
+                  {rangeErrors.engineCapacity}
+                </Typography>
               </Grid>
             )}
           </Grid>

@@ -73,8 +73,8 @@ const Actions = () => {
   const updateProfile = async (
     url: string,
     data: any,
-    date: any,
-    Image: any
+    date?: any,
+    Image?: any
   ) => {
     setIsLoading(true);
     console.log(date);
@@ -100,6 +100,12 @@ const Actions = () => {
     if (data.city) {
       formData.append('city', data.city);
     }
+   if(data.about){
+     formData.append('about', data.about);
+   }
+   if(data.description){
+     formData.append('description', data.description);
+   }
     if (date) {
       formData.append('dateOfBirth', date + '');
     }

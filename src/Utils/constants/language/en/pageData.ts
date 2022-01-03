@@ -39,6 +39,10 @@ const PageMeta = {
         title:"Help | Carokta",
         canonical:"dashboard/help"
     },
+    about:{
+        title:"About | Carokta",
+        canonical:"dashboard/about"
+    },
     changePassword:{
         title:"Change Password | Carokta",
         canonical:"dashboard/change-password"

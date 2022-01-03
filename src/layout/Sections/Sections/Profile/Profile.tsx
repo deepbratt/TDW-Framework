@@ -1,10 +1,10 @@
-import Grid from "@material-ui/core/Grid"
-import Typography from "@material-ui/core/Typography"
-import MenuItem from "@material-ui/core/MenuItem"
-import TextField from "@material-ui/core/TextField"
-import Hidden from "@material-ui/core/Hidden"
-import Paper from "@material-ui/core/Paper"
-import Button from "@material-ui/core/Button"
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+import Hidden from '@material-ui/core/Hidden';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 import DatePicker from './DatePicker';
 import { useStyles } from './useStyles';
 import useHooks from './useHooks';
@@ -50,11 +50,21 @@ const Profile = () => {
   let cityNames = [];
   if (extractedCityNames) {
     cityNames.push(...extractedCityNames);
-  }  
-  const { heading, box, button, cancelButton } =
-    useStyles();
-  const { handleChange, val, date, handleChangeDate, setVal, Img, setImg, number, NumericOnly, errorMessage, setNumber } =
-    useHooks();
+  }
+  const { heading, box, button, cancelButton } = useStyles();
+  const {
+    handleChange,
+    val,
+    date,
+    handleChangeDate,
+    setVal,
+    Img,
+    setImg,
+    number,
+    NumericOnly,
+    errorMessage,
+    setNumber
+  } = useHooks();
 
   const handleAlertClose = () => {
     setOpen(false);
@@ -77,12 +87,15 @@ const Profile = () => {
       userName: val.userName,
       email: val.email,
       currentPassword: val.currentPassword,
+      about: val.about,
+      description: val.description,
       newPassword: '',
       confirmPassword: ''
     });
     let phone = '+92' + number;
-    let numberOrEmaildata = user.phone !== phone ? { phone: phone } : { email: val.email };
-    let data = {...val, ...numberOrEmaildata}
+    let numberOrEmaildata =
+      user.phone !== phone ? { phone: phone } : { email: val.email };
+    let data = { ...val, ...numberOrEmaildata };
     updateProfile(updateMe, data, date, Img);
   };
 
@@ -97,7 +110,9 @@ const Profile = () => {
       email: user.email || '',
       currentPassword: '',
       newPassword: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      about: user.about || '',
+      description: user.description || ''
     });
     if (user.phone) {
       setNumber(user.phone.slice(3));
@@ -119,17 +134,15 @@ const Profile = () => {
             <Hidden mdUp>
               <SideBar Title={Title} sidebar={paths} />
             </Hidden>
-            <Typography variant="h3">
-              {profileTitle}
-            </Typography>
+            <Typography variant="h3">{profileTitle}</Typography>
           </section>
           <Grid container spacing={4}>
             {/* <Grid container spacing={4}></Grid> */}
-          <Grid item xs={12} container justifyContent="center">
-            <section style={{ position: 'relative' }}>
-              <ProfileUpload setImg={setImg} profile={Img ? Img : profile} />
-            </section>
-          </Grid>
+            <Grid item xs={12} container justifyContent="center">
+              <section style={{ position: 'relative' }}>
+                <ProfileUpload setImg={setImg} profile={Img ? Img : profile} />
+              </section>
+            </Grid>
             <Grid item lg={6} xs={12}>
               <TextField
                 name="firstName"
@@ -217,7 +230,7 @@ const Profile = () => {
               />
             </Grid>
 
-            <Grid item xs={12} style={{display:"flex"}}>
+            <Grid item xs={12} style={{ display: 'flex' }}>
               <Button
                 variant="contained"
                 color="secondary"

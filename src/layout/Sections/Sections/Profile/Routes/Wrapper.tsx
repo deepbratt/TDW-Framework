@@ -3,6 +3,7 @@ import ProfileSideBarContext from '../ProfileSidebar/ProfileSideBarContext';
 // import Orders from '../Orders/History';
 import Profile from '../Profile';
 import Help from '../Help/Help';
+import About from '../About/index';
 import Favs from '../Favorites';
 import Ads from '../Ads/Ads';
 import ChangePassword from '../ChangePassword';
@@ -18,6 +19,13 @@ const Wrapper = () => {
       return (
         <>
           <Help />
+        </>
+      );
+    }
+    if (id === 'about') {
+      return (
+        <>
+          <About />
         </>
       );
     }

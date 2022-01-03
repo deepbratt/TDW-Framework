@@ -1,4 +1,5 @@
 import profileIcon from '../assets/Profile/profile 1.png';
+import InfoRoundedIcon from '@material-ui/icons/InfoRounded';
 // import helpIcon from "../assets/Profile/customer-service.png"
 import helpIcon from '../assets/Profile/customer-service.png';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -32,6 +33,11 @@ export const paths = [
     title: 'Change Password',
     path: '/dashboard/change-password',
     icon: <VpnKeyIcon />
+  },
+  {
+    title: 'About',
+    path: '/dashboard/about',
+    icon: <InfoRoundedIcon />
   },
   // {
   //     title: "Orders",
@@ -67,7 +73,7 @@ export const paths = [
     title: 'Help',
     path: '/dashboard/help',
     icon: <Help />
-  }
+  },
 ];
 
 export const currencies = [

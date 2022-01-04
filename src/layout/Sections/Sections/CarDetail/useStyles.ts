@@ -216,7 +216,7 @@ export const useStyles = makeStyles(() => ({
     justifyContent: 'center',
     alignItems: 'center',
     cursor: 'pointer',
-    height: '600px',    
+    height: '600px',
     overflow: 'hidden',
     position: 'relative',
     width: '100%',
@@ -252,13 +252,11 @@ export const useStyles = makeStyles(() => ({
   imgWaterMark: {
     position: 'absolute',
     width: '100%',
-    maxWidth: '150px',
-    bottom: '10px',
-    right: '10px',
+    maxWidth: '70%',
+    // bottom: '10px',
+    // right: '10px',
+    opacity: 0.3,
     zIndex: 99,
-    [theme.breakpoints.up('lg')]: {
-      maxWidth: '200px'
-    }
   },
   overlay: {
     position: 'absolute',

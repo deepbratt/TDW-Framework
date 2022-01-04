@@ -46,7 +46,7 @@ import { Box } from '@material-ui/core';
 import Compare from '@material-ui/icons/Compare';
 import useImageOrientation from '../../Utils/hooks/useImageOrientation';
 import MoreVertRoundedIcon from '@material-ui/icons/MoreVertRounded';
-import LOGO from '../../layout/Sections/assets/logo.png';
+import LOGO from '../../layout/Sections/assets/Whitelogo.png';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { deleteData, updateData } from '../../Utils/API/API';
 import { ICarCard } from '../../Utils/interfaces/products.interface';

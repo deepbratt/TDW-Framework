@@ -514,9 +514,9 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.price)
                 }
-                InputProps={{
-                  inputComponent: PriceInput as any
-                }}
+                // InputProps={{
+                //   inputComponent: PriceInput as any
+                // }}
                 // DON'T REMOVE, NOT BEING USED
                 // options={priceValues}
               />
@@ -535,9 +535,9 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.price)
                 }
-                InputProps={{
-                  inputComponent: PriceInput as any
-                }}
+                // InputProps={{
+                //   inputComponent: PriceInput as any
+                // }}
                 // InputProps={{
                 //   endAdornment: (
                 //       <Button

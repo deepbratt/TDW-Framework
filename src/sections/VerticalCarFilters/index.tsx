@@ -30,7 +30,6 @@ import {
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { getAllData } from '../../Utils/API/API';
 import SearchRounded from '@material-ui/icons/SearchRounded';
-import PriceInput from '../../components/InputField/PriceInput';
 import { isNumeric } from '../../Utils/regex';
 
 export interface CarFiltersProps {
@@ -514,9 +513,6 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.price)
                 }
-                // InputProps={{
-                //   inputComponent: PriceInput as any
-                // }}
                 // DON'T REMOVE, NOT BEING USED
                 // options={priceValues}
               />
@@ -535,9 +531,6 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.price)
                 }
-                // InputProps={{
-                //   inputComponent: PriceInput as any
-                // }}
                 // InputProps={{
                 //   endAdornment: (
                 //       <Button

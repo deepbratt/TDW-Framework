@@ -6,7 +6,6 @@ import { Colors } from '../../../Utils/color.constants';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CustomButton from '../../../../../components/CustomButton';
 import InputField from '../../../../../components/InputField';
-import PriceInput from '../../../../../components/InputField/PriceInput';
 import useStyles from './useStyles';
 import { City } from '../../../../../Utils/country-state-city/index';
 import {
@@ -84,9 +83,6 @@ const SearchFilterContext = ({
             name="min"
             value={data.min}
             type="number"
-            InputProps={{
-              inputComponent: PriceInput as any
-            }}
             onChange={handleChange}
           />
         </Grid>
@@ -99,9 +95,6 @@ const SearchFilterContext = ({
             className={inputStyle}
             value={data.max}
             type="number"
-            InputProps={{
-              inputComponent: PriceInput as any
-            }}
             onChange={handleChange}
           />
         </Grid>

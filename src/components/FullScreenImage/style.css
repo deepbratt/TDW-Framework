@@ -167,7 +167,7 @@
 #lb-canvas .imgWaterMark {
     position: absolute;
     max-width: 90%;
-    opacity: 0.2;
+    opacity: 0.3;
     z-index: 99
 }
 

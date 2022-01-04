@@ -255,7 +255,7 @@ export const useStyles = makeStyles(() => ({
     maxWidth: '70%',
     // bottom: '10px',
     // right: '10px',
-    opacity: 0.2,
+    opacity: 0.3,
     zIndex: 99,
   },
   overlay: {

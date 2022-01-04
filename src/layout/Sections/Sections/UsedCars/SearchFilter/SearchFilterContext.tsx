@@ -6,7 +6,6 @@ import { Colors } from '../../../Utils/color.constants';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CustomButton from '../../../../../components/CustomButton';
 import InputField from '../../../../../components/InputField';
-import NumberInput from '../../../../../components/InputField/NumberInput';
 import PriceInput from '../../../../../components/InputField/PriceInput';
 import useStyles from './useStyles';
 import { City } from '../../../../../Utils/country-state-city/index';
@@ -46,12 +45,11 @@ const SearchFilterContext = ({
             name="make"
             className={select}
           >
-            {Object.keys(carModels).map((key, index: number) =>  (
-                <MenuItem key={`make ${index}`} value={key}>
-                  {key}
-                </MenuItem>
-              ))}
-            
+            {Object.keys(carModels).map((key, index: number) => (
+              <MenuItem key={`make ${index}`} value={key}>
+                {key}
+              </MenuItem>
+            ))}
           </Select>
         </Grid>
 
@@ -159,9 +157,6 @@ const SearchFilterContext = ({
             name="yearFrom"
             value={data.yearFrom}
             type="number"
-            InputProps={{
-              inputComponent: NumberInput as any
-            }}
             onChange={handleChange}
           />
         </Grid>
@@ -174,9 +169,6 @@ const SearchFilterContext = ({
             name="yearTo"
             value={data.yearTo}
             type="number"
-            InputProps={{
-              inputComponent: NumberInput as any
-            }}
             onChange={handleChange}
           />
         </Grid>
@@ -210,9 +202,6 @@ const SearchFilterContext = ({
             name="engineCapacityFrom"
             value={data.engineCapacityFrom}
             type="number"
-            InputProps={{
-              inputComponent: NumberInput as any
-            }}
             onChange={handleChange}
           />
         </Grid>
@@ -225,9 +214,6 @@ const SearchFilterContext = ({
             name="engineCapacityTo"
             value={data.engineCapacityTo}
             type="number"
-            InputProps={{
-              inputComponent: NumberInput as any
-            }}
             onChange={handleChange}
           />
         </Grid>
@@ -240,9 +226,6 @@ const SearchFilterContext = ({
             name="mileageFrom"
             value={data.mileageFrom}
             type="number"
-            InputProps={{
-              inputComponent: NumberInput as any
-            }}
             onChange={handleChange}
           />
         </Grid>
@@ -255,9 +238,6 @@ const SearchFilterContext = ({
             name="mileageTo"
             value={data.mileageTo}
             type="number"
-            InputProps={{
-              inputComponent: NumberInput as any
-            }}
             onChange={handleChange}
           />
         </Grid>

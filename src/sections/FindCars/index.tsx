@@ -209,7 +209,7 @@ const FindCars: React.FC = () => {
                 name={fieldNames.priceTo}
                 value={values.priceTo}
                 label="Price Range (Max)"
-                placeholder="50000000"
+                placeholder="100000000"
                 onChange={handleInputChange}
               />
             </Grid>

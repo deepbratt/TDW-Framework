@@ -43,10 +43,10 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
     engineCapacity: 'Engine Capacity'
   };
   const rangeInitialValues = {
-    price: [0, 50000000],
-    modelYear: [1971, 2021],
-    milage: [0, 500000],
-    engineCapacity: [0, 10000]
+    price: ['', ''],
+    modelYear: ['', ''],
+    milage: ['', ''],
+    engineCapacity: ['', '']
   };
 
   if (
@@ -60,7 +60,10 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
           classes={{ root: root, deleteIcon: icon }}
           size="small"
           label={
-            getKeyValue(rangeFilters)(keys) + ` [${values[0]}-${values[1]}]`
+            getKeyValue(rangeFilters)(keys) +
+            ` [${Number(values[0])}-${
+              Number(values[1]) === 0 ? 'Max' : Number(values[1])
+            }]`
           }
           onDelete={() => removeRangeFilter(keys)}
         />
@@ -142,7 +145,7 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
             size="small"
             label={`Price High to Low`}
             onDelete={() =>
-              dispatch(removeFilter({ name: keys, value: [0, 50000000] }))
+              dispatch(removeFilter({ name: keys, value: [0, 0] }))
             }
           />
         </Grid>
@@ -155,7 +158,7 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
             size="small"
             label={`Price Low to High`}
             onDelete={() =>
-              dispatch(removeFilter({ name: keys, value: [0, 50000000] }))
+              dispatch(removeFilter({ name: keys, value: [0, 0] }))
             }
           />
         </Grid>

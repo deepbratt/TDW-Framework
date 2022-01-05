@@ -2,7 +2,7 @@ import './style.css';
 import React from 'react';
 import { NavigateBefore, NavigateNext } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
-import LOGO from '../../layout/Sections/assets/logo.png';
+import LOGO from '../../layout/Sections/assets/Whitelogo.png';
 
 const DEFAULT_ZOOM_STEP = 0.3;
 const DEFAULT_LARGE_ZOOM = 4;

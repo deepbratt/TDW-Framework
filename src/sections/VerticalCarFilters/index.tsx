@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
-import Slider from '@material-ui/core/Slider';
+// import Slider from '@material-ui/core/Slider';
 import { Button, CircularProgress, IconButton } from '@material-ui/core';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -10,9 +10,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import InputField from '../../components/InputField';
-import PriceInput from '../../components/InputField/PriceInput';
-import NumberInput from '../../components/InputField/NumberInput';
-import InputFieldWithButton from '../../components/InputField/InputFieldWithButton';
 import FilterAccordion from '../../components/Accordion';
 import {
   Carfilters,
@@ -25,33 +22,85 @@ import DialogBox from '../../components/DialogBox';
 import { ICity } from '../../Utils/country-state-city/interface';
 import AppliedFilters from './appliedFilters';
 import defaultBodyType from '../../assets/Cars/sedan.png';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { RootState } from '../../redux/store';
 import {
-  ENTER_YOUR_EMAIL_PASS_MESSAGE,
   SEE_MORE
 } from '../../Utils/constants/language/en/buttonLabels';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { getAllData } from '../../Utils/API/API';
 import SearchRounded from '@material-ui/icons/SearchRounded';
-// import MapSearch from '../../components/MapSearch/MapSearch';
+import { isNumeric } from '../../Utils/regex';
 
 export interface CarFiltersProps {
   filterProps: any;
+}
+
+interface IMinMax {
+  min: boolean;
+  max: boolean;
+}
+
+export interface IRangeFiltersErrorStatus {
+  [k: string]: IMinMax;
+  price: IMinMax;
+  modelYear: IMinMax;
+  milage: IMinMax;
+  engineCapacity: IMinMax;
+}
+
+export interface IRangeFiltersError {
+  [k: string]: string;
+  price: string;
+  modelYear: string;
+  milage: string;
+  engineCapacity: string;
+}
+
+export interface IMinMaxValues {
+  [k: string]: number[] | string[];
+  price: number[] | string[];
+  modelYear: number[] | string[];
+  milage: number[] | string[];
+  engineCapacity: number[] | string[];
 }
 
 const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
   const { ADS, CARS } = API_ENDPOINTS;
   const [keyword, setKeyword] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [rangeErrors, setRangeErrors] = useState<IRangeFiltersError>({
+    price: '',
+    modelYear: '',
+    milage: '',
+    engineCapacity: ''
+  });
+  const [rangeErrorsStatus, setRangeErrorsStatus] = useState<IRangeFiltersErrorStatus>({
+    price: {
+      min: false,
+      max: false
+    },
+    modelYear: {
+      min: false,
+      max: false
+    },
+    milage: {
+      min: false,
+      max: false
+    },
+    engineCapacity: {
+      min: false,
+      max: false
+    }
+  });
   const [citySearchResult, setCitySearchResult] = useState<ICity[]>();
   const [regSearchResult, setRegSearchResult] = useState<ICity[]>();
   const [makeSearchResult, setMakeSearchResult] = useState<any>();
   const [modelSearchResult, setModelSearchResult] = useState<any>();
-  const carFilters = useSelector(
-    (state: RootState) => state.carFilters.filters
-  );
   const values = useSelector((state: RootState) => state.carFilters.filters);
-  const { filtersCollection, lastAccordion, fontSize } = VerticalFilterStyles();
+
+  const { filtersCollection, lastAccordion, fontSize, errorMsg } =
+    VerticalFilterStyles();
   const {
     PRICE_RANGE,
     YEAR,
@@ -72,6 +121,19 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     SELLER_TYPE
     // AD_TYPE
   } = CarFiltersData;
+
+  // let priceValues = [
+  //   { value: 50000, label: '50K' },
+  //   { value: 500000, label: '5 Lakh' },
+  //   { value: 1000000, label: '10 Lakh' },
+  //   { value: 1500000, label: '15 Lakh' },
+  //   { value: 3000000, label: '30 Lakh' },
+  //   { value: 5000000, label: '50 Lakh' },
+  //   { value: 8000000, label: '80 Lakh' },
+  //   { value: 10000000, label: '1 Crore' },
+  //   { value: 100000000, label: '5 Crore' },
+  //   { value: 100000000, label: '10 Crore' }
+  // ];
 
   const majorCities = ['Karachi', 'Islamabad', 'Lahore', 'Peshawar', 'Quetta'];
   const mainCarTypes = ['Sedan', 'Hatchback', 'Pick Up'];
@@ -159,6 +221,232 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
     );
   };
 
+  useEffect(() => {
+    // set value of rangeFilters to rangeValues
+    setRangeValues({
+      price: values.price,
+      modelYear: values.modelYear,
+      milage: values.milage,
+      engineCapacity: values.engineCapacity
+    });
+    // eslint-disable-next-line
+  }, []);
+
+
+   /*
+    generate array containing objects with label and values for modelYears
+    between minMaxValues.modelYear[1]:i-e(max) and minMaxValues.modelYear[0]:i-e(min)
+    decrementing 1 in each iteration
+  */
+  // const generateArrayOfYears = (): { value: number; label: string }[] => {
+  //   var years = [];
+  //   for (
+  //     var i = minMaxValues.modelYear[1];
+  //     i >= minMaxValues.modelYear[0];
+  //     i--
+  //   ) {
+  //     years.push({ value: i, label: i.toString() });
+  //   }
+  //   return years;
+  // };
+
+  /*
+    generate array containing objects with label and values for engineCapacity
+    between minMaxValues.engineCapacity[0]:i-e(min) and minMaxValues.engineCapacity[1]:i-e(max)
+    incrementing 100 in each iteration
+  */
+  // const generateEngineCapacityArray = (): {
+  //   value: number;
+  //   label: string;
+  // }[] => {
+  //   var engineCapacity = [];
+  //   for (
+  //     var i = minMaxValues.engineCapacity[0];
+  //     i <= minMaxValues.engineCapacity[1];
+
+  //   ) {
+  //     engineCapacity.push({ value: i, label: `${i.toString()} cc` });
+  //     i = i + 100;
+  //   }
+  //   return engineCapacity;
+  // };
+
+  /*
+    generate array containing objects with label and values for milage
+    between minMaxValues.milage[0]:i-e(min) and minMaxValues.milage[1]:i-e(max)
+    incrementing 10000 in each iteration
+  */
+  // const generateMilageArray = (): {
+  //   value: number;
+  //   label: string;
+  // }[] => {
+  //   var milage = [];
+  //   for (
+  //     var i = minMaxValues.milage[0];
+  //     i <= minMaxValues.milage[1];
+
+  //   ) {
+  //     milage.push({ value: i, label: `${i.toString()} kms` });
+  //     i = i + 10000;
+  //   }
+  //   return milage;
+  // };
+
+  /*
+      Sets minimum and maximum values of price filter
+  */
+  // DON'T REMOVE, NOT BEING USED 
+  // const handlePriceSliderChange = (event: any, newValue: number | number[]) => {
+  //   setRangeValues((previousValue: any) => {
+  //     previousValue.price = newValue;
+  //     return { ...previousValue };
+  //   });
+  // };
+  
+
+  /*
+      Sets minimum and maximum values of engine capacity filter
+  */
+  // DON'T REMOVE, NOT BEING USED 
+  // const handleEngineCapacitySliderChange = (
+  //   event: any,
+  //   newValue: number | number[]
+  // ) => {
+  //   setRangeValues((previousValue: any) => {
+  //     previousValue.engineCapacity = newValue;
+  //     return { ...previousValue };
+  //   });
+  // };
+
+  /*
+    Sets minimum and maximum values of model year filter
+  */
+  // DON'T REMOVE, NOT BEING USED 
+  // const handleModelYearSliderChange = (
+  //   event: any,
+  //   newValue: number | number[]
+  // ) => {
+  //   setRangeValues((previousValue: any) => {
+  //     previousValue.modelYear = newValue;
+  //     return { ...previousValue };
+  //   });
+  // };
+
+  /*
+    Sets minimum and maximum values of milage filter
+  */
+  // DON'T REMOVE, NOT BEING USED 
+  // const handleMilageSliderChange = (
+  //   event: any,
+  //   newValue: number | number[]
+  // ) => {
+  //   setRangeValues((previousValue: any) => {
+  //     previousValue.milage = newValue;
+  //     return { ...previousValue };
+  //   });
+  // };
+
+  /*  
+      Sets minimum value of range filters if value
+      is less than maximum value clears maximum value if otherwise
+  */
+  const handleRangeFromInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (isNumeric(event.target.value)) {
+      let newValue: number[] | string[] = [...rangeValues[event.target.name]];
+      // check if new values is greater than maximum values don't check if max value is empty
+      if (newValue[1] < Number(event.target.value) && newValue[1] !== '') {
+        // set range errors if min value is greater than max value
+        setRangeErrors((previousValue: IRangeFiltersError) => {
+          previousValue[event.target.name] =
+            'Minimum value should be less than maximum value';
+          return { ...previousValue };
+        });
+        setRangeErrorsStatus((previousValue: IRangeFiltersErrorStatus) => {
+          previousValue[event.target.name].min = true;
+          return { ...previousValue };
+        });
+      } else {
+        // clear min, max value error if min value is less than max value
+        setRangeErrorsStatus((previousValue: IRangeFiltersErrorStatus) => {
+          previousValue[event.target.name] = { min: false, max: false };
+          return { ...previousValue };
+        });
+        setRangeErrors((previousValue: IRangeFiltersError) => {
+          previousValue[event.target.name] = '';
+          return { ...previousValue };
+        });
+      }
+      newValue[0] = event.target.value;
+      setRangeValues((previousValue: any) => {
+        previousValue[event.target.name] = newValue;
+        return { ...previousValue };
+      });
+    }
+  };
+
+  /*  
+    Sets maximum value of range filters if value
+    is greater than minimum value clears minimum value if otherwise
+  */
+  const handleRangeToInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (isNumeric(event.target.value)) {
+      let newValue: number[] | string[] = [...rangeValues[event.target.name]];
+      // check if new values is less than minimum values don't check if new target value is empty
+      if (
+        newValue[0] > Number(event.target.value) &&
+        event.target.value !== ''
+      ) {
+        // set range errors if max value is less than min value
+        setRangeErrors((previousValue: IRangeFiltersError) => {
+          previousValue[event.target.name] =
+            'Maximum value should be greater than minimum value';
+          return { ...previousValue };
+        });
+        setRangeErrorsStatus((previousValue: IRangeFiltersErrorStatus) => {
+          previousValue[event.target.name].max = true;
+          return { ...previousValue };
+        });
+      } else {
+        // clear min, max value error if max value is greater than min value
+        setRangeErrorsStatus((previousValue: IRangeFiltersErrorStatus) => {
+          previousValue[event.target.name] = {
+            min: false,
+            max: false
+          };
+          return { ...previousValue };
+        });
+        setRangeErrors((previousValue: IRangeFiltersError) => {
+          previousValue[event.target.name] = '';
+          return { ...previousValue };
+        });
+      }
+      newValue[1] = event.target.value;
+      setRangeValues((previousValue: any) => {
+        previousValue[event.target.name] = newValue;
+        return { ...previousValue };
+      });
+    }
+  };
+
+  const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>, fieldName: string) => {
+    if (
+      e.key === 'Enter' &&
+      Object.values(rangeErrors).every((x) => x === '')
+    ) {
+      handleTextBoxSubmit(fieldName);
+    }
+  }
+
+  const handleRangeFiltersOnBlur = (e: React.FocusEvent<HTMLInputElement>, fieldName: string) => {
+    if (Object.values(rangeErrors).every((x) => x === '')) {
+      handleTextBoxSubmit(fieldName);
+    }
+  }
+
   return (
     <div>
       {appliedFilters !== {} && (
@@ -195,7 +483,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           </FilterAccordion>
         ))} */}
       {/* <FilterAccordion title={KEYWORDS} expanded hideExpandIcon={true}>
-        <InputFieldWithButton  classes={{root: textFieldRoot}}
+        <InputField  classes={{root: textFieldRoot}}
           name={fieldNames.keywords}
           label="Search by Keywords"
           placeholder="Eg. Honda In Lahore"
@@ -211,58 +499,80 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       <FilterAccordion title={PRICE_RANGE}>
         <Grid container direction="column">
           <Grid item container spacing={1}>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <InputField
                 label="From"
+                name={fieldNames.price}
+                placeholder="0"
                 value={rangeValues.price[0]}
-                type="number"
-                InputProps={{
-                  inputComponent: PriceInput as any
-                }}
-                onChange={(e: any) => {
-                  let newValue = [...carFilters.price];
-                  newValue[0] = e.target.value as number;
-                  setRangeValues((previousValue: any) => {
-                    previousValue.price = newValue;
-                    return { ...previousValue };
-                  });
-                }}
+                error={rangeErrorsStatus.price.min}
+                onChange={handleRangeFromInputChange}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.price)
+                }
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.price)
+                }
+                // DON'T REMOVE, NOT BEING USED
+                // options={priceValues}
               />
             </Grid>
-            <Grid item xs={7}>
-              <InputFieldWithButton
-                name={fieldNames.priceTo}
+            <Grid item xs={6}>
+              <InputField
+                name={fieldNames.price}
                 label="To"
+                placeholder="500,000"
                 value={rangeValues.price[1]}
-                type="number"
-                InputProps={{
-                  inputComponent: PriceInput as any
-                }}
-                onChange={(e: any) => {
-                  let newValue = [...carFilters.price];
-                  newValue[1] = e.target.value as number;
-                  setRangeValues((previousValue: any) => {
-                    previousValue.price = newValue;
-                    return { ...previousValue };
-                  });
-                }}
-                handleClick={() => handleTextBoxSubmit('price')}
+                error={rangeErrorsStatus.price.max}
+                onChange={handleRangeToInputChange}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.price)
+                }
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.price)
+                }
+                // InputProps={{
+                //   endAdornment: (
+                //       <Button
+                //         className={btn}
+                //         color="primary"
+                //         variant="contained"
+                //         onClick={() => handleTextBoxSubmit(fieldNames.price)}
+                //       >
+                //         GO
+                //       </Button>
+                //     </InputAdornment>
+                //   )
+                // }}
               />
             </Grid>
+            {rangeErrors.price !== '' && (
+              <Grid className={errorMsg} item xs={12}>
+                <InfoOutlinedIcon color="inherit" fontSize="small" />
+                <Typography
+                  style={{ marginLeft: '5px' }}
+                  variant="caption"
+                  color="inherit"
+                >
+                  {rangeErrors.price}
+                </Typography>
+              </Grid>
+            )}
           </Grid>
-          <Grid item>
+          {/* 
+            DON'T REMOVE, NOT BEING USED 
+          */}
+          {/* <Grid item>
             <Slider
+              classes={{ markLabel: markLabel }}
+              marks={priceValues}
+              step={null}
               value={[rangeValues.price[0], rangeValues.price[1]]}
-              min={0}
-              max={5000000}
-              onChange={(event: any, newValue: number | number[]) => {
-                setRangeValues((previousValue: any) => {
-                  previousValue.price = newValue;
-                  return { ...previousValue };
-                });
-              }}
+              min={minMaxValues.price[0]}
+              max={minMaxValues.price[1]}
+              onChange={handlePriceSliderChange}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </FilterAccordion>
       <FilterAccordion title={MAKE}>
@@ -288,7 +598,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           {makes.length > 5 && (
             <DialogBox title="Select Makes">
               <Grid style={{ display: 'flex' }} container>
-                <Grid xs={12}>
+                <Grid item xs={12}>
                   <InputField
                     name="make"
                     variant="filled"
@@ -380,7 +690,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           {models.length > 5 && (
             <DialogBox title="Select Model">
               <Grid style={{ display: 'flex' }} container>
-                <Grid xs={12}>
+                <Grid item xs={12}>
                   <InputField
                     name="model"
                     variant="filled"
@@ -499,117 +809,162 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       <FilterAccordion title={MILEAGE}>
         <Grid container direction="column">
           <Grid item container spacing={1}>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <InputField
-                name={fieldNames.mileageFrom}
                 label="From"
+                name={fieldNames.milage}
+                placeholder="0"
                 value={rangeValues.milage[0]}
-                type="number"
-                InputProps={{
-                  inputComponent: NumberInput as any
-                }}
-                onChange={(e: any) => {
-                  let newValue = [...carFilters.milage];
-                  newValue[0] = e.target.value as number;
-                  setRangeValues((previousValue: any) => {
-                    previousValue.milage = newValue;
-                    return { ...previousValue };
-                  });
-                }}
+                error={rangeErrorsStatus.milage.min}
+                onChange={handleRangeFromInputChange}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.milage)
+                }
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.milage)
+                }
+                // DON'T REMOVE, NOT BEING USED
+                // options={generateMilageArray()}
               />
             </Grid>
-            <Grid item xs={7}>
-              <InputFieldWithButton
-                name={fieldNames.mileageTo}
+            <Grid item xs={6}>
+              <InputField
                 label="To"
+                name={fieldNames.milage}
+                placeholder="50000"
                 value={rangeValues.milage[1]}
-                type="number"
-                InputProps={{
-                  inputComponent: NumberInput as any
-                }}
-                onChange={(e: any) => {
-                  let newValue = [...carFilters.milage];
-                  newValue[1] = e.target.value as number;
-                  setRangeValues((previousValue: any) => {
-                    previousValue.milage = newValue;
-                    return { ...previousValue };
-                  });
-                }}
-                handleClick={() => handleTextBoxSubmit('milage')}
+                error={rangeErrorsStatus.milage.max}
+                onChange={handleRangeToInputChange}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.milage)
+                }
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.milage)
+                }
+                // DON'T REMOVE, NOT BEING USED
+                // options={generateMilageArray()}
+                // InputProps={{
+                //   endAdornment: (
+                //     <InputAdornment position="end">
+                //       <Button
+                //         className={btn}
+                //         color="primary"
+                //         variant="contained"
+                //         onClick={() => handleTextBoxSubmit(fieldNames.milage)}
+                //       >
+                //         GO
+                //       </Button>
+                //     </InputAdornment>
+                //   )
+                // }}
               />
             </Grid>
+            {rangeErrors.milage !== '' && (
+              <Grid className={errorMsg} item xs={12}>
+                <InfoOutlinedIcon color="inherit" fontSize="small" />
+                <Typography
+                  style={{ marginLeft: '5px' }}
+                  variant="caption"
+                  color="inherit"
+                >
+                  {rangeErrors.milage}
+                </Typography>
+              </Grid>
+            )}
           </Grid>
-          <Grid item>
+          {/* 
+            DON'T REMOVE, NOT BEING USED 
+          */}
+          {/* <Grid item>
             <Slider
               value={[rangeValues.milage[0], rangeValues.milage[1]]}
-              min={0}
-              max={500000}
-              onChange={(event: any, newValue: number | number[]) => {
-                setRangeValues((previousValue: any) => {
-                  previousValue.milage = newValue;
-                  return { ...previousValue };
-                });
-              }}
+              min={minMaxValues.milage[0]}
+              max={minMaxValues.milage[1]}
+              step={10000}
+              onChange={handleMilageSliderChange}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </FilterAccordion>
       <FilterAccordion title={YEAR}>
         <Grid container direction="column">
           <Grid item container spacing={1}>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <InputField
-                name={fieldNames.yearFrom}
                 label="From"
+                name={fieldNames.modelYear}
+                placeholder="2000"
                 value={rangeValues.modelYear[0]}
-                type="number"
-                InputProps={{
-                  inputComponent: NumberInput as any
-                }}
-                onChange={(e: any) => {
-                  let newValue = [...carFilters.modelYear];
-                  newValue[0] = e.target.value as number;
-                  setRangeValues((previousValue: any) => {
-                    previousValue.modelYear = newValue;
-                    return { ...previousValue };
-                  });
-                }}
+                error={rangeErrorsStatus.modelYear.min}
+                onChange={handleRangeFromInputChange}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.modelYear)
+                }
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.modelYear)
+                }
+                // DON'T REMOVE, NOT BEING USED
+                // options={generateArrayOfYears()}
               />
             </Grid>
-            <Grid item xs={7}>
-              <InputFieldWithButton
-                name={fieldNames.yearTo}
+            <Grid item xs={6}>
+              <InputField
                 label="To"
+                name={fieldNames.modelYear}
+                placeholder="2021"
                 value={rangeValues.modelYear[1]}
-                type="number"
-                InputProps={{
-                  inputComponent: NumberInput as any
-                }}
-                onChange={(e: any) => {
-                  let newValue = [...carFilters.modelYear];
-                  newValue[1] = e.target.value as number;
-                  setRangeValues((previousValue: any) => {
-                    previousValue.modelYear = newValue;
-                    return { ...previousValue };
-                  });
-                }}
-                handleClick={() => handleTextBoxSubmit('modelYear')}
+                error={rangeErrorsStatus.modelYear.max}
+                onChange={handleRangeToInputChange}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.modelYear)
+                }
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.modelYear)
+                }
+                // DON'T REMOVE, NOT BEING USED
+                // options={generateArrayOfYears()}
+                // InputProps={{
+                //   endAdornment: (
+                //     <InputAdornment position="end">
+                //       <Button
+                //         className={btn}
+                //         color="primary"
+                //         variant="contained"
+                //         onClick={() =>
+                //           handleTextBoxSubmit(fieldNames.modelYear)
+                //         }
+                //       >
+                //         GO
+                //       </Button>
+                //     </InputAdornment>
+                //   )
+                // }}
               />
             </Grid>
+            {rangeErrors.modelYear !== '' && (
+              <Grid className={errorMsg} item xs={12}>
+                <InfoOutlinedIcon color="inherit" fontSize="small" />
+                <Typography
+                  style={{ marginLeft: '5px' }}
+                  variant="caption"
+                  color="inherit"
+                >
+                  {rangeErrors.modelYear}
+                </Typography>
+              </Grid>
+            )}
           </Grid>
-          <Grid item>
+          {/* 
+            DON'T REMOVE, NOT BEING USED 
+          */}
+          {/* <Grid item>
             <Slider
               value={[rangeValues.modelYear[0], rangeValues.modelYear[1]]}
-              min={1971}
-              max={2021}
-              onChange={(event: any, newValue: number | number[]) => {
-                setRangeValues((previousValue: any) => {
-                  previousValue.modelYear = newValue;
-                  return { ...previousValue };
-                });
-              }}
+              min={minMaxValues.modelYear[0]}
+              max={minMaxValues.modelYear[1]}
+              onChange={handleModelYearSliderChange}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </FilterAccordion>
       <div className={filtersCollection}>
@@ -658,7 +1013,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           {citiesWithCars.length > 5 && (
             <DialogBox title="Select Cities">
               <Grid style={{ display: 'flex' }} container>
-                <Grid xs={12}>
+                <Grid item xs={12}>
                   <InputField
                     variant="filled"
                     label="Search"
@@ -739,7 +1094,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
 
           <DialogBox title="Select Cities">
             <Grid style={{ display: 'flex' }} container>
-              <Grid xs={12}>
+              <Grid item xs={12}>
                 <InputField
                   variant="filled"
                   label="Search"
@@ -855,62 +1210,87 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
       <FilterAccordion title={ENGINE_CAPACITY}>
         <Grid container direction="column">
           <Grid item container spacing={1}>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <InputField
-                name={fieldNames.engineCapacityFrom}
                 label="From"
+                name={fieldNames.engineCapacity}
+                placeholder="600"
                 value={rangeValues.engineCapacity[0]}
-                type="number"
-                InputProps={{
-                  inputComponent: NumberInput as any
-                }}
-                onChange={(e: any) => {
-                  let newValue = [...carFilters.engineCapacity];
-                  newValue[0] = e.target.value as number;
-                  setRangeValues((previousValue: any) => {
-                    previousValue.engineCapacity = newValue;
-                    return { ...previousValue };
-                  });
-                }}
+                error={rangeErrorsStatus.engineCapacity.min}
+                onChange={handleRangeFromInputChange}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.engineCapacity)
+                }
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.engineCapacity)
+                }
+                // DON'T REMOVE, NOT BEING USED
+                // options={generateEngineCapacityArray()}
               />
             </Grid>
-            <Grid item xs={7}>
-              <InputFieldWithButton
-                name={fieldNames.engineCapacityTo}
+            <Grid item xs={6}>
+              <InputField
                 label="To"
+                name={fieldNames.engineCapacity}
+                placeholder="1300"
                 value={rangeValues.engineCapacity[1]}
-                type="number"
-                InputProps={{
-                  inputComponent: NumberInput as any
-                }}
-                onChange={(e: any) => {
-                  let newValue = [...carFilters.engineCapacity];
-                  newValue[1] = e.target.value as number;
-                  setRangeValues((previousValue: any) => {
-                    previousValue.engineCapacity = newValue;
-                    return { ...previousValue };
-                  });
-                }}
-                handleClick={() => handleTextBoxSubmit('engineCapacity')}
+                error={rangeErrorsStatus.engineCapacity.max}
+                onChange={handleRangeToInputChange}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                  handleRangeFiltersOnBlur(e, fieldNames.engineCapacity)
+                }
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleEnterPress(e, fieldNames.engineCapacity)
+                }
+                // DON'T REMOVE, NOT BEING USED
+                // options={generateEngineCapacityArray()}
+                // InputProps={{
+                //   endAdornment: (
+                //     <InputAdornment position="end">
+                //       <Button
+                //         className={btn}
+                //         color="primary"
+                //         variant="contained"
+                //         onClick={() =>
+                //           handleTextBoxSubmit(fieldNames.engineCapacity)
+                //         }
+                //       >
+                //         GO
+                //       </Button>
+                //     </InputAdornment>
+                //   )
+                // }}
               />
             </Grid>
+            {rangeErrors.engineCapacity !== '' && (
+              <Grid className={errorMsg} item xs={12}>
+                <InfoOutlinedIcon color="inherit" fontSize="small" />
+                <Typography
+                  style={{ marginLeft: '5px' }}
+                  variant="caption"
+                  color="inherit"
+                >
+                  {rangeErrors.engineCapacity}
+                </Typography>
+              </Grid>
+            )}
           </Grid>
-          <Grid item>
+          {/* 
+            DON'T REMOVE, NOT BEING USED 
+          */}
+          {/* <Grid item>
             <Slider
+              classes={{ markLabel: markLabel }}
               value={[
                 rangeValues.engineCapacity[0],
                 rangeValues.engineCapacity[1]
               ]}
-              min={0}
-              max={10000}
-              onChange={(event: any, newValue: number | number[]) => {
-                setRangeValues((previousValue: any) => {
-                  previousValue.engineCapacity = newValue;
-                  return { ...previousValue };
-                });
-              }}
+              step={100}
+              min={minMaxValues.engineCapacity[0]}
+              max={minMaxValues.engineCapacity[1]}
+              onChange={handleEngineCapacitySliderChange}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </FilterAccordion>
       <div className={filtersCollection}>

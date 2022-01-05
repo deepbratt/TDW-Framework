@@ -129,9 +129,10 @@ const ListingCardStyles = makeStyles(() => ({
   imgWaterMark: {
     position: 'absolute',
     width: '100%',
-    maxWidth: '80px',
-    bottom: '10px',
-    right: '10px',
+    maxWidth: '50%',
+    // bottom: '10px',
+    // right: '10px',
+    opacity: 0.3,
     zIndex: 99
   },
   overlay: {

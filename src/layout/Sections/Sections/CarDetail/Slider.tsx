@@ -9,7 +9,7 @@ import Toast from '../../../../components/Toast';
 import { Box, Tab, Tabs, Typography } from '@material-ui/core';
 import FullScreenImage from '../../../../components/FullScreenImage/index';
 import useImageOrientation from '../../../../Utils/hooks/useImageOrientation';
-import LOGO from '../../assets/logo.png';
+import LOGO from '../../assets/Whitelogo.png';
 
 const Slider = ({ arr, data, imageLoaded }: Detail) => {
   const { open, setOpen, responseMessage } = Actions();

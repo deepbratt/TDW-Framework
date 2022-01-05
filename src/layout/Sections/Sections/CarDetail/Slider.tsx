@@ -78,7 +78,7 @@ const Slider = ({ arr, data, imageLoaded }: Detail) => {
                 className={sliderImageWrapper}
               >
                 <div
-                  style={{ backgroundImage: `url(${data})` }}
+                  style={{ backgroundImage: `url(${data.location})` }}
                   className={blurBgImg}
                 ></div>
                 <img

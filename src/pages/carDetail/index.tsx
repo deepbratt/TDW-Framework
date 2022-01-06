@@ -176,14 +176,14 @@ const CarDetailContainer = () => {
           toggleSold();
           handleClose();
         }}>
-        {isSold ? MARK_AS_SOLD : MARK_AS_UNSOLD}
+        {isSold ? MARK_AS_UNSOLD : MARK_AS_SOLD}
       </MenuItem>
       <MenuItem
         onClick={() => {
           toggleActive();
           handleClose();
         }}>
-        {isActive ? ACTIVATE : DEACTIVATE}
+        {isActive ? DEACTIVATE : ACTIVATE}
       </MenuItem>
     </Menu>
   );

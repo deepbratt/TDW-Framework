@@ -155,6 +155,8 @@
 
 #lb-canvas {
     position: relative;
+    display: flex;
+    align-items: center;
     justify-content: center;
 }
 
@@ -164,10 +166,8 @@
 
 #lb-canvas .imgWaterMark {
     position: absolute;
-    width: 100%;
-    max-width: 150px;
-    bottom: 10px;
-    right: 10px;
+    max-width: 90%;
+    opacity: 0.3;
     z-index: 99
 }
 

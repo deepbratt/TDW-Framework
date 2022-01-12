@@ -30,7 +30,6 @@ import {
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { getAllData } from '../../Utils/API/API';
 import SearchRounded from '@material-ui/icons/SearchRounded';
-import PriceInput from '../../components/InputField/PriceInput';
 import { isNumeric } from '../../Utils/regex';
 
 export interface CarFiltersProps {
@@ -502,9 +501,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           <Grid item container spacing={1}>
             <Grid item xs={6}>
               <InputField
-                label="From"
+                label="Min"
                 name={fieldNames.price}
-                placeholder="0"
                 value={rangeValues.price[0]}
                 error={rangeErrorsStatus.price.min}
                 onChange={handleRangeFromInputChange}
@@ -514,9 +512,6 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.price)
                 }
-                InputProps={{
-                  inputComponent: PriceInput as any
-                }}
                 // DON'T REMOVE, NOT BEING USED
                 // options={priceValues}
               />
@@ -524,8 +519,7 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             <Grid item xs={6}>
               <InputField
                 name={fieldNames.price}
-                label="To"
-                placeholder="500,000"
+                label="Max"
                 value={rangeValues.price[1]}
                 error={rangeErrorsStatus.price.max}
                 onChange={handleRangeToInputChange}
@@ -535,9 +529,6 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                   handleEnterPress(e, fieldNames.price)
                 }
-                InputProps={{
-                  inputComponent: PriceInput as any
-                }}
                 // InputProps={{
                 //   endAdornment: (
                 //       <Button
@@ -818,9 +809,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           <Grid item container spacing={1}>
             <Grid item xs={6}>
               <InputField
-                label="From"
+                label="Min"
                 name={fieldNames.milage}
-                placeholder="0"
                 value={rangeValues.milage[0]}
                 error={rangeErrorsStatus.milage.min}
                 onChange={handleRangeFromInputChange}
@@ -836,9 +826,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             </Grid>
             <Grid item xs={6}>
               <InputField
-                label="To"
+                label="Max"
                 name={fieldNames.milage}
-                placeholder="50000"
                 value={rangeValues.milage[1]}
                 error={rangeErrorsStatus.milage.max}
                 onChange={handleRangeToInputChange}
@@ -898,9 +887,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           <Grid item container spacing={1}>
             <Grid item xs={6}>
               <InputField
-                label="From"
+                label="Min"
                 name={fieldNames.modelYear}
-                placeholder="2000"
                 value={rangeValues.modelYear[0]}
                 error={rangeErrorsStatus.modelYear.min}
                 onChange={handleRangeFromInputChange}
@@ -916,9 +904,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             </Grid>
             <Grid item xs={6}>
               <InputField
-                label="To"
+                label="Max"
                 name={fieldNames.modelYear}
-                placeholder="2021"
                 value={rangeValues.modelYear[1]}
                 error={rangeErrorsStatus.modelYear.max}
                 onChange={handleRangeToInputChange}
@@ -1219,9 +1206,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
           <Grid item container spacing={1}>
             <Grid item xs={6}>
               <InputField
-                label="From"
+                label="Min"
                 name={fieldNames.engineCapacity}
-                placeholder="600"
                 value={rangeValues.engineCapacity[0]}
                 error={rangeErrorsStatus.engineCapacity.min}
                 onChange={handleRangeFromInputChange}
@@ -1237,9 +1223,8 @@ const CarFilters: React.FC<CarFiltersProps> = ({ filterProps }) => {
             </Grid>
             <Grid item xs={6}>
               <InputField
-                label="To"
+                label="Max"
                 name={fieldNames.engineCapacity}
-                placeholder="1300"
                 value={rangeValues.engineCapacity[1]}
                 error={rangeErrorsStatus.engineCapacity.max}
                 onChange={handleRangeToInputChange}

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import CarDetail from '../../layout/Sections/Sections/CarDetail/CarDetail';
 import Grid from '@material-ui/core/Grid';
@@ -40,7 +41,6 @@ import {
   Tabs,
   Typography
 } from '@material-ui/core';
-import { useEffect, useRef, useState } from 'react';
 import Sizes from '../../Utils/themeConstants';
 import { Compare, Favorite, LocationOnOutlined } from '@material-ui/icons';
 import { useSelector } from 'react-redux';

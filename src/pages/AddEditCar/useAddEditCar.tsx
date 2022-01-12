@@ -469,7 +469,6 @@ const useAddEditCar = () => {
       }
     } else if (stepValidatation === 1) {
       let secondStepValidated = images.length > 0;
-      // console.log(images.length > 0 && images.length < 21);
       setRequireError((requiredError) => {
         return { ...requiredError, images: !secondStepValidated };
       });
@@ -535,12 +534,10 @@ const useAddEditCar = () => {
       'selectedImage': formData.selectedImage,
       'image': formData.images
     }
-    // console.log(data);
     setIsLoading(true);
     addEditData(data).then((response) => {
       setIsLoading(false);
       if (response && response.data && response.data.status === 'success') {
-        // console.log(response.data);
         setToastMessage(response.data.message);
         setToastType('success');
         setToastOpen(true);
@@ -563,7 +560,6 @@ const useAddEditCar = () => {
             : response.response
             ? response.response
             : 'Network Error';
-        // console.log(msg);
         setToastMessage(msg);
         setToastType('error');
         setToastOpen(true);

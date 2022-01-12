@@ -38,7 +38,7 @@ CustomButton.defaultProps = {
   color: "primary",
   variant: "contained",
   radius: "4px",
-  handleClick: () => console.log("buttonClicked"),
+  handleClick: () => {},
 };
 
 export default CustomButton;

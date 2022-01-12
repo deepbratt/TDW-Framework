@@ -31,8 +31,8 @@ const Actions = (url? : string) => {
               return "error";
             }
           })
-          .catch((error: any) => {
-            console.log(error);
+          .catch((error) => {
+            console.error(error);
           });
       };
 

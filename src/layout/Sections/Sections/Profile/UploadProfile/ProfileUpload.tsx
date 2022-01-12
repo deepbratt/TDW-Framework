@@ -8,17 +8,17 @@ const ProfileUpload = ({setImg,profile} : Upload) => {
     const imageUploader = useRef<any | FileReader>(null);
     const handleImageUpload = (e : any) => {
       const [file] = e.target.files;
-      if (!file){
-          return console.log("error")
-      }else {
+      if (!file) {
+        return console.error('No file selected');
+      } else {
         const reader = new FileReader();
         const { current } = uploadedImage;
         current.file = file;
-        reader.onload = e => {
+        reader.onload = (e) => {
           current.src = e.target?.result;
         };
         reader.readAsDataURL(file);
-        setImg(file)
+        setImg(file);
       }
     };
   

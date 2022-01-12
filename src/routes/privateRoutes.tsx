@@ -13,7 +13,6 @@ const PrivateRoutes = ({
   ...routeProps
 }: ProtectedRouteProps) => {
   const {isLoggedIn} = useSelector((state:RootState)=>state.auth)
-  console.log('isLogged in',isLoggedIn)
   return (
     <Route
       {...routeProps}

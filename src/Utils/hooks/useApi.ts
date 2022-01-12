@@ -15,7 +15,6 @@ const useApi = () => {
     setLoading(true);
     await getAllData(endpoint)
       .then((response) => {
-        console.log("response", response);
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({
@@ -24,7 +23,7 @@ const useApi = () => {
         });
       })
       .catch((error) => {
-        console.log("error", error);
+        console.error(error);
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({
@@ -38,7 +37,6 @@ const useApi = () => {
     setLoading(true);
     await addData(endpoint, requestBody)
       .then((response) => {
-        console.log("response", response);
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({
@@ -47,7 +45,7 @@ const useApi = () => {
         });
       })
       .catch((error) => {
-        console.log("error", error);
+        console.error(error);
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({
@@ -61,7 +59,6 @@ const useApi = () => {
     setLoading(true);
     await updateData(endpoint, requestBody)
       .then((response) => {
-        console.log("response", response);
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({
@@ -70,7 +67,7 @@ const useApi = () => {
         });
       })
       .catch((error) => {
-        console.log("error", error);
+        console.error(error);
         setLoading(false);
         setAlertOpen(true);
         setResponseMessage({

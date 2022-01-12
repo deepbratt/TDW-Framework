@@ -8,9 +8,7 @@ const ProfileUpload = ({setImg,profile} : Upload) => {
     const imageUploader = useRef<any | FileReader>(null);
     const handleImageUpload = (e : any) => {
       const [file] = e.target.files;
-      if (!file){
-          return console.log("error")
-      }else {
+      if (file){
         const reader = new FileReader();
         const { current } = uploadedImage;
         current.file = file;

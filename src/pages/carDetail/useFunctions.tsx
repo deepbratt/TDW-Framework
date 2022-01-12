@@ -90,7 +90,7 @@ const Actions = (Id?: string | '') => {
             : response.message
             ? response.message
             : 'Network Error';
-          console.log('Error', msg);
+          console.error(msg);
           setOpen(true);
           setResponseMessage({
             status: 'error',

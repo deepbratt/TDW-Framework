@@ -23,9 +23,6 @@ const axiosInstance = axios.create({
 //   }
 //   let tokenLocal = await localStorage.getItem('caroktajwt')
 //   let JWT = await storeState.auth.token
-//   console.log('jwt=', JWT)
-//   console.log('local token=', tokenLocal)
-//   console.log('local token=', JWT ? JWT : tokenLocal)
 //   axiosInstance.defaults.headers.common['Authorization']="Bearer "+JWT? JWT+"" : tokenLocal+""
 //   return headers
 // }

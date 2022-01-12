@@ -52,7 +52,6 @@ const useHook = () => {
 
   const handleFilters = () => {
     let combined = { ...data, ...moreOp };
-    console.log('combined', combined);
     dispatch(setQueryParams(combined));
     history.push('/cars');
   };
@@ -69,10 +68,6 @@ const useHook = () => {
       [name]: val
     });
   };
-
-  useEffect(() => {
-    console.log('Data', data);
-  }, [data]);
 
   const handleAdvanceFilters = () => {
     handleFilters();

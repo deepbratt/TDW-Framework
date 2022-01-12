@@ -103,13 +103,11 @@ export const getAllData = async (url: string) => {
 
 export const handleFacebookAuth = async () => {
   const response = await socialMediaAuth(facebookAuthProvider);
-  console.log('response', response);
 };
 
 export const handleGoogleAuth = async () => {
   try {
     const response = await socialMediaAuth(googleAuthProvider);
-    console.log('response', response.additionalUserInfo.profile);
     return response.additionalUserInfo.profile;
   } catch (error: any) {
     return error;

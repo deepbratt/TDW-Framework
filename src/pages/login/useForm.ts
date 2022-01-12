@@ -57,10 +57,6 @@ export const useForm = (validateOnChange = false) => {
       };
       setIsLoading(true);
       await addData(USERS + LOGIN, requestBody).then((response) => {
-        console.log('data', response);
-        console.log('response.data', response.data);
-        console.log('response.message', response.message);
-        console.log('response.response', response.response);
         setIsLoading(false);
         if (response && response.data && response.data.status === 'success') {
           setAlertOpen(true);
@@ -88,7 +84,6 @@ export const useForm = (validateOnChange = false) => {
         image: response.picture,
         email: response.email
       };
-      console.log('request body', requestBody);
     });
   };
 

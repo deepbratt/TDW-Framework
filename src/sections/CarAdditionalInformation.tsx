@@ -39,7 +39,6 @@ const CarAdditionalInformation = ({
       temp = temp.filter((item: string) => item !== e.target.name);
     }
     setFormData({ name: 'features', value: temp });
-    console.log(temp);
   };
   return (
     <Grid container spacing={3}>

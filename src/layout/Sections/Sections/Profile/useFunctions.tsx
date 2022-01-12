@@ -35,7 +35,7 @@ const Actions = () => {
         }
       })
       .catch((error: any) => {
-        console.log(error);
+        console.error(error);
         setIsLoading(false);
       });
   };
@@ -77,7 +77,6 @@ const Actions = () => {
     Image: any
   ) => {
     setIsLoading(true);
-    console.log(date);
     var formData = new FormData();
     if (Image) {
       formData.append('image', Image);
@@ -106,7 +105,6 @@ const Actions = () => {
 
     await updateUser(url, formData)
       .then((response) => {
-        console.log(response);
         setIsLoading(false);
         if (response && response.status === 'success') {
           setOpen(true);
@@ -116,7 +114,6 @@ const Actions = () => {
           });
           dispatch(updateUserData({ data: response.result }));
         } else {
-          console.log('error message');
           setOpen(true);
           setResponseMessage({
             status: 'error',
@@ -126,7 +123,7 @@ const Actions = () => {
       })
       .catch((error) => {
         setIsLoading(false);
-        console.log('catch', error);
+        console.error(error);
         setOpen(true);
         setResponseMessage({
           status: 'error',
@@ -146,7 +143,6 @@ const Actions = () => {
       .then((response) => {
         setIsLoading(false);
         if (response.status === 'success') {
-          console.log(response);
           setOpen(true);
           dispatch(updateToken(response.token));
           let temp = data
@@ -160,7 +156,6 @@ const Actions = () => {
           });
         } else {
           setOpen(true);
-          console.log(response);
           setResponseMessage({
             status: 'error',
             message: response.message

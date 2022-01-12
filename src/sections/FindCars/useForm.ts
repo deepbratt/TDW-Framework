@@ -39,10 +39,6 @@ export const useForm = (validateOnChange = false) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log('value', values);
-  }, [values]);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -69,7 +65,6 @@ export const useForm = (validateOnChange = false) => {
       priceFrom: '',
       priceTo: ''
     });
-    console.log("reset form")
     setErrors({});
   };
 

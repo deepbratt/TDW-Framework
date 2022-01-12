@@ -41,7 +41,6 @@ const VerificationContext = ({ verificationMethod }: IVerficationProps) => {
     if (!val || val === "" || val === undefined) {
       setError(true);
     } else {
-      console.log(typeof number);
       setError(false);
       await updateRequest(
         USERS + verificationMethod === "phone"

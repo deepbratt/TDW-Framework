@@ -87,7 +87,6 @@ export const useForm = (validateOnChange = true) => {
         image: response.picture,
         email: response.email
       };
-      console.log('request body', requestBody);
       await addRequest(USERS + GOOGLE_AUTH, requestBody);
     });
   };

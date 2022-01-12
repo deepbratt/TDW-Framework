@@ -13,10 +13,7 @@ const OnlyPublicRoutes = ({
   ...routeProps
 }: ProtectedRouteProps) => {
   const {isLoggedIn} = useSelector((state:RootState)=>state.auth)
-  const history = useHistory()
-  const location = useLocation()
-  console.log(history)
-  console.log(location)
+
   return (
     <Route
       {...routeProps}

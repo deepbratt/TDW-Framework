@@ -46,7 +46,6 @@ export const useForm = (token: any, validateOnChange = false) => {
       setIsLoading(true);
       await updateData(USERS + RESET_PASSWORD + '/' + token, requestBody)
         .then((response) => {
-          console.log('data', response);
           setIsLoading(false);
           if (response && response.data && response.data.status === 'success') {
             setAlertOpen(true);

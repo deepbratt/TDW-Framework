@@ -101,7 +101,7 @@ const Actions = (Id?: string | '') => {
       .then(() => setIsLoading(false));
   };
 
-  const loadSingleData = async (url: string, Id: string) => {
+  const loadSingleData = async (url: string, Id: any) => {
     setIsLoading(true);
     getAllData(`${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}/${Id}`)
       .then((response) => {
@@ -125,6 +125,12 @@ const Actions = (Id?: string | '') => {
       .then(() => setIsLoading(false));
   };
 
+  const handleToggleUpdate = () => {
+    if (loadSingleData && Id) {
+      loadSingleData(getSingleCar, Id);
+    }
+  };
+
   const toggleSold = (soldHere: boolean = false) => {
     let soldUnsold = isSold
       ? API_ENDPOINTS.MARK_UNSOLD
@@ -145,6 +151,7 @@ const Actions = (Id?: string | '') => {
         setIsSold(!isSold);
         setToastMessage(response.data.message);
         setToastType('success');
+        handleToggleUpdate();
       } else {
         setToastMessage(response.message);
         setToastType('error');
@@ -166,6 +173,7 @@ const Actions = (Id?: string | '') => {
         setIsActive(!isActive);
         setToastMessage(response.data.message);
         setToastType('success');
+        handleToggleUpdate();
       } else {
         setToastMessage(response.message);
         setToastType('error');
@@ -183,6 +191,7 @@ const Actions = (Id?: string | '') => {
       if (response && response.data && response.data.status === 'success') {
         setToastMessage(response.data.message);
         setToastType('success');
+        handleToggleUpdate();
       } else {
         setToastMessage(response.message);
         setToastType('error');

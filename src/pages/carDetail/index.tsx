@@ -171,20 +171,24 @@ const CarDetailContainer = () => {
           {PUBLISH}
         </MenuItem>
       ) : null}
-      <MenuItem
+      {obj?.isPublished && isActive && (
+        <MenuItem
         onClick={() => {
           toggleSold();
           handleClose();
         }}>
         {isSold ? MARK_AS_UNSOLD : MARK_AS_SOLD}
       </MenuItem>
-      <MenuItem
+      )}      
+      {obj?.isPublished && !isSold && (
+        <MenuItem
         onClick={() => {
           toggleActive();
           handleClose();
         }}>
         {isActive ? DEACTIVATE : ACTIVATE}
       </MenuItem>
+      )}      
     </Menu>
   );
 

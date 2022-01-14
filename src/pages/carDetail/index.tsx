@@ -149,19 +149,47 @@ const CarDetailContainer = () => {
       open={Boolean(anchorEl)}
       onClose={handleClose}
     >
-      <MenuItem onClick={() => history.push(paths.addEditCar + `${obj?._id}`)}>
+      <MenuItem
+        onClick={() => {
+          history.push(paths.addEditCar + `${obj?._id}`);
+          handleClose();
+        }}>
         {EDIT}
       </MenuItem>
-      <MenuItem onClick={() => deleteAd()}>{DELETE}</MenuItem>
+      <MenuItem
+        onClick={() => {
+          deleteAd();
+          handleClose();
+        }}>
+        {DELETE}
+      </MenuItem>
       {obj?.isPublished === false ? (
-        <MenuItem onClick={() => publishAd()}>{PUBLISH}</MenuItem>
+        <MenuItem
+          onClick={() => {
+            publishAd();
+            handleClose();
+          }}>
+          {PUBLISH}
+        </MenuItem>
       ) : null}
-      <MenuItem onClick={() => toggleSold()}>
-        {isSold ? MARK_AS_SOLD : MARK_AS_UNSOLD}
+      {obj?.isPublished && isActive && (
+        <MenuItem
+        onClick={() => {
+          toggleSold();
+          handleClose();
+        }}>
+        {isSold ? MARK_AS_UNSOLD : MARK_AS_SOLD}
       </MenuItem>
-      <MenuItem onClick={() => toggleActive()}>
-        {isActive ? ACTIVATE : DEACTIVATE}
+      )}      
+      {obj?.isPublished && !isSold && (
+        <MenuItem
+        onClick={() => {
+          toggleActive();
+          handleClose();
+        }}>
+        {isActive ? DEACTIVATE : ACTIVATE}
       </MenuItem>
+      )}      
     </Menu>
   );
 

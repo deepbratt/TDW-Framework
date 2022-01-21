@@ -7,7 +7,7 @@ import {
   removeFavs
 } from '../../Utils/hooks/endpoints';
 import { useEffect } from 'react';
-import { getAllData, updateData, deleteData } from '../../Utils/API/API';
+import { addData, getAllData, updateData, deleteData } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
@@ -24,7 +24,7 @@ const Actions = (Id?: string | '') => {
   const [isFavorite, setIsFavorite] = useState<boolean | undefined>(false);
   const [signinModal, setSigninModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [obj, setObj] = useState<ICarCard>();
+  const [obj, setObj] = useState<any>();
   const [open, setOpen] = useState(false);
   const [featuresArray, setFeaturesArray] = useState<Array<any>>([]);
   const [carFeatures, setCarFeatures] = useState<Array<any>>([]);
@@ -280,6 +280,42 @@ const Actions = (Id?: string | '') => {
     }
   };
 
+  // Defining function to create a new car inspection appointment:
+  const createInspectionAppointment = (firstName: string, lastName: string, number: number | string, carLocation: string) => {
+    let body = {
+      user_id: user._id,
+      ad_id: obj._id,
+      firstName: firstName,
+      lastName: lastName,
+      phone: number,
+      carLocation: carLocation
+    };
+    setIsLoading(true);
+    addData(`${API_ENDPOINTS.APPOINTMENTS}${API_ENDPOINTS.CAR_INSPECTION}`, body)
+      .then(
+        (response) => {
+          if (response && response.data && response.data.status === 'success') {
+            setToastMessage(response.data.message);
+            setToastType('success');
+            setOpenToast(true);
+          } else {
+            let msg =
+              response.response &&
+                response.response.data &&
+                response.response.data.message
+                ? response.response.data.message
+                : response.message
+                  ? response.message
+                  : 'Network Error';
+            setToastMessage(msg);
+            setToastType('error');
+            setOpenToast(true);
+          }
+          setIsLoading(false);
+        }
+      );
+  };
+
   useEffect(() => {
     if (obj) {
       let newBreadCrumData = [...breadCrumbData];
@@ -318,7 +354,8 @@ const Actions = (Id?: string | '') => {
     toastMessage,
     openToast,
     publishAd,
-    deleteAd
+    deleteAd,
+    createInspectionAppointment
   };
 };
 

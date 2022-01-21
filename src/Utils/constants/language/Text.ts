@@ -12,7 +12,7 @@ export const subTitle =
 export const category = "category";
 export const filter = "Advanced Filters";
 export const AppointmentFormTitle = "Appointment Form"
-export const AppointmentFormDescription = "We will call you back within 24 hours after submission of this form"
+export const AppointmentFormDescription = "We will call you back shortly after submission of this form"
 
 export const Data = [
   {

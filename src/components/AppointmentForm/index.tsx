@@ -17,50 +17,68 @@ import {
 interface AppointmentFormProps {
   open: boolean;
   handleClose: () => void;
-  fullName?: string;
-  phone?: string;
-  handleSubmit: (name: string, number: number | string) => void;
+  user: any;
+  carData: any;
+  handleSubmit: (firstName: string, lastName: string, number: number | string, carLocation: string) => void;
 }
 const AppointmentForm = ({
   open,
   handleClose,
-  fullName,
-  phone,
+  user,
+  carData,
   handleSubmit
 }: AppointmentFormProps) => {
   const [number, setNumber] = useState<string|number>("");
-  const [name, setName] = useState("");
-  const [error, setError] = useState({name:false, number:false})
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [carLocation, setCarLocation] = useState("")
+  const [error, setError] = useState({ firstName: false, lastName: false, number: false, carLocation: false })
   useEffect(()=>{
-    setNumber(phone?.slice(3, phone.length) || '')
-    setName(fullName || "")
+    setNumber(user.phone?.slice(3, user.phone.length) || '')
+    setFirstName(user.firstName)
+    setLastName(user.lastName)
   },[open])
   const onSubmit = () => {
     let tempError = error
-    if(!name){
-        tempError.name = true
-        setError({...tempError, name:true})
-    }else{
-        tempError.name=false
-        setError({...tempError, name:false})
+    if (!firstName) {
+      tempError.firstName = true
+      setError({ ...tempError, firstName: true })
+    } else {
+      tempError.firstName = false
+      setError({ ...tempError, firstName: false })
     }
-    if(!phone){
+    if (!lastName) {
+      tempError.lastName = true
+      setError({ ...tempError, lastName: true })
+    } else {
+      tempError.lastName = false
+      setError({ ...tempError, lastName: false })
+    }
+    if (!user.phone) {
         tempError.number = true
         setError({...tempError, number:true})
     }else{
         tempError.number = false
         setError({...tempError, number:false})
     }
-    if(tempError.name || tempError.number){
+    if (!carLocation) {
+      tempError.carLocation = true
+      setError({ ...tempError, carLocation: true })
+    } else {
+      tempError.carLocation = false
+      setError({ ...tempError, carLocation: false })
+    }
+    if (tempError.firstName || tempError.number || tempError.carLocation) {
         return
     }
-    handleSubmit(name, number);
+    handleSubmit(firstName, lastName, number, carLocation);
     handleClose();
   };
   const onClose = () =>{
-      setName("")
+    setFirstName("")
+    setLastName("")
       setNumber("")
-    setError({name:false, number:false})  
+    setError({ firstName: false, lastName: false, number: false, carLocation: false })  
     handleClose()
   }
   return (
@@ -69,18 +87,32 @@ const AppointmentForm = ({
       <DialogContent>
         <DialogContentText>{AppointmentFormDescription}</DialogContentText>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              name="firstName"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               type="text"
-              label="Full Name"
-              placeholder={"John Doe"}
-              disabled={fullName ? true : false}
+              label="First Name"
+              placeholder={"John"}
+              disabled={user.firstName ? true : false}
               fullWidth
               required
-              error={error.name}
+              error={error.firstName}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              name="lastName"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              type="text"
+              label="Last Name"
+              placeholder={"Doe"}
+              disabled={user.lastName ? true : false}
+              fullWidth
+              required
+              error={error.lastName}
             />
           </Grid>
           <Grid item xs={12}>
@@ -92,6 +124,7 @@ const AppointmentForm = ({
               fullWidth
               type="tel"
               placeholder={'3XXXXXXXXX'}
+              disabled={user.phone ? true : false}
               InputProps={{ startAdornment: <span>+92&nbsp;</span> }}
               required
               error={error.number}
@@ -99,16 +132,17 @@ const AppointmentForm = ({
           </Grid>
           <Grid item xs={12}>
             <TextField
-              name="address"
-              // value={name}
-              // onChange={(e) => setName(e.target.value)}
+              name="carLocation"
+              value={carLocation}
+              onChange={(e) => setCarLocation(e.target.value)}
               type="text"
-              title="Enter full address where you want to get your car inspected..."
+              title="Enter full address where you want to get your car inspected"
               label="Full Address"
-              placeholder={"Enter full address where you want to get your car inspected..."}
+              placeholder={"Enter full address of your car..."}
               // disabled={fullName ? true : false}
               fullWidth
-              // error={error.name}
+              required
+              error={error.carLocation}
             />
           </Grid>
         </Grid>

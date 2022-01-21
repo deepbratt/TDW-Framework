@@ -35,5 +35,10 @@ export const API_ENDPOINTS = {
   AD_TICKETS: '/advAssistance',
   TECH_TICKETS: '/techAssistance',
   SHOW_PHONE: '/show-number',
-  PUBLISH_AD: "/publish-ad/"
+  PUBLISH_AD: "/publish-ad/",
+  APPOINTMENTS: "/appointments",
+  CAR_INSPECTION: "/car_inspection",
+  MY_APPOINTMENTS: "/my_inspection_appointments",
+  CANCEL: "/cancel-inspection",
+  REOPEN: "/reopen-inspection"
 };

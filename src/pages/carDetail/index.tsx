@@ -124,7 +124,8 @@ const CarDetailContainer = () => {
     toastMessage,
     openToast,
     publishAd,
-    deleteAd
+    deleteAd,
+    createInspectionAppointment
   } = Actions(id ?? '');
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -423,9 +424,9 @@ const CarDetailContainer = () => {
           <Card style={{ margin: "20px auto" }}>
             <Box>
               <Paper elevation={4}>
-                {user._id === obj.createdBy._id && (
+                {user._id === obj.createdBy._id && isActive && !isSold && (
                   <Grid item xs={12}>
-                    <FixAppointment userId={user._id} carId={obj._id} />
+                    <FixAppointment createInspectionAppointment={createInspectionAppointment} carData={obj} />
                   </Grid>
                 )}
               </Paper>

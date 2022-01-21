@@ -52,7 +52,7 @@ const CarDetail: React.FC<any> = ({
   // const [openDialog, setOpenDialog] = useState(false);
   const [toastType, setToastType] = useState('');
   const [signinModal, setSigninModal] = useState(false);
-  const [appointmentForm, setAppointmentForm] = useState(false);
+  // const [appointmentForm, setAppointmentForm] = useState(false);
   const [showPhone, setShowPhone] = useState(false);
   const { open, setOpen, responseMessage } = Actions();
   const { root, type, numBtn, icon } = useStyles();
@@ -171,13 +171,13 @@ const CarDetail: React.FC<any> = ({
         confirmBtnLabel={SOLD_HERE_DIALOG_OK}
         rejectBtnLabel={SOLD_HERE_DIALOG_REJECT}
       /> */}
-      <AppointmentForm
+      {/* <AppointmentForm
         open={appointmentForm}
         handleClose={() => setAppointmentForm(false)}
-        fullName={user.firstName ? `${user.firstName} ${user.lastName}` : ''}
-        phone={user.phone}
+        user={user}
+        carData={data}
         handleSubmit={(name, number) => null}
-      />
+      /> */}
       <LoginModal
         openModal={signinModal}
         closeModal={() => setSigninModal(false)}

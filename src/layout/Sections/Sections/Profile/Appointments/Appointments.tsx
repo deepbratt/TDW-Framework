@@ -32,14 +32,14 @@ function Appointments() {
 
   const { layoutType } = useSelector((state: RootState) => state.layout);
 
-  const getAllCarsData = () => {
+  const getMyAppointments = () => {
     fetchData(
-      `${API_ENDPOINTS.ADS}${API_ENDPOINTS.CARS}${API_ENDPOINTS.MY_CARS}`
+      `${API_ENDPOINTS.APPOINTMENTS}${API_ENDPOINTS.MY_APPOINTMENTS}`
     );
   };
 
   useEffect(() => {
-    getAllCarsData();
+    getMyAppointments();
   }, []);
 
   return (

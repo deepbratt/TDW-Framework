@@ -36,6 +36,7 @@ const Dashboard = lazy(() => import('../pages/dashboard'));
 const PostAd = lazy(() => import('../pages/postAd'));
 const HelpPage = lazy(() => import('../pages/help'));
 const ErrorPage = lazy(() => import('../pages/Error404'));
+const ProductDetail = lazy(() => import('../pages/ProductDetail/index'));
 // ===========================================================================================
 //            lazy loading with retry if chunk fails to load
 // =========================================================================================
@@ -76,6 +77,7 @@ export const paths = {
   resetPassword: 'reset-password',
   addEditCar: '/add-edit/car/',
   help: 'help',
+  productDetail: '/product-detail/',
   error: '*'
 };
 
@@ -99,6 +101,7 @@ export const routes = {
   resetPassword: '/reset-password/:token',
   addEditCar: '/add-edit/car/:id?',
   help: '/help',
+  productDetail: '/product-detail/:id',
   error: '*'
 };
 
@@ -171,6 +174,10 @@ export const publicRoutes = {
     name: 'Help',
     path: routes.help,
     component: HelpPage
+  },
+  [paths.productDetail]: {
+    path: routes.productDetail,
+    component: ProductDetail
   },
   [paths.error]: {
     name: 'Error 404',

@@ -10,42 +10,48 @@ const productData = [{
         "reference": "acf02b11-7503-4eaf-8d62-0999daaa712d.jpg",
         "location": "https://s3.ap-south-1.amazonaws.com/cdn.carokta.com/acf02b11-7503-4eaf-8d62-0999daaa712d.jpg"
       },
-      "features": [
-        "USB and Auxillary Cable",
-        "Power Mirrors",
-        "Power Locks",
-        "Front Camera",
-        "CoolBox",
-        "Air Conditioning"
+      "userReview": [
+        {
+          "userId": "",
+          "rating": 4,
+          "review": {
+            "title": "Good Product.",
+            "description": "..........."
+          },
+        },
+        {
+          "userId": "",
+          "rating": 3,
+          "review": {
+            "title": "Average quality. Overpriced.",
+            "description": "..........."
+          },
+        },
+        {
+          "userId": "",
+          "rating": 5,
+          "review": {
+            "title": "Excellent Product.",
+            "description": "..........."
+          },
+        }
       ],
       "favOf": [
         "6177d9940b794300258c8320"
       ],
-      "isSold": false,
-      "active": true,
+      "soldOut": false,
+      "available": true,
       "banned": false,
-      "views": 6,
+      "views": 6, 
       "_id": "61df0fe11299a6042b8732ba",
       "country": "Pakistan",
-      "city": "Ahmedpur East",
-      "province": "Punjab",
-      "model": "A3",
-      "make": "Audi",
-      "version": "1.4 TFSI",
-      "transmission": "Automatic",
-      "assembly": "Not Available",
-      "registrationCity": "Buner District",
+      "category": "Dashboard Cleaner",
+      "make": "CARRERA",
       "bodyColor": "Red",
-      "milage": 10,
-      "condition": "Not Available",
-      "description": ".......Test.........",
-      "bodyType": "Not Available",
-      "engineType": "Petrol",
-      "engineCapacity": 1395,
-      "regNumber": "ALH34634874",
-      "sellerType": "Not Available",
-      "modelYear": 1984,
-      "price": 22200000,
+      "description": "Perfect dashbard cleaner for your car",
+      "sellerType": "Retail Seller",
+      "expiryDate": 1984,
+      "price": 1500,
       "isPublished": true,
       "image": [
         {
@@ -90,7 +96,7 @@ const productData = [{
       "imageStatus": true,
       "createdAt": "2022-01-12T17:29:05.472Z",
       "updatedAt": "2022-02-03T16:47:58.162Z",
-      "slug": "Red-Audi-A3-in-Ahmedpur-East-1984-61df0fe11299a6042b8732ba",
+      "slug": "CARRERA-Dashboard-Cleaner-61df0fe11299a6042b8732ba",
       "__v": 0,
       "publishedDate": "2022-01-12T17:43:39.012Z",
       "soldByUs": null,

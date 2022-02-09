@@ -4,35 +4,34 @@ import { Colors } from "../../Utils/constants/colors/colors";
 const { grey, blue } = Colors;
 const LayoutStyle = makeStyles((theme) => ({
   root: {
-    display:"flex",
-    padding:"0",
-    position: "relative",
+    display: 'flex',
+    padding: '0',
+    position: 'relative'
   },
   content: {
-    position: "relative",
-    margin: "0 8%",
-    "& > img": {
-      position: "absolute",
-      height: "146px",
+    position: 'relative',
+    margin: '0 8%',
+    '& > img': {
+      position: 'absolute',
+      height: '146px'
     },
-    [theme.breakpoints.down("sm")]: {
-      margin: "0 2%",
-    },
+    [theme.breakpoints.down('sm')]: {
+      margin: '0 2%'
+    }
   },
   sectionHeader: {
-    marginBottom: "0px",
+    marginBottom: '0px'
   },
   subHeader: {
-    color: grey,
+    color: grey
   },
   underlinedStyles: {
-    borderBottom: `5px solid ${blue}`,
+    borderBottom: `5px solid ${blue}`
   },
   btn: {
-    textTransform: "none",
-    fontWeight: "bold",
-    padding: "7px 25px 7px 25px",
-  },
+    fontWeight: 'bold',
+    boxShadow: 'none'
+  }
 }));
 
 export default LayoutStyle;

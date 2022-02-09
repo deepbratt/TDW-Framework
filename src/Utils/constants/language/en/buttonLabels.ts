@@ -65,3 +65,5 @@ export const PUBLISH: string = 'Publish';
 export const NOT_PUBLISHED: string = 'Not Published';
 export const NOT_ACTIVE: string = 'Not Active';
 export const DELETE: string = 'Delete';
+export const ADD_TO_CART: string = 'Add To Cart';
+export const BUY_NOW: string = 'Buy Now';

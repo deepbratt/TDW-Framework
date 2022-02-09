@@ -1,16 +1,26 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Colors } from '../../Utils/constants/colors/colors';
-import LOGO from '../../layout/Sections/assets/logo.png';
-const { carminePink, white, greyFour, blueOne, spanishGrey, black, lightBlue } =
-  Colors;
 
-const ListingCardStyles = makeStyles(() => ({
+const {
+  carminePink,
+  white,
+  greyFour,
+  blueOne,
+  spanishGrey,
+  black,
+  lightBlue,
+  green,
+  darkGreen,
+  red,
+  greythree,
+} = Colors;
+
+const ListingCardStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     backgroundColor: lightBlue,
     boxShadow: 'none',
     position: 'relative',
-    // maxWidth: "800px",
     width: '100%',
     marginTop: '10px'
   },
@@ -26,8 +36,8 @@ const ListingCardStyles = makeStyles(() => ({
     height: '100%'
   },
   featuredBadgeContainer: {
-    display: "flex",
-    justifyContent:"flex-start",
+    display: 'flex',
+    justifyContent: 'flex-start',
     position: 'absolute',
     left: '7px',
     top: '7px',
@@ -110,7 +120,8 @@ const ListingCardStyles = makeStyles(() => ({
     alignItems: 'center',
     overflow: 'hidden',
     width: '100%',
-    position: 'relative'
+    position: 'relative',
+    borderRadius: '5px',
   },
   blurBgImg: {
     position: 'absolute',
@@ -142,6 +153,27 @@ const ListingCardStyles = makeStyles(() => ({
     minWidth: '100%',
     minHeight: '100%',
     zIndex: 98
+  },
+  cartBtn: {
+    backgroundColor: green,
+    boxShadow: 'none',
+    '&:hover': { backgroundColor: darkGreen }
+  },
+  salePrice: {
+    textDecoration: 'line-through',
+    marginLeft: '5px',
+    textDecorationColor: red
+  },
+  reviewBadge: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    maxWidth: '50px',
+    backgroundColor: greythree,
+    color: theme.palette.common.white,
+    borderRadius: '2px',
+    padding: '2px 2px 2px 5px'
   }
 }));
 

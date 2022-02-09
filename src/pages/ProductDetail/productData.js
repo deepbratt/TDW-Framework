@@ -39,7 +39,7 @@ const productData = [{
       "favOf": [
         "6177d9940b794300258c8320"
       ],
-      "soldOut": false,
+      "stockCount": 12,
       "available": true,
       "banned": false,
       "views": 6, 

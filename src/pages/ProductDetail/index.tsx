@@ -1,10 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
-import CarDetail from '../../layout/Sections/Sections/CarDetail/CarDetail';
+import ProductDetailsSkeletons from '../../layout/Sections/Sections/ProductDetail/ProductDetailsSkeletons';
+import ProductDetail from '../../layout/Sections/Sections/ProductDetail/ProductDetail';
+import Slides from '../../layout/Sections/Sections/ProductDetail/Slider';
+import ProductDescription from '../../layout/Sections/Sections/ProductDetail/ProductDescription';
+import ProductRatings from '../../layout/Sections/Sections/ProductDetail/ProductRatings';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
 import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
 import MenuItem from '@material-ui/core/MenuItem';
 import {
   rating,
@@ -19,7 +26,6 @@ import {
   CarInfo,
   carTitle
 } from '../../layout/Sections/Utils/carDetail';
-import Slides from '../../layout/Sections/Sections/CarDetail/Slider';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Actions from './useFunctions';
 import MetaTags from '../../components/MetaTags';
@@ -28,8 +34,6 @@ import PageMeta from '../../Utils/constants/language/en/pageData';
 import NoImg from '../../assets/no-img.png';
 import Toast from '../../components/Toast';
 import { Colors } from '../../Utils/constants/colors/colors';
-import CarDescription from '../../layout/Sections/Sections/CarDetail/CarDescription';
-import CarFeatures from '../../layout/Sections/Sections/CarDetail/CarFeatures';
 import {
   Box,
   Container,
@@ -41,7 +45,7 @@ import {
   Typography
 } from '@material-ui/core';
 import Sizes from '../../Utils/themeConstants';
-import { Compare, Favorite, LocationOnOutlined } from '@material-ui/icons';
+import { Compare, Favorite } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import LoginModal from '../login/LoginModal';
@@ -57,7 +61,6 @@ import {
 } from '../../Utils/constants/language/en/buttonLabels';
 import { paths } from '../../routes/paths';
 import productData from './productData';
-import CarDetailsSkeletons from '../../layout/Sections/Sections/CarDetail/CarDetailsSkeletons';
 
 interface RouteProps {
   id: string;
@@ -105,7 +108,7 @@ const ProductDetailPage = () => {
     (state: RootState) => state.shortlistCars
   );
   const {
-    obj,
+    // obj,
     isLoading,
     open,
     setOpen,
@@ -130,7 +133,7 @@ const ProductDetailPage = () => {
   } = Actions(id ?? '');
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { tabs, tab, btn } = useStyles();
+  const { tabs, tab, btn, cartBtn, buyBtn, salePrice, reviewBadge } = useStyles();
   const [sliderHeight, setSliderHeight] = useState(0);
   const sliderColumn = useRef<HTMLDivElement | null>(null);
   const [tabValue, setTabValue] = useState(0);
@@ -198,7 +201,7 @@ const ProductDetailPage = () => {
       <Grid item xs={12}>
         <BreadCrumbs links={breadCrumbData} />
       </Grid>
-      {isLoading && <CarDetailsSkeletons />}
+      {isLoading && <ProductDetailsSkeletons />}
       <Card>
         <Box>
           <Paper elevation={4}>
@@ -222,11 +225,6 @@ const ProductDetailPage = () => {
                       product.image && product.image.length > 0 ? product.image : NoImg
                     }
                     id={product?._id}
-                    city={product?.registrationCity}
-                    assembly={product?.assembly}
-                    color={product?.bodyColor}
-                    bodyType={product?.bodyType}
-                    engineCapacity={product?.engineCapacity}
                     date={product.createdAt}
                     createdBy={product.createdBy}
                     updatedAt={product.updatedAt}
@@ -254,21 +252,16 @@ const ProductDetailPage = () => {
                       alignItems="flex-start"
                     >
                       <Box>
-                        <Typography variant="h2">{`${product.make} ${product.model} ${product.modelYear}`}</Typography>
+                        <Typography variant="h2">{`${product.make} ${product.category}`}</Typography>
                         <Box
                           display="flex"
                           alignItems="center"
                           style={{ color: Colors.grey }}
-                        >
-                          <LocationOnOutlined fontSize="small" />
-                          <Typography variant="subtitle1">
-                            {/* <img width="20px" src={locIcon} alt="" /> */}
-                            {product?.city}
-                          </Typography>
+                        >                          
                         </Box>
                       </Box>
                       <Box display="flex" justifyContent="space-between">
-                        <IconButton
+                        {/* <IconButton
                           className={btn}
                           onClick={(e) => toggleShortListCar(e)}
                         >
@@ -281,7 +274,7 @@ const ProductDetailPage = () => {
                                 : 'inherit'
                             }
                           />
-                        </IconButton>
+                        </IconButton> */}
                         {user?._id === product?.createdBy._id ? null : (
                           <IconButton
                             onClick={() => toggleFavourite(product?._id)}
@@ -308,7 +301,7 @@ const ProductDetailPage = () => {
                         {actionsMenu}
                       </Box>
                     </Grid>
-                    <Box style={{ marginTop: defaultMarginTop }}>
+                    <Box>
                       <Typography
                         style={{ color: Colors.navyBlue }}
                         variant="h2"
@@ -316,6 +309,37 @@ const ProductDetailPage = () => {
                         PKR {product.price?.toLocaleString()}
                       </Typography>
                     </Box>
+                    <Box m={0.5}>
+                      <Typography
+                        className={salePrice}
+                        variant="body1"
+                        component="span"
+                        gutterBottom
+                      >
+                        PKR {(product.originalPrice).toLocaleString()}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} container spacing={2}>
+                    <Grid item xs={6}>
+                      <Button
+                        fullWidth
+                        className={cartBtn}
+                        endIcon={<ShoppingCartIcon />}
+                      >
+                        ADD TO CART
+                      </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Button
+                        fullWidth
+                        color='secondary'                      
+                        className={buyBtn}
+                        endIcon={<OfflineBoltIcon />}
+                      >
+                        BUY NOW
+                      </Button>
+                    </Grid>
                   </Grid>
                   <Box marginTop={defaultMarginTop}>
                     <Divider />
@@ -336,33 +360,35 @@ const ProductDetailPage = () => {
                         classes={{
                           wrapper: tab
                         }}
-                        label="Information"
+                        label="Description"
                         {...a11yProps(0)}
                       />
                       <Tab
                         classes={{
                           wrapper: tab
                         }}
-                        label="Description"
+                        label="Specifications"
                         {...a11yProps(1)}
                       />
                       <Tab
                         classes={{
                           wrapper: tab
                         }}
-                        label="Car features"
+                        label="Ratings & Reviews"
                         {...a11yProps(2)}
                       />
                     </Tabs>
                     <Divider />
                   </Box>
-                  <Box p={3}>
+                  <Box p={3}>                    
                     <TabPanel value={tabValue} index={0}>
-                      <CarDetail
+                      <ProductDescription description={product.description} />
+                    </TabPanel>
+                    <TabPanel value={tabValue} index={1}>
+                      <ProductDetail
                         mainButton={mainButton}
                         numButton={numButton}
-                        Title={`${product.make} ${product.model} ${product.modelYear}`}
-                        location={product?.city}
+                        Title={`${product.make} ${product.category}`}
                         rating={rating}
                         array={array}
                         locIcon={locIcon}
@@ -372,19 +398,11 @@ const ProductDetailPage = () => {
                         paragraph={product?.description}
                         desc={desc}
                         price={product?.price}
-                        modelYear={product?.modelYear}
-                        transmission={product?.transmission}
-                        mileage={product?.milage}
-                        engineType={product?.engineType}
-                        createdBy={product.createdBy}
                         data={product}
                       />
                     </TabPanel>
-                    <TabPanel value={tabValue} index={1}>
-                      <CarDescription description={product.description} />
-                    </TabPanel>
                     <TabPanel value={tabValue} index={2}>
-                      <CarFeatures features={carFeatures} />
+                      <ProductRatings ratings={product.userRatings} />
                     </TabPanel>
                   </Box>
                 </Grid>
@@ -437,5 +455,47 @@ const useStyles = makeStyles((theme) => ({
       background: Colors.lightGrey,
       boxShadow: 'none'
     }
+  },
+  buyBtn: {
+    color: 'white',
+    backgroundColor: '#092C4C',
+    border: '1px solid #092C4C',
+    boxShadow: 'none',
+    borderRadius: '4px',
+    margin: '0 4px',
+    padding: '8px 2px',
+    fontSize: '1.25rem',
+    lineHeight: '1.5rem',
+    marginLeft: '2px',
+    '&:hover': {  backgroundColor: '#011A3A'  }
+  },
+  cartBtn: {
+    color: 'white',
+    backgroundColor: '#27AE60',
+    border: '1px solid #27AE60',
+    boxShadow: 'none',
+    borderRadius: '4px',
+    margin: '0 4px',
+    padding: '8px 2px',
+    fontSize: '1.25rem',
+    lineHeight: '1.5rem',
+    marginRight: '2px',
+    '&:hover': { backgroundColor: 'darkGreen' }
+  },
+  salePrice: {
+    textDecoration: 'line-through',
+    marginLeft: '5px',
+    textDecorationColor: 'red'
+  },
+  reviewBadge: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    maxWidth: '50px',
+    backgroundColor: 'greythree',
+    color: theme.palette.common.white,
+    borderRadius: '2px',
+    padding: '2px 2px 2px 5px'
   }
 }));

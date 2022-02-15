@@ -8,15 +8,15 @@ const productData = [{
       },
       "selectedImage": {
         "reference": "acf02b11-7503-4eaf-8d62-0999daaa712d.jpg",
-        "location": "https://s3.ap-south-1.amazonaws.com/cdn.carokta.com/acf02b11-7503-4eaf-8d62-0999daaa712d.jpg"
+        "location": "https://i.ibb.co/LtvFyyn/unsplash-ZMnefo-I3k.png"
       },
-      "userReview": [
+      "userRatings": [
         {
           "userId": "",
           "rating": 4,
           "review": {
             "title": "Good Product.",
-            "description": "..........."
+            "description": "Works as expected. Container is cheap. Packaging can be improved"
           },
         },
         {
@@ -24,7 +24,7 @@ const productData = [{
           "rating": 3,
           "review": {
             "title": "Average quality. Overpriced.",
-            "description": "..........."
+            "description": "Average cleaner. Price is a bit high"
           },
         },
         {
@@ -32,7 +32,7 @@ const productData = [{
           "rating": 5,
           "review": {
             "title": "Excellent Product.",
-            "description": "..........."
+            "description": "This product met my expectation. Will buy again."
           },
         }
       ],
@@ -48,27 +48,28 @@ const productData = [{
       "category": "Dashboard Cleaner",
       "make": "CARRERA",
       "bodyColor": "Red",
-      "description": "Perfect dashbard cleaner for your car",
+      "description": "Perfect dashbard cleaner for your car at a very affordable price. Buy CARRERA Dashboard cleaner now at the best price.",
       "sellerType": "Retail Seller",
-      "expiryDate": 1984,
+      "expiryDate": 2024,
+      "originalPrice": 1850,
       "price": 1500,
       "isPublished": true,
       "image": [
         {
           "reference": "acf02b11-7503-4eaf-8d62-0999daaa712d.jpg",
-          "location": "https://s3.ap-south-1.amazonaws.com/cdn.carokta.com/acf02b11-7503-4eaf-8d62-0999daaa712d.jpg"
+          "location": "https://i.ibb.co/LtvFyyn/unsplash-ZMnefo-I3k.png"
         },
         {
           "reference": "c07c9b17-7ef0-4a6e-85d3-618af38113df.jpg",
-          "location": "https://s3.ap-south-1.amazonaws.com/cdn.carokta.com/c07c9b17-7ef0-4a6e-85d3-618af38113df.jpg"
+          "location": "https://images.unsplash.com/photo-1550963295-019d8a8a61c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80"
         },
         {
           "reference": "9f762bbc-94ee-4a54-bff0-e09520e73cae.jpg",
-          "location": "https://s3.ap-south-1.amazonaws.com/cdn.carokta.com/9f762bbc-94ee-4a54-bff0-e09520e73cae.jpg"
+          "location": "https://images.unsplash.com/photo-1610389473058-fd68ad1d8bac?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1529&q=80"
         },
         {
           "reference": "c3fbdd1e-a45e-4d66-b233-594763cb9646.jpg",
-          "location": "https://s3.ap-south-1.amazonaws.com/cdn.carokta.com/c3fbdd1e-a45e-4d66-b233-594763cb9646.jpg"
+          "location": "https://images.unsplash.com/photo-1609096458726-ff110e138ad2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
         }
       ],
       "createdBy": {

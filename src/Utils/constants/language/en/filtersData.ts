@@ -23,6 +23,19 @@ export const CarFiltersData = {
   AD_TYPE: 'AD TYPE'
 };
 
+export const productsFiltersData = {
+  KEYWORDS: 'SEARCH BY KEYWORDS',
+  CATEGORIES: 'CATEGORIES',
+  SUB_CATEGORIES: 'SUB CATEGORIES',
+  PRICE_RANGE: 'PRICE RANGE',
+  CITY: 'CITY',
+  MAKE: 'MAKE',
+  BRAND: 'BRAND',
+  SALE: 'SALE',
+  COLOR: 'COLOR',
+  AD_TYPE: 'AD TYPE'
+};
+
 export const Carfilters = {
   TRANSMISSION: ['Automatic', 'Manual'],
   ENGINE_TYPE: ['CNG', 'Diesel', 'Electric', 'Hybrid', 'Petrol'],
@@ -101,6 +114,18 @@ export const sortingOptions = [
   { value: 'milage', label: 'Mileage: Lowest First' },
   { value: 'modelYear', label: 'Model Year: Oldest First' },
   { value: '-modelYear', label: 'Model Year: Newest First' }
+];
+
+export const productsListingSortingOptions = [
+  { value: 'price', label: 'Price: Low to High' },
+  { value: '-price', label: 'Price: High to Low' },
+  { value: '-createdAt', label: 'Ad Date: Recent First' },
+  { value: 'createdAt', label: 'Ad Date: Oldest First' },
+];
+
+export const adType = [
+  { value: 'new', label: 'New' },
+  { value: 'used', label: 'Used' },
 ];
 
 export const conditionOptions = [

@@ -26,4 +26,6 @@ export const Colors = {
   greyTranparent: 'rgba(255,255,255,0.5)',
   lightBlue: '#F0F1F2',
   lightGrey: "#DEDFE0",
+  green: '#27AE60',
+  darkGreen: '#279460',
 };

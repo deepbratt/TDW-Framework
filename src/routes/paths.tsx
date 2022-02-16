@@ -24,6 +24,7 @@ import { lazy } from 'react';
 const Home = lazy(() => import('../pages/home'));
 const Login = lazy(() => import('../pages/login'));
 const CarsListing = lazy(() => import('../pages/carsListing'));
+const ProductListing = lazy(() => import('../pages/productListing'));
 const ForgetPassword = lazy(() => import('../pages/forgetPassword'));
 const ResetPassword = lazy(() => import('../pages/resetPassword'));
 const Signup = lazy(() => import('../pages/signup'));
@@ -73,6 +74,7 @@ export const paths = {
   carShortlist: 'cars-shortlist',
   signup: '/signup',
   cars: '/cars',
+  spareParts: '/spare-parts',
   forgotPassword: '/forgot-password',
   resetPassword: 'reset-password',
   addEditCar: '/add-edit/car/',
@@ -97,6 +99,7 @@ export const routes = {
   postAd: '/post-an-ad',
   verification: '/verification/:method?',
   cars: '/cars/:city?',
+  spareParts: '/spare-parts',
   forgotPassword: '/forgot-password/:token?',
   resetPassword: '/reset-password/:token',
   addEditCar: '/add-edit/car/:id?',
@@ -153,6 +156,11 @@ export const publicRoutes = {
     name: 'Cars Listing',
     path: routes.cars,
     component: CarsListing
+  },
+  [paths.spareParts]: {
+    name: 'Product Listing',
+    path: routes.spareParts,
+    component: ProductListing
   },
   [paths.carDetail]: {
     path: routes.carDetail,

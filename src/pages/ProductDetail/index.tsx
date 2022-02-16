@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, Fragment } from 'react';
 import { useHistory, useParams } from 'react-router';
 import ProductDetailsSkeletons from '../../layout/Sections/Sections/ProductDetail/ProductDetailsSkeletons';
 import ProductDetail from '../../layout/Sections/Sections/ProductDetail/ProductDetail';
@@ -201,232 +201,245 @@ const ProductDetailPage = () => {
       <Grid item xs={12}>
         <BreadCrumbs links={breadCrumbData} />
       </Grid>
-      {isLoading && <ProductDetailsSkeletons />}
-      <Card>
-        <Box>
-          <Paper elevation={4}>
-            {product && !isLoading && (
-              <Grid container spacing={2}>
-                <Grid
-                  item
-                  xs={12}
-                  lg={6}
-                  md={6}
-                  ref={sliderColumn}
-                  style={{ height: '100%' }}
-                >
-                  <Slides
-                    carTitle={carTitle}
-                    info={CarInfo}
-                    feature={carFeatures}
-                    desc={desc}
-                    paragraph={product?.description}
-                    arr={
-                      product.image && product.image.length > 0 ? product.image : NoImg
-                    }
-                    id={product?._id}
-                    date={product.createdAt}
-                    createdBy={product.createdBy}
-                    updatedAt={product.updatedAt}
-                    data={product}
-                    imageLoaded={handleImageLoaded}
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  lg={6}
-                  md={6}
-                  style={{
-                    maxHeight:
-                      size.mobile || size.mobileLarge ? '100%' : sliderHeight,
-                    overflowY: 'scroll'
-                  }}
-                >
-                  <Grid container style={{ padding: '20px' }}>
-                    <Grid
-                      item
-                      xs={12}
-                      container
-                      justifyContent="space-between"
-                      alignItems="flex-start"
-                    >
-                      <Box>
-                        <Typography variant="h2">{`${product.make} ${product.category}`}</Typography>
-                        <Box
-                          display="flex"
-                          alignItems="center"
-                          style={{ color: Colors.grey }}
-                        >                          
+      {isLoading && <ProductDetailsSkeletons />}      
+      {product && !isLoading && (
+        <Fragment>
+          <Card>
+            <Box>
+              <Paper elevation={4}>
+                <Grid container spacing={2}>
+                  <Grid
+                    item
+                    xs={12}
+                    lg={6}
+                    md={6}
+                    ref={sliderColumn}
+                    style={{ height: '100%' }}
+                  >
+                    <Slides
+                      carTitle={carTitle}
+                      info={CarInfo}
+                      feature={carFeatures}
+                      desc={desc}
+                      paragraph={product?.description}
+                      arr={
+                        product.image && product.image.length > 0 ? product.image : NoImg
+                      }
+                      id={product?._id}
+                      date={product.createdAt}
+                      createdBy={product.createdBy}
+                      updatedAt={product.updatedAt}
+                      data={product}
+                      imageLoaded={handleImageLoaded}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    lg={6}
+                    md={6}
+                    style={{
+                      maxHeight:
+                        size.mobile || size.mobileLarge ? '100%' : sliderHeight,
+                      overflowY: 'scroll'
+                    }}
+                  >
+                    <Grid container style={{ padding: '20px' }}>
+                      <Grid
+                        item
+                        xs={12}
+                        container
+                        justifyContent="space-between"
+                        alignItems="flex-start"
+                      >
+                        <Box>
+                          <Typography variant="h2">{`${product.make} ${product.category}`}</Typography>
+                          <Box
+                            display="flex"
+                            alignItems="center"
+                            style={{ color: Colors.grey }}
+                          >
+                          </Box>
                         </Box>
-                      </Box>
-                      <Box display="flex" justifyContent="space-between">
-                        {/* <IconButton
-                          className={btn}
-                          onClick={(e) => toggleShortListCar(e)}
-                        >
-                          <Compare
-                            color={
-                              shortlistCars.filter(
-                                (e: any) => e._id === product._id
-                              ).length > 0
-                                ? 'primary'
-                                : 'inherit'
-                            }
-                          />
-                        </IconButton> */}
-                        {user?._id === product?.createdBy._id ? null : (
-                          <IconButton
-                            onClick={() => toggleFavourite(product?._id)}
-                            className={btn}
-                            style={{ marginLeft: '5px' }}
-                          >
-                            {isFavorite ? (
-                              <Favorite color="primary" />
-                            ) : (
-                              <Favorite color="inherit" />
-                            )}
-                          </IconButton>
-                        )}
+                        <Box display="flex" justifyContent="space-between">
+                          {/* <IconButton
+                                className={btn}
+                                onClick={(e) => toggleShortListCar(e)}
+                                >
+                                <Compare
+                                color={
+                                  shortlistCars.filter(
+                                    (e: any) => e._id === product._id
+                                  ).length > 0
+                                    ? 'primary'
+                                    : 'inherit'
+                                }
+                                />
+                              </IconButton> */}
+                          {user?._id === product?.createdBy._id ? null : (
+                            <IconButton
+                              onClick={() => toggleFavourite(product?._id)}
+                              className={btn}
+                              style={{ marginLeft: '5px' }}
+                            >
+                              {isFavorite ? (
+                                <Favorite color="primary" />
+                              ) : (
+                                <Favorite color="inherit" />
+                              )}
+                            </IconButton>
+                          )}
 
-                        {user._id === product.createdBy._id && (
-                          <IconButton
-                            className={btn}
-                            style={{ marginLeft: '5px' }}
-                            onClick={handleClick}
-                          >
-                            <MoreVertRoundedIcon color="inherit" />
-                          </IconButton>
-                        )}
-                        {actionsMenu}
+                          {user._id === product.createdBy._id && (
+                            <IconButton
+                              className={btn}
+                              style={{ marginLeft: '5px' }}
+                              onClick={handleClick}
+                            >
+                              <MoreVertRoundedIcon color="inherit" />
+                            </IconButton>
+                          )}
+                          {actionsMenu}
+                        </Box>
+                      </Grid>
+                      <Box>
+                        <Typography
+                          style={{ color: Colors.navyBlue }}
+                          variant="h2"
+                        >
+                          PKR {product.price?.toLocaleString()}
+                        </Typography>
+                      </Box>
+                      <Box m={0.5}>
+                        <Typography
+                          className={salePrice}
+                          variant="body1"
+                          component="span"
+                          gutterBottom
+                        >
+                          PKR {(product.originalPrice).toLocaleString()}
+                        </Typography>
                       </Box>
                     </Grid>
+                    <Grid item xs={12} container spacing={2} style={{ padding: '0 20px' }}>
+                      <Grid item xs={6}>
+                        <Box>
+                          <Button
+                            fullWidth
+                            className={cartBtn}
+                            endIcon={<ShoppingCartIcon />}
+                          >
+                            ADD TO CART
+                          </Button>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Button
+                          fullWidth
+                          color='secondary'
+                          className={buyBtn}
+                          endIcon={<OfflineBoltIcon />}
+                        >
+                          BUY NOW
+                        </Button>
+                      </Grid>
+                    </Grid>
+                    <Box marginTop={defaultMarginTop}>
+                      <Divider />
+                    </Box>
                     <Box>
-                      <Typography
-                        style={{ color: Colors.navyBlue }}
-                        variant="h2"
+                      <Tabs
+                        value={tabValue}
+                        onChange={handleChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        variant="fullWidth"
+                        aria-label="full width tabs example"
+                        classes={{
+                          flexContainer: tabs
+                        }}
                       >
-                        PKR {product.price?.toLocaleString()}
-                      </Typography>
+                        <Tab
+                          classes={{
+                            wrapper: tab
+                          }}
+                          label="Description"
+                          {...a11yProps(0)}
+                        />
+                        <Tab
+                          classes={{
+                            wrapper: tab
+                          }}
+                          label="Specifications"
+                          {...a11yProps(1)}
+                        />
+                        <Tab
+                          classes={{
+                            wrapper: tab
+                          }}
+                          label="Ratings & Reviews"
+                          {...a11yProps(2)}
+                        />
+                      </Tabs>
+                      <Divider />
                     </Box>
-                    <Box m={0.5}>
-                      <Typography
-                        className={salePrice}
-                        variant="body1"
-                        component="span"
-                        gutterBottom
-                      >
-                        PKR {(product.originalPrice).toLocaleString()}
-                      </Typography>
+                    <Box p={3}>
+                      <TabPanel value={tabValue} index={0}>
+                        <ProductDescription description={product.description} />
+                      </TabPanel>
+                      <TabPanel value={tabValue} index={1}>
+                        <ProductDetail
+                          mainButton={mainButton}
+                          numButton={numButton}
+                          Title={`${product.make} ${product.category}`}
+                          rating={rating}
+                          array={array}
+                          locIcon={locIcon}
+                          mailIcon={mailIcon}
+                          ratIcon={ratIcon}
+                          numbIcon={numbIcon}
+                          paragraph={product?.description}
+                          desc={desc}
+                          price={product?.price}
+                          data={product}
+                        />
+                      </TabPanel>
+                      <TabPanel value={tabValue} index={2}>
+                        <ProductRatings ratings={product.userRatings} />
+                      </TabPanel>
                     </Box>
                   </Grid>
-                  <Grid item xs={12} container spacing={2}>
-                    <Grid item xs={6}>
-                      <Button
-                        fullWidth
-                        className={cartBtn}
-                        endIcon={<ShoppingCartIcon />}
-                      >
-                        ADD TO CART
-                      </Button>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Button
-                        fullWidth
-                        color='secondary'                      
-                        className={buyBtn}
-                        endIcon={<OfflineBoltIcon />}
-                      >
-                        BUY NOW
-                      </Button>
-                    </Grid>
-                  </Grid>
-                  <Box marginTop={defaultMarginTop}>
-                    <Divider />
-                  </Box>
-                  <Box>
-                    <Tabs
-                      value={tabValue}
-                      onChange={handleChange}
-                      indicatorColor="primary"
-                      textColor="primary"
-                      variant="fullWidth"
-                      aria-label="full width tabs example"
-                      classes={{
-                        flexContainer: tabs
-                      }}
-                    >
-                      <Tab
-                        classes={{
-                          wrapper: tab
-                        }}
-                        label="Description"
-                        {...a11yProps(0)}
-                      />
-                      <Tab
-                        classes={{
-                          wrapper: tab
-                        }}
-                        label="Specifications"
-                        {...a11yProps(1)}
-                      />
-                      <Tab
-                        classes={{
-                          wrapper: tab
-                        }}
-                        label="Ratings & Reviews"
-                        {...a11yProps(2)}
-                      />
-                    </Tabs>
-                    <Divider />
-                  </Box>
-                  <Box p={3}>                    
-                    <TabPanel value={tabValue} index={0}>
-                      <ProductDescription description={product.description} />
-                    </TabPanel>
-                    <TabPanel value={tabValue} index={1}>
-                      <ProductDetail
-                        mainButton={mainButton}
-                        numButton={numButton}
-                        Title={`${product.make} ${product.category}`}
-                        rating={rating}
-                        array={array}
-                        locIcon={locIcon}
-                        mailIcon={mailIcon}
-                        ratIcon={ratIcon}
-                        numbIcon={numbIcon}
-                        paragraph={product?.description}
-                        desc={desc}
-                        price={product?.price}
-                        data={product}
-                      />
-                    </TabPanel>
-                    <TabPanel value={tabValue} index={2}>
-                      <ProductRatings ratings={product.userRatings} />
-                    </TabPanel>
-                  </Box>
+                </Grid>                       
+              </Paper>            
+            </Box>
+          </Card>
+          <Card style={{ margin: "20px auto" }}>
+            <Box>
+              <Paper elevation={4}>
+                <Grid item xs={12} style={{ padding: "20px" }}>
+                  <Typography variant="h2">Similar Products</Typography>
                 </Grid>
-              </Grid>
-            )}
-          </Paper>
-          <LoginModal
-            openModal={signinModal}
-            closeModal={() => setSigninModal(false)}
-          />
-          <Toast
-            message={toastMessage}
-            type={toastType}
-            open={openToast}
-            onClose={() => setOpenToast(false)}
-          />
-          <Toast
-            open={open}
-            message={responseMessage.message}
-            type={responseMessage.status}
-            onClose={() => setOpen(false)}
-          />
-        </Box>
-      </Card>
+              </Paper>
+            </Box>
+          </Card>
+        </Fragment>
+      )}
+      <LoginModal
+        openModal={signinModal}
+        closeModal={() => setSigninModal(false)}
+      />
+      <Toast
+        message={toastMessage}
+        type={toastType}
+        open={openToast}
+        onClose={() => setOpenToast(false)}
+      />
+      <Toast
+        open={open}
+        message={responseMessage.message}
+        type={responseMessage.status}
+        onClose={() => setOpen(false)}
+      />
     </Container>
   );
 };
@@ -459,7 +472,7 @@ const useStyles = makeStyles((theme) => ({
   buyBtn: {
     color: 'white',
     backgroundColor: '#092C4C',
-    border: '1px solid #092C4C',
+    border: '2px solid #092C4C',
     boxShadow: 'none',
     borderRadius: '4px',
     margin: '0 4px',
@@ -467,12 +480,14 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1.25rem',
     lineHeight: '1.5rem',
     marginLeft: '2px',
-    '&:hover': {  backgroundColor: '#011A3A'  }
+    '&:hover': {  
+      backgroundColor: '#05409D' 
+    }
   },
   cartBtn: {
-    color: 'white',
-    backgroundColor: '#27AE60',
-    border: '1px solid #27AE60',
+    color: '#05409D',
+    backgroundColor: '#FFF',
+    border: '2px solid #05409D',
     boxShadow: 'none',
     borderRadius: '4px',
     margin: '0 4px',
@@ -480,7 +495,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1.25rem',
     lineHeight: '1.5rem',
     marginRight: '2px',
-    '&:hover': { backgroundColor: 'darkGreen' }
+    '&:hover': { 
+      color: '#FFF',
+      backgroundColor: '#05409D'
+    }
   },
   salePrice: {
     textDecoration: 'line-through',

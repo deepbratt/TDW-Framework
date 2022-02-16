@@ -309,7 +309,7 @@ export const useStyles = makeStyles(() => ({
     backgroundColor: '#C4C4C4',
     color: '#393939',
     borderRadius: '3px',
-    padding: '15px 10px 15px 15px',
+    padding: '5px 10px 5px 15px',
     margin: '5px'
   },
   progressBarContainer: {

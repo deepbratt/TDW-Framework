@@ -16,7 +16,7 @@ const ProductRatings = ({ ratings }: ProductRatingsProps) => {
       spacing={2}
     >
       <Grid item xs={12} container spacing={2} style={{ marginBottom: '1rem'}}>
-        <Grid item xs={4} container spacing={1} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Grid item xs={3} container spacing={1} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <div className={ratingTotal}>
             <Typography variant="h2" component="span" align="center">
               {4.3}
@@ -35,10 +35,11 @@ const ProductRatings = ({ ratings }: ProductRatingsProps) => {
             </Typography>
           </div>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={1}></Grid>
+        <Grid item xs={8} style={{ marginLeft: '5px' }}>
           <Grid className={progressBarContainer}>
             <Box display="flex" alignItems="center">
-              <Box minWidth={35} className={progressBarBadge}>
+              <Box minWidth={40} className={progressBarBadge}>
                 <Typography variant="h4" component="span" align="center">
                   {5}
                 </Typography>
@@ -47,14 +48,14 @@ const ProductRatings = ({ ratings }: ProductRatingsProps) => {
               <Box width="100%" mr={2}>
                 <LinearProgress value={67} variant="determinate" color="secondary" />
               </Box>
-              <Box minWidth={35} style={{ marginLeft: '4px' }}>
+              <Box minWidth={40}>
                 <Typography variant="body2" color="textSecondary">
                   {`${67}%`}
                 </Typography>
               </Box>
             </Box>
             <Box display="flex" alignItems="center">
-              <Box minWidth={35} className={progressBarBadge}>
+              <Box minWidth={40} className={progressBarBadge}>
                 <Typography variant="h4" component="span" align="center">
                   {4}
                 </Typography>
@@ -63,14 +64,14 @@ const ProductRatings = ({ ratings }: ProductRatingsProps) => {
               <Box width="100%" mr={2}>
                 <LinearProgress value={14} variant="determinate" color="secondary" />
               </Box>
-              <Box minWidth={35} style={{ marginLeft: '4px' }}>
+              <Box minWidth={40}>
                 <Typography variant="body2" color="textSecondary">
                   {`${14}%`}
                 </Typography>
               </Box>
             </Box>
             <Box display="flex" alignItems="center">
-              <Box minWidth={35} className={progressBarBadge}>
+              <Box minWidth={40} className={progressBarBadge}>
                 <Typography variant="h4" component="span" align="center">
                   {3}
                 </Typography>
@@ -79,14 +80,14 @@ const ProductRatings = ({ ratings }: ProductRatingsProps) => {
               <Box width="100%" mr={2}>
                 <LinearProgress value={9} variant="determinate" color="secondary" />
               </Box>
-              <Box minWidth={35} style={{ marginLeft: '4px' }}>
+              <Box minWidth={40}>
                 <Typography variant="body2" color="textSecondary">
                   {`${9}%`}
                 </Typography>
               </Box>
             </Box>
             <Box display="flex" alignItems="center">
-              <Box minWidth={35} className={progressBarBadge}>
+              <Box minWidth={40} className={progressBarBadge}>
                 <Typography variant="h4" component="span" align="center">
                   {2}
                 </Typography>
@@ -95,14 +96,14 @@ const ProductRatings = ({ ratings }: ProductRatingsProps) => {
               <Box width="100%" mr={2}>
                 <LinearProgress value={4} variant="determinate" color="secondary" />
               </Box>
-              <Box minWidth={35} style={{ marginLeft: '4px' }}>
+              <Box minWidth={40}>
                 <Typography variant="body2" color="textSecondary">
                   {`${4}%`}
                 </Typography>
               </Box>
             </Box>
             <Box display="flex" alignItems="center">
-              <Box minWidth={35} className={progressBarBadge}>
+              <Box minWidth={40} className={progressBarBadge}>
                 <Typography variant="h4" component="span" align="center">
                   {1}
                 </Typography>
@@ -111,7 +112,7 @@ const ProductRatings = ({ ratings }: ProductRatingsProps) => {
               <Box width="100%" mr={2}>
                 <LinearProgress value={6} variant="determinate" color="secondary" />
               </Box>
-              <Box minWidth={35} style={{ marginLeft: '4px' }}>
+              <Box minWidth={40}>
                 <Typography variant="body2" color="textSecondary">
                   {`${6}%`}
                 </Typography>

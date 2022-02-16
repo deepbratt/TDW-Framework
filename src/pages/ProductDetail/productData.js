@@ -16,7 +16,7 @@ const productData = [{
           "rating": 4,
           "review": {
             "title": "Good Product.",
-            "description": "Works as expected. Container is cheap. Packaging can be improved"
+            "description": "Works as expected. Container is cheap. Packaging can be improved."
           },
         },
         {
@@ -24,7 +24,7 @@ const productData = [{
           "rating": 3,
           "review": {
             "title": "Average quality. Overpriced.",
-            "description": "Average cleaner. Price is a bit high"
+            "description": "Average cleaner. Price is a bit high."
           },
         },
         {

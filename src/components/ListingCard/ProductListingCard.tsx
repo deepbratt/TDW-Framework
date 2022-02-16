@@ -46,6 +46,7 @@ import { Box } from '@material-ui/core';
 import useImageOrientation from '../../Utils/hooks/useImageOrientation';
 import MoreVertRoundedIcon from '@material-ui/icons/MoreVertRounded';
 import AddShoppingCartRoundedIcon from '@material-ui/icons/AddShoppingCartRounded';
+import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
 import LOGO from '../../layout/Sections/assets/Whitelogo.png';
@@ -458,7 +459,7 @@ const ProductListingCard: React.FC<ProductListingCardProps> = ({
                   ) : null} */}
                     </Grid>
                     <Grid item xs={12}>
-                      <Typography variant="h4" style={{ cursor: 'pointer' }}>
+                      <Typography variant="h3" style={{ cursor: 'pointer' }}>
                         {`${make} ${model}`}
                       </Typography>
                     </Grid>
@@ -501,7 +502,7 @@ const ProductListingCard: React.FC<ProductListingCardProps> = ({
                         <CustomButton
                           fullWidth
                           color="secondary"
-                          endIcon={<AddCircleRoundedIcon />}
+                          endIcon={<OfflineBoltIcon />}
                         >
                           {BUY_NOW}
                         </CustomButton>

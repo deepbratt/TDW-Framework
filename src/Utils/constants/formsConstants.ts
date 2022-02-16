@@ -50,4 +50,6 @@ export const fieldNames = {
   adType: 'adType',
   category: 'category',
   subCategory: 'subCategory',
+  address: 'address',
+  zipCode: 'zipCode'
 };

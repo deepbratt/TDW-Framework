@@ -12,7 +12,7 @@ const {
   green,
   darkGreen,
   red,
-  greythree,
+  greyEight
 } = Colors;
 
 const ListingCardStyles = makeStyles((theme) => ({
@@ -121,7 +121,7 @@ const ListingCardStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     width: '100%',
     position: 'relative',
-    borderRadius: '5px',
+    borderRadius: '5px'
   },
   blurBgImg: {
     position: 'absolute',
@@ -170,10 +170,18 @@ const ListingCardStyles = makeStyles((theme) => ({
     alignItems: 'center',
     alignContent: 'center',
     maxWidth: '50px',
-    backgroundColor: greythree,
-    color: theme.palette.common.white,
+    backgroundColor: greyEight,
     borderRadius: '2px',
     padding: '2px 2px 2px 5px'
+  },
+  removeBtn: {
+    margin: '10px'
+  },
+  stockInput: {
+    backgroundColor: theme.palette.common.white,
+    margin: '5px 0',
+    maxWidth: '60px',
+    textAlign: 'center',
   }
 }));
 

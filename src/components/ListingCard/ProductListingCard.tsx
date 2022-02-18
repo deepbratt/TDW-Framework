@@ -45,8 +45,8 @@ import LoginModal from '../../pages/login/LoginModal';
 import { Box } from '@material-ui/core';
 import useImageOrientation from '../../Utils/hooks/useImageOrientation';
 import MoreVertRoundedIcon from '@material-ui/icons/MoreVertRounded';
-import AddShoppingCartRoundedIcon from '@material-ui/icons/AddShoppingCartRounded';
-import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
 import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
 import LOGO from '../../layout/Sections/assets/Whitelogo.png';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
@@ -56,7 +56,7 @@ import CustomButton from '../CustomButton';
 import { Colors } from '../../layout/Sections/Utils/color.constants';
 
 export interface ProductListingCardProps {
-  data: ICarCard;
+  data: any;
   layoutType: string;
   span?: string;
   isFavs?: boolean;
@@ -94,18 +94,20 @@ const ProductListingCard: React.FC<ProductListingCardProps> = ({
     featuredImgStyle,
     overlay,
     cartBtn,
+    buyBtn,
     salePrice,
     reviewBadge
   } = ProductListingCardStyles();
 
   const {
     _id,
-    model,
+    category,
     make,
     city,
     createdAt,
     updatedAt,
     price,
+    originalPrice,
     image,
     selectedImage,
     isFav,
@@ -400,7 +402,7 @@ const ProductListingCard: React.FC<ProductListingCardProps> = ({
                     className={imgWaterMark}
                     alt="carokta watermark"
                   />
-                  <div className={overlay} />
+                  {/* <div className={overlay} />
                   <div className={featuredBadgeContainer}>
                     <>
                       {data.isSold && (
@@ -421,7 +423,7 @@ const ProductListingCard: React.FC<ProductListingCardProps> = ({
                         </span>
                       )}
                     </>
-                  </div>
+                  </div> */}
                 </CardMedia>
               </Grid>
               <Grid item container xs={12} sm={layoutType !== 'list' ? 12 : 8}>
@@ -459,16 +461,23 @@ const ProductListingCard: React.FC<ProductListingCardProps> = ({
                     </Grid>
                     <Grid item xs={12}>
                       <Typography variant="h4" style={{ cursor: 'pointer' }}>
-                        {`${make} ${model}`}
+                        {`${make} ${category}`}
                       </Typography>
                     </Grid>
-                    <Grid item xs={12}>
-                      <div className={reviewBadge}>
-                        <Typography variant="h4" component="span">
-                          4.5
-                        </Typography>
-                        <StarRateRoundedIcon />
-                      </div>
+                    <Grid item xs={12} container spacing={1}>
+                      <Grid item xs={3}>
+                        <div className={reviewBadge} style={{ backgroundColor: Colors.greenReview }}>
+                          <Typography variant="h4" component="span">
+                              {4.5}
+                          </Typography>
+                          <StarRateRoundedIcon />
+                        </div>
+                      </Grid>
+                      <Grid item xs={2}>
+                        <div style={{ fontFamily: 'Roboto', marginTop: '5px' }}>
+                          (321)
+                        </div>
+                      </Grid>                      
                     </Grid>
                     <Grid item xs={12}>
                       <Typography
@@ -484,7 +493,7 @@ const ProductListingCard: React.FC<ProductListingCardProps> = ({
                         component="span"
                         gutterBottom
                       >
-                        {price && `${price?.toLocaleString()}`}
+                        {originalPrice && `${originalPrice?.toLocaleString()}`}
                       </Typography>
                     </Grid>
                     <Grid item xs={12} container spacing={1}>
@@ -492,7 +501,7 @@ const ProductListingCard: React.FC<ProductListingCardProps> = ({
                         <CustomButton
                           fullWidth
                           className={cartBtn}
-                          endIcon={<AddShoppingCartRoundedIcon />}
+                          endIcon={<ShoppingCartIcon />}
                         >
                           {ADD_TO_CART}
                         </CustomButton>
@@ -500,8 +509,8 @@ const ProductListingCard: React.FC<ProductListingCardProps> = ({
                       <Grid item xs={layoutType === 'list' ? 6 : 12}>
                         <CustomButton
                           fullWidth
-                          color="secondary"
-                          endIcon={<AddCircleRoundedIcon />}
+                          className={buyBtn}
+                          endIcon={<OfflineBoltIcon />}
                         >
                           {BUY_NOW}
                         </CustomButton>

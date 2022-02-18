@@ -307,7 +307,7 @@ export const useStyles = makeStyles(() => ({
     alignContent: 'center',
     maxWidth: '75px',
     backgroundColor: '#C4C4C4',
-    color: '#393939',
+    color: '#FFF',
     borderRadius: '3px',
     padding: '5px 10px 5px 15px',
     margin: '5px'

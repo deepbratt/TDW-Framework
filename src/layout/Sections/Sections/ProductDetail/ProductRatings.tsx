@@ -1,5 +1,7 @@
 import { Grid, Box, Typography, LinearProgress } from '@material-ui/core';
-import { carFeatures } from '../../Utils/Text';
+import type { } from '@material-ui/lab/themeAugmentation';
+import createTheme from '@material-ui/core/styles/createTheme';
+import { ThemeProvider } from '@material-ui/core';
 import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
 import { useStyles } from './useStyles';
 import { Colors } from '../../Utils/color.constants';
@@ -9,7 +11,36 @@ interface ProductRatingsProps {
 }
 const ProductRatings = ({ ratings }: ProductRatingsProps) => {
   const { featureBox, ratingTotal, ratingSubheading, progressBarContainer, progressBarBadge, ratingIndividual, reviewTitle, reviewText } = useStyles();
-  const { gray } = Colors;
+
+  // Defining custom colors for progress bars
+  const progressBarGreen = createTheme({
+    overrides: {
+      MuiLinearProgress: {
+        barColorPrimary: {
+          backgroundColor: Colors.greenReview
+        }
+      },
+    },
+  });
+  const progressBarYellow = createTheme({
+    overrides: {
+      MuiLinearProgress: {
+        barColorPrimary: {
+          backgroundColor: Colors.yellowReview
+        }
+      },
+    },
+  });
+  const progressBarRed = createTheme({
+    overrides: {
+      MuiLinearProgress: {
+        barColorPrimary: {
+          backgroundColor: Colors.redReview
+        }
+      },
+    },
+  });
+
   return (
     <Grid
       container
@@ -17,7 +48,7 @@ const ProductRatings = ({ ratings }: ProductRatingsProps) => {
     >
       <Grid item xs={12} container spacing={2} style={{ marginBottom: '1rem'}}>
         <Grid item xs={3} container spacing={1} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <div className={ratingTotal}>
+          <div className={ratingTotal} style={{ backgroundColor: Colors.greenReview }}>
             <Typography variant="h2" component="span" align="center">
               {4.3}
             </Typography>
@@ -46,7 +77,9 @@ const ProductRatings = ({ ratings }: ProductRatingsProps) => {
                 <StarRateRoundedIcon />              
               </Box>
               <Box width="100%" mr={2}>
-                <LinearProgress value={67} variant="determinate" color="secondary" />
+                <ThemeProvider theme={progressBarGreen}>
+                  <LinearProgress value={67} variant="determinate" />
+                </ThemeProvider>                
               </Box>
               <Box minWidth={40}>
                 <Typography variant="body2" color="textSecondary">
@@ -62,7 +95,9 @@ const ProductRatings = ({ ratings }: ProductRatingsProps) => {
                 <StarRateRoundedIcon />              
               </Box>
               <Box width="100%" mr={2}>
-                <LinearProgress value={14} variant="determinate" color="secondary" />
+                <ThemeProvider theme={progressBarGreen}>
+                  <LinearProgress value={14} variant="determinate" />
+                </ThemeProvider>
               </Box>
               <Box minWidth={40}>
                 <Typography variant="body2" color="textSecondary">
@@ -78,7 +113,9 @@ const ProductRatings = ({ ratings }: ProductRatingsProps) => {
                 <StarRateRoundedIcon />              
               </Box>
               <Box width="100%" mr={2}>
-                <LinearProgress value={9} variant="determinate" color="secondary" />
+                <ThemeProvider theme={progressBarYellow}>
+                  <LinearProgress value={9} variant="determinate" />
+                </ThemeProvider>
               </Box>
               <Box minWidth={40}>
                 <Typography variant="body2" color="textSecondary">
@@ -94,7 +131,9 @@ const ProductRatings = ({ ratings }: ProductRatingsProps) => {
                 <StarRateRoundedIcon />              
               </Box>
               <Box width="100%" mr={2}>
-                <LinearProgress value={4} variant="determinate" color="secondary" />
+                <ThemeProvider theme={progressBarRed}>
+                  <LinearProgress value={4} variant="determinate" />
+                </ThemeProvider>
               </Box>
               <Box minWidth={40}>
                 <Typography variant="body2" color="textSecondary">
@@ -110,7 +149,9 @@ const ProductRatings = ({ ratings }: ProductRatingsProps) => {
                 <StarRateRoundedIcon />              
               </Box>
               <Box width="100%" mr={2}>
-                <LinearProgress value={6} variant="determinate" color="secondary" />
+                <ThemeProvider theme={progressBarRed}>
+                  <LinearProgress value={6} variant="determinate" />
+                </ThemeProvider>
               </Box>
               <Box minWidth={40}>
                 <Typography variant="body2" color="textSecondary">
@@ -133,7 +174,7 @@ const ProductRatings = ({ ratings }: ProductRatingsProps) => {
             >
               <Grid item xs={12} style={{ display: 'flex', alignItems: 'center' }}>
                 <Grid item xs={12} style={{ display: 'flex', justifyContent: 'start', alignItems: 'flexStart' }}>
-                  <Grid item xs={4} className={ratingIndividual}>
+                  <Grid item xs={4} className={ratingIndividual} style={{ backgroundColor: data.rating > 3 ? Colors.greenReview : data.rating < 3 ? Colors.redReview : Colors.yellowReview }}>
                     <Typography variant="h4" component="span" style={{ fontWeight: 'bolder' }}>
                       {data.rating}
                     </Typography>

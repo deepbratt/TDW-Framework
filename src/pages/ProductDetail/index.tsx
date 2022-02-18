@@ -60,6 +60,8 @@ import {
   DELETE
 } from '../../Utils/constants/language/en/buttonLabels';
 import { paths } from '../../routes/paths';
+import ProductListingCard from '../../components/ListingCard/ProductListingCard';
+import ListingCardSkeletons from '../../components/ListingCard/ListingCardSkeletons';
 import productData from './productData';
 
 interface RouteProps {
@@ -418,6 +420,64 @@ const ProductDetailPage = () => {
               <Paper elevation={4}>
                 <Grid item xs={12} style={{ padding: "20px" }}>
                   <Typography variant="h2">Similar Products</Typography>
+                  <Box marginTop='10px'>
+                    <Divider />
+                  </Box>
+                  {/* {!isLoading && responseData !== null && ( */}
+                    <Grid item container xs={12} spacing={1}>
+                      {/* {result && */}
+                        {/* result.map((car: ICarCard) => ( */}
+                          <Grid
+                            // key={`${uuidv4}`}
+                            item
+                            xs={12}
+                            sm={3}
+                          >
+                            <ProductListingCard
+                              data={product}
+                              // getMyCars={getAllCars}
+                              layoutType={'grid'}
+                            />
+                          </Grid>
+                          <Grid
+                            // key={`${uuidv4}`}
+                            item
+                            xs={12}
+                            sm={3}
+                          >
+                            <ProductListingCard
+                              data={product}
+                              // getMyCars={getAllCars}
+                              layoutType={'grid'}
+                            />
+                          </Grid>
+                          <Grid
+                            // key={`${uuidv4}`}
+                            item
+                            xs={12}
+                            sm={3}
+                          >
+                            <ProductListingCard
+                              data={product}
+                              // getMyCars={getAllCars}
+                              layoutType={'grid'}
+                            />
+                          </Grid>
+                          <Grid
+                            // key={`${uuidv4}`}
+                            item
+                            xs={12}
+                            sm={3}
+                          >
+                            <ProductListingCard
+                              data={product}
+                              // getMyCars={getAllCars}
+                              layoutType={'grid'}
+                            />
+                          </Grid>
+                        {/* ))} */}
+                    </Grid>
+                  {/* )} */}
                 </Grid>
               </Paper>
             </Box>

@@ -29,10 +29,10 @@ const productData = [{
         },
         {
           "userId": "",
-          "rating": 5,
+          "rating": 2,
           "review": {
-            "title": "Excellent Product.",
-            "description": "This product met my expectation. Will buy again."
+            "title": "Worst Product ever.",
+            "description": "This product didn't meet my expectation. Will never buy it again."
           },
         }
       ],

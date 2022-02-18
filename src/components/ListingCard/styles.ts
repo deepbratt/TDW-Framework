@@ -155,9 +155,35 @@ const ListingCardStyles = makeStyles((theme) => ({
     zIndex: 98
   },
   cartBtn: {
-    backgroundColor: green,
+    color: '#05409D',
+    backgroundColor: '#FFF',
+    border: '2px solid #05409D',
     boxShadow: 'none',
-    '&:hover': { backgroundColor: darkGreen }
+    borderRadius: '4px',
+    margin: '0 4px',
+    padding: '8px 2px',
+    fontSize: '1.25rem',
+    lineHeight: '1.5rem',
+    marginRight: '2px',
+    '&:hover': { 
+      color: '#FFF',
+      backgroundColor: '#05409D'
+    }
+  },
+  buyBtn: {
+    color: 'white',
+    backgroundColor: '#092C4C',
+    border: '2px solid #092C4C',
+    boxShadow: 'none',
+    borderRadius: '4px',
+    margin: '0 4px',
+    padding: '8px 2px',
+    fontSize: '1.25rem',
+    lineHeight: '1.5rem',
+    marginLeft: '2px',
+    '&:hover': {  
+      backgroundColor: '#05409D' 
+    }
   },
   salePrice: {
     textDecoration: 'line-through',

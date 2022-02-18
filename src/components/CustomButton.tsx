@@ -21,6 +21,7 @@ function CustomButton({
   handleClick,
   size,
   children,
+  endIcon,
   ...rest
 }: IButtonProps) {
   const { btn } = useStyles();
@@ -33,6 +34,7 @@ function CustomButton({
       variant={variant}
       color={color}
       fullWidth={fullWidth}
+      endIcon={endIcon}
       {...rest}
     >
       {children}

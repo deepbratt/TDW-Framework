@@ -10,32 +10,59 @@ const productData = [{
         "reference": "acf02b11-7503-4eaf-8d62-0999daaa712d.jpg",
         "location": "https://i.ibb.co/LtvFyyn/unsplash-ZMnefo-I3k.png"
       },
-      "userRatings": [
-        {
-          "userId": "",
-          "rating": 4,
-          "review": {
-            "title": "Good Product.",
-            "description": "Works as expected. Container is cheap. Packaging can be improved."
+      "ratings": {
+        "totalRating": 4.1,
+        "numOfRatings": 220,
+        "numOfReviews": 72,
+        "percentage": [
+          {
+            "rating": 5,
+            "value": 67,
           },
-        },
-        {
-          "userId": "",
-          "rating": 3,
-          "review": {
-            "title": "Average quality. Overpriced.",
-            "description": "Average cleaner. Price is a bit high."
+          {
+            "rating": 4,
+            "value": 9,
           },
-        },
-        {
-          "userId": "",
-          "rating": 2,
-          "review": {
-            "title": "Worst Product ever.",
-            "description": "This product didn't meet my expectation. Will never buy it again."
+          {
+            "rating": 3,
+            "value": 4,
           },
-        }
-      ],
+          {
+            "rating": 2,
+            "value": 6,
+          },
+          {
+            "rating": 1,
+            "value": 14,
+          },
+        ],
+        "allRatings": [
+          {
+            "userId": "",
+            "rating": 4,
+            "review": {
+              "title": "Good Product.",
+              "description": "Works as expected. Container is cheap. Packaging can be improved."
+            },
+          },
+          {
+            "userId": "",
+            "rating": 3,
+            "review": {
+              "title": "Average quality. Overpriced.",
+              "description": "Average cleaner. Price is a bit high."
+            },
+          },
+          {
+            "userId": "",
+            "rating": 2,
+            "review": {
+              "title": "Worst Product ever.",
+              "description": "This product didn't meet my expectation. Will never buy it again."
+            },
+          }
+        ]
+      },
       "favOf": [
         "6177d9940b794300258c8320"
       ],
@@ -44,8 +71,11 @@ const productData = [{
       "banned": false,
       "views": 6, 
       "_id": "61df0fe11299a6042b8732ba",
+      "productTitle": "",
       "country": "Pakistan",
+      "city": "",
       "category": "Dashboard Cleaner",
+      "subCategory": "",
       "make": "CARRERA",
       "bodyColor": "Red",
       "description": "Perfect dashbard cleaner for your car at a very affordable price. Buy CARRERA Dashboard cleaner now at the best price.",

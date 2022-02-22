@@ -407,7 +407,7 @@ const ProductDetailPage = () => {
                         />
                       </TabPanel>
                       <TabPanel value={tabValue} index={2}>
-                        <ProductRatings ratings={product.userRatings} />
+                        <ProductRatings ratings={product.ratings} />
                       </TabPanel>
                     </Box>
                   </Grid>

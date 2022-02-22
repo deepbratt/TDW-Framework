@@ -7,10 +7,13 @@ import { useStyles } from './useStyles';
 import { Colors } from '../../Utils/color.constants';
 
 interface ProductRatingsProps {
-  ratings: Array<any>;
+  ratings: any;
 }
 const ProductRatings = ({ ratings }: ProductRatingsProps) => {
   const { featureBox, ratingTotal, ratingSubheading, progressBarContainer, progressBarBadge, ratingIndividual, reviewTitle, reviewText } = useStyles();
+
+  // Destructuring "ratings" object:
+  const { totalRating, numOfRatings, numOfReviews, percentage, allRatings } = ratings;
 
   // Defining custom colors for progress bars
   const progressBarGreen = createTheme({
@@ -50,121 +53,53 @@ const ProductRatings = ({ ratings }: ProductRatingsProps) => {
         <Grid item xs={3} container spacing={1} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <div className={ratingTotal} style={{ backgroundColor: Colors.greenReview }}>
             <Typography variant="h2" component="span" align="center">
-              {4.3}
+              {totalRating}
             </Typography>
             <StarRateRoundedIcon />
           </div>
           <div className={ratingSubheading}>
             <Typography component="span" align="center">
-              {220} Ratings
+              {numOfRatings} Ratings
             </Typography>
             <Typography component="span" align="center">
               {'&'}
             </Typography>
             <Typography component="span" align="center">
-              {72} Reviews
+              {numOfReviews} Reviews
             </Typography>
           </div>
         </Grid>
         <Grid item xs={1}></Grid>
         <Grid item xs={8} style={{ marginLeft: '5px' }}>
           <Grid className={progressBarContainer}>
-            <Box display="flex" alignItems="center">
-              <Box minWidth={40} className={progressBarBadge}>
-                <Typography variant="h4" component="span" align="center">
-                  {5}
-                </Typography>
-                <StarRateRoundedIcon />              
-              </Box>
-              <Box width="100%" mr={2}>
-                <ThemeProvider theme={progressBarGreen}>
-                  <LinearProgress value={67} variant="determinate" />
-                </ThemeProvider>                
-              </Box>
-              <Box minWidth={40}>
-                <Typography variant="body2" color="textSecondary">
-                  {`${67}%`}
-                </Typography>
-              </Box>
-            </Box>
-            <Box display="flex" alignItems="center">
-              <Box minWidth={40} className={progressBarBadge}>
-                <Typography variant="h4" component="span" align="center">
-                  {4}
-                </Typography>
-                <StarRateRoundedIcon />              
-              </Box>
-              <Box width="100%" mr={2}>
-                <ThemeProvider theme={progressBarGreen}>
-                  <LinearProgress value={14} variant="determinate" />
-                </ThemeProvider>
-              </Box>
-              <Box minWidth={40}>
-                <Typography variant="body2" color="textSecondary">
-                  {`${14}%`}
-                </Typography>
-              </Box>
-            </Box>
-            <Box display="flex" alignItems="center">
-              <Box minWidth={40} className={progressBarBadge}>
-                <Typography variant="h4" component="span" align="center">
-                  {3}
-                </Typography>
-                <StarRateRoundedIcon />              
-              </Box>
-              <Box width="100%" mr={2}>
-                <ThemeProvider theme={progressBarYellow}>
-                  <LinearProgress value={9} variant="determinate" />
-                </ThemeProvider>
-              </Box>
-              <Box minWidth={40}>
-                <Typography variant="body2" color="textSecondary">
-                  {`${9}%`}
-                </Typography>
-              </Box>
-            </Box>
-            <Box display="flex" alignItems="center">
-              <Box minWidth={40} className={progressBarBadge}>
-                <Typography variant="h4" component="span" align="center">
-                  {2}
-                </Typography>
-                <StarRateRoundedIcon />              
-              </Box>
-              <Box width="100%" mr={2}>
-                <ThemeProvider theme={progressBarRed}>
-                  <LinearProgress value={4} variant="determinate" />
-                </ThemeProvider>
-              </Box>
-              <Box minWidth={40}>
-                <Typography variant="body2" color="textSecondary">
-                  {`${4}%`}
-                </Typography>
-              </Box>
-            </Box>
-            <Box display="flex" alignItems="center">
-              <Box minWidth={40} className={progressBarBadge}>
-                <Typography variant="h4" component="span" align="center">
-                  {1}
-                </Typography>
-                <StarRateRoundedIcon />              
-              </Box>
-              <Box width="100%" mr={2}>
-                <ThemeProvider theme={progressBarRed}>
-                  <LinearProgress value={6} variant="determinate" />
-                </ThemeProvider>
-              </Box>
-              <Box minWidth={40}>
-                <Typography variant="body2" color="textSecondary">
-                  {`${6}%`}
-                </Typography>
-              </Box>
-            </Box>
+            {percentage && percentage.length > 0 && (
+              percentage.map((item: any) =>  (
+                <Box display="flex" alignItems="center">
+                  <Box minWidth={40} className={progressBarBadge}>
+                    <Typography variant="h4" component="span" align="center">
+                      {item.rating}
+                    </Typography>
+                    <StarRateRoundedIcon />
+                  </Box>
+                  <Box width="100%" mr={2}>
+                    <ThemeProvider theme={(item.rating > 3) ? progressBarGreen : (item.rating < 3) ? progressBarRed : progressBarYellow}>
+                      <LinearProgress value={item.value} variant="determinate" />
+                    </ThemeProvider>
+                  </Box>
+                  <Box minWidth={40}>
+                    <Typography variant="body2" color="textSecondary">
+                      {`${item.value}%`}
+                    </Typography>
+                  </Box>
+                </Box>
+              ))
+            )}            
           </Grid>
         </Grid>
       </Grid>
       {/* <Grid container style={{flexWrap: 'wrap' }}> */}
-      {ratings ? (
-        ratings.map((data: any, index: any) => {
+      {allRatings && allRatings.length > 0 ? (
+        allRatings.map((data: any, index: any) => {
           return (
             <Grid
               className={featureBox}

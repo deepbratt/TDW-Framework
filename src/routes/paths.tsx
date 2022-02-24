@@ -31,6 +31,7 @@ const ForgetPassword = lazy(() => import('../pages/forgetPassword'));
 const ResetPassword = lazy(() => import('../pages/resetPassword'));
 const Signup = lazy(() => import('../pages/signup'));
 const AddEditCar = lazy(() => import('../pages/AddEditCar'));
+const AddEditProduct = lazy(() => import('../pages/AddEditProduct'));
 const Verification = lazy(() => import('../pages/verificationPage'));
 const CarDetail = lazy(() => import('../pages/carDetail/index'));
 const CarComparison = lazy(() => import('../pages/carComparision/index'));
@@ -81,6 +82,7 @@ export const paths = {
   forgotPassword: '/forgot-password',
   resetPassword: 'reset-password',
   addEditCar: '/add-edit/car/',
+  addEditProduct: '/add-edit/product/',
   help: 'help',
   error: '*'
 };
@@ -107,6 +109,7 @@ export const routes = {
   forgotPassword: '/forgot-password/:token?',
   resetPassword: '/reset-password/:token',
   addEditCar: '/add-edit/car/:id?',
+  addEditProduct: '/add-edit/product/:id?',
   help: '/help',
   error: '*'
 };
@@ -132,9 +135,14 @@ export const privateRoutes = {
     component: Verification
   },
   [paths.addEditCar]: {
-    name: 'Cars Add Edit',
+    name: 'Add Edit Cars',
     path: routes.addEditCar,
     component: AddEditCar
+  },
+  [paths.addEditProduct]: {
+    name: 'Add Edit Products',
+    path: routes.addEditProduct,
+    component: AddEditProduct
   },
   [paths.dashboard]: {
     name: 'Dashboard',

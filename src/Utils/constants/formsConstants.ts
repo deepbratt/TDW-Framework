@@ -1,3 +1,4 @@
+import { title } from './../../layout/Sections/Utils/Text';
 export const messages = {
   isRequired: 'This field is required.',
   notValid: 'Input value is not Valid',
@@ -32,6 +33,7 @@ export const fieldNames = {
   sortingOptions: 'sort',
   condition: 'condition',
   model: 'model',
+  modelNo: 'modelNo',
   city: 'city',
   province: 'province',
   registrationCity: 'registrationCity',
@@ -51,5 +53,12 @@ export const fieldNames = {
   category: 'category',
   subCategory: 'subCategory',
   address: 'address',
-  zipCode: 'zipCode'
+  zipCode: 'zipCode',
+  title: 'title',
+  listingPrice: 'listingPrice',
+  sellingPrice: 'sellingPrice',
+  description: 'description',
+  images: 'images',
+  brand: '',
+  additionalDescription: ''
 };

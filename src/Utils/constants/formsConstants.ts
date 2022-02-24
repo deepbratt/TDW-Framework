@@ -59,6 +59,6 @@ export const fieldNames = {
   sellingPrice: 'sellingPrice',
   description: 'description',
   images: 'images',
-  brand: '',
+  brand: 'brand',
   additionalDescription: ''
 };

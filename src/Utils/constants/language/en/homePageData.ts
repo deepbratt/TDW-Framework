@@ -19,7 +19,7 @@ export const shopCarData = [
   {
     heading: 'Attractive Fair Price Range',
     subTitle:
-      'Aware customers of the current market’s trends and attractive fair price ranges, in case, you want to buy, sell or exchange your car.',
+      'Aware customers of the current market’s trends and attractive fair price ranges, in case, you want to buy or sell your car.',
     icon: WheelWhite
   },
   {

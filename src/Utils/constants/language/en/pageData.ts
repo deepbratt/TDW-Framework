@@ -1,6 +1,6 @@
 const PageMeta = {
     home:{
-        title:"Carokta | Cars for Sale | Buy, Sell or Exchange Cars",
+        title:"Carokta | Cars for Sale | Buy or Sell Cars",
         canonical:""
     },
     carListing:{

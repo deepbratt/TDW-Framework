@@ -158,12 +158,16 @@ const ListingCard: React.FC<ListingCardProps> = ({
       {data.isPublished === false ? (
         <MenuItem onClick={() => publishAd()}>{PUBLISH}</MenuItem>
       ) : null}
-      <MenuItem onClick={() => toggleSold()}>
-        {isSold ? MARK_AS_UNSOLD : MARK_AS_SOLD}
-      </MenuItem>
-      <MenuItem onClick={() => toggleActive()}>
-        {isActive ? DEACTIVATE : ACTIVATE}
-      </MenuItem>
+      {data.isPublished && isActive && (
+        <MenuItem onClick={() => toggleSold()}>
+          {isSold ? MARK_AS_UNSOLD : MARK_AS_SOLD}
+        </MenuItem>
+      )}
+      {data.isPublished && !isSold && (
+        <MenuItem onClick={() => toggleActive()}>
+          {isActive ? DEACTIVATE : ACTIVATE}
+        </MenuItem>
+      )}      
     </Menu>
   );
 

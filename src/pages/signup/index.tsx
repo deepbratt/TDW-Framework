@@ -32,14 +32,18 @@ import { useForm } from './useForm';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 
-const Signup = () => {
+interface ISignupProps {
+  handleFlip?: () => void;
+}
+
+const Signup: React.FC<ISignupProps> = ({ handleFlip }) => {
   const history = useHistory();
   const {
-    loginFormGrid,
     formCard,
-    //  buttonWrap,
     formStyle,
-    loginbtn
+    loginbtn,
+    linkStyle,
+    input,
   } = GlobalStyles();
   const {
     // handleGoogleSubmit,
@@ -67,23 +71,17 @@ const Signup = () => {
   };
 
   return (
-    <Grid
-      className={loginFormGrid}
-      container
-      justify="center"
-      alignContent="center"
-    >
+    <>
       <MetaTags
         title={PageMeta.signup.title}
         canonical={PageMeta.signup.canonical}
       />
-      <Grid item xs={10} md={6} lg={4}>
-        {isLoading && <LinearProgress color="secondary" />}
-        <Card className={formCard}>
-          <Typography variant="h6" gutterBottom>
-            {SIGNUP}
-          </Typography>
-          {/* <Button
+      {isLoading && <LinearProgress color="secondary" />}
+      <Card className={formCard}>
+        <Typography variant="h6" gutterBottom>
+          {SIGNUP}
+        </Typography>
+        {/* <Button
             className={buttonWrap}
             fullWidth
             variant="outlined"
@@ -108,156 +106,176 @@ const Signup = () => {
           >
             {OR}
           </Typography> */}
-          <form className={formStyle} onSubmit={handleSubmit}>
-            <Grid container spacing={1} justifyContent="center">
-              <Grid item xs={12} md={6}>
-                <InputField
-                  id="input-first-name"
-                  name={fieldNames.firstName}
-                  fullWidth
-                  variant="outlined"
-                  label="First Name"
-                  value={values.firstName}
-                  error={errors.firstName}
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <InputField
-                  id="input-last-name"
-                  name={fieldNames.lastName}
-                  fullWidth
-                  variant="outlined"
-                  label="Last Name"
-                  value={values.lastName}
-                  error={errors.lastName}
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <InputField
-                  id="input-username"
-                  name={fieldNames.username}
-                  fullWidth
-                  variant="outlined"
-                  label="Username"
-                  value={values.username}
-                  error={errors.username}
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <RadioGroup
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'center'
-                  }}
-                  aria-label="continue with"
-                  value={continueWith}
-                  onChange={handleRadioChange}
-                >
-                  <FormControlLabel
-                    value="mobile"
-                    control={<Radio size="small" />}
-                    label={CONTINUE_WITH_PHONE}
-                  />
-                  <FormControlLabel
-                    value="email"
-                    control={<Radio size="small" />}
-                    label={CONTINUE_WITH_EMAIL}
-                  />
-                </RadioGroup>
-              </Grid>
-              {continueWith !== '' &&
-                (continueWith === 'mobile' ? (
-                  <Grid item xs={12}>
-                    <InputField
-                      id="input-phone"
-                      type="number"
-                      name={fieldNames.method}
-                      fullWidth
-                      placeholder="349xxxxxxx"
-                      variant="outlined"
-                      label="Phone"
-                      value={values.method}
-                      error={errors.method}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">+92</InputAdornment>
-                        )
-                      }}
-                      onChange={handlePhoneInputChange}
-                    />
-                  </Grid>
-                ) : (
-                  <Grid item xs={12}>
-                    <InputField
-                      id="input-email"
-                      name={fieldNames.method}
-                      fullWidth
-                      variant="outlined"
-                      label="Email"
-                      value={values.method}
-                      error={errors.method}
-                      onChange={handleInputChange}
-                    />
-                  </Grid>
-                ))}
-              <Grid item xs={12}>
-                <PasswordField
-                  id="input-password"
-                  name={fieldNames.password}
-                  fullWidth
-                  variant="outlined"
-                  label="Password"
-                  value={values.password}
-                  error={errors.password}
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <PasswordField
-                  id="input-confirm-password"
-                  name={fieldNames.confirmPassword}
-                  label="Confirm Password"
-                  fullWidth
-                  variant="outlined"
-                  value={values.confirmPassword}
-                  error={errors.confirmPassword}
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item container xs={12} justifyContent="center">
-                <Typography
-                  style={{ margin: '30px 0' }}
-                  align="center"
-                  variant="body2"
-                  component="h6"
-                  gutterBottom
-                >
-                  {ALREADY_HAVE_ACCOUNT}{' '}
-                  <NavLink to={routes.login}>{SIGNIN}</NavLink>
-                </Typography>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Button
-                  className={loginbtn}
-                  fullWidth
-                  disabled={isLoading}
-                  variant="contained"
-                  color="secondary"
-                  type="submit"
-                >
-                  {CONTINUE}
-                </Button>
-              </Grid>
+        <form className={formStyle} onSubmit={handleSubmit}>
+          <Grid container spacing={1} justifyContent="center">
+            <Grid item xs={12} md={6}>
+              <InputField
+                id="input-first-name"
+                name={fieldNames.firstName}
+                fullWidth
+                variant="outlined"
+                label="First Name"
+                value={values.firstName}
+                error={errors.firstName}
+                onChange={handleInputChange}
+                InputProps={{
+                  classes: { input: input }
+                }}
+              />
             </Grid>
-          </form>
-        </Card>
-        {responseMessage.status === 'success' && history.push(routes.login)}
-      </Grid>
+            <Grid item xs={12} md={6}>
+              <InputField
+                id="input-last-name"
+                name={fieldNames.lastName}
+                fullWidth
+                variant="outlined"
+                label="Last Name"
+                value={values.lastName}
+                error={errors.lastName}
+                onChange={handleInputChange}
+                InputProps={{
+                  classes: { input: input }
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputField
+                id="input-username"
+                name={fieldNames.username}
+                fullWidth
+                variant="outlined"
+                label="Username"
+                value={values.username}
+                error={errors.username}
+                onChange={handleInputChange}
+                InputProps={{
+                  classes: { input: input }
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <RadioGroup
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'center'
+                }}
+                aria-label="continue with"
+                value={continueWith}
+                onChange={handleRadioChange}
+              >
+                <FormControlLabel
+                  value="mobile"
+                  control={<Radio size="small" />}
+                  label={CONTINUE_WITH_PHONE}
+                />
+                <FormControlLabel
+                  value="email"
+                  control={<Radio size="small" />}
+                  label={CONTINUE_WITH_EMAIL}
+                />
+              </RadioGroup>
+            </Grid>
+            {continueWith !== '' &&
+              (continueWith === 'mobile' ? (
+                <Grid item xs={12}>
+                  <InputField
+                    id="input-phone"
+                    type="number"
+                    name={fieldNames.method}
+                    fullWidth
+                    placeholder="349xxxxxxx"
+                    variant="outlined"
+                    label="Phone"
+                    value={values.method}
+                    error={errors.method}
+                    InputProps={{
+                      classes: { input: input },
+                      startAdornment: (
+                        <InputAdornment position="start">+92</InputAdornment>
+                      )
+                    }}
+                    onChange={handlePhoneInputChange}
+                  />
+                </Grid>
+              ) : (
+                <Grid item xs={12}>
+                  <InputField
+                    id="input-email"
+                    name={fieldNames.method}
+                    fullWidth
+                    variant="outlined"
+                    label="Email"
+                    value={values.method}
+                    error={errors.method}
+                    onChange={handleInputChange}
+                    InputProps={{
+                      classes: { input: input }
+                    }}
+                  />
+                </Grid>
+              ))}
+            <Grid item xs={12}>
+              <PasswordField
+                id="input-password"
+                name={fieldNames.password}
+                fullWidth
+                variant="outlined"
+                label="Password"
+                value={values.password}
+                error={errors.password}
+                onChange={handleInputChange}
+                InputProps={{
+                  classes: { input: input }
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <PasswordField
+                id="input-confirm-password"
+                name={fieldNames.confirmPassword}
+                label="Confirm Password"
+                fullWidth
+                variant="outlined"
+                value={values.confirmPassword}
+                error={errors.confirmPassword}
+                onChange={handleInputChange}
+                InputProps={{
+                  classes: { input: input }
+                }}
+              />
+            </Grid>
+            <Grid item container xs={12} justifyContent="center">
+              <Typography
+                style={{ margin: '30px 0' }}
+                align="center"
+                variant="body2"
+                component="h6"
+                gutterBottom
+              >
+                {ALREADY_HAVE_ACCOUNT}{' '}
+                <span className={linkStyle} onClick={handleFlip}>
+                  {SIGNIN}
+                </span>
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Button
+                className={loginbtn}
+                fullWidth
+                disabled={isLoading}
+                variant="contained"
+                color="secondary"
+                type="submit"
+              >
+                {CONTINUE}
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Card>
+      {responseMessage.status === 'success' && history.push(routes.login)}
       {responseMessage && (
         <Toast
           open={alertOpen}
@@ -266,7 +284,7 @@ const Signup = () => {
           message={responseMessage.message}
         />
       )}
-    </Grid>
+    </>
   );
 };
 

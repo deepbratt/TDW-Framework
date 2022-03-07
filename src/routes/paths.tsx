@@ -27,6 +27,7 @@ const CarsListing = lazy(() => import('../pages/carsListing'));
 const ForgetPassword = lazy(() => import('../pages/forgetPassword'));
 const ResetPassword = lazy(() => import('../pages/resetPassword'));
 const Signup = lazy(() => import('../pages/signup'));
+const AuthPage = lazy(() => import('../pages/auth'));
 const AddEditCar = lazy(() => import('../pages/AddEditCar'));
 const Verification = lazy(() => import('../pages/verificationPage'));
 const CarDetail = lazy(() => import('../pages/carDetail/index'));
@@ -61,7 +62,9 @@ export const paths = {
   fav: '/favorites',
   postAd: '/post-an-ad',
   login: '/login',
+  signup: '/signup',
   about: 'about',
+  auth: '/auth',
   products: 'products',
   contact: 'contact',
   usedCars: 'usedCars',
@@ -70,7 +73,6 @@ export const paths = {
   carDetail: '/car-detail/',
   carComparision: '/car-comparision',
   carShortlist: 'cars-shortlist',
-  signup: '/signup',
   cars: '/cars',
   forgotPassword: '/forgot-password',
   resetPassword: 'reset-password',
@@ -84,6 +86,7 @@ export const routes = {
   dashboard: '/dashboard/:id?',
   login: '/login',
   signup: '/signup',
+  auth: '/auth',
   loginWithMobile: '/login-with-mobile',
   about: '/about',
   products: '/products',
@@ -189,6 +192,11 @@ export const onlyPublicRoutes = {
     name: 'Signup',
     path: routes.signup,
     component: Signup
+  },
+  [paths.auth]: {
+    name: 'Auth',
+    path: routes.auth,
+    component: AuthPage
   },
   [paths.forgotPassword]: {
     name: 'Forgot Password',

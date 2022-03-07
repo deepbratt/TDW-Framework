@@ -90,7 +90,7 @@ const VerificationContext = ({ verificationMethod }: IVerficationProps) => {
             <span className={text}>{buttonText}</span>
           </button>
         </Typography>
-        {responseMessage.status === "success" && history.push(routes.login)}
+        {responseMessage.status === "success" && history.push(routes.auth)}
       </Grid>
     </Grid>
   );

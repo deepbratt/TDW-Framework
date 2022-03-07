@@ -119,13 +119,13 @@ const SideBar = () => {
           )}
           {!isLoggedIn && (
             <>
-              <NavLink className={link} to={paths.login}>
+              <NavLink className={link} to={paths.auth}>
                 <ListItem button>
                   <ListItemText primary={SIGNIN} />
                 </ListItem>
               </NavLink>
 
-              <NavLink className={link} to={paths.signup}>
+              <NavLink className={link} to={paths.auth}>
                 <ListItem button>
                   <ListItemText primary={SIGNUP} />
                 </ListItem>

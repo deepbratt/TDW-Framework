@@ -275,7 +275,7 @@ const Signup: React.FC<ISignupProps> = ({ handleFlip }) => {
           </Grid>
         </form>
       </Card>
-      {responseMessage.status === 'success' && history.push(routes.login)}
+      {responseMessage.status === 'success' && history.push(routes.auth)}
       {responseMessage && (
         <Toast
           open={alertOpen}

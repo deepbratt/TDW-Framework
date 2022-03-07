@@ -22,11 +22,9 @@ import { lazy } from 'react';
 //                                      lazy loading
 // =========================================================================================
 const Home = lazy(() => import('../pages/home'));
-const Login = lazy(() => import('../pages/login'));
 const CarsListing = lazy(() => import('../pages/carsListing'));
 const ForgetPassword = lazy(() => import('../pages/forgetPassword'));
 const ResetPassword = lazy(() => import('../pages/resetPassword'));
-const Signup = lazy(() => import('../pages/signup'));
 const AuthPage = lazy(() => import('../pages/auth'));
 const AddEditCar = lazy(() => import('../pages/AddEditCar'));
 const Verification = lazy(() => import('../pages/verificationPage'));
@@ -61,8 +59,6 @@ export const paths = {
   dashboard: '/dashboard',
   fav: '/favorites',
   postAd: '/post-an-ad',
-  login: '/login',
-  signup: '/signup',
   about: 'about',
   auth: '/auth',
   products: 'products',
@@ -84,8 +80,6 @@ export const paths = {
 export const routes = {
   home: '/',
   dashboard: '/dashboard/:id?',
-  login: '/login',
-  signup: '/signup',
   auth: '/auth',
   loginWithMobile: '/login-with-mobile',
   about: '/about',
@@ -183,16 +177,6 @@ export const publicRoutes = {
 };
 
 export const onlyPublicRoutes = {
-  [paths.login]: {
-    name: 'Login',
-    path: routes.login,
-    component: Login
-  },
-  [paths.signup]: {
-    name: 'Signup',
-    path: routes.signup,
-    component: Signup
-  },
   [paths.auth]: {
     name: 'Auth',
     path: routes.auth,

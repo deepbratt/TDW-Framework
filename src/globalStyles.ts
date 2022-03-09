@@ -117,11 +117,11 @@ const GlobalStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
   input: {
+    boxSizing: 'border-box',
     paddingTop: '20px',
     paddingBottom: '20px',
-    '&::placeholder': {
-      paddingTop: '20px',
-      paddingBottom: '20px'
+    "& > *":{
+      boxSizing: 'border-box',
     }
   }
 }));

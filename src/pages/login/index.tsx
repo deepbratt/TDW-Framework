@@ -123,7 +123,7 @@ const Login = ({
           />
           <PasswordField
             id="input-password"
-            classes={{inputMarginDense: input}}
+            // classes={{inputMarginDense: input}}
             name={fieldNames.password}
             fullWidth
             variant="outlined"
@@ -131,9 +131,7 @@ const Login = ({
             value={values.password}
             error={errors.password}
             onChange={handleInputChange}
-            InputProps={{
-              classes: { input: input },
-            }}
+            inputStyle={input}
           />
           <Typography>
             <NavLink to={paths.forgotPassword}>{FORGOT_PASS}</NavLink>

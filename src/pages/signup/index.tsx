@@ -225,9 +225,7 @@ const Signup: React.FC<ISignupProps> = ({ handleFlip }) => {
                 value={values.password}
                 error={errors.password}
                 onChange={handleInputChange}
-                InputProps={{
-                  classes: { input: input }
-                }}
+                inputStyle={input}
               />
             </Grid>
             <Grid item xs={12}>
@@ -240,9 +238,7 @@ const Signup: React.FC<ISignupProps> = ({ handleFlip }) => {
                 value={values.confirmPassword}
                 error={errors.confirmPassword}
                 onChange={handleInputChange}
-                InputProps={{
-                  classes: { input: input }
-                }}
+                inputStyle={input}
               />
             </Grid>
             <Grid item container xs={12} justifyContent="center">

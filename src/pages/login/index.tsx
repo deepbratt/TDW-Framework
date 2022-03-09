@@ -1,9 +1,11 @@
 import { useForm } from './useForm';
 import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 import { NavLink } from 'react-router-dom';
 import Toast from '../../components/Toast';
 import { routes, paths } from '../../routes/paths';
-import Grid, { GridSize } from '@material-ui/core/Grid';
+import { GridSize } from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -52,27 +54,12 @@ const Login = ({
     linkStyle,
     input
   } = GlobalStyles();
-  const {
-    values,
-    errors,
-    isLoading,
-    alertOpen,
-    handleSubmit,
-    setAlertOpen,
-    responseMessage,
-    handleInputChange
-    // handleGoogleSubmit,
-  } = useForm();
+  const { values, errors, isLoading, handleSubmit, handleInputChange } =
+    useForm();
 
-  const handleAlertClose = (
-    event: React.SyntheticEvent | React.MouseEvent,
-    reason?: string
-  ) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setAlertOpen(false);
-  };
+    const { type, message, alertOpen } = useSelector(
+      (state: RootState) => state.responseMessage
+    );
 
   return (
     <>
@@ -118,7 +105,7 @@ const Login = ({
             error={errors.data}
             onChange={handleInputChange}
             InputProps={{
-              classes: { input: input },
+              classes: { input: input }
             }}
           />
           <PasswordField
@@ -160,21 +147,11 @@ const Login = ({
           >
             {SIGNIN}
           </Button>
-          {responseMessage.status === 'success' && !loginCallback
+          {type === 'success' && !loginCallback
             ? history.push(routes.home)
-            : responseMessage.status === 'success' &&
-              loginCallback &&
-              loginCallback()}
+            : type === 'success' && loginCallback && loginCallback()}
         </form>
       </Card>
-      {responseMessage && (
-        <Toast
-          open={alertOpen}
-          onClose={handleAlertClose}
-          type={responseMessage.status}
-          message={responseMessage.message}
-        />
-      )}
     </>
   );
 };

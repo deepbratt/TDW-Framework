@@ -1,5 +1,6 @@
-import { NavLink, useHistory } from 'react-router-dom';
-import Toast from '../../components/Toast';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
@@ -38,37 +39,19 @@ interface ISignupProps {
 
 const Signup: React.FC<ISignupProps> = ({ handleFlip }) => {
   const history = useHistory();
+  const { formCard, formStyle, loginbtn, linkStyle, input } = GlobalStyles();
   const {
-    formCard,
-    formStyle,
-    loginbtn,
-    linkStyle,
-    input,
-  } = GlobalStyles();
-  const {
-    // handleGoogleSubmit,
     isLoading,
-    alertOpen,
-    setAlertOpen,
     handleInputChange,
     handlePhoneInputChange,
     handleSubmit,
     values,
     errors,
-    responseMessage,
     continueWith,
     handleRadioChange
   } = useForm();
 
-  const handleAlertClose = (
-    event: React.SyntheticEvent | React.MouseEvent,
-    reason?: string
-  ) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setAlertOpen(false);
-  };
+  const { type } = useSelector((state: RootState) => state.responseMessage);
 
   return (
     <>
@@ -271,15 +254,7 @@ const Signup: React.FC<ISignupProps> = ({ handleFlip }) => {
           </Grid>
         </form>
       </Card>
-      {responseMessage.status === 'success' && history.push(routes.auth)}
-      {responseMessage && (
-        <Toast
-          open={alertOpen}
-          onClose={handleAlertClose}
-          type={responseMessage.status}
-          message={responseMessage.message}
-        />
-      )}
+      {type === 'success' && history.push(routes.auth)}
     </>
   );
 };

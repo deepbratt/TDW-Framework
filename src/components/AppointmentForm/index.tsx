@@ -19,7 +19,7 @@ interface AppointmentFormProps {
   handleClose: () => void;
   user: any;
   carData: any;
-  handleSubmit: (firstName: string, lastName: string, number: number | string, carLocation: string) => void;
+  handleSubmit: (firstName: string, lastName: string, number: number | string, altNumber: number | string, carCity: string, carLocation: string) => void;
 }
 const AppointmentForm = ({
   open,
@@ -28,16 +28,39 @@ const AppointmentForm = ({
   carData,
   handleSubmit
 }: AppointmentFormProps) => {
-  const [number, setNumber] = useState<string|number>("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [carLocation, setCarLocation] = useState("")
-  const [error, setError] = useState({ firstName: false, lastName: false, number: false, carLocation: false })
-  useEffect(()=>{
+  const [carMake, setCarMake] = useState("");
+  const [carModel, setCarModel] = useState("");
+  const [carModelYear, setCarModelYear] = useState<string | number>("");
+  const [carBodyColor, setCarBodyColor] = useState("");
+  const [number, setNumber] = useState<string | number>("");
+  const [altNumber, setAltNumber] = useState<string | number>("");
+  const [carCity, setCarCity] = useState("");
+  const [carProvince, setCarProvince] = useState("");
+  const [carAddress, setCarAddress] = useState("");
+  const [error, setError] = useState({
+    firstName: false,
+    lastName: false,
+    number: false,
+    altNumber: false,
+    carLocation: {
+      city: false,
+      address: false
+    }
+  })
+  useEffect(() => {
     setNumber(user.phone?.slice(3, user.phone.length) || '')
     setFirstName(user.firstName)
     setLastName(user.lastName)
-  },[open])
+    setCarMake(carData.make)
+    setCarModel(carData.model)
+    setCarModelYear(carData.modelYear)
+    setCarBodyColor(carData.bodyColor)
+    setCarCity(carData.city)
+    setCarProvince(carData.province)
+  }, [open])
+
   const onSubmit = () => {
     let tempError = error
     if (!firstName) {
@@ -55,32 +78,74 @@ const AppointmentForm = ({
       setError({ ...tempError, lastName: false })
     }
     if (!user.phone) {
-        tempError.number = true
-        setError({...tempError, number:true})
-    }else{
-        tempError.number = false
-        setError({...tempError, number:false})
-    }
-    if (!carLocation) {
-      tempError.carLocation = true
-      setError({ ...tempError, carLocation: true })
+      tempError.number = true
+      setError({ ...tempError, number: true })
     } else {
-      tempError.carLocation = false
-      setError({ ...tempError, carLocation: false })
+      tempError.number = false
+      setError({ ...tempError, number: false })
     }
-    if (tempError.firstName || tempError.number || tempError.carLocation) {
-        return
+    if (!carCity) {
+      tempError.carLocation.city = true
+      setError({
+        ...tempError,
+        carLocation: {
+          city: true,
+          address: false
+        }
+      })
+    } else {
+      tempError.carLocation.city = false
+      setError({
+        ...tempError,
+        carLocation: {
+          city: false,
+          address: false
+        }
+      })
     }
-    handleSubmit(firstName, lastName, number, carLocation);
+    if (!carAddress) {
+      tempError.carLocation.address = true
+      setError({
+        ...tempError,
+        carLocation: {
+          city: false,
+          address: true
+        }
+      })
+    } else {
+      tempError.carLocation.address = false
+      setError({
+        ...tempError,
+        carLocation: {
+          city: false,
+          address: false
+        }
+      })
+    }
+    if (tempError.firstName || tempError.number || tempError.carLocation.city || tempError.carLocation.address) {
+      return
+    }
+    handleSubmit(firstName, lastName, number, altNumber, carCity, carAddress);
     handleClose();
   };
-  const onClose = () =>{
+
+  const onClose = () => {
     setFirstName("")
     setLastName("")
-      setNumber("")
-    setError({ firstName: false, lastName: false, number: false, carLocation: false })  
+    setNumber("")
+    setError({
+      firstName: false,
+      lastName: false,
+      number: false,
+      altNumber: false,
+      carLocation: {
+        city: false,
+        address: false
+      }
+    })
     handleClose()
   }
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>{AppointmentFormTitle}</DialogTitle>
@@ -115,7 +180,63 @@ const AppointmentForm = ({
               error={error.lastName}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
+            <TextField
+              name="carMake"
+              value={carMake}
+              onChange={(e) => setCarMake(e.target.value)}
+              type="text"
+              label="Car Make"
+              placeholder={"Honda"}
+              disabled={carData.make ? true : false}
+              fullWidth
+              required
+            // error={error.lastName}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              name="carModel"
+              value={carModel}
+              onChange={(e) => setCarModel(e.target.value)}
+              type="text"
+              label="Car Model"
+              placeholder={"Civc"}
+              disabled={carData.model ? true : false}
+              fullWidth
+              required
+            // error={error.lastName}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              name="carModelYear"
+              value={carModelYear}
+              onChange={(e) => setCarModelYear(e.target.value)}
+              type="text"
+              label="Model year"
+              placeholder={"2011"}
+              disabled={carData.modelYear ? true : false}
+              fullWidth
+              required
+            // error={error.lastName}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              name="carBodyColor"
+              value={carBodyColor}
+              onChange={(e) => setCarBodyColor(e.target.value)}
+              type="text"
+              label="Body Color"
+              placeholder={"Body color of your car"}
+              disabled={carData.bodyColor ? true : false}
+              fullWidth
+              required
+            // error={error.lastName}
+            />
+          </Grid>
+          <Grid item xs={6}>
             <TextField
               name="number"
               value={number}
@@ -130,26 +251,67 @@ const AppointmentForm = ({
               error={error.number}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
-              name="carLocation"
-              value={carLocation}
-              onChange={(e) => setCarLocation(e.target.value)}
+              name="alternativeNumber"
+              value={altNumber}
+              onChange={(e) => setAltNumber(e.target.value)}
+              type="tel"
+              title="Alternative Phone Number"
+              label="Alternative Mobile Number"
+              placeholder={'3XXXXXXXXX'}
+              InputProps={{ startAdornment: <span>+92&nbsp;</span> }}
+              fullWidth
+              error={error.altNumber}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              name="carCity"
+              value={carCity}
+              onChange={(e) => setCarCity(e.target.value)}
               type="text"
-              title="Enter full address where you want to get your car inspected"
-              label="Full Address"
-              placeholder={"Enter full address of your car..."}
-              // disabled={fullName ? true : false}
+              title="Car City"
+              label="City"
+              placeholder={"Enter City of your car."}
               fullWidth
               required
-              error={error.carLocation}
+              error={error.carLocation.city}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              name="carProvince"
+              value={carProvince}
+              onChange={(e) => setCarProvince(e.target.value)}
+              type="text"
+              title="Car Province"
+              label="Province"
+              placeholder={"Enter Province of your car"}
+              fullWidth
+              required
+            // error={error.carLocation.city}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              name="carAddress"
+              value={carAddress}
+              onChange={(e) => setCarAddress(e.target.value)}
+              type="text"
+              title="Full address of Car"
+              label="Full Address"
+              placeholder={"Enter full address of your car"}
+              fullWidth
+              required
+              error={error.carLocation.address}
             />
           </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} variant="outlined" color="secondary">{CANCEL}</Button>
-        <Button onClick={onSubmit} variant="contained" color="primary">{SUBMIT}</Button>
+        <Button onClick={onSubmit} variant="contained" style={{ backgroundColor: '#092C4C', color: '#FFF ' }}>{SUBMIT}</Button>
       </DialogActions>
     </Dialog>
   );

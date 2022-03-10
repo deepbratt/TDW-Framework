@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import { handleGoogleAuth } from '../../Utils/API/API';
+import { useDispatch } from 'react-redux';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
-import useApi from '../../Utils/hooks/useApi';
 import { addData } from '../../Utils/API/API';
 import useValidation from '../../Utils/hooks/useValidation';
 import { extractError } from '../../Utils/helperFunctions';
 import { fieldNames } from '../../Utils/constants/formsConstants';
 import { isTypeAlphaSpace } from '../../Utils/regex';
+import {
+  setToastMessage,
+  setAlertOpen
+} from '../../redux/reducers/responseMessageSlice';
 
 const initialValues: any = {
   firstName: '',
@@ -19,17 +22,12 @@ const initialValues: any = {
 
 export const useForm = (validateOnChange = true) => {
   const [values, setValues] = useState(initialValues);
-  const [alertOpen, setAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [continueWith, setContinueWith] = useState('');
   const { validate, error, errors, setErrors } = useValidation(values);
-  const [responseMessage, setResponseMessage] = useState({
-    status: '',
-    message: ''
-  });
 
-  const { addRequest } = useApi();
-  const { USERS, GOOGLE_AUTH, SIGNUP } = API_ENDPOINTS;
+  const { USERS, SIGNUP } = API_ENDPOINTS;
+  const dispatch = useDispatch();
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setContinueWith(event.target.value);
@@ -77,20 +75,6 @@ export const useForm = (validateOnChange = true) => {
     setErrors({});
   };
 
-  const handleGoogleSubmit = async () => {
-    await handleGoogleAuth().then(async (response) => {
-      let requestBody = {
-        googleId: response.id,
-        displayName: response.name,
-        firstName: response.given_name,
-        lastName: response.family_name,
-        image: response.picture,
-        email: response.email
-      };
-      await addRequest(USERS + GOOGLE_AUTH, requestBody);
-    });
-  };
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -117,23 +101,34 @@ export const useForm = (validateOnChange = true) => {
         .then((response) => {
           setIsLoading(false);
           if (response && response.data && response.data.status === 'success') {
-            setAlertOpen(true);
-            setResponseMessage({
-              status: response.data.status,
-              message: response.data.message
-            });
+            dispatch(setAlertOpen());
+            dispatch(
+              setToastMessage({
+                type: 'success',
+                message: response.data.message
+              })
+            );
           } else {
-            setAlertOpen(true);
-            setResponseMessage(extractError(response));
+            dispatch(setAlertOpen());
+            let extractedMsg = extractError(response);
+            dispatch(
+              setToastMessage({
+                type: extractedMsg.status,
+                message: extractedMsg.message
+              })
+            );
           }
         })
         .catch((error) => {
           setIsLoading(false);
-          setAlertOpen(true);
-          setResponseMessage({
-            status: error.status,
-            message: error.message
-          });
+          dispatch(setAlertOpen());
+          let extractedMsg = extractError(error);
+          dispatch(
+            setToastMessage({
+              type: extractedMsg.status,
+              message: extractedMsg.message
+            })
+          );
         });
     }
   };
@@ -148,11 +143,7 @@ export const useForm = (validateOnChange = true) => {
     resetForm,
     validate,
     handleSubmit,
-    handleGoogleSubmit,
     isLoading,
-    alertOpen,
-    setAlertOpen,
-    responseMessage,
     continueWith,
     handleRadioChange
   };

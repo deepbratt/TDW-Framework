@@ -11,8 +11,11 @@ export const subTitle =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ";
 export const category = "category";
 export const filter = "Advanced Filters";
-export const AppointmentFormTitle = "Appointment Form"
+export const AppointmentFormTitle = "Car Inspection Appointment Form"
 export const AppointmentFormDescription = "We will call you back shortly after submission of this form"
+export const CarInspectionHeading = "Car Inspection"
+export const CarInspectionText = "By inspecting your car from Carokta, your selling percentage in Carokta will increase by 60%. It brings trust to the user by getting a Carokta assured badge.The Carokta badge runs deep. With transparency, integrity, focus on quality and genuine car love. Carokta experts will visit you wherever you want."
+export const ScheduleAppointment = "Schedule an Appointment"
 
 export const Data = [
   {

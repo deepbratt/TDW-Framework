@@ -18,6 +18,7 @@ const PasswordField: React.FC<PasswordFieldProps | any> = (props) => {
     size,
     error = null,
     onChange,
+    inputStyle,
   } = props;
   const [showPassword, setShowPassword] = useState(false);
   const { root, input } = LayoutStyle();
@@ -35,7 +36,7 @@ const PasswordField: React.FC<PasswordFieldProps | any> = (props) => {
     <TextField
       className={root}
       placeholder={placeholder}
-      type={showPassword ? "text" : "password"}
+      type={showPassword ? 'text' : 'password'}
       name={name}
       value={value}
       variant={variant}
@@ -44,7 +45,7 @@ const PasswordField: React.FC<PasswordFieldProps | any> = (props) => {
       onChange={onChange}
       {...(error && { error: true, helperText: error })}
       InputProps={{
-        classes: { input: input },
+        classes: { input: inputStyle ? inputStyle : input },
         endAdornment: (
           <InputAdornment position="end">
             <IconButton
@@ -56,7 +57,7 @@ const PasswordField: React.FC<PasswordFieldProps | any> = (props) => {
               {showPassword ? <Visibility /> : <VisibilityOff />}
             </IconButton>
           </InputAdornment>
-        ),
+        )
       }}
       {...props}
     />

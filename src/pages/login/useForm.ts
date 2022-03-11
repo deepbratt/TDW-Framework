@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 import { login } from '../../redux/reducers/authSlice';
-import { handleGoogleAuth } from '../../Utils/API/API';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import useValidation from '../../Utils/hooks/useValidation';
 import { addData } from '../../Utils/API/API';
 import { extractError } from '../../Utils/helperFunctions';
+import {
+  setToastMessage,
+  setAlertOpen
+} from '../../redux/reducers/responseMessageSlice';
 
 const initialValues: any = {
   data: '',
@@ -14,16 +18,14 @@ const initialValues: any = {
 
 export const useForm = (validateOnChange = false) => {
   const [values, setValues] = useState(initialValues);
-  const [alertOpen, setAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [responseData, setResponseData] = useState({});
   const { validate, errors, setErrors } = useValidation(values);
-  const [responseMessage, setResponseMessage] = useState({
-    status: '',
-    message: ''
-  });
 
   const { USERS, LOGIN } = API_ENDPOINTS;
+  const { type, message } = useSelector(
+    (state: RootState) => state.responseMessage
+  );
   const dispatch = useDispatch();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,11 +44,11 @@ export const useForm = (validateOnChange = false) => {
   };
 
   useEffect(() => {
-    if (responseMessage.status === 'success') {
+    if (type === 'success') {
       dispatch(login(responseData));
     }
     //eslint-disable-next-line
-  }, [responseMessage]);
+  }, [message]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -59,32 +61,33 @@ export const useForm = (validateOnChange = false) => {
       await addData(USERS + LOGIN, requestBody).then((response) => {
         setIsLoading(false);
         if (response && response.data && response.data.status === 'success') {
-          setAlertOpen(true);
+          dispatch(setAlertOpen());
+          dispatch(
+            setToastMessage({
+              type: 'success',
+              message: response.data.message
+            })
+          );
           setResponseData(response.data);
-          setResponseMessage({
-            status: response.data.status,
-            message: response.data.message
-          });
+          dispatch(
+            setToastMessage({
+              type: response.data.status,
+              message: response.data.message
+            })
+          );
         } else {
-          setAlertOpen(true);
-          setResponseMessage(extractError(response));
+          dispatch(setAlertOpen());
+          let extractedMsg = extractError(response);
+          dispatch(
+            setToastMessage({
+              type: extractedMsg.status,
+              message: extractedMsg.message
+            })
+          );
         }
         setIsLoading(false);
       });
     }
-  };
-
-  const handleGoogleSubmit = async () => {
-    await handleGoogleAuth().then(async (response) => {
-      let requestBody = {
-        googleId: response.id,
-        displayName: response.name,
-        firstName: response.given_name,
-        lastName: response.family_name,
-        image: response.picture,
-        email: response.email
-      };
-    });
   };
 
   return {
@@ -96,10 +99,6 @@ export const useForm = (validateOnChange = false) => {
     resetForm,
     validate,
     handleSubmit,
-    handleGoogleSubmit,
-    isLoading,
-    alertOpen,
-    setAlertOpen,
-    responseMessage
+    isLoading
   };
 };

@@ -1,6 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import authSlice from './authSlice';
 import layoutSlice from './layoutSlice';
+import responseMessageSlice from './responseMessageSlice';
 import carFiltersSlice from './carFiltersSlice';
 import filtersDataSlice from './filterDataSlice';
 import queryParamsSlice from './queryParamsSlice';
@@ -9,6 +10,7 @@ import shortlistCarsSlice from './shortlistCarsSlice';
 const rootReducer = combineReducers({
   auth: authSlice,
   layout: layoutSlice,
+  responseMessage: responseMessageSlice,
   carFilters: carFiltersSlice,
   filtersData: filtersDataSlice,
   queryParams: queryParamsSlice,

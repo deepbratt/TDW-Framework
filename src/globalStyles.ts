@@ -5,17 +5,17 @@ const GlobalStyles = makeStyles((theme) => ({
   '@global': {
     '*::-webkit-scrollbar': {
       width: '0.5rem',
-      borderRadius:"10px",
+      borderRadius: '10px'
     },
     '*::-webkit-scrollbar-track': {
       // '-webkit-box-shadow': '0px 0px red',
       // backgroundColor:Color.secondary,
-      backgroundColor:"darkgrey",
-      borderRadius:"10px",
+      backgroundColor: 'darkgrey',
+      borderRadius: '10px'
     },
     '*::-webkit-scrollbar-thumb': {
-      backgroundColor:"grey",
-      borderRadius:"10px",
+      backgroundColor: 'grey',
+      borderRadius: '10px'
       // outline: '1px solid green'
     }
   },
@@ -38,6 +38,16 @@ const GlobalStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       padding: '10px 15px',
       fontSize: '12px'
+    }
+  },
+  containerRoot: {
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '30px',
+      padding: '10px'
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginTop: '40px',
+      paddingTop: '0px'
     }
   },
   loginFormGrid: {
@@ -79,7 +89,7 @@ const GlobalStyles = makeStyles((theme) => ({
     }
   },
   formStyle: {
-    margin: '20px 0px',
+    margin: '20px 0px'
   },
   header: {
     marginTop: '40px',
@@ -88,7 +98,32 @@ const GlobalStyles = makeStyles((theme) => ({
       marginTop: '35px'
     }
   },
-
+  linkStyle: {
+    cursor: 'pointer',
+    color: theme.palette.secondary.main
+  },
+  flipCardRoot: {
+    margin: '60px auto',
+    marginTop: '80px',
+    height: '600px',
+    boxShadow: 'none'
+  },
+  flipCardContent: {
+    boxShadow: 'none',
+    padding: 0,
+    margin: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  input: {
+    boxSizing: 'border-box',
+    paddingTop: '20px',
+    paddingBottom: '20px',
+    "& > *":{
+      boxSizing: 'border-box',
+    }
+  }
 }));
 
 export default GlobalStyles;

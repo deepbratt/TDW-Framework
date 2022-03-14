@@ -1,11 +1,9 @@
 import { useForm } from './useForm';
 import { useHistory } from 'react-router';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
 import { NavLink } from 'react-router-dom';
 import Toast from '../../components/Toast';
 import { routes, paths } from '../../routes/paths';
-import { GridSize } from '@material-ui/core/Grid';
+import Grid, { GridSize } from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -54,12 +52,27 @@ const Login = ({
     linkStyle,
     input
   } = GlobalStyles();
-  const { values, errors, isLoading, handleSubmit, handleInputChange } =
-    useForm();
+  const {
+    values,
+    errors,
+    isLoading,
+    alertOpen,
+    handleSubmit,
+    setAlertOpen,
+    responseMessage,
+    handleInputChange
+    // handleGoogleSubmit,
+  } = useForm();
 
-    const { type, message, alertOpen } = useSelector(
-      (state: RootState) => state.responseMessage
-    );
+  const handleAlertClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlertOpen(false);
+  };
 
   return (
     <>
@@ -105,12 +118,12 @@ const Login = ({
             error={errors.data}
             onChange={handleInputChange}
             InputProps={{
-              classes: { input: input }
+              classes: { input: input },
             }}
           />
           <PasswordField
             id="input-password"
-            // classes={{inputMarginDense: input}}
+            classes={{inputMarginDense: input}}
             name={fieldNames.password}
             fullWidth
             variant="outlined"
@@ -118,7 +131,9 @@ const Login = ({
             value={values.password}
             error={errors.password}
             onChange={handleInputChange}
-            inputStyle={input}
+            InputProps={{
+              classes: { input: input },
+            }}
           />
           <Typography>
             <NavLink to={paths.forgotPassword}>{FORGOT_PASS}</NavLink>
@@ -147,11 +162,21 @@ const Login = ({
           >
             {SIGNIN}
           </Button>
-          {type === 'success' && !loginCallback
+          {responseMessage.status === 'success' && !loginCallback
             ? history.push(routes.home)
-            : type === 'success' && loginCallback && loginCallback()}
+            : responseMessage.status === 'success' &&
+              loginCallback &&
+              loginCallback()}
         </form>
       </Card>
+      {responseMessage && (
+        <Toast
+          open={alertOpen}
+          onClose={handleAlertClose}
+          type={responseMessage.status}
+          message={responseMessage.message}
+        />
+      )}
     </>
   );
 };

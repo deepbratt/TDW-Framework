@@ -109,3 +109,9 @@ export const conditionOptions = [
   { value: 'good', label: 'Good' },
   { value: 'fair', label: 'Fair' }
 ];
+
+export const listingOptions = [
+  { value: 'any', label: 'Any' },
+  { value: 'rent', label: 'Rent Cars' },
+  { value: 'buy', label: 'Buy Cars' },
+];

@@ -28,6 +28,9 @@ const formReducer = (state: any, event: any) => {
 };
 
 const initialFieldValues = {
+  adType: 'Sell',
+  rentType: 'Daily',
+  rentalCharge: '',
   city: '',
   carModel: '',
   carMake: '',
@@ -63,7 +66,10 @@ const initialRequireError = {
   bodyColor: false,
   registeredIn: false,
   mileage: false,
-  price: false,
+  adType: false,
+  // rentType: false,
+  // rentalCharge: false,
+  // price: false,
   registrationNo: false,
   description: false
 };
@@ -94,6 +100,7 @@ const useAddEditCar = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
+  const [adType, setAdType] = useState('Sell');
   const [phoneRequiredDialog, setPhoneRequiredDialog] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('success');
@@ -148,6 +155,26 @@ const useAddEditCar = () => {
       });
     }
   };
+
+  const handleChangeAdType = (name: string, value: any) => {
+    setFormData({ name: name, value: value });
+    if (value !== 'Sell' && value !== "Rental") {
+      setRequireError({
+        ...requireError,
+        [name]: true
+      });
+    } else {
+      setRequireError({
+        ...requireError,
+        [name]: false
+      });
+    }
+    if (value === 'Sell') {
+      setAdType('Sell');
+    } else if (value === 'Rental') {
+      setAdType('Rental');
+    }
+  };
   
   const toTitleCase = (str: string) => {
     return str.replace(/\w\S*/g, function (txt) {
@@ -182,7 +209,9 @@ const useAddEditCar = () => {
       requireError={requireError}
       handleChangeSelect={handleChangeSelect}
       setFormData={setFormData}
+      adType={adType}
       bodyColorArray={bodyColorArray}
+      handleChangeAdType={handleChangeAdType}
       handleChangeSelectKeyValue={handleChangeSelectKeyValue}
     />,
     <UploadPhotosForm
@@ -311,6 +340,9 @@ const useAddEditCar = () => {
           }
           let FieldValues = formData;
           FieldValues = {
+            adType: result.adType,
+            rentType: result.rentType,
+            rentalCharge: result.rentalCharge,
             city: result.city,
             carModel: result.model,
             carMake: result.make,
@@ -506,6 +538,9 @@ const useAddEditCar = () => {
 
   const submitForm = async (isPublished: any) => {
     let data = {
+      'adType': formData.adType,
+      'rentType': formData.rentType,
+      'rentalCharge': formData.rentalCharge,
       'country': 'Pakistan',
       'city': formData.city,
       'province': formData.province,

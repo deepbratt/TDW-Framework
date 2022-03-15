@@ -12,6 +12,10 @@ export const Paths = [
     name: 'SELL CARS'
   },
   {
+    path: '/car-inspection',
+    name: 'CARS INSPECTION'
+  },
+  {
     path: '/car-comparision',
     name: 'CARS COMPARISION'
   },

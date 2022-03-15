@@ -15,6 +15,10 @@ const PageMeta = {
         title:"Select Cars | Carokta",
         canonical:"cars-shortlist"
     },
+    carInspection:{
+        title:"Car Inspection | Carokta",
+        canonical:"car-inspection"
+    },
     carComparision:{
         title:"Car Comparision | Carokta",
         canonical:"car-comparision"

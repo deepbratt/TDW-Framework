@@ -281,14 +281,24 @@ const Actions = (Id?: string | '') => {
   };
 
   // Defining function to create a new car inspection appointment:
-  const createInspectionAppointment = (firstName: string, lastName: string, number: number | string, carLocation: string) => {
+  const createInspectionAppointment = (firstName: string, lastName: string, number: number | string, altNumber: number | string, carCity: string, carLocation: object) => {
     let body = {
       user_id: user._id,
       ad_id: obj._id,
       firstName: firstName,
       lastName: lastName,
       phone: number,
-      carLocation: carLocation
+      alternativePhone: altNumber,
+      carLocation: {
+        city: carCity,
+        address: carLocation,
+      }
+      // appointmentTime: {
+      //   startTime: "",
+      //   endTime: "",
+      // },
+      // appointmentDate:"",
+      // appointmentSlot:"",
     };
     setIsLoading(true);
     addData(`${API_ENDPOINTS.APPOINTMENTS}${API_ENDPOINTS.CAR_INSPECTION}`, body)

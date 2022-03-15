@@ -1,8 +1,19 @@
 import { useEffect } from 'react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@material-ui/core";
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
 import Paper from '@material-ui/core/Paper';
+import Toast from '../../../../../components/Toast';
+// import AppointmentsTableRows from '../../../../../sections/AppointmentsTableRows';
+import { Pagination } from "@material-ui/lab";
 import { paths, Title, appointmentsTitle } from '../../../Utils/sidebarText';
 import SideBar from '../ProfileSidebar/Sidebar';
 import MetaTags from '../../../../../components/MetaTags';
@@ -32,14 +43,21 @@ function Appointments() {
 
   const { layoutType } = useSelector((state: RootState) => state.layout);
 
-  const getMyAppointments = () => {
+  const headings = [
+    "Car Id",
+    "City",
+    "Inspection Date",
+    "Status"
+  ];
+
+  const getMyAppointments = (pageValue = page) => {
     fetchData(
-      `${API_ENDPOINTS.APPOINTMENTS}${API_ENDPOINTS.MY_APPOINTMENTS}`
+      `${API_ENDPOINTS.APPOINTMENTS}${API_ENDPOINTS.MY_APPOINTMENTS}?limit=${dataLimit}&page=${pageValue}`
     );
   };
 
   useEffect(() => {
-    getMyAppointments();
+    getMyAppointments(1);
   }, []);
 
   return (
@@ -58,23 +76,48 @@ function Appointments() {
             <Typography variant="h3">{appointmentsTitle}</Typography>
           </section>
         </Grid>
-        {data.length === 0 ? (
+        {(!data || data.length === 0) && (
           <Typography variant="h2" className={loading}>
             No Result Found
           </Typography>
-        ) : (
-          <Grid container spacing={2}>
-            <p>{JSON.stringify(data)}</p>
-          </Grid>
         )}
-        {/* <Grid className={pagination} item xs={12}>
-        <Pagination
-          count={pageCount}
-          onChange={(event, value) => getFavs(value)}
-          color="secondary"
-        />
-      </Grid> */}
+        {data && data.length > 0 && (
+          <TableContainer>
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  {headings.map((heading: string, index: number) => (
+                    <TableCell key={heading + index}>{heading}</TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {/* {data.map((row: any, index: number) => (
+                  <AppointmentsTableRows
+                    data={row}
+                    resultArray={result}
+                    setResultArray={setResult}
+                    key={index + row._id}
+                  />
+                ))} */}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+        <Grid item container xs={12} justifyContent="flex-end">
+          <Pagination
+            count={pageCount}
+            onChange={(event, value) => getMyAppointments()}
+            color="secondary"
+          />
+        </Grid>
       </Paper>
+      <Toast
+        open={open}
+        onClose={() => setOpen(false)}
+        type={responseMessage.status}
+        message={responseMessage.message}
+      />
     </Grid>
   );
 }

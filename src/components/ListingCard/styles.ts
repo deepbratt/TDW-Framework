@@ -1,7 +1,7 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Colors } from '../../Utils/constants/colors/colors';
 import LOGO from '../../layout/Sections/assets/logo.png';
-const { carminePink, white, greyFour, blueOne, spanishGrey, black, lightBlue } =
+const { carminePink, white, grey, greyFour, blueOne, spanishGrey, black, lightBlue } =
   Colors;
 
 const ListingCardStyles = makeStyles(() => ({
@@ -142,6 +142,9 @@ const ListingCardStyles = makeStyles(() => ({
     minWidth: '100%',
     minHeight: '100%',
     zIndex: 98
+  },
+  rentalBasis: {
+    color: grey
   }
 }));
 

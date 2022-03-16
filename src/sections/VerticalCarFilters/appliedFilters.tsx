@@ -179,14 +179,14 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
     );
   }
 
-  if (keys === 'listingType' && values !== '' && values !== 'any') {
+  if (keys === 'listingType' && values !== '' && values !== 'any' && (values === 'Sell' || values === 'Rental')) {
     return (
       <Grid item>
         <Chip
           classes={{ root: root, deleteIcon: icon }}
           size="small"
           label={`Showing Results for ${
-            values === 'car' ? 'Buying Cars' : 'Renting Cars'
+            values === 'Sell' ? 'Buying Cars' : 'Renting Cars'
           }`}
           onDelete={() => dispatch(removeFilter({ name: keys, value: '' }))}
         />

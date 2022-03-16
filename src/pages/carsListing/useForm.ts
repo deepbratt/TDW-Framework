@@ -276,7 +276,7 @@ export const useForm = (validateOnChange = true) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if ((name === 'condition' || 'adType') && value === 'any') {
+    if ((name === 'condition' || 'listingType') && value === 'any') {
       let filter = {
         name: name,
         value: ''

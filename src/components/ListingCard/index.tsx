@@ -501,11 +501,11 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       {!adType && (
                         <Typography color="secondary" variant="h3">
                           {price && price >= 10000 && `PKR ${price?.toLocaleString()}`}
-                          <span className={rentalBasis}> per {'Week'}</span>
+                          <span className={rentalBasis}> / {'Week'}</span>
                           {/* </Typography>                          
                           <Typography color="secondary" variant="h3">
                             PKR {rentalCharge?.toLocaleString()}
-                            <span className={rentalBasis}> per {rentType === 'Daily' ? 'Day'
+                            <span className={rentalBasis}> / {rentType === 'Daily' ? 'Day'
                               : rentType === 'Weekly' ? 'Week'
                                 : rentType === 'Monthly' ? 'Month'
                                   : ''

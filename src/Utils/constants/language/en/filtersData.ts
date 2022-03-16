@@ -112,6 +112,6 @@ export const conditionOptions = [
 
 export const listingOptions = [
   { value: 'any', label: 'Any' },
-  { value: 'rent', label: 'Rent Cars' },
-  { value: 'buy', label: 'Buy Cars' },
+  { value: 'Sell', label: 'Buy Cars' },
+  { value: 'Rental', label: 'Rent Cars' }
 ];

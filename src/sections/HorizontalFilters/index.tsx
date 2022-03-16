@@ -21,6 +21,15 @@ const HorizontalFilters: React.FC<HorizontalFiltersProps> = ({
   return (
     <Grid style={{ margin: '10px 0' }} container justifyContent="space-between">
       <Grid item container xs={10} spacing={2}>
+        <Grid item xs={3}>
+          <Dropdown
+            label="AD TYPE"
+            name={fieldNames.adType}
+            onChange={handleInputChange}
+            value={values.listingType}
+            options={listingOptions}
+          />
+        </Grid>
         <Grid item xs={5}>
           <Dropdown
             label="SORT BY"
@@ -37,15 +46,6 @@ const HorizontalFilters: React.FC<HorizontalFiltersProps> = ({
             onChange={handleInputChange}
             value={values.condition}
             options={conditionOptions}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <Dropdown
-            label="LISTING TYPE"
-            name={fieldNames.listingType}
-            onChange={handleInputChange}
-            value={values.listingType}
-            options={listingOptions}
           />
         </Grid>
         {/* <Grid item xs={5}>

@@ -34,9 +34,7 @@ const HomeBannerStyles = makeStyles((theme) => ({
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: theme.palette.common.black,
-    opacity: 0.6,
-    filter: 'blur(10px)'
+    background: 'linear-gradient(180deg, #FFFFFF 2.44%, rgba(255, 255, 255, 0) 42.26%)'
   },
   cardRoot: {
     position: 'absolute',
@@ -79,7 +77,7 @@ const HomeBanner: React.FC = () => {
   const { root, after, cardRoot, cardHeading } = HomeBannerStyles();
   return (
     <div className={root}>
-      <img src={BannerImg} alt="Guy in car showing keys." />
+      <img src={BannerImg} alt="Homepage Banner" />
       <div className={after} />
       <Card className={cardRoot}>
         <Typography align="center" className={cardHeading} variant="h1">

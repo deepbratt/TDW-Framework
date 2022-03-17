@@ -13,20 +13,82 @@ const HomeBannerStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
     minWidth: '100%',
-    minHeight: '420px',
+    minHeight: '340px',
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 700,
     [theme.breakpoints.down('sm')]: {
-      minHeight: '280px'
+      minHeight: '300px'
     },
     [theme.breakpoints.down('xs')]: {
-      minHeight: '150px'
+      minHeight: '240px'
     },
     '& > img': {
-      maxHeight: '580px',
       width: '100%',
+      minHeight: '340px',
+      [theme.breakpoints.down('sm')]: {
+        minHeight: '300px'
+      },
+      [theme.breakpoints.down('xs')]: {
+        minHeight: '240px'
+      },
+      maxHeight: '580px',
       [theme.breakpoints.up('xl')]: {
         maxHeight: '800px'
       }
     }
+  },
+  bannerHeading: {
+    position: 'absolute',
+    top: 2,
+    textAlign: 'center',
+    width: '100%',
+    height: '100%',    
+    fontSize: '22px',
+    lineHeight: '30px',
+    color: '#000000',
+    textShadow: '0px 4px 4px #FFFFFF',
+    [theme.breakpoints.up('sm')]: {
+      top: 10,
+      fontSize: '35px',
+      lineHeight: '40px'
+    },
+    [theme.breakpoints.up('lg')]: {
+      top: 12,
+      fontSize: '40px',
+      lineHeight: '50px'
+    }
+  },
+  bannerText: {
+    position: 'absolute',
+    top: 190,    
+    fontSize: '16px',
+    lineHeight: '18px',
+    textAlign: 'center',
+    verticalAlign: 'bottom',
+    width: '100%',
+    height: '100%', 
+    color: '#FFF',
+    textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    [theme.breakpoints.up('sm')]: {
+      top: 250,
+      fontSize: '20px',
+      lineHeight: '25px'
+    },
+    [theme.breakpoints.up('md')]: {
+      top: 240,
+      fontSize: '26px',
+      lineHeight: '30px'
+    },
+    [theme.breakpoints.up('lg')]: {
+      top: '25vw',
+      fontSize: '32px',
+      lineHeight: '36px'
+    }
+  },
+  bannerTextBlue: {
+    color: '#05409D',
+    backgroundColor: '#FFF'
   },
   after: {
     position: 'absolute',
@@ -74,12 +136,14 @@ const HomeBannerStyles = makeStyles((theme) => ({
 
 const HomeBanner: React.FC = () => {
   const history = useHistory();
-  const { root, after, cardRoot, cardHeading } = HomeBannerStyles();
+  const { root, after, bannerHeading, bannerText, bannerTextBlue } = HomeBannerStyles();
   return (
     <div className={root}>
-      <img src={BannerImg} alt="Homepage Banner" />
+      <img src={BannerImg} alt="Homepage Banner" />      
       <div className={after} />
-      <Card className={cardRoot}>
+      <h3 className={bannerHeading}>{BannerData.BANNER_HEADING}</h3>
+      <p className={bannerText}><span className={bannerTextBlue}>{BannerData.BANNER_TEXT1}</span>{BannerData.BANNER_TEXT2}</p>
+      {/* <Card className={cardRoot}>
         <Typography align="center" className={cardHeading} variant="h1">
           {BannerData.CARD_HEADER}
         </Typography>
@@ -90,7 +154,7 @@ const HomeBanner: React.FC = () => {
         >
           {FIND_YOUR_CAR}
         </CustomButton>
-      </Card>
+      </Card> */}
     </div>
   );
 };

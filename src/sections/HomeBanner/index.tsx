@@ -142,7 +142,7 @@ const HomeBanner: React.FC = () => {
       <img src={BannerImg} alt="Homepage Banner" />      
       <div className={after} />
       <h3 className={bannerHeading}>{BannerData.BANNER_HEADING}</h3>
-      <p className={bannerText}><span className={bannerTextBlue}>{BannerData.BANNER_TEXT1}</span>{BannerData.BANNER_TEXT2}</p>
+      <p className={bannerText}><span className={bannerTextBlue}>&nbsp; {BannerData.BANNER_TEXT1} &nbsp;</span>{BannerData.BANNER_TEXT2}</p>
       {/* <Card className={cardRoot}>
         <Typography align="center" className={cardHeading} variant="h1">
           {BannerData.CARD_HEADER}

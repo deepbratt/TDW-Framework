@@ -52,12 +52,12 @@ const HomePage = () => {
             <Grid item xs={12} md={10} lg={7}>
               <FindCars />
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <ShopCars featureImg={ShopCarImg} />
             </Grid>
             <Grid item xs={12}>
               <PointsSection />
-            </Grid>
+            </Grid> */}
             <Grid item container xs={12}>
               <Grid className={carComparisionsRoot} item xs={12} md={6}>
                 <Typography variant="h3">{CAR_COMPARISIONS}</Typography>

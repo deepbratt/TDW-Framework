@@ -3,7 +3,7 @@ import CardActions from '@material-ui/core/CardActions';
 import { useHistory } from 'react-router';
 import CustomButton from '../../components/CustomButton';
 import { paths } from '../../routes/paths';
-import { CAR_COMPARISIONS } from '../../Utils/constants/language/en/buttonLabels';
+import { CAR_COMPARISON } from '../../Utils/constants/language/en/buttonLabels';
 import CarsComparisonStyles from './styles';
 
 export interface CarComparisionProps {
@@ -18,7 +18,7 @@ const CarComparision: React.FC<CarComparisionProps> = ({ featureImg }) => {
       <img width="100%" src={featureImg} alt="cars-comparisons" />
       <CardActions>
         <CustomButton onClick={() => history.push(paths.cars)}>
-          {CAR_COMPARISIONS}
+          {CAR_COMPARISON}
         </CustomButton>
       </CardActions>
     </Card>

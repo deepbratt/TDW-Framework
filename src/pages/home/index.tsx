@@ -7,18 +7,20 @@ import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import CarComaprisonImg from '../../assets/Cars/carsComparision.png';
 import DownloadAppImg from '../../assets/Cars/downloadApp.png';
+import { Colors } from '../../Utils/constants/colors/colors';
 import ShopCarImg from '../../assets/Cars/ShopCar.png';
 // import DownloadAppImg from '../../assets/Cars/';
 import HomeBanner from '../../sections/HomeBanner';
 import BreadCrumbs from '../../components/BreadCrumbs';
 import DownloadApp from '../../sections/DownloadApp';
 import {
-  CAR_COMPARISIONS,
+  CAR_COMPARISON,
   ALL_CARS_COMPARISIONS
 } from '../../Utils/constants/language/en/buttonLabels';
 import ShopCars from '../../sections/ShopCars';
 import PointsSection from '../../sections/PointsSection';
 import FindCars from '../../sections/FindCars';
+import DividerWithText from '../../components/DividerWithText';
 
 const HomePageStyles = makeStyles((theme) => ({
   carComparisionsRoot: {
@@ -29,13 +31,21 @@ const HomePageStyles = makeStyles((theme) => ({
   carComparisionsLink: {
     color: theme.palette.secondary.main,
     cursor: 'pointer'
+  },
+  carComparisonHeading: {
+    textAlign: 'center',
+    lineHeight: 1.25,
+    minWidth: '640px',
+    [theme.breakpoints.down(830)]: {
+      minWidth: '350px'
+    }
   }
 }));
 
 export interface HomeProps {}
 
 const HomePage = () => {
-  const { carComparisionsRoot, carComparisionsLink } = HomePageStyles();
+  const { carComparisionsRoot, carComparisonHeading } = HomePageStyles();
   return (
     <>
       <MetaTags
@@ -59,8 +69,17 @@ const HomePage = () => {
               <PointsSection />
             </Grid> */}
             <Grid item container xs={12}>
+              <Grid xs={12}>
+                <div>
+                  <DividerWithText>
+                    <h2 className={carComparisonHeading}>
+                      {"Compare your car to get the best deals"}
+                    </h2>
+                  </DividerWithText>
+                </div>
+              </Grid>              
               <Grid className={carComparisionsRoot} item xs={12} md={6}>
-                <Typography variant="h3">{CAR_COMPARISIONS}</Typography>
+                <Typography variant="h3">{CAR_COMPARISON}</Typography>
                 {/* <Typography className={carComparisionsLink} variant="h3">
                   {ALL_CARS_COMPARISIONS}
                 </Typography> */}

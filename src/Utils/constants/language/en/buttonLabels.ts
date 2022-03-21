@@ -1,4 +1,4 @@
-export const CAR_COMPARISIONS: string = 'Car Comparisions';
+export const CAR_COMPARISON: string = 'Car Comparison';
 export const POST_YOUR_AD: string = 'Post Your Ad';
 export const FEATURED: string = 'Featured';
 export const SOLD: string = 'Sold';

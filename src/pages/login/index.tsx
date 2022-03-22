@@ -28,7 +28,6 @@ import PasswordField from '../../components/InputField/PasswordField';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 interface LoginProps {
-  handleFlip?: () => void;
   formColLg?: boolean | GridSize | undefined;
   formColMd?: boolean | GridSize | undefined;
   formColXs?: boolean | GridSize | undefined;
@@ -36,7 +35,6 @@ interface LoginProps {
 }
 
 const Login = ({
-  handleFlip,
   formColLg = 4,
   formColMd = 8,
   formColXs = 10,
@@ -48,9 +46,7 @@ const Login = ({
     formCard,
     // buttonWrap,
     formStyle,
-    loginbtn,
-    linkStyle,
-    input
+    loginbtn
   } = GlobalStyles();
   const {
     values,
@@ -75,18 +71,23 @@ const Login = ({
   };
 
   return (
-    <>
+    <Grid
+      className={loginFormGrid}
+      container
+      justifyContent="center"
+      alignContent="center"
+    >
       <MetaTags
         title={PageMeta.login.title}
         canonical={PageMeta.login.canonical}
       />
-
-      {isLoading && <LinearProgress color="secondary" />}
-      <Card className={formCard}>
-        <Typography variant="h6" gutterBottom>
-          {SIGNIN}
-        </Typography>
-        {/* <Button
+      <Grid item xs={formColXs} md={formColMd} lg={formColLg}>
+        {isLoading && <LinearProgress color="secondary" />}
+        <Card className={formCard}>
+          <Typography variant="h6" gutterBottom>
+            {SIGNIN}
+          </Typography>
+          {/* <Button
             className={buttonWrap}
             fullWidth
             variant="outlined"
@@ -104,71 +105,61 @@ const Login = ({
           >
             {CONTINUE_WITH_FACEBOOK}
           </Button> */}
-        <form className={formStyle} onSubmit={handleSubmit}>
-          <Typography variant="body2" gutterBottom>
-            {SIGNIN_USING_ACCOUNT}
-          </Typography>
-          <InputField
-            id="input-data"
-            name={fieldNames.data}
-            fullWidth
-            variant="outlined"
-            label="Email/Phone Number"
-            value={values.data}
-            error={errors.data}
-            onChange={handleInputChange}
-            InputProps={{
-              classes: { input: input },
-            }}
-          />
-          <PasswordField
-            id="input-password"
-            classes={{inputMarginDense: input}}
-            name={fieldNames.password}
-            fullWidth
-            variant="outlined"
-            label="Password"
-            value={values.password}
-            error={errors.password}
-            onChange={handleInputChange}
-            InputProps={{
-              classes: { input: input },
-            }}
-          />
-          <Typography>
-            <NavLink to={paths.forgotPassword}>{FORGOT_PASS}</NavLink>
-          </Typography>
+          <form className={formStyle} onSubmit={handleSubmit}>
+            <Typography variant="body2" gutterBottom>
+              {SIGNIN_USING_ACCOUNT}
+            </Typography>
+            <InputField
+              id="input-data"
+              name={fieldNames.data}
+              fullWidth
+              variant="outlined"
+              label="Email/Phone Number"
+              value={values.data}
+              error={errors.data}
+              onChange={handleInputChange}
+            />
+            <PasswordField
+              id="input-password"
+              name={fieldNames.password}
+              fullWidth
+              variant="outlined"
+              label="Password"
+              value={values.password}
+              error={errors.password}
+              onChange={handleInputChange}
+            />
+            <Typography>
+              <NavLink to={paths.forgotPassword}>{FORGOT_PASS}</NavLink>
+            </Typography>
 
-          <Typography
-            style={{ margin: '30px 0' }}
-            align="center"
-            variant="body2"
-            component="h6"
-            gutterBottom
-          >
-            {DONOT_HAVE_ACCOUNT}{' '}
-            <span className={linkStyle} onClick={handleFlip}>
-              {SIGNUP}
-            </span>
-          </Typography>
+            <Typography
+              style={{ margin: '30px 0' }}
+              align="center"
+              variant="body2"
+              component="h6"
+              gutterBottom
+            >
+              {DONOT_HAVE_ACCOUNT}{' '}
+              <NavLink to={routes.signup}>{SIGNUP}</NavLink>
+            </Typography>
 
-          <Button
-            className={loginbtn}
-            fullWidth
-            disabled={isLoading}
-            variant="contained"
-            color="secondary"
-            type="submit"
-          >
-            {SIGNIN}
-          </Button>
-          {responseMessage.status === 'success' && !loginCallback
-            ? history.push(routes.home)
-            : responseMessage.status === 'success' &&
-              loginCallback &&
-              loginCallback()}
-        </form>
-      </Card>
+            <Button
+              className={loginbtn}
+              fullWidth
+              disabled={isLoading}
+              variant="contained"
+              color="secondary"
+              type="submit"
+            >
+              {SIGNIN}
+            </Button>
+            {responseMessage.status === 'success' && !loginCallback
+              ? history.push(routes.home)
+              : responseMessage.status === 'success' && loginCallback && loginCallback()}
+          </form>
+        </Card>
+      </Grid>
       {responseMessage && (
         <Toast
           open={alertOpen}
@@ -177,7 +168,7 @@ const Login = ({
           message={responseMessage.message}
         />
       )}
-    </>
+    </Grid>
   );
 };
 

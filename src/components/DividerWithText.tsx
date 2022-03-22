@@ -17,9 +17,16 @@ const useStyles = makeStyles(theme => ({
     paddingRight: theme.spacing(2),
     paddingLeft: theme.spacing(2),
     textTransform: 'uppercase',
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
     fontWeight: 500,
-    fontSize: 18,
-    color: Colors.grey
+    fontSize: 20,
+    textAlign: 'center',
+    lineHeight: 1.5,    
+    color: Colors.grey,
+    '& > *': {
+      textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+    }
   }
 }));
 

@@ -21,6 +21,10 @@ import ShopCars from '../../sections/ShopCars';
 import PointsSection from '../../sections/PointsSection';
 import FindCars from '../../sections/FindCars';
 import DividerWithText from '../../components/DividerWithText';
+import PolygonIcon from '../../assets/Home/Polygon.png';
+import DollarIcon from '../../assets/Home/Dollar.png';
+import CarRepairIcon from '../../assets/Home/CarRepair.png';
+import ThumbsUpIcon from '../../assets/Home/ThumbsUp.png';
 
 const HomePageStyles = makeStyles((theme) => ({
   carComparisionsRoot: {
@@ -33,11 +37,67 @@ const HomePageStyles = makeStyles((theme) => ({
     cursor: 'pointer'
   },
   carComparisonHeading: {
+    minWidth: '650px',
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '340px'
+    }
+  },
+  caroktaWorksHeading: {
+    minWidth: '325px',
+  },
+  badges: {
+    width: '90%',
+    margin: '2% auto',
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  badgeContent: {
+    margin: '1% auto 3%',
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexDirection: 'column',
+    transition: 'transform .5s',
+    '&:hover': {
+      cursor: 'pointer',
+      transform: 'scale(1.2)'
+    }
+  },
+  badgeIcon: {
+    backgroundImage: `url(${PolygonIcon})`,
+    backgroundSize: 'fit',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    marginTop: '15px',
+    width: '100px',
+    height: '100px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center'
+  },
+  badgeHeading: {
+    margin: '15px auto 5px',
+    color: '#05409D',
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 600,
+    fontSize: '19px',
+    lineHeight: '26px',
+  },
+  badgeDescription: {
+    marginBottom: '15px',
+    width: '80%',
+    color: '#484848',
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: '17px',
+    lineHeight: '25px',
     textAlign: 'center',
-    lineHeight: 1.25,
-    minWidth: '640px',
-    [theme.breakpoints.down(830)]: {
-      minWidth: '350px'
+    [theme.breakpoints.down('sm')]: {
+      width: '60%'
     }
   }
 }));
@@ -45,7 +105,17 @@ const HomePageStyles = makeStyles((theme) => ({
 export interface HomeProps {}
 
 const HomePage = () => {
-  const { carComparisionsRoot, carComparisonHeading } = HomePageStyles();
+  const {
+    carComparisionsRoot,
+    carComparisonHeading,
+    caroktaWorksHeading,
+    badges,
+    badgeContent,
+    badgeIcon,
+    badgeHeading,
+    badgeDescription
+  } = HomePageStyles();
+
   return (
     <>
       <MetaTags
@@ -62,12 +132,66 @@ const HomePage = () => {
             <Grid item xs={12} md={10} lg={7}>
               <FindCars />
             </Grid>
+
+            <Grid item container xs={12}>
+
+              <Grid xs={12}>
+                <div>
+                  <DividerWithText>
+                    <h2 className={caroktaWorksHeading}>
+                      How <span style={{ color: Colors.blueMain }}> Carokta </span> Works
+                    </h2>
+                  </DividerWithText>
+                </div>
+              </Grid>
+
+              <Grid container className={badges}>
+
+                <Grid container xs={12} md={4} className={badgeContent}>
+                  <div className={badgeIcon}>
+                    <img src={DollarIcon} alt="Fair Price Range" />
+                  </div>
+                  <div className={badgeHeading} >
+                    {"FAIR PRICE RANGE"}
+                  </div>
+                  <div className={badgeDescription} >
+                    By inspecting your car from Carokta, your selling percentage in Carokta will increase by 60%. It brings trust to
+                  </div>
+                </Grid>
+
+                <Grid container xs={12} md={4} className={badgeContent}>
+                  <div className={badgeIcon}>
+                    <img src={CarRepairIcon} alt="EASY and CLEAR STEPS" />
+                  </div>
+                  <div className={badgeHeading} >
+                    {"EASY & CLEAR STEPS"}
+                  </div>
+                  <div className={badgeDescription} >
+                    By inspecting your car from Carokta, your selling percentage in Carokta will increase by 60%. It brings trust to
+                  </div>
+                </Grid>
+
+                <Grid container xs={12} md={4} className={badgeContent}>
+                  <div className={badgeIcon}>
+                    <img src={ThumbsUpIcon} alt="SAFE TRANSACTIONS" />
+                  </div>
+                  <div className={badgeHeading} >
+                    {"SAFE TRANSACTIONS"}
+                  </div>
+                  <div className={badgeDescription} >
+                    By inspecting your car from Carokta, your selling percentage in Carokta will increase by 60%. It brings trust to
+                  </div>
+                </Grid>
+              </Grid>
+            </Grid>
+            
             {/* <Grid item xs={12}>
               <ShopCars featureImg={ShopCarImg} />
             </Grid>
             <Grid item xs={12}>
               <PointsSection />
             </Grid> */}
+
             <Grid item container xs={12}>
               <Grid xs={12}>
                 <div>

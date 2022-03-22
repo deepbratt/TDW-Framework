@@ -103,8 +103,8 @@ const GlobalStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main
   },
   flipCardRoot: {
-    margin: '60px auto',
-    marginTop: '80px',
+    margin: '20px auto',
+    marginTop: '40px',
     height: '600px',
     boxShadow: 'none'
   },

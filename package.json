@@ -56,7 +56,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "node ./update-build.ts && sh -ac '. ./.env.${REACT_APP_NODE_ENV}; react-scripts build'",
-    "build-local": "react-scripts build",
     "build-dev": "REACT_APP_NODE_ENV=dev npm run build",
     "build-prod": "REACT_APP_NODE_ENV=prod GENERATE_SOURCEMAP=false && npm run build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",

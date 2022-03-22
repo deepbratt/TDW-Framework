@@ -25,6 +25,10 @@ import PolygonIcon from '../../assets/Home/Polygon.png';
 import DollarIcon from '../../assets/Home/Dollar.png';
 import CarRepairIcon from '../../assets/Home/CarRepair.png';
 import ThumbsUpIcon from '../../assets/Home/ThumbsUp.png';
+import PromoBgIcon from '../../assets/Home/PromoBg.png';
+import PromoBgBlue from '../../assets/Home/PromoBgBlue.png';
+import PromoBgWhite from '../../assets/Home/PromoBgWhite.png';
+import PromoToyota from '../../assets/Home/PromoToyota.png';
 
 const HomePageStyles = makeStyles((theme) => ({
   carComparisionsRoot: {
@@ -88,7 +92,7 @@ const HomePageStyles = makeStyles((theme) => ({
   },
   badgeDescription: {
     marginBottom: '15px',
-    width: '80%',
+    width: '84%',
     color: '#484848',
     fontFamily: 'Roboto',
     fontStyle: 'normal',
@@ -98,6 +102,28 @@ const HomePageStyles = makeStyles((theme) => ({
     textAlign: 'center',
     [theme.breakpoints.down('sm')]: {
       width: '60%'
+    }
+  },
+  promo: {
+    backgroundImage: `url(${PromoBgIcon})`,
+    position: 'relative',
+    minWidth: '100%',
+    minHeight: '540px',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    marginBottom: '5%',    
+    padding: '0 !important'
+  },
+  promoCar: {
+    position: 'absolute',
+    margin: 0,
+    background: `linear-gradient(75deg, #05409D, #05409D 55%, #FFF 55.3%, #FFF 80%, rgba(255,255,255,0) 80.3%, rgba(255,255,255,0) 100%)`,
+    // background: '#05409D',
+    textAlign: 'center',
+    height: '540px',
+    '& > img': {
+      marginTop: 120
     }
   }
 }));
@@ -113,7 +139,9 @@ const HomePage = () => {
     badgeContent,
     badgeIcon,
     badgeHeading,
-    badgeDescription
+    badgeDescription,
+    promo,
+    promoCar
   } = HomePageStyles();
 
   return (
@@ -146,7 +174,6 @@ const HomePage = () => {
               </Grid>
 
               <Grid container className={badges}>
-
                 <Grid container xs={12} md={4} className={badgeContent}>
                   <div className={badgeIcon}>
                     <img src={DollarIcon} alt="Fair Price Range" />
@@ -155,7 +182,7 @@ const HomePage = () => {
                     {"FAIR PRICE RANGE"}
                   </div>
                   <div className={badgeDescription} >
-                    By inspecting your car from Carokta, your selling percentage in Carokta will increase by 60%. It brings trust to
+                    Aware customers of the current market’s trends and attractive fair price ranges, in case, you want to buy or sell your car.
                   </div>
                 </Grid>
 
@@ -167,7 +194,7 @@ const HomePage = () => {
                     {"EASY & CLEAR STEPS"}
                   </div>
                   <div className={badgeDescription} >
-                    By inspecting your car from Carokta, your selling percentage in Carokta will increase by 60%. It brings trust to
+                    We serve easy and clear steps for our offered services to all of our clients. We are available here with 24/7 services to assist you.
                   </div>
                 </Grid>
 
@@ -179,9 +206,15 @@ const HomePage = () => {
                     {"SAFE TRANSACTIONS"}
                   </div>
                   <div className={badgeDescription} >
-                    By inspecting your car from Carokta, your selling percentage in Carokta will increase by 60%. It brings trust to
+                    Your payment methods and your bank credentials are safe with us. So, no need to panic about unsafe payments. We got your back.
                   </div>
                 </Grid>
+              </Grid>              
+            </Grid>
+
+            <Grid item container xs={12} className={promo}>
+              <Grid className={promoCar}>
+                <img src={PromoToyota} alt='' />
               </Grid>
             </Grid>
             

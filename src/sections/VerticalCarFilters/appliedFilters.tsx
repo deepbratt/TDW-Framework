@@ -179,7 +179,7 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
     );
   }
 
-  if (keys === 'listingType' && values !== '' && values !== 'any' && (values === 'Sell' || values === 'Rental')) {
+  if (keys === 'adType' && values !== '' && values !== 'any' && (values === 'Sell' || values === 'Rental')) {
     return (
       <Grid item>
         <Chip

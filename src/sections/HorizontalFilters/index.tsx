@@ -24,9 +24,9 @@ const HorizontalFilters: React.FC<HorizontalFiltersProps> = ({
         <Grid item xs={3}>
           <Dropdown
             label="AD TYPE"
-            name={fieldNames.listingType}
+            name={fieldNames.adType}
             onChange={handleInputChange}
-            value={values.listingType}
+            value={values.adType}
             options={listingOptions}
           />
         </Grid>

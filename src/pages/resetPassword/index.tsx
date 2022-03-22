@@ -85,7 +85,7 @@ const ResetPassword = ({ token }: any) => {
           >
             {RESET_PASSWORD}
           </Button>
-          {responseMessage.status === "success" && history.push(routes.auth)}
+          {responseMessage.status === "success" && history.push(routes.login)}
         </form>
       </Card>
       {responseMessage && (

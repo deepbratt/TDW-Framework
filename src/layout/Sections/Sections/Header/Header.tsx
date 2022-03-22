@@ -197,13 +197,13 @@ const HeaderContext = () => {
             <List className={list}>
               {!isLoggedIn && (
                 <ListItem>
-                  <NavLink className={loginLink} to={paths.auth}>
+                  <NavLink className={loginLink} to={'/login'}>
                     <Typography variant="body1">{SIGNIN} |</Typography>
                   </NavLink>
                   <NavLink
                     style={{ marginLeft: '5px' }}
                     className={loginLink}
-                    to={paths.auth}
+                    to={'/signup'}
                   >
                     <Typography variant="body1">{SIGNUP}</Typography>
                   </NavLink>

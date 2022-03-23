@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import { Button } from '@material-ui/core';
 import MetaTags from '../../components/MetaTags';
 import PageMeta from '../../Utils/constants/language/en/pageData';
 import CarComaprisonImg from '../../assets/Cars/carsComparision.png';
@@ -112,23 +113,69 @@ const HomePageStyles = makeStyles((theme) => ({
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
-    marginBottom: '5%',    
+    marginBottom: '5%',
     padding: '0 !important'
   },
   promoCar: {
     position: 'absolute',
+    width: '60%',
     margin: 0,
-    background: `linear-gradient(75deg, #05409D, #05409D 55%, #FFF 55.3%, #FFF 80%, rgba(255,255,255,0) 80.3%, rgba(255,255,255,0) 100%)`,
-    // background: '#05409D',
-    textAlign: 'center',
+    background: `linear-gradient(75deg, #05409D, #05409D 50%, #FFF 50.3%, #FFF 75%, rgba(255,255,255,0) 75.3%, rgba(255,255,255,0) 85%)`,
     height: '540px',
     '& > img': {
       marginTop: 120
+    },    
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      textAlign: 'center',
+      background: `linear-gradient(75deg, #05409D, #05409D 30%, #FFF 30.3%, #FFF 55%, rgba(255,255,255,0) 55.3%, rgba(255,255,255,0) 65%)`,
+      '& > img': {
+        marginTop: 90,
+        maxWidth: '480px'
+      },
+    },
+    [theme.breakpoints.down('xs')]: {
+      '& > img': {
+        marginTop: 60,
+        maxWidth: '420px',
+      },
     }
-  }
+  },
+  promoContent: {    
+    position: 'absolute',
+    textAlign: 'center',
+    top: 45,
+    right: 10,
+    '& > span': {
+      padding: '0 10px',
+      fontFamily: 'Roboto',
+      fontStyle: 'normal',
+      fontWeight: 600,
+      fontSize: '35px',
+      lineHeight: '41px',
+      color: '#092C4C',
+      backgroundColor: Colors.flashWhite,
+      textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+      boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+      borderRadius: '5px',
+    },
+  },
+  btn: {
+    backgroundColor: '#00F',
+    border: '1px solid #FFFFFF',
+    boxSizing: 'border-box',
+    borderRadius: '4px',
+    padding: '1.5%',
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 600,
+    fontSize: '16px',
+    lineHeight: '28px',
+    color: '#FFFFFF',
+  },
 }));
 
-export interface HomeProps {}
+export interface HomeProps { }
 
 const HomePage = () => {
   const {
@@ -141,7 +188,9 @@ const HomePage = () => {
     badgeHeading,
     badgeDescription,
     promo,
-    promoCar
+    promoCar,
+    promoContent,
+    btn
   } = HomePageStyles();
 
   return (
@@ -153,7 +202,7 @@ const HomePage = () => {
       <HomeBanner />
       <Container style={{ marginBottom: '130px' }}>
         <Grid container justifyContent="center">
-        {/* <Grid item xs={12}>
+          {/* <Grid item xs={12}>
           <BreadCrumbs />
         </Grid> */}
           <Grid item container xs={12} spacing={2} justifyContent="center">
@@ -209,15 +258,20 @@ const HomePage = () => {
                     Your payment methods and your bank credentials are safe with us. So, no need to panic about unsafe payments. We got your back.
                   </div>
                 </Grid>
-              </Grid>              
+              </Grid>
             </Grid>
 
             <Grid item container xs={12} className={promo}>
-              <Grid className={promoCar}>
+              <Grid xs={12} md={10} className={promoCar}>
                 <img src={PromoToyota} alt='' />
               </Grid>
+              <div className={promoContent}>
+                <span>Do you want to earn with us ?</span><br /><br />
+                <span>So, Don't be late</span><br /><br />
+                <button className={btn}>POST AN AD</button>
+              </div>
             </Grid>
-            
+
             {/* <Grid item xs={12}>
               <ShopCars featureImg={ShopCarImg} />
             </Grid>
@@ -234,7 +288,7 @@ const HomePage = () => {
                     </h2>
                   </DividerWithText>
                 </div>
-              </Grid>              
+              </Grid>
               <Grid className={carComparisionsRoot} item xs={12} md={6}>
                 <Typography variant="h3">{CAR_COMPARISON}</Typography>
                 {/* <Typography className={carComparisionsLink} variant="h3">

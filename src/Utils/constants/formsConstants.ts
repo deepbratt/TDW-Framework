@@ -47,4 +47,5 @@ export const fieldNames = {
   modelYear: 'modelYear',
   engineCapacity: 'engineCapacity',
   milage: 'milage',
+  listingType: 'listingType',
 };

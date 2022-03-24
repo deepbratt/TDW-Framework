@@ -23,12 +23,12 @@ function CustomButton({
   children,
   ...rest
 }: IButtonProps) {
-  const { btn } = useStyles();
+  const { blueBtn } = useStyles();
   return (
     <Button
       onClick={handleClick}
       size={size ? size : Breakpoints()}
-      className={styles ? styles : btn}
+      className={styles ? styles : blueBtn}
       style={{ borderRadius: radius, boxShadow: 'none' }}
       variant={variant}
       color={color}

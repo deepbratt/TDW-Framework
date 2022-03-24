@@ -30,7 +30,8 @@ const initialValues: any = {
   adType: [],
   sort: '',
   condition: '',
-  keyword: ''
+  keyword: '',
+  listingType: ''
 };
 
 const initialRangeValues: IMinMaxValues = {
@@ -275,7 +276,7 @@ export const useForm = (validateOnChange = true) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === 'condition' && value === 'any') {
+    if ((name === 'condition' || 'listingType') && value === 'any') {
       let filter = {
         name: name,
         value: ''

@@ -7,11 +7,14 @@ import WheelWhite from '../../../../assets/icons/wheel_white 1.png';
 import { Carfilters } from './filtersData';
 
 export const BannerData = {
-  CARD_HEADER: 'Love Your Car Guarantee',
-  CARD_SUBTITLES: {
-    TEST_DRIVE: '24-hr test drives',
-    RETURN: '30-day returns'
-  }
+  BANNER_HEADING: "CARS YOU WILL LOVE TO BUY",
+  BANNER_TEXT1:"LET US ",
+  BANNER_TEXT2:" HELP YOU TO FIND YOUR PERFECT MATCH",
+  // CARD_HEADER: 'Love Your Car Guarantee',
+  // CARD_SUBTITLES: {
+  //   TEST_DRIVE: '24-hr test drives',
+  //   RETURN: '30-day returns'
+  // }
 };
 
 export const shopCarHeader = 'What to expect from us?';

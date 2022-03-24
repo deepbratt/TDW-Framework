@@ -87,6 +87,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     grid,
     featuredBadgeContainer,
     featuredBadge,
+    adTypeBadge,
     location,
     favsIconGrid,
     favsIconList,
@@ -115,7 +116,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     active,
     isFav,
     createdBy,
-    slug
+    slug,
   } = data;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -388,28 +389,34 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   <div
                     style={{
                       backgroundImage: `url(${
-                        selectedImage && selectedImage.location ? selectedImage.location 
-                        : image && image.length > 0 && image[0].location ? image[0].location 
-                        : NoImg
+                        selectedImage && selectedImage.location
+                          ? selectedImage.location
+                          : image && image.length > 0 && image[0].location
+                          ? image[0].location
+                          : NoImg
                       })`
                     }}
                     className={blurBgImg}
                   ></div>
                   <img
                     src={
-                      selectedImage && selectedImage.location ? selectedImage.location 
-                        : image && image.length > 0 && image[0].location ? image[0].location 
+                      selectedImage && selectedImage.location
+                        ? selectedImage.location
+                        : image && image.length > 0 && image[0].location
+                        ? image[0].location
                         : NoImg
-                      }
+                    }
                     className={featuredImgStyle}
                     alt=""
                     width={imgWidth}
                     height={imgHeight}
                     onLoad={() =>
                       setImageOrientationAndSize(
-                        selectedImage && selectedImage.location ? selectedImage.location 
-                        : image && image.length > 0 && image[0].location ? image[0].location 
-                        : NoImg
+                        selectedImage && selectedImage.location
+                          ? selectedImage.location
+                          : image && image.length > 0 && image[0].location
+                          ? image[0].location
+                          : NoImg
                       )
                     }
                   />
@@ -454,12 +461,20 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       item
                       xs={12}
                       container
-                      justifyContent="space-between"
+                      justifyContent="flex-start"
                       alignItems="center"
                     >
                       <Typography variant="h5" style={{ paddingTop: '5px' }}>
                         {ConvertDate(createdAt)}
                       </Typography>
+                      {data.adType && (
+                        <span className={`${featuredBadge} ${adTypeBadge}`}>
+                          <Typography variant="body2">
+                            {data.adType.toUpperCase()}
+                          </Typography>
+                        </span>
+                      )}
+
                       {/* {isLoggedIn && user._id !== createdBy ? (
                     <IconButton
                       onClick={(e) => {

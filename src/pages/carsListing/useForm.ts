@@ -27,10 +27,10 @@ const initialValues: any = {
   bodyColor: [],
   bodyType: [],
   sellerType: [],
-  adType: [],
+  adType: '',
   sort: '',
   condition: '',
-  keyword: ''
+  keyword: '',
 };
 
 const initialRangeValues: IMinMaxValues = {
@@ -275,7 +275,7 @@ export const useForm = (validateOnChange = true) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === 'condition' && value === 'any') {
+    if ((name === 'condition' || 'adType') && value === 'any') {
       let filter = {
         name: name,
         value: ''

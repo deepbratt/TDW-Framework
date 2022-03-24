@@ -1,7 +1,7 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Colors } from '../../Utils/constants/colors/colors';
 import LOGO from '../../layout/Sections/assets/logo.png';
-const { carminePink, white, greyFour, blueOne, spanishGrey, black, lightBlue } =
+const { carminePink, white, greyFour, blueOne, spanishGrey, black, lightBlue, darkBlue } =
   Colors;
 
 const ListingCardStyles = makeStyles(() => ({
@@ -26,8 +26,8 @@ const ListingCardStyles = makeStyles(() => ({
     height: '100%'
   },
   featuredBadgeContainer: {
-    display: "flex",
-    justifyContent:"flex-start",
+    display: 'flex',
+    justifyContent: 'flex-start',
     position: 'absolute',
     left: '7px',
     top: '7px',
@@ -44,6 +44,10 @@ const ListingCardStyles = makeStyles(() => ({
       color: white,
       lineHeight: '12px'
     }
+  },
+  adTypeBadge: {
+    margin: '0 7px',
+    backgroundColor: darkBlue
   },
   yearPrice: {
     display: 'flex',

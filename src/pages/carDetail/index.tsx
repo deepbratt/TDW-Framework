@@ -127,7 +127,7 @@ const CarDetailContainer = () => {
   } = Actions(id ?? '');
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { tabs, tab, btn } = useStyles();
+  const { tabs, tab, btn, rentalBasis } = useStyles();
   const [sliderHeight, setSliderHeight] = useState(0);
   const sliderColumn = useRef<HTMLDivElement | null>(null);
   const [tabValue, setTabValue] = useState(0);
@@ -335,12 +335,29 @@ const CarDetailContainer = () => {
                       </Box>
                     </Grid>
                     <Box style={{ marginTop: defaultMarginTop }}>
-                      <Typography
-                        style={{ color: Colors.navyBlue }}
-                        variant="h2"
-                      >
-                        PKR {obj.price?.toLocaleString()}
-                      </Typography>
+                      {obj.adType && obj.adType === 'Rental' && obj.rentType && obj.rentalCharge && (
+                        <Typography color="secondary" variant="h3">
+                          {/* {obj.price && obj.price >= 10000 && `PKR ${obj.price?.toLocaleString()}`}
+                          <span className={rentalBasis}> / {'Week'}</span>
+                          </Typography>                          
+                          <Typography color="secondary" variant="h3"> */}
+                          PKR {obj.rentalCharge?.toLocaleString()}
+                          <span className={rentalBasis}> / {obj.rentType === 'Daily' ? 'Day'
+                            : obj.rentType === 'Weekly' ? 'Week'
+                              : obj.rentType === 'Monthly' ? 'Month'
+                                : ''
+                          }
+                          </span>
+                        </Typography>
+                      )}
+                      {obj.adType && obj.adType === 'Sell' && (
+                        <Typography
+                          style={{ color: Colors.navyBlue }}
+                          variant="h2"
+                        >
+                          PKR {obj.price?.toLocaleString()}
+                        </Typography>
+                      )}                      
                     </Box>
                   </Grid>
                   <Box marginTop={defaultMarginTop}>
@@ -463,5 +480,8 @@ const useStyles = makeStyles((theme) => ({
       background: Colors.lightGrey,
       boxShadow: 'none'
     }
+  },
+  rentalBasis: {
+    color: Colors.grey
   }
 }));

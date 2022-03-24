@@ -33,6 +33,18 @@ const LayoutStyle = makeStyles((theme) => ({
     fontWeight: "bold",
     padding: "7px 25px 7px 25px",
   },
+  blueBtn: {
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    padding: "7px 25px 7px 25px",
+    border: `2px solid ${Colors.blueMain}`,
+    color: Colors.white,
+    backgroundColor: Colors.blueMain,
+    '&:hover': {
+      color: Colors.blueMain,
+      backgroundColor: Colors.blueTwo
+    }
+  }
 }));
 
 export default LayoutStyle;

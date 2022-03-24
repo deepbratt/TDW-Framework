@@ -19,21 +19,34 @@ import SelectInputComponent from '../../components/SelectInputComponent';
 
 const FindCarsStyles = makeStyles((theme) => ({
   root: {
-    marginTop: '-100px',
-    marginBottom: '-120px',
+    marginTop: '-90px',
+    marginBottom: '20px',
     position: 'relative',
-    boxShadow: '0px 2px 4px 4px rgba(0, 0, 0, 0.2)',
-    border: `1px solid ${theme.palette.text.primary}`,
+    boxShadow: `0px 2px 4px 4px ${Colors.blueTwo}`,
+    border: `1px solid ${Colors.darkBlue}`,
+    borderRadius: '12px',
+    color: `${Colors.flashWhite}`,
+    backgroundColor: `${Colors.blueMain}`,
     [theme.breakpoints.down('sm')]: {
+      marginTop: '-30px',
       marginBottom: '20px'
     },
     [theme.breakpoints.down('xs')]: {
-      marginTop: '150px',
+      marginTop: '-20px',
       marginBottom: '20px'
+    },
+    '& label': {
+      backgroundColor: Colors.white,
+      color: Colors.blueMain,
+      padding: '2px 5px'
+    },
+    '& ::placeholder': {
+      color: Colors.darkBlue
     }
   },
   content: {
     padding: '30px 140px',
+    color: Colors.blueTwo,
     [theme.breakpoints.down('sm')]: {
       padding: '30px 35px'
     }
@@ -45,7 +58,7 @@ const FindCarsStyles = makeStyles((theme) => ({
     }
   },
   textFields: {
-    backgroundColor: Colors.flashWhite
+    backgroundColor: '#FFF'
   },
   tabIndicator: {
     display: 'none',
@@ -53,23 +66,24 @@ const FindCarsStyles = makeStyles((theme) => ({
   },
   tabRoot: {
     margin: '0',
-    color: Colors.textPrimary,
-    minWidth: '12.5rem'
+    color: Colors.blueMain,
+    minWidth: '12.5rem',
+    opacity: 1,
+    zIndex: 100,
   },
   tabContainer: {
     borderBottom: 'none'
   },
-
   tabWrapper: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    border: `1px solid ${Colors.textPrimary}`,
-    backgroundColor: Colors.lightBlue,
+    backgroundColor: '#FFF',
     borderRadius: '5px',
     padding: '0 10px',
     '&:hover': {
-      boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.15)'
+      backgroundColor: Colors.lightBlue,
+      boxShadow: `0px 2px 4px 4px ${Colors.darkBlue}`
     },
     fontSize: '0.9rem'
   },
@@ -78,18 +92,29 @@ const FindCarsStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     border: `2px solid ${Colors.darkBlue}`,
-    backgroundColor: Colors.lightGrey,
+    backgroundColor: Colors.white,
+    boxShadow: `0px 3px 4px 4px ${Colors.darkBlue}`,
     borderRadius: '5px',
     padding: '0 10px'
   },
   inputFieldRoot: {
-    backgroundColor: Colors.lightBlue,
-    width:"100%"
+    backgroundColor: '#FFF',
+    width:"100%",
+    borderRadius: '4px'
   },
   loaderContainer: {
     display: 'flex',
     justifyContent: 'center',
     width: '100%'
+  },
+  btn: {
+    color: Colors.blueMain,
+    backgroundColor: Colors.white,
+    '&:hover': {
+      color: Colors.white,
+      backgroundColor: Colors.navyBlue,
+      border: `2px solid ${Colors.white}`,
+    }
   }
 }));
 
@@ -104,7 +129,8 @@ const FindCars: React.FC = () => {
     tabWrapperSelected,
     tabContainer,
     inputFieldRoot,
-    loaderContainer
+    loaderContainer,
+    btn,
   } = FindCarsStyles();
 
   const {
@@ -118,6 +144,7 @@ const FindCars: React.FC = () => {
     handleChangeSelect,
     handleSubmit
   } = useForm();
+
   return (
     <Card className={root}>
       <Typography className={content} align="center" variant="h2">
@@ -213,9 +240,9 @@ const FindCars: React.FC = () => {
                 onChange={handleInputChange}
               />
             </Grid>
-            <Grid item container xs={12} justifyContent="center">
-              <Grid item xs={12} md={6}>
-                <CustomButton type="submit" fullWidth>
+            <Grid item container xs={12} justifyContent="center" >
+              <Grid item xs={12} sm={8} >
+                <CustomButton type="submit" fullWidth className={btn} style={{ border: `1px solid ${Colors.darkBlue}` }}>
                   {FIND_YOUR_CAR}
                 </CustomButton>
               </Grid>

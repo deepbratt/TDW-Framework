@@ -16,6 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import {
   ACTIVE,
   INACTIVE,
+  RENTAL,
   SOLD,
   UPDATED,
   MARK_AS_SOLD,
@@ -50,6 +51,7 @@ import LOGO from '../../layout/Sections/assets/Whitelogo.png';
 import { API_ENDPOINTS } from '../../Utils/API/endpoints';
 import { deleteData, updateData } from '../../Utils/API/API';
 import { ICarCard } from '../../Utils/interfaces/products.interface';
+import { Colors } from '../../Utils/constants/colors/colors';
 
 export interface ListingCardProps {
   data: ICarCard;
@@ -94,11 +96,15 @@ const ListingCard: React.FC<ListingCardProps> = ({
     blurBgImg,
     imgWaterMark,
     featuredImgStyle,
-    overlay
+    overlay,
+    rentalBasis
   } = ListingCardStyles();
 
   const {
     _id,
+    adType,
+    rentType,
+    rentalCharge,
     model,
     make,
     modelYear,
@@ -421,9 +427,18 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   <div className={overlay} />
                   <div className={featuredBadgeContainer}>
                     <>
+                      {adType && adType === 'Rental' && rentalCharge && (
+                        <span className={featuredBadge} style={{ backgroundColor: Colors.navyBlue }}>
+                          <Typography variant="body2">
+                            {RENTAL}
+                          </Typography>
+                        </span>
+                      )}
                       {data.isSold && (
                         <span className={featuredBadge}>
-                          <Typography variant="body2">{SOLD}</Typography>
+                          <Typography variant="body2">
+                            {SOLD}
+                          </Typography>
                         </span>
                       )}
                       {data.isPublished === false && (
@@ -481,9 +496,26 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <Typography color="secondary" variant="h3">
-                        {price && `PKR ${price?.toLocaleString()}`}
-                      </Typography>
+                      {adType && adType === 'Rental' && rentType && rentalCharge && (
+                        <Typography color="secondary" variant="h3">
+                          {/* {price && price >= 10000 && `PKR ${price?.toLocaleString()}`}
+                          <span className={rentalBasis}> / {'Week'}</span>
+                          </Typography>                          
+                          <Typography color="secondary" variant="h3"> */}
+                          PKR {rentalCharge?.toLocaleString()}
+                          <span className={rentalBasis}> / {rentType === 'Daily' ? 'Day'
+                            : rentType === 'Weekly' ? 'Week'
+                              : rentType === 'Monthly' ? 'Month'
+                                : ''
+                          }
+                          </span>
+                        </Typography>
+                      )}
+                      {adType && adType === 'Sell' && (
+                        <Typography color="secondary" variant="h3">
+                          {price && price >= 10000 && `PKR ${price?.toLocaleString()}`}
+                        </Typography>
+                      )}
                     </Grid>
                     <Grid
                       item

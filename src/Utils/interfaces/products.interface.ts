@@ -1,6 +1,9 @@
 export interface ICarCard {
   _id: string;
   id: string;
+  adType: string;
+  rentType: string;
+  rentalCharge: number;
   model: string;
   modelYear: number;
   createdAt: string;

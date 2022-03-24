@@ -66,7 +66,7 @@ const HomePageStyles = makeStyles((theme) => ({
     transition: 'transform .5s',
     '&:hover': {
       cursor: 'pointer',
-      transform: 'scale(1.2)'
+      transform: 'scale(1.1)'
     }
   },
   badgeIcon: {
@@ -114,7 +114,7 @@ const HomePageStyles = makeStyles((theme) => ({
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     marginBottom: '5%',
-    padding: '0 !important'
+    padding: '0 !important',
   },
   promoCar: {
     position: 'absolute',
@@ -123,28 +123,28 @@ const HomePageStyles = makeStyles((theme) => ({
     background: `linear-gradient(75deg, #05409D, #05409D 50%, #FFF 50.3%, #FFF 75%, rgba(255,255,255,0) 75.3%, rgba(255,255,255,0) 85%)`,
     height: '540px',
     '& > img': {
-      marginTop: 120
-    },    
+      marginTop: 140
+    },
     [theme.breakpoints.down('sm')]: {
       width: '100%',
       textAlign: 'center',
       background: `linear-gradient(75deg, #05409D, #05409D 30%, #FFF 30.3%, #FFF 55%, rgba(255,255,255,0) 55.3%, rgba(255,255,255,0) 65%)`,
       '& > img': {
-        marginTop: 90,
-        maxWidth: '480px'
+        marginTop: 240,
+        maxWidth: '500px'
       },
     },
     [theme.breakpoints.down('xs')]: {
       '& > img': {
-        marginTop: 60,
-        maxWidth: '420px',
+        marginTop: 300,
+        maxWidth: '350px',
       },
     }
   },
-  promoContent: {    
+  promoContent: {
     position: 'absolute',
     textAlign: 'center',
-    top: 45,
+    top: 60,
     right: 10,
     '& > span': {
       padding: '0 10px',
@@ -159,19 +159,36 @@ const HomePageStyles = makeStyles((theme) => ({
       boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
       borderRadius: '5px',
     },
+    [theme.breakpoints.down('sm')]: {
+      top: 30,
+      right: 30,
+      fontSize: '28px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      top: 30,
+      right: 30,
+      fontSize: '20px',
+    }
   },
   btn: {
-    backgroundColor: '#00F',
-    border: '1px solid #FFFFFF',
+    backgroundColor: Colors.blueMain,
+    border: `1px solid ${Colors.darkBlue}`,
     boxSizing: 'border-box',
     borderRadius: '4px',
-    padding: '1.5%',
+    padding: '1.5%',    
     fontFamily: 'Roboto',
     fontStyle: 'normal',
     fontWeight: 600,
     fontSize: '16px',
     lineHeight: '28px',
-    color: '#FFFFFF',
+    color: '#FFFFFF',    
+    transition: 'transform .5s',
+    '&:hover': {
+      cursor: 'pointer',
+      backgroundColor: Colors.darkBlue,
+      border: '1px solid #FFFFFF',
+      transform: 'scale(1.1)'
+    },
   },
 }));
 
@@ -268,7 +285,7 @@ const HomePage = () => {
               <div className={promoContent}>
                 <span>Do you want to earn with us ?</span><br /><br />
                 <span>So, Don't be late</span><br /><br />
-                <button className={btn}>POST AN AD</button>
+                <a href='/add-edit/car/'><button className={btn}>POST AN AD</button></a>
               </div>
             </Grid>
 

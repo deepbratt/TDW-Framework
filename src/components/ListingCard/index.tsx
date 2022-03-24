@@ -427,8 +427,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   <div className={overlay} />
                   <div className={featuredBadgeContainer}>
                     <>
-                      {/* {adType && adType === 'Rental' && rentalCharge && ( */}
-                      {!adType && (
+                      {adType && adType === 'Rental' && rentalCharge && (
                         <span className={featuredBadge} style={{ backgroundColor: Colors.navyBlue }}>
                           <Typography variant="body2">
                             {RENTAL}
@@ -497,20 +496,19 @@ const ListingCard: React.FC<ListingCardProps> = ({
                       </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      {/* {adType && adType === 'Rental' && rentType && rentalCharge && ( */}
-                      {!adType && (
+                      {adType && adType === 'Rental' && rentType && rentalCharge && (
                         <Typography color="secondary" variant="h3">
-                          {price && price >= 10000 && `PKR ${price?.toLocaleString()}`}
+                          {/* {price && price >= 10000 && `PKR ${price?.toLocaleString()}`}
                           <span className={rentalBasis}> / {'Week'}</span>
-                          {/* </Typography>                          
-                          <Typography color="secondary" variant="h3">
-                            PKR {rentalCharge?.toLocaleString()}
-                            <span className={rentalBasis}> / {rentType === 'Daily' ? 'Day'
-                              : rentType === 'Weekly' ? 'Week'
-                                : rentType === 'Monthly' ? 'Month'
-                                  : ''
-                            }
-                            </span> */}
+                          </Typography>                          
+                          <Typography color="secondary" variant="h3"> */}
+                          PKR {rentalCharge?.toLocaleString()}
+                          <span className={rentalBasis}> / {rentType === 'Daily' ? 'Day'
+                            : rentType === 'Weekly' ? 'Week'
+                              : rentType === 'Monthly' ? 'Month'
+                                : ''
+                          }
+                          </span>
                         </Typography>
                       )}
                       {adType && adType === 'Sell' && (

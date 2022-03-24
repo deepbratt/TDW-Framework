@@ -335,20 +335,19 @@ const CarDetailContainer = () => {
                       </Box>
                     </Grid>
                     <Box style={{ marginTop: defaultMarginTop }}>
-                       {/* {obj.adType && obj.adType === 'Rental' && obj.rentType && obj.rentalCharge && ( */}
-                       {!obj.adType && (
+                      {obj.adType && obj.adType === 'Rental' && obj.rentType && obj.rentalCharge && (
                         <Typography color="secondary" variant="h3">
-                          {obj.price && obj.price >= 10000 && `PKR ${obj.price?.toLocaleString()}`}
+                          {/* {obj.price && obj.price >= 10000 && `PKR ${obj.price?.toLocaleString()}`}
                           <span className={rentalBasis}> / {'Week'}</span>
-                          {/* </Typography>                          
-                          <Typography color="secondary" variant="h3">
-                            PKR {obj.rentalCharge?.toLocaleString()}
-                            <span className={rentalBasis}> / {obj.rentType === 'Daily' ? 'Day'
-                              : obj.rentType === 'Weekly' ? 'Week'
-                                : obj.rentType === 'Monthly' ? 'Month'
-                                  : ''
-                            }
-                            </span> */}
+                          </Typography>                          
+                          <Typography color="secondary" variant="h3"> */}
+                          PKR {obj.rentalCharge?.toLocaleString()}
+                          <span className={rentalBasis}> / {obj.rentType === 'Daily' ? 'Day'
+                            : obj.rentType === 'Weekly' ? 'Week'
+                              : obj.rentType === 'Monthly' ? 'Month'
+                                : ''
+                          }
+                          </span>
                         </Typography>
                       )}
                       {obj.adType && obj.adType === 'Sell' && (

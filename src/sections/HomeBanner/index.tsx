@@ -72,7 +72,7 @@ const HomeBannerStyles = makeStyles((theme) => ({
     textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     [theme.breakpoints.up('sm')]: {
       top: 250,
-      fontSize: '20px',
+      fontSize: '22px',
       lineHeight: '25px'
     },
     [theme.breakpoints.up('md')]: {
@@ -80,10 +80,31 @@ const HomeBannerStyles = makeStyles((theme) => ({
       fontSize: '26px',
       lineHeight: '30px'
     },
+    [theme.breakpoints.up(1050)]: {
+      top: 260,
+    },
+    [theme.breakpoints.up(1100)]: {
+      top: 270,
+    },
+    [theme.breakpoints.up(1150)]: {
+      top: 290,
+    },
+    [theme.breakpoints.up(1200)]: {
+      top: 310,
+    },
     [theme.breakpoints.up('lg')]: {
       top: '25vw',
       fontSize: '32px',
       lineHeight: '36px'
+    },
+    [theme.breakpoints.up(1400)]: {
+      top: '25.5vw',
+    },
+    [theme.breakpoints.up(1500)]: {
+      top: '26.5vw',
+    },
+    [theme.breakpoints.up(1650)]: {
+      top: '27vw',
     }
   },
   bannerTextBlue: {

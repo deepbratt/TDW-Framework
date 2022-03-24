@@ -28,11 +28,11 @@ const FindCarsStyles = makeStyles((theme) => ({
     color: `${Colors.flashWhite}`,
     backgroundColor: `${Colors.blueMain}`,
     [theme.breakpoints.down('sm')]: {
-      marginTop: '-20px',
+      marginTop: '-30px',
       marginBottom: '20px'
     },
     [theme.breakpoints.down('xs')]: {
-      marginTop: '25px',
+      marginTop: '-20px',
       marginBottom: '20px'
     },
     '& label': {
@@ -99,7 +99,8 @@ const FindCarsStyles = makeStyles((theme) => ({
   },
   inputFieldRoot: {
     backgroundColor: '#FFF',
-    width:"100%"
+    width:"100%",
+    borderRadius: '4px'
   },
   loaderContainer: {
     display: 'flex',
@@ -129,7 +130,7 @@ const FindCars: React.FC = () => {
     tabContainer,
     inputFieldRoot,
     loaderContainer,
-    btn
+    btn,
   } = FindCarsStyles();
 
   const {

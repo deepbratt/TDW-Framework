@@ -123,7 +123,7 @@ const HomePageStyles = makeStyles((theme) => ({
     background: `linear-gradient(75deg, #05409D, #05409D 50%, #FFF 50.3%, #FFF 75%, rgba(255,255,255,0) 75.3%, rgba(255,255,255,0) 85%)`,
     height: '540px',
     '& > img': {
-      marginTop: 140
+      marginTop: 140,
     },
     [theme.breakpoints.down('sm')]: {
       width: '100%',

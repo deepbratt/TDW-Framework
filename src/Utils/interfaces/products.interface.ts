@@ -33,6 +33,7 @@ export interface ICarCard {
   slug: string;
   isFav: boolean;
   isPublished: boolean;
+  adType: "Rental" | "Sell";
 }
 
 export interface IUser {

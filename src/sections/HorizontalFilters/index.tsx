@@ -6,7 +6,8 @@ import { RootState } from '../../redux/store';
 import { fieldNames } from '../../Utils/constants/formsConstants';
 import {
   sortingOptions,
-  conditionOptions
+  conditionOptions,
+  listingOptions
 } from '../../Utils/constants/language/en/filtersData';
 
 export interface HorizontalFiltersProps {
@@ -20,6 +21,15 @@ const HorizontalFilters: React.FC<HorizontalFiltersProps> = ({
   return (
     <Grid style={{ margin: '10px 0' }} container justifyContent="space-between">
       <Grid item container xs={10} spacing={2}>
+        <Grid item xs={3}>
+          <Dropdown
+            label="AD TYPE"
+            name={fieldNames.adType}
+            onChange={handleInputChange}
+            value={values.adType}
+            options={listingOptions}
+          />
+        </Grid>
         <Grid item xs={5}>
           <Dropdown
             label="SORT BY"

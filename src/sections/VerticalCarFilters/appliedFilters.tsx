@@ -179,9 +179,27 @@ const AppliedFilters: React.FC<AppliedFiltersProps> = ({
     );
   }
 
+  if (keys === 'adType' && values !== '' && values !== 'any' && (values === 'Sell' || values === 'Rental')) {
+    return (
+      <Grid item>
+        <Chip
+          classes={{ root: root, deleteIcon: icon }}
+          size="small"
+          label={`Showing Results for ${
+            values === 'Sell' ? 'Buying Cars' : 'Renting Cars'
+          }`}
+          onDelete={() => dispatch(removeFilter({ name: keys, value: '' }))}
+        />
+      </Grid>
+    );
+  }
+
   return (
     <>
-      {values !== '' && values !== false && typeof values !== typeof [] ? (
+      {values !== '' &&
+      values !== false &&
+      typeof values !== typeof [] &&
+      values !== 'any' ? (
         <Grid item>
           <Chip
             classes={{ root: root, deleteIcon: icon }}
